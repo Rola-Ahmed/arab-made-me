@@ -1,0 +1,41 @@
+
+.cont {
+  width: 70% !important;
+
+
+}
+.verify-mesg .border-css{
+  border: solid 1px black;
+  border-radius: 6px;
+
+  gap:12px
+
+  
+}
+
+.verified-cont label,.verified-cont p{
+  font-size:15px;
+  font-weight: 600;
+  font-family: "Inter-reg";
+}
+
+.verified-cont .steps-text{
+
+  background-color: var(--secondary-color);
+  border-radius: 40px;
+  color: white;
+  font-size: x-large;
+
+
+
+}
+.verified-cont .cont-btn
+  {
+  color: var(--secondary-color);
+  text-decoration: underline;
+
+}
+.verified-cont  small{
+  font-family: "Inter-reg";
+  font-weight: 600;
+}

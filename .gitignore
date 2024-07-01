@@ -1,0 +1,71 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+src/node_modules/
+client/node_modules/
+src/node_modules.zip
+.env
+
+
+
+
+
+
+
+
+
+
+# General files and directories
+uploads/
+node_modules/
+
+
+
+
+
+
+
+
+
+
+client/src/components/AdminDashboard/subComponets/Products/EditProduct/EditProduct copy 2.jsx
+client/src/components/Factorydashboard/subComponets/Products/EditProduct/EditProduct copy 2.jsx
+client/src/components/AdminDashboard/subComponets/Products/EditProduct/EditProduct copy.jsx
+client/src/components/Factorydashboard/subComponets/Products/EditProduct/EditProduct copy.jsx
+client/src/containers/Factorydashboard/subComponets/Quotations/EditQuote/EditQuoteContainer.jsx
+client/src/components/Auth/Sign/Sign copy 2.jsx
+client/src/components/Auth/Sign/Sign copy.jsx
+client/src/components/MeetingRoom/MeetingRoom copy 2.jsx
+client/src/components/MeetingRoom/MeetingRoom copy 3.jsx
+client/src/components/MeetingRoom/MeetingRoom copy 4.jsx
+client/src/components/MeetingRoom/MeetingRoom copy 5.sssssssssssssssssssssssss
+client/src/components/MeetingRoom/MeetingRoom copy.jsx
+client/src/docker-compose.yml
+client/src/components/MeetingRoom/Modal.css
+client/src/components/Forms/PurchasingOrder copy/PurchasingOrder.css
+client/src/components/Forms/PurchasingOrder copy/PurchasingOrder.jsx
+client/src/components/Home/TopFactories/TopFactories copy.jsx
+client/src/components/Auth/Sign/Sign copy 4.jsx
+client/tsconfig copy 2.json
+client/tsconfig copy.json
+client/.vscode/tasks.json

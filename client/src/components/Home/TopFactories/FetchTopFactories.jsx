@@ -1,0 +1,88 @@
+import React, { useEffect, useState } from "react";
+
+import { fetchFactories, fetchFactoryProductsSize } from "Services/factory";
+import TopFactories from "./TopFactories";
+
+export default function FetchTopFactories() {
+  const numOfFactoriesFetch = 30;
+  const numOfProductsFetch = 20;
+  const [allFactoriesData, setAllFactoriesData] = useState([]);
+
+  const [uniqueFactoryIDofProducts, setUniqueFactoryIDofProducts] = useState(
+    []
+  );
+
+  useEffect(() => {
+    const fetchFactoriesData = async () => {
+      try {
+        let result = await fetchFactories(numOfFactoriesFetch);
+
+        // if there is error
+        if (result && result.error) {
+        }
+        if (result && result.success) {
+          setAllFactoriesData(
+            result.data.factories.filter((item) => item?.factoryId !== null)
+          );
+          const uniqueIds = [
+            ...new Set(
+              result.data.factories
+                .map((obj) => obj.id) // Extract all factoryIds
+                .filter((id) => id !== null) // Filter out null values
+            ),
+          ];
+
+          setUniqueFactoryIDofProducts(uniqueIds);
+        }
+      } catch (error) {}
+    };
+
+    fetchFactoriesData();
+  }, []);
+
+  const getFactoryProduct = async (factoryId) => {
+    try {
+      let result = await fetchFactoryProductsSize(
+        factoryId,
+        numOfProductsFetch
+      );
+
+      if (result && result.success) {
+        // Extract specific attributes (id, name, coverImage) and filter out the rest
+        const filteredAttributes = result.data.products.map((item) => {
+          // Extract specific attributes
+          const { id, name, coverImage } = item;
+
+          return {
+            id,
+            name,
+            coverImage,
+          };
+        });
+
+        setAllFactoriesData((prevData) =>
+          prevData.map((item) =>
+            item?.id === factoryId
+              ? {
+                  ...item,
+                  productLength: result.data.products?.length,
+                  productData: filteredAttributes,
+                }
+              : item
+          )
+        );
+      }
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    if (uniqueFactoryIDofProducts !== null) {
+      uniqueFactoryIDofProducts?.map((factoryId) => (
+        <>{getFactoryProduct(factoryId)}</>
+      ));
+    }
+  }, [uniqueFactoryIDofProducts]);
+
+  console.log("allFactoriesData",allFactoriesData)
+  return <TopFactories allFactoriesData={allFactoriesData} />;
+}

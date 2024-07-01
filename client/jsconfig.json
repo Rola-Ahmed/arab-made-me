@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "jsx": "react",
+    "module": "commonjs",
+    "target": "es6"
+  },
+  "include": ["src", "src/i18n.js", "public/locales/en/countries copy.js"],
+  "exclude": ["node_modules", "build", "dist"]
+}

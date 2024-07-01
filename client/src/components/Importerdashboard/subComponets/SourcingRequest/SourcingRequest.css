@@ -1,0 +1,17 @@
+.width-drop{
+    /* width: fit-content; */
+}
+
+button.dropdown-toggle{
+    border-radius: 6px !important;
+}
+
+
+.dropdown-menu.scroller{
+    height: 177px;
+    overflow: auto;
+}
+
+ .dropdown-item:active{
+background-color: transparent !important;
+}

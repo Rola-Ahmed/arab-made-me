@@ -1,0 +1,401 @@
+import React, { useState, useContext } from "react";
+
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+import { baseUrl } from "config.js";
+import { GlobalMsgContext } from "Context/globalMessage";
+
+export default function Password(props) {
+  let {
+    handleShow,
+    handleClose,
+    show,
+    errorMsg,
+    setIsLogin,
+    ModalClose,
+    setErrorMsg,
+    isLogin,
+    isLoading,
+  } = props;
+  let navigate = useNavigate();
+  const { setGlobalMsg } = useContext(GlobalMsgContext);
+
+  // hide/show passowrd toggle
+  let [toggleSeePassword, settoggleSeePassword] = useState({
+    confirmPassword: false,
+    password: false,
+    oldPassword: false,
+  });
+  // once use update the password i should let log him out again
+  const logOuut = () => {
+    setIsLogin("");
+    localStorage.clear();
+
+    navigate("/");
+  };
+
+  //
+  // Password Validation
+  let formPasswordValidation = useFormik({
+    initialValues: {
+      //-------------------- change password
+      oldPassword: "",
+      password: "",
+      confirmPassword: "",
+    },
+
+    validationSchema: Yup.object().shape({
+      oldPassword: Yup.string()
+        .required("Input Field is Required")
+        .min(6, "min length is 6")
+        .max(255, "max length is 255"),
+
+      password: Yup.string()
+        .required("Input Field is Required")
+        .min(6, "min length is 6")
+        .max(255, "max length is 255"),
+      confirmPassword: Yup.string()
+        .required("Input Field is required")
+        .oneOf([Yup.ref("password")], "Passwords must match"),
+    }),
+    onSubmit: submitPasswordForm,
+  });
+  async function submitPasswordForm(values) {
+    setErrorMsg((prevErrors) => {
+      const { response, ...restErrors } = prevErrors || {};
+      return restErrors;
+    });
+    let data = {};
+    // cotinue
+    data = {
+      oldPassword: values.oldPassword,
+
+      password: values.password,
+    };
+
+    try {
+      let config = {
+        method: "put",
+        url: `${baseUrl}/users/update/fromUser`,
+        headers: {
+          authorization: isLogin,
+        },
+        data: data,
+      };
+
+      const response = await axios.request(config);
+
+      if (response.data.message == "updated") {
+        logOuut();
+        ModalClose();
+
+        setGlobalMsg("Password updated Successfully");
+      } else {
+        setErrorMsg((prevErrors) => ({
+          ...prevErrors,
+          response: response?.data?.message,
+        }));
+      }
+    } catch (error) {
+      setErrorMsg((prevErrors) => ({
+        ...prevErrors,
+        response: error?.response?.data?.message,
+      }));
+      window.scrollTo({ top: 1642.4000244140625 });
+    }
+  }
+  return (
+    <>
+      <div id="PasswordChange"></div>
+      <div className="container-profile-input w-100">
+        <div className="title-contianer-input w-100">
+          {" "}
+          <p>Password Change</p>
+          <div className="w-100 ">
+            {" "}
+            <div className="row  row-gap">
+              <div className="col-12">
+                <div className="grid-gap-col">
+                  {" "}
+                  <div className="form-group">
+                    <label>Change Password</label>
+                    <input
+                      type="password"
+                      className="form-control"
+                      placeholder="Enter New Password"
+                      readOnly
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-12">
+                <div className="form-group">
+                  <label>Confirm Password</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Confirm Password"
+                    readOnly
+                  />
+                </div>
+              </div>
+
+              <div className="col-12">
+                <Button
+                  className="btn-edit"
+                  variant="primary"
+                  onClick={() => handleShow("passwordChangeReadOnly")}
+                >
+                  <p className="cursor">Change Password </p>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <Modal
+        show={show.passwordChangeReadOnly}
+        onHide={() => handleClose("passwordChangeReadOnly")}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        className="factory-profile"
+      >
+        <Modal.Body closeButton>
+          {/* Account Info container 1 */}
+
+          <div className="container-profile-input w-100">
+            <div className="title-contianer-input w-100">
+              {" "}
+              <Modal.Header closeButton>
+                <Modal.Title>
+                  <p>Password Change</p>
+                </Modal.Title>
+              </Modal.Header>
+              {errorMsg?.response ? (
+                <div className="alert mt-3 p-2 alert-danger form-control text-dark">
+                  {errorMsg?.response}{" "}
+                </div>
+              ) : (
+                ""
+              )}{" "}
+              <div className="w-100 ">
+                {" "}
+                <form onSubmit={formPasswordValidation.handleSubmit}>
+                  <div className="row  row-gap">
+                    <div className="col-12">
+                      <div className="grid-gap-col">
+                        {" "}
+                        <div className="form-group">
+                          <label>Old Password</label>
+
+                          {/*  */}
+                          <div class="input-group">
+                            <input
+                              type={`${
+                                toggleSeePassword.oldPassword == true
+                                  ? "text"
+                                  : "password"
+                              }`}
+                              autoComplete="new-password"
+                              className="form-control"
+                              id="oldPassword"
+                              name="oldPassword"
+                              onChange={formPasswordValidation.handleChange}
+                              onBlur={formPasswordValidation.handleBlur}
+                              value={formPasswordValidation.values.oldPassword}
+                              // didnt allow pating
+                              // onPaste={(e) => e.preventDefault()}
+
+                              // placeholder="Change Password"
+                            />
+                            <div
+                              class="input-group-append h-100 cursor"
+                              onClick={() =>
+                                settoggleSeePassword((prevData) => ({
+                                  ...prevData,
+                                  oldPassword: !toggleSeePassword.oldPassword,
+                                }))
+                              }
+                            >
+                              <span
+                                class={`input-group-text bg-white h-100 icon-eye-passowrd    cursor ${
+                                  toggleSeePassword.oldPassword == true
+                                    ? "fa-solid fa-eye-slash"
+                                    : "fa-solid fa-eye"
+                                }`}
+                              ></span>
+                            </div>
+                          </div>
+                          {/*  */}
+                          {formPasswordValidation.errors.oldPassword &&
+                          formPasswordValidation.touched.oldPassword ? (
+                            <small className="text-danger">
+                              {formPasswordValidation.errors.oldPassword}
+                            </small>
+                          ) : (
+                            ""
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-12">
+                      <div className="grid-gap-col">
+                        {" "}
+                        <div className="form-group">
+                          <label>Change Password</label>
+
+                          {/*  */}
+                          <div class="input-group">
+                            <input
+                              type={`${
+                                toggleSeePassword.password == true
+                                  ? "text"
+                                  : "password"
+                              }`}
+                              className="form-control"
+                              id="password"
+                              name="password"
+                              placeholder="Change Password"
+                              onChange={formPasswordValidation.handleChange}
+                              onBlur={formPasswordValidation.handleBlur}
+                              value={formPasswordValidation.values.password}
+                              autoComplete="new-passowrd"
+                            />
+                            <div
+                              class="input-group-append h-100 cursor"
+                              onClick={() =>
+                                settoggleSeePassword((prevData) => ({
+                                  ...prevData,
+                                  password: !toggleSeePassword.password,
+                                }))
+                              }
+                            >
+                              <span
+                                class={`input-group-text bg-white h-100 icon-eye-passowrd    cursor ${
+                                  toggleSeePassword.password == true
+                                    ? "fa-solid fa-eye-slash"
+                                    : "fa-solid fa-eye"
+                                }`}
+                              ></span>
+                            </div>
+                          </div>
+                          {/*  */}
+                          {formPasswordValidation.errors.password &&
+                          formPasswordValidation.touched.password ? (
+                            <small className="text-danger">
+                              {formPasswordValidation.errors.password}
+                            </small>
+                          ) : (
+                            ""
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-12">
+                      <div className="form-group">
+                        <label>Confirm Password</label>
+
+                        {/*  */}
+                        <div class="input-group">
+                          <input
+                            type={`${
+                              toggleSeePassword.confirmPassword == true
+                                ? "text"
+                                : "password"
+                            }`}
+                            className="form-control"
+                            // onPaste={(event) => {
+                            //   // paste is not allowed
+                            //   event.preventDefault();
+                            //   event.clipboardData.getData("text/plain");
+                            // }}
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            placeholder="Confirm Password"
+                            onChange={formPasswordValidation.handleChange}
+                            onBlur={formPasswordValidation.handleBlur}
+                            value={
+                              formPasswordValidation.values.confirmPassword
+                            }
+                          />
+                          <div
+                            class="input-group-append h-100 cursor"
+                            onClick={() =>
+                              settoggleSeePassword((prevData) => ({
+                                ...prevData,
+                                confirmPassword:
+                                  !toggleSeePassword.confirmPassword,
+                              }))
+                            }
+                          >
+                            <span
+                              class={`input-group-text bg-white h-100 icon-eye-passowrd    cursor ${
+                                toggleSeePassword.confirmPassword == true
+                                  ? "fa-solid fa-eye-slash"
+                                  : "fa-solid fa-eye"
+                              }`}
+                            ></span>
+                          </div>
+                        </div>
+                        {/*  */}
+
+                        {formPasswordValidation.errors.confirmPassword &&
+                        formPasswordValidation.touched.confirmPassword ? (
+                          <small className="text-danger">
+                            {formPasswordValidation.errors.confirmPassword}
+                          </small>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="col-12 d-flex justify-content-start btn-modal-gap">
+                      {" "}
+                      <Button
+                        variant="secondary"
+                        type="button"
+                        onClick={() => handleClose("passwordChangeReadOnly")}
+                      >
+                        Close
+                      </Button>
+                      {isLoading ? (
+                        <button type="button" className="btn-edit">
+                          <i className="fas fa-spinner fa-spin text-white px-5"></i>
+                        </button>
+                      ) : (
+                        <button
+                          className="btn-edit submitButton"
+                          type="submit"
+                          disabled={
+                            !(
+                              formPasswordValidation.isValid &&
+                              formPasswordValidation.dirty
+                            )
+                          }
+                        >
+                          <p className="cursor">save changes</p>
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
+    </>
+  );
+}

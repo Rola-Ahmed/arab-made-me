@@ -1,0 +1,47 @@
+.freq-text1{
+    color: var(--Gray-900, #101828);
+text-align: center;
+
+/* Display md/Semibold */
+font-family: "Inter-semi";
+font-size: 36px;
+font-style: normal;
+font-weight: 600;
+line-height: 44px; /* 122.222% */
+letter-spacing: -0.72px;
+}
+.freq-text2{
+    color: var(--Gray-500, #667085);
+text-align: center;
+
+/* Text xl/Regular */
+font-family: "Inter-reg";
+font-size: 20px;
+font-style: normal;
+font-weight: 400;
+line-height: 30px; 
+padding-bottom: 34px;
+}
+.freq-acc{
+    color: var(--Gray-900, #101828);
+
+/* Text lg/Medium */
+font-family: "Inter-med";
+font-size: 18px;
+font-style: normal;
+font-weight: 500;
+line-height: 28px; 
+}
+.freq-acc2{
+    color: var(--Gray-500, #667085);
+
+/* Text md/Regular */
+font-family: "Inter-reg";
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: 24px; 
+}
+.freq-section{
+    padding: 70px 0;
+}

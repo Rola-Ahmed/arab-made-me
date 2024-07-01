@@ -1,0 +1,148 @@
+.img-parent-source{
+    position: relative;
+        /* right: -31px; */
+        /* display: flex; */
+        /* justify-content: end; */
+        width: 100%;
+}
+
+.img-parent-source-2{
+    width: fit-content;
+}
+.sorcingh-img{
+    /* width: 75px; */
+    width: 100%;
+    max-width: 75px;
+
+    /* max-height: 75px; */
+    /* min-height: 55px; */
+    height: 55px;
+
+    
+    position: absolute;
+    right: 7px;
+}
+.sorcingh-img-2{
+    width: 100%;
+    max-width: 75px;
+
+    height: 55px;
+    
+}
+.parentsourc{
+    display: flex;
+    border: 0.1px solid rgba(128, 128, 128, 0.258);
+    
+    padding: 15px;
+    border-radius: 8px;
+}
+.sour-1{
+    color: var(--secondary-color, #F2AE31);
+    font-weight: 600;
+    font-size: 18px;
+}
+.sour-2{
+    font-size: 22px;
+    font-weight: 600;
+    font-family: "Inter-semi";
+}
+.sourcing-h-hom{
+    padding: 70px 0;
+}
+.sourc-h-2{
+    color: var(--Gray-900);
+    /* text-align: center; */
+    font-family: "Inter-semi";
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 44px;
+    letter-spacing: -0.72px;
+    
+}
+
+.sourc-p{
+    /* color: var(--Gray-500, #667085); */
+    color: var(--Gray-900);
+
+    font-family: "Inter-semi";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 30px;
+}
+
+.row-home-sourcing{
+    padding-bottom: 50px;
+}
+
+
+/* .sourcing-h-hom .page-link.arrow-link-color i{
+    color: var(--secondary-color) !important; 
+}
+.sourcing-h-hom .page-link.arrow-link-color{
+    border-color: var(--secondary-color) !important; 
+} */
+
+.sourcing.horizontal-text-handler{
+    /* width: 160px; */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 3rem;
+    width: 100%;
+ }
+
+ .sourcing.horizontal-text-handler-1{
+    /* width: 160px; */
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+ }
+
+
+
+
+
+
+.sourcing-h-hom .arrow-btn{
+    display: flex;
+width: 32px;
+height: 32px;
+padding: 7px;
+justify-content: center;
+align-items: center;
+flex-shrink: 0;
+    border-radius: 16px;
+border: 1px solid #6B7B8A;
+background: #FAFAFA;
+cursor: pointer;
+ }
+.sourcing-h-hom .arrow-btn[disabled]{
+background:rgba(128, 128, 128, 0.542) !important;
+ }
+ 
+ .sourcing-h-hom .arrowLeft{
+    top: -60px;
+    right: 67px;
+}
+
+.sourcing-h-hom .arrowRight{
+    top: -60px;
+    right: 31px;
+}
+
+
+
+
+ /* carsoul */
+ .sourcing-h-hom .kNBmiK {
+    margin: 0 !important;
+}
+
+
+.sourcing-h-hom .bghjHX {
+    margin: 0 0 !important;
+}

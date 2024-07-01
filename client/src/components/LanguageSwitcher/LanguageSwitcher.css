@@ -1,0 +1,15 @@
+.Lang-cont .header-nav button.dropdown-item {
+  /* font-family: "Inter-med"; */
+  /* font-weight: 500; */
+  /* border: solid 1.5px rgba(0, 0, 0, 0.457) !important; */
+  padding: 5px 12px !important;
+}
+
+.Lang-cont button{
+  font-size: 12px !important;
+
+}
+
+.Lang-cont #local-btns.dropdown-menu[data-bs-popper] {
+  left: 0% !important;
+}
