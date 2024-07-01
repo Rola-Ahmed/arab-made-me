@@ -1,0 +1,43 @@
+import { DataTypes } from "sequelize";
+import { sequelize } from "../connection.js";
+import { Factory } from "./factory.model.js";
+import { Importer } from "./importer.model.js";
+import { Product } from "./product.model.js";
+
+export const PrivateLabeling=sequelize.define('privateLabelings',{
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    // specialCharacteristics: {
+    //     type: DataTypes.JSONB
+    // },
+    moreDetails:{
+      type:DataTypes.STRING
+    },
+    productName: {
+      type: DataTypes.STRING
+  },
+    status:{
+      type:DataTypes.ENUM,
+      values:['open','seen','pending','accepted','rejected'],
+      defaultValue:'open'
+  },
+    docs: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
+        set(value){
+          let paths=[]
+          value.forEach(element => {
+            paths.push(element.finalPath)
+          });
+          this.setDataValue('docs',paths)
+        } 
+      },
+},{
+    timestamps:true
+})
+
+PrivateLabeling.belongsTo(Factory)
+PrivateLabeling.belongsTo(Importer)
+PrivateLabeling.belongsTo(Product,{foreignKey:{allowNull:true}})
