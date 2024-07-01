@@ -3,19 +3,17 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { UserToken } from "Context/userToken";
-import { GlobalMsgContext } from "Context/globalMessage";
 
 import "../PrivateLabel/PrivateLabel.css";
-import useSubmitFormMsg from "../../../hooks/useSubmitFormMsg";
 import useFormSubmission from "./hooks/useFormSubmission";
 
 import FactoryInfo from "../Shared/FactoryInfo";
 import CurrentAcccountInfo from "../Shared/CurrentAcccountInfo";
 import CustomProductForm from "./CustomProductForm";
+import { formattedDateValidate } from "utils/validationUtils";
 function CustomerProductReq(props) {
   let { factoryDetails, isLoading, setIsLoading, factoryId } = props;
 
-  let navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState();
 
   const [specialCharacteristicsArr, SetSpecialCharacteristicsArr] = useState(
@@ -23,14 +21,6 @@ function CustomerProductReq(props) {
   );
 
   let { isLogin } = useContext(UserToken);
-  const handleSubmitMsg = useSubmitFormMsg();
-
-  let { setGlobalMsg } = useContext(GlobalMsgContext);
-
-  // let [poAdded, setPoAdded] = useState({
-  //   status: false,
-  //   id: "",
-  // });
 
   //Document Validation
   const [selectedDocs, setSelectedDocs] = useState([
@@ -51,13 +41,6 @@ function CustomerProductReq(props) {
     setIsLoading((prev) => ({ ...prev, submitLoading: loadingStatus }));
   }
 
-  const location = useLocation();
-  const hasPreviousState = location.key !== "default";
-  console.log("hasPreviousState", hasPreviousState);
-  //-------------------------End api helper function
-
-  // ------------------------Form Validation
-
   let requiredString = Yup.string().required("Input field is Required");
   const otherTextAreaValidate = (field, value) => {
     return Yup.string().when(field, {
@@ -72,7 +55,6 @@ function CustomerProductReq(props) {
   let validationSchema = Yup.object().shape({
     productName: Yup.string()
       .required("Input field is Required")
-      .min(3, "min legnth is 3")
       .max(50, "max legnth is 50"),
 
     specialCharKeyWord: Yup.string()
@@ -128,6 +110,20 @@ function CustomerProductReq(props) {
     qualityConditionsOther: otherTextAreaValidate("qualityConditions", "other"),
 
     otherConditions: Yup.string().max(255, "max legnth is 255"),
+
+    timeLine: Yup.array()
+      .of(
+        Yup.object().shape({
+          date: Yup.date()
+            .required("Input field is Required")
+            .min(formattedDateValidate, "Invalid Date"),
+          quantity: Yup.string()
+            .required("Input field is Required")
+            .matches(/^[0-9]+$/, "Input field must be numbers only")
+            .min(1, "min 1 legnth"),
+        })
+      )
+      .min("1", "minimum length is 1"),
   });
 
   let initialValues = {
@@ -148,11 +144,13 @@ function CustomerProductReq(props) {
     inqueries: "",
 
     // newwwwww
-    recurrence: false,
-
-    repeats: "day",
-    every: "",
-    endOn: "",
+    recurrence: "oneBatch",
+    timeLine: [
+      {
+        date: "",
+        quantity: "",
+      },
+    ],
 
     quantity: "",
 

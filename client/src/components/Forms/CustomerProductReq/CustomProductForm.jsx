@@ -1,8 +1,15 @@
-import SharedConditionsValidate from "../Shared/SharedConditionsValidate";
 import Trademakr from "../Shared/Trademakr";
 import UploadDocument from "../Shared/UploadDocument";
 import TextareaInput from "../Shared/TextareaInput";
 import FormVlaidtionError from "../Shared/FormVlaidtionError";
+import InputField from "../Shared/InputField";
+import TimeLine from "../Shared/TimeLine/TimeLine";
+import SelectOption from "../Shared/SelectOption";
+import { packingConditionsArr } from "constants/packingConditionsArr";
+import { SupplyLocationArr } from "constants/SupplyLocationArr";
+import { shippingConditionsArr } from "constants/shippingConditionsArr";
+import { ShippingTypeSizeArr } from "constants/ShippingTypeSizeArr";
+import { qualityConditionsArr } from "constants/qualityConditionsArr";
 
 function CustomProductForm(props) {
   let {
@@ -267,10 +274,92 @@ function CustomProductForm(props) {
 
           {/* newwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww */}
 
-          <SharedConditionsValidate
+          <div className="col-md-6 col-sm-12">
+            <InputField
+              isRequired={true}
+              formValidation={formValidation}
+              vlaidationName={"quantity"}
+              title="Quantity"
+            />
+          </div>
+
+          <div className="col-md-6 col-sm-12">
+            <SelectOption
+              formValidation={formValidation}
+              vlaidationName={"shippingConditions"}
+              textAreaOther={"shippingConditionsOther"}
+              isRequired={true}
+              title={"shipping conditions"}
+              array={shippingConditionsArr}
+            />
+          </div>
+
+          <div className="col-md-6 col-sm-12">
+            <SelectOption
+              formValidation={formValidation}
+              vlaidationName={"packingConditions"}
+              textAreaOther={"packingConditionsOther"}
+              isRequired={true}
+              title={"Packing condition"}
+              array={packingConditionsArr}
+            />
+          </div>
+
+          <div className="col-md-6 col-sm-12">
+            <SelectOption
+              formValidation={formValidation}
+              vlaidationName={"ShippingTypeSize"}
+              textAreaOther={"ShippingTypeSizeOther"}
+              isRequired={true}
+              title={"Shipping Type and Size"}
+              array={ShippingTypeSizeArr}
+            />
+          </div>
+
+          <div className="col-md-6 col-sm-12">
+            <SelectOption
+              formValidation={formValidation}
+              vlaidationName={"qualityConditions"}
+              textAreaOther={"qualityConditionsOther"}
+              isRequired={true}
+              title={"Quality Conditions"}
+              array={qualityConditionsArr}
+            />
+          </div>
+
+          <div className="col-md-6 col-sm-12">
+            <div className="form-group">
+              <label>Supply Location *</label>
+              <select
+                id="SupplyLocation"
+                className="form-select form-control"
+                onChange={formValidation.handleChange}
+                onBlur={formValidation.handleBlur}
+                value={formValidation.values.SupplyLocation}
+              >
+                {SupplyLocationArr.map((item) => (
+                  <option value={item?.value}>{item?.name}</option>
+                ))}
+              </select>
+
+              <FormVlaidtionError
+                formValidation={formValidation}
+                vlaidationName="SupplyLocation"
+              />
+            </div>
+          </div>
+          <TimeLine
             formValidation={formValidation}
-            quantityTitle="Quantity"
+            vlaidationName={"timeLine"}
           />
+
+          <TextareaInput
+            vlaidationName="otherConditions"
+            formValidation={formValidation}
+            isRequired={false}
+            title="Other Conditions"
+          />
+
           <Trademakr
             formValidation={formValidation}
             errorMsg={errorMsg}
@@ -324,14 +413,16 @@ function CustomProductForm(props) {
                 onClick={() => {
                   if (formValidation.isValid == false) {
                     const targetElement = document.getElementById(
-                      Object.keys(formValidation.errors)?.[0]
+                      Object.keys(formValidation?.errors)?.[0]
                     );
 
                     // Scroll to the target element
-                    targetElement.scrollIntoView({
-                      behavior: "smooth",
-                      block: "center",
-                    });
+                    if (targetElement) {
+                      targetElement.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center",
+                      });
+                    }
                   }
                 }}
               >
