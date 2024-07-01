@@ -69,3 +69,7 @@ client/src/components/Auth/Sign/Sign copy 4.jsx
 client/tsconfig copy 2.json
 client/tsconfig copy.json
 client/.vscode/tasks.json
+client/src/components/Forms/CustomerProductReq copy/FetchCustomProductContainer.jsx
+client/src/components/Forms/CustomerProductReq copy/CustomProductReq.jsx
+client/src/components/Forms/CustomerProductReq copy/CustomProductForm.jsx
+client/src/components/Forms/CustomerProductReq/CustomProductReq copy.jsx

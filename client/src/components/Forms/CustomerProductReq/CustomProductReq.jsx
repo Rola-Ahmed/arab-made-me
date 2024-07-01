@@ -1,21 +1,20 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { baseUrl } from "config.js";
-import { errorHandler } from "utils/errorHandler";
 import { UserToken } from "Context/userToken";
 import { GlobalMsgContext } from "Context/globalMessage";
 
 import "../PrivateLabel/PrivateLabel.css";
 import useSubmitFormMsg from "../../../hooks/useSubmitFormMsg";
+import useFormSubmission from "./hooks/useFormSubmission";
 
 import FactoryInfo from "../Shared/FactoryInfo";
 import CurrentAcccountInfo from "../Shared/CurrentAcccountInfo";
 import CustomProductForm from "./CustomProductForm";
 function CustomerProductReq(props) {
   let { factoryDetails, isLoading, setIsLoading, factoryId } = props;
+
   let navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState();
 
@@ -28,10 +27,10 @@ function CustomerProductReq(props) {
 
   let { setGlobalMsg } = useContext(GlobalMsgContext);
 
-  let [poAdded, setPoAdded] = useState({
-    status: false,
-    id: "",
-  });
+  // let [poAdded, setPoAdded] = useState({
+  //   status: false,
+  //   id: "",
+  // });
 
   //Document Validation
   const [selectedDocs, setSelectedDocs] = useState([
@@ -41,27 +40,15 @@ function CustomerProductReq(props) {
     // },
   ]);
 
+  const { submitForm, poAdded, submitDocs } = useFormSubmission(
+    isLogin,
+    setIsLoading,
+    setErrorMsg
+  );
+
   //-------------------------Start api helper function
   function setLoadingState(loadingStatus) {
     setIsLoading((prev) => ({ ...prev, submitLoading: loadingStatus }));
-  }
-  function clearResponseError() {
-    setErrorMsg((prevErrors) => {
-      const { response, ...restErrors } = prevErrors || {};
-      return restErrors;
-    });
-  }
-
-  function scrollToView(elementId) {
-    const targetElement = document.getElementById(elementId);
-    if (targetElement) {
-      targetElement.scrollIntoView({ behavior: "smooth", block: "center" });
-    }
-  }
-  function handleResponseError(message) {
-    setLoadingState(false);
-    setErrorMsg((prevErrors) => ({ ...prevErrors, response: message }));
-    scrollToView("view");
   }
 
   const location = useLocation();
@@ -142,6 +129,7 @@ function CustomerProductReq(props) {
 
     otherConditions: Yup.string().max(255, "max legnth is 255"),
   });
+
   let initialValues = {
     factoryId: factoryId,
     productName: "",
@@ -201,7 +189,7 @@ function CustomerProductReq(props) {
   function submit(values) {
     // if data is not added yet
     if (!poAdded.status) {
-      submitForm(values);
+      submitForm(values, selectedDocs, specialCharacteristicsArr);
     }
 
     // if textApi is added and selectedDocs is greater that 0
@@ -211,100 +199,10 @@ function CustomerProductReq(props) {
     // if (privateLabelAdded.status && selectedDocs?.length > 0) {
     else if (selectedDocs?.length > 0) {
       setLoadingState(true);
-      SubmitDocs(poAdded.id);
+      submitDocs(poAdded.id, selectedDocs);
     }
   }
-
-  async function submitForm(values) {
-    setLoadingState(true);
-
-    clearResponseError();
-
-    let data = {
-      factoryId: values?.factoryId,
-
-      productName: values.productName,
-      technicalSpecifications: values.technicalSpecifications,
-      inqueries: values.inqueries,
-
-      specialCharacteristics: values.specialCharKeyWord
-        ? { [values.specialCharKeyWord]: values.specialCharDesc }
-        : {},
-    };
-
-    if (specialCharacteristicsArr?.length > 0) {
-      specialCharacteristicsArr.forEach((index) => {
-        const key = values[`specialCharKeyWord${index}`];
-        const desc = values[`specialCharDesc${index}`];
-        data.specialCharacteristics[key] = desc;
-      });
-    }
-
-    try {
-      let config = {
-        method: "post",
-        url: `${baseUrl}/spmfs/add`,
-        headers: {
-          authorization: isLogin,
-        },
-        data: data,
-      };
-
-      const response = await axios.request(config);
-
-      if (response.data.message == "done") {
-        if (selectedDocs.length > 0) {
-          setPoAdded({
-            status: true,
-            id: response.data.specialManufacturing.id,
-          });
-
-          await SubmitDocs(response.data.specialManufacturing.id);
-        } else {
-          // display  successfully submitted message
-          handleSubmitMsg("Custom product Request");
-        }
-      } else {
-        handleResponseError(response?.data?.message);
-      }
-    } catch (error) {
-      handleResponseError(errorHandler(error));
-    }
-  }
-
-  async function SubmitDocs(qoute_id) {
-    const FormData = require("form-data");
-    let data = new FormData();
-
-    selectedDocs?.map((item) => data.append("docs", item.pdfFile));
-
-    let config = {
-      method: "put",
-      url: `${baseUrl}/spmfs/uploadMedia/${qoute_id}`,
-
-      headers: {
-        authorization: isLogin,
-      },
-      data: data,
-    };
-
-    axios
-      .request(config)
-      .then((response) => {
-        if (response.data.message == "done") {
-          setLoadingState(true);
-
-          // display  successfully submitted message
-          handleSubmitMsg("Custom product Request");
-        } else {
-          handleResponseError(response?.data?.message);
-        }
-      })
-      .catch((error) => {
-        handleResponseError(errorHandler(error));
-      });
-  }
-
+  console.log("formVlaidation", formValidation);
   return (
     <section id="view" className="req-visit">
       {/* Factory Details */}
