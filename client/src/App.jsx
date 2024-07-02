@@ -49,7 +49,6 @@ import factoryDashboardRoutes from "routes/factoryDashboardRoutes";
 import authRoutes from "routes/authRoutes";
 import MeetingRoom from "components/MeetingRoom/MeetingRoom";
 import Invitaion from "components/MeetingRoom/Invitaion";
-import ImageREmove from "ImageREmove";
 
 const router = createBrowserRouter([
   {
@@ -201,11 +200,6 @@ const router = createBrowserRouter([
   ...adminDashboardRoutes,
   ...importerDashboardRoutes,
   ...factoryDashboardRoutes,
-
-  {
-    path: "/ygyggygy",
-    element: <ImageREmove />,
-  },
 ]);
 
 function App() {

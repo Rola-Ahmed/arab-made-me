@@ -1,8 +1,10 @@
 import { useState } from "react";
-import axios from "axios";
-import { baseUrl } from "config.js";
 import { errorHandler } from "utils/errorHandler";
 import useSubmitFormMsg from "hooks/useSubmitFormMsg";
+import {
+  addCustomProductlMedia,
+  addCustomProduct,
+} from "Services/customProduct";
 
 const useFormSubmission = (isLogin, setIsLoading, setErrorMsg) => {
   const [poAdded, setPoAdded] = useState({ status: false, id: "" });
@@ -57,27 +59,21 @@ const useFormSubmission = (isLogin, setIsLoading, setErrorMsg) => {
     }
 
     try {
-      let config = {
-        method: "post",
-        url: `${baseUrl}/spmfs/add`,
-        headers: { authorization: isLogin },
-        data: data,
-      };
+      let result = await addCustomProduct({ authorization: isLogin }, data);
 
-      const response = await axios.request(config);
-      if (response.data.message === "done") {
+      if (result?.success) {
         if (selectedDocs.length > 0) {
           setPoAdded({
             status: true,
-            id: response.data.specialManufacturing.id,
+            id: result.data.specialManufacturing.id,
           });
-          await submitDocs(response.data.specialManufacturing.id, selectedDocs);
+          await submitDocs(result.data.specialManufacturing.id, selectedDocs);
         } else {
           // display  successfully submitted message
           handleSubmitMsg("Custom product Request");
         }
       } else {
-        handleResponseError(response?.data?.message);
+        handleResponseError(result.error);
       }
     } catch (error) {
       handleResponseError(errorHandler(error));
@@ -85,28 +81,29 @@ const useFormSubmission = (isLogin, setIsLoading, setErrorMsg) => {
   };
 
   const submitDocs = async (qoute_id, selectedDocs) => {
+    setLoadingState(true);
+
+    clearResponseError();
     const FormData = require("form-data");
     let data = new FormData();
 
     selectedDocs?.forEach((item) => data.append("docs", item.pdfFile));
 
-    let config = {
-      method: "put",
-      url: `${baseUrl}/spmfs/uploadMedia/${qoute_id}`,
-      headers: { authorization: isLogin },
-      data: data,
-    };
-
     try {
-      const response = await axios.request(config);
-      if (response.data.message === "done") {
+      let result = await addCustomProductlMedia(
+        qoute_id,
+        { authorization: isLogin },
+        data
+      );
+
+      if (result?.success) {
         setLoadingState(true);
         handleSubmitMsg("Custom product Request");
       } else {
-        handleResponseError(response?.data?.message);
+        handleResponseError(result.error);
       }
     } catch (error) {
-      handleResponseError(errorHandler(error));
+      // handleResponseError(errorHandler(error));
     }
   };
 
