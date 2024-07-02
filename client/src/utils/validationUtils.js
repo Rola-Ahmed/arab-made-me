@@ -7,28 +7,32 @@ export const otherTextAreaValidate = (field, value) => {
       schema.required("Input field is Required").max(255, "max length is 255"),
   });
 };
+// export const otherTextAreaValidate = (field, value) =>
+//   Yup.string().when(field, {
+//     is: value,
+//     then: Yup.string()
+//       .required("Input field is Required")
+//       .max(255, "max length is 255"),
+//   });
 
-export const textAreaValidate = () => {
-  return Yup.string().max(255, "max legnth is 255");
-};
 
+// textAreaValidate()
+export const textAreaValidate = () =>
+  Yup.string().max(255, "max legnth is 255");
+
+// requiredStringValidate
 export let requiredStringValidate = Yup.string().required(
   "Input field is Required"
 );
-
-// export const validationSchema = Yup.object().shape({
-//   email: Yup.string()
-//     .email("Invalid email")
-//     .required("Input Field is Required")
-//     .min(5, "min length is 5")
-//     .max(255, "max length is 255"),
-//   password: Yup.string()
-//     .required("Input Field is Required")
-//     .min(6, "min length is 6")
-//     .max(255, "max length is 255"),
-// });
-
 const now = new Date();
 const tomorrow = new Date(now);
 tomorrow.setDate(now.getDate() + 1);
 export const formattedDateValidate = tomorrow.toISOString().slice(0, 16);
+
+
+
+
+// --1----formattedDateValidate = tomorrow.toISOString().slice(0, 16);
+// 
+// purpose: The function generates a formatted date string representing tomorrow's date and time. It ensures that the generated date is always in the future compared to the current date and time.
+// Why is it needed?: This functionality is useful for scenarios where you want to enforce that the user selects a date and time in the future, preventing them from entering past or today's date.

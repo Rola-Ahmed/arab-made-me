@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { UserToken } from "Context/userToken";
@@ -10,7 +9,11 @@ import useFormSubmission from "./hooks/useFormSubmission";
 import FactoryInfo from "../Shared/FactoryInfo";
 import CurrentAcccountInfo from "../Shared/CurrentAcccountInfo";
 import CustomProductForm from "./CustomProductForm";
-import { formattedDateValidate } from "utils/validationUtils";
+import {
+  formattedDateValidate,
+  requiredStringValidate,
+  otherTextAreaValidate,
+} from "utils/validationUtils";
 function CustomerProductReq(props) {
   let { factoryDetails, isLoading, setIsLoading, factoryId } = props;
 
@@ -40,17 +43,6 @@ function CustomerProductReq(props) {
   function setLoadingState(loadingStatus) {
     setIsLoading((prev) => ({ ...prev, submitLoading: loadingStatus }));
   }
-
-  let requiredString = Yup.string().required("Input field is Required");
-  const otherTextAreaValidate = (field, value) => {
-    return Yup.string().when(field, {
-      is: value,
-      then: (schema) =>
-        schema
-          .required("Input field is Required")
-          .max(255, "max length is 255"),
-    });
-  };
 
   let validationSchema = Yup.object().shape({
     productName: Yup.string()
@@ -93,20 +85,20 @@ function CustomerProductReq(props) {
       .matches(/^[0-9]+$/, "Input field must be numbers only")
       .min(1, "min 1 legnth"),
 
-    packingConditions: requiredString,
+    packingConditions: requiredStringValidate,
     packingConditionsOther: otherTextAreaValidate("packingConditions", "other"),
-    SupplyLocation: requiredString,
+    SupplyLocation: requiredStringValidate,
 
-    shippingConditions: requiredString,
+    shippingConditions: requiredStringValidate,
     shippingConditionsOther: otherTextAreaValidate(
       "shippingConditions",
       "other"
     ),
 
-    ShippingTypeSize: requiredString,
+    ShippingTypeSize: requiredStringValidate,
     ShippingTypeSizeOther: otherTextAreaValidate("ShippingTypeSize", "other"),
 
-    qualityConditions: requiredString,
+    qualityConditions: requiredStringValidate,
     qualityConditionsOther: otherTextAreaValidate("qualityConditions", "other"),
 
     otherConditions: Yup.string().max(255, "max legnth is 255"),
@@ -200,7 +192,6 @@ function CustomerProductReq(props) {
       submitDocs(poAdded.id, selectedDocs);
     }
   }
-  console.log("formVlaidation", formValidation);
   return (
     <section id="view" className="req-visit">
       {/* Factory Details */}
