@@ -6,7 +6,6 @@ export default function InputField({
   isRequired,
   title,
 }) {
-  
   return (
     <>
       <div className="form-group">
@@ -15,7 +14,6 @@ export default function InputField({
           {title} {isRequired && "*"}
         </label>
         <input
-          //   type="text"
           className="form-control"
           id={vlaidationName}
           onChange={formValidation.handleChange}

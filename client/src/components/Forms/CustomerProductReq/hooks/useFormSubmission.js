@@ -34,8 +34,8 @@ const useFormSubmission = (isLogin, setIsLoading, setErrorMsg) => {
 
   const submitForm = async (
     values,
-    selectedDocs,
-    specialCharacteristicsArr
+    selectedDocs
+    // specialCharacteristicsArr
   ) => {
     setLoadingState(true);
     clearResponseError();
@@ -45,17 +45,15 @@ const useFormSubmission = (isLogin, setIsLoading, setErrorMsg) => {
       productName: values.productName,
       technicalSpecifications: values.technicalSpecifications,
       inqueries: values.inqueries,
-      specialCharacteristics: values.specialCharKeyWord
-        ? { [values.specialCharKeyWord]: values.specialCharDesc }
-        : {},
+      specialCharacteristics: {},
     };
 
-    if (specialCharacteristicsArr?.length > 0) {
-      specialCharacteristicsArr.forEach((index) => {
-        const key = values[`specialCharKeyWord${index}`];
-        const desc = values[`specialCharDesc${index}`];
-        data.specialCharacteristics[key] = desc;
-      });
+    if (Object.keys(values.productCharacteristic).length != 0) {
+      // create an object with the keyword property as the key and the value property as the value.
+      const obj = Object.fromEntries(
+        values.productCharacteristic.map((obj) => [obj.keyword, obj.value])
+      );
+      data.specialCharacteristics = obj;
     }
 
     try {

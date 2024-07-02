@@ -16,12 +16,7 @@ export default function TimeLine(props) {
     formValidation.setFieldValue(vlaidationName, combinedArray);
   }
 
-  // function removenewSepcialChar() {
-  //   let newArray = formValidation.values.timeLine;
-  //   newArray.pop(); // Remove the last item
 
-  //   formValidation.setFieldValue(vlaidationName, newArray);
-  // }
   return (
     <div className="col-12" id={formValidation.values[vlaidationName]}>
       <div className="form-group form-control">

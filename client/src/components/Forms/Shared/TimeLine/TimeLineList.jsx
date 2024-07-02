@@ -1,11 +1,10 @@
-// import FormVlaidtionError from "./FormVlaidtionError";
-
+import { removefromArray } from "utils/removeFromArray";
 export default function TimeLineList(props) {
   const { formValidation, vlaidationName, index } = props;
 
-  function removenewSepcialChar() {
-    let newArray = formValidation.values.timeLine;
-    newArray.pop(); // Remove the last item
+  function removenewSepcialChar(index) {
+    let oldArr = formValidation.values[vlaidationName];
+    let newArray = removefromArray(index, oldArr);
 
     formValidation.setFieldValue(vlaidationName, newArray);
   }
@@ -71,7 +70,7 @@ export default function TimeLineList(props) {
             <div className="w-100 h-100 justify-content-center align-items-center d-flex pt-mt ">
               <i
                 class=" w-25 cursor fa-solid fa-minus text-white px-3 py-2"
-                onClick={() => removenewSepcialChar()}
+                onClick={() => removenewSepcialChar(index)}
               ></i>
             </div>
           </div>

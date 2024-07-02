@@ -100,7 +100,7 @@ function CustomerProductReq(props) {
     productCharacteristic: Yup.array().of(
       Yup.object().shape({
         keyword: Yup.string().max(50, "max legnth is  50"),
-        valude: Yup.string().max(50, "max legnth is  50"),
+        value: Yup.string().max(50, "max legnth is  50"),
       })
     ),
   });
@@ -115,7 +115,7 @@ function CustomerProductReq(props) {
     productCharacteristic: [
       {
         keyword: "",
-        valude: "",
+        value: "",
       },
     ],
 
@@ -179,7 +179,6 @@ function CustomerProductReq(props) {
       submitDocs(poAdded.id, selectedDocs);
     }
   }
-  console.log("customProductReq",formValidation)
   return (
     <section id="view" className="req-visit">
       {/* Factory Details */}

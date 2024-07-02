@@ -22,9 +22,8 @@ import { paymentTypeArr } from "constants/paymentTypeArr";
 import { packingConditionsArr } from "constants/packingConditionsArr";
 
 // functions
-import { formattedDateValidate} from "utils/validationUtils";
+import { formattedDateValidate } from "utils/validationUtils";
 import { errorHandler } from "utils/errorHandler";
-// import { removeSelectedDoc } from "utils/removeSelectedDoc";
 import SubPageUtility from "components/Shared/Dashboards/SubPageUtility";
 
 export default function EditQuote() {

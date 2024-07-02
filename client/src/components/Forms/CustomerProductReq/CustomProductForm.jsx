@@ -10,7 +10,7 @@ import { SupplyLocationArr } from "constants/SupplyLocationArr";
 import { shippingConditionsArr } from "constants/shippingConditionsArr";
 import { ShippingTypeSizeArr } from "constants/ShippingTypeSizeArr";
 import { qualityConditionsArr } from "constants/qualityConditionsArr";
-
+import { removefromArray } from "utils/removeFromArray";
 function CustomProductForm(props) {
   let {
     isLoading,
@@ -25,17 +25,15 @@ function CustomProductForm(props) {
   function addnewSepcialChar() {
     let newArray = formValidation.initialValues["productCharacteristic"]?.[0];
     let existingArray = formValidation.values["productCharacteristic"];
-
     // Merge the existing files with the new files
     const combinedArray = existingArray.concat(newArray);
-
     // Update the form state with the combined files
     formValidation.setFieldValue("productCharacteristic", combinedArray);
   }
 
-  function removenewSepcialChar() {
-    let newArray = formValidation.values.productCharacteristic;
-    newArray.pop(); // Remove the last item
+  function removenewSepcialChar(index) {
+    let oldArr = formValidation.values.productCharacteristic;
+    let newArray = removefromArray(index, oldArr);
 
     formValidation.setFieldValue("productCharacteristic", newArray);
   }
@@ -58,25 +56,13 @@ function CustomProductForm(props) {
 
         <div className="row row-container-sepcialChar w-100 ">
           <div className="col-12">
-            <div className="form-group">
-              <label htmlFor="productName">Product Name *</label>
-              <input
-                type="text"
-                className="form-control"
-                id="productName"
-                name="productName"
-                onChange={formValidation.handleChange}
-                onBlur={formValidation.handleBlur}
-                value={formValidation.values.productName}
-              />
-
-              <FormVlaidtionError
-                formValidation={formValidation}
-                vlaidationName="productName"
-              />
-            </div>
+            <InputField
+              isRequired={true}
+              title={"Product Name"}
+              formValidation={formValidation}
+              vlaidationName={"productName"}
+            />
           </div>
-          {/* new  */}
 
           {/* end new */}
           <div className="col-12 ms-3">
@@ -115,50 +101,45 @@ function CustomProductForm(props) {
               {formValidation.values.productType == "text" && (
                 <>
                   {formValidation.values.productCharacteristic?.map(
-                    (dateSection, index = 1) => (
+                    (dateSection, index) => (
                       <div
                         className="col-12 ms-3"
                         id={formValidation.values["productCharacteristic"]}
+                        key={index}
                       >
                         <div className="border-row row">
                           <div
                             className={`form-group   col-lg-6 col-md-12"
                             `}
                           >
-                            <label>keyword {index}* </label>
+                            <label>keyword {index + 1}* </label>
 
                             <input
                               className="form-control"
                               onChange={formValidation.handleChange}
                               onBlur={formValidation.handleBlur}
                               placeholder="Color"
-                              name={`productCharacteristic.${index}.keyword`}
                               id={`productCharacteristic.${index}.keyword`}
                               value={
-                                formValidation.values["productCharacteristic"][
+                                formValidation.values.productCharacteristic[
                                   index
                                 ].keyword
                               }
                             />
-                            {formValidation.errors["productCharacteristic"]?.[
+                            {formValidation.errors.productCharacteristic?.[
                               index
-                            ]?.date &&
-                              formValidation.touched["productCharacteristic"]?.[
+                            ]?.keyword &&
+                              formValidation.touched.productCharacteristic?.[
                                 index
-                              ]?.date && (
+                              ]?.keyword && (
                                 <small className="form-text text-danger">
                                   {
                                     formValidation.errors[
                                       "productCharacteristic"
-                                    ]?.[index]?.date
+                                    ]?.[index]?.keyword
                                   }
                                 </small>
                               )}
-
-                            {/* <FormVlaidtionError
-                                  formValidation={formValidation}
-                                  vlaidationName={`specialCharKeyWord${index}`}
-                                /> */}
                           </div>
 
                           <div
@@ -171,37 +152,33 @@ function CustomProductForm(props) {
                                 : "  col-lg-6 col-md-12"
                             }`}
                           >
-                            <label>description {index + 2}* </label>
+                            <label>description {index + 1}* </label>
 
                             <input
                               type="text"
-                              name={`productCharacteristic.${index}.value`}
                               id={`productCharacteristic.${index}.value`}
                               className="form-control"
                               onChange={formValidation.handleChange}
                               onBlur={formValidation.handleBlur}
                               placeholder="Color"
                               value={
-                                formValidation.values[`specialCharDesc${index}`]
+                                formValidation.values.productCharacteristic[
+                                  index
+                                ].value
                               }
                             />
 
-                            {/* <FormVlaidtionError
-                                  formValidation={formValidation}
-                                  vlaidationName={`specialCharDesc${index}`}
-                                /> */}
-
                             {formValidation.errors["productCharacteristic"]?.[
                               index
-                            ]?.date &&
+                            ]?.value &&
                               formValidation.touched["productCharacteristic"]?.[
                                 index
-                              ]?.date && (
+                              ]?.value && (
                                 <small className="form-text text-danger">
                                   {
                                     formValidation.errors[
                                       "productCharacteristic"
-                                    ]?.[index]?.date
+                                    ]?.[index]?.value
                                   }
                                 </small>
                               )}
@@ -211,13 +188,11 @@ function CustomProductForm(props) {
                             1 ==
                             index &&
                             index !== 0 && (
-                              <div className="col-md-1 col-sm-12   ">
-                                <div className="h-100 w-100 justify-content-center align-items-center d-flex pt-mt ">
-                                  <i
-                                    class=" cursor fa-solid fa-minus text-white px-3 py-2 w-25"
-                                    onClick={() => removenewSepcialChar()}
-                                  ></i>
-                                </div>
+                              <div className="col-md-1 col-sm-12  justify-content-center align-items-center d-flex pt-mt ">
+                                <i
+                                  class=" cursor fa-solid fa-minus text-white px-3 py-2 w-25"
+                                  onClick={() => removenewSepcialChar(index)}
+                                ></i>
                               </div>
                             )}
                         </div>
@@ -346,19 +321,6 @@ function CustomProductForm(props) {
             title="Other Conditions"
           />
 
-          <Trademakr
-            formValidation={formValidation}
-            errorMsg={errorMsg}
-            selectedDocs={selectedDocs}
-            // sub section
-
-            setSelectedDocs={setSelectedDocs}
-            MediaName="TrademakrDocs"
-            mediaMaxLen="3"
-            meidaAcceptedExtensions={["pdf", "png", "jpeg", "jpg"]}
-            setErrorMsg={setErrorMsg}
-          />
-
           {/* end new */}
           <TextareaInput
             vlaidationName="inqueries"
@@ -372,6 +334,18 @@ function CustomProductForm(props) {
             formValidation={formValidation}
             isRequired={true}
             title="Technical Specifications"
+          />
+
+          <Trademakr
+            formValidation={formValidation}
+            errorMsg={errorMsg}
+            selectedDocs={selectedDocs}
+            // sub section
+            setSelectedDocs={setSelectedDocs}
+            MediaName="TrademakrDocs"
+            mediaMaxLen="3"
+            meidaAcceptedExtensions={["pdf", "png", "jpeg", "jpg"]}
+            setErrorMsg={setErrorMsg}
           />
 
           <UploadDocument
