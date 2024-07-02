@@ -4,3 +4,9 @@ export function removeSelectedDoc(index, selectedDocs) {
   updatedDocs.splice(index, 1);
   return updatedDocs;
 }
+
+export function removefromArray(index, selectedDocs) {
+  let updatedDocs = [...selectedDocs];
+  updatedDocs.splice(index, 1);
+  return updatedDocs;
+}

@@ -19,10 +19,6 @@ function CustomerProductReq(props) {
 
   const [errorMsg, setErrorMsg] = useState();
 
-  const [specialCharacteristicsArr, SetSpecialCharacteristicsArr] = useState(
-    []
-  );
-
   let { isLogin } = useContext(UserToken);
 
   //Document Validation
@@ -49,29 +45,13 @@ function CustomerProductReq(props) {
       .required("Input field is Required")
       .max(50, "max legnth is 50"),
 
-    specialCharKeyWord: Yup.string()
-      .min(3, "min legnth is 3")
-      .max(50, "max legnth is 50"),
+    specialCharKeyWord: Yup.string().max(50, "max legnth is 50"),
 
     specialCharDesc: Yup.string().when("specialCharKeyWord", {
       is: (schema) => !!schema,
       then: (schema) =>
         schema.min(3, "min length is 3").max(50, "max length is 50"),
     }),
-
-    ...specialCharacteristicsArr?.reduce((acc, _, index) => {
-      acc[`specialCharKeyWord${index}`] = Yup.string()
-        .required("Input field is Required")
-        .min(3, "min legnth is 3")
-        .max(50, "max legnth is 50");
-
-      acc[`specialCharDesc${index}`] = Yup.string()
-        .required("Input field is Required")
-        .min(3, "min legnth is 3")
-        .max(50, "max legnth is 50");
-
-      return acc;
-    }, {}),
 
     technicalSpecifications: Yup.string()
       .required("Input field is Required")
@@ -116,6 +96,13 @@ function CustomerProductReq(props) {
         })
       )
       .min("1", "minimum length is 1"),
+
+    productCharacteristic: Yup.array().of(
+      Yup.object().shape({
+        keyword: Yup.string().max(50, "max legnth is  50"),
+        valude: Yup.string().max(50, "max legnth is  50"),
+      })
+    ),
   });
 
   let initialValues = {
@@ -124,13 +111,13 @@ function CustomerProductReq(props) {
 
     specialCharKeyWord: "",
     specialCharDesc: "",
-    ...specialCharacteristicsArr?.reduce((acc, _, index) => {
-      acc[`specialCharKeyWord${index}`] = "";
 
-      acc[`specialCharDesc${index}`] = "";
-
-      return acc;
-    }, {}),
+    productCharacteristic: [
+      {
+        keyword: "",
+        valude: "",
+      },
+    ],
 
     technicalSpecifications: "",
     inqueries: "",
@@ -179,7 +166,7 @@ function CustomerProductReq(props) {
   function submit(values) {
     // if data is not added yet
     if (!poAdded.status) {
-      submitForm(values, selectedDocs, specialCharacteristicsArr);
+      submitForm(values, selectedDocs);
     }
 
     // if textApi is added and selectedDocs is greater that 0
@@ -192,6 +179,7 @@ function CustomerProductReq(props) {
       submitDocs(poAdded.id, selectedDocs);
     }
   }
+  console.log("customProductReq",formValidation)
   return (
     <section id="view" className="req-visit">
       {/* Factory Details */}
@@ -209,8 +197,6 @@ function CustomerProductReq(props) {
         formValidation={formValidation}
         selectedDocs={selectedDocs}
         setSelectedDocs={setSelectedDocs}
-        specialCharacteristicsArr={specialCharacteristicsArr}
-        SetSpecialCharacteristicsArr={SetSpecialCharacteristicsArr}
         errorMsg={errorMsg}
         setErrorMsg={setErrorMsg}
       />

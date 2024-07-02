@@ -55,8 +55,8 @@ export default function TimeLine(props) {
             </div>
           </div>
           {/* <div className="timeline form-control checked d-flex justify-content-between align-content-center"> */}
-          {formValidation.values[vlaidationName].length > 0 &&
-            formValidation.values[vlaidationName].map((friend, index) => (
+          {formValidation.values[vlaidationName]?.length > 0 &&
+            formValidation.values[vlaidationName]?.map((friend, index) => (
               <TimeLineList
                 formValidation={formValidation}
                 vlaidationName={vlaidationName}

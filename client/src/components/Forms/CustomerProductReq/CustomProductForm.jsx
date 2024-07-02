@@ -17,21 +17,27 @@ function CustomProductForm(props) {
     formValidation,
     selectedDocs,
     setSelectedDocs,
-    specialCharacteristicsArr,
-    SetSpecialCharacteristicsArr,
+
     errorMsg,
     setErrorMsg,
   } = props;
 
   function addnewSepcialChar() {
-    SetSpecialCharacteristicsArr((prevSections) => [
-      ...prevSections,
-      specialCharacteristicsArr?.length,
-    ]);
+    let newArray = formValidation.initialValues["productCharacteristic"]?.[0];
+    let existingArray = formValidation.values["productCharacteristic"];
+
+    // Merge the existing files with the new files
+    const combinedArray = existingArray.concat(newArray);
+
+    // Update the form state with the combined files
+    formValidation.setFieldValue("productCharacteristic", combinedArray);
   }
 
   function removenewSepcialChar() {
-    SetSpecialCharacteristicsArr((prev) => prev.slice(0, -1));
+    let newArray = formValidation.values.productCharacteristic;
+    newArray.pop(); // Remove the last item
+
+    formValidation.setFieldValue("productCharacteristic", newArray);
   }
 
   return (
@@ -40,12 +46,10 @@ function CustomProductForm(props) {
       className="container container-req "
     >
       <div className="input-content ">
-        {errorMsg?.response ? (
+        {errorMsg?.response && (
           <div className="alert mt-3 p-2 alert-danger form-control text-dark w-100">
             {errorMsg?.response}
           </div>
-        ) : (
-          ""
         )}
 
         <div className="title-text w-100 ">
@@ -110,100 +114,69 @@ function CustomProductForm(props) {
 
               {formValidation.values.productType == "text" && (
                 <>
-                  <div className="col-12 ms-3">
-                    <div className="border-row row">
-                      <div className="col-xxl-6 col-xl-6   col-lg-6 col-md-12 col-sm-12">
-                        <div className="form-group">
-                          <label>keyword </label>
-
-                          <input
-                            type="text"
-                            id="specialCharKeyWord"
-                            name="specialCharKeyWord"
-                            className="form-control"
-                            placeholder="Color"
-                            onChange={formValidation.handleChange}
-                            onBlur={formValidation.handleBlur}
-                            value={formValidation.values.specialCharKeyWord}
-                          />
-
-                          <FormVlaidtionError
-                            formValidation={formValidation}
-                            vlaidationName="specialCharKeyWord"
-                          />
-                        </div>
-                      </div>
-                      <div className="col-xxl-6 col-xl-6   col-lg-6 col-md-12 col-sm-12">
-                        <div className="form-group">
-                          <label>description </label>
-
-                          <input
-                            type="text"
-                            id="specialCharDesc"
-                            name="specialCharDesc"
-                            className="form-control"
-                            placeholder="Color"
-                            onChange={formValidation.handleChange}
-                            onBlur={formValidation.handleBlur}
-                            value={formValidation.values.specialCharDesc}
-                          />
-
-                          <FormVlaidtionError
-                            formValidation={formValidation}
-                            vlaidationName="specialCharDesc"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {specialCharacteristicsArr?.map((dateSection, index) => (
-                    // <>{dateSection}</>
-
-                    <div className="col-12 ms-3">
-                      <div className="border-row row">
-                        <div
-                          className={`  col-xxl-6 col-xl-6   col-lg-6 col-md-12 col-sm-12`}
-                        >
-                          <div className="form-group">
-                            <label>keyword {index + 2}* </label>
+                  {formValidation.values.productCharacteristic?.map(
+                    (dateSection, index = 1) => (
+                      <div
+                        className="col-12 ms-3"
+                        id={formValidation.values["productCharacteristic"]}
+                      >
+                        <div className="border-row row">
+                          <div
+                            className={`form-group   col-lg-6 col-md-12"
+                            `}
+                          >
+                            <label>keyword {index}* </label>
 
                             <input
-                              type="text"
-                              id={`specialCharKeyWord${index}`}
-                              name={`specialCharKeyWord${index}`}
                               className="form-control"
                               onChange={formValidation.handleChange}
                               onBlur={formValidation.handleBlur}
                               placeholder="Color"
+                              name={`productCharacteristic.${index}.keyword`}
+                              id={`productCharacteristic.${index}.keyword`}
                               value={
-                                formValidation.values[
-                                  `specialCharKeyWord${index}`
-                                ]
+                                formValidation.values["productCharacteristic"][
+                                  index
+                                ].keyword
                               }
                             />
+                            {formValidation.errors["productCharacteristic"]?.[
+                              index
+                            ]?.date &&
+                              formValidation.touched["productCharacteristic"]?.[
+                                index
+                              ]?.date && (
+                                <small className="form-text text-danger">
+                                  {
+                                    formValidation.errors[
+                                      "productCharacteristic"
+                                    ]?.[index]?.date
+                                  }
+                                </small>
+                              )}
 
-                            <FormVlaidtionError
-                              formValidation={formValidation}
-                              vlaidationName={`specialCharKeyWord${index}`}
-                            />
+                            {/* <FormVlaidtionError
+                                  formValidation={formValidation}
+                                  vlaidationName={`specialCharKeyWord${index}`}
+                                /> */}
                           </div>
-                        </div>
 
-                        <div
-                          className={` ${
-                            specialCharacteristicsArr.length - 1 == index
-                              ? " col-xxl-5 col-xl-5   col-lg-5 col-md-11 col-sm-12 col-12"
-                              : "col-xxl-6 col-xl-6   col-lg-6 col-md-12 col-sm-12"
-                          }`}
-                        >
-                          <div className="form-group">
+                          <div
+                            className={`form-group    ${
+                              formValidation.values["productCharacteristic"]
+                                ?.length -
+                                1 ===
+                                index && index !== 0
+                                ? "   col-lg-5 col-md-11 col-sm-12 "
+                                : "  col-lg-6 col-md-12"
+                            }`}
+                          >
                             <label>description {index + 2}* </label>
 
                             <input
                               type="text"
-                              id={`specialCharDesc${index}`}
-                              name={`specialCharDesc${index}`}
+                              name={`productCharacteristic.${index}.value`}
+                              id={`productCharacteristic.${index}.value`}
                               className="form-control"
                               onChange={formValidation.handleChange}
                               onBlur={formValidation.handleBlur}
@@ -213,45 +186,58 @@ function CustomProductForm(props) {
                               }
                             />
 
-                            <FormVlaidtionError
-                              formValidation={formValidation}
-                              vlaidationName={`specialCharDesc${index}`}
-                            />
+                            {/* <FormVlaidtionError
+                                  formValidation={formValidation}
+                                  vlaidationName={`specialCharDesc${index}`}
+                                /> */}
+
+                            {formValidation.errors["productCharacteristic"]?.[
+                              index
+                            ]?.date &&
+                              formValidation.touched["productCharacteristic"]?.[
+                                index
+                              ]?.date && (
+                                <small className="form-text text-danger">
+                                  {
+                                    formValidation.errors[
+                                      "productCharacteristic"
+                                    ]?.[index]?.date
+                                  }
+                                </small>
+                              )}
                           </div>
+                          {formValidation.values["productCharacteristic"]
+                            ?.length -
+                            1 ==
+                            index &&
+                            index !== 0 && (
+                              <div className="col-md-1 col-sm-12   ">
+                                <div className="h-100 w-100 justify-content-center align-items-center d-flex pt-mt ">
+                                  <i
+                                    class=" cursor fa-solid fa-minus text-white px-3 py-2 w-25"
+                                    onClick={() => removenewSepcialChar()}
+                                  ></i>
+                                </div>
+                              </div>
+                            )}
                         </div>
-                        {specialCharacteristicsArr?.length - 1 === index ? (
-                          <div className="col-md-1 col-sm-12   ">
-                            <div className="h-100 w-100 justify-content-center align-items-center d-flex pt-mt ">
-                              <i
-                                class=" cursor fa-solid fa-minus text-white px-3 py-2 w-25"
-                                onClick={() => removenewSepcialChar()}
-                              ></i>
-                            </div>
-                            {/* {dateSection} */}
-                          </div>
-                        ) : (
-                          ""
-                        )}
+                      </div>
+                    )
+                  )}
+                  {formValidation.values["productCharacteristic"]?.length >
+                    0 && (
+                    <div className="action ">
+                      <div
+                        className="cursor"
+                        onClick={() => addnewSepcialChar()}
+                      >
+                        <button className="action-btn btn-1 " type="button">
+                          {" "}
+                          add
+                        </button>
                       </div>
                     </div>
-                  ))}
-
-                  <div className="col-12">
-                    {specialCharacteristicsArr.length < 4 ? (
-                      <div className="action  ">
-                        <div
-                          className="cursor "
-                          onClick={() => addnewSepcialChar()}
-                        >
-                          <button className="action-btn btn-1" type="button">
-                            add
-                          </button>
-                        </div>
-                      </div>
-                    ) : (
-                      ""
-                    )}
-                  </div>
+                  )}
                 </>
               )}
 
