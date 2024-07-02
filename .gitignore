@@ -75,3 +75,5 @@ client/src/components/Forms/CustomerProductReq copy/CustomProductForm.jsx
 client/src/components/Forms/CustomerProductReq/CustomProductReq copy.jsx
 server/bash.exe.stackdump
 client/src/routes/forms.js
+ignoore/jsconfig.json
+/ignoore
