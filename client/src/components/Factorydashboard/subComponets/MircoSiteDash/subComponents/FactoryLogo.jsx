@@ -1,7 +1,5 @@
-import React from "react";
-
 export default function FactoryLogo(props) {
-  let { baseUrl_IMG, handleImageError, handleShow,factoryProfile } = props;
+  let { baseUrl_IMG, handleImageError, handleShow, factoryProfile } = props;
   return (
     <>
       <div id="factorylogo"></div>

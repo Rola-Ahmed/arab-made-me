@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function ActionBtnsOnProduct(props) {
   const {
     factoryDetails,
@@ -22,8 +20,7 @@ export default function ActionBtnsOnProduct(props) {
             className={`text-container`}
             onClick={() => {
               handleButtonClick(
-                `privatelabel?factoryId=${factoryDetails?.id}&factoryName=${factoryDetails?.name}&productId=${productItem?.id}&productName=${productItem?.name}`,
-                
+                `privatelabel?factoryId=${factoryDetails?.id}&factoryName=${factoryDetails?.name}&productId=${productItem?.id}&productName=${productItem?.name}`
               );
             }}
           >
@@ -78,8 +75,7 @@ export default function ActionBtnsOnProduct(props) {
             className="text-container "
             onClick={() => {
               handleIsLoggedInBtn(
-                `contactsupplier?userId=${factoryDetails?.userId}&factoryName=${factoryDetails?.name}`,
-                
+                `contactsupplier?userId=${factoryDetails?.userId}&factoryName=${factoryDetails?.name}`
               );
             }}
           >

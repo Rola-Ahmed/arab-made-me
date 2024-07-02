@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function FactoryInforamtion(props) {
   let { handleShow, Button, factoryProfile } = props;
   return (

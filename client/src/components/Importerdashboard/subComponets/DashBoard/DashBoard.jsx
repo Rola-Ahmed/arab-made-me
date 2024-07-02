@@ -1,4 +1,3 @@
-import React from "react";
 import { Chart as ChartJS } from "chart.js/auto";
 import { Line, Doughnut } from "react-chartjs-2";
 import "./DashBoard.css";

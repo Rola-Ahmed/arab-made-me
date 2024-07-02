@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function FormVlaidtionError(props) {
   let { formValidation, vlaidationName } = props;
   return (

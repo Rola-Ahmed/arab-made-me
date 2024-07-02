@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function SocialAccounts(props) {
   let { handleShow, Button } = props;
   return (

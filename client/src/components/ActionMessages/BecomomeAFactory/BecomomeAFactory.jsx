@@ -1,4 +1,3 @@
-import React from "react";
 import { Button, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 export default function BecomomeAFactory(directTo) {

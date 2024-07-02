@@ -1,12 +1,10 @@
-import React from "react";
 import { handleImageError } from "utils/ImgNotFound";
 import { baseUrl_IMG } from "config.js";
 import { useNavigate } from "react-router-dom";
 
 export default function CurrectAccountDropList(props) {
-  let { coverImage, name, DashboardPath, profilePath, } = props;
+  let { coverImage, name, DashboardPath, profilePath } = props;
   let navigate = useNavigate();
-
 
   return (
     <div className="input-group drop-account position-relative justify-content-center">

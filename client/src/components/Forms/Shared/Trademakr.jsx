@@ -1,9 +1,14 @@
-import React from "react";
 import UploadDocument from "./UploadDocument";
 
 export default function Trademakr(props) {
-  let { formValidation, errorMsg, selectedDocs, setErrorMsg, setSelectedDocs,title } =
-    props;
+  let {
+    formValidation,
+    errorMsg,
+    selectedDocs,
+    setErrorMsg,
+    setSelectedDocs,
+    title,
+  } = props;
   return (
     <>
       <div className="col-12">

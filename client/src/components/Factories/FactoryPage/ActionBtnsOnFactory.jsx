@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function ActionBtnsOnFactory(props) {
   const {
     factoryDetails,
@@ -36,8 +34,7 @@ export default function ActionBtnsOnFactory(props) {
             className={`text-container`}
             onClick={() => {
               handleButtonClick(
-                `privatelabel?factoryId=${factoryDetails?.id}&factoryName=${factoryDetails?.name}`,
-                
+                `privatelabel?factoryId=${factoryDetails?.id}&factoryName=${factoryDetails?.name}`
               );
             }}
           >
@@ -93,8 +90,7 @@ export default function ActionBtnsOnFactory(props) {
             className="text-container "
             onClick={() => {
               handleIsLoggedInBtn(
-                `contactsupplier?userId=${factoryDetails?.userId}&factoryName=${factoryDetails?.name}`,
-                
+                `contactsupplier?userId=${factoryDetails?.userId}&factoryName=${factoryDetails?.name}`
               );
             }}
           >

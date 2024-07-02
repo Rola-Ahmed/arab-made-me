@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 
 import { baseUrl } from "config.js";
 import Productpage from "components/Products/Productpage/Productpage";
-import React from "react";
 
 export default function ProductPageContainer() {
   let { ProductIdProductNameFactoryName } = useParams();

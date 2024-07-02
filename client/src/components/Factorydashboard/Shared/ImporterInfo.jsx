@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function ImporterInfo(props) {
   let { importerData } = props;
   return (

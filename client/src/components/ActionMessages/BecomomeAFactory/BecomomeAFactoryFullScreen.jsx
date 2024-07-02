@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 // used in dashbaords
 export default function BecomomeAFactoryFullScreen(directTo) {

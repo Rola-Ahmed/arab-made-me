@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function AccountInformation(props) {
   let { currentUserData, factoryProfile, handleShow, Button } = props;
   return (

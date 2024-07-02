@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function SearchSortFilter(props) {
   let { setFilter, filter } = props;
   // search filteration

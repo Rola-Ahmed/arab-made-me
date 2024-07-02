@@ -1,4 +1,3 @@
-import React from "react";
 import "./Loading.css";
 import Footer from "components/main/Footer/Footer";
 import Header from "components/main/Header/Header";

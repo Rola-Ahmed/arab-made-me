@@ -1,4 +1,3 @@
-import React from "react";
 import PrivateLabelNotification from "containers/Factorydashboard/Notifcations/PrivateLabelNotification";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 
@@ -85,7 +84,6 @@ export default function HeaderSection(props) {
     });
   };
 
-  
   return (
     <>
       <PageUtility currentPage="Private Labels" />

@@ -1,5 +1,3 @@
-import React from "react";
-
 const StarRating = ({ averageRating }) => {
   const totalStars = Math.floor(averageRating); // Use ceil to round up for partial stars
 
@@ -13,7 +11,10 @@ const StarRating = ({ averageRating }) => {
   return (
     <div className="star-rating">
       {stars.map((status) => (
-        <i className={`fa-solid ${status}`} style={{ color:"var(--star-color)" }}></i>
+        <i
+          className={`fa-solid ${status}`}
+          style={{ color: "var(--star-color)" }}
+        ></i>
       ))}
     </div>
   );

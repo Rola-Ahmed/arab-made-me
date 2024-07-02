@@ -1,9 +1,8 @@
-import React from "react";
-import { Link ,useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function SubPageUtility(props) {
   let { currentPage, PrevPage } = props;
-  let navigate=useNavigate();
+  let navigate = useNavigate();
   return (
     <div className="page-utility  gap">
       <Link
@@ -24,7 +23,6 @@ export default function SubPageUtility(props) {
           localStorage.setItem("ToHomePage", "true");
           navigate(-1);
         }}
-     
       >
         {PrevPage}
       </p>

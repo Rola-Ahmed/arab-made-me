@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function DataStatus(props) {
   let { requestedData, errorsMsg, apiLoadingData } = props;
   return (

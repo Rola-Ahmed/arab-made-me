@@ -1,4 +1,3 @@
-import React from "react";
 import CurrectAccountDropList from "./CurrectAccountDropList";
 import { useNavigate } from "react-router-dom";
 
