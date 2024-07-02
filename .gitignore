@@ -48,32 +48,35 @@ node_modules/
 
 
 
-client/src/components/AdminDashboard/subComponets/Products/EditProduct/EditProduct copy 2.jsx
-client/src/components/Factorydashboard/subComponets/Products/EditProduct/EditProduct copy 2.jsx
-client/src/components/AdminDashboard/subComponets/Products/EditProduct/EditProduct copy.jsx
-client/src/components/Factorydashboard/subComponets/Products/EditProduct/EditProduct copy.jsx
-client/src/containers/Factorydashboard/subComponets/Quotations/EditQuote/EditQuoteContainer.jsx
-client/src/components/Auth/Sign/Sign copy 2.jsx
-client/src/components/Auth/Sign/Sign copy.jsx
-client/src/components/MeetingRoom/MeetingRoom copy 2.jsx
-client/src/components/MeetingRoom/MeetingRoom copy 3.jsx
-client/src/components/MeetingRoom/MeetingRoom copy 4.jsx
-client/src/components/MeetingRoom/MeetingRoom copy 5.sssssssssssssssssssssssss
-client/src/components/MeetingRoom/MeetingRoom copy.jsx
-client/src/docker-compose.yml
-client/src/components/MeetingRoom/Modal.css
-client/src/components/Forms/PurchasingOrder copy/PurchasingOrder.css
-client/src/components/Forms/PurchasingOrder copy/PurchasingOrder.jsx
-client/src/components/Home/TopFactories/TopFactories copy.jsx
-client/src/components/Auth/Sign/Sign copy 4.jsx
-client/tsconfig copy 2.json
-client/tsconfig copy.json
-client/.vscode/tasks.json
-client/src/components/Forms/CustomerProductReq copy/FetchCustomProductContainer.jsx
-client/src/components/Forms/CustomerProductReq copy/CustomProductReq.jsx
-client/src/components/Forms/CustomerProductReq copy/CustomProductForm.jsx
-client/src/components/Forms/CustomerProductReq/CustomProductReq copy.jsx
-server/bash.exe.stackdump
-client/src/routes/forms.js
-ignoore/jsconfig.json
+# client/src/components/AdminDashboard/subComponets/Products/EditProduct/EditProduct copy 2.jsx
+# client/src/components/Factorydashboard/subComponets/Products/EditProduct/EditProduct copy 2.jsx
+# client/src/components/AdminDashboard/subComponets/Products/EditProduct/EditProduct copy.jsx
+# client/src/components/Factorydashboard/subComponets/Products/EditProduct/EditProduct copy.jsx
+# client/src/containers/Factorydashboard/subComponets/Quotations/EditQuote/EditQuoteContainer.jsx
+# client/src/components/Auth/Sign/Sign copy 2.jsx
+# client/src/components/Auth/Sign/Sign copy.jsx
+# client/src/components/MeetingRoom/MeetingRoom copy 2.jsx
+# client/src/components/MeetingRoom/MeetingRoom copy 3.jsx
+# client/src/components/MeetingRoom/MeetingRoom copy 4.jsx
+# client/src/components/MeetingRoom/MeetingRoom copy 5.sssssssssssssssssssssssss
+# client/src/components/MeetingRoom/MeetingRoom copy.jsx
+# client/src/docker-compose.yml
+# client/src/components/MeetingRoom/Modal.css
+# client/src/components/Forms/PurchasingOrder copy/PurchasingOrder.css
+# client/src/components/Forms/PurchasingOrder copy/PurchasingOrder.jsx
+# client/src/components/Home/TopFactories/TopFactories copy.jsx
+# client/src/components/Auth/Sign/Sign copy 4.jsx
+# client/tsconfig copy 2.json
+# client/tsconfig copy.json
+# client/.vscode/tasks.json
+# client/src/components/Forms/CustomerProductReq copy/FetchCustomProductContainer.jsx
+# client/src/components/Forms/CustomerProductReq copy/CustomProductReq.jsx
+# client/src/components/Forms/CustomerProductReq copy/CustomProductForm.jsx
+# client/src/components/Forms/CustomerProductReq/CustomProductReq copy.jsx
+# server/bash.exe.stackdump
+# client/src/routes/forms.js
+# ignoore/jsconfig.json
+# /ignoore
 /ignoore
+client/src/containers/Factorydashboard/subComponets/Quotations/EditQuote/EditQuoteContainer.jsx
+server/bash.exe.stackdump
