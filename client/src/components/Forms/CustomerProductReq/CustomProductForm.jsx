@@ -17,7 +17,6 @@ function CustomProductForm(props) {
     formValidation,
     selectedDocs,
     setSelectedDocs,
-
     errorMsg,
     setErrorMsg,
   } = props;
@@ -39,7 +38,7 @@ function CustomProductForm(props) {
         </div>
 
         <div className="row row-container-sepcialChar w-100 ">
-          <div className="col-12">
+           <div className="col-12">
             <InputField
               isRequired={true}
               title={"Product Name"}
@@ -54,7 +53,7 @@ function CustomProductForm(props) {
               <div>
                 <label className="pb-2">Product Characteristics</label>
                 <div className="d-flex justify-content-between align-items-center">
-                  <div class="form-check w-100 d-blcok ">
+                  <div class="form-check w-100 d-block ">
                     <input
                       class="form-check-input"
                       type="radio"
@@ -67,7 +66,7 @@ function CustomProductForm(props) {
                     />
                     <label class="form-check-label">Text</label>
                   </div>
-                  <div class="form-check w-100 d-blcok ">
+                  <div class="form-check w-100 d-block ">
                     <input
                       class="form-check-input"
                       type="radio"
