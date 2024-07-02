@@ -22,11 +22,9 @@ export default function IsLoggedInMsg(directTo) {
           </Modal.Header>
 
           <div className="w-100 ">
-            {" "}
             <div className="row  row-gap">
               <div className="col-6">
                 <div className="grid-gap-col">
-                  {" "}
                   <div className="form-group">
                     <label>Direct to login Page</label>
                   </div>
@@ -34,7 +32,6 @@ export default function IsLoggedInMsg(directTo) {
               </div>
 
               <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                {" "}
                 <Button
                   variant="secondary"
                   type="button"

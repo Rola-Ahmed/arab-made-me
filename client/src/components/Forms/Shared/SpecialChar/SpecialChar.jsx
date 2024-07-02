@@ -22,7 +22,6 @@ export default function SpecialChar(props) {
         <div className="action ">
           <div className="cursor" onClick={() => addnewSepcialChar()}>
             <button className="action-btn btn-1 " type="button">
-              {" "}
               add
             </button>
           </div>

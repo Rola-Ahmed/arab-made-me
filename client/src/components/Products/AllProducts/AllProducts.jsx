@@ -83,10 +83,7 @@ function AllProducts(props) {
                     {allProductsData.length === 0 && (
                       <>
                         <span></span>
-                        <p className="h3 py-5 text-center ">
-                          {" "}
-                          No records{" "}
-                        </p>{" "}
+                        <p className="h3 py-5 text-center ">No records</p>
                         <span></span>
                       </>
                     )}

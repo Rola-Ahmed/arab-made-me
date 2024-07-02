@@ -720,7 +720,6 @@ function Factorypage() {
                     </p>
                   </div>
                   <div className="col-9 ">
-                    {" "}
                     <p>{factoryDetails?.description}</p>
                   </div>
                 </div>
@@ -811,7 +810,6 @@ function Factorypage() {
                                 </div>
                                 <div className="card-svg-text">
                                   <p>
-                                    {" "}
                                     {`${
                                       factoryDetails?.city
                                         ? factoryDetails?.city + ", "
@@ -901,7 +899,7 @@ function Factorypage() {
                         </h5>
                         <div>
                           <p className="card-text product-card-text2 ">
-                            Personal Branding? Partner with{" "}
+                            Personal Branding? Partner with
                             {factoryIdName?.split("-")?.[1]} for your private
                             label brand journey, and let us transform your
                             vision into a unique and marketable reality.
@@ -926,7 +924,6 @@ function Factorypage() {
                           </div>
                           <div className="card-svg-text">
                             <p>
-                              {" "}
                               {`${
                                 factoryDetails?.city
                                   ? factoryDetails?.city + ", "
@@ -944,13 +941,12 @@ function Factorypage() {
                             className="btn-call-1  cursor me-3 "
                             onClick={() => {
                               handleButtonClick(
-                                `CustomerProductReq?factoryId=${factoryDetails?.id}&factoryName=${factoryDetails?.name}&productName=CreateYourOwnBrand `,
-                              
+                                `CustomerProductReq?factoryId=${factoryDetails?.id}&factoryName=${factoryDetails?.name}&productName=CreateYourOwnBrand `
                               );
                             }}
                           >
                             <div className="btn-text text-decoration-none text-white cursor">
-                              Custom Product Request 
+                              Custom Product Request
                             </div>
                           </button>
                           <div
@@ -968,7 +964,7 @@ function Factorypage() {
                           </div>
                         </div>
 
-{/* Your brand btns */}
+                        {/* Your brand btns */}
                         <ActionBtnsOnFactory
                           factoryDetails={factoryDetails}
                           factoryProduct={factoryProduct}
@@ -1217,7 +1213,6 @@ function Factorypage() {
                   </div>
                   <div className="col-6 ">
                     <div className="d-flex justify-content-end align-items-center">
-                      {" "}
                       {!currentUserData?.datacompletelyLoaded ? (
                         <button
                           className="btn-endorse cursor"
@@ -1299,8 +1294,7 @@ function Factorypage() {
                     className="text-container"
                     onClick={() => {
                       handleButtonClick(
-                        `CustomerProductReq?factoryId=${factoryDetails?.id}&factoryName=${factoryDetails?.name}`,
-                        
+                        `CustomerProductReq?factoryId=${factoryDetails?.id}&factoryName=${factoryDetails?.name}`
                       );
                     }}
                   >
@@ -1462,25 +1456,20 @@ function Factorypage() {
             <Modal.Title>Factory Has No Products</Modal.Title>
           </Modal.Header>
           <div className="w-100 ">
-            {" "}
             <div className="row  row-gap">
-              {" "}
               <div className="form-group">
                 <label className="w-100 ">
-                  {" "}
                   There are no products available from this factory at the
                   moment. However, you can send a private label or custom
                   product request
                 </label>
               </div>
               <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                {" "}
                 <Button
                   className="btn-edit "
                   onClick={() => {
                     handleButtonClick(
-                      `CustomerProductReq?factoryId=${factoryDetails?.id}&factoryName=${factoryDetails?.name}&productName=CreateYourOwnBrand `,
-                      
+                      `CustomerProductReq?factoryId=${factoryDetails?.id}&factoryName=${factoryDetails?.name}&productName=CreateYourOwnBrand `
                     );
 
                     // return

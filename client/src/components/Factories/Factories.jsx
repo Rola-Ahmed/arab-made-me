@@ -590,7 +590,7 @@ export default function TopFactories() {
                 <div className="row gap  w-100">
                   {allFactoriesData.length === 0 ? (
                     <>
-                      <span></span> <p className="h3 "> No record </p>{" "}
+                      <span></span> <p className="h3 "> No record </p>
                       <span></span>
                     </>
                   ) : (
@@ -682,7 +682,7 @@ export default function TopFactories() {
                               >
                                 <div className="text-truncate">
                                   <p className="text-truncate">
-                                    products:{" "}
+                                    products:
                                     <span>
                                       {factoryitem?.productName?.length > 0
                                         ? factoryitem?.productName?.map(
@@ -962,19 +962,15 @@ export default function TopFactories() {
             <Modal.Title>Factory Has No Products</Modal.Title>
           </Modal.Header>
           <div className="w-100 ">
-            {" "}
             <div className="row  row-gap">
-              {" "}
               <div className="form-group">
                 <label className="w-100 ">
-                  {" "}
                   There are no products available from this factory at the
                   moment. However, you can send a private label or custom
                   product request
                 </label>
               </div>
               <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                {" "}
                 <Button
                   className="btn-edit "
                   onClick={() => {

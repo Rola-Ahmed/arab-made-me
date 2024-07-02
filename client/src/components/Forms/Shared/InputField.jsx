@@ -10,7 +10,6 @@ export default function InputField({
     <>
       <div className="form-group">
         <label>
-          {" "}
           {title} {isRequired && "*"}
         </label>
         <input

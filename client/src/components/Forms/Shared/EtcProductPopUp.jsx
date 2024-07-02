@@ -55,7 +55,6 @@ export default function EtcProductPopUp(directTo) {
           </Modal.Header>
 
           <div className="w-100  m-auto d-grid gap-16 ">
-            {" "}
             <div className="w-100 ps-3">
               <ProductDetails productDetails={productDetails} />
             </div>
@@ -94,7 +93,6 @@ export default function EtcProductPopUp(directTo) {
             </Carousel>
             <div className="row  row-gap  ps-4">
               <div className="col-12 d-flex justify-content-start btn-modal-gap ">
-                {" "}
                 <Button
                   variant="secondary"
                   type="button"

@@ -16,17 +16,13 @@ export default function UserNotAuthorized(directTo) {
           <Modal.Header closeButton></Modal.Header>
 
           <div className="w-100 ">
-            {" "}
             <div className="row  row-gap">
-              {" "}
               <div className="form-group">
                 <label className="w-100">
-                  {" "}
                   To gain access, please register as a {directTo.userType}.
                 </label>
               </div>
               <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                {" "}
                 <Button
                   variant="secondary"
                   type="button"

@@ -65,7 +65,6 @@ export default function ProductCard(props) {
         key={productIndex}
         className="col-xxl-4 col-xl-4  col-lg-6  col-12  "
       >
-        {" "}
         <button className="card  ">
           <img
             className="card-img-top"

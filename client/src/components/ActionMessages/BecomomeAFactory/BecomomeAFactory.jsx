@@ -23,7 +23,6 @@ export default function BecomomeAFactory(directTo) {
                 </label>
               </div>
               <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                {" "}
                 <Button
                   variant="secondary"
                   type="button"

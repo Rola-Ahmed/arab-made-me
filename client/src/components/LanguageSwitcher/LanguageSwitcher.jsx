@@ -51,7 +51,7 @@ const LanguageSwitcher = () => {
             onClick={() => changeLanguage("ar")}
             className="dropdown-item "
           >
-            العربيه -Ar{" "}
+            العربيه -Ar
           </button>
         </div>
       </div>

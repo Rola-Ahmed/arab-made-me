@@ -12,7 +12,6 @@ export default function BecomomeAFactoryFullScreen(directTo) {
             </label>
           </div>
           <div className="col-12 d-flex justify-content-start btn-modal-gap">
-            {" "}
             <button
               className="btn-edit submitButton"
               onClick={() => {

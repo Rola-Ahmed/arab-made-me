@@ -6,7 +6,6 @@ export default function LoadingForm2(props) {
       <Header title={props?.title} subTitle={props?.subTitle} />
 
       <div className="my-3 py-2 ">
-        {" "}
         <div className="loading my-5 ">
           <div className="square-3 "> </div>
         </div>

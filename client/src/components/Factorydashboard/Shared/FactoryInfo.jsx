@@ -50,7 +50,6 @@ export default function FactoryInfo() {
           <div className="row  row-gap">
             <div className="col-6">
               <div className="grid-gap-col">
-                {" "}
                 <div className="form-group">
                   <label>Factory Name</label>
                   <input

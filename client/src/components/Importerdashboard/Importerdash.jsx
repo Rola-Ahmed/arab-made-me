@@ -192,7 +192,6 @@ function Importerdash() {
                       }}
                     >
                       <div className="d-flex  align-items-start sub-profile-cont  mt-3 ">
-                        {" "}
                         <i class="fa-solid fa-user pe-3 text-white"></i>
                         <p className="sub-text cursor ">Profile Image</p>
                       </div>
@@ -210,7 +209,6 @@ function Importerdash() {
                       }}
                     >
                       <div className="d-flex  align-items-center sub-profile-cont">
-                        {" "}
                         <i className="fa-solid fa-gears  pe-3 text-white"></i>
                         <p className="sub-text cursor ">Account Inforamtion</p>
                       </div>
@@ -228,7 +226,6 @@ function Importerdash() {
                       }}
                     >
                       <div className="d-flex  align-items-center sub-profile-cont">
-                        {" "}
                         <i className="fa-solid fa-lock pe-3 text-white"></i>
                         <p className="sub-text cursor ">Password Change</p>
                       </div>
@@ -246,7 +243,6 @@ function Importerdash() {
                       }`}
                     >
                       <div className="d-flex  align-items-center sub-profile-cont">
-                        {" "}
                         <i className="fa-solid fa-share-nodes pe-3 text-white"></i>
                         <p className="sub-text cursor ">Social Accounts</p>
                       </div>
@@ -266,7 +262,6 @@ function Importerdash() {
                       }`}
                     >
                       <div className="d-flex  align-items-center sub-profile-cont">
-                        {" "}
                         <i className="fa-solid fa-bell pe-3 text-white"></i>
                         <p className="sub-text cursor ">Notifications</p>
                       </div>
@@ -284,7 +279,6 @@ function Importerdash() {
                       }`}
                     >
                       <div className="d-flex  align-items-center sub-profile-cont">
-                        {" "}
                         <i className="fa-solid fa-file-circle-check pe-3 text-white"></i>
                         <p className="sub-text cursor ">Legal Documents</p>
                       </div>
@@ -304,7 +298,6 @@ function Importerdash() {
                       }`}
                     >
                       <div className="d-flex  align-items-center sub-profile-cont mb-1">
-                        {" "}
                         <svg
                           style={{ width: "30px" }}
                           fill="white"

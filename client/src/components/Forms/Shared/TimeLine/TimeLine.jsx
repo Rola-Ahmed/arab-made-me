@@ -16,7 +16,6 @@ export default function TimeLine(props) {
     formValidation.setFieldValue(vlaidationName, combinedArray);
   }
 
-
   return (
     <div className="col-12" id={formValidation.values[vlaidationName]}>
       <div className="form-group form-control">
@@ -62,14 +61,13 @@ export default function TimeLine(props) {
             <div className="action ">
               <div className="cursor" onClick={() => addnewSepcialChar()}>
                 <button className="action-btn btn-1 " type="button">
-                  {" "}
                   add
                 </button>
               </div>
             </div>
           ) : (
             ""
-          )}{" "}
+          )}
         </div>
       </div>
     </div>

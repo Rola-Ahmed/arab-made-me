@@ -24,7 +24,6 @@ export default function SharedConditionsValidate(props) {
       </div>
       {formValidation?.values?.recurrence == true && (
         <>
-          {" "}
           <div className="col-md-6 col-sm-12">
             <div className="form-group">
               <label>Repeat Every *</label>

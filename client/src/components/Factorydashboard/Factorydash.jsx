@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState,useRef } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 
 import "./Factorydash.css";
 import { Link, Outlet, useLocation } from "react-router-dom";
@@ -19,7 +19,6 @@ function Factorydash(props) {
 
   useEffect(() => {
     // const navEntries = window.performance.getEntriesByType("navigation");
-
     // if (!scrollRef.current?.baseURI.includes(pathname)) {
     //   scrollRef.current.scrollTo({
     //     top: 0,
@@ -27,9 +26,7 @@ function Factorydash(props) {
     //     behavior: "instant",
     //   });
     // }
-
     // console.log("scrollRef",scrollRef.current?.baseURI.includes(pathname), pathname,scrollRef.current?.baseURI);
-
     // window.scrollTo({
     //   top: 0,
     //   left: 0,
@@ -149,7 +146,6 @@ function Factorydash(props) {
                       }}
                     >
                       <div className="d-flex  align-items-center sub-icon-pro">
-                        {" "}
                         <i className="fa-solid fa-gears pe-2 text-white"></i>
                         <p className="sub-text cursor ">Account Inforamtion</p>
                       </div>
@@ -167,7 +163,6 @@ function Factorydash(props) {
                       }}
                     >
                       <div className="d-flex  align-items-center sub-icon-pro">
-                        {" "}
                         <i className="fa-solid fa-lock pe-2 text-white"></i>
                         <p className="sub-text cursor ">Password Change</p>
                       </div>
@@ -187,7 +182,6 @@ function Factorydash(props) {
                       }`}
                     >
                       <div className="d-flex  align-items-center sub-icon-pro">
-                        {" "}
                         <i className="fa-solid fa-bell pe-2 text-white"></i>
                         <p className="sub-text cursor ">Notifications</p>
                       </div>
@@ -205,7 +199,6 @@ function Factorydash(props) {
                       }`}
                     >
                       <div className="d-flex  align-items-center sub-icon-pro">
-                        {" "}
                         <i className="fa-solid fa-file-circle-check pe-2 text-white"></i>
                         <p className="sub-text cursor ">Legal Documents</p>
                       </div>
@@ -223,7 +216,6 @@ function Factorydash(props) {
                       }`}
                     >
                       <div className="d-flex  align-items-center sub-icon-pro">
-                        {" "}
                         <i className="fa-solid fa-envelope-circle-check pe-2 text-white"></i>
                         <p className="sub-text cursor ">Subscription Plan</p>
                       </div>
@@ -276,7 +268,6 @@ function Factorydash(props) {
                       }}
                     >
                       <div className="d-flex  align-items-center sub-icon-pro">
-                        {" "}
                         <i class="fa-solid fa-user pe-2 text-white"></i>
                         <p className="sub-text cursor ">factory logo </p>
                       </div>
@@ -294,7 +285,6 @@ function Factorydash(props) {
                       }`}
                     >
                       <div className="d-flex  align-items-center sub-icon-pro">
-                        {" "}
                         <i className="fa-solid fa-share-nodes pe-2 text-white"></i>
                         <p className="sub-text cursor ">Social Accounts</p>
                       </div>
@@ -312,7 +302,6 @@ function Factorydash(props) {
                       }`}
                     >
                       <div className="d-flex  align-items-center sub-icon-pro">
-                        {" "}
                         <i className="fa-solid fa-images pe-2 text-white"></i>
                         <p className="sub-text cursor "> Cover Images</p>
                       </div>
@@ -330,7 +319,6 @@ function Factorydash(props) {
                       }`}
                     >
                       <div className="d-flex  align-items-center sub-icon-pro">
-                        {" "}
                         <i className="fa-solid fa-stamp pe-2 text-white"></i>
                         <p className="sub-text cursor ">Certificates</p>
                       </div>
@@ -348,7 +336,6 @@ function Factorydash(props) {
                       }`}
                     >
                       <div className="d-flex  align-items-center sub-icon-pro">
-                        {" "}
                         <i className="fa-solid fa-images pe-2 text-white"></i>
                         <p className="sub-text cursor ">Cover Video</p>
                       </div>
@@ -366,7 +353,6 @@ function Factorydash(props) {
                       }`}
                     >
                       <div className="d-flex  align-items-center sub-icon-pro">
-                        {" "}
                         <svg
                           style={{ width: "30px" }}
                           fill="white"
@@ -402,7 +388,6 @@ function Factorydash(props) {
                       }`}
                     >
                       <div className="d-flex  align-items-center sub-icon-pro">
-                        {" "}
                         <i className="fa-solid fa-envelope-circle-check pe-2 text-white"></i>
                         <p className="sub-text cursor ">Team</p>
                       </div>
@@ -649,7 +634,7 @@ function Factorydash(props) {
             setIsLogin={setIsLogin}
           />
         </div>
-        <div className="col-10 bg-white border-rounded   overflow-container factory-scroll-padding " >
+        <div className="col-10 bg-white border-rounded   overflow-container factory-scroll-padding ">
           <Outlet context={[activeMenu, setActiveMenu]} />
         </div>
       </div>

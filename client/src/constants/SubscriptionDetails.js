@@ -59,39 +59,38 @@ export const freeSubscription = [
 
   "5",
 
-
   "0",
   "0",
 
   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
 
-//   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
-//   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
+  //   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
+  //   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
-//   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
-//   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
-//   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
-//   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
+  //   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
+  //   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
+  //   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
+  //   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
-//   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
-//   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
-//   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
-//   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
-//   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
-//   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
-//   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
-//   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
-//   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
-//   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
-//   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
-//   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
-//   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
-//   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
-//   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
-//   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
-//   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
-//   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
-//   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
+  //   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
+  //   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
+  //   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
+  //   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
+  //   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
+  //   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
+  //   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
+  //   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
+  //   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
+  //   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
+  //   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
+  //   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
+  //   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
+  //   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
+  //   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
+  //   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
+  //   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
+  //   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
+  //   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
 ];
 
 export const standardSubscription = [
@@ -118,43 +117,43 @@ export const standardSubscription = [
     className="fa-solid fa-sharpe fa-check-double mx-2 "
     style={{ color: "green" }}
   ></i>,
-//   <i
-//     className="fa-solid fa-sharpe fa-check-double mx-2 "
-//     style={{ color: "green" }}
-//   ></i>,
-//   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
+  //   <i
+  //     className="fa-solid fa-sharpe fa-check-double mx-2 "
+  //     style={{ color: "green" }}
+  //   ></i>,
+  //   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
   "Shared",
-//   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
-//   "Yearly",
-//   <i
-//     className="fa-solid fa-sharpe fa-check-double mx-2 "
-//     style={{ color: "green" }}
-//   ></i>,
-//   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
+  //   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
+  //   "Yearly",
+  //   <i
+  //     className="fa-solid fa-sharpe fa-check-double mx-2 "
+  //     style={{ color: "green" }}
+  //   ></i>,
+  //   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
   <i
     className="fa-solid fa-sharpe fa-check-double mx-2 "
     style={{ color: "green" }}
   ></i>,
-//   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
+  //   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
 
-//   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
-//   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
-//   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
-//   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
-//   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
-//   "5%",
-//   "5%",
-//   "5%",
-//   "5%",
-//   "5%",
-//   "5%",
-//   "5%",
-//   "5%",
-//   "5%",
-//   "5%",
-//   "5%",
-//   " ",
-//   " ",
+  //   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
+  //   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
+  //   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
+  //   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
+  //   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
+  //   "5%",
+  //   "5%",
+  //   "5%",
+  //   "5%",
+  //   "5%",
+  //   "5%",
+  //   "5%",
+  //   "5%",
+  //   "5%",
+  //   "5%",
+  //   "5%",
+  //   " ",
+  //   " ",
 ];
 
 export const GoldSubscription = [
@@ -180,63 +179,63 @@ export const GoldSubscription = [
     className="fa-solid fa-sharpe fa-check-double mx-2 "
     style={{ color: "green" }}
   ></i>,
-//   <i
-//     className="fa-solid fa-sharpe fa-check-double mx-2 "
-//     style={{ color: "green" }}
-//   ></i>,
-//   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
+  //   <i
+  //     className="fa-solid fa-sharpe fa-check-double mx-2 "
+  //     style={{ color: "green" }}
+  //   ></i>,
+  //   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
   "2 h/d",
-//   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
-//   "Quarterly",
-//   <i
-//     className="fa-solid fa-sharpe fa-check-double mx-2 "
-//     style={{ color: "green" }}
-//   ></i>,
-//   <i
-//     className="fa-solid fa-sharpe fa-check-double mx-2 "
-//     style={{ color: "green" }}
-//   ></i>,
+  //   <i className="fa-solid fa-xmark" style={{ color: "red" }}></i>,
+  //   "Quarterly",
+  //   <i
+  //     className="fa-solid fa-sharpe fa-check-double mx-2 "
+  //     style={{ color: "green" }}
+  //   ></i>,
+  //   <i
+  //     className="fa-solid fa-sharpe fa-check-double mx-2 "
+  //     style={{ color: "green" }}
+  //   ></i>,
   <i
     className="fa-solid fa-sharpe fa-check-double mx-2 "
     style={{ color: "green" }}
   ></i>,
-//   <>
-//     <i
-//       className="fa-solid fa-sharpe fa-check-double mx-2 "
-//       style={{ color: "green" }}
-//     ></i>
-//     Breif
-//   </>,
-//   <i
-//     className="fa-solid fa-sharpe fa-check-double mx-2 "
-//     style={{ color: "green" }}
-//   ></i>,
-//   "5 keywords",
-//   <i
-//     className="fa-solid fa-sharpe fa-check-double mx-2 "
-//     style={{ color: "green" }}
-//   ></i>,
-//   <i
-//     className="fa-solid fa-sharpe fa-check-double mx-2 "
-//     style={{ color: "green" }}
-//   ></i>,
-//   <i
-//     className="fa-solid fa-sharpe fa-check-double mx-2 "
-//     style={{ color: "green" }}
-//   ></i>,
-//   "10%",
-//   "10%",
-//   "10%",
-//   "10%",
-//   "10%",
-//   "10%",
-//   "10%",
-//   "10%",
-//   "10%",
-//   "10%",
-//   "10%",
-//   "",
-//   "",
+  //   <>
+  //     <i
+  //       className="fa-solid fa-sharpe fa-check-double mx-2 "
+  //       style={{ color: "green" }}
+  //     ></i>
+  //     Breif
+  //   </>,
+  //   <i
+  //     className="fa-solid fa-sharpe fa-check-double mx-2 "
+  //     style={{ color: "green" }}
+  //   ></i>,
+  //   "5 keywords",
+  //   <i
+  //     className="fa-solid fa-sharpe fa-check-double mx-2 "
+  //     style={{ color: "green" }}
+  //   ></i>,
+  //   <i
+  //     className="fa-solid fa-sharpe fa-check-double mx-2 "
+  //     style={{ color: "green" }}
+  //   ></i>,
+  //   <i
+  //     className="fa-solid fa-sharpe fa-check-double mx-2 "
+  //     style={{ color: "green" }}
+  //   ></i>,
+  //   "10%",
+  //   "10%",
+  //   "10%",
+  //   "10%",
+  //   "10%",
+  //   "10%",
+  //   "10%",
+  //   "10%",
+  //   "10%",
+  //   "10%",
+  //   "10%",
+  //   "",
+  //   "",
 ];
 export const PremiumSubscription = [
   "Premium",
@@ -259,67 +258,67 @@ export const PremiumSubscription = [
   "Unlimited",
   "Unlimited",
   "all vedio",
-//   <i
-//     className="fa-solid fa-sharpe fa-check-double mx-2 "
-//     style={{ color: "green" }}
-//   ></i>,
-//   <i
-//     className="fa-solid fa-sharpe fa-check-double mx-2 "
-//     style={{ color: "green" }}
-//   ></i>,
+  //   <i
+  //     className="fa-solid fa-sharpe fa-check-double mx-2 "
+  //     style={{ color: "green" }}
+  //   ></i>,
+  //   <i
+  //     className="fa-solid fa-sharpe fa-check-double mx-2 "
+  //     style={{ color: "green" }}
+  //   ></i>,
   "8 h/d",
-//   <i
-//     className="fa-solid fa-sharpe fa-check-double mx-2 "
-//     style={{ color: "green" }}
-//   ></i>,
-//   "Monthly",
-//   <i
-//     className="fa-solid fa-sharpe fa-check-double mx-2 "
-//     style={{ color: "green" }}
-//   ></i>,
-//   <i
-//     className="fa-solid fa-sharpe fa-check-double mx-2 "
-//     style={{ color: "green" }}
-//   ></i>,
+  //   <i
+  //     className="fa-solid fa-sharpe fa-check-double mx-2 "
+  //     style={{ color: "green" }}
+  //   ></i>,
+  //   "Monthly",
+  //   <i
+  //     className="fa-solid fa-sharpe fa-check-double mx-2 "
+  //     style={{ color: "green" }}
+  //   ></i>,
+  //   <i
+  //     className="fa-solid fa-sharpe fa-check-double mx-2 "
+  //     style={{ color: "green" }}
+  //   ></i>,
   <i
     className="fa-solid fa-sharpe fa-check-double mx-2 "
     style={{ color: "green" }}
   ></i>,
-//   <>
-//     <i
-//       className="fa-solid fa-sharpe fa-check-double mx-2 "
-//       style={{ color: "green" }}
-//     ></i>{" "}
-//     Advanced
-//   </>,
-//   <i
-//     className="fa-solid fa-sharpe fa-check-double mx-2 "
-//     style={{ color: "green" }}
-//   ></i>,
-//   "10 Keywords",
-//   <i
-//     className="fa-solid fa-sharpe fa-check-double mx-2 "
-//     style={{ color: "green" }}
-//   ></i>,
-//   <i
-//     className="fa-solid fa-sharpe fa-check-double mx-2 "
-//     style={{ color: "green" }}
-//   ></i>,
-//   <i
-//     className="fa-solid fa-sharpe fa-check-double mx-2 "
-//     style={{ color: "green" }}
-//   ></i>,
-//   "15 %",
-//   "15 %",
-//   "15 %",
-//   "15 %",
-//   "15 %",
-//   "15 %",
-//   "15 %",
-//   "15 %",
-//   "15 %",
-//   "15 %",
-//   "15 %",
-//   " ",
-//   "",
+  //   <>
+  //     <i
+  //       className="fa-solid fa-sharpe fa-check-double mx-2 "
+  //       style={{ color: "green" }}
+  //     ></i>
+  //     Advanced
+  //   </>,
+  //   <i
+  //     className="fa-solid fa-sharpe fa-check-double mx-2 "
+  //     style={{ color: "green" }}
+  //   ></i>,
+  //   "10 Keywords",
+  //   <i
+  //     className="fa-solid fa-sharpe fa-check-double mx-2 "
+  //     style={{ color: "green" }}
+  //   ></i>,
+  //   <i
+  //     className="fa-solid fa-sharpe fa-check-double mx-2 "
+  //     style={{ color: "green" }}
+  //   ></i>,
+  //   <i
+  //     className="fa-solid fa-sharpe fa-check-double mx-2 "
+  //     style={{ color: "green" }}
+  //   ></i>,
+  //   "15 %",
+  //   "15 %",
+  //   "15 %",
+  //   "15 %",
+  //   "15 %",
+  //   "15 %",
+  //   "15 %",
+  //   "15 %",
+  //   "15 %",
+  //   "15 %",
+  //   "15 %",
+  //   " ",
+  //   "",
 ];
