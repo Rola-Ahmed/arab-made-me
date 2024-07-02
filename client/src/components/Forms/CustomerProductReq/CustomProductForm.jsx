@@ -11,6 +11,7 @@ import { shippingConditionsArr } from "constants/shippingConditionsArr";
 import { ShippingTypeSizeArr } from "constants/ShippingTypeSizeArr";
 import { qualityConditionsArr } from "constants/qualityConditionsArr";
 import SpecialChar from "../Shared/SpecialChar/SpecialChar";
+import RadioInput from "../Shared/RadioInput";
 function CustomProductForm(props) {
   let {
     isLoading,
@@ -38,7 +39,7 @@ function CustomProductForm(props) {
         </div>
 
         <div className="row row-container-sepcialChar w-100 ">
-           <div className="col-12">
+          <div className="col-12">
             <InputField
               isRequired={true}
               title={"Product Name"}
@@ -54,52 +55,42 @@ function CustomProductForm(props) {
                 <label className="pb-2">Product Characteristics</label>
                 <div className="d-flex justify-content-between align-items-center">
                   <div class="form-check w-100 d-block ">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      id="productType"
-                      name="productType"
+                    <RadioInput
+                      formValidation={formValidation}
+                      vlaidationName="productType"
+                      label="Text"
                       value="text"
-                      defaultChecked
-                      onChange={formValidation.handleChange}
-                      onBlur={formValidation.handleBlur}
+                      defaultChecked={true}
                     />
-                    <label class="form-check-label">Text</label>
                   </div>
+
                   <div class="form-check w-100 d-block ">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      id="productType"
-                      name="productType"
-                      onChange={formValidation.handleChange}
-                      onBlur={formValidation.handleBlur}
+                    <RadioInput
+                      formValidation={formValidation}
+                      vlaidationName="productType"
+                      label="Upload Documents"
                       value="docs"
+                      defaultChecked={false}
                     />
-                    <label class="form-check-label">Upload Documents</label>
                   </div>
                 </div>
               </div>
 
               {formValidation.values.productType == "text" && (
-                <>
-                  <SpecialChar formValidation={formValidation} />
-                </>
+                <SpecialChar formValidation={formValidation} />
               )}
 
               {formValidation.values.productType == "docs" && (
-                <>
-                  <UploadDocument
-                    selectedDocs={selectedDocs}
-                    errorMsg={errorMsg}
-                    setSelectedDocs={setSelectedDocs}
-                    MediaName="productDocs"
-                    mediaMaxLen="3"
-                    meidaAcceptedExtensions={["pdf", "png", "jpeg", "jpg"]}
-                    setErrorMsg={setErrorMsg}
-                    title="Upload Documents"
-                  />
-                </>
+                <UploadDocument
+                  selectedDocs={selectedDocs}
+                  errorMsg={errorMsg}
+                  setSelectedDocs={setSelectedDocs}
+                  MediaName="productDocs"
+                  mediaMaxLen="3"
+                  meidaAcceptedExtensions={["pdf", "png", "jpeg", "jpg"]}
+                  setErrorMsg={setErrorMsg}
+                  title="Upload Documents"
+                />
               )}
             </div>
           </div>
