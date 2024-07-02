@@ -22,7 +22,7 @@ import WhiteLabelContainer from "components/Forms/WhiteLabel/FetchWhiteLabelCont
 
 // forms
 import SendRfq from "./components/Forms/RFQ/FetchRfqContainer";
-import CustomerProductReq from "./components/Forms/CustomerProductReq/FetchCustomProductContainer";
+// import CustomerProductReq from "./components/Forms/CustomerProductReq/FetchCustomProductContainer";
 import Contactsupplier from "./components/Forms/Contactsupplier/Contactsupplier";
 import RequestVisit from "./components/Forms/RequestVisit/RequestVisit";
 import PurchasingOrder from "./components/Forms/PurchasingOrder/PurchasingOrder";
@@ -47,6 +47,8 @@ import adminDashboardRoutes from "routes/adminDashboardRoutes";
 import importerDashboardRoutes from "routes/importerDashboardRoutes";
 import factoryDashboardRoutes from "routes/factoryDashboardRoutes";
 import authRoutes from "routes/authRoutes";
+import formRoutes from "routes/formRoutes";
+
 import MeetingRoom from "components/MeetingRoom/MeetingRoom";
 import Invitaion from "components/MeetingRoom/Invitaion";
 
@@ -126,10 +128,7 @@ const router = createBrowserRouter([
         path: "/PrivateLabel",
         element: <PrivateLabel />,
       },
-      {
-        path: "/CustomerProductReq",
-        element: <CustomerProductReq />,
-      },
+
       {
         path: "/sendrfq/:factoryId?/:factoryName?/:productId?/:productName?",
         element: <SendRfq />,
@@ -151,6 +150,7 @@ const router = createBrowserRouter([
       // ---------------------------------
 
       ...authRoutes,
+      ...formRoutes,
     ],
   },
 
