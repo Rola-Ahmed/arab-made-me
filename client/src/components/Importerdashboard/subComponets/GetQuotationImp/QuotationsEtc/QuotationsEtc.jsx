@@ -253,7 +253,6 @@ export default function QuotationsEtc() {
                     <div className="row  row-gap">
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Representative Name</label>
                             <input
@@ -324,7 +323,6 @@ export default function QuotationsEtc() {
                     <div className="row  row-gap">
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Factory Name</label>
                             <input
@@ -393,7 +391,6 @@ export default function QuotationsEtc() {
                     <div className="row  row-gap">
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Product Name</label>
                             <input
@@ -407,7 +404,6 @@ export default function QuotationsEtc() {
 
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Min Quantity</label>
                             <input
@@ -420,7 +416,6 @@ export default function QuotationsEtc() {
                       </div>
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Price</label>
                             <input
@@ -434,7 +429,6 @@ export default function QuotationsEtc() {
 
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Discounts</label>
                             <input
@@ -525,7 +519,6 @@ export default function QuotationsEtc() {
 
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Created At </label>
                             <input
@@ -596,10 +589,8 @@ export default function QuotationsEtc() {
               {PosData?.docs?.length > 0 && (
                 <div className="container-profile-input w-100">
                   <div className="title-contianer-input w-100">
-                    {" "}
                     <p> Documents</p>
                     <div className="w-100 ">
-                      {" "}
                       {/* ----------------------- */}
                       <div className="row grid-gap-col">
                         <div className="col-12">
@@ -671,7 +662,7 @@ export default function QuotationsEtc() {
                   }}
                 >
                   <p className="cursor text-danger">Reject Request</p>
-                </button>{" "}
+                </button>
                 <ContactBtn
                   isLogin={isLogin}
                   handleIsLoggedInBtn={handleIsLoggedInBtn}

@@ -176,7 +176,6 @@ export default function PrivateLabelReqEtc() {
                     <div className="row  row-gap">
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Representative Name</label>
                             <input
@@ -247,7 +246,6 @@ export default function PrivateLabelReqEtc() {
                     <div className="row  row-gap">
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Factory Name</label>
                             <input
@@ -317,7 +315,6 @@ export default function PrivateLabelReqEtc() {
                       {PosData?.productName !== null && (
                         <div className="col-6">
                           <div className="grid-gap-col">
-                            {" "}
                             <div className="form-group">
                               <label>Product Name</label>
                               <input
@@ -345,7 +342,6 @@ export default function PrivateLabelReqEtc() {
 
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Created At </label>
                             <input
@@ -380,10 +376,8 @@ export default function PrivateLabelReqEtc() {
               {PosData?.docs?.length > 0 && (
                 <div className="container-profile-input w-100">
                   <div className="title-contianer-input w-100">
-                    {" "}
                     <p> Documents</p>
                     <div className="w-100 ">
-                      {" "}
                       {/* ----------------------- */}
                       <div className="row grid-gap-col">
                         <div className="col-12">
@@ -438,7 +432,6 @@ export default function PrivateLabelReqEtc() {
               )}
 
               <div className="col-12 d-flex justify-content-start btn-modal-gap mb-4">
-                {" "}
                 {/* <button
                   className="btn-edit d-none  "
                   type="button"

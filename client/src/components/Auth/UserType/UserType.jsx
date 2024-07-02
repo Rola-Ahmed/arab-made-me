@@ -21,7 +21,6 @@ export default function UserType() {
       <section className="register-msg ">
         {/* <div className="container "> */}
         <div className=" container ">
-          {" "}
           <div className=" cont-1 d-flex justify-content-center align-items-center mx-auto  ">
             <div className=" sub-cont w-100">
               <div className=" text-check ">
@@ -99,7 +98,6 @@ export default function UserType() {
                   >
                     <div className="border-type p-3 ">
                       <div className="d-flex justify-content-start align-content-center gap-cont">
-                        {" "}
                         <div className="user-icon">
                           <img src={buyerIcon} alt="buyer icon" />
                         </div>
@@ -121,7 +119,6 @@ export default function UserType() {
                   >
                     <div className="border-type p-3 ">
                       <div className="d-flex justify-content-start align-content-center gap-cont">
-                        {" "}
                         <div className="user-icon">
                           <img src={factoryIcon} alt="buyer icon" />
                         </div>
@@ -139,14 +136,13 @@ export default function UserType() {
 
                 <div className="d-flex justify-content-center">
                   <small className="text-muted title-small ">
-                    Already have an account?{" "}
+                    Already have an account?
                     <span
                       className="fw-bolder cursor"
                       onClick={() => {
                         navigate("/signIn");
                       }}
                     >
-                      {" "}
                       Sign In
                     </span>
                   </small>

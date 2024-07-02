@@ -5,7 +5,6 @@ import * as Yup from "yup";
 import axios from "axios";
 import { baseUrl } from "config.js";
 
-
 import Header from "components/main/Header/Header";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
@@ -165,7 +164,7 @@ function ForgotPassword() {
                   <div className="input-content">
                     {errorMsg ? (
                       <div className="alert mt-3 p-2 alert-danger form-control text-dark">
-                        {errorMsg}{" "}
+                        {errorMsg}
                       </div>
                     ) : (
                       ""
@@ -238,8 +237,6 @@ function ForgotPassword() {
           </div>
         </div>
       </section>
-
-    
     </>
   );
 }

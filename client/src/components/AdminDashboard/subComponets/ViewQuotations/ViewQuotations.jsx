@@ -424,7 +424,6 @@ export default function ViewQuotations() {
         {/* data section */}
 
         <div className=" data-container w-100 p-3">
-          {" "}
           <table className="table mb-0">
             {/* headers */}
 
@@ -488,7 +487,6 @@ export default function ViewQuotations() {
                   </th>
 
                   <th className=" col-1 d-flex align-items-center  ">
-                    {" "}
                     <div>
                       {
                         // allAnsRfqData.map((item) =>
@@ -547,12 +545,10 @@ export default function ViewQuotations() {
                   </th>
 
                   <th className=" col-1 d-flex align-items-center">
-                    {" "}
                     <p className="trate-sub-title">{poItem?.minQuantity}</p>
                   </th>
 
                   <th className=" col-1 d-flex align-items-center ">
-                    {" "}
                     <p className="trate-sub-title">{poItem?.price}</p>
                   </th>
 

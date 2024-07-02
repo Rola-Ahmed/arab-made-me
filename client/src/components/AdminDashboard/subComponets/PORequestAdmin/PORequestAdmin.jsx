@@ -276,7 +276,6 @@ export default function PORequestAdmin() {
         {/* data section */}
 
         <div className=" data-container w-100 p-3">
-          {" "}
           <table className="table mb-0">
             {/* headers */}
 
@@ -341,12 +340,10 @@ export default function PORequestAdmin() {
                   </th>
 
                   <th className=" col-1 d-flex align-items-center ">
-                    {" "}
                     <p className="trate-sub-title">${poItem?.product?.price}</p>
                   </th>
 
                   <th className=" col-1 d-flex align-items-center  ">
-                    {" "}
                     <div>
                       {
                         // allAnsRfqData.map((item) =>
@@ -390,24 +387,21 @@ export default function PORequestAdmin() {
                       )
                     } */}
                     <div>
-                      {" "}
                       {Array.isArray(poItem?.timeLine) &&
                         poItem?.timeLine.map((timelineItem, index) => (
                           <p className="trate-sub-title" key={index}>
                             <span className="fw-bolder text-dark ">
-                              {" "}
-                              Date{index + 1}{" "}
+                              Date{index + 1}
                             </span>
                             :
                             {getMonthName(
                               timelineItem?.date?.split("T")?.[0] ??
                                 timelineItem?.date ??
                                 timelineItem?.time
-                            )}{" "}
+                            )}
                             -
                             <span className="fw-bolder text-dark ">
-                              {" "}
-                              Quantity{index + 1}{" "}
+                              Quantity{index + 1}
                             </span>
                             :{timelineItem?.quantity}
                           </p>
@@ -417,8 +411,7 @@ export default function PORequestAdmin() {
                           <span className="fw-bolder text-dark "> Date1 </span>
                           :Jan, 20,2020 -
                           <span className="fw-bolder text-dark ">
-                            {" "}
-                            Quantity1{" "}
+                            Quantity1
                           </span>
                           :5000
                         </p>

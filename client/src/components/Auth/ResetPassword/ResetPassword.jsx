@@ -163,7 +163,7 @@ function ResetPassword() {
                   <div className="input-content">
                     {errorMsg ? (
                       <div className="alert mt-3 p-2 alert-danger form-control text-dark">
-                        {errorMsg}{" "}
+                        {errorMsg}
                       </div>
                     ) : (
                       ""
@@ -224,8 +224,7 @@ function ResetPassword() {
                       <div className="col-12">
                         <div className="form-group">
                           <label forHtml="confirmPassword">
-                            {" "}
-                            Confirm new password{" "}
+                            Confirm new password
                             <span className="text-danger">*</span>
                           </label>
 
@@ -342,7 +341,6 @@ function ResetPassword() {
                           navigate("/signup");
                         }}
                       >
-                        {" "}
                         Create New
                       </button>
                     </div>
@@ -353,7 +351,6 @@ function ResetPassword() {
           </div>
         </div>
       </section>
-
     </>
   );
 }

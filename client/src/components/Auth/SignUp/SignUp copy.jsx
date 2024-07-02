@@ -152,7 +152,7 @@ export default function SignUp() {
                   <div className="input-content">
                     {errorMsg ? (
                       <div className="alert mt-3 p-2 alert-danger form-control text-dark w-100">
-                        {errorMsg}{" "}
+                        {errorMsg}
                       </div>
                     ) : (
                       ""
@@ -256,7 +256,6 @@ export default function SignUp() {
                           navigate("/signIn");
                         }}
                       >
-                        {" "}
                         Sign In
                       </button>
                     </div>

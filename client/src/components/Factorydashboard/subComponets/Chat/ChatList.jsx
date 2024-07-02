@@ -233,7 +233,6 @@ export default function ChatList() {
         {/* data section */}
 
         <div className=" data-container w-100 p-3">
-          {" "}
           <table className="table mb-0">
             {/* headers */}
 
@@ -287,7 +286,7 @@ export default function ChatList() {
                   </th>
                   <th className=" col-2 d-flex align-items-center justify-content-center gap-icon-table">
                     <small className="notifi-date text-muted  lh-base">
-                      <i class="fa-regular fa-clock"></i>{" "}
+                      <i class="fa-regular fa-clock"></i>
                       <span className="pe-1">
                         {getTimeDifference(poItem?.createdAt)}
                       </span>

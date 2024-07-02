@@ -119,7 +119,6 @@ function Footer(props) {
           <div className="linkat ">
             <ul className="footer-links">
               <li>
-                {" "}
                 <Link className="nav-link " to="/">
                   Home
                 </Link>

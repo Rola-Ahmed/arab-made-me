@@ -166,7 +166,6 @@ export default function OffersFacEtc() {
                         <div className="row  row-gap">
                           <div className="col-6">
                             <div className="grid-gap-col">
-                              {" "}
                               <div className="form-group">
                                 <label>Product Name</label>
                                 <input
@@ -180,7 +179,6 @@ export default function OffersFacEtc() {
 
                           <div className="col-6">
                             <div className="grid-gap-col">
-                              {" "}
                               <div className="form-group">
                                 <label>sku</label>
                                 <input
@@ -194,7 +192,6 @@ export default function OffersFacEtc() {
 
                           <div className="col-6">
                             <div className="grid-gap-col">
-                              {" "}
                               <div className="form-group">
                                 <label>hsnCode</label>
                                 <input
@@ -208,7 +205,6 @@ export default function OffersFacEtc() {
 
                           <div className="col-6">
                             <div className="grid-gap-col">
-                              {" "}
                               <div className="form-group">
                                 <label>Price</label>
                                 <input
@@ -285,7 +281,6 @@ export default function OffersFacEtc() {
 
                           <div className="col-6">
                             <div className="grid-gap-col">
-                              {" "}
                               <div className="form-group">
                                 <label>available</label>
                                 <input
@@ -319,7 +314,6 @@ export default function OffersFacEtc() {
 
                           <div className="col-6">
                             <div className="grid-gap-col">
-                              {" "}
                               <div className="form-group">
                                 <label>Quantity</label>
                                 <input
@@ -333,7 +327,6 @@ export default function OffersFacEtc() {
 
                           <div className="col-6">
                             <div className="grid-gap-col">
-                              {" "}
                               <div className="form-group">
                                 <label>Created At </label>
                                 <input
@@ -403,10 +396,8 @@ export default function OffersFacEtc() {
 
                   <div className="container-profile-input w-100">
                     <div className="title-contianer-input w-100">
-                      {" "}
                       <p> Product Images</p>
                       <div className="w-100 ">
-                        {" "}
                         {/* ----------------------- */}
                         <div className="row grid-gap-col">
                           <div className="col-12">
@@ -462,7 +453,7 @@ export default function OffersFacEtc() {
                   </div>
 
                   {/* <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                    {" "}
+                    
                     <button className="btn-edit " type="button">
                       <p className="cursor">Edit Offer</p>
                     </button>

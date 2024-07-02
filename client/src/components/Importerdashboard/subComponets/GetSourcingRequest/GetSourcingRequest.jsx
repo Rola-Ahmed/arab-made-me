@@ -436,7 +436,6 @@ export default function GetSourcingRequest() {
         {/* data section */}
 
         <div className=" data-container w-100 p-3">
-          {" "}
           <table className="table mb-0">
             {/* headers */}
 
@@ -504,7 +503,7 @@ export default function GetSourcingRequest() {
                             <p>
                               <span className="fw-bolder text-dark ">
                                 Keyword{index + 1}:
-                              </span>{" "}
+                              </span>
                               {value}
                             </p>
                           </div>
@@ -543,7 +542,6 @@ export default function GetSourcingRequest() {
                   </th>
 
                   <th className=" col-1 d-flex align-items-center justify-content-center  gap-icon-table">
-                    {" "}
                     <p
                       className="trate-sub-title view-more-details cursor"
                       title="view more details"

@@ -2,7 +2,6 @@ export default function DataStatus(props) {
   let { requestedData, errorsMsg, apiLoadingData } = props;
   return (
     <>
-      {" "}
       {requestedData?.length == 0 ? (
         <tr className="row">
           <div className="col-12  w-100 h-100 my-5 py-5">

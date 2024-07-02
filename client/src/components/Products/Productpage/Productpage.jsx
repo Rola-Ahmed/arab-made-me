@@ -158,7 +158,6 @@ function Productpage(props) {
               <Slider ref={sliderRef} {...settings}>
                 {productData?.productSlider?.map((item, index) => (
                   <div className="product-slide-img">
-                    {" "}
                     <img
                       src={`${baseUrl_IMG}/${item}`}
                       alt="Img"
@@ -245,14 +244,13 @@ function Productpage(props) {
               <div className="sku w-100">
                 <div className="avail">
                   <p className="skkkkku">
-                    Sku:<span>{productData?.sku}</span>{" "}
+                    Sku:<span>{productData?.sku}</span>
                   </p>
                   <p className="skkkkku paddig-ava">
-                    Availability:{" "}
+                    Availability:
                     <span className="stock">
-                      {" "}
                       {productData?.available ? "In Stock" : "Out of Stock"}
-                    </span>{" "}
+                    </span>
                   </p>
                 </div>
                 <div className="material  w-100">
@@ -307,7 +305,6 @@ function Productpage(props) {
               </div>
             </div>
             <div className="col-lg-2   h-100">
-              {" "}
               <div className="parent-buttons-container d-table-cell ">
                 <div className="d-flex align-items-center">
                   <div

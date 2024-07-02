@@ -214,7 +214,6 @@ function EmailActivatedMsg() {
         <div className=" container ">
           {Msg ? (
             <>
-              {" "}
               <div className=" cont-1 d-flex justify-content-center align-items-center mx-auto  ">
                 <div className=" sub-cont w-100">
                   <div className=" text-check ">
@@ -292,7 +291,6 @@ function EmailActivatedMsg() {
                       >
                         <div className="border-type p-3 ">
                           <div className="d-flex justify-content-start align-content-center gap-cont">
-                            {" "}
                             <div className="user-icon">
                               <img src={userIcon} alt="buyer icon" />
                             </div>
@@ -310,7 +308,7 @@ function EmailActivatedMsg() {
 
                     <div className="d-flex justify-content-center">
                       <small className="text-muted title-small">
-                        Already have an account?{" "}
+                        Already have an account?
                         <span className="fw-bolder"> Sign In</span>
                       </small>
                     </div>
@@ -327,7 +325,6 @@ function EmailActivatedMsg() {
                   </div>
 
                   <label className="text-title m-auto">
-                    {" "}
                     {errorMsg ?? "Expired Link"}
                   </label>
 

@@ -718,7 +718,7 @@ export default function AddProduct() {
               <div className="col-4">
                 <div className="form-group">
                   <label>
-                    Product Name <span className="text-danger">*</span>{" "}
+                    Product Name <span className="text-danger">*</span>
                   </label>
                   <input
                     className="form-control"
@@ -972,13 +972,11 @@ export default function AddProduct() {
 
                     {specialCharacteristicsArr?.map((dateSection, index) => (
                       <>
-                        {" "}
                         <div className="  timeline form-control checked d-flex justify-content-between align-content-center ">
                           <div className="row w-100 ">
-                            {" "}
                             <div className="form-group  col-6 col-6-50  ">
                               <label forhtml="specialCharKeyWord">
-                                Keyword {index + 2}*{" "}
+                                Keyword {index + 2}*
                               </label>
                               <input
                                 type="text"
@@ -1074,7 +1072,6 @@ export default function AddProduct() {
                           onClick={() => addnewSepcialChar()}
                         >
                           <button className="action-btn btn-1 " type="button">
-                            {" "}
                             add
                           </button>
                         </div>
@@ -1163,7 +1160,7 @@ export default function AddProduct() {
                                 <div>
                                   <p>{item?.pdfFile?.name}</p>
                                   <p className="">
-                                    {(item?.pdfFile?.size / 1024)?.toFixed(2)}{" "}
+                                    {(item?.pdfFile?.size / 1024)?.toFixed(2)}
                                     KB
                                   </p>
                                   {/* {imgloadin} */}
@@ -1208,7 +1205,7 @@ export default function AddProduct() {
               <div className="col-12">
                 <div className="form-group gap">
                   <label className="form-title">
-                    Upload coverImage <span className="text-danger">*</span>{" "}
+                    Upload coverImage <span className="text-danger">*</span>
                   </label>
                   <label
                     className="mb-0 drop-drag-area  p-5 text-center cursor w-100 "
@@ -1284,7 +1281,7 @@ export default function AddProduct() {
                                 <div>
                                   <p>{item?.pdfFile?.name}</p>
                                   <p className="">
-                                    {(item?.pdfFile?.size / 1024)?.toFixed(2)}{" "}
+                                    {(item?.pdfFile?.size / 1024)?.toFixed(2)}
                                     KB
                                   </p>
                                   {/* {imgloadin} */}

@@ -198,7 +198,6 @@ function FactoryEmailActivatedMsg() {
         <div className=" container ">
           {Msg ? (
             <>
-              {" "}
               <div className="sec-div d-flex justify-content-center">
                 <div className="frame-container-1 p-5">
                   <div className="cont-frame-1 ">

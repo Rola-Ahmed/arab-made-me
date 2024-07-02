@@ -45,7 +45,6 @@ function Hero() {
                 {/* <h2 className="text-2">Top Arabic Platform for Trading</h2> */}
                 {/* <h3 className="text-2">Leading Arab Factories B2B Private Label Sourcing Platform</h3> */}
                 <h3 className="text-2">
-                  {" "}
                   Arab B2B platform for Private Label services
                 </h3>
 
@@ -55,7 +54,6 @@ function Hero() {
                 </p>
               </div>
               <div className="w-100 mb-3 cont-5">
-                {" "}
                 <div className="input-group">
                   <button
                     className=" btn-warning dropdown-toggle btn-size"

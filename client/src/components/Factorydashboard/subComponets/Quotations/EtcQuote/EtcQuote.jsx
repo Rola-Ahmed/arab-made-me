@@ -13,7 +13,7 @@ import ImporterInfo from "components/Factorydashboard/Shared/ImporterInfo";
 import ContactBtn from "components/Factorydashboard/Shared/ContactBtn";
 
 export default function EtcQuote(props) {
-  let { requestedData ,isLogin} = props;
+  let { requestedData, isLogin } = props;
   let getMonthName = getDate;
   let navigate = useNavigate();
 
@@ -68,7 +68,6 @@ export default function EtcQuote(props) {
                     <div className="row  row-gap">
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Product Name</label>
                             <input
@@ -82,7 +81,6 @@ export default function EtcQuote(props) {
 
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Min Quantity</label>
                             <input
@@ -95,7 +93,6 @@ export default function EtcQuote(props) {
                       </div>
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Price</label>
                             <input
@@ -109,7 +106,6 @@ export default function EtcQuote(props) {
 
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Discounts</label>
                             <input
@@ -215,7 +211,6 @@ export default function EtcQuote(props) {
 
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Created At </label>
                             <input

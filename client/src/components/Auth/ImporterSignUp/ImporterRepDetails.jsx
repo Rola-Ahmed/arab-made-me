@@ -367,7 +367,6 @@ export default function ImporterRepDetails() {
                   </div>
 
                   <div className="col-12">
-                    {" "}
                     <div className="form-group gap">
                       <label className="form-title">
                         Representive full Name*
@@ -394,7 +393,6 @@ export default function ImporterRepDetails() {
                   </div>
 
                   <div className="col-12">
-                    {" "}
                     <div className="form-group gap">
                       <label className="form-title"> Representive Email*</label>
                       <input
@@ -422,7 +420,6 @@ export default function ImporterRepDetails() {
                   {/* ----------------------- */}
                   <div className="col-12">
                     <div className="grid-gap-col">
-                      {" "}
                       <div className="form-group gap">
                         <label className="form-title">
                           Representive Phone Number*
@@ -472,7 +469,6 @@ export default function ImporterRepDetails() {
                   {/* ---------------------- */}
                   <div className="col-12">
                     <div className="grid-gap-col">
-                      {" "}
                       <div className="form-group gap">
                         <label className="form-title">
                           Whatsapp Phone Number
@@ -655,7 +651,6 @@ export default function ImporterRepDetails() {
                   <div className="col-12">
                     <div className="form-group gap">
                       <label className="form-title">
-                        {" "}
                         Buyer Description <span className="text-danger">*</span>
                       </label>
                       <textarea

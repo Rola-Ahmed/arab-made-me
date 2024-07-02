@@ -283,7 +283,6 @@ function SourcingOfferExtraDetails() {
                   {/* <div className="row  row-gap"> */}
                   <div className="col-md-6 col-sm-12">
                     <div className="grid-gap-col">
-                      {" "}
                       <div className="form-group">
                         <label>Product Name</label>
                         <input
@@ -297,7 +296,6 @@ function SourcingOfferExtraDetails() {
 
                   <div className="col-md-6 col-sm-12">
                     <div className="grid-gap-col">
-                      {" "}
                       <div className="form-group">
                         <label>sku</label>
                         <input
@@ -311,7 +309,6 @@ function SourcingOfferExtraDetails() {
 
                   <div className="col-md-6 col-sm-12">
                     <div className="grid-gap-col">
-                      {" "}
                       <div className="form-group">
                         <label>hsnCode</label>
                         <input
@@ -325,7 +322,6 @@ function SourcingOfferExtraDetails() {
 
                   <div className="col-md-6 col-sm-12">
                     <div className="grid-gap-col">
-                      {" "}
                       <div className="form-group">
                         <label>Price</label>
                         <input
@@ -402,7 +398,6 @@ function SourcingOfferExtraDetails() {
 
                   <div className="col-md-6 col-sm-12">
                     <div className="grid-gap-col">
-                      {" "}
                       <div className="form-group">
                         <label>available</label>
                         <input
@@ -433,7 +428,6 @@ function SourcingOfferExtraDetails() {
 
                   <div className="col-md-6 col-sm-12">
                     <div className="grid-gap-col">
-                      {" "}
                       <div className="form-group">
                         <label>Quantity</label>
                         <input
@@ -447,7 +441,6 @@ function SourcingOfferExtraDetails() {
 
                   <div className="col-md-6 col-sm-12">
                     <div className="grid-gap-col">
-                      {" "}
                       <div className="form-group">
                         <label>Created At </label>
                         <input

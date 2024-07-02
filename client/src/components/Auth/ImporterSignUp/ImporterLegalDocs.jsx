@@ -426,7 +426,7 @@ function ImporterRepDetails() {
                                         <p className="">
                                           {(
                                             item?.pdfFile?.size / 1024
-                                          )?.toFixed(2)}{" "}
+                                          )?.toFixed(2)}
                                           KB
                                         </p>
                                         {/* {imgloadin} */}
@@ -463,11 +463,11 @@ function ImporterRepDetails() {
                     <div className="col-12">
                       <div className="form-group gap">
                         <label className="form-title">
-                          Legal Documents{" "}
+                          Legal Documents
                           <i
                             className="fa-solid fa-circle-info cursor"
                             title="descrption"
-                          ></i>{" "}
+                          ></i>
                         </label>
                         <label
                           className="mb-0 drop-drag-area  p-5 text-center cursor w-100 "
@@ -560,7 +560,7 @@ function ImporterRepDetails() {
                                         <p className="">
                                           {(
                                             item?.pdfFile?.size / 1024
-                                          )?.toFixed(2)}{" "}
+                                          )?.toFixed(2)}
                                           KB
                                         </p>
                                         {/* {imgloadin} */}

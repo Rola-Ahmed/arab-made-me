@@ -336,7 +336,6 @@ function CompanyMircoSiteDocs() {
                   <div className="w-100 vertical-line-after  mt-auto mb-auto"></div>
                 </div>
                 <p className="text-cont text-center">
-                  {" "}
                   Company Microsite Details
                 </p>
               </div>
@@ -474,7 +473,7 @@ function CompanyMircoSiteDocs() {
                                         <p className="">
                                           {(
                                             item?.pdfFile?.size / 1024
-                                          )?.toFixed(2)}{" "}
+                                          )?.toFixed(2)}
                                           KB
                                         </p>
                                         {/* {imgloadin} */}
@@ -610,7 +609,7 @@ function CompanyMircoSiteDocs() {
                                         <p className="">
                                           {(
                                             item?.pdfFile?.size / 1024
-                                          )?.toFixed(2)}{" "}
+                                          )?.toFixed(2)}
                                           KB
                                         </p>
                                         {/* {imgloadin} */}
@@ -746,7 +745,7 @@ function CompanyMircoSiteDocs() {
                                         <p className="">
                                           {(
                                             item?.pdfFile?.size / 1024
-                                          )?.toFixed(2)}{" "}
+                                          )?.toFixed(2)}
                                           KB
                                         </p>
                                         {/* {imgloadin} */}
@@ -787,7 +786,6 @@ function CompanyMircoSiteDocs() {
                     </div>
 
                     <div className="col-12">
-                      {" "}
                       <div className="form-group gap">
                         <label className="form-title">
                           Company Cover video

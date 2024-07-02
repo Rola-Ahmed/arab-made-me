@@ -505,10 +505,8 @@ export default function FactoryProfile() {
               <div id="EmailNotification"></div>
               <div className="container-profile-input w-100">
                 <div className="title-contianer-input w-100">
-                  {" "}
                   <p>Notifications</p>
                   <div className="w-100 ">
-                    {" "}
                     <div className="row grid-gap-col">
                       <div className="col-12">
                         <div className="d-flex justify-content-between align-items-center form-control">
@@ -567,19 +565,17 @@ export default function FactoryProfile() {
               </Modal.Header>
               {errorMsg?.response ? (
                 <div className="alert mt-3 p-2 alert-danger form-control text-dark">
-                  {errorMsg?.response}{" "}
+                  {errorMsg?.response}
                 </div>
               ) : (
                 ""
-              )}{" "}
+              )}
               <div className="w-100 ">
-                {" "}
                 <form onSubmit={AccountInfoValidation.handleSubmit}>
                   {/* <form> */}
                   <div className="row  row-gap">
                     <div className="col-6">
                       <div className="grid-gap-col">
-                        {" "}
                         <div className="form-group">
                           <label>Representive first Name</label>
                           <input
@@ -630,7 +626,6 @@ export default function FactoryProfile() {
 
                     <div className="col-6">
                       <div className="grid-gap-col">
-                        {" "}
                         <div className="form-group">
                           <label> Representive Email</label>
                           <input
@@ -658,7 +653,6 @@ export default function FactoryProfile() {
 
                     <div className="col-6">
                       <div className="grid-gap-col">
-                        {" "}
                         <div className="form-group">
                           <label>Representive Phone Number*</label>
                           <div className="input-group  h-100">
@@ -705,7 +699,6 @@ export default function FactoryProfile() {
                     </div>
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                      {" "}
                       <Button
                         variant="secondary"
                         type="button"
@@ -751,7 +744,6 @@ export default function FactoryProfile() {
 
           <div className="container-profile-input w-100">
             <div className="title-contianer-input w-100">
-              {" "}
               <Modal.Header closeButton>
                 <Modal.Title>
                   <p className="bg-info">Legal Documents</p>
@@ -759,13 +751,12 @@ export default function FactoryProfile() {
               </Modal.Header>
               {errorMsg?.response ? (
                 <div className="alert mt-3 p-2 alert-danger form-control text-dark">
-                  {errorMsg?.response}{" "}
+                  {errorMsg?.response}
                 </div>
               ) : (
                 ""
-              )}{" "}
+              )}
               <div className="w-100 ">
-                {" "}
                 <form
                   onSubmit={(e) => updateMedia(e, "legalDocs")}
                   encType="multipart/form-data"
@@ -773,7 +764,6 @@ export default function FactoryProfile() {
                   <div className="row  row-gap">
                     <div className="col-12">
                       <div className="grid-gap-col">
-                        {" "}
                         <div className="form-group">
                           {/*  */}
 
@@ -864,7 +854,7 @@ export default function FactoryProfile() {
                                           <p className="img-name">
                                             {(
                                               item?.pdfFile?.size / 1024
-                                            )?.toFixed(2)}{" "}
+                                            )?.toFixed(2)}
                                             KB
                                           </p>
                                           {/* {imgloadin} */}
@@ -902,7 +892,6 @@ export default function FactoryProfile() {
                     </div>
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                      {" "}
                       <Button
                         variant="secondary"
                         type="button"

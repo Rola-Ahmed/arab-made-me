@@ -81,11 +81,10 @@ function PrivateLabelNotificationList(props) {
             <div className="d-grid gap-2">
               <div className="d-grid gap-0">
                 <small className="d-block  lh-base text-truncate req-name-noti">
-                  {" "}
                   {item?.importer?.name} sent you a request
                 </small>
                 <small className="notifi-date text-muted  lh-base">
-                  <i class="fa-regular fa-clock"></i>{" "}
+                  <i class="fa-regular fa-clock"></i>
                   <span className="pe-1">
                     {getTimeDifference(item?.createdAt)}
                   </span>
@@ -95,7 +94,6 @@ function PrivateLabelNotificationList(props) {
               <button
                 className="order-btn-1 btn-2 w-100"
                 onClick={() => {
-                  
                   navigate(
                     `/factorydashboard/PrivateLabelReq/moreDetails?privateLabelId=${item?.id}`
                     // &factoryName=${item?.factory?.name}
@@ -135,8 +133,5 @@ PrivateLabelNotificationList.defaultProps = {
   handleDisplayPrevData: () => {}, // Provide a default function if needed
   totalPage: 0,
 };
-
-
-
 
 export default PrivateLabelNotificationList;

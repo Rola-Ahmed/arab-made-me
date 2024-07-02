@@ -867,10 +867,8 @@ export default function MircoSiteDash() {
               <div id="factoryimages"></div>
               <div className="container-profile-input w-100">
                 <div className="title-contianer-input w-100">
-                  {" "}
                   <p>Factory Banners</p>
                   <div className="w-100 h-100  ">
-                    {" "}
                     {/* ----------------------- */}
                     <div className="row  ">
                       <div className="col-12">
@@ -932,10 +930,8 @@ export default function MircoSiteDash() {
               <div id="certificates"></div>
               <div className="container-profile-input w-100">
                 <div className="title-contianer-input w-100">
-                  {" "}
                   <p>Certificates</p>
                   <div className="w-100 ">
-                    {" "}
                     {/* ----------------------- */}
                     <div className="row grid-gap-col">
                       <div className="col-12">
@@ -1000,10 +996,8 @@ export default function MircoSiteDash() {
               <div id="CoverVideo"></div>
               <div className="container-profile-input w-100">
                 <div className="title-contianer-input w-100">
-                  {" "}
                   <p>Cover Video</p>
                   <div className="w-100 ">
-                    {" "}
                     {/* ----------------------- */}
                     <div className="row grid-gap-col">
                       <div className="col-12 h-fit-content">
@@ -1310,7 +1304,6 @@ export default function MircoSiteDash() {
 
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Facatory Phone Number</label>
                             <div className="input-group  h-100">
@@ -1475,7 +1468,6 @@ export default function MircoSiteDash() {
                       </div>
 
                       <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                        {" "}
                         <Button
                           variant="secondary"
                           type="button"
@@ -1637,7 +1629,6 @@ export default function MircoSiteDash() {
                       </div>
 
                       <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                        {" "}
                         <Button
                           variant="secondary"
                           type="button"
@@ -1681,7 +1672,6 @@ export default function MircoSiteDash() {
 
           <div className="container-profile-input w-100">
             <div className="title-contianer-input w-100">
-              {" "}
               <Modal.Header closeButton>
                 <Modal.Title>
                   <p>Factory Banners</p>
@@ -1689,13 +1679,12 @@ export default function MircoSiteDash() {
               </Modal.Header>
               {errorMsg?.response ? (
                 <div className="alert mt-3 p-2 alert-danger form-control text-dark">
-                  {errorMsg?.response}{" "}
+                  {errorMsg?.response}
                 </div>
               ) : (
                 ""
-              )}{" "}
+              )}
               <div className="w-100 ">
-                {" "}
                 <form
                   onSubmit={(e) => updateMedia(e, "images")}
                   encType="multipart/form-data"
@@ -1703,7 +1692,6 @@ export default function MircoSiteDash() {
                   <div className="row  row-gap">
                     <div className="col-12">
                       <div className="grid-gap-col">
-                        {" "}
                         <div className="form-group">
                           {/*  */}
 
@@ -1789,7 +1777,7 @@ export default function MircoSiteDash() {
                                           <p className="img-name">
                                             {(
                                               item?.pdfFile?.size / 1024
-                                            )?.toFixed(2)}{" "}
+                                            )?.toFixed(2)}
                                             KB
                                           </p>
                                           {/* {imgloadin} */}
@@ -1831,7 +1819,6 @@ export default function MircoSiteDash() {
                     </div>
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                      {" "}
                       <Button
                         variant="secondary"
                         type="button"
@@ -1875,7 +1862,6 @@ export default function MircoSiteDash() {
 
           <div className="container-profile-input w-100">
             <div className="title-contianer-input w-100">
-              {" "}
               <Modal.Header closeButton>
                 <Modal.Title>
                   <p>Factory Logo</p>
@@ -1883,13 +1869,12 @@ export default function MircoSiteDash() {
               </Modal.Header>
               {errorMsg?.response ? (
                 <div className="alert mt-3 p-2 alert-danger form-control text-dark">
-                  {errorMsg?.response}{" "}
+                  {errorMsg?.response}
                 </div>
               ) : (
                 ""
-              )}{" "}
+              )}
               <div className="w-100 ">
-                {" "}
                 <form
                   onSubmit={(e) => updateMedia(e, "coverImage")}
                   encType="multipart/form-data"
@@ -1897,7 +1882,6 @@ export default function MircoSiteDash() {
                   <div className="row  row-gap">
                     <div className="col-12">
                       <div className="grid-gap-col">
-                        {" "}
                         <div className="form-group">
                           {/*  */}
 
@@ -1983,7 +1967,7 @@ export default function MircoSiteDash() {
                                           <p className="img-name">
                                             {(
                                               item?.pdfFile?.size / 1024
-                                            )?.toFixed(2)}{" "}
+                                            )?.toFixed(2)}
                                             KB
                                           </p>
                                           {/* {imgloadin} */}
@@ -2025,7 +2009,6 @@ export default function MircoSiteDash() {
                     </div>
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                      {" "}
                       <Button
                         variant="secondary"
                         type="button"
@@ -2070,7 +2053,6 @@ export default function MircoSiteDash() {
 
           <div className="container-profile-input w-100">
             <div className="title-contianer-input w-100">
-              {" "}
               <Modal.Header closeButton>
                 <Modal.Title>
                   <p>Certificates</p>
@@ -2078,13 +2060,12 @@ export default function MircoSiteDash() {
               </Modal.Header>
               {errorMsg?.response ? (
                 <div className="alert mt-3 p-2 alert-danger form-control text-dark">
-                  {errorMsg?.response}{" "}
+                  {errorMsg?.response}
                 </div>
               ) : (
                 ""
-              )}{" "}
+              )}
               <div className="w-100 ">
-                {" "}
                 <form
                   onSubmit={(e) => updateMedia(e, "qualityCertificates")}
                   encType="multipart/form-data"
@@ -2092,7 +2073,6 @@ export default function MircoSiteDash() {
                   <div className="row  row-gap">
                     <div className="col-12">
                       <div className="grid-gap-col">
-                        {" "}
                         <div className="form-group">
                           <label
                             className="mb-0 drop-drag-area  p-5 text-center cursor "
@@ -2172,7 +2152,7 @@ export default function MircoSiteDash() {
                                           <p className="img-name">
                                             {(
                                               item?.pdfFile?.size / 1024
-                                            )?.toFixed(2)}{" "}
+                                            )?.toFixed(2)}
                                             KB
                                           </p>
                                           {/* {imgloadin} */}
@@ -2214,7 +2194,6 @@ export default function MircoSiteDash() {
                     </div>
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                      {" "}
                       <Button
                         variant="secondary"
                         type="button"
@@ -2261,7 +2240,6 @@ export default function MircoSiteDash() {
 
           <div className="container-profile-input w-100">
             <div className="title-contianer-input w-100">
-              {" "}
               <Modal.Header closeButton>
                 <Modal.Title>
                   <p>Cover Video</p>
@@ -2269,13 +2247,12 @@ export default function MircoSiteDash() {
               </Modal.Header>
               {errorMsg?.response ? (
                 <div className="alert mt-3 p-2 alert-danger form-control text-dark">
-                  {errorMsg?.response}{" "}
+                  {errorMsg?.response}
                 </div>
               ) : (
                 ""
-              )}{" "}
+              )}
               <div className="w-100 ">
-                {" "}
                 <form
                   onSubmit={(e) => updateMedia(e, "coverVideo")}
                   encType="multipart/form-data"
@@ -2283,7 +2260,6 @@ export default function MircoSiteDash() {
                   <div className="row  row-gap">
                     <div className="col-12">
                       <div className="grid-gap-col">
-                        {" "}
                         <div className="form-group">
                           <label
                             className="mb-0 drop-drag-area  p-5 text-center cursor "
@@ -2366,7 +2342,7 @@ export default function MircoSiteDash() {
                                           <p className="img-name">
                                             {(
                                               item?.pdfFile?.size / 1024
-                                            )?.toFixed(2)}{" "}
+                                            )?.toFixed(2)}
                                             KB
                                           </p>
                                           {/* {imgloadin} */}
@@ -2408,7 +2384,6 @@ export default function MircoSiteDash() {
                     </div>
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                      {" "}
                       <Button
                         variant="secondary"
                         type="button"
@@ -2453,7 +2428,6 @@ export default function MircoSiteDash() {
 
           <div className="container-profile-input w-100">
             <div className="title-contianer-input w-100">
-              {" "}
               <Modal.Header closeButton>
                 <Modal.Title>
                   <p>Add New Team </p>
@@ -2461,13 +2435,12 @@ export default function MircoSiteDash() {
               </Modal.Header>
               {errorMsg?.response ? (
                 <div className="alert mt-3 p-2 alert-danger form-control text-dark">
-                  {errorMsg?.response}{" "}
+                  {errorMsg?.response}
                 </div>
               ) : (
                 ""
-              )}{" "}
+              )}
               <div className="w-100 ">
-                {" "}
                 <form
                   onSubmit={teamValidation.handleSubmit}
                   encType="multipart/form-data"
@@ -2516,7 +2489,6 @@ export default function MircoSiteDash() {
 
                     <div className="col-12">
                       <div className="grid-gap-col">
-                        {" "}
                         <div className="form-group">
                           <label
                             className="mb-0 drop-drag-area  p-5 text-center cursor "
@@ -2596,7 +2568,7 @@ export default function MircoSiteDash() {
                                           <p className="img-name">
                                             {(
                                               item?.pdfFile?.size / 1024
-                                            )?.toFixed(2)}{" "}
+                                            )?.toFixed(2)}
                                             KB
                                           </p>
                                           {/* {imgloadin} */}
@@ -2638,7 +2610,6 @@ export default function MircoSiteDash() {
                     </div>
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                      {" "}
                       <Button
                         variant="secondary"
                         type="button"
@@ -2692,7 +2663,6 @@ export default function MircoSiteDash() {
               <Modal.Header closeButton></Modal.Header>
 
               <div className="w-100 ">
-                {" "}
                 <div className="row row-gap">
                   <img
                     src={showImagePop.imagePath}

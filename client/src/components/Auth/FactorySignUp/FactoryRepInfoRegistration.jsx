@@ -272,7 +272,6 @@ function FactoryRepInfoRegistration() {
                   <div className="w-100 vertical-line  mt-auto mb-auto"></div>
                 </div>
                 <p className="text-cont text-center">
-                  {" "}
                   Company Microsite Details
                 </p>
               </div>
@@ -316,10 +315,9 @@ function FactoryRepInfoRegistration() {
                   <div className="row gap-row-2">
                     <div className="col-12">
                       <div className="grid-gap-col">
-                        {" "}
                         <div className="form-group gap">
                           <label className="form-title">
-                            Representive first Name{" "}
+                            Representive first Name
                             <span className="text-danger"> * </span>
                           </label>
                           <input
@@ -346,10 +344,9 @@ function FactoryRepInfoRegistration() {
 
                     <div className="col-12">
                       <div className="grid-gap-col">
-                        {" "}
                         <div className="form-group gap">
                           <label className="form-title">
-                            Representive last Name{" "}
+                            Representive last Name
                             <span className="text-danger"> * </span>
                           </label>
                           <input
@@ -376,11 +373,9 @@ function FactoryRepInfoRegistration() {
 
                     <div className="col-12">
                       <div className="grid-gap-col">
-                        {" "}
                         <div className="form-group gap">
                           <label className="form-title">
-                            {" "}
-                            Representive Email{" "}
+                            Representive Email
                             <span className="text-danger"> * </span>
                           </label>
                           <input
@@ -409,11 +404,10 @@ function FactoryRepInfoRegistration() {
                     {/* ----------------------- */}
                     <div className="col-12">
                       <div className="grid-gap-col">
-                        {" "}
                         <div className="form-group gap">
                           <label className="form-title">
-                            Representive Phone Number{" "}
-                            <span className="text-danger"> * </span>{" "}
+                            Representive Phone Number
+                            <span className="text-danger"> * </span>
                           </label>
                           <div className="input-group  h-100">
                             <div className="input-group-prepend">

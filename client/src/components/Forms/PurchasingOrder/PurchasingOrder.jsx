@@ -133,7 +133,7 @@ function PurchasingOrder() {
     try {
       let config = {
         method: "get",
-        url: `${baseUrl}/products/${productId !== null && productId }`,
+        url: `${baseUrl}/products/${productId !== null && productId}`,
         // url: `${baseUrl}/factories/products/2`,
       };
 
@@ -789,7 +789,7 @@ function PurchasingOrder() {
             <div className="input-content ">
               {errorMsg?.response ? (
                 <div className="alert mt-3 p-2 alert-danger form-control text-dark">
-                  {errorMsg?.response}{" "}
+                  {errorMsg?.response}
                 </div>
               ) : (
                 ""
@@ -1013,13 +1013,11 @@ function PurchasingOrder() {
 
                       {timelineArr?.map((dateSection, index) => (
                         <>
-                          {" "}
                           <div className=" timeline form-control checked d-flex justify-content-between align-content-center ">
                             <div className="row w-100   mx-auto">
-                              {" "}
                               <div className="form-group  col-xxl-6 col-xl-6   col-lg-6 col-md-12 col-sm-12   ">
                                 <label forhtml="startTimeLine">
-                                  Date {index + 2}*{" "}
+                                  Date {index + 2}*
                                 </label>
                                 <input
                                   type="datetime-local"
@@ -1114,7 +1112,6 @@ function PurchasingOrder() {
                             onClick={() => addnewSepcialChar()}
                           >
                             <button className="action-btn btn-1 " type="button">
-                              {" "}
                               add
                             </button>
                           </div>

@@ -5,10 +5,8 @@ export default function FactoryInforamtion(props) {
       <div id="FactoryInforamtion"></div>
       <div className="container-profile-input w-100">
         <div className="title-contianer-input w-100">
-          {" "}
           <p>Factory Inforamtion</p>
           <div className="w-100 ">
-            {" "}
             <div className="row  row-gap">
               <div className="col-6">
                 <div className="grid-gap-col">

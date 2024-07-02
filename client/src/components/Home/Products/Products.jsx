@@ -176,7 +176,6 @@ function Products(title) {
           <div className="header d-flex justify-content-between">
             <div>
               <h2 className="header-Title">
-                {" "}
                 {title?.title ? title?.title : "Products"}
               </h2>
               <p>Everything you need to know about the product and billing.</p>

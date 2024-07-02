@@ -115,14 +115,11 @@ export default function Password(props) {
       <div id="PasswordChange"></div>
       <div className="container-profile-input w-100">
         <div className="title-contianer-input w-100">
-          {" "}
           <p>Password Change</p>
           <div className="w-100 ">
-            {" "}
             <div className="row  row-gap">
               <div className="col-12">
                 <div className="grid-gap-col">
-                  {" "}
                   <div className="form-group">
                     <label>Change Password</label>
                     <input
@@ -174,7 +171,6 @@ export default function Password(props) {
 
           <div className="container-profile-input w-100">
             <div className="title-contianer-input w-100">
-              {" "}
               <Modal.Header closeButton>
                 <Modal.Title>
                   <p>Password Change</p>
@@ -182,18 +178,16 @@ export default function Password(props) {
               </Modal.Header>
               {errorMsg?.response ? (
                 <div className="alert mt-3 p-2 alert-danger form-control text-dark">
-                  {errorMsg?.response}{" "}
+                  {errorMsg?.response}
                 </div>
               ) : (
                 ""
-              )}{" "}
+              )}
               <div className="w-100 ">
-                {" "}
                 <form onSubmit={formPasswordValidation.handleSubmit}>
                   <div className="row  row-gap">
                     <div className="col-12">
                       <div className="grid-gap-col">
-                        {" "}
                         <div className="form-group">
                           <label>Old Password</label>
 
@@ -250,7 +244,6 @@ export default function Password(props) {
 
                     <div className="col-12">
                       <div className="grid-gap-col">
-                        {" "}
                         <div className="form-group">
                           <label>Change Password</label>
 
@@ -362,7 +355,6 @@ export default function Password(props) {
                     </div>
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                      {" "}
                       <Button
                         variant="secondary"
                         type="button"

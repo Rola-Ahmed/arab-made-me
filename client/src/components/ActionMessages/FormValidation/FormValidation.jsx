@@ -58,14 +58,13 @@ export default function FormValidation(props) {
 
                     <div className="d-flex justify-content-center">
                       <small className="text-muted title-small">
-                        Already have an account?{" "}
+                        Already have an account?
                         <span
                           className="fw-bolder"
                           onClick={() => {
                             navigate("/signIn");
                           }}
                         >
-                          {" "}
                           Sign In
                         </span>
                       </small>

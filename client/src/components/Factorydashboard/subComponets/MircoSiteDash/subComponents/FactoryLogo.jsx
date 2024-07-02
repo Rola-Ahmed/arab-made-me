@@ -5,10 +5,8 @@ export default function FactoryLogo(props) {
       <div id="factorylogo"></div>
       <div className="container-profile-input w-100 ">
         <div className="title-contianer-input w-100">
-          {" "}
           <p>factory logo </p>
           <div className="w-100 ">
-            {" "}
             <div className="row  row-gap">
               <div className="col-12">
                 <div className="grid-gap-col position-relative ">

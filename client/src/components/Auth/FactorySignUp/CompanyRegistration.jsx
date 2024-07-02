@@ -319,7 +319,6 @@ export default function CompanyRegistration() {
                   <div className="w-100 vertical-line-after  mt-auto mb-auto"></div>
                 </div>
                 <p className="text-cont text-center">
-                  {" "}
                   Company Microsite Details
                 </p>
 
@@ -406,7 +405,6 @@ export default function CompanyRegistration() {
 
                     <div className="col-12">
                       <div className="grid-gap-col">
-                        {" "}
                         <div className="form-group gap">
                           <label className="form-title">
                             Company Phone Number
@@ -454,7 +452,6 @@ export default function CompanyRegistration() {
 
                     <div className="col-12">
                       <div className="grid-gap-col">
-                        {" "}
                         <div className="form-group gap">
                           <label className="form-title">
                             Whatsapp Phone Number

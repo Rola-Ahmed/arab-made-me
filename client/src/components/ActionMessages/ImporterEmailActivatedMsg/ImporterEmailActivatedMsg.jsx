@@ -197,13 +197,11 @@ function ImporterEmailActivatedMsg() {
 
   return (
     <>
-      
       <section className="register-msg ">
         {/* <div className="container "> */}
         <div className=" container ">
           {Msg ? (
             <>
-              {" "}
               <div className="sec-div d-flex justify-content-center">
                 <div className="frame-container-1 p-5">
                   <div className="cont-frame-1 ">
@@ -261,7 +259,6 @@ function ImporterEmailActivatedMsg() {
           )}
         </div>
       </section>
-
     </>
   );
 }

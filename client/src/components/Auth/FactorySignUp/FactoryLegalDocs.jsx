@@ -484,7 +484,6 @@ function FactoryLegalDocs() {
                   <div className="w-100 vertical-line  mt-auto mb-auto"></div>
                 </div>
                 <p className="text-cont text-center">
-                  {" "}
                   Company Microsite Details
                 </p>
 
@@ -644,11 +643,11 @@ function FactoryLegalDocs() {
                     <div className="col-12">
                       <div className="form-group gap">
                         <label className="form-title">
-                          Legal Documents{" "}
+                          Legal Documents
                           <i
                             className="fa-solid fa-circle-info cursor"
                             title="descrption"
-                          ></i>{" "}
+                          ></i>
                         </label>
                         <label
                           className="mb-0 drop-drag-area  p-5 text-center cursor w-100 "
@@ -741,7 +740,7 @@ function FactoryLegalDocs() {
                                         <p className="">
                                           {(
                                             item?.pdfFile?.size / 1024
-                                          )?.toFixed(2)}{" "}
+                                          )?.toFixed(2)}
                                           KB
                                         </p>
                                         {/* {imgloadin} */}

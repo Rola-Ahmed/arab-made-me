@@ -178,7 +178,6 @@ export default function CustomProductReqEtc() {
                     <div className="row  row-gap">
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Representative Name</label>
                             <input
@@ -249,7 +248,6 @@ export default function CustomProductReqEtc() {
                     <div className="row  row-gap">
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Factory Name</label>
                             <input
@@ -318,7 +316,6 @@ export default function CustomProductReqEtc() {
                     <div className="row  row-gap">
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Product Name</label>
                             <input
@@ -345,7 +342,6 @@ export default function CustomProductReqEtc() {
 
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Created At </label>
                             <input
@@ -428,10 +424,8 @@ export default function CustomProductReqEtc() {
               {PosData?.docs?.length > 0 && (
                 <div className="container-profile-input w-100">
                   <div className="title-contianer-input w-100">
-                    {" "}
                     <p> Documents</p>
                     <div className="w-100 ">
-                      {" "}
                       {/* ----------------------- */}
                       <div className="row grid-gap-col">
                         <div className="col-12">

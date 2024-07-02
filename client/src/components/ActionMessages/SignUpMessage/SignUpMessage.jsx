@@ -25,16 +25,14 @@ function SignUpMessage() {
                 <div className="input-content">
                   <div className="form-1 row ">
                     <label className="text-muted user-text-sub text-center w-100 d-block ">
-                      {" "}
                       Thank you for creating an account with arabmade! You
                       should shortly receive an email with the activation link
-                      at{" "}
+                      at
                       <span className="text-dark fw-bold">{emailAddress} </span>
                       {/* within 5 minutes to finalize your account
                       creation. */}
                     </label>
                     <label className="text-muted user-text-sub text-center w-100 d-block ">
-                      {" "}
                       Nothing in Sight? Check your Spam Folder.
                     </label>
 
@@ -52,7 +50,6 @@ function SignUpMessage() {
           </div>
         </div>
       </section>
-
     </>
   );
 }

@@ -462,7 +462,7 @@ function Contact() {
                     </button>
                   ) : (
                     <button type="submit" className="contact-btn">
-                      Send{" "}
+                      Send
                     </button>
                   )}
                 </div>

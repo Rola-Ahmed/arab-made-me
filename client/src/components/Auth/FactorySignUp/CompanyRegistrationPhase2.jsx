@@ -249,7 +249,6 @@ function CompanyRegistrationPhase2() {
                   <div className="w-100 vertical-line-after  mt-auto mb-auto"></div>
                 </div>
                 <p className="text-cont text-center">
-                  {" "}
                   Company Microsite Details
                 </p>
               </div>

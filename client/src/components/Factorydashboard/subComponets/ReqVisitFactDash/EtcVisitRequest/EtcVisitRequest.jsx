@@ -201,7 +201,6 @@ export default function EtcVisitRequest() {
                     <div className="row  row-gap">
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Factory Name</label>
                             <input
@@ -286,7 +285,6 @@ export default function EtcVisitRequest() {
                     <div className="row  row-gap">
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Representative Name</label>
                             <input
@@ -355,7 +353,6 @@ export default function EtcVisitRequest() {
 
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Visit Date </label>
                             <input
@@ -369,7 +366,6 @@ export default function EtcVisitRequest() {
 
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Created At </label>
                             <input

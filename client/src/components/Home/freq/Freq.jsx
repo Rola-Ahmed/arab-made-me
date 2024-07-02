@@ -48,7 +48,7 @@ function Freq(props) {
                   aria-expanded="false"
                   aria-controls="collapseTwo"
                 >
-                  Can I change my plan later?{" "}
+                  Can I change my plan later?
                 </button>
               </h2>
               <div
@@ -64,7 +64,7 @@ function Freq(props) {
                   classes control the overall appearance, as well as the showing
                   and hiding via CSS transitions. You can modify any of this
                   with custom CSS or overriding our default variables. It's also
-                  worth noting that just about any HTML can go within the{" "}
+                  worth noting that just about any HTML can go within the
                   <code>.accordion-body</code>, though the transition does limit
                   overflow.
                 </div>
@@ -80,7 +80,7 @@ function Freq(props) {
                   aria-expanded="false"
                   aria-controls="collapseThree"
                 >
-                  What is your cancellation policy?{" "}
+                  What is your cancellation policy?
                 </button>
               </h2>
               <div
@@ -96,7 +96,7 @@ function Freq(props) {
                   classes control the overall appearance, as well as the showing
                   and hiding via CSS transitions. You can modify any of this
                   with custom CSS or overriding our default variables. It's also
-                  worth noting that just about any HTML can go within the{" "}
+                  worth noting that just about any HTML can go within the
                   <code>.accordion-body</code>, though the transition does limit
                   overflow.
                 </div>
@@ -128,7 +128,7 @@ function Freq(props) {
                   classes control the overall appearance, as well as the showing
                   and hiding via CSS transitions. You can modify any of this
                   with custom CSS or overriding our default variables. It's also
-                  worth noting that just about any HTML can go within the{" "}
+                  worth noting that just about any HTML can go within the
                   <code>.accordion-body</code>, though the transition does limit
                   overflow.
                 </div>
@@ -144,7 +144,7 @@ function Freq(props) {
                   aria-expanded="false"
                   aria-controls="collapseFive"
                 >
-                  How does billing work?{" "}
+                  How does billing work?
                 </button>
               </h2>
               <div
@@ -160,7 +160,7 @@ function Freq(props) {
                   classes control the overall appearance, as well as the showing
                   and hiding via CSS transitions. You can modify any of this
                   with custom CSS or overriding our default variables. It's also
-                  worth noting that just about any HTML can go within the{" "}
+                  worth noting that just about any HTML can go within the
                   <code>.accordion-body</code>, though the transition does limit
                   overflow.
                 </div>
@@ -192,7 +192,7 @@ function Freq(props) {
                   classes control the overall appearance, as well as the showing
                   and hiding via CSS transitions. You can modify any of this
                   with custom CSS or overriding our default variables. It's also
-                  worth noting that just about any HTML can go within the{" "}
+                  worth noting that just about any HTML can go within the
                   <code>.accordion-body</code>, though the transition does limit
                   overflow.
                 </div>

@@ -161,13 +161,11 @@ function AllSourcingOffers() {
         <div className="row  row-sourcing pt-5">
           <div className="row">
             <div className="col-12">
-              {" "}
               <div className="border-container-2">
                 <table class="table table-striped align-middle ">
                   <thead>
                     <tr className=" bg-header">
                       <th scope="col" className="">
-                        {" "}
                         <div className="d-flex  align-items-center justify-contnet-center ">
                           <p className="title-3 text-muted">Product</p>
                         </div>
@@ -238,7 +236,6 @@ function AllSourcingOffers() {
                           </div>
                         </td>
                         <td className="">
-                          {" "}
                           <p className="title">
                             {getMonthName(item?.createdAt?.split("T")?.[0])}
                           </p>

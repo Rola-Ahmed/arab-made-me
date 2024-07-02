@@ -12,10 +12,8 @@ export default function SubscriptionPlan() {
       <div id="subscriptionPlan"></div>
       <div className="container-profile-input w-100">
         <div className="title-contianer-input w-100">
-          {" "}
           <p>subscription Plan</p>
           <div className="w-100 ">
-            {" "}
             <div className="row">
               {/* subscription plan */}
               <div className="col-4  ">
@@ -44,7 +42,6 @@ export default function SubscriptionPlan() {
                   <label
                     className={`active plan-title titleBg activeFree text-center sub-title  py-1`}
                   >
-                    {" "}
                     Free
                   </label>
 
@@ -59,7 +56,6 @@ export default function SubscriptionPlan() {
                     ))}
 
                     <div className="d-flex justify-content-center align-items-center w-100  h-100">
-                      {" "}
                       <button className={`plan-btn btn-active p-1  m-1  `}>
                         <p> Current Plan</p>
                       </button>
@@ -74,7 +70,6 @@ export default function SubscriptionPlan() {
                   <label
                     className={` plan-title titleBg standard text-center sub-title  py-1`}
                   >
-                    {" "}
                     Standard
                   </label>
                   <div className={`plan-gap`}>
@@ -88,7 +83,6 @@ export default function SubscriptionPlan() {
                     ))}
 
                     <div className="d-flex justify-content-center align-items-center w-100  h-100">
-                      {" "}
                       <button className={`plan-btn p-1  m-1  `}>
                         <p> Upgrade now</p>
                       </button>
@@ -103,7 +97,6 @@ export default function SubscriptionPlan() {
                   <label
                     className={` plan-title  titleBg Gold text-center sub-title  py-1`}
                   >
-                    {" "}
                     gold
                   </label>
                   <div className={`plan-gap`}>
@@ -117,7 +110,6 @@ export default function SubscriptionPlan() {
                     ))}
 
                     <div className="d-flex justify-content-center align-items-center w-100  h-100">
-                      {" "}
                       <button className={`plan-btn p-1  m-1  `}>
                         <p> Upgrade now</p>
                       </button>
@@ -132,7 +124,6 @@ export default function SubscriptionPlan() {
                   <label
                     className={`plan-title titleBg Premium text-center sub-title  py-1`}
                   >
-                    {" "}
                     Premium
                   </label>
                   <div className={`plan-gap`}>
@@ -146,7 +137,6 @@ export default function SubscriptionPlan() {
                     ))}
 
                     <div className="d-flex justify-content-center align-items-center w-100  h-100">
-                      {" "}
                       <button className={`plan-btn p-1  m-1  `}>
                         <p> Upgrade now</p>
                       </button>

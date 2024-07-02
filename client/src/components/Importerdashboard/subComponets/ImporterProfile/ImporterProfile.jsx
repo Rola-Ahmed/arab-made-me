@@ -33,7 +33,6 @@ export default function ImporterProfile() {
   const [isLoading, setIsLoading] = useState(false);
   const [allSectors, setAllSectors] = useState([]);
   const [errorMsg, setErrorMsg] = useState();
-  
 
   // slider setting
   const [allowEmailNotification, setAllowEmailNotification] = useState();
@@ -1093,7 +1092,6 @@ export default function ImporterProfile() {
                     <div className="row  row-gap">
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Business Account</label>
                             <input
@@ -2362,7 +2360,6 @@ export default function ImporterProfile() {
                   <div className="row  row-gap">
                     <div className="col-12">
                       <div className="grid-gap-col">
-                        {" "}
                         <div className="form-group">
                           {/*  */}
 
@@ -2453,7 +2450,7 @@ export default function ImporterProfile() {
                                           <p className="img-name">
                                             {(
                                               item?.pdfFile?.size / 1024
-                                            )?.toFixed(2)}{" "}
+                                            )?.toFixed(2)}
                                             KB
                                           </p>
                                           {/* {imgloadin} */}
@@ -2565,7 +2562,6 @@ export default function ImporterProfile() {
 
           <div className="container-profile-input w-100">
             <div className="title-contianer-input w-100">
-              {" "}
               <Modal.Header closeButton>
                 <Modal.Title>
                   <p>Profile Picture</p>
@@ -2573,13 +2569,12 @@ export default function ImporterProfile() {
               </Modal.Header>
               {errorMsg?.response ? (
                 <div className="alert mt-3 p-2 alert-danger form-control text-dark">
-                  {errorMsg?.response}{" "}
+                  {errorMsg?.response}
                 </div>
               ) : (
                 ""
-              )}{" "}
+              )}
               <div className="w-100 ">
-                {" "}
                 <form
                   onSubmit={(e) => updateMedia(e)}
                   encType="multipart/form-data"
@@ -2587,7 +2582,6 @@ export default function ImporterProfile() {
                   <div className="row  row-gap">
                     <div className="col-12">
                       <div className="grid-gap-col">
-                        {" "}
                         <div className="form-group">
                           <label
                             className="mb-0 drop-drag-area  p-5 text-center cursor "
@@ -2667,7 +2661,7 @@ export default function ImporterProfile() {
                                           <p className="img-name">
                                             {(
                                               item?.pdfFile?.size / 1024
-                                            )?.toFixed(2)}{" "}
+                                            )?.toFixed(2)}
                                             KB
                                           </p>
                                           {/* {imgloadin} */}
@@ -2709,7 +2703,6 @@ export default function ImporterProfile() {
                     </div>
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                      {" "}
                       <Button
                         variant="secondary"
                         type="button"

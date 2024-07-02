@@ -22,10 +22,8 @@ export default function LegalDocuments(props) {
       <div id="legalDocs"></div>
       <div className="container-profile-input w-100">
         <div className="title-contianer-input w-100">
-          {" "}
           <p className="">Legal Documents</p>
           <div className="w-100 ">
-            {" "}
             {/* ----------------------- */}
             <div className="row grid-gap-col">
               <div className="col-12">
@@ -114,7 +112,6 @@ export default function LegalDocuments(props) {
               </Modal.Header>
 
               <div className="w-100 ">
-                {" "}
                 <div className="row row-gap">
                   {showImagePop.imagePath?.includes("pdf") ? (
                     <embed

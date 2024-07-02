@@ -40,8 +40,6 @@ export default function ChatList() {
 
   // utils function
 
- 
-
   async function fetchFactoriesData() {
     setapiLoadingData(true);
 
@@ -173,7 +171,6 @@ export default function ChatList() {
     fetchDataLenght();
   }, [filter]);
 
- 
   return (
     <div className="m-4 order-section ">
       {/* section 1 */}
@@ -194,10 +191,7 @@ export default function ChatList() {
         {/* search filter section */}
         {/* <div className=" search-container d-flex justify-content-between align-items-center p-3"> */}
         <div className="input-group ">
-          <div
-            className="input-group-prepend  cursor"
-            
-          >
+          <div className="input-group-prepend  cursor">
             <span className="input-group-text bg-white icon-search-container pe-0 cursor">
               <i className="fa-solid fa-magnifying-glass icon-search"></i>
             </span>
@@ -207,14 +201,12 @@ export default function ChatList() {
             className="form-control input-search "
             placeholder="Search by product name"
             id="formsFilter"
-         
           />
         </div>
         {/* </div> */}
         {/* data section */}
 
         <div className=" data-container w-100 p-3">
-          {" "}
           <table className="table mb-0">
             {/* headers */}
 
@@ -268,7 +260,7 @@ export default function ChatList() {
                   </th>
                   <th className=" col-2 d-flex align-items-center justify-content-center gap-icon-table">
                     <small className="notifi-date text-muted  lh-base">
-                      <i class="fa-regular fa-clock"></i>{" "}
+                      <i class="fa-regular fa-clock"></i>
                       <span className="pe-1">
                         {getTimeDifference(poItem?.createdAt)}
                       </span>

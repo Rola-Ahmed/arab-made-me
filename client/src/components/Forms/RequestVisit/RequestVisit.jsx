@@ -69,8 +69,7 @@ function RequestVisit() {
 
     visitDate: "",
     visitPurpose: "",
-    visitType:"offline"
-    
+    visitType: "offline",
   };
 
   // if i used this or no it will work
@@ -231,7 +230,7 @@ function RequestVisit() {
             <div className="input-content ">
               {errorMsg?.response ? (
                 <div className="alert mt-3 p-2 alert-danger form-control text-dark">
-                  {errorMsg?.response}{" "}
+                  {errorMsg?.response}
                 </div>
               ) : (
                 ""
@@ -424,7 +423,7 @@ function RequestVisit() {
                               }
                             }}
                           >
-                            Send{" "}
+                            Send
                           </button>
                         )}
                       </div>

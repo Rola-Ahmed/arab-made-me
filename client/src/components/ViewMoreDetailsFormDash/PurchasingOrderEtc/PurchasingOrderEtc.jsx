@@ -175,7 +175,6 @@ export default function PurchasingOrderEtc() {
                     <div className="row  row-gap">
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Representative Name</label>
                             <input
@@ -246,7 +245,6 @@ export default function PurchasingOrderEtc() {
                     <div className="row  row-gap">
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Factory Name</label>
                             <input
@@ -315,7 +313,6 @@ export default function PurchasingOrderEtc() {
                     <div className="row  row-gap">
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Product Name</label>
                             <input
@@ -420,7 +417,6 @@ export default function PurchasingOrderEtc() {
 
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Created At </label>
                             <input
@@ -451,7 +447,6 @@ export default function PurchasingOrderEtc() {
                             <div className="row  row-gap">
                               <div className="col-6">
                                 <div className="grid-gap-col">
-                                  {" "}
                                   <div className="form-group">
                                     <label>Date {index + 1}</label>
                                     <input
@@ -469,7 +464,6 @@ export default function PurchasingOrderEtc() {
 
                               <div className="col-6">
                                 <div className="grid-gap-col">
-                                  {" "}
                                   <div className="form-group">
                                     <label forhtml="specialCharDesc">
                                       Quantity {index + 1}
@@ -545,10 +539,8 @@ export default function PurchasingOrderEtc() {
               {PosData?.docs?.length > 0 && (
                 <div className="container-profile-input w-100">
                   <div className="title-contianer-input w-100">
-                    {" "}
                     <p> Documents</p>
                     <div className="w-100 ">
-                      {" "}
                       {/* ----------------------- */}
                       <div className="row grid-gap-col">
                         <div className="col-12">
@@ -603,7 +595,6 @@ export default function PurchasingOrderEtc() {
               )}
 
               <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                {" "}
                 {/* <button
                   // submitButton bg-white border-btn
                   className="btn-edit d-none"

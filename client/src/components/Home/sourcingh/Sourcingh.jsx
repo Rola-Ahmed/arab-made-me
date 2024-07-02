@@ -172,19 +172,19 @@ function Sourcingh() {
                       <div className=" ">
                         <h5 className="sour-2">{item?.productName} </h5>
                         <p className="sourcing horizontal-text-handler ">
-                          {item?.productDescription}{" "}
+                          {item?.productDescription}
                         </p>
                         <p className="mb-1">
-                          <span className="fw-bold">Requested by</span>{" "}
+                          <span className="fw-bold">Requested by</span>
                           {item?.importerName}
                         </p>
                         {/* <div className="mb-1 d-flex"> */}
                         <p className="mb-1 me-3">
-                          <span className="fw-bold">Quantity</span>{" "}
+                          <span className="fw-bold">Quantity</span>
                           {item?.quantity}
                         </p>
                         <p className="mb-1">
-                          <span className="fw-bold">Deadline</span>{" "}
+                          <span className="fw-bold">Deadline</span>
                           {getMonthName(item?.deadline?.split("T")?.[0])}
                         </p>
 
@@ -194,13 +194,12 @@ function Sourcingh() {
                             Sourcing Countries
                           </span>
                           <span className="sourcing horizontal-text-handler-1">
-                            {" "}
                             {item?.preferredCountries?.length === 0
                               ? "All Countries"
                               : item?.preferredCountries
                                   ?.map((countryitem) => countryitem)
                                   .join(", ")}
-                          </span>{" "}
+                          </span>
                         </p>
                       </div>
                     </div>
@@ -222,7 +221,6 @@ function Sourcingh() {
                             className="req-btn btn-color me-2 req-btn cursor"
                             type="button"
                           >
-                            {" "}
                             <i className="fas fa-spinner fa-spin text-white"></i>
                           </button>
                         ) : (
@@ -281,7 +279,7 @@ function Sourcingh() {
                             );
                           }}
                         >
-                          More Details{" "}
+                          More Details
                         </button>
                       </div>
                     </div>

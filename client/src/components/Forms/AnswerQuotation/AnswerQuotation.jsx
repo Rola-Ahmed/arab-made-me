@@ -348,7 +348,7 @@ export default function AnswerQuotation() {
             <div className="input-content ">
               {errorMsg?.response ? (
                 <div className="alert mt-3 p-2 alert-danger form-control text-dark">
-                  {errorMsg?.response}{" "}
+                  {errorMsg?.response}
                 </div>
               ) : (
                 ""

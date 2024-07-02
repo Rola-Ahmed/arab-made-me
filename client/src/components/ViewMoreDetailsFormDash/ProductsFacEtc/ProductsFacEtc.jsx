@@ -112,7 +112,7 @@ export default function ProductsFacEtc() {
                     <div className="row  row-gap">
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
+                          
                           <div className="form-group">
                             <label>Factory Name</label>
                             <input
@@ -197,7 +197,6 @@ export default function ProductsFacEtc() {
                     <div className="row  row-gap">
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Product Name</label>
                             <input
@@ -211,7 +210,6 @@ export default function ProductsFacEtc() {
 
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>sku</label>
                             <input
@@ -225,7 +223,6 @@ export default function ProductsFacEtc() {
 
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>hsnCode</label>
                             <input
@@ -239,7 +236,6 @@ export default function ProductsFacEtc() {
 
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Price</label>
                             <input
@@ -253,7 +249,6 @@ export default function ProductsFacEtc() {
 
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>available</label>
                             <input
@@ -269,7 +264,6 @@ export default function ProductsFacEtc() {
 
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Min Order Quantity</label>
                             <input
@@ -283,7 +277,6 @@ export default function ProductsFacEtc() {
 
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Max Order Quantity</label>
                             <input
@@ -297,7 +290,6 @@ export default function ProductsFacEtc() {
 
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Guarantee</label>
                             <input
@@ -311,7 +303,6 @@ export default function ProductsFacEtc() {
 
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Average Rate</label>
                             <input
@@ -325,7 +316,6 @@ export default function ProductsFacEtc() {
 
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Created At </label>
                             <input
@@ -396,10 +386,8 @@ export default function ProductsFacEtc() {
               {/* {PosData?.images !== null && ( */}
               <div className="container-profile-input w-100">
                 <div className="title-contianer-input w-100">
-                  {" "}
                   <p> Product Banners</p>
                   <div className="w-100 ">
-                    {" "}
                     {/* ----------------------- */}
                     <div className="row grid-gap-col">
                       <div className="col-12">
@@ -453,10 +441,8 @@ export default function ProductsFacEtc() {
 
               <div className="container-profile-input w-100">
                 <div className="title-contianer-input w-100">
-                  {" "}
                   <p> Image</p>
                   <div className="w-100 ">
-                    {" "}
                     {/* ----------------------- */}
                     <div className="row grid-gap-col">
                       <div className="col-12">
@@ -494,7 +480,6 @@ export default function ProductsFacEtc() {
               </div>
 
               <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                {" "}
                 <button
                   className="btn-edit d-none"
                   type="button"

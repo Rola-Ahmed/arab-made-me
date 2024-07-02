@@ -8,11 +8,9 @@ export default function AccountInformation(props) {
         <div className="title-contianer-input w-100">
           <p>Account Inforamtions</p>
           <div className="w-100 ">
-            {" "}
             <div className="row  row-gap">
               <div className="col-6">
                 <div className="grid-gap-col">
-                  {" "}
                   <div className="form-group">
                     <label>Business Account</label>
                     <input
@@ -26,7 +24,6 @@ export default function AccountInformation(props) {
 
               <div className="col-6">
                 <div className="grid-gap-col">
-                  {" "}
                   <div className="form-group">
                     <label>User Type</label>
                     <input className="form-control" value="Factory" readOnly />
@@ -36,7 +33,6 @@ export default function AccountInformation(props) {
 
               <div className="col-6">
                 <div className="grid-gap-col">
-                  {" "}
                   <div className="form-group">
                     <label>representive First Name</label>
                     <input
@@ -60,7 +56,6 @@ export default function AccountInformation(props) {
 
               <div className="col-6">
                 <div className="grid-gap-col">
-                  {" "}
                   <div className="form-group">
                     <label> Representive Email</label>
                     <input
@@ -75,7 +70,6 @@ export default function AccountInformation(props) {
 
               <div className="col-6">
                 <div className="grid-gap-col">
-                  {" "}
                   <div className="form-group">
                     <label>Representive Phone Number</label>
                     <input
@@ -88,7 +82,6 @@ export default function AccountInformation(props) {
               </div>
 
               <div className="col-12">
-                {" "}
                 <Button
                   className="btn-edit"
                   variant="primary"

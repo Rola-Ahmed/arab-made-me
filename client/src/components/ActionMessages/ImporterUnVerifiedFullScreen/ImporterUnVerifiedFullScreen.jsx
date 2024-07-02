@@ -1,7 +1,7 @@
 import Footer from "components/main/Footer/Footer";
 import Navbar from "components/main/Navbar/Navbar";
 import { useNavigate } from "react-router-dom";
-import {  Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 
 export default function ImporterUnVerifiedFullScreen(props) {
   let navigate = useNavigate();
@@ -65,7 +65,6 @@ export default function ImporterUnVerifiedFullScreen(props) {
 
                         <div className="col-12  justify-content-start align-items-center d-flex">
                           <small className="py-4">
-                            {" "}
                             It might take up to 24 hours to fully activate your
                             Buyer account. If you can't access your services
                             after that time, please

@@ -67,11 +67,10 @@ export default function PurchasingOrdersNotificationList(props) {
             <div className="d-grid gap-2">
               <div className="d-grid gap-0">
                 <small className="d-block  lh-base text-truncate req-name-noti">
-                  {" "}
                   {item?.importer?.name} sent you a request
                 </small>
                 <small className="notifi-date text-muted  lh-base">
-                  <i class="fa-regular fa-clock"></i>{" "}
+                  <i class="fa-regular fa-clock"></i>
                   <span className="pe-1">
                     {getTimeDifference(item?.createdAt)}
                   </span>

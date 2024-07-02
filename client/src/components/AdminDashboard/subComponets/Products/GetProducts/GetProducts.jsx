@@ -186,7 +186,6 @@ export default function GetProducts() {
             acc["TimeLineData"] = originalObject[key]
               .map((item, index) => (
                 <p className="trate-sub-title">
-                  {" "}
                   `date${index + 1}:${item?.date} - quantity${index + 1}:$
                   {item?.quantity}`
                 </p>
@@ -356,20 +355,16 @@ export default function GetProducts() {
                       isLogin: true,
                     }));
 
-                   
-                    
-
                     setisLoggedReDirect(`signIn/factoryDashboard/addProduct`);
                     return;
                   }
 
-                  
                   navigate("/factoryDashboard/addProduct");
                 }}
 
                 // onClick={() => {
 
-                //   
+                //
                 //   navigate("/factoryDashboard/addProduct");
                 // }}
               >
@@ -489,7 +484,6 @@ export default function GetProducts() {
         {/* data section */}
 
         <div className=" data-container w-100 p-3">
-          {" "}
           <table className="table mb-0">
             {/* headers */}
 
@@ -556,17 +550,14 @@ export default function GetProducts() {
                   </th>
 
                   <th className=" col-1 d-flex align-items-center ">
-                    {" "}
                     <p className="trate-sub-title">${poItem?.price}</p>
                   </th>
 
                   <th className=" col-1 d-flex align-items-center  ">
-                    {" "}
                     <div>{poItem?.available ? "instock" : "out of stock"}</div>
                   </th>
 
                   <th className=" col-1 d-flex align-items-center  ">
-                    {" "}
                     <p className="">
                       {/* {poItem?.minOrderQuantity}-{poItem?.maxOrderQuantity} */}
 
@@ -627,7 +618,6 @@ export default function GetProducts() {
                   <div className="col-12  w-100 h-100 my-5 py-5">
                     <div className="text-center">
                       <p className="trate-sub-title ">
-                        {" "}
                         {apiLoadingData ? (
                           <div
                             class="spinner-border spinner-border-sm"

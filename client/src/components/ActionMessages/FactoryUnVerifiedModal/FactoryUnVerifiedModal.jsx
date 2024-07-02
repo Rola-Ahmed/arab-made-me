@@ -20,7 +20,6 @@ export default function FactoryUnVerifiedModal(directTo) {
           </Modal.Header>
 
           <div className="w-100 ">
-            {" "}
             {/* <form> */}
             <div className="row  row-gap">
               <div className="row row-container  border-css p-4">
@@ -65,7 +64,6 @@ export default function FactoryUnVerifiedModal(directTo) {
 
                 <div className="col-12  justify-content-start align-items-center d-flex">
                   <small className="py-4">
-                    {" "}
                     It might take up to 24 hours to fully activate your Buyer
                     account. If you can't access your services after that time,
                     please
@@ -75,7 +73,6 @@ export default function FactoryUnVerifiedModal(directTo) {
               </div>
 
               <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                {" "}
                 <Button
                   variant="secondary"
                   type="button"

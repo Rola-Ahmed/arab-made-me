@@ -427,7 +427,7 @@ function SourcingRequest() {
             <div className="row row-container w-100 ">
               {errorMsg?.response ? (
                 <div className="alert mt-3 p-2 alert-danger form-control text-dark">
-                  {errorMsg?.response}{" "}
+                  {errorMsg?.response}
                 </div>
               ) : (
                 ""
@@ -774,13 +774,11 @@ function SourcingRequest() {
 
                     {specialCharacteristicsArr?.map((dateSection, index) => (
                       <>
-                        {" "}
                         <div className="  timeline form-control checked d-flex justify-content-between align-content-center ">
                           <div className="row w-100 ">
-                            {" "}
                             <div className="form-group  col-6 col-6-50  ">
                               <label forhtml="specialCharKeyWord">
-                                Keyword {index + 2}*{" "}
+                                Keyword {index + 2}*
                               </label>
                               <input
                                 type="text"
@@ -876,7 +874,6 @@ function SourcingRequest() {
                           onClick={() => addnewSepcialChar()}
                         >
                           <button className="action-btn btn-1 " type="button">
-                            {" "}
                             add
                           </button>
                         </div>

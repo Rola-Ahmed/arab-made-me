@@ -226,7 +226,6 @@ function Sourcinghub() {
 
         {apiLoadingData ? (
           <div className="my-3 py-2 ">
-            {" "}
             <div className="loading my-5 ">
               <div className="square-3 "> </div>
             </div>
@@ -241,19 +240,19 @@ function Sourcinghub() {
                       <div className="me-3">
                         <h5 className="sour-2">{item?.productName} </h5>
                         <p className="sourcing horizontal-text-handler ">
-                          {item?.productDescription}{" "}
+                          {item?.productDescription}
                         </p>
                         <p className="mb-1">
-                          <span className="fw-bold">Requested by</span>{" "}
+                          <span className="fw-bold">Requested by</span>
                           {item?.importerName}
                         </p>
                         {/* <div className="mb-1 d-flex"> */}
                         <p className="mb-1 me-3">
-                          <span className="fw-bold">Quantity</span>{" "}
+                          <span className="fw-bold">Quantity</span>
                           {item?.quantity}
                         </p>
                         <p className="mb-1">
-                          <span className="fw-bold">Deadline</span>{" "}
+                          <span className="fw-bold">Deadline</span>
                           {getMonthName(item?.deadline?.split("T")?.[0])}
                         </p>
 
@@ -263,13 +262,12 @@ function Sourcinghub() {
                             Sourcing Countries
                           </span>
                           <span className="sourcing horizontal-text-handler-1">
-                            {" "}
                             {item?.preferredCountries?.length === 0
                               ? "All Countries"
                               : item?.preferredCountries
                                   ?.map((countryitem) => countryitem)
                                   .join(", ")}
-                          </span>{" "}
+                          </span>
                         </p>
                         <div className="d-flex mt-2">
                           {currentUserData?.datacompletelyLoaded ? (
@@ -277,7 +275,6 @@ function Sourcinghub() {
                               className="req-btn btn-color me-2 req-btn cursor"
                               type="button"
                             >
-                              {" "}
                               <i className="fas fa-spinner fa-spin text-white"></i>
                             </button>
                           ) : (
@@ -347,7 +344,7 @@ function Sourcinghub() {
                               );
                             }}
                           >
-                            More Details{" "}
+                            More Details
                           </button>
                         </div>
                       </div>

@@ -174,7 +174,6 @@ export default function SourcingReqEtc() {
                     <div className="row  row-gap">
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Representative Name</label>
                             <input
@@ -244,7 +243,6 @@ export default function SourcingReqEtc() {
                     <div className="row  row-gap">
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Product Name</label>
                             <input
@@ -349,7 +347,6 @@ export default function SourcingReqEtc() {
 
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Created At </label>
                             <input
@@ -366,7 +363,6 @@ export default function SourcingReqEtc() {
                       </div>
                       <div className="col-6">
                         <div className="grid-gap-col">
-                          {" "}
                           <div className="form-group">
                             <label>Deadline</label>
                             <input
@@ -418,7 +414,6 @@ export default function SourcingReqEtc() {
                         )}
                       {/* ----------------------------------------- */}
 
-
                       <div className="col-12">
                         <div className="form-group">
                           <label>Product Description</label>
@@ -449,10 +444,8 @@ export default function SourcingReqEtc() {
               {PosData?.docs?.length > 0 && (
                 <div className="container-profile-input w-100">
                   <div className="title-contianer-input w-100">
-                    {" "}
                     <p> Documents</p>
                     <div className="w-100 ">
-                      {" "}
                       {/* ----------------------- */}
                       <div className="row grid-gap-col">
                         <div className="col-12">
@@ -506,9 +499,7 @@ export default function SourcingReqEtc() {
                 </div>
               )}
 
-              <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                {" "}
-              </div>
+              <div className="col-12 d-flex justify-content-start btn-modal-gap"></div>
             </div>
           </div>
         </div>

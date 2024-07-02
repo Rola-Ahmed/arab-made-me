@@ -32,8 +32,6 @@ export default function Team(props) {
         theme: "colored",
         type: "success",
       });
-
-     
     } catch (error) {
       // setapiLoadingData(true);
 
@@ -51,17 +49,14 @@ export default function Team(props) {
     }
     // }
   };
-  
+
   return (
     <>
-      {" "}
       <div id="team"></div>
       <div className="container-profile-input w-100">
         <div className="title-contianer-input w-100">
-          {" "}
           <p>Team</p>
           <div className="h-100  " style={{ width: "74vw" }}>
-            {" "}
             {/* ----------------------- */}
             <div className="row  ">
               <div className="col-12">

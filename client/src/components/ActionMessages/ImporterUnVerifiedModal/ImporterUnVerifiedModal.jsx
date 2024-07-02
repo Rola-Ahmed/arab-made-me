@@ -5,14 +5,12 @@ export default function ImporterUnVerifiedModal(directTo) {
   return (
     <>
       <Modal
-
         {...directTo}
         // size="md-down"
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
         className="factory-profile "
-     
       >
         <Modal.Body>
           <Modal.Header closeButton>
@@ -22,13 +20,11 @@ export default function ImporterUnVerifiedModal(directTo) {
           </Modal.Header>
 
           <div className="w-100 ">
-            {" "}
             {/* <form> */}
             <div className="row  row-gap">
               <div className="row row-container  border-css p-4">
                 <div className="col-12 mb-4">
                   <label>
-                   
                     Thank you for signing up for Arab Made. If you've been
                     directed to this page, it means you haven't completed the
                     registration process. Ensure you've completed the following
@@ -59,18 +55,15 @@ export default function ImporterUnVerifiedModal(directTo) {
 
                 <div className="col-12  justify-content-start align-items-center d-flex">
                   <small className="py-4">
-                    {" "}
                     It might take up to 24 hours to fully activate your Buyer
                     account. If you can't access your services after that time,
                     please
                     <span className="cont-btn"> contact support</span> .
                   </small>
                 </div>
-
               </div>
 
               <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                {" "}
                 <Button
                   variant="secondary"
                   type="button"

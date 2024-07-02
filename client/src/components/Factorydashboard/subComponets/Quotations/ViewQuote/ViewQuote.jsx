@@ -48,7 +48,6 @@ export default function ViewQuote(props) {
 
         {/* data section */}
         <div className=" data-container w-100 p-3">
-          {" "}
           <table className="table mb-0">
             {/* headers */}
 
@@ -128,22 +127,20 @@ export default function ViewQuote(props) {
                     </div>
                   </th>
 
-              
-
                   <th className=" col-1 d-flex align-items-center">
-                    {" "}
                     <p className="trate-sub-title">{poItem?.minQuantity}</p>
                   </th>
 
                   <th className=" col-1 d-flex align-items-center ">
-                    {" "}
                     <p className="trate-sub-title">{poItem?.price}</p>
                   </th>
 
                   <th className=" col-2 ps-3  d-flex align-items-center ">
                     <p className="trate-sub-title">
                       {poItem?.timeForDelivery?.end !== null
-                        ? getMonthName(poItem?.timeForDelivery?.end?.split("T")?.[0])
+                        ? getMonthName(
+                            poItem?.timeForDelivery?.end?.split("T")?.[0]
+                          )
                         : ""}
                     </p>
                   </th>

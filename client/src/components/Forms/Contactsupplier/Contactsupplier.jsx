@@ -501,7 +501,7 @@ function Contactsupplier() {
                   id="errorMsg"
                   className=" alert mt-3 p-2 alert-danger form-control text-dark"
                 >
-                  {errorMsg?.response}{" "}
+                  {errorMsg?.response}
                 </div>
               ) : (
                 ""

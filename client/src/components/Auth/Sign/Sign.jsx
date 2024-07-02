@@ -162,7 +162,7 @@ function Sign() {
                   <div className="input-content">
                     {errorMsg ? (
                       <div className="alert mt-3 p-2 alert-danger form-control text-dark">
-                        {errorMsg}{" "}
+                        {errorMsg}
                       </div>
                     ) : (
                       ""
@@ -310,7 +310,6 @@ function Sign() {
                           navigate("/signup");
                         }}
                       >
-                        {" "}
                         Create New
                       </button>
                     </div>

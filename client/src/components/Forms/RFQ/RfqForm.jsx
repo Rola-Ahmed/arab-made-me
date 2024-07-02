@@ -48,7 +48,7 @@ function RfqForm(props) {
               id="errorMsg"
               className=" alert mt-3 p-2 alert-danger form-control text-dark"
             >
-              {errorMsg?.response}{" "}
+              {errorMsg?.response}
             </div>
           ) : (
             ""
@@ -82,7 +82,6 @@ function RfqForm(props) {
                               className="form-check-label p-0 m-0 justify-content-between d-flex w-100"
                               //   htmlFor="productId"
                             >
-                              {" "}
                               <input
                                 //
                                 onChange={formValidation.handleChange}

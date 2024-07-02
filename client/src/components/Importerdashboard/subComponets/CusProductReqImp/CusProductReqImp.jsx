@@ -447,7 +447,6 @@ export default function CusProductReqImp() {
         </div>
 
         <div className=" data-container w-100 p-3">
-          {" "}
           <table className="table mb-0">
             {/* headers */}
 
@@ -516,7 +515,7 @@ export default function CusProductReqImp() {
                               <span className="fw-bolder text-dark ">
                                 {key}
                                 {index + 1}:
-                              </span>{" "}
+                              </span>
                               {value}
                             </p>
                           </div>
@@ -554,12 +553,10 @@ export default function CusProductReqImp() {
                   </th>
 
                   <th className=" col-1 d-flex align-items-center justify-content-center  gap-icon-table">
-                    {" "}
                     <p
                       className="trate-sub-title view-more-details cursor"
                       title="view more details"
                       onClick={() => {
-                       
                         navigate(
                           `/importerdashboard/customProductReq/moreDetails?customProductId=${poItem?.id}&factoryName=${poItem?.factoryName}`
                         );

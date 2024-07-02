@@ -407,7 +407,6 @@ export default function Orders() {
         {/* data section */}
 
         <div className=" data-container w-100 p-3">
-          {" "}
           <table className="table mb-0">
             {/* headers */}
 
@@ -473,12 +472,10 @@ export default function Orders() {
                   </th>
 
                   <th className=" col-1 d-flex align-items-center ">
-                    {" "}
                     <p className="trate-sub-title">${poItem?.productPrice}</p>
                   </th>
 
                   <th className=" col-1 d-flex align-items-center  ">
-                    {" "}
                     <div>
                       {
                         // allAnsRfqData.map((item) =>
@@ -515,24 +512,21 @@ export default function Orders() {
 
                   <th className=" col-3  d-flex align-items-center  ps-4">
                     <div>
-                      {" "}
                       {Array.isArray(poItem?.timeLine) &&
                         poItem?.timeLine.map((timelineItem, index) => (
                           <p className="trate-sub-title" key={index}>
                             <span className="fw-bolder text-dark ">
-                              {" "}
-                              Date{index + 1}{" "}
+                              Date{index + 1}
                             </span>
                             :
                             {getMonthName(
                               timelineItem?.date?.split("T")?.[0] ??
                                 timelineItem?.date ??
                                 timelineItem?.time
-                            )}{" "}
+                            )}
                             -
                             <span className="fw-bolder text-dark ">
-                              {" "}
-                              Quantity{index + 1}{" "}
+                              Quantity{index + 1}
                             </span>
                             :{timelineItem?.quantity}
                           </p>
@@ -542,8 +536,7 @@ export default function Orders() {
                           <span className="fw-bolder text-dark "> Date1 </span>
                           :Jan, 20,2020 -
                           <span className="fw-bolder text-dark ">
-                            {" "}
-                            Quantity1{" "}
+                            Quantity1
                           </span>
                           :5000
                         </p>

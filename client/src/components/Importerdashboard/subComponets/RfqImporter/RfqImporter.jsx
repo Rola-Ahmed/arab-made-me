@@ -448,7 +448,6 @@ export default function RfqImporterDash() {
         {/* data section */}
 
         <div className=" data-container w-100 p-3">
-          {" "}
           <table className="table mb-0">
             {/* headers */}
 
@@ -525,7 +524,6 @@ export default function RfqImporterDash() {
                   </th>
 
                   <th className=" col-1 d-flex align-items-center  ">
-                    {" "}
                     <div>
                       {
                         // allAnsRfqData.map((item) =>
@@ -561,12 +559,10 @@ export default function RfqImporterDash() {
                   </th>
 
                   <th className=" col-1 d-flex align-items-center">
-                    {" "}
                     <p className="trate-sub-title">{poItem?.quantity}</p>
                   </th>
 
                   <th className=" col-1 d-flex align-items-center ">
-                    {" "}
                     <p className="trate-sub-title">{poItem?.productPrice}</p>
                   </th>
 

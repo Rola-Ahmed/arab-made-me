@@ -263,7 +263,7 @@ export default function TopFactories(props) {
                         DirectToFactoryPage={DirectToFactoryPage}
                       />
 
-{/*  product slider*/}
+                      {/*  product slider*/}
                       <div className="profile-img w-100  ">
                         {factoryitem?.productLength > 0 && (
                           <ProductCarousel factoryitem={factoryitem} />
@@ -281,7 +281,7 @@ export default function TopFactories(props) {
                       >
                         <div className="text-truncate">
                           <p className="text-truncate">
-                            products:{" "}
+                            products:
                             <span>
                               {factoryitem?.productLength > 0
                                 ? factoryitem?.productData?.map(
@@ -395,19 +395,15 @@ export default function TopFactories(props) {
             <Modal.Title>Factory Has No Products</Modal.Title>
           </Modal.Header>
           <div className="w-100 ">
-            {" "}
             <div className="row  row-gap">
-              {" "}
               <div className="form-group">
                 <label className="w-100 ">
-                  {" "}
                   There are no products available from this factory at the
                   moment. However, you can send a private label or custom
                   product request
                 </label>
               </div>
               <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                {" "}
                 <Button
                   className="btn-edit "
                   onClick={() => {

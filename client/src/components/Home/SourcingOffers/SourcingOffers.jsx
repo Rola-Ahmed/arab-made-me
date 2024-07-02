@@ -88,13 +88,11 @@ export default function SourcingOffers() {
       <p className="sourc-p pb-2">Factory Offers</p>
       <div className="row">
         <div className="col-12">
-          {" "}
           <div className="border-container">
             <table class="table table-striped align-middle ">
               <thead>
                 <tr className=" bg-header">
                   <th scope="col" className="">
-                    {" "}
                     <div className="d-flex  align-items-center justify-contnet-center ">
                       <p className="title-3 text-muted">Product</p>
                     </div>
@@ -166,7 +164,6 @@ export default function SourcingOffers() {
                       </div>
                     </td>
                     <td className="">
-                      {" "}
                       <p className="title">
                         {getMonthName(item?.createdAt?.split("T")?.[0])}
                       </p>
@@ -190,7 +187,7 @@ export default function SourcingOffers() {
                     </div>
                   </td>
                   <td className="">
-                    {" "}
+                    
                     <p className="title">Jan 6, 2022</p>
                   </td>
                 </tr>
@@ -211,29 +208,7 @@ export default function SourcingOffers() {
                     </div>
                   </td>
                   <td className="">
-                    {" "}
-                    <p className="title">Jan 6, 2022</p>
-                  </td>
-                </tr>
-
-                <tr className="">
-                  <th className="  " scope="row">
-                    <div className="d-flex flag-container align-items-center">
                     
-                      <img
-                        className="flag-img"
-                        src={`https://flagcdn.com/w80/eg.png`}
-                      />
-                      <p className="title">Egypt</p>
-                    </div>
-                  </th>
-                  <td className="">
-                    <div className="d-flex  align-items-center ">
-                      <p className="title-2">Inquiry About Cashew Nuts</p>
-                    </div>
-                  </td>
-                  <td className="">
-                    {" "}
                     <p className="title">Jan 6, 2022</p>
                   </td>
                 </tr>
@@ -255,7 +230,7 @@ export default function SourcingOffers() {
                     </div>
                   </td>
                   <td className="">
-                    {" "}
+                    
                     <p className="title">Jan 6, 2022</p>
                   </td>
                 </tr>
@@ -277,7 +252,29 @@ export default function SourcingOffers() {
                     </div>
                   </td>
                   <td className="">
-                    {" "}
+                    
+                    <p className="title">Jan 6, 2022</p>
+                  </td>
+                </tr>
+
+                <tr className="">
+                  <th className="  " scope="row">
+                    <div className="d-flex flag-container align-items-center">
+                    
+                      <img
+                        className="flag-img"
+                        src={`https://flagcdn.com/w80/eg.png`}
+                      />
+                      <p className="title">Egypt</p>
+                    </div>
+                  </th>
+                  <td className="">
+                    <div className="d-flex  align-items-center ">
+                      <p className="title-2">Inquiry About Cashew Nuts</p>
+                    </div>
+                  </td>
+                  <td className="">
+                    
                     <p className="title">Jan 6, 2022</p>
                   </td>
                 </tr>
@@ -298,7 +295,7 @@ export default function SourcingOffers() {
                     </div>
                   </td>
                   <td className="">
-                    {" "}
+                    
                     <p className="title">Jan 6, 2022</p>
                   </td>
                 </tr>
@@ -319,7 +316,7 @@ export default function SourcingOffers() {
                     </div>
                   </td>
                   <td className="">
-                    {" "}
+                    
                     <p className="title">Jan 6, 2022</p>
                   </td>
                 </tr> */}
@@ -329,7 +326,7 @@ export default function SourcingOffers() {
         </div>
 
         {/* <div className="col-6">
-          {" "}
+          
           <div className="border-container">
             <table class="table table-striped align-middle ">
 
@@ -337,7 +334,7 @@ export default function SourcingOffers() {
               <thead>
                 <tr className=" bg-header">
                   <th scope="">
-                    {" "}
+                    
                     <div className="d-flex  align-items-center justify-contnet-center ">
                       <p className="title-3 text-muted">Action</p>
                     </div>
@@ -364,7 +361,7 @@ export default function SourcingOffers() {
                     </div>
                   </td>
                   <td className="">
-                    {" "}
+                    
                     <p className="title">Jan 6, 2022</p>
                   </td>
                 </tr>
@@ -385,29 +382,7 @@ export default function SourcingOffers() {
                     </div>
                   </td>
                   <td className="">
-                    {" "}
-                    <p className="title">Jan 6, 2022</p>
-                  </td>
-                </tr>
-
-                <tr className="">
-                  <th className="  " scope="row">
-                    <div className="d-flex flag-container align-items-center">
                     
-                      <img
-                        className="flag-img"
-                        src={`https://flagcdn.com/w80/eg.png`}
-                      />
-                      <p className="title">Egypt</p>
-                    </div>
-                  </th>
-                  <td className="">
-                    <div className="d-flex  align-items-center ">
-                      <p className="title-2">Inquiry About Cashew Nuts</p>
-                    </div>
-                  </td>
-                  <td className="">
-                    {" "}
                     <p className="title">Jan 6, 2022</p>
                   </td>
                 </tr>
@@ -429,7 +404,7 @@ export default function SourcingOffers() {
                     </div>
                   </td>
                   <td className="">
-                    {" "}
+                    
                     <p className="title">Jan 6, 2022</p>
                   </td>
                 </tr>
@@ -451,7 +426,29 @@ export default function SourcingOffers() {
                     </div>
                   </td>
                   <td className="">
-                    {" "}
+                    
+                    <p className="title">Jan 6, 2022</p>
+                  </td>
+                </tr>
+
+                <tr className="">
+                  <th className="  " scope="row">
+                    <div className="d-flex flag-container align-items-center">
+                    
+                      <img
+                        className="flag-img"
+                        src={`https://flagcdn.com/w80/eg.png`}
+                      />
+                      <p className="title">Egypt</p>
+                    </div>
+                  </th>
+                  <td className="">
+                    <div className="d-flex  align-items-center ">
+                      <p className="title-2">Inquiry About Cashew Nuts</p>
+                    </div>
+                  </td>
+                  <td className="">
+                    
                     <p className="title">Jan 6, 2022</p>
                   </td>
                 </tr>
@@ -472,7 +469,7 @@ export default function SourcingOffers() {
                     </div>
                   </td>
                   <td className="">
-                    {" "}
+                    
                     <p className="title">Jan 6, 2022</p>
                   </td>
                 </tr>
@@ -493,7 +490,7 @@ export default function SourcingOffers() {
                     </div>
                   </td>
                   <td className="">
-                    {" "}
+                    
                     <p className="title">Jan 6, 2022</p>
                   </td>
                 </tr>

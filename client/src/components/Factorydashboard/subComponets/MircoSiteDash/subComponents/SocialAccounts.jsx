@@ -5,7 +5,6 @@ export default function SocialAccounts(props) {
       <div id="socialAccount"></div>
       <div className="container-profile-input w-100">
         <div className="title-contianer-input w-100">
-          {" "}
           <p>Social Accounts</p>
           <div className="w-100 ">
             <div className="row grid-gap-col">

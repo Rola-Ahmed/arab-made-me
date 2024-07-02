@@ -664,7 +664,7 @@ export default function AddSourcingOffer() {
               <div className="col-4">
                 <div className="form-group">
                   <label>
-                    Product Name <span className="">*</span>{" "}
+                    Product Name <span className="">*</span>
                   </label>
                   <input
                     className="form-control"
@@ -1114,7 +1114,7 @@ export default function AddSourcingOffer() {
                                 <div>
                                   <p>{item?.pdfFile?.name}</p>
                                   <p className="">
-                                    {(item?.pdfFile?.size / 1024)?.toFixed(2)}{" "}
+                                    {(item?.pdfFile?.size / 1024)?.toFixed(2)}
                                     KB
                                   </p>
                                   {/* {imgloadin} */}

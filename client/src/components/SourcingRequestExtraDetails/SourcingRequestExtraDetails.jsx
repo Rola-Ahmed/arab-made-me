@@ -160,7 +160,6 @@ function SourcingRequestExtraDetails() {
                   {/* <div className="row  row-gap"> */}
                   <div className=" col-xxl-6 col-xl-6   col-lg-6 col-md-6 col-sm-12  ">
                     <div className="grid-gap-col">
-                      {" "}
                       <div className="form-group">
                         <label>Product Name</label>
                         <input
@@ -237,7 +236,6 @@ function SourcingRequestExtraDetails() {
 
                   <div className=" col-xxl-6 col-xl-6   col-lg-6 col-md-6 col-sm-12  ">
                     <div className="grid-gap-col">
-                      {" "}
                       <div className="form-group">
                         <label>available</label>
                         <input
@@ -253,7 +251,6 @@ function SourcingRequestExtraDetails() {
 
                   <div className=" col-xxl-6 col-xl-6   col-lg-6 col-md-6 col-sm-12  ">
                     <div className="grid-gap-col">
-                      {" "}
                       <div className="form-group">
                         <label>Quantity</label>
                         <input
@@ -267,7 +264,6 @@ function SourcingRequestExtraDetails() {
 
                   <div className=" col-xxl-6 col-xl-6   col-lg-6 col-md-6 col-sm-12  ">
                     <div className="grid-gap-col">
-                      {" "}
                       <div className="form-group">
                         <label>Created At </label>
                         <input
@@ -285,7 +281,6 @@ function SourcingRequestExtraDetails() {
 
                   <div className=" col-xxl-6 col-xl-6   col-lg-6 col-md-6 col-sm-12  ">
                     <div className="grid-gap-col">
-                      {" "}
                       <div className="form-group">
                         <label>Deadline </label>
                         <input
@@ -303,7 +298,6 @@ function SourcingRequestExtraDetails() {
 
                   <div className=" col-xxl-6 col-xl-6   col-lg-6 col-md-6 col-sm-12  ">
                     <div className="grid-gap-col">
-                      {" "}
                       <div className="form-group">
                         <label>Preferred Countries </label>
                         <input
