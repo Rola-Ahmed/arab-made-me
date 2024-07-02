@@ -22,7 +22,7 @@ import { paymentTypeArr } from "constants/paymentTypeArr";
 import { packingConditionsArr } from "constants/packingConditionsArr";
 
 // functions
-import formattedDate from "utils/dateValidation";
+import { formattedDateValidate} from "utils/validationUtils";
 import { errorHandler } from "utils/errorHandler";
 // import { removeSelectedDoc } from "utils/removeSelectedDoc";
 import SubPageUtility from "components/Shared/Dashboards/SubPageUtility";
@@ -43,7 +43,6 @@ export default function EditQuote() {
   let { setGlobalMsg } = useContext(GlobalMsgContext);
 
   let { quoteId } = useParams();
-  const validationDate = formattedDate;
   let navigate = useNavigate();
 
   const [errorMsg, setErrorMsg] = useState();
@@ -126,8 +125,8 @@ export default function EditQuote() {
       otherwise: (schema) => schema.nullable(),
     }),
 
-    startDeliveryDate: Yup.date().min(validationDate, "Invalid Date"),
-    endDeliveryDate: Yup.date().min(validationDate, "Invalid Date"),
+    startDeliveryDate: Yup.date().min(formattedDateValidate, "Invalid Date"),
+    endDeliveryDate: Yup.date().min(formattedDateValidate, "Invalid Date"),
   });
 
   let initialValues = {
