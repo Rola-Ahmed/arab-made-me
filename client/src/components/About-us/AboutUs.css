@@ -1,7 +1,8 @@
-.section-about-1{
+.section-about-1 {
     padding: 70px 0;
 }
-.about-text-1{
+
+.about-text-1 {
     color: #333;
     font-family: "Inter-semi";
     font-size: 42px;
@@ -11,65 +12,73 @@
     width: 484px;
 }
 
-.about-text-2{
+.about-text-2 {
     color: #666;
-font-family: "Inter-med";
-font-size: 16px;
-font-style: normal;
-font-weight: 400;
-line-height: 32px;  
-letter-spacing: 0.5px;
-width: 520px;
+    font-family: "Inter-med";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 32px;
+    letter-spacing: 0.5px;
+    width: 520px;
 }
 
-.about-texts{
+.about-texts {
     padding-top: 50px;
 }
-.about-nums{
+
+.about-nums {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
     overflow: hidden;
     padding-top: 30px;
 }
-.about-num{
+
+.about-num {
     width: 33.3%;
 }
-.about-num h4{
+
+.about-num h4 {
     color: var(--secondary-color);
     font-family: "Inter-bold";
     font-size: 42px;
     font-style: normal;
     font-weight: 700;
-    line-height: normal;    
+    line-height: normal;
 }
-.about-num p{
+
+.about-num p {
     color: #666;
-font-family: "Inter-med";
-font-size: 16px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
+    font-family: "Inter-med";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
 }
-.about-text-3{
+
+.about-text-3 {
     padding-top: 10px;
 }
-.about-text-4{
+
+.about-text-4 {
     padding-top: 30px;
     color: #666;
-font-family: "Inter-reg";
-font-size: 16px;
-font-style: normal;
-width: 500px;
-font-weight: 400;
-line-height: 32px;
-letter-spacing: 0.5px;
+    font-family: "Inter-reg";
+    font-size: 16px;
+    font-style: normal;
+    width: 500px;
+    font-weight: 400;
+    line-height: 32px;
+    letter-spacing: 0.5px;
 }
-.photo-about{
+
+.photo-about {
     width: 94%;
     height: 86vh;
 }
-.photo-about-section21{
+
+.photo-about-section21 {
     position: absolute;
     z-index: -1;
     right: 0;
@@ -80,15 +89,18 @@ letter-spacing: 0.5px;
 
 
 }
-.parent-about{
+
+.parent-about {
     position: relative;
 }
-.photo-about-section22{
+
+.photo-about-section22 {
     position: relative;
     top: 135px;
     width: 72%;
 }
-.section-about-2{
+
+.section-about-2 {
     padding-bottom: 70px;
 
 }
@@ -101,31 +113,33 @@ letter-spacing: 0.5px;
 
 
 /* enteed small screens */
-@media (max-width: 992px) { 
-    .col-lg-6.parent-about{
-    order: -1;
-    padding-bottom:30% ;
-  }
- }
+@media (max-width: 992px) {
+    .col-lg-6.parent-about {
+        order: -1;
+        padding-bottom: 30%;
+    }
+}
 
-  @media (max-width:539px) {
+@media (max-width:539px) {
 
     .about-text-1 {
         font-size: 33px;
     }
+
     .about-texts p {
         font-size: 12px;
-  }
-  .about-text-4 {
-    font-size: 12px;
-  }
+    }
 
-  .col-lg-6.parent-about{
-    padding-bottom:60% ;
-  } 
+    .about-text-4 {
+        font-size: 12px;
+    }
+
+    .col-lg-6.parent-about {
+        padding-bottom: 60%;
+    }
 
 
-  
 
-  
+
+
 }
