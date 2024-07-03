@@ -3,7 +3,6 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { UserToken } from "Context/userToken";
 
-import "../PrivateLabel/PrivateLabel.css";
 import useFormSubmission from "./hooks/useFormSubmission";
 
 import FactoryInfo from "../Shared/FactoryInfo";

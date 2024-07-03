@@ -38,7 +38,7 @@ function CustomProductForm(props) {
           <h5> product Details</h5>
         </div>
 
-        <div className="row row-container-sepcialChar w-100 ">
+        <div className="row row-gap-24 w-100 ">
           <div className="col-12">
             <InputField
               isRequired={true}

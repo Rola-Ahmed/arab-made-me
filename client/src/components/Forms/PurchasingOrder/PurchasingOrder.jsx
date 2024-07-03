@@ -11,7 +11,7 @@ import { GlobalMsgContext } from "Context/globalMessage";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import Header from "components/main/Header/Header";
-import "./PurchasingOrder.css";
+
 import LoadingForm2 from "components/Loading/LoadingForm2";
 
 import ImporterUnVerifiedFullScreen from "components/ActionMessages/ImporterUnVerifiedFullScreen/ImporterUnVerifiedFullScreen";

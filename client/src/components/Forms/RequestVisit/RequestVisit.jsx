@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
-import { baseUrl, baseUrl_IMG } from "config.js";
+import { baseUrl } from "config.js";
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -9,7 +9,6 @@ import Footer from "components/main/Footer/Footer";
 import Header from "components/main/Header/Header";
 import Navbar from "components/main/Navbar/Navbar";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import "./RequestVisit.css";
 import { UserToken } from "Context/userToken";
 import { GlobalMsgContext } from "Context/globalMessage";
 import FactoryInfo from "../Shared/FactoryInfo";

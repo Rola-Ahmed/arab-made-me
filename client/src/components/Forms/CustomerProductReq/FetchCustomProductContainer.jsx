@@ -3,7 +3,6 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { baseUrl } from "config.js";
 
-import "../PrivateLabel/PrivateLabel.css";
 import CustomerProductReq from "./CustomProductReq";
 import useAuthFormChecks from "components/Forms/hooks/useAuthFormChecks";
 import Header from "components/main/Header/Header";
