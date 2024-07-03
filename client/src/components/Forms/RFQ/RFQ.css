@@ -81,7 +81,7 @@
 .send-rfq .form-group label,
 .req-visit .form-group label,
 .send-po .form-group label {
-  color: var(--Gray-700, #344054);
+  color: var(--Gray-700);
   font-family: "Inter-reg";
   font-size: 14px;
   font-style: normal;
@@ -133,31 +133,10 @@
   height: 100%;
 }
 
-/*  .uploadFile-css{
-    display: flex;
-    gap: 6px;
-    padding: 10px 16px;
-    justify-content: center;
-    align-items: center;
-    color: var(--Gray-700, #344054);
-
-
-
-}
- .uploadFile-css i{
-  font-size: 20px;
-  transform: rotate(90deg);
-}
- .uploadFile-css p{
-  font-family: "Inter-reg";
-font-size: 16px;
-font-style: normal;
-font-weight: 600;
-line-height: 24px; 
-} */
 
 .send-rfq .action,
-.req-visit .action, .send-po .action {
+.req-visit .action,
+.send-po .action {
   display: flex;
   flex-direction: column;
   align-self: stretch;

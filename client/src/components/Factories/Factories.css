@@ -423,7 +423,7 @@ a:hover {
 }
 
 .cardBody .title p {
-    color: var(--gray-500, #6B7280);
+    color: var(--gray-500);
 
     /* text-base/font-normal */
     font-family: Inter-reg;
@@ -450,7 +450,7 @@ a:hover {
 }
 
 .subText div p {
-    color: var(--gray-500, #6B7280);
+    color: var(--gray-500);
     font-size: 12px;
     font-style: normal;
     font-weight: 600;
@@ -459,7 +459,7 @@ a:hover {
 }
 
 .subText div p span {
-    color: var(--gray-500, #6B7280);
+    color: var(--gray-500);
     font-size: 12px;
     font-style: normal;
     font-weight: 400;

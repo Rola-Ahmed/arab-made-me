@@ -33,7 +33,7 @@
 .products-section .header-Title p {
   align-self: stretch;
 
-  color: var(--Gray-500, #667085);
+  color: var(--Gray-500);
 
   /* Text xl/Regular */
   font-family: Inter-reg;
@@ -109,7 +109,7 @@
 }
 
 .product-2 {
-  color: var(--Gray-500, #667085);
+  color: var(--Gray-500);
   font-family: "Inter-med";
   font-size: 20px;
   font-style: normal;

@@ -111,7 +111,7 @@
 }
 
 .btn-container-dash p {
-    color: var(--Gray-700, #344054);
+    color: var(--Gray-700);
 
 
     font-family: "Inter-reg";

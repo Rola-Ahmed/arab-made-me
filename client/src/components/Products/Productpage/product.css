@@ -192,7 +192,7 @@
 }
 
 .text-product-4 {
-    color: var(--gray-500, #6B7280);
+    color: var(--gray-500);
     font-family: "Inter-med";
     font-size: 14px;
     font-style: normal;
@@ -354,7 +354,7 @@
 }
 
 .rela-2 {
-    color: var(--Gray-500, #667085);
+    color: var(--Gray-500);
     font-family: "Inter-med";
     font-size: 20px;
     font-style: normal;

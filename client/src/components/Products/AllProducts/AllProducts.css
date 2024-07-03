@@ -80,7 +80,7 @@
 }
 
 .all-products .product-2 {
-    color: var(--Gray-500, #667085);
+    color: var(--Gray-500);
     font-family: "Inter-med";
     font-size: 20px;
     font-style: normal;
@@ -369,7 +369,7 @@
 }
 
 .profile-title .sub-title {
-    color: var(--gray-500, #6B7280);
+    color: var(--gray-500);
     font-family: "Inter-reg";
     font-size: 10px;
     font-style: normal;

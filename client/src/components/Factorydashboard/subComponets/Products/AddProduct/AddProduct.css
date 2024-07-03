@@ -96,7 +96,7 @@
 }
 
 .add-product-dash .form-group label {
-  color: var(--Gray-700, #344054);
+  color: var(--Gray-700);
 
   font-family: "Inter-reg";
   font-size: 14px;

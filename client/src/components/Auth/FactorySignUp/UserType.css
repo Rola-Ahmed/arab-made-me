@@ -14,14 +14,6 @@
 
 }
 
-
-
-
-
-
-
-
-
 .userType {
   padding: 128px;
 
@@ -132,7 +124,7 @@
 }
 
 .userType .form-group label {
-  color: var(--Gray-700, #344054);
+  color: var(--Gray-700);
 
   font-family: "Inter-reg";
   font-size: 14px;
@@ -263,34 +255,6 @@
 
 
 }
-
-.userType .upload-padding {
-  padding-top: 10px;
-  padding-bottom: 10px;
-
-}
-
-
-
-
-
-
-
-
-
-.yourDiv {
-  opacity: 0;
-  transition: opacity 1s, visibility 1s;
-}
-
-.yourDiv.visible {
-  display: flex;
-  visibility: visible;
-  opacity: 1;
-}
-
-
-
 
 .img-cont {
   width: fit-content !important;
