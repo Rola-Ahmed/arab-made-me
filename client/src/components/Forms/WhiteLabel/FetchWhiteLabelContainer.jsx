@@ -32,7 +32,6 @@ export default function WhiteLabelContainerAPI() {
         } else if (!productId) {
           result = await fetchFactoryProducts(factoryId);
         }
-        console.log("result", result);
 
         // if there is error
         if (result.error) {
@@ -52,14 +51,7 @@ export default function WhiteLabelContainerAPI() {
           pageLoading: result.loadingStatus,
           errorPageLoading: result.error,
         }));
-      } catch (error) {
-        console.log("white error", error);
-        setIsLoading((prev) => ({
-          ...prev,
-          pageLoading: true,
-          errorPageLoading: "jijujuuuhuhhuhuhu",
-        }));
-      }
+      } catch (error) {}
     };
 
     fetchData();
@@ -92,6 +84,9 @@ export default function WhiteLabelContainerAPI() {
           // new
           factoryData={productDetails?.factory}
           productDetails={productDetails}
+          productName={productName}
+          productId={productId}
+          factoryId={factoryId}
         />
       ) : (
         <WhiteLabel
@@ -101,6 +96,9 @@ export default function WhiteLabelContainerAPI() {
           productDetails={productDetailsArr}
           // new
           factoryData={productDetailsArr?.[0]?.factory}
+          productName={productName}
+          productId={productId}
+          factoryId={factoryId}
         />
       )}
     </>

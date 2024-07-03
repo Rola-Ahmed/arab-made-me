@@ -1,16 +1,15 @@
 import { useState } from "react";
 import { errorHandler } from "utils/errorHandler";
 import useSubmitFormMsg from "hooks/useSubmitFormMsg";
-import {
-  addCustomProductlMedia,
-  addCustomProduct,
-} from "Services/customProduct";
 
-const useFormSubmission = (isLogin, setIsLoading, setErrorMsg) => {
-  const [poAdded, setPoAdded] = useState({ status: false, id: "" });
-  function setLoadingState(loadingStatus) {
-    setIsLoading((prev) => ({ ...prev, submitLoading: loadingStatus }));
-  }
+import { addWhiteLabel, addWhiteLabelMedia } from "Services/whiteLabel";
+
+const useFormSubmission = (isLogin, setErrorMsg, setLoadingState) => {
+  const [privateLabelAdded, setPrivateLabelAdded] = useState({
+    status: false,
+    id: "",
+  });
+
   const handleSubmitMsg = useSubmitFormMsg();
 
   function clearResponseError() {
@@ -42,33 +41,29 @@ const useFormSubmission = (isLogin, setIsLoading, setErrorMsg) => {
 
     let data = {
       factoryId: values?.factoryId,
-      productName: values.productName,
-      technicalSpecifications: values.technicalSpecifications,
-      inqueries: values.inqueries,
-      specialCharacteristics: {},
+      // productId: values?.productId,
+      // productName: values.productName,
+
+      productId: 562,
+      productName: "Scarlett Mueller",
+
+      // if  values.moreDetails!==null add value
+      ...(values.moreDetails && { moreDetails: values.moreDetails }),
     };
 
-    if (Object.keys(values.productCharacteristic).length != 0) {
-      // create an object with the keyword property as the key and the value property as the value.
-      const obj = Object.fromEntries(
-        values.productCharacteristic.map((obj) => [obj.keyword, obj.value])
-      );
-      data.specialCharacteristics = obj;
-    }
-
     try {
-      let result = await addCustomProduct({ authorization: isLogin }, data);
+      let result = await addWhiteLabel({ authorization: isLogin }, data);
 
       if (result?.success) {
         if (selectedDocs.length > 0) {
-          setPoAdded({
+          setPrivateLabelAdded({
             status: true,
-            id: result.data.specialManufacturing.id,
+            id: result.data.whiteLabeling.id,
           });
-          await submitDocs(result.data.specialManufacturing.id, selectedDocs);
+          await submitDocs(result.data.whiteLabeling.id, selectedDocs);
         } else {
           // display  successfully submitted message
-          handleSubmitMsg("Custom product Request");
+          handleSubmitMsg(" White Label Request");
         }
       } else {
         handleResponseError(result.error);
@@ -85,10 +80,10 @@ const useFormSubmission = (isLogin, setIsLoading, setErrorMsg) => {
     const FormData = require("form-data");
     let data = new FormData();
 
-    selectedDocs?.forEach((item) => data.append("docs", item.pdfFile));
+    selectedDocs?.forEach((item) => data.append(item.keyWord, item.pdfFile));
 
     try {
-      let result = await addCustomProductlMedia(
+      let result = await addWhiteLabelMedia(
         qoute_id,
         { authorization: isLogin },
         data
@@ -96,15 +91,14 @@ const useFormSubmission = (isLogin, setIsLoading, setErrorMsg) => {
 
       if (result?.success) {
         setLoadingState(true);
-        handleSubmitMsg("Custom product Request");
+        handleSubmitMsg(" White Label Request");
       } else {
         handleResponseError(result.error);
       }
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
-  return { submitForm, poAdded, submitDocs };
+  return { submitForm, privateLabelAdded, submitDocs };
 };
 
 export default useFormSubmission;

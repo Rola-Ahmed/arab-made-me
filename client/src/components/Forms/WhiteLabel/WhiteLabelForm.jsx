@@ -43,7 +43,6 @@ export default function WhiteLabelForm(props) {
     formValidation.setFieldValue("productName", productNameArr);
   };
 
-  console.log("formValidation all", formValidation);
   return (
     <>
       <form
@@ -91,7 +90,6 @@ export default function WhiteLabelForm(props) {
                                 //
                                 onChange={formValidation.handleChange}
                                 onBlur={formValidation.handleBlur}
-                                // value={formValidation.values.productId}
                                 onClick={(e) => {
                                   formValidation.handleChange(e);
                                   handleCheckboxProductNameChange(
@@ -139,7 +137,10 @@ export default function WhiteLabelForm(props) {
                   />
                 </div>
 
-                <TimeLine formValidation={formValidation} vlaidationName={'timeLine'}/>
+                <TimeLine
+                  formValidation={formValidation}
+                  vlaidationName={"timeLine"}
+                />
 
                 <div className="col-md-6 col-sm-12">
                   <SelectOption
@@ -249,12 +250,6 @@ export default function WhiteLabelForm(props) {
                         const targetElement = document.getElementById(
                           Object.keys(formValidation.errors)?.[0]
                         );
-
-                        // console.log(
-                        //   "targetElement",
-                        //   targetElement,
-                        //   Object.keys(formValidation.errors)?.[0]
-                        // );
 
                         // Scroll to the target element
                         if (targetElement) {

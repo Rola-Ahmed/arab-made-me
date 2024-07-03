@@ -1,10 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useSearchParams } from "react-router-dom";
 import { UserToken } from "Context/userToken";
-import { addWhiteLabel, addWhiteLabelMedia } from "Services/whiteLabel";
-import useSubmitFormMsg from "../../../hooks/useSubmitFormMsg";
+import useFormSubmission from "./hooks/useFormSubmission";
 
 import {
   textAreaValidate,
@@ -25,51 +23,27 @@ export default function WhiteLabel(props) {
     setIsLoading,
     factoryData,
     productIsSelected,
+    productName,
+    productId,
+    factoryId,
   } = props;
   // State variables
-  const [searchParams] = useSearchParams();
   const [errorMsg, setErrorMsg] = useState();
-  const handleSubmitMsg = useSubmitFormMsg();
 
-  const [privateLabelAdded, setPrivateLabelAdded] = useState({
-    status: false,
-    id: "",
-  });
   const [selectedDocs, setSelectedDocs] = useState([]);
 
   // Context variables
   const { isLogin } = useContext(UserToken);
 
-  // Constants for URL parameters
-  const factoryId = searchParams.get("factoryId");
-  const productId = searchParams.get("productId");
-  const factoryName = searchParams.get("factoryName");
-  const productName = searchParams.get("productName");
-
   function setLoadingState(loadingStatus) {
     setIsLoading((prev) => ({ ...prev, submitLoading: loadingStatus }));
   }
 
-  function clearResponseError() {
-    setErrorMsg((prevErrors) => {
-      const { response, ...restErrors } = prevErrors || {};
-      return restErrors;
-    });
-  }
-
-  function scrollToView(elementId) {
-    const targetElement = document.getElementById(elementId);
-    if (targetElement) {
-      targetElement.scrollIntoView({ behavior: "smooth", block: "center" });
-    }
-  }
-
-  function handleResponseError(message) {
-    setLoadingState(false);
-    setErrorMsg((prevErrors) => ({ ...prevErrors, response: message }));
-    scrollToView("view");
-  }
-
+  let { submitForm, privateLabelAdded, submitDocs } = useFormSubmission(
+    isLogin,
+    setErrorMsg,
+    setLoadingState
+  );
   // ------------------------Form Validation
 
   let validationSchema = Yup.object().shape({
@@ -170,9 +144,8 @@ export default function WhiteLabel(props) {
   function submit(values) {
     // if data is not added yet
     if (!privateLabelAdded.status) {
-      submitForm(values);
+      submitForm(values,selectedDocs);
     }
-
     // if textApi is added and selectedDocs is greater that 0
     // call media
     // this case means that error ouccured in meidaApi so i need only to call media api
@@ -180,75 +153,11 @@ export default function WhiteLabel(props) {
     // if (privateLabelAdded.status && selectedDocs?.length > 0) {
     else if (selectedDocs?.length > 0) {
       setLoadingState(true);
-      SubmitDocs(privateLabelAdded.id);
+      submitDocs(privateLabelAdded.id, selectedDocs);
     }
   }
 
-  async function submitForm(values) {
-    setLoadingState(true);
-    clearResponseError();
-    let data = {
-      factoryId: values?.factoryId,
-      productId: values?.productId,
-      productName: values.productName,
-
-      // if  values.moreDetails!==null add value
-      ...(values.moreDetails && { moreDetails: values.moreDetails }),
-    };
-
-    try {
-      let result = await addWhiteLabel({ authorization: isLogin }, data);
-
-      // if there is error
-      if (result && result.error) {
-        handleResponseError(result.error);
-      }
-      //  state is success
-      if (result && result.success) {
-        if (selectedDocs.length > 0) {
-          setPrivateLabelAdded({
-            status: true,
-            id: result.data.whiteLabeling.id,
-          });
-          await SubmitDocs(result.data.whiteLabeling.id);
-        } else {
-          // setGlobalMsg("Your White Label Form has been successfully submitted");
-          // navigate(-1);
-
-          handleSubmitMsg("White Label");
-        }
-      }
-    } catch (error) {}
-  }
-
-  async function SubmitDocs(id) {
-    setLoadingState(true);
-
-    clearResponseError();
-    const FormData = require("form-data");
-    let data = new FormData();
-
-    selectedDocs?.map((item) => data.append("docs", item.pdfFile));
-    try {
-      let result = await addWhiteLabelMedia(
-        id,
-        { authorization: isLogin },
-        data
-      );
-
-      // if there is error
-      if (result && result.error) {
-        handleResponseError(result.error);
-      }
-      //  state is success
-
-      if (result && result.success) {
-        // setGlobalMsg("Your White Label Form has been successfully submitted");
-        // navigate(-1);
-        handleSubmitMsg("White Label");
-      }
-    } catch (error) {}
-  }
+  console.log("setSelectedDocs", selectedDocs);
 
   return (
     <>
