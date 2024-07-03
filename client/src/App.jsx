@@ -125,7 +125,7 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/sendrfq/:factoryId?/:factoryName?/:productId?/:productName?",
+        path: "/sendrfq",
         element: <SendRfq />,
       },
 

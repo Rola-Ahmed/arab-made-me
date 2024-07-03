@@ -11,6 +11,10 @@ const formRoutess = [
     path: "/CustomerProductReq",
     element: <CustomerProductReq />,
   },
+  {
+    path: "/whiteLabelings/form",
+    element: <WhiteLabelContainer />,
+  },
 ];
 
 export default formRoutess;

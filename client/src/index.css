@@ -2,20 +2,14 @@
   --primary-color:#0F1E3B;
   --secondary-color:#F2AE31;
   --white:#fff;
-  --text-color:#667085;
   --light-gray:#F1F1F1;
-  --font-family:Inter;
-  font-family:"Inter-reg" ;
-  --gray:#667085;
   --Gray-900: #101828;
-  --Gray-500: #667085;
+  --Gray-500: #667085; /*??*/
   --gray-200: #E5E7EB;
   --Gray-50: #F9FAFB;
   --Gray-300: #D0D5DD;
 
-  --Gray-00color:  #FFF ;
   --star-color:#FA8232;
---Primary-500: #FA8232;
 --secondary-5-workd-light: #F4F5FF;
 
 --border-btn-color:#6670853b;
@@ -25,7 +19,7 @@
 --tertiary-color:  #f2f2f2;
 --light-baby-blue:rgba(126, 184, 204, 0.203);
 
---read-only-bg:#8080802b;
+/* --read-only-bg:#8080802b; */
 }
 @font-face {
   font-family: "Inter-reg";
