@@ -41,17 +41,17 @@ const useFormSubmission = (isLogin, setErrorMsg, setLoadingState) => {
 
     let data = {
       factoryId: values?.factoryId,
-      // productId: values?.productId,
-      // productName: values.productName,
+      productId: values?.productId,
+      productName: values.productName,
 
-      productId: 562,
-      productName: "Scarlett Mueller",
+      // productId: 562,
+      // productName: "Scarlett Mueller",
 
       // if  values.moreDetails!==null add value
       ...(values.moreDetails && { moreDetails: values.moreDetails }),
     };
 
-    try {
+    // try {
       let result = await addWhiteLabel({ authorization: isLogin }, data);
 
       if (result?.success) {
@@ -68,9 +68,9 @@ const useFormSubmission = (isLogin, setErrorMsg, setLoadingState) => {
       } else {
         handleResponseError(result.error);
       }
-    } catch (error) {
-      handleResponseError(errorHandler(error));
-    }
+    // } catch (error) {
+    //   handleResponseError(errorHandler(error));
+    // }
   };
 
   const submitDocs = async (qoute_id, selectedDocs) => {

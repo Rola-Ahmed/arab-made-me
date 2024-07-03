@@ -21,6 +21,8 @@ RUN npm run build
 # Install a lightweight HTTP server to serve the built React application
 RUN npm install -g serve
 
+Run npm start
+
 # Expose the port the application will run on
 EXPOSE 3000
 

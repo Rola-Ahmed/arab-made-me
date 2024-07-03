@@ -15,7 +15,6 @@ export const otherTextAreaValidate = (field, value) => {
 //       .max(255, "max length is 255"),
 //   });
 
-
 // textAreaValidate()
 export const textAreaValidate = () =>
   Yup.string().max(255, "max legnth is 255");
@@ -29,10 +28,11 @@ const tomorrow = new Date(now);
 tomorrow.setDate(now.getDate() + 1);
 export const formattedDateValidate = tomorrow.toISOString().slice(0, 16);
 
-
-
+export const requiredDateValidate = Yup.date()
+  .required("Input field is Required")
+  .min(formattedDateValidate, "Invalid Date");
 
 // --1----formattedDateValidate = tomorrow.toISOString().slice(0, 16);
-// 
+//
 // purpose: The function generates a formatted date string representing tomorrow's date and time. It ensures that the generated date is always in the future compared to the current date and time.
 // Why is it needed?: This functionality is useful for scenarios where you want to enforce that the user selects a date and time in the future, preventing them from entering past or today's date.

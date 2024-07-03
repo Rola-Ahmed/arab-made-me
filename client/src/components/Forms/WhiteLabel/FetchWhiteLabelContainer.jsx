@@ -34,10 +34,8 @@ export default function WhiteLabelContainerAPI() {
         }
 
         // if there is error
-        if (result.error) {
-        } else {
+        if (result?.success) {
           //  state is success
-
           if (result.data.message == "done") {
             if (productId) {
               setProductDetails(result.data.products);

@@ -8,7 +8,7 @@ import {
   textAreaValidate,
   otherTextAreaValidate,
   requiredStringValidate,
-  formattedDateValidate,
+  requiredDateValidate,
 } from "utils/validationUtils";
 
 import FactoryInfo from "../Shared/FactoryInfo";
@@ -82,9 +82,7 @@ export default function WhiteLabel(props) {
     timeLine: Yup.array()
       .of(
         Yup.object().shape({
-          date: Yup.date()
-            .required("Input field is Required")
-            .min(formattedDateValidate, "Invalid Date"),
+          date: requiredDateValidate,
           quantity: Yup.string()
             .required("Input field is Required")
             .matches(/^[0-9]+$/, "Input field must be numbers only")
@@ -144,7 +142,7 @@ export default function WhiteLabel(props) {
   function submit(values) {
     // if data is not added yet
     if (!privateLabelAdded.status) {
-      submitForm(values,selectedDocs);
+      submitForm(values, selectedDocs);
     }
     // if textApi is added and selectedDocs is greater that 0
     // call media
@@ -156,8 +154,6 @@ export default function WhiteLabel(props) {
       submitDocs(privateLabelAdded.id, selectedDocs);
     }
   }
-
-  console.log("setSelectedDocs", selectedDocs);
 
   return (
     <>

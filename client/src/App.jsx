@@ -18,11 +18,9 @@ import ContactSupplierFactoryPg from "./components/Factories/ContactSupplierFact
 // forms
 // OutSide Formsclean
 import PrivateLabel from "./components/Forms/PrivateLabel/PrivateLabelContainer";
-import WhiteLabelContainer from "components/Forms/WhiteLabel/FetchWhiteLabelContainer";
 
 // forms
 import SendRfq from "./components/Forms/RFQ/FetchRfqContainer";
-// import CustomerProductReq from "./components/Forms/CustomerProductReq/FetchCustomProductContainer";
 import Contactsupplier from "./components/Forms/Contactsupplier/Contactsupplier";
 import RequestVisit from "./components/Forms/RequestVisit/RequestVisit";
 import PurchasingOrder from "./components/Forms/PurchasingOrder/PurchasingOrder";
@@ -120,10 +118,7 @@ const router = createBrowserRouter([
         element: <PurchasingOrder />,
       },
 
-      {
-        path: "/whiteLabelings/form",
-        element: <WhiteLabelContainer />,
-      },
+      
       {
         path: "/PrivateLabel",
         element: <PrivateLabel />,
