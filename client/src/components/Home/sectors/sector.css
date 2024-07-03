@@ -56,7 +56,7 @@ height: 73px;
 }
 
 .text-4{
-    color: var(--Gray-900, #101828);
+    color: var(--Gray-900);
 text-align: center;
 
 /* Display md/Semibold */
@@ -125,8 +125,8 @@ justify-content: center;
 align-items: center;
 gap: 10px;
 border-radius: 10px;
-background: var(--primary-color, #0F1E3B);
-color: var(--White, #FFF);
+background: var(--primary-color);
+color: var(--White);
 text-align: center;
 
 /* Body/Body_9 */

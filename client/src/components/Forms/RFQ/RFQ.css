@@ -16,7 +16,7 @@ gap: 32px;
 
 padding: 30px 30px;
 border-radius: 16px;
-border: 1px solid var(--light-gray, #F1F1F1);
+border: 1px solid var(--light-gray);
 
 }
 
@@ -32,7 +32,7 @@ align-items: flex-start;
 gap: 24px;
 }
 .send-rfq .title-text p{
-  color: var(--Gray-900, #101828);
+  color: var(--Gray-900);
 
   /* Display lg/Semibold */
   font-family: "Inter-reg";
@@ -102,7 +102,7 @@ gap: 24px;
   align-items: center;
   gap: 8px;
   align-self: stretch;border-radius: 8px;
-  border: 1px solid var(--Gray-300, #D0D5DD);
+  border: 1px solid var(--Gray-300);
   box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
   }
   
@@ -174,21 +174,21 @@ line-height: 24px;
   gap: 6px;
   align-self: stretch;
   border-radius: 8px;
-  border: 1px solid var(--primary-color, #0F1E3B);
-  background: var(--primary-color, #0F1E3B);
+  border: 1px solid var(--primary-color);
+  background: var(--primary-color);
   
   
   box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
   }
   .send-rfq  .action .action-btn.btn-1{
-  border: 1px solid var(--primary-color, #0F1E3B);
-  background: var(--primary-color, #0F1E3B);
+  border: 1px solid var(--primary-color);
+  background: var(--primary-color);
   color: white;
   
   }
   .send-rfq   .action .action-btn.btn-2{
     border-radius: 8px;
-    border: 1px solid var(--Gray-300, #D0D5DD);
+    border: 1px solid var(--Gray-300);
     background: var(--Base-White, #FFF);
     
     box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);

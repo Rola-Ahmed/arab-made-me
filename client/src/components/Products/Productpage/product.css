@@ -30,7 +30,7 @@ gap: 35px;
 
 .product-page-section1 .slick-dots.slick-thumb .slick-active a img{
     border-radius: 2px;
-    border: 2px solid var(--Primary-500);
+    border: 2px solid var(--star-color);
 }
 .product-page-section1 .slick-dot-slider .slick-track{
  display: flex !important;
@@ -173,7 +173,7 @@ font-weight: 400;
 line-height: 150%; 
 }
 .text-product-5{
-    color: var(--primary-color, #0F1E3B);
+    color: var(--primary-color);
 
 /* Heading/03 */
 font-family: "Inter-semi";
@@ -196,7 +196,7 @@ padding: 5px 10px;
 align-items: flex-start;
 gap: 10px;
 border-radius: 2px;
-/* background: var(--secondary-color, #F2AE31); */
+/* background: var(--secondary-color); */
 color: var(--Gray-900, #191C1F);
 
 /* Body/Small/600 */
@@ -255,7 +255,7 @@ height: 350px;
 }
 .product-page-section1 .dots-slider-img.active-dot {
     border-radius: 2px;
-border: 2px solid var(--Primary-500, #FA8232);
+border: 2px solid var(--star-color);
 }
 .details-text-1{
     color: var(--11-Text-Color-Light-01-Text-Primary, #212B36);
@@ -296,7 +296,7 @@ line-height: 20px;
     padding-bottom: 70px;
 }
 .rela-1{
-    color: var(--Gray-900, #101828);
+    color: var(--Gray-900);
 
 /* Display md/Semibold */
 font-family: "Inter-semi";
@@ -342,7 +342,7 @@ cursor: pointer;
 }
 
 .parent-buttons-container .text-container p{
-    color: var(--White, #FFF);
+    color: var(--White);
     text-align: center;
     font-family: "Inter-reg";
     font-size: 15px;

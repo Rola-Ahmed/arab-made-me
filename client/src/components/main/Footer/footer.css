@@ -16,7 +16,7 @@ padding: 48px 0px;
 flex-direction: column;
 align-items: center;
 gap: 64px;
-background: var(--primary-color, #0F1E3B);
+background: var(--primary-color);
 }
 .container-1{
     display: flex;
@@ -55,7 +55,7 @@ flex-shrink: 0;
 }
 .copy{
     width: 160px;
-    color: var(--light-gray, #F1F1F1);
+    color: var(--light-gray);
 text-align: right;
 
 /* Text md/Regular */

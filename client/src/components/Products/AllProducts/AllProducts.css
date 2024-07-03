@@ -64,7 +64,7 @@ border: 1px solid #DDD;
 background: #FFF;
 }
 .all-products .product-1{
-    color: var(--Gray-900, #101828);
+    color: var(--Gray-900);
 
     font-family: "Inter-semi";
     font-size: 36px;
@@ -136,11 +136,11 @@ justify-content: center;
 align-items: center;
 gap: 8px;
 border-radius: 8px;
-background: var(--primary-color, #0F1E3B);
+background: var(--primary-color);
 border-color: transparent;
 }
 .all-products .btn-text{
-    color: var(--white, #FFF);
+    color: var(--White);
 
 font-family: "Inter-med";
 font-size: 13.5px;
@@ -160,7 +160,7 @@ justify-content: center;
 align-items: center;
 color: var(--gray-800, #1F2A37);
 border-radius: 8px;
-border: 1px solid var(--gray-200, #E5E7EB);
+border: 1px solid var(--gray-200);
 font-family: "Inter-med";
 font-size: 13.5px;
 font-style: normal;
@@ -177,7 +177,7 @@ justify-content: center;
 align-items: center;
 color: var(--gray-800, #1F2A37);
 border-radius: 8px;
-border: 1px solid var(--gray-200, #E5E7EB);
+border: 1px solid var(--gray-200);
 font-family: "Inter-med";
 font-size: 13.5px;
 font-style: normal;
@@ -451,15 +451,15 @@ line-height: 20px !important;
 
 .filter-active{
     border-radius: 2px;
-    border: 1px solid var(--secondary-color, #F2AE31);
-    background: var(--white, #FFF);
+    border: 1px solid var(--secondary-color);
+    background: var(--White);
 }
 .filter-active-text{
     color: #F2AE31 ;
 }
 .countries input:checked{
-    background-color: var(--secondary-color, #F2AE31)!important;
-    border-color: var(--secondary-color, #F2AE31)!important;
+    background-color: var(--secondary-color)!important;
+    border-color: var(--secondary-color)!important;
 }
 
 .country-filters.countries.scroll{

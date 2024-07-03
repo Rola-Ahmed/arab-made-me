@@ -3,7 +3,7 @@
 padding: 73px 0px;
 justify-content: center;
 align-items: flex-start;
-background: var(--Gray-50, #F9FAFB);
+background: var(--Gray-50);
 }
 .company-1{
     align-self: stretch;
@@ -108,7 +108,7 @@ flex-shrink: 0;
     width: 102.107px;
 height: 26.688px;
 flex-shrink: 0;
-fill: var(--Gray-900, #101828);
+fill: var(--Gray-900);
 
 }.sv-5{
     width: 129.449px;

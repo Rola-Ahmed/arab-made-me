@@ -14,7 +14,7 @@
     
  }
  .products-section .header-Title{
-    color: var(--Gray-900, #101828);
+    color: var(--Gray-900);
 
 /* Display md/Semibold */
 font-family: Inter-reg;
@@ -87,7 +87,7 @@ background:rgba(128, 128, 128, 0.542) !important;
 /* ----------end header------------------------------------------- */
 
 .product-1{
-    color: var(--Gray-900, #101828);
+    color: var(--Gray-900);
 
     /* Display md/Semibold */
     font-family: "Inter-semi";
@@ -162,7 +162,7 @@ justify-content: center;
 align-items: center;
 gap: 8px;
 border-radius: 8px;
-background: var(--primary-color, #0F1E3B);
+background: var(--primary-color);
 border-color: transparent;
 }
 .btn-text{
@@ -181,7 +181,7 @@ line-height: 150%;
 justify-content: center;
 align-items: center;
 border-radius: 8px;
-border: 1px solid var(--gray-200, #E5E7EB);
+border: 1px solid var(--gray-200);
 
 }
 
@@ -197,8 +197,8 @@ padding: 14px;
 
 gap: 10px;
 border-radius: 10px;
-background: var(--primary-color, #0F1E3B);
-color: var(--White, #FFF);
+background: var(--primary-color);
+color: var(--White);
 text-align: center;
 
 /* Body/Body_9 */

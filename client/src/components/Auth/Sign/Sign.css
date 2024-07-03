@@ -4,7 +4,7 @@
 }
 .login .frame-container-1 {
   border-radius: 16px;
-  border: 1px solid var(--light-gray, #F1F1F1);
+  border: 1px solid var(--light-gray);
   display: grid;
 
   padding: 40px 0px;
@@ -90,7 +90,7 @@ padding: 10px 14px;
 align-items: center;
 gap: 8px;
 align-self: stretch;border-radius: 8px;
-border: 1px solid var(--Gray-300, #D0D5DD);
+border: 1px solid var(--Gray-300);
 background: var(--Base-White, #FFF);
 box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
 }
@@ -116,20 +116,20 @@ gap: 6px;
 align-self: stretch;
 border-radius: 8px;
 border: none;
-background: var(--primary-color, #0F1E3B);
+background: var(--primary-color);
 
 
 box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
 }
 .login  .action .action-btn.btn-1{
 border: none;
-background: var(--primary-color, #0F1E3B);
+background: var(--primary-color);
 color: white;
 
 }
 .login  .action .action-btn.btn-2{
   border-radius: 8px;
-  border: 1px solid var(--Gray-300, #D0D5DD);
+  border: 1px solid var(--Gray-300);
   background: var(--Base-White, #FFF);
   
   box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
@@ -163,7 +163,7 @@ justify-content: center;
 align-items: center;
 gap: 6px;
 
-color: var(--secondary-color, #F2AE31);
+color: var(--secondary-color);
 font-family:  "Inter-reg";
 
 font-size: 14px;

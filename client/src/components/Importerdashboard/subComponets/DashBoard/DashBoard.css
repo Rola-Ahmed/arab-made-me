@@ -46,7 +46,7 @@ grid-template-columns: repeat(3, 1fr); */
     font-family:"Inter-reg" ;
     font-weight: 600;
     font-size: 12px;
-    color:var(--text-color) ;
+    color:var(--Gray-500) ;
 }
 .parent-persantage{
 
@@ -73,7 +73,7 @@ line-height: 28px;
 
 .btn-container-dash{
     border-radius: 8px;
-border: 1px solid var(--Gray-300, #D0D5DD);
+border: 1px solid var(--Gray-300);
 background: var(--Base-White, #FFF);
 
 
@@ -132,7 +132,7 @@ gap: 8px;border-radius: 6px;
 
 .transaction-text{
 
-color: var(--Gray-900, #101828);
+color: var(--Gray-900);
 
 
 font-family: "Inter-med";

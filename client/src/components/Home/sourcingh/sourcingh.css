@@ -37,7 +37,7 @@
     border-radius: 8px;
 }
 .sour-1{
-    color: var(--secondary-color, #F2AE31);
+    color: var(--secondary-color);
     font-weight: 600;
     font-size: 18px;
 }

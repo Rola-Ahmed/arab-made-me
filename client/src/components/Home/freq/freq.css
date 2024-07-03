@@ -1,5 +1,5 @@
 .freq-text1{
-    color: var(--Gray-900, #101828);
+    color: var(--Gray-900);
 text-align: center;
 
 /* Display md/Semibold */
@@ -23,7 +23,7 @@ line-height: 30px;
 padding-bottom: 34px;
 }
 .freq-acc{
-    color: var(--Gray-900, #101828);
+    color: var(--Gray-900);
 
 /* Text lg/Medium */
 font-family: "Inter-med";

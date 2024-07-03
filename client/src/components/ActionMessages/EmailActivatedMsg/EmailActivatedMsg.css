@@ -109,7 +109,7 @@ height: 2px;
 }
 
 .vertical-line-after{
-    background-color: var(--gray-200);
+    background-color: var(var(--gray-200));
     width: 336px;
     
 height: 2px;
@@ -120,7 +120,7 @@ height: 2px;
 
 .frame-container-1{
   border-radius: 16px;
-  border: 1px solid var(--light-gray, #F1F1F1);
+  border: 1px solid var(--light-gray);
   display: grid;
 
   padding: 40px 0px;
@@ -248,7 +248,7 @@ font-family: 'Inter-reg';
   align-self: stretch;
   border-radius: 8px;
   border: none;
-  background: var(--primary-color, #0F1E3B);
+  background: var(--primary-color);
   box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
   color: white;
 }

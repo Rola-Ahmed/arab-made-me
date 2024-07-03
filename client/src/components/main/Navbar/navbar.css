@@ -1,6 +1,6 @@
 .header-nav {
   padding: 24px 48px;
-  background-color: var(--primary-color, #0f1e3b);
+  background-color: var(--primary-color);
   position: sticky;
   top:0;
   /* z-index: 3; */
@@ -23,7 +23,7 @@
 
 }
 .nav-link {
-  color: var(--light-gray, #f1f1f1) !important;
+  color: var(--light-gray) !important;
   text-align: center;
   gap: 32px;
 
@@ -41,7 +41,7 @@
   align-items: center;
   gap: 8px;
   border-radius: 8px;
-  background: var(--secondary-color, #f2ae31);
+  background: var(--secondary-color);
   color: white;
   border: 1px solid #f2ae31;
 
@@ -61,7 +61,7 @@
   gap: 16px;
 }
 .btns .text-1 {
-  color: var(--light-gray, #f1f1f1);
+  color: var(--light-gray);
   font-family: "Inter-med";
   font-size: 14px;
   font-style: normal;

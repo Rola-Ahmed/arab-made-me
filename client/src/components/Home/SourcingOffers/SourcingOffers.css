@@ -17,7 +17,7 @@ font-weight: 400;
 line-height: 21px;
 letter-spacing: 0em;
 /* text-align: left; */
-color: var(--text-color)
+color: var(--Gray-500)
 
 }
 
@@ -57,7 +57,7 @@ color: black;
 }
 
 .bg-header{
-    background-color: var(--gray-200) !important
+    background-color: var(var(--gray-200)) !important
 }
 .table thead {
   
@@ -67,7 +67,7 @@ color: black;
 
 .table-striped tbody tr:nth-child(even) {
   
-    background-color: var(--gray-200) !important; /* Set your desired background color */
+    background-color: var(var(--gray-200)) !important; /* Set your desired background color */
 }
 
 

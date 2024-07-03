@@ -133,7 +133,7 @@ padding: 11px 22px;
 justify-content: center;
 align-items: center;
 border-radius: 8px;
-background: var(--primary-color, #0F1E3B);
+background: var(--primary-color);
 color:  #FFF;
 font-family: "Inter-semi";
 font-size: 15px;

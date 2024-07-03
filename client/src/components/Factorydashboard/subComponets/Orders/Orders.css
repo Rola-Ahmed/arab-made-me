@@ -47,7 +47,7 @@ gap:12px;
 
 .sub-text{
     font-family: "Inter-reg";
-    color :var(--text-color)
+    color :var(--Gray-500)
 }
 .header-btns button{
    border: solid 2px var(--border-btn-color);
@@ -183,7 +183,7 @@ color: black;
       }
  .trate-sub-title{
                         font-family: "Inter-med";
-                        /* color: var(--text-color); */
+                        /* color: var(--Gray-500); */
                         font-size: 14px;
                         color: var(--Gray-600, #475467);
 
@@ -256,7 +256,7 @@ color: blue;
 
  .status-continaer p{
     font-family: "Inter-reg";
-    color: var(--text-color);
+    color: var(--Gray-500);
     font-size: 14px;
     font-weight: 600;
    }

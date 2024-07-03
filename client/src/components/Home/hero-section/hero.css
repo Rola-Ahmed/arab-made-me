@@ -109,7 +109,7 @@ line-height: 150%; /* 24px */
   height: 4rem;
 }
 .hero-search .search-button p{
-  color: var(--White, #FFF);
+  color: var(--White);
   font-family: DM Sans;
   font-size: 16px;
   font-style: normal;

@@ -71,8 +71,8 @@ padding: 6px 16px;
 justify-content: center;
 align-items: center;
 border-radius: 8px;
-border: 1px solid var(--primary-color, #0F1E3B);
-color: var(--primary-color, #0F1E3B);
+border: 1px solid var(--primary-color);
+color: var(--primary-color);
 text-align: center;
 background-color: #FFF;
 /* 01 ButtonText/02 Medium */

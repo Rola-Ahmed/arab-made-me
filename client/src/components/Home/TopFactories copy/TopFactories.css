@@ -12,7 +12,7 @@ padding-top: 130px;
     
  }
  .topFactory .header-Title{
-    color: var(--Gray-900, #101828);
+    color: var(--Gray-900);
 
 /* Display md/Semibold */
 font-family: Inter-reg;
@@ -266,7 +266,7 @@ gap: 8px;
     align-items: center;
     gap: 8px;border-radius: 8px;
     background-color: white;
-    border: 1px solid var(--gray-200);
+    border: 1px solid var(var(--gray-200));
     font-family: "Inter-med";
   }
     .top-factories{
@@ -303,8 +303,8 @@ padding: 14px;
 
 gap: 10px;
 border-radius: 10px;
-background: var(--primary-color, #0F1E3B);
-color: var(--White, #FFF);
+background: var(--primary-color);
+color: var(--White);
 text-align: center;
 
 /* Body/Body_9 */
@@ -352,7 +352,7 @@ justify-content: center;
 align-items: center;
 gap: 8px;
 border-radius: 8px;
-background: var(--primary-color, #0F1E3B);
+background: var(--primary-color);
 border-color: transparent;
 }
 

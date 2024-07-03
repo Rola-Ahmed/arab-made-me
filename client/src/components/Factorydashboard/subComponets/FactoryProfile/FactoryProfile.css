@@ -83,7 +83,7 @@ top: 119px;
 /* not used  btn-container*/
 .factory-profile .btn-container{
     border-radius: 8px;
-background: var(--secondary-5-workd-light, #F4F5FF);display: flex;
+background: var(--secondary-5-workd-light);display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
@@ -119,7 +119,7 @@ gap:16px;
 }
 
 .factory-profile .sub-title{
-color: var(--primary-color, #0F1E3B);
+color: var(--primary-color);
 font-family: "Inter-semi";
 font-size: 18px;
 font-style: normal;
@@ -193,9 +193,9 @@ align-self: stretch;
 
 .factory-profile .form-select.form-control{padding: 11px 10px;}
 
-.factory-profile .form-control[readonly]{
+/* .factory-profile .form-control[readonly]{
     background-color: var(--read-only-bg) ;
-}
+} */
 
 .factory-profile .form-group label{
     font-family: "Inter-semi";
@@ -207,7 +207,7 @@ align-self: stretch;
 }
 .factory-profile .btn-edit{
     border-radius: 8px;
-    background: var(--primary-color, #0F1E3B) ;
+    background: var(--primary-color) ;
 
     display: flex;
     padding: 11px 22px;
@@ -219,7 +219,7 @@ align-self: stretch;
 }
  .factory-profile .btn-edit.btn:hover,.factory-profile .btn-edit.btn:active{
     border-radius: 8px;
-    background: var(--primary-color, #0F1E3B) !important;
+    background: var(--primary-color) !important;
 
     display: flex;
     padding: 11px 22px;
@@ -513,7 +513,7 @@ text-shadow:0px 1px 1px rgb(0, 0, 0);
 }
 .factory-profile  .dots-slider-img.active-dot {
     border-radius: 2px;
-border: 2px solid var(--Primary-500, #FA8232);
+border: 2px solid var(--star-color);
 }
 
 
@@ -529,7 +529,7 @@ border: 2px solid var(--Primary-500, #FA8232);
     justify-content: space-between;
  
     border-radius: 8px ;
-    border: 1px solid var(--Gray-300, #D0D5DD);
+    border: 1px solid var(--Gray-300);
     
     box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
   }
@@ -577,7 +577,7 @@ border: 2px solid var(--Primary-500, #FA8232);
 
   .parent-team{
 
-      border: 1px solid var(--gray-200);
+      border: 1px solid var(var(--gray-200));
       border-radius: 8px;
       padding: 12px;
       width: 294px;
@@ -600,5 +600,5 @@ border: 2px solid var(--Primary-500, #FA8232);
   }
 
   .border-btn{
-border: solid var(--gray-200) 1px !important;
+border: solid var(var(--gray-200)) 1px !important;
   }
