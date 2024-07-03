@@ -226,6 +226,11 @@ p, h1,h2,h3,h4,h5,h6{
   padding: 10px 14px !important; 
 }
 
+.pt-mt {
+  padding-top: 1.5rem ;
+  margin-top: .25rem ;
+}
+
 @media (max-width:539px) {
   .margin-sm-screen{
     padding-left: 20px !important;

@@ -1,26 +1,27 @@
-.sector-section{
+.sector-section {
     padding-top: 70px;
 }
 
 /* .secrotr-row{
    gap: 28px 0px;
 } */
-.sector-img{
-    
-display: flex;
-align-items: center;
-/* overflow: hidden; */
+.sector-img {
+
+    display: flex;
+    align-items: center;
+    /* overflow: hidden; */
 
 }
 
-.borderContainer{
-border-radius: 6px;
+.borderContainer {
+    border-radius: 6px;
 
     object-fit: cover;
-    width:73px;
-height: 73px;
+    width: 73px;
+    height: 73px;
 }
-.sec-r-container{
+
+.sec-r-container {
     /* display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -48,116 +49,130 @@ height: 73px;
 
 
 }
-.sec-r-item{
+
+.sec-r-item {
     /* width: 19%; */
-    
+
     width: 247px;
 
 }
 
-.text-4{
+.text-4 {
     color: var(--Gray-900);
-text-align: center;
+    text-align: center;
 
-/* Display md/Semibold */
-font-family: "Inter-semi";
-font-size: 36px;
-font-style: normal;
-font-weight: 600;
-line-height: 44px; /* 122.222% */
-letter-spacing: -0.72px;
+    /* Display md/Semibold */
+    font-family: "Inter-semi";
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 44px;
+    /* 122.222% */
+    letter-spacing: -0.72px;
 }
-.text-5{
+
+.text-5 {
     color: var(--Gray-500, #667085);
-text-align: center;
+    text-align: center;
 
-/* Text xl/Regular */
-font-family: "Inter-reg";
-font-size: 20px;
-font-style: normal;
-font-weight: 400;
-line-height: 30px; 
+    /* Text xl/Regular */
+    font-family: "Inter-reg";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 30px;
 }
-.container-1{
+
+.container-1 {
     display: flex;
-flex-direction: column;
-align-items: center;
-gap: 48px;
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
 }
-.card-sector{
+
+.card-sector {
     display: flex;
-/* padding: 8px 16px 8px 10px; */
-padding: 8px  10px;
-align-items: center;
-gap: 16px;
-border-radius: 14px;
-border: 1px solid #D8DBDE;
-background: #FFF;
+    /* padding: 8px 16px 8px 10px; */
+    padding: 8px 10px;
+    align-items: center;
+    gap: 16px;
+    border-radius: 14px;
+    border: 1px solid #D8DBDE;
+    background: #FFF;
 }
-.sector-text{
+
+.sector-text {
     display: flex;
-flex-direction: column;
-align-items: flex-start;
-gap: 2px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
 }
-.sector-text h4{
+
+.sector-text h4 {
     color: #202124;
     font-family: "Inter-semi";
     font-size: 18px;
     font-style: normal;
     font-weight: 600;
-    line-height: 100%; /* 20px */}
-.sector-text p{
+    line-height: 100%;
+    /* 20px */
+}
+
+.sector-text p {
     margin-bottom: 0;
 }
-.sector-container{
-    display: flex;
-flex-direction: column;
-align-items: flex-start;
-gap: 29px;
-width: 100%;
-}
-.btn-sector{
-    display: flex;
-width: 194px;
-padding: 14px;
-justify-content: center;
-align-items: center;
-gap: 10px;
-border-radius: 10px;
-background: var(--primary-color);
-color: var(--White);
-text-align: center;
 
-/* Body/Body_9 */
-font-family: "Inter-semi";
-font-size: 15px;
-font-style: normal;
-font-weight: 700;
-line-height: 24px; /* 160% */
+.sector-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 29px;
+    width: 100%;
+}
+
+.btn-sector {
+    display: flex;
+    width: 194px;
+    padding: 14px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 10px;
+    background: var(--primary-color);
+    color: var(--white);
+    text-align: center;
+
+    /* Body/Body_9 */
+    font-family: "Inter-semi";
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    /* 160% */
 }
 
 
 
 @media (max-width:539px) {
-    .sec-r-container.secrotr-row{
- 
-    gap: 9px 11px;
-    grid-template-columns: repeat(2, 1fr);
-    display: grid;
-    }   
-    
+    .sec-r-container.secrotr-row {
+
+        gap: 9px 11px;
+        grid-template-columns: repeat(2, 1fr);
+        display: grid;
+    }
+
     .sec-r-item {
         /* width: 43vw; */
         width: 100%;
 
     }
 
-    .sector-text h4,.sector-text p  {
+    .sector-text h4, .sector-text p {
         font-size: 2.6vw;
         width: 100%;
     }
-    .sector-text h4{
+
+    .sector-text h4 {
         margin: 0;
     }
 
@@ -165,6 +180,5 @@ line-height: 24px; /* 160% */
         width: 14.5vw;
         height: 14vw;
     }
-    
-  }
 
+}
