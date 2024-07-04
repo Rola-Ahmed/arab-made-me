@@ -4,7 +4,7 @@ import TextareaInput from "../Shared/TextareaInput";
 import FormVlaidtionError from "../Shared/FormVlaidtionError";
 import InputField from "../Shared/InputField";
 import TimeLine from "../Shared/TimeLine/TimeLine";
-import SelectOption from "../Shared/SelectOption";
+import SelectWithTextarea from "../Shared/SelectWithTextarea";
 import { packingConditionsArr } from "constants/packingConditionsArr";
 import { SupplyLocationArr } from "constants/SupplyLocationArr";
 import { shippingConditionsArr } from "constants/shippingConditionsArr";
@@ -107,7 +107,7 @@ function CustomProductForm(props) {
           </div>
 
           <div className="col-md-6 col-sm-12">
-            <SelectOption
+            <SelectWithTextarea
               formValidation={formValidation}
               vlaidationName={"shippingConditions"}
               textAreaOther={"shippingConditionsOther"}
@@ -118,7 +118,7 @@ function CustomProductForm(props) {
           </div>
 
           <div className="col-md-6 col-sm-12">
-            <SelectOption
+            <SelectWithTextarea
               formValidation={formValidation}
               vlaidationName={"packingConditions"}
               textAreaOther={"packingConditionsOther"}
@@ -129,7 +129,7 @@ function CustomProductForm(props) {
           </div>
 
           <div className="col-md-6 col-sm-12">
-            <SelectOption
+            <SelectWithTextarea
               formValidation={formValidation}
               vlaidationName={"ShippingTypeSize"}
               textAreaOther={"ShippingTypeSizeOther"}
@@ -140,7 +140,7 @@ function CustomProductForm(props) {
           </div>
 
           <div className="col-md-6 col-sm-12">
-            <SelectOption
+            <SelectWithTextarea
               formValidation={formValidation}
               vlaidationName={"qualityConditions"}
               textAreaOther={"qualityConditionsOther"}

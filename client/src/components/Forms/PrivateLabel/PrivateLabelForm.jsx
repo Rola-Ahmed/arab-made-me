@@ -10,7 +10,7 @@ import InputField from "../Shared/InputField";
 import { shippingConditionsArr } from "constants/shippingConditionsArr";
 import { packingConditionsArr } from "constants/packingConditionsArr";
 import { qualityConditionsArr } from "constants/qualityConditionsArr";
-import SelectOption from "../Shared/SelectOption";
+import SelectWithTextarea from "../Shared/SelectWithTextarea";
 import FormVlaidtionError from "../Shared/FormVlaidtionError";
 
 import { SupplyLocationArr } from "constants/SupplyLocationArr";
@@ -76,7 +76,7 @@ export default function PrivateLabelForm(props) {
                 </div>
 
                 <div className="col-md-6 col-sm-12">
-                  <SelectOption
+                  <SelectWithTextarea
                     formValidation={formValidation}
                     vlaidationName={"shippingConditions"}
                     textAreaOther={"shippingConditionsOther"}
@@ -87,7 +87,7 @@ export default function PrivateLabelForm(props) {
                 </div>
 
                 <div className="col-md-6 col-sm-12">
-                  <SelectOption
+                  <SelectWithTextarea
                     formValidation={formValidation}
                     vlaidationName={"packingConditions"}
                     textAreaOther={"packingConditionsOther"}
@@ -97,7 +97,7 @@ export default function PrivateLabelForm(props) {
                   />
                 </div>
                 <div className="col-md-6 col-sm-12">
-                  <SelectOption
+                  <SelectWithTextarea
                     formValidation={formValidation}
                     vlaidationName={"qualityConditions"}
                     textAreaOther={"qualityConditionsOther"}
@@ -107,7 +107,7 @@ export default function PrivateLabelForm(props) {
                   />
                 </div>
                 <div className="col-md-6 col-sm-12">
-                  <SelectOption
+                  <SelectWithTextarea
                     formValidation={formValidation}
                     vlaidationName={"ShippingTypeSize"}
                     textAreaOther={"ShippingTypeSizeOther"}

@@ -1,6 +1,6 @@
 import FormVlaidtionError from "./FormVlaidtionError";
 
-export default function SelectOption(props) {
+export default function SelectWithTextarea(props) {
   let {
     formValidation,
     vlaidationName,

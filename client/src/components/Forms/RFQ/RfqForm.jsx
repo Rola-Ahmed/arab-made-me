@@ -8,7 +8,7 @@ import { qualityConditionsArr } from "constants/qualityConditionsArr";
 import EtcProductPopUp from "../Shared/EtcProductPopUp";
 
 import "./RFQ.css";
-import SelectOption from "../Shared/SelectOption";
+import SelectWithTextarea from "../Shared/SelectWithTextarea";
 import { paymentTypeArr } from "constants/paymentTypeArr";
 import UploadDocument from "../Shared/UploadDocument";
 import TextareaInput from "../Shared/TextareaInput";
@@ -29,7 +29,6 @@ function RfqForm(props) {
   } = props;
 
   const [selectedItem, setSelectedItem] = useState(null);
-
 
   return (
     <>
@@ -72,7 +71,7 @@ function RfqForm(props) {
               </div>
 
               <div className="col-md-6 col-sm-12">
-                <SelectOption
+                <SelectWithTextarea
                   formValidation={formValidation}
                   vlaidationName={"shippingConditions"}
                   textAreaOther={"shippingConditionsOther"}
@@ -83,7 +82,7 @@ function RfqForm(props) {
               </div>
 
               <div className="col-md-6 col-sm-12">
-                <SelectOption
+                <SelectWithTextarea
                   formValidation={formValidation}
                   vlaidationName={"packingConditions"}
                   textAreaOther={"packingConditionsOther"}
@@ -94,7 +93,7 @@ function RfqForm(props) {
               </div>
 
               <div className="col-md-6 col-sm-12">
-                <SelectOption
+                <SelectWithTextarea
                   formValidation={formValidation}
                   vlaidationName={"qualityConditions"}
                   textAreaOther={"qualityConditionsOther"}
@@ -105,7 +104,7 @@ function RfqForm(props) {
               </div>
 
               <div className="col-md-6 col-sm-12">
-                <SelectOption
+                <SelectWithTextarea
                   formValidation={formValidation}
                   vlaidationName={"paymentType"}
                   textAreaOther={"paymentTypeOther"}

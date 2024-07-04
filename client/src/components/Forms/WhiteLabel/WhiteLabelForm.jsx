@@ -4,7 +4,7 @@ import TextareaInput from "../Shared/TextareaInput";
 import EtcProductPopUp from "../Shared/EtcProductPopUp";
 import UploadDocument from "../Shared/UploadDocument";
 
-import SelectOption from "../Shared/SelectOption";
+import SelectWithTextarea from "../Shared/SelectWithTextarea";
 import FormVlaidtionError from "../Shared/FormVlaidtionError";
 
 import { shippingConditionsArr } from "constants/shippingConditionsArr";
@@ -143,7 +143,7 @@ export default function WhiteLabelForm(props) {
                 />
 
                 <div className="col-md-6 col-sm-12">
-                  <SelectOption
+                  <SelectWithTextarea
                     formValidation={formValidation}
                     vlaidationName={"shippingConditions"}
                     textAreaOther={"shippingConditionsOther"}
@@ -154,7 +154,7 @@ export default function WhiteLabelForm(props) {
                 </div>
 
                 <div className="col-md-6 col-sm-12">
-                  <SelectOption
+                  <SelectWithTextarea
                     formValidation={formValidation}
                     vlaidationName={"packingConditions"}
                     textAreaOther={"packingConditionsOther"}
@@ -165,7 +165,7 @@ export default function WhiteLabelForm(props) {
                 </div>
 
                 <div className="col-md-6 col-sm-12">
-                  <SelectOption
+                  <SelectWithTextarea
                     formValidation={formValidation}
                     vlaidationName={"ShippingTypeSize"}
                     textAreaOther={"ShippingTypeSizeOther"}
@@ -176,7 +176,7 @@ export default function WhiteLabelForm(props) {
                 </div>
 
                 <div className="col-md-6 col-sm-12">
-                  <SelectOption
+                  <SelectWithTextarea
                     formValidation={formValidation}
                     vlaidationName={"qualityConditions"}
                     textAreaOther={"qualityConditionsOther"}
