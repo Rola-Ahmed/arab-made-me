@@ -1,4 +1,5 @@
 import FormVlaidtionError from "./FormVlaidtionError";
+import SelectOption from "./SelectOption";
 
 export default function SelectWithTextarea(props) {
   let {
@@ -11,26 +12,17 @@ export default function SelectWithTextarea(props) {
   } = props;
   return (
     <div className="form-group">
-      <label>
-        {title} {isRequired && "*"}
-      </label>
-
-      <select
-        className="form-select form-control"
-        id={vlaidationName}
-        name={vlaidationName}
-        onChange={formValidation.handleChange}
-        onBlur={formValidation.handleBlur}
-        value={formValidation.values[vlaidationName]}
-      >
-        {array?.map((item) => (
-          <option value={item?.value}>{item?.name}</option>
-        ))}
-      </select>
-      <FormVlaidtionError
+      <SelectOption
         formValidation={formValidation}
         vlaidationName={vlaidationName}
+        isRequired={isRequired}
+        title={title}
+        array={array}
       />
+
+    
+
+      
       {formValidation.values[vlaidationName] == "other" && (
         <textarea
           className="form-control w-100 "
