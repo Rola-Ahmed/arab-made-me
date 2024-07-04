@@ -6,14 +6,19 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { errorHandler } from "utils/errorHandler";
 
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { UserToken } from "Context/userToken";
 import { GlobalMsgContext } from "Context/globalMessage";
-// import LoadingForm from "components/Loading/LoadingForm";
 
 import FactoryInfo from "../Shared/FactoryInfo";
 import ProductDetails from "../Shared/SelectedProductDetails";
 import PrivateLabelForm from "./PrivateLabelForm";
+import {
+  textAreaValidate,
+  otherTextAreaValidate,
+  requiredStringValidate,
+  requiredDateValidate,
+} from "utils/validationUtils";
 
 export default function PrivateLabel(props) {
   let {
@@ -22,9 +27,11 @@ export default function PrivateLabel(props) {
     setIsLoading,
     factoryData,
     productIsSelected,
+    productName,
+    productId,
+    factoryId,
   } = props;
   // State variables
-  const [searchParams] = useSearchParams();
   const [errorMsg, setErrorMsg] = useState();
 
   const [privateLabelAdded, setPrivateLabelAdded] = useState({
@@ -39,12 +46,6 @@ export default function PrivateLabel(props) {
 
   // Router navigate function
   const navigate = useNavigate();
-
-  // Constants for URL parameters
-  const factoryId = searchParams.get("factoryId");
-  const productId = searchParams.get("productId");
-  const factoryName = searchParams.get("factoryName");
-  const productName = searchParams.get("productName");
 
   function setLoadingState(loadingStatus) {
     setIsLoading((prev) => ({ ...prev, submitLoading: loadingStatus }));
@@ -80,66 +81,55 @@ export default function PrivateLabel(props) {
       }),
     // .required("Input field is Required"),
 
-    moreDetails: Yup.string().max(255, "max legnth is 255"),
     // new
-    every: Yup.string()
-      .matches(/^[0-9]+$/, "Input field must be numbers only")
-      .min(1, "min 1 legnth"),
-    endOn: Yup.string()
-      .matches(/^[0-9]+$/, "Input field must be numbers only")
-      .min(1, "min 1 legnth"),
+    // every: Yup.string()
+    //   .matches(/^[0-9]+$/, "Input field must be numbers only")
+    //   .min(1, "min 1 legnth"),
+    // endOn: Yup.string()
+    //   .matches(/^[0-9]+$/, "Input field must be numbers only")
+    //   .min(1, "min 1 legnth"),
 
     quantity: Yup.string()
       .required("Input field is Required")
       .matches(/^[0-9]+$/, "Input field must be numbers only")
       .min(1, "min 1 legnth"),
 
-    packingConditions: Yup.string().required("Input field is Required"),
-    packingConditionsOther: Yup.string().when("packingConditions", {
-      is: "other",
-      then: (schema) => schema.required("Input field is Required"),
-      otherwise: (schema) => schema.nullable(),
-    }),
-    SupplyLocation: Yup.string().required("Input field is Required"),
+    packingConditions: requiredStringValidate,
+    packingConditionsOther: otherTextAreaValidate("packingConditions", "other"),
+    then: (schema) => schema.required("Input field is Required"),
+    otherwise: (schema) => schema.nullable(),
 
-    shippingConditions: Yup.string().required("Input field is Required"),
-    shippingConditionsOther: Yup.string().when("shippingConditions", {
-      is: "other",
-      then: (schema) => schema.required("Input field is Required"),
-      otherwise: (schema) => schema.nullable(),
-    }),
+    SupplyLocation: requiredStringValidate,
 
-    ShippingTypeSize: Yup.string().required("Input field is Required"),
-    ShippingTypeSizeOther: Yup.string().when("ShippingTypeSize", {
-      is: "other",
-      then: (schema) => schema.required("Input field is Required"),
-      otherwise: (schema) => schema.nullable(),
-    }),
+    shippingConditions: requiredStringValidate,
+    shippingConditionsOther: otherTextAreaValidate(
+      "shippingConditions",
+      "other"
+    ),
 
-    qualityConditions: Yup.string().required("Input field is Required"),
-    qualityConditionsOther: Yup.string().when("qualityConditions", {
-      is: "other",
-      then: (schema) => schema.required("Input field is Required"),
-      otherwise: (schema) => schema.nullable(),
-    }),
+    ShippingTypeSize: requiredStringValidate,
+    ShippingTypeSizeOther: otherTextAreaValidate("ShippingTypeSize", "other"),
 
-    otherConditions: Yup.string().max(255, "max legnth is 255"),
+    qualityConditions: requiredStringValidate,
+    qualityConditionsOther: otherTextAreaValidate("qualityConditions", "other"),
+
+    moreDetails: textAreaValidate(),
+    otherConditions: textAreaValidate(),
   });
   let initialValues = {
     factoryId: factoryId,
 
     productId: productId ? [productId] : [],
     productName: productName ? [productName] : [],
-
     // productId: "77",
     // productName: "paste G100",
     moreDetails: "",
 
     // new
     recurrence: false,
-    repeats: "day",
-    every: "",
-    endOn: "",
+    // repeats: "day",
+    // every: "",
+    // endOn: "",
 
     quantity: "",
 
@@ -157,7 +147,6 @@ export default function PrivateLabel(props) {
     qualityConditions: "",
     qualityConditionsOther: "",
     trademarkCheckBox: false,
-
   };
   useEffect(() => {
     if (productDetails && factoryId) {
@@ -270,10 +259,9 @@ export default function PrivateLabel(props) {
       });
   }
 
-  
   return (
     <>
-
+      <header title="Private Label"  />
       <section className="req-visit">
         {/* Factory Details */}
         <div className="container container-req ">
@@ -289,7 +277,7 @@ export default function PrivateLabel(props) {
         <PrivateLabelForm
           allProductsArr={productDetails}
           isLoading={isLoading}
-          formValidation={formValidation}
+          formValidation={formValidation} 
           errorMsg={errorMsg}
           setSelectedDocs={setSelectedDocs}
           setErrorMsg={setErrorMsg}
