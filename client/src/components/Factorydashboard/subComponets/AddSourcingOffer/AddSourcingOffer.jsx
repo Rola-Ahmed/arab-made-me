@@ -109,7 +109,6 @@ export default function AddSourcingOffer() {
     productDescription: Yup.string()
       .required(" productDescription is Requried")
 
-      //.min(16, "min legnth is 16")
       .max(255, "max legnth is 255"),
 
     qualityConditions: Yup.string(),
@@ -117,7 +116,7 @@ export default function AddSourcingOffer() {
       is: "other",
       then: (schema) =>
         schema
-          //.min(16, "min legnth is 16")
+
           .max(255, "max legnth is 255")
           .required("Input field is Required"),
       otherwise: (schema) => schema.nullable(),
@@ -128,7 +127,7 @@ export default function AddSourcingOffer() {
       is: "other",
       then: (schema) =>
         schema
-          //.min(16, "min legnth is 16")
+
           .max(255, "max legnth is 255")
           .required("Input field is Required"),
       otherwise: (schema) => schema.nullable(),
@@ -139,7 +138,7 @@ export default function AddSourcingOffer() {
       is: "other",
       then: (schema) =>
         schema
-          //.min(16, "min legnth is 16")
+
           .max(255, "max legnth is 255")
           .required("Input field is Required"),
       otherwise: (schema) => schema.nullable(),
@@ -150,7 +149,7 @@ export default function AddSourcingOffer() {
       is: "other",
       then: (schema) =>
         schema
-          //.min(16, "min legnth is 16")
+
           .max(255, "max legnth is 255")
           .required("Input field is Required"),
       otherwise: (schema) => schema.nullable(),

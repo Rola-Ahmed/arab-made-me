@@ -58,7 +58,7 @@ function SourcingRequest() {
       is: "other",
       then: (schema) =>
         schema
-          //.min(16, "min legnth is 16")
+
           .max(255, "max legnth is 255")
           .required("Input field is Required"),
       otherwise: (schema) => schema.nullable(),
@@ -69,7 +69,7 @@ function SourcingRequest() {
       is: "other",
       then: (schema) =>
         schema
-          //.min(16, "min legnth is 16")
+
           .max(255, "max legnth is 255")
           .required("Input field is Required"),
       otherwise: (schema) => schema.nullable(),
@@ -80,7 +80,7 @@ function SourcingRequest() {
       is: "other",
       then: (schema) =>
         schema
-          //.min(16, "min legnth is 16")
+
           .max(255, "max legnth is 255")
           .required("Input field is Required"),
       otherwise: (schema) => schema.nullable(),
@@ -89,8 +89,7 @@ function SourcingRequest() {
     deadline: Yup.date().min(formattedDate, "Invalid Date"),
 
     otherInfoRequest: Yup.string()
-      //.min(16, "min legnth is 16")
-      .max(255, "max legnth is 255"),
+    .max(255, "max legnth is 255"),
 
     productDescription: Yup.string()
       .required("Input field is Required")

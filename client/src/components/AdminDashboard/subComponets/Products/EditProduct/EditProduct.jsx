@@ -122,7 +122,6 @@ export default function EditProduct() {
     description: Yup.string()
       .required(" Description is Requried")
 
-      //.min(16, "min legnth is 16")
       .max(255, "max legnth is 255"),
 
     specialCharKeyWord: Yup.string()

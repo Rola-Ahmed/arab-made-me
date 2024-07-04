@@ -74,7 +74,7 @@ export default function AnswerQuotation() {
       is: "other",
       then: (schema) =>
         schema
-          //.min(16, "min legnth is 16")
+
           .max(255, "max legnth is 255")
           .required("Input field is Required"),
       otherwise: (schema) => schema.nullable(),
@@ -85,7 +85,7 @@ export default function AnswerQuotation() {
       is: "other",
       then: (schema) =>
         schema
-          //.min(16, "min legnth is 16")
+
           .max(255, "max legnth is 255")
           .required("Input field is Required"),
       otherwise: (schema) => schema.nullable(),
@@ -96,7 +96,7 @@ export default function AnswerQuotation() {
       is: "other",
       then: (schema) =>
         schema
-          //.min(16, "min legnth is 16")
+
           .max(255, "max legnth is 255")
           .required("Input field is Required"),
       otherwise: (schema) => schema.nullable(),
@@ -108,8 +108,7 @@ export default function AnswerQuotation() {
     endDeliveryDate: Yup.date().min(formattedDate, "Invalid Date"),
 
     notes: Yup.string()
-      //.min(16, "min legnth is 16")
-      .max(255, "max legnth is 255"),
+    .max(255, "max legnth is 255"),
   });
 
   let initialValues = {

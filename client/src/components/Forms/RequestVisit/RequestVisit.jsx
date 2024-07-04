@@ -60,8 +60,7 @@ function RequestVisit() {
   let validationSchema = Yup.object().shape({
     visitDate: Yup.string().required("Input field is Required"),
     visitPurpose: Yup.string()
-      //.min(16, "min legnth is 16")
-      .max(255, "max legnth is 255"),
+    .max(255, "max legnth is 255"),
   });
   let initialValues = {
     factoryId: factoryId,
