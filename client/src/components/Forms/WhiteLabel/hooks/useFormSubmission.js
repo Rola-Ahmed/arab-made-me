@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { errorHandler } from "utils/errorHandler";
 import useSubmitFormMsg from "hooks/useSubmitFormMsg";
 
 import { addWhiteLabel, addWhiteLabelMedia } from "Services/whiteLabel";
@@ -52,22 +51,22 @@ const useFormSubmission = (isLogin, setErrorMsg, setLoadingState) => {
     };
 
     // try {
-      let result = await addWhiteLabel({ authorization: isLogin }, data);
+    let result = await addWhiteLabel({ authorization: isLogin }, data);
 
-      if (result?.success) {
-        if (selectedDocs.length > 0) {
-          setPrivateLabelAdded({
-            status: true,
-            id: result.data.whiteLabeling.id,
-          });
-          await submitDocs(result.data.whiteLabeling.id, selectedDocs);
-        } else {
-          // display  successfully submitted message
-          handleSubmitMsg(" White Label Request");
-        }
+    if (result?.success) {
+      if (selectedDocs.length > 0) {
+        setPrivateLabelAdded({
+          status: true,
+          id: result.data.whiteLabeling.id,
+        });
+        await submitDocs(result.data.whiteLabeling.id, selectedDocs);
       } else {
-        handleResponseError(result.error);
+        // display  successfully submitted message
+        handleSubmitMsg(" White Label Request");
       }
+    } else {
+      handleResponseError(result.error);
+    }
     // } catch (error) {
     //   handleResponseError(errorHandler(error));
     // }
