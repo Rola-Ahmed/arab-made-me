@@ -252,7 +252,9 @@ p, button, div, textarea, input {
   margin-top: .25rem;
 }
 
-
+.rounded{
+  border-radius: 6px !important;
+}
 
 
 

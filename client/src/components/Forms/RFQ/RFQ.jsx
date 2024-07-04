@@ -30,7 +30,7 @@ function SendRfq(props) {
   const { isLogin } = useContext(UserToken);
   const [errorMsg, setErrorMsg] = useState();
 
-  let { submitForm, rfqAdded, submitDocs,handleSubmitMsg } = useFormSubmission(
+  let { submitForm, rfqAdded, submitDocs, handleSubmitMsg } = useFormSubmission(
     isLogin,
     setErrorMsg,
     setIsLoading
@@ -94,8 +94,8 @@ function SendRfq(props) {
 
     // if user selected a product then productId
     //else it will display all the products of the selected factory
-    // productId: productId || productDetailsArr?.[0]?.id || "",
-    // productName: productDetails?.name || productDetailsArr?.[0]?.name,
+    // productId: 562,
+    // productName: "Scarlett Mueller",
     productId: productId ? [productId] : [],
     productName: productName ? [productName] : [],
   };
@@ -125,9 +125,7 @@ function SendRfq(props) {
     // if (privateLabelAdded.status && selectedDocs?.length > 0) {
     else if (selectedDocs?.length > 0) {
       submitDocs(rfqAdded.id, selectedDocs);
-    }
-    else{
-
+    } else {
       handleSubmitMsg("RFQ Request");
     }
   }

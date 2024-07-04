@@ -29,7 +29,7 @@ function RfqForm(props) {
   const [selectedItem, setSelectedItem] = useState(null);
 
   const handleCheckboxProductNameChange = (item, isChecked) => {
-    let productNameArr = formValidation.values.productName;
+    let productNameArr = formValidation?.values?.productName;
 
     // let updatedProductNames;
     if (isChecked) {
@@ -43,15 +43,13 @@ function RfqForm(props) {
     <>
       <div className="container container-rfq">
         <div className="input-content ">
-          {errorMsg?.response ? (
+          {errorMsg?.response && (
             <div
               id="errorMsg"
               className=" alert mt-3 p-2 alert-danger form-control text-dark"
             >
               {errorMsg?.response}
             </div>
-          ) : (
-            ""
           )}
           <form
             onSubmit={formValidation.handleSubmit}
@@ -62,31 +60,26 @@ function RfqForm(props) {
               {!productIsSelected && (
                 <div className="col-12">
                   <div className="form-group">
-                    <label>selected product</label>
+                    <label>selected product *</label>
 
                     <button
-                      className="btn form-control dropdown-toggle w-100 text-center countries-drop d-flex "
+                      className="btn form-control dropdown-toggle w-100 text-center countries-drop d-flex rounded"
                       type="button"
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
                     >
                       <p> Select Product *</p>
                       <i className="fa-solid fa-chevron-down text-end my-auto"></i>
-                      {/* {Dropdown} */}
                     </button>
                     <ul className="dropdown-menu col-3 scroller">
                       {productDetails.map((item) => (
                         <li>
                           <div className=" dropdown-item d-flex justify-content-start align-items-center width-drop bg-none">
-                            <label
-                              className="form-check-label p-0 m-0 justify-content-between d-flex w-100"
-                              //   htmlFor="productId"
-                            >
+                            <label className="form-check-label p-0 m-0  d-flex w-100">
                               <input
                                 //
                                 onChange={formValidation.handleChange}
                                 onBlur={formValidation.handleBlur}
-                                // value={formValidation.values.productId}
                                 onClick={(e) => {
                                   formValidation.handleChange(e);
                                   handleCheckboxProductNameChange(
