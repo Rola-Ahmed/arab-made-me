@@ -81,6 +81,9 @@ export default function PrivateLabelContainerAPI() {
           // new
           factoryData={productDetails?.factory}
           productDetails={productDetails}
+          productName={productName}
+          productId={productId}
+          factoryId={factoryId}
         />
       ) : (
         <PrivateLabel
@@ -90,6 +93,9 @@ export default function PrivateLabelContainerAPI() {
           productDetails={productDetailsArr}
           // new
           factoryData={productDetailsArr?.[0]?.factory}
+          productName={productName}
+          productId={productId}
+          factoryId={factoryId}
         />
       )}
     </>

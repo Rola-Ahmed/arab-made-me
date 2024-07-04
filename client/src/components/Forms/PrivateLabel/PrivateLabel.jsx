@@ -1,14 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
-import axios from "axios";
-import { baseUrl } from "config.js";
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { errorHandler } from "utils/errorHandler";
 
-import { useNavigate } from "react-router-dom";
 import { UserToken } from "Context/userToken";
-import { GlobalMsgContext } from "Context/globalMessage";
 
 import FactoryInfo from "../Shared/FactoryInfo";
 import ProductDetails from "../Shared/SelectedProductDetails";
@@ -17,8 +12,9 @@ import {
   textAreaValidate,
   otherTextAreaValidate,
   requiredStringValidate,
-  requiredDateValidate,
 } from "utils/validationUtils";
+
+import useFormSubmission from "./hooks/useFormSubmission";
 
 export default function PrivateLabel(props) {
   let {
@@ -32,44 +28,16 @@ export default function PrivateLabel(props) {
     factoryId,
   } = props;
   // State variables
+
   const [errorMsg, setErrorMsg] = useState();
 
-  const [privateLabelAdded, setPrivateLabelAdded] = useState({
-    status: false,
-    id: "",
-  });
   const [selectedDocs, setSelectedDocs] = useState([]);
 
   // Context variables
   const { isLogin } = useContext(UserToken);
-  const { setGlobalMsg } = useContext(GlobalMsgContext);
 
-  // Router navigate function
-  const navigate = useNavigate();
-
-  function setLoadingState(loadingStatus) {
-    setIsLoading((prev) => ({ ...prev, submitLoading: loadingStatus }));
-  }
-
-  function clearResponseError() {
-    setErrorMsg((prevErrors) => {
-      const { response, ...restErrors } = prevErrors || {};
-      return restErrors;
-    });
-  }
-
-  function scrollToView(elementId) {
-    const targetElement = document.getElementById(elementId);
-    if (targetElement) {
-      targetElement.scrollIntoView({ behavior: "smooth", block: "center" });
-    }
-  }
-
-  function handleResponseError(message) {
-    setLoadingState(false);
-    setErrorMsg((prevErrors) => ({ ...prevErrors, response: message }));
-    scrollToView("view");
-  }
+  let { submitForm, privateLabelAdded, submitDocs, handleSubmitMsg } =
+    useFormSubmission(isLogin, setErrorMsg, setIsLoading);
 
   // ------------------------Form Validation
 
@@ -117,7 +85,6 @@ export default function PrivateLabel(props) {
 
     // new
     // recurrence: false,
-  
 
     quantity: "",
 
@@ -151,7 +118,7 @@ export default function PrivateLabel(props) {
   function submit(values) {
     // if data is not added yet
     if (!privateLabelAdded.status) {
-      submitForm(values);
+      submitForm(values, selectedDocs);
     }
 
     // if textApi is added and selectedDocs is greater that 0
@@ -160,92 +127,12 @@ export default function PrivateLabel(props) {
     // else
     // if (privateLabelAdded.status && selectedDocs?.length > 0) {
     else if (selectedDocs?.length > 0) {
-      setLoadingState(true);
-      SubmitDocs(privateLabelAdded.id);
+      submitDocs(privateLabelAdded.id, selectedDocs);
+    } else {
+      handleSubmitMsg("Private Label Request");
     }
   }
-
-  async function submitForm(values) {
-    setLoadingState(true);
-
-    clearResponseError();
-
-    let data = {
-      factoryId: values?.factoryId,
-      productId: values?.productId,
-      productName: values.productName,
-
-      // if  values.moreDetails!==null add value
-      ...(values.moreDetails && { moreDetails: values.moreDetails }),
-    };
-
-    try {
-      let config = {
-        method: "post",
-        url: `${baseUrl}/privateLabelings/add`,
-        headers: {
-          authorization: isLogin,
-        },
-        data: data,
-      };
-
-      const response = await axios.request(config);
-      if (response.data.message == "done") {
-        if (selectedDocs.length > 0) {
-          setPrivateLabelAdded({
-            status: true,
-            id: response.data.privateLabeling.id,
-          });
-
-          await SubmitDocs(response.data.privateLabeling.id);
-        } else {
-          setGlobalMsg(
-            "Your Private Label Form has been successfully submitted"
-          );
-
-          navigate(-1);
-        }
-      } else {
-        handleResponseError(response?.data?.message);
-      }
-    } catch (error) {
-      handleResponseError(errorHandler(error));
-    }
-  }
-
-  async function SubmitDocs(qoute_id) {
-    const FormData = require("form-data");
-    let data = new FormData();
-
-    selectedDocs?.map((item) => data.append("docs", item.pdfFile));
-
-    let config = {
-      method: "put",
-      url: `${baseUrl}/privateLabelings/uploadMedia/${qoute_id}`,
-
-      headers: {
-        authorization: isLogin,
-      },
-      data: data,
-    };
-
-    axios
-      .request(config)
-      .then((response) => {
-        if (response.data.message == "done") {
-          setLoadingState(true);
-
-          setGlobalMsg("Your White Label Form has been successfully submitted");
-
-          navigate(-1);
-        } else {
-          handleResponseError(response?.data?.message);
-        }
-      })
-      .catch((error) => {
-        handleResponseError(errorHandler(error));
-      });
-  }
+  console.log("formik", formValidation);
 
   return (
     <>

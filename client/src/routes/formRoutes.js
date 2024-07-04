@@ -4,6 +4,7 @@
 import CustomerProductReq from "components/Forms/CustomerProductReq/FetchCustomProductContainer";
 import WhiteLabelContainer from "components/Forms/WhiteLabel/FetchWhiteLabelContainer";
 import SendRfq from "components/Forms/RFQ/FetchRfqContainer";
+import PrivateLabel from "components/Forms/PrivateLabel/PrivateLabelContainer";
 
 const formRoutess = [
   {
@@ -18,6 +19,10 @@ const formRoutess = [
   {
     path: "/sendrfq",
     element: <SendRfq />,
+  },
+  {
+    path: "/PrivateLabel",
+    element: <PrivateLabel />,
   },
 ];
 

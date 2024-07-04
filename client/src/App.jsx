@@ -17,7 +17,6 @@ import ContactSupplierFactoryPg from "components/Factories/ContactSupplierFactor
 
 // forms
 // OutSide Formsclean
-import PrivateLabel from "components/Forms/PrivateLabel/PrivateLabelContainer";
 
 // forms
 import Contactsupplier from "components/Forms/Contactsupplier/Contactsupplier";
@@ -118,10 +117,7 @@ const router = createBrowserRouter([
       },
 
       
-      {
-        path: "/PrivateLabel",
-        element: <PrivateLabel />,
-      },
+     
 
       
 
