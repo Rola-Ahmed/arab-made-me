@@ -13,6 +13,9 @@ import { paymentTypeArr } from "constants/paymentTypeArr";
 import UploadDocument from "../Shared/UploadDocument";
 import TextareaInput from "../Shared/TextareaInput";
 import FormVlaidtionError from "../Shared/FormVlaidtionError";
+import ProductMultiSelector from "../Shared/ProductMultiSelector";
+import InputField from "../Shared/InputField";
+import DateTimeInput from "../Shared/DateTimeInput";
 
 function RfqForm(props) {
   let {
@@ -59,84 +62,24 @@ function RfqForm(props) {
             <div className="row row-container w-100 mx-auto ">
               {!productIsSelected && (
                 <div className="col-12">
-                  <div className="form-group">
-                    <label>selected product *</label>
-
-                    <button
-                      className="btn form-control dropdown-toggle w-100 text-center countries-drop d-flex rounded"
-                      type="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      <p> Select Product *</p>
-                      <i className="fa-solid fa-chevron-down text-end my-auto"></i>
-                    </button>
-                    <ul className="dropdown-menu col-3 scroller">
-                      {productDetails.map((item) => (
-                        <li>
-                          <div className=" dropdown-item d-flex justify-content-start align-items-center width-drop bg-none">
-                            <label className="form-check-label p-0 m-0  d-flex w-100">
-                              <input
-                                //
-                                onChange={formValidation.handleChange}
-                                onBlur={formValidation.handleBlur}
-                                onClick={(e) => {
-                                  formValidation.handleChange(e);
-                                  handleCheckboxProductNameChange(
-                                    item.name,
-                                    e.target.checked
-                                  );
-                                }}
-                                className="form-check-input cursor me-3 "
-                                type="checkbox"
-                                id="productId"
-                                name="productId"
-                                value={item.id}
-                              />
-                              {item.name}
-                            </label>
-                            <button
-                              type="button"
-                              class="fa-solid fa-circle-info ps-3 bg-none border-0 p-0 m-0"
-                              title="view product details"
-                              onClick={() => {
-                                setSelectedItem(item.id);
-                              }}
-                            ></button>
-                          </div>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <FormVlaidtionError
+                  <ProductMultiSelector
+                    productDetails={productDetails}
                     formValidation={formValidation}
-                    vlaidationName="productId"
+                    setSelectedItem={setSelectedItem}
+                    vlaidationNameOnId="productId"
+                    vliadationNameOnName="ProductName"
+                    title={"selected product"}
                   />
                 </div>
               )}
 
               <div className="col-md-6 col-sm-12">
-                <div className="form-group">
-                  <label htmlFor="quantity">quantity *</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="quantity"
-                    name="quantity"
-                    placeholder="Enter Product Quantity"
-                    onChange={formValidation.handleChange}
-                    onBlur={formValidation.handleBlur}
-                    value={formValidation.values.quantity}
-                  />
-                  {formValidation.errors.quantity &&
-                  formValidation.touched.quantity ? (
-                    <small className="form-text text-danger">
-                      {formValidation.errors.quantity}
-                    </small>
-                  ) : (
-                    ""
-                  )}
-                </div>
+                <InputField
+                  isRequired={true}
+                  title={"quantity"}
+                  formValidation={formValidation}
+                  vlaidationName={"quantity"}
+                />
               </div>
 
               <div className="col-md-6 col-sm-12">
@@ -184,26 +127,12 @@ function RfqForm(props) {
               </div>
 
               <div className="col-md-6 col-sm-12">
-                <div className="form-group">
-                  <label htmlFor="DeadLine">DeadLine *</label>
-                  <input
-                    id="deadLine"
-                    name="deadLine"
-                    onChange={formValidation.handleChange}
-                    onBlur={formValidation.handleBlur}
-                    value={formValidation.values.deadLine}
-                    type="datetime-local"
-                    className="form-control d-block"
-                  />
-                </div>
-                {formValidation.errors.deadLine &&
-                formValidation.touched.deadLine ? (
-                  <small className="form-text text-danger">
-                    {formValidation.errors.deadLine}
-                  </small>
-                ) : (
-                  ""
-                )}
+                <DateTimeInput
+                  isRequired={true}
+                  title={"Deadline"}
+                  formValidation={formValidation}
+                  vlaidationName={"deadLine"}
+                />
               </div>
 
               <UploadDocument
@@ -237,6 +166,7 @@ function RfqForm(props) {
                         const targetElement = document.getElementById(
                           Object.keys(formValidation.errors)?.[0]
                         );
+                        console.log("targetElement", targetElement);
 
                         // Scroll to the target element
                         targetElement.scrollIntoView({

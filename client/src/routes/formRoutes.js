@@ -3,7 +3,7 @@
 // restriction to only allow buyers to access the page,
 import CustomerProductReq from "components/Forms/CustomerProductReq/FetchCustomProductContainer";
 import WhiteLabelContainer from "components/Forms/WhiteLabel/FetchWhiteLabelContainer";
-
+import SendRfq from "components/Forms/RFQ/FetchRfqContainer";
 
 const formRoutess = [
   {
@@ -14,6 +14,10 @@ const formRoutess = [
   {
     path: "/whiteLabelings/form",
     element: <WhiteLabelContainer />,
+  },
+  {
+    path: "/sendrfq",
+    element: <SendRfq />,
   },
 ];
 

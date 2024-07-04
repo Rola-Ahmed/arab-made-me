@@ -20,7 +20,6 @@ import ContactSupplierFactoryPg from "./components/Factories/ContactSupplierFact
 import PrivateLabel from "./components/Forms/PrivateLabel/PrivateLabelContainer";
 
 // forms
-import SendRfq from "./components/Forms/RFQ/FetchRfqContainer";
 import Contactsupplier from "./components/Forms/Contactsupplier/Contactsupplier";
 import RequestVisit from "./components/Forms/RequestVisit/RequestVisit";
 import PurchasingOrder from "./components/Forms/PurchasingOrder/PurchasingOrder";
@@ -124,10 +123,7 @@ const router = createBrowserRouter([
         element: <PrivateLabel />,
       },
 
-      {
-        path: "/sendrfq",
-        element: <SendRfq />,
-      },
+      
 
       // -------------------------
       {

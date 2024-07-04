@@ -1,38 +1,15 @@
-import React, { useEffect, useState, useContext } from "react";
+import React from "react";
 
 import { Button, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import ProductDetails from "./SelectedProductDetails";
 import Carousel from "react-grid-carousel";
 import { handleImageError } from "utils/ImgNotFound";
-import { baseUrl, baseUrl_IMG } from "config.js";
-import axios from "axios";
+import { baseUrl_IMG } from "config.js";
 
 export default function EtcProductPopUp(directTo) {
-  const [productDetails, setProductDetails] = useState({});
-
-  useEffect(() => {
-    async function fetchProductData() {
-      try {
-        let config = {
-          method: "get",
-          url: `${baseUrl}/products/${directTo?.selectedItemId}`,
-        };
-
-        const response = await axios.request(config);
-
-        if (response.data.message == "done") {
-          setProductDetails(response.data.products);
-        } else if (response.data.message == "404 Not Found") {
-          // errorsMsg("404");
-        }
-      } catch (error) {}
-    }
-    // gell one product data only
-    if (directTo?.selectedItemId !== null) {
-      fetchProductData();
-    }
-  }, [directTo?.selectedItemId]);
+  // const [productDetails, setProductDetails] = useState({});
+  console.log("selectedItemId", directTo?.selectedItemId);
 
   let navigate = useNavigate();
   return (
@@ -56,7 +33,7 @@ export default function EtcProductPopUp(directTo) {
 
           <div className="w-100  m-auto d-grid gap-16 ">
             <div className="w-100 ps-3">
-              <ProductDetails productDetails={productDetails} />
+              <ProductDetails productDetails={directTo?.selectedItemId} />
             </div>
             <Carousel
               cols={2}
@@ -71,14 +48,14 @@ export default function EtcProductPopUp(directTo) {
                 <div className="vh-75 ">
                   <img
                     className="w-100 h-100"
-                    src={`${baseUrl_IMG}/${productDetails?.coverImage}`}
+                    src={`${baseUrl_IMG}/${directTo?.selectedItemId?.coverImage}`}
                     onError={handleImageError}
                     alt="sourcing request img"
                   />
                 </div>
               </Carousel.Item>
 
-              {productDetails?.images?.map((item) => (
+              {directTo?.selectedItemId?.images?.map((item) => (
                 <Carousel.Item>
                   <div className="vh-75 ">
                     <img
