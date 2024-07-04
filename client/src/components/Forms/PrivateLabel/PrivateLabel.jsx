@@ -81,14 +81,6 @@ export default function PrivateLabel(props) {
       }),
     // .required("Input field is Required"),
 
-    // new
-    // every: Yup.string()
-    //   .matches(/^[0-9]+$/, "Input field must be numbers only")
-    //   .min(1, "min 1 legnth"),
-    // endOn: Yup.string()
-    //   .matches(/^[0-9]+$/, "Input field must be numbers only")
-    //   .min(1, "min 1 legnth"),
-
     quantity: Yup.string()
       .required("Input field is Required")
       .matches(/^[0-9]+$/, "Input field must be numbers only")
@@ -96,8 +88,6 @@ export default function PrivateLabel(props) {
 
     packingConditions: requiredStringValidate,
     packingConditionsOther: otherTextAreaValidate("packingConditions", "other"),
-    then: (schema) => schema.required("Input field is Required"),
-    otherwise: (schema) => schema.nullable(),
 
     SupplyLocation: requiredStringValidate,
 
@@ -126,10 +116,8 @@ export default function PrivateLabel(props) {
     moreDetails: "",
 
     // new
-    recurrence: false,
-    // repeats: "day",
-    // every: "",
-    // endOn: "",
+    // recurrence: false,
+  
 
     quantity: "",
 
@@ -261,7 +249,7 @@ export default function PrivateLabel(props) {
 
   return (
     <>
-      <header title="Private Label"  />
+      <header title="Private Label" />
       <section className="req-visit">
         {/* Factory Details */}
         <div className="container container-req ">
@@ -277,7 +265,7 @@ export default function PrivateLabel(props) {
         <PrivateLabelForm
           allProductsArr={productDetails}
           isLoading={isLoading}
-          formValidation={formValidation} 
+          formValidation={formValidation}
           errorMsg={errorMsg}
           setSelectedDocs={setSelectedDocs}
           setErrorMsg={setErrorMsg}

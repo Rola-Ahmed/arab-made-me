@@ -11,10 +11,10 @@ import { shippingConditionsArr } from "constants/shippingConditionsArr";
 import { packingConditionsArr } from "constants/packingConditionsArr";
 import { qualityConditionsArr } from "constants/qualityConditionsArr";
 import SelectWithTextarea from "../Shared/SelectWithTextarea";
-import FormVlaidtionError from "../Shared/FormVlaidtionError";
 
 import { SupplyLocationArr } from "constants/SupplyLocationArr";
 import { ShippingTypeSizeArr } from "constants/ShippingTypeSizeArr";
+import SelectOption from "../Shared/SelectOption";
 
 export default function PrivateLabelForm(props) {
   let {
@@ -118,25 +118,13 @@ export default function PrivateLabelForm(props) {
                 </div>
 
                 <div className="col-md-6 col-sm-12">
-                  <div className="form-group">
-                    <label>Supply Location *</label>
-                    <select
-                      id="SupplyLocation"
-                      className="form-select form-control"
-                      onChange={formValidation.handleChange}
-                      onBlur={formValidation.handleBlur}
-                      value={formValidation.values.SupplyLocation}
-                    >
-                      {SupplyLocationArr.map((item) => (
-                        <option value={item?.value}>{item?.name}</option>
-                      ))}
-                    </select>
-
-                    <FormVlaidtionError
-                      formValidation={formValidation}
-                      vlaidationName="SupplyLocation"
-                    />
-                  </div>
+                  <SelectOption
+                    formValidation={formValidation}
+                    vlaidationName={"SupplyLocation"}
+                    isRequired={true}
+                    title={"Supply Location"}
+                    array={SupplyLocationArr}
+                  />
                 </div>
 
                 <Trademakr
@@ -172,33 +160,31 @@ export default function PrivateLabelForm(props) {
               </div>
             </div>
 
-            <div className="action">
-              <div className="col-12">
-                {isLoading?.submitLoading ? (
-                  <button type="button" className="action-btn btn-1 w-100 ">
-                    <i className="fas fa-spinner fa-spin"></i>
-                  </button>
-                ) : (
-                  <button
-                    className="action-btn btn-1 w-100"
-                    type="submit"
-                    onClick={() => {
-                      if (formValidation.isValid == false) {
-                        const targetElement = document.getElementById(
-                          Object.keys(formValidation.errors)?.[0]
-                        );
+            <div className="col-12 action">
+              {isLoading?.submitLoading ? (
+                <button type="button" className="action-btn btn-1 w-100 ">
+                  <i className="fas fa-spinner fa-spin"></i>
+                </button>
+              ) : (
+                <button
+                  className="action-btn btn-1 w-100"
+                  type="submit"
+                  onClick={() => {
+                    if (formValidation.isValid == false) {
+                      const targetElement = document.getElementById(
+                        Object.keys(formValidation.errors)?.[0]
+                      );
 
-                        targetElement.scrollIntoView({
-                          behavior: "smooth",
-                          block: "center",
-                        });
-                      }
-                    }}
-                  >
-                    Send
-                  </button>
-                )}
-              </div>
+                      targetElement.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center",
+                      });
+                    }
+                  }}
+                >
+                  Send
+                </button>
+              )}
             </div>
           </div>
           {/*  */}
