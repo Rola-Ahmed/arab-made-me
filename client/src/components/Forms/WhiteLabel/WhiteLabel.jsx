@@ -75,7 +75,6 @@ export default function WhiteLabel(props) {
     qualityConditionsOther: otherTextAreaValidate("qualityConditions", "other"),
 
     otherConditions: textAreaValidate(),
-    moreDetails: textAreaValidate(),
 
     recurrence: Yup.string().oneOf(["oneBatch", "repeat"]),
 
@@ -90,6 +89,7 @@ export default function WhiteLabel(props) {
         })
       )
       .min("1", "minimum length is 1"),
+    moreDetails: textAreaValidate(),
   });
 
   let initialValues = {
@@ -157,7 +157,7 @@ export default function WhiteLabel(props) {
 
   return (
     <>
-      <Header title="White Label" subTitle="White Label" />
+      <Header title="White Label"   />
 
       <section className="req-visit">
         {/* Factory Details */}

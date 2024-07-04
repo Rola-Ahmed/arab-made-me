@@ -12,7 +12,6 @@ import SelectOption from "../Shared/SelectOption";
 import { paymentTypeArr } from "constants/paymentTypeArr";
 import UploadDocument from "../Shared/UploadDocument";
 import TextareaInput from "../Shared/TextareaInput";
-import FormVlaidtionError from "../Shared/FormVlaidtionError";
 import ProductMultiSelector from "../Shared/ProductMultiSelector";
 import InputField from "../Shared/InputField";
 import DateTimeInput from "../Shared/DateTimeInput";
@@ -31,17 +30,7 @@ function RfqForm(props) {
 
   const [selectedItem, setSelectedItem] = useState(null);
 
-  const handleCheckboxProductNameChange = (item, isChecked) => {
-    let productNameArr = formValidation?.values?.productName;
 
-    // let updatedProductNames;
-    if (isChecked) {
-      productNameArr.push(item);
-    } else {
-      productNameArr = productNameArr.filter((name) => name != item);
-    }
-    formValidation.setFieldValue("productName", productNameArr);
-  };
   return (
     <>
       <div className="container container-rfq">
