@@ -23,10 +23,19 @@ export const textAreaValidate = () =>
 export let requiredStringValidate = Yup.string().required(
   "Input field is Required"
 );
+// const now = new Date();
+// const tomorrow = new Date(now);
+// tomorrow.setDate(now.getDate() + 1);
+// export const formattedDateValidate = tomorrow.toISOString().slice(0, 16);
+
+// Date setup to not accept the old date or todays date
+// must accept future date
 const now = new Date();
-const tomorrow = new Date(now);
-tomorrow.setDate(now.getDate() + 1);
-export const formattedDateValidate = tomorrow.toISOString().slice(0, 16);
+export const formattedDateValidate = new Date(
+  now.getTime() + 24 * 60 * 60 * 1000
+)
+  .toISOString()
+  .slice(0, 16);
 
 export const requiredDateValidate = Yup.date()
   .required("Input field is Required")

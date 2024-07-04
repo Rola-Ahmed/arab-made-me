@@ -3,7 +3,7 @@ import { getRequest } from "./authServices";
 // Service for fetching all products of a specific factory
 //------------------------------------- factory products------------------------------------------
 export const fetchFactoryProducts = async (factoryId) => {
-  return await getRequest(`/factories/products/${factoryId}`);
+  return await getRequest(`/factories/products/${factoryId}?include=factory`);
 };
 
 export const fetchFactoryProductsSize = async (factoryId, size) => {

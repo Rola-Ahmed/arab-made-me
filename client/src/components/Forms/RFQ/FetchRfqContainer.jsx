@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { baseUrl } from "config.js";
 
 import { useSearchParams } from "react-router-dom";
 
@@ -8,7 +6,8 @@ import Header from "components/main/Header/Header";
 import "./RFQ.css";
 import RFQ from "./RFQ";
 import useAuthFormChecks from "components/Forms/hooks/useAuthFormChecks";
-
+import { fetchFactoryProducts } from "Services/factory";
+import { fetchProductData } from "Services/products";
 function FetchRfqContainer() {
   const [searchParams] = useSearchParams();
   const factoryId = searchParams.get("factoryId");
@@ -19,65 +18,47 @@ function FetchRfqContainer() {
   //
   const [isLoading, setIsLoading] = useState({
     submitLoading: false,
-    pageLoading: false,
+    pageLoading: true,
+    errorPageLoading: true,
   });
 
-  let [productDetails, setProductDetails] = useState({});
   let [productDetailsArr, setProductDetailsArr] = useState([]);
+  let [productDetails, setProductDetails] = useState({});
 
   // if there is no specific product slected then call all the products
   //   all products of a specfiic factory
-  async function FactoryTotalProductLen() {
-    try {
-      let config = {
-        method: "get",
-        url: `${baseUrl}/factories/products/${factoryId}?include=factory`,
-      };
-
-      const response = await axios.request(config);
-
-      if (response.data.message == "done") {
-        setProductDetailsArr(response?.data?.products);
-      } else if (response.data.message == "404 Not Found") {
-        // errorsMsg("404");
-      }
-    } catch (error) {}
-  }
 
   // product data
-
-  async function fetchProductData() {
-    try {
-      let config = {
-        method: "get",
-        url: `${baseUrl}/products/${
-          productId !== null && productId
-        }?include=factory`,
-      };
-
-      const response = await axios.request(config);
-
-      if (response.data.message == "done") {
-        setProductDetails(response.data.products);
-      } else if (response.data.message == "404 Not Found") {
-        // errorsMsg("404");
-      }
-    } catch (error) {}
-  }
-
   useEffect(() => {
-    if (productId !== null) {
-      fetchProductData();
-    }
+    const fetchData = async () => {
+      try {
+        let result;
+        if (productId) {
+          result = await fetchProductData(productId);
+        } else if (!productId) {
+          result = await fetchFactoryProducts(factoryId);
+        }
 
-    // checks if user is logged in
-    // can user access this page
-    // if page is loading
+        // if there is error
+        if (result?.success) {
+          //  state is success
+          if (result.data.message == "done") {
+            if (productId) {
+              setProductDetails(result.data.products);
+            } else {
+              setProductDetailsArr(result.data.products);
+            }
+          }
+        }
+        setIsLoading((prev) => ({
+          ...prev,
+          pageLoading: result.loadingStatus,
+          errorPageLoading: result.error,
+        }));
+      } catch (error) {}
+    };
 
-    if (productId == "" || productId == null || productId == undefined) {
-      // call all total products of the factory
-      FactoryTotalProductLen();
-    }
+    fetchData();
   }, [productId, factoryId]);
 
   const authChecks = useAuthFormChecks(

@@ -5,6 +5,6 @@
     "module": "commonjs",
     "target": "es6"
   },
-  "include": ["src", "src/i18n.js", "public/locales/en/countries copy.js", "../ignoore/TopFactories copy"],
+  "include": ["src", "src/i18n.js"],
   "exclude": ["node_modules", "build", "dist"]
 }
