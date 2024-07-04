@@ -11,7 +11,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import axios from "axios";
-import { baseUrl, baseUrl_IMG } from "config.js";
+import { baseUrl } from "config.js";
 
 import * as Yup from "yup";
 
