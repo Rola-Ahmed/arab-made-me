@@ -2,42 +2,42 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "components/Layout/Layout";
 import { StrictMode, Suspense } from "react";
 
-import Home from "./components/Home/home";
-import Loading from "./components/Loading/Loading";
-import Factories from "./components/Factories/Factories";
-import AboutUs from "./components/About-us/AboutUs";
-import Sourcinghub from "./components/Sourcinghub/Sourcinghub";
-import Errorpage from "./components/Errorpage/Errorpage";
+import Home from "components/Home/home";
+import Loading from "components/Loading/Loading";
+import Factories from "components/Factories/Factories";
+import AboutUs from "components/About-us/AboutUs";
+import Sourcinghub from "components/Sourcinghub/Sourcinghub";
+import Errorpage from "components/Errorpage/Errorpage";
 
 // contact for arab-made itself
-import ContactArabMade from "./components/Contact/Contact";
+import ContactArabMade from "components/Contact/Contact";
 
 // conact page for each factory
-import ContactSupplierFactoryPg from "./components/Factories/ContactSupplierFactoryPg/ContactSupplierFactoryPg";
+import ContactSupplierFactoryPg from "components/Factories/ContactSupplierFactoryPg/ContactSupplierFactoryPg";
 
 // forms
 // OutSide Formsclean
-import PrivateLabel from "./components/Forms/PrivateLabel/PrivateLabelContainer";
+import PrivateLabel from "components/Forms/PrivateLabel/PrivateLabelContainer";
 
 // forms
-import Contactsupplier from "./components/Forms/Contactsupplier/Contactsupplier";
-import RequestVisit from "./components/Forms/RequestVisit/RequestVisit";
-import PurchasingOrder from "./components/Forms/PurchasingOrder/PurchasingOrder";
-import AnswerQuotation from "./components/Forms/AnswerQuotation/AnswerQuotation";
-import AnsQuotationPrivateLabel from "./components/Forms/AnswerQuotation/AnsQuotationPrivateLabel";
+import Contactsupplier from "components/Forms/Contactsupplier/Contactsupplier";
+import RequestVisit from "components/Forms/RequestVisit/RequestVisit";
+import PurchasingOrder from "components/Forms/PurchasingOrder/PurchasingOrder";
+import AnswerQuotation from "components/Forms/AnswerQuotation/AnswerQuotation";
+import AnsQuotationPrivateLabel from "components/Forms/AnswerQuotation/AnsQuotationPrivateLabel";
 
 // more details form
-import SourcingOfferExtraDetails from "./components/SourcingOfferExtraDetails/SourcingOfferExtraDetails";
-import SourcingRequestExtraDetails from "./components/SourcingRequestExtraDetails/SourcingRequestExtraDetails";
+import SourcingOfferExtraDetails from "components/SourcingOfferExtraDetails/SourcingOfferExtraDetails";
+import SourcingRequestExtraDetails from "components/SourcingRequestExtraDetails/SourcingRequestExtraDetails";
 
-import Factorypage from "./components/Factories/FactoryPage/Factorypage";
-import FactoryProducts from "./containers/Factories/FactoryProducts/FactoryProductsContainer";
+import Factorypage from "components/Factories/FactoryPage/Factorypage";
+import FactoryProducts from "containers/Factories/FactoryProducts/FactoryProductsContainer";
 
 import Productpage from "containers/Products/ProductPageContainer";
 import AllProducts from "containers/Products/AllProductsContainer";
 
 // Factory Dashboard pages
-import AllSourcingOffers from "./components/Sourcinghub/AllSourcingOffers/AllSourcingOffers";
+import AllSourcingOffers from "components/Sourcinghub/AllSourcingOffers/AllSourcingOffers";
 
 // sub routes
 import adminDashboardRoutes from "routes/adminDashboardRoutes";
