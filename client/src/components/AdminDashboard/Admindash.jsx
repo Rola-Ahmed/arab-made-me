@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 
 import { handleImageError } from "utils/ImgNotFound";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { logo2 } from "constants/Images";
+import { logo } from "constants/Images";
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
 import { GlobalMsgContext } from "Context/globalMessage";
@@ -63,7 +63,7 @@ function Admindash() {
           <div className="static-navbar">
             <div className="img-icon mb-2 justify-content-start align-items-center d-flex">
               <Link className="navbar-brand" to="/">
-                <img src={logo2} alt="arabmade logo" />
+                <img src={logo} alt="arabmade logo" />
               </Link>
             </div>
 

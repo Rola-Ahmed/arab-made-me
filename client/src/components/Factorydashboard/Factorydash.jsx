@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState, useRef } from "react";
 
 import "./Factorydash.css";
 import { Link, Outlet, useLocation } from "react-router-dom";
-import { logo2 } from "constants/Images";
+import { logo } from "constants/Images";
 
 import { GlobalMsgContext } from "Context/globalMessage";
 import { ToastContainer, toast } from "react-toastify";
@@ -73,7 +73,7 @@ function Factorydash(props) {
           <div className="static-navbar">
             <div className="img-icon mb-2 justify-content-start align-items-center d-flex">
               <Link className="navbar-brand" to="/">
-                <img src={logo2} alt="arabmade logo" />
+                <img src={logo} alt="arabmade logo" />
               </Link>
 
               <small className="text-white">User Type: Factory</small>

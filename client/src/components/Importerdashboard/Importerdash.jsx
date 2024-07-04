@@ -4,7 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { baseUrl, baseUrl_IMG } from "config.js";
 
-import { logo2 as logo } from "constants/Images";
+import { logo } from "constants/Images";
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
 import { GlobalMsgContext } from "Context/globalMessage";
