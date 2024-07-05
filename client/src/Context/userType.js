@@ -142,6 +142,7 @@ export function UserTypeProvider({ children }) {
               ...prevData,
               importerVerified: response.data.importers.verified,
               importerName: response.data.importers?.repName,
+              importerEmail: response.data.importers?.repEmail,
               importerEmailActivated: response.data.importers.emailActivated,
               datacompletelyLoaded: false,
               profile: response.data.importers.image,

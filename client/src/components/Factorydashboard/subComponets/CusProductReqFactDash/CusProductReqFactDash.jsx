@@ -484,7 +484,6 @@ export default function CusProductReqFactDash() {
                       className="trate-sub-title view-more-details cursor"
                       title="view more details"
                       onClick={() => {
-                        setGlobalMsg("ToImporterdashboard", "true");
                         navigate(
                           `/factorydashboard/customProductReq/moreDetails?customProductId=${poItem?.id}&factoryName=${poItem?.factoryName}`
                         );

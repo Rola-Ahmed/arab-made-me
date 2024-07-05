@@ -1,24 +1,20 @@
 import React, { useContext, useState, useEffect } from "react";
+import { baseUrl_IMG } from "config.js";
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
-import { baseUrl, baseUrl_IMG } from "config.js";
-
-import { logo } from "constants/Images";
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
 import { GlobalMsgContext } from "Context/globalMessage";
-
 import { handleImageError } from "utils/ImgNotFound";
-
 import { useLocation, useNavigate, Outlet, Link } from "react-router-dom";
+import DashLogo from "components/Shared/Dashboards/DashLogo";
+import DashNavBtn from "components/Shared/Dashboards/DashNavBtn";
 
 function Importerdash() {
   let { setIsLogin } = useContext(UserToken);
   let { currentUserData } = useContext(userDetails);
   let { globalMsg, setGlobalMsg } = useContext(GlobalMsgContext);
-
-  const [importerProfile, setImporterProfile] = useState([]);
 
   let navigate = useNavigate();
   document.title = "Importer Dashboard";
@@ -35,6 +31,8 @@ function Importerdash() {
   const currentPathname = location.pathname.split("/");
   let currentNavPage =
     currentPathname?.[currentPathname?.length - 1].toLocaleLowerCase();
+
+    // 
   const [activeMenu, setActiveMenu] = useState("");
 
   const logOuut = () => {
@@ -44,36 +42,6 @@ function Importerdash() {
     localStorage.setItem("ToHomePage", "true");
     navigate("/");
   };
-  if (localStorage.getItem("ToImporterdashboard")) {
-    let bool = false;
-
-    if (localStorage.getItem("ToImporterdashboard") !== "true" && !bool) {
-      toast(localStorage.getItem("ToImporterdashboard"), {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        // pauseOnHover: true,
-        draggable: true,
-        theme: "colored",
-        type: "success",
-        onClose: () => {
-          bool = true;
-          localStorage.removeItem("ToImporterdashboard");
-        },
-      });
-      // }
-    } else {
-      localStorage.removeItem("ToImporterdashboard");
-    }
-    // localStorage.removeItem("ToImporterdashboard");
-    // setTimeout(() => {
-    //   localStorage.removeItem("ToImporterdashboard");
-    // }, 10000); // 10 seconds in milliseconds
-
-    localStorage.removeItem("ToImporterdashboard");
-    // 30 seconds in milliseconds
-  }
 
   useEffect(() => {
     if (globalMsg !== "") {
@@ -91,29 +59,7 @@ function Importerdash() {
         },
       });
     }
-  }, []);
-
-  useEffect(() => {
-    async function fetchImporterPage() {
-      try {
-        let config = {
-          method: "get",
-          url: `${baseUrl}/importers/${currentUserData?.importerId}`,
-        };
-
-        const response = await axios.request(config);
-
-        if (response.data.message == "done") {
-          setImporterProfile(response.data.importers);
-        } else if (response.data.message == "404 Not Found") {
-          // errorMsg("404");
-        }
-      } catch (error) {}
-    }
-    if (currentUserData?.importerId) {
-      fetchImporterPage();
-    }
-  }, [currentUserData?.importerId]);
+  }, [globalMsg]);
 
   return (
     <section className="factory-dashboard vh-100 overflow-hidden">
@@ -121,10 +67,32 @@ function Importerdash() {
       <div className="row h-100 w-100 remove-x">
         <div className="col-2 left-nav-fac-dashboard h-100 d-grid">
           <div className="static-navbar">
-            <div className="img-icon mb-2 justify-content-start align-items-center d-flex">
-              <Link className="navbar-brand" to="/">
-                <img src={logo} alt="arabmade logo" />
-              </Link>
+            <DashLogo />
+
+            <div class="dropdown">
+              <button
+                class="btn btn-secondary dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton"
+                data-bs-toggle="dropdown"
+                aria-haspopup="false"
+                aria-expanded="false"
+                data-bs-target=".dropdown-menu"
+              >
+                Dropdown button
+              </button>
+              <div class="dropdown-menu" >
+              {/* aria-labelledby="dropdownMenuButton" */}
+                <a class="dropdown-item" href="#">
+                  Action
+                </a>
+                <a class="dropdown-item" href="#">
+                  Another action
+                </a>
+                <a class="dropdown-item" href="#">
+                  Something else here
+                </a>
+              </div>
             </div>
 
             <div className="scroller-container">
@@ -147,7 +115,6 @@ function Importerdash() {
                     <p className="sub-title cursor">Dashboard</p>
                   </Link>
                 </div>
-
                 <div className="">
                   <Link
                     className={`base-btn cursor text-decoration-none ${
@@ -188,10 +155,9 @@ function Importerdash() {
                       to="importerProfile#profileImage"
                       onClick={() => {
                         setActiveMenu("profileImage");
-                        // navigate("importerProfile");
                       }}
                     >
-                      <div className="d-flex  align-items-start sub-profile-cont  mt-3 ">
+                      <div className="d-flex  align-items-start sub-profile-cont    mt-3  ms-2 ps-4">
                         <i class="fa-solid fa-user pe-3 text-white"></i>
                         <p className="sub-text cursor ">Profile Image</p>
                       </div>
@@ -325,185 +291,73 @@ function Importerdash() {
                   </div>
                 </div>
 
-                <div
-                  className="p-0
-                  m-0
-                  text-decoration-none
-                  text-dark
-                  w-100
-              "
-                >
-                  <Link
-                    className={`base-btn cursor ${
-                      currentNavPage == "privatelabel" ? "active" : ""
-                    }   text-decoration-none`}
-                    to="PrivateLabel"
-                  >
-                    <i class="fa-solid fa-tag"></i>
+                <DashNavBtn
+                  icon="fa-solid fa-tag"
+                  currentNavPage={currentNavPage}
+                  activePageName="privatelabel"
+                  navigateToPage="PrivateLabel"
+                  title="Private Label Requests"
+                  notification=""
+                />
 
-                    <p className="sub-title cursor">Private Label Requests</p>
-                  </Link>
-                </div>
-
-                <div
-                  className="p-0
-                  m-0
-                  text-decoration-none
-                  text-dark
-                  w-100
-              "
-                >
-                  <Link
-                    className={`base-btn cursor ${
-                      currentNavPage == "customerproductrequest" ? "active" : ""
-                    }   text-decoration-none`}
-                    to="CustomerProductRequest"
-                  >
-                    <i class="fa-solid fa-rectangle-list"></i>
-
-                    <p className="sub-title cursor">Custom Product Requests</p>
-                  </Link>
-                </div>
-
-                <div
-                  className="p-0
-                  m-0
-                  text-decoration-none
-                  text-dark
-                  w-100
-              "
-                >
-                  <Link
-                    className={`base-btn cursor ${
-                      currentNavPage == "requestvisit" ? "active" : ""
-                    }   text-decoration-none`}
-                    to="RequestVisit"
-                  >
-                    <i class="fa-solid fa-industry"></i>
-
-                    <p className="sub-title cursor"> Factory Visit Requests</p>
-                  </Link>
-                </div>
-
-                <div
-                  className="p-0
-                  m-0
-                  text-decoration-none
-                  text-dark
-                  w-100
-              "
-                >
-                  <Link
-                    className={`base-btn cursor ${
-                      currentNavPage == "rfqs" ? "active" : ""
-                    }   text-decoration-none`}
-                    to="Rfqs"
-                  >
-                    <i className="fa-solid fa-money-bill-trend-up"></i>
-                    <p className="sub-title cursor">RFQ Requests</p>
-                  </Link>
-                </div>
-
-                <div
-                  className="p-0
-                  m-0
-                  text-decoration-none
-                  text-dark
-                  w-100
-              "
-                >
-                  <Link
-                    className={`base-btn cursor ${
-                      currentNavPage == "purchasingorders" ? "active" : ""
-                    }   text-decoration-none`}
-                    to="purchasingOrders"
-                  >
-                    <i class="fa-solid fa-bag-shopping"></i>
-                    <p className="sub-title cursor">Purchasing Orders</p>
-                  </Link>
-                </div>
-
-                <div
-                  className="p-0
-                  m-0
-                  text-decoration-none
-                  text-dark
-                  w-100
-              "
-                >
-                  <Link
-                    className={`base-btn cursor ${
-                      currentNavPage == "allsourcingrequests" ? "active" : ""
-                    }   text-decoration-none`}
-                    to="AllSourcingRequests"
-                  >
-                    <i className="fa-solid fa-bell"></i>
-                    <p className="sub-title cursor">Sourcing Requests</p>
-                  </Link>
-                </div>
-
-                <div
-                  className="p-0
-                  m-0
-                  text-decoration-none
-                  text-dark
-                  w-100
-              "
-                >
-                  <Link
-                    className={`base-btn cursor ${
-                      currentNavPage == "allquotations" ? "active" : ""
-                    }   text-decoration-none`}
-                    to="AllQuotations"
-                  >
-                    <i class="fa-solid fa-envelope"></i>
-
-                    <p className="sub-title cursor"> Quotations</p>
-                  </Link>
-                </div>
-
-                <div
-                  className="p-0
-                   m-0
-                  text-decoration-none
-                  text-dark
-                  w-100
-                 position-relative
-              "
-                >
-                  <Link
-                    className={`base-btn cursor  ${
-                      currentNavPage == "chatlist" ? "active" : ""
-                    }   text-decoration-none`}
-                    to="chatList"
-                  >
-                    <i class="fa-solid fa-tag"></i>
-                    <p className="sub-title cursor">Messages</p>
-                  </Link>
-
-                  {/* {notification?.PrivateLabelingsNotif != 0 && (
-                    <div className="dash-notif position-absolute ">
-                      {notification?.PrivateLabelingsNotif}
-                    </div>
-                  )} */}
-                </div>
+                <DashNavBtn
+                  icon="fa-solid fa-rectangle-list"
+                  currentNavPage={currentNavPage}
+                  activePageName="customerproductrequest"
+                  navigateToPage="CustomerProductRequest"
+                  title="Custom Product Requests"
+                  notification=""
+                />
+                <DashNavBtn
+                  icon="fa-solid fa-industry"
+                  currentNavPage={currentNavPage}
+                  activePageName="requestvisit"
+                  navigateToPage="RequestVisit"
+                  title="Factory Visit Requests"
+                  notification=""
+                />
+                <DashNavBtn
+                  icon="fa-solid fa-money-bill-trend-up"
+                  currentNavPage={currentNavPage}
+                  activePageName="rfqs"
+                  navigateToPage="Rfqs"
+                  title="RFQ Requests"
+                  notification=""
+                />
+                <DashNavBtn
+                  icon="fa-solid fa-bag-shopping"
+                  currentNavPage={currentNavPage}
+                  activePageName="purchasingorderss"
+                  navigateToPage="purchasingOrders"
+                  title="Purchasing Orders"
+                  notification=""
+                />
+                <DashNavBtn
+                  icon="fa-solid fa-bell"
+                  currentNavPage={currentNavPage}
+                  activePageName="allsourcingrequests"
+                  navigateToPage="AllSourcingRequests"
+                  title="Sourcing Requests"
+                  notification=""
+                />
+                <DashNavBtn
+                  icon="fa-solid fa-envelope"
+                  currentNavPage={currentNavPage}
+                  activePageName="allquotations"
+                  navigateToPage="AllQuotations"
+                  title="Quotations"
+                  notification=""
+                />
+                <DashNavBtn
+                  icon="sub-title cursor"
+                  currentNavPage={currentNavPage}
+                  activePageName="chatlist"
+                  navigateToPage="chatList"
+                  title="Messages"
+                  notification=""
+                />
               </div>
             </div>
-
-            {/* <div className="profile-container justify-content-start align-items-center d-flex mt-5">
-            <div className="profile-img">
-              <img className="w-100 h-100" src={profile} alt="profile " />
-            </div>
-            <div>
-              <p className="text-white name-text">Olivia Phye</p>
-              <p className="text-white email-text">OliviaPhye@gmail.com</p>
-            </div>
-
-            <i
-              className="fa-solid fa-arrow-right-from-bracket cursor"
-              onClick={() => logOuut()}
-            ></i>
-          </div> */}
           </div>
 
           {/*  */}
@@ -515,16 +369,18 @@ function Importerdash() {
                 //  src={profile}
                 // alt="profile "
 
-                src={`${baseUrl_IMG}/${importerProfile?.image}`}
+                src={`${baseUrl_IMG}/${currentUserData?.profile}`}
                 alt="importer logo"
                 onError={handleImageError}
               />
             </div>
             <div className="w size-profile ">
               <div>
-                <p className="text-white name-text">{importerProfile?.name}</p>
+                <p className="text-white name-text">
+                  {currentUserData?.importerName}
+                </p>
                 <p className="text-white email-text w-100 title-text-handler">
-                  {importerProfile?.repEmail}
+                  {currentUserData?.importerEmail}
                 </p>
               </div>
             </div>
@@ -534,7 +390,6 @@ function Importerdash() {
               onClick={() => logOuut()}
             ></i>
           </div>
-          {/* </div> */}
         </div>
         {/* <div className="col-10 bg-white border-rounded h-100  overflow-container"> */}
         <div className="col-10 bg-white border-rounded   overflow-container ">

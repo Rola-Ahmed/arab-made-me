@@ -4,13 +4,13 @@ import React, { useContext, useEffect, useState } from "react";
 
 import { handleImageError } from "utils/ImgNotFound";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { logo } from "constants/Images";
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
 import { GlobalMsgContext } from "Context/globalMessage";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import getNotifcation from "containers/Admindashboard/Admindash";
+import DashLogo from "components/Shared/Dashboards/DashLogo";
 function Admindash() {
   document.title = "Admin Dashboard";
   // State
@@ -61,12 +61,7 @@ function Admindash() {
       <div className="row h-100 w-100 remove-x">
         <div className="col-2 left-nav-fac-dashboard h-100 d-grid">
           <div className="static-navbar">
-            <div className="img-icon mb-2 justify-content-start align-items-center d-flex">
-              <Link className="navbar-brand" to="/">
-                <img src={logo} alt="arabmade logo" />
-              </Link>
-            </div>
-
+            <DashLogo />
             <div className="scroller-container">
               <div className="page-sub-menu">
                 <div
@@ -88,8 +83,6 @@ function Admindash() {
                     <p className="sub-title cursor">Dashboard</p>
                   </Link>
                 </div>
-
-               
 
                 <div
                   className="p-0

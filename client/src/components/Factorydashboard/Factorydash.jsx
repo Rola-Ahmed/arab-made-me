@@ -8,6 +8,7 @@ import { GlobalMsgContext } from "Context/globalMessage";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FactoryInfo from "./subComponets/FactoryInfo";
+import DashLogo from "components/Shared/Dashboards/DashLogo";
 function Factorydash(props) {
   let { notification, setIsLogin, factoryProfile } = props;
   // State the clicked menu
@@ -71,13 +72,7 @@ function Factorydash(props) {
       <div className="row h-100 w-100 remove-x">
         <div className="col-2 left-nav-fac-dashboard h-100 d-grid">
           <div className="static-navbar">
-            <div className="img-icon mb-2 justify-content-start align-items-center d-flex">
-              <Link className="navbar-brand" to="/">
-                <img src={logo} alt="arabmade logo" />
-              </Link>
-
-              <small className="text-white">User Type: Factory</small>
-            </div>
+            <DashLogo />
 
             <div className="scroller-container">
               <div className="page-sub-menu">
