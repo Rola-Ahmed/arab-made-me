@@ -1,4 +1,3 @@
-import React from "react";
 import FormVlaidtionError from "./FormVlaidtionError";
 
 export default function ProductMultiSelector(props) {

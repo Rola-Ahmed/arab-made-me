@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function RadioInput(props) {
   let { formValidation, vlaidationName, label, value, defaultChecked } = props;
   return (

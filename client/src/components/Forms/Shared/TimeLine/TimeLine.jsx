@@ -17,7 +17,8 @@ export default function TimeLine(props) {
   }
 
   return (
-    <div className="col-12" id={formValidation.values[vlaidationName]}>
+    // <div className="col-12" id={formValidation.values[vlaidationName]}>
+    <div className="col-12" id={vlaidationName}>
       <div className="form-group form-control">
         <div className="form-group timeline-container">
           <label> Timeline</label>
