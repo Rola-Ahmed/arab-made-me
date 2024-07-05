@@ -6,6 +6,9 @@ import WhiteLabelContainer from "components/Forms/WhiteLabel/FetchWhiteLabelCont
 import SendRfq from "components/Forms/RFQ/FetchRfqContainer";
 import PrivateLabel from "components/Forms/PrivateLabel/PrivateLabelContainer";
 import FetchPurchasingOrder from "components/Forms/PurchasingOrder/FetchPurchasingOrder";
+
+import RequestVisit from "components/Forms/RequestVisit/RequestVisit";
+
 const formRoutess = [
   {
     // ?factoryId=9&factoryName=Nora%20Dyer
@@ -25,9 +28,18 @@ const formRoutess = [
     element: <PrivateLabel />,
   },
 
+  // add auth validation
   {
     path: "/purchasingOrder/:requestType",
     element: <FetchPurchasingOrder />,
+  },
+
+
+
+  
+  {
+    path: "/requestVisit",
+    element: <RequestVisit />,
   },
 ];
 

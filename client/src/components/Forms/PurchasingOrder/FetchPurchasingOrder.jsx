@@ -18,7 +18,6 @@ function FetchPurchasingOrder() {
   let { requestType } = useParams();
 
   const normalizedRequestType = requestType?.toLowerCase();
-  console.log("normalizedRequestType", normalizedRequestType);
   let requestTypeValues = {
     fromFactory: "fromfactory",
     fromSelectedProduct: "fromselectedproduct",

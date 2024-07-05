@@ -317,3 +317,39 @@ shippingConditions: "EXW", //required,
             // otherAttributes, // Optionally include other attributes in the result
           };
         });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        else {
+        setErrorMsg((prevErrors) => ({
+          ...prevErrors,
+          response: "An unexpected error occurred. Please try again later.",
+        }));
+      }

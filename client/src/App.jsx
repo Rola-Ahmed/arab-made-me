@@ -20,7 +20,6 @@ import ContactSupplierFactoryPg from "components/Factories/ContactSupplierFactor
 
 // forms
 import Contactsupplier from "components/Forms/Contactsupplier/Contactsupplier";
-import RequestVisit from "components/Forms/RequestVisit/RequestVisit";
 
 import AnswerQuotation from "components/Forms/AnswerQuotation/AnswerQuotation";
 import AnsQuotationPrivateLabel from "components/Forms/AnswerQuotation/AnsQuotationPrivateLabel";
@@ -111,8 +110,6 @@ const router = createBrowserRouter([
 
       // formssssssssssssssssssssssssssssssss
 
-     
-
       // -------------------------
       {
         path: "mettingRoom",
@@ -135,13 +132,7 @@ const router = createBrowserRouter([
 
   // ---------------------------FORMS---------------
 
-  {
-    // path: "/requestVisit/:factoryID-Name?/:ProductID-Name?",
-    // path: "/requestVisit/:factoryId?/factoryName?/:ProductId?/:ProductName?",
-    path: "/requestVisit",
 
-    element: <RequestVisit />,
-  },
 
   {
     path: "/answerQuotation",
