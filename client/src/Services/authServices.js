@@ -56,6 +56,17 @@ export const getRequest = async (url) => {
   }
 };
 
+export const getRequestDataHeader = async (url, headers, data) => {
+  try {
+    const config = createRequestConfig("get", url, headers, data);
+    const response = await axios.request(config);
+    return handleResponse(response);
+  } catch (error) {
+    console.log("Request error: get", error);
+    return handleError(error);
+  }
+};
+
 // Generic function to make POST requests
 export const postRequest = async (url, headers, data) => {
   try {
