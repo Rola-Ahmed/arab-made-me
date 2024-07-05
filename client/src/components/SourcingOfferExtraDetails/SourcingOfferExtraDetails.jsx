@@ -113,7 +113,7 @@ function SourcingOfferExtraDetails() {
     navigate("/");
   }
 
-  function handleButtonClick(loginPath, storgaeName) {
+  function handleButtonClick(loginPath) {
     if (
       currentUserData?.importerId !== null &&
       (currentUserData?.importerVerified === "0" ||
@@ -514,8 +514,7 @@ function SourcingOfferExtraDetails() {
                         handleButtonClick(
                           `purchasingOrder?sourcingOfferId=${factoryOffersId}&factoryId=${factoryId}&factoryName=${factoryName}${
                             productId !== null ? `&productId=${productId}` : ""
-                          }&productName=${PosData?.productName}`,
-                          "ToPurchasingOrder"
+                          }&productName=${PosData?.productName}`
                         );
                       }}
                       // onClick={() => {
