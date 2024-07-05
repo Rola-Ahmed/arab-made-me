@@ -837,7 +837,7 @@ export default function TopFactories() {
                                               return;
                                             }
                                             handleButtonClick(
-                                              `purchasingOrder?factoryId=${factoryitem?.id}&factoryName=${factoryitem?.name}`,
+                                              `purchasingOrder/fromfactory?factoryId=${factoryitem?.id}&factoryName=${factoryitem?.name}`,
                                               "ToPurchasingOrder"
                                             );
                                           }}

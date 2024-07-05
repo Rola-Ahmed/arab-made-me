@@ -71,7 +71,7 @@ const DropdownActionBtnsFactory = ({
           title="Send PO"
           onClick={() =>
             handleBtnCheckIfProductExisit(
-              `purchasingOrder?factoryId=${factoryitem?.factoryId}&factoryName=${factoryitem?.factory?.name}`,
+              `purchasingOrder/fromSelectedProduct?factoryId=${factoryitem?.factoryId}&factoryName=${factoryitem?.factory?.name}`,
               factoryitem?.productLength,
               factoryitem?.id,
               factoryitem?.name
