@@ -5,6 +5,6 @@
     "module": "commonjs",
     "target": "es6"
   },
-  "include": ["src", "src/i18n.js"],
+  "include": ["src", "src/i18n.js", "../ignoore/PurchasingOrder copy-latest-2"],
   "exclude": ["node_modules", "build", "dist"]
 }

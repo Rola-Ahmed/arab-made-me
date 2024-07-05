@@ -81,3 +81,4 @@ node_modules/
 client/src/containers/Factorydashboard/subComponets/Quotations/EditQuote/EditQuoteContainer.jsx
 server/bash.exe.stackdump
 client/src/constants/SubscriptionDetails copy.js
+client/jsconfig.json

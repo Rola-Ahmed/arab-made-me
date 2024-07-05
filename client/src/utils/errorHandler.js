@@ -16,6 +16,8 @@ export function errorHandler(error) {
 
       case 500:
         return error?.response?.data?.errorMessage;
+      case 502:
+        return "We apologize for the inconvenience, but it looks like there is a temporary issue with our server (Error 502: Bad Gateway). Our team is working hard to resolve this as quickly as possible.";
       case 429:
         return " Too Many Requests , Please try again later.";
 
@@ -25,5 +27,7 @@ export function errorHandler(error) {
       default:
         return error?.response?.data?.errorMessage;
     }
+  } else {
+    return "Something Went Wrong. Please try again later.";
   }
 }

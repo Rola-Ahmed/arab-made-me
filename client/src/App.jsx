@@ -21,7 +21,7 @@ import ContactSupplierFactoryPg from "components/Factories/ContactSupplierFactor
 // forms
 import Contactsupplier from "components/Forms/Contactsupplier/Contactsupplier";
 import RequestVisit from "components/Forms/RequestVisit/RequestVisit";
-import PurchasingOrder from "components/Forms/PurchasingOrder/PurchasingOrder";
+
 import AnswerQuotation from "components/Forms/AnswerQuotation/AnswerQuotation";
 import AnsQuotationPrivateLabel from "components/Forms/AnswerQuotation/AnsQuotationPrivateLabel";
 
@@ -111,15 +111,7 @@ const router = createBrowserRouter([
 
       // formssssssssssssssssssssssssssssssss
 
-      {
-        path: "/purchasingOrder/:factoryIDName?",
-        element: <PurchasingOrder />,
-      },
-
-      
      
-
-      
 
       // -------------------------
       {
