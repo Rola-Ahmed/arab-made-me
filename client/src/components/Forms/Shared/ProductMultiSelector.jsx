@@ -36,7 +36,7 @@ export default function ProductMultiSelector(props) {
           <i className="fa-solid fa-chevron-down text-end my-auto"></i>
         </button>
         <ul className="dropdown-menu col-3 scroller">
-          {productDetails.map((item, index) => (
+          {productDetails?.map((item, index) => (
             <li>
               <div className=" dropdown-item d-flex justify-content-start align-items-center width-drop bg-none">
                 <label className="form-check-label p-0 m-0  d-flex w-100">

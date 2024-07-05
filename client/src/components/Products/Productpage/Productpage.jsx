@@ -389,7 +389,7 @@ function Productpage(props) {
                     className="text-container"
                     onClick={() => {
                       handleUserClickValidation1(
-                        `purchasingOrder?factoryId=${productData?.factoryId}&factoryName=${productData?.factory?.name}&productId=${productData?.id}&productName=${productData?.name} `
+                        `purchasingOrder/fromSelectedProduct?factoryId=${productData?.factoryId}&factoryName=${productData?.factory?.name}&productId=${productData?.id}&productName=${productData?.name} `
                       );
                     }}
                   >

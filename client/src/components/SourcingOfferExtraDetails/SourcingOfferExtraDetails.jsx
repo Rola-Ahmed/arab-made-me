@@ -512,7 +512,7 @@ function SourcingOfferExtraDetails() {
                       className="action-btn btn-1 w-100 submitButton"
                       onClick={() => {
                         handleButtonClick(
-                          `purchasingOrder?sourcingOfferId=${factoryOffersId}&factoryId=${factoryId}&factoryName=${factoryName}${
+                          `purchasingOrder/fromSourcingReuqest?sourcingOfferId=${factoryOffersId}&factoryId=${factoryId}&factoryName=${factoryName}${
                             productId !== null ? `&productId=${productId}` : ""
                           }&productName=${PosData?.productName}`
                         );

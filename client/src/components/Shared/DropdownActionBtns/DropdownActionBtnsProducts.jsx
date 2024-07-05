@@ -67,7 +67,7 @@ const DropdownActionBtnsProducts = ({
           title="Send PO"
           onClick={() =>
             handleButtonClick(
-              `purchasingOrder?factoryId=${productItem?.factoryId}&factoryName=${productItem?.factory?.name}&productId=${productItem?.id}&productName=${productItem?.name}`
+              `purchasingOrder/fromSelectedProduct?factoryId=${productItem?.factoryId}&factoryName=${productItem?.factory?.name}&productId=${productItem?.id}&productName=${productItem?.name}`
             )
           }
           description={BtnDescription.PO}

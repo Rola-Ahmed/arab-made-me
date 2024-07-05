@@ -82,3 +82,6 @@ client/src/containers/Factorydashboard/subComponets/Quotations/EditQuote/EditQuo
 server/bash.exe.stackdump
 client/src/constants/SubscriptionDetails copy.js
 client/jsconfig.json
+client/src/components/Shared/DropdownActionBtns/DropdownActionBtnsFactory copy.jsx
+client/src/components/Shared/DropdownActionBtns/DropdownActionBtnsFactory copy.jsx
+client/src/components/Shared/DropdownActionBtns/DropdownActionBtnsFactory copy.jsx

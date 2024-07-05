@@ -1365,7 +1365,7 @@ function Factorypage() {
                         return;
                       }
                       handleButtonClick(
-                        `purchasingOrder?factoryId=${factoryDetails?.id}&factoryName=${factoryDetails?.name}`,
+                        `purchasingOrder/fromfactory?factoryId=${factoryDetails?.id}&factoryName=${factoryDetails?.name}`,
                         "ToPurchasingOrder"
                       );
                     }}

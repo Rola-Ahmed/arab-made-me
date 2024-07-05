@@ -246,7 +246,7 @@ export default function ProductCard(props) {
                       className={`text-container `}
                       onClick={() => {
                         handleUserClickValidation1(
-                          `purchasingOrder?factoryId=${productItem?.factoryId}&factoryName=${productItem?.factory?.name}&productId=${productItem?.id}&productName=${productItem?.name}`
+                          `purchasingOrder/fromSelectedProduct?factoryId=${productItem?.factoryId}&factoryName=${productItem?.factory?.name}&productId=${productItem?.id}&productName=${productItem?.name}`
                         );
                       }}
                     >

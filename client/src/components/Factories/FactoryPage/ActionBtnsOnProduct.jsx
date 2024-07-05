@@ -63,7 +63,7 @@ export default function ActionBtnsOnProduct(props) {
                 return;
               }
               handleButtonClick(
-                `purchasingOrder?factoryId=${factoryDetails?.id}&factoryName=${factoryDetails?.name}&productId=${productItem?.id}&productName=${productItem?.name}`,
+                `purchasingOrder/fromfactory?factoryId=${factoryDetails?.id}&factoryName=${factoryDetails?.name}&productId=${productItem?.id}&productName=${productItem?.name}`,
                 "ToPurchasingOrder"
               );
             }}
