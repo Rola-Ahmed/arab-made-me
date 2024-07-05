@@ -4,28 +4,23 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { logo } from "constants/Images";
 import { userDetails } from "Context/userType";
 import { UserToken } from "Context/userToken";
-import { GlobalMsgContext } from "Context/globalMessage";
-import { ToastContainer, toast } from "react-toastify";
-import AllUsersDropListComp from "./AllUsersDropListComp";
+// import { GlobalMsgContext } from "Context/globalMessage";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import AllUsersDropListComp from "./AllUsersDropListComp";
+import useGlobalMessage from "hooks/useGlobalMessage";
 import "./navbar.css";
 import LanguageSwitcher from "components/LanguageSwitcher/LanguageSwitcher";
 import NavLinkBtn from "./NavLinkBtn";
+import ScrollToTop from "components/ScrollTo";
 function Navbar(props) {
   let navigate = useNavigate();
   const { pathname } = useLocation();
   let { isLogin, setIsLogin } = useContext(UserToken);
-  let { globalMsg, setGlobalMsg } = useContext(GlobalMsgContext);
   let { currentUserData } = useContext(userDetails);
 
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "instant",
-    });
-  }, [pathname]);
+  // pop up message
+  const { setGlobalMsg } = useGlobalMessage();
 
   const logOuut = () => {
     setIsLogin("");
@@ -33,26 +28,9 @@ function Navbar(props) {
     navigate("/");
   };
 
-  useEffect(() => {
-    if (globalMsg !== "") {
-      toast(globalMsg, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        draggable: true,
-        theme: "colored",
-        type: "success",
-        onClose: () => {
-          // localStorage.removeItem("displayMessage");
-          setGlobalMsg("");
-        },
-      });
-    }
-  }, [globalMsg]);
-
   return (
     <>
+      <ScrollToTop />
       <ToastContainer />
       <header className="header-nav">
         <nav className="navbar navbar-expand-lg navbar-dark  ">
