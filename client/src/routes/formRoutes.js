@@ -5,7 +5,7 @@ import CustomerProductReq from "components/Forms/CustomerProductReq/FetchCustomP
 import WhiteLabelContainer from "components/Forms/WhiteLabel/FetchWhiteLabelContainer";
 import SendRfq from "components/Forms/RFQ/FetchRfqContainer";
 import PrivateLabel from "components/Forms/PrivateLabel/PrivateLabelContainer";
-
+import FetchPurchasingOrder from "components/Forms/PurchasingOrder/FetchPurchasingOrder";
 const formRoutess = [
   {
     // ?factoryId=9&factoryName=Nora%20Dyer
@@ -23,6 +23,11 @@ const formRoutess = [
   {
     path: "/PrivateLabel",
     element: <PrivateLabel />,
+  },
+
+  {
+    path: "/purchasingOrder",
+    element: <FetchPurchasingOrder />,
   },
 ];
 
