@@ -599,7 +599,7 @@
 
 .parent-team {
 
-    border: 1px solid var(var(--gray-200));
+    border: 1px solid var(--gray-200);
     border-radius: 8px;
     padding: 12px;
     width: 294px;
@@ -623,5 +623,5 @@
 }
 
 .border-btn {
-    border: solid var(var(--gray-200)) 1px !important;
+    border: solid var(--gray-200) 1px !important;
 }

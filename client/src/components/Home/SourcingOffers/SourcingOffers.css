@@ -1,50 +1,49 @@
-.flag-container{
+.flag-container {
     gap: 12px;
 }
 
-.flag-img{
-    width:22px ;
-    height:22px ;
+.flag-img {
+    width: 22px;
+    height: 22px;
     border-radius: 22px;
 
 
 }
 
-.title{
+.title {
     font-family: "Inter-reg";
-font-size: 14px;
-font-weight: 400;
-line-height: 21px;
-letter-spacing: 0em;
-/* text-align: left; */
-color: var(--Gray-500)
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21px;
+    letter-spacing: 0em;
+    /* text-align: left; */
+    color: var(--Gray-500)
+}
+
+.title-2 {
+    font-family: "Inter-semi";
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+    letter-spacing: 0em;
+    color: black;
+
+
+
 
 }
 
-.title-2{
-font-family: "Inter-semi";
-font-size: 14px;
-font-weight: 500;
-line-height: 18px;
-letter-spacing: 0em;
-color: black;
-
-
-
-
-}
-
-.title-3{
+.title-3 {
     font-family: "Inter-semi";
     font-size: 14px;
     font-weight: 600;
     line-height: 18px;
     letter-spacing: 0em;
-    color: var( --Gray-500);
-    
-    
-    
-    }
+    color: var(--Gray-500);
+
+
+
+}
 
 .table {
     --bs-table-bg: inherit !important;
@@ -53,21 +52,23 @@ color: black;
 
 
 .table-striped tbody tr {
-    padding:  16px 24px 16px 24px !important;
+    padding: 16px 24px 16px 24px !important;
 }
 
-.bg-header{
-    background-color: var(var(--gray-200)) !important
+.bg-header {
+    background-color: var(--gray-200) !important
 }
+
 .table thead {
-  
+
     position: sticky !important;
     top: 0 !important;
 }
 
 .table-striped tbody tr:nth-child(even) {
-  
-    background-color: var(var(--gray-200)) !important; /* Set your desired background color */
+
+    background-color: var(--gray-200) !important;
+    /* Set your desired background color */
 }
 
 
@@ -76,16 +77,17 @@ color: black;
     background-color:  white !important; 
 } */
 
-.border-container{
+.border-container {
     border-radius: 8px;
     border: solid 1px var(--border-btn-color);
-    
+
     /* overflow: hidden; */
     /* min-height: 442px; */
     height: 50vh;
     overflow-y: scroll;
-    scrollbar-width: thin; 
+    scrollbar-width: thin;
 }
+
 .border-container-2 {
     border-radius: 8px;
     border: solid 1px var(--border-btn-color);
@@ -95,23 +97,24 @@ color: black;
     /* overflow-y: scroll; */
     scrollbar-width: thin;
 }
+
 /* Scrollbar */
 /* .border-container::-webkit-scrollbar {
     width: 5px;
   } */
-  
-  /* Track */
-  /* .border-container::-webkit-scrollbar-track {
+
+/* Track */
+/* .border-container::-webkit-scrollbar-track {
     background: rgba(128, 128, 128, 0.479);
     border-radius: 6px;
   } */
-  
-  /* Handle */
-  /* .border-container::-webkit-scrollbar-thumb {
+
+/* Handle */
+/* .border-container::-webkit-scrollbar-thumb {
     background:var(--secondary-color);
     border-radius: 6px;
   } */
-  
+
 
 .table>:not(caption)>*>* {
     padding: 15px 24px !important;
@@ -119,12 +122,11 @@ color: black;
 
 /* overrid the 1irst th */
 .table>:not(caption)>tr>th {
-    padding: 12px 24px  !important;
+    padding: 12px 24px !important;
     /* padding: 50px 24px  !important; */
 
 }
 
-.table tbody tr:last-child th,.table tbody tr:last-child td {
+.table tbody tr:last-child th, .table tbody tr:last-child td {
     border-bottom: none !important;
-  }
-
+}
