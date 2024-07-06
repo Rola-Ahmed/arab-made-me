@@ -118,6 +118,7 @@ export function UserTypeProvider({ children }) {
               factoryVerified: response.data.factories.verified,
               // FactoryName:response.data.factories?.repName?.[0],
               FactoryName: response.data.factories?.name,
+              factoryRepEmail: response.data.factories?.repEmail,
               factoryEmailActivated: response.data.factories.emailActivated,
               datacompletelyLoaded: false,
               profile: response.data.factories.coverImage,
