@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { UserToken } from "Context/userToken";
 import axios from "axios";
 import { baseUrl } from "config.js";
-import { userDetails } from "Context/userType";
 import Factorydash from "components/Factorydashboard/Factorydash";
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg/IsLoggedInMsg";
 // import BecomomeAFactory from "components/ActionMessages/BecomomeAFactory/BecomomeAFactory";
@@ -12,28 +11,8 @@ export default function FactorydashContainer() {
 
   // Fetch notifications
   const [notification, setNotification] = useState([]);
-  const [factoryProfile, setFactoryProfile] = useState([]);
 
   // Context
-  const { currentUserData } = useContext(userDetails);
-  // Fetch factory data
-  useEffect(() => {
-    async function fetchFactoryPage() {
-      try {
-        const response = await axios.get(
-          `${baseUrl}/factories/${currentUserData?.factoryId}`
-        );
-        if (response.data.message === "done") {
-          setFactoryProfile(response.data.factories);
-        }
-      } catch (error) {
-        // Handle error
-      }
-    }
-    if (currentUserData?.factoryId) {
-      fetchFactoryPage();
-    }
-  }, [currentUserData?.factoryId]);
 
   useEffect(() => {
     const fetchNotifications = async () => {
@@ -169,11 +148,5 @@ export default function FactorydashContainer() {
     );
   }
 
-  return (
-    <Factorydash
-      notification={notification}
-      setIsLogin={setIsLogin}
-      factoryProfile={factoryProfile}
-    />
-  );
+  return <Factorydash notification={notification} />;
 }
