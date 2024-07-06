@@ -675,3 +675,8 @@ th {
 
 
 }
+
+
+.icon-text-gap {
+  grid-template-columns: 15% 85%;
+}

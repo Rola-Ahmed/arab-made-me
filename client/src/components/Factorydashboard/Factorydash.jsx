@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import DashLogo from "components/Shared/Dashboards/DashLogo";
 import BottomDashMenu from "components/Shared/Dashboards/BottomDashMenu";
 import DashNavBtn from "components/Shared/Dashboards/DashNavBtn";
+import DashListsDropDown from "components/Shared/Dashboards/DashListsDropDown";
 
 function Factorydash(props) {
   let { notification } = props;
@@ -63,15 +64,6 @@ function Factorydash(props) {
 
             <div className="scroller-container">
               <div className="page-sub-menu">
-                <div
-                  className="p-0
-                   m-0
-                  text-decoration-none
-                  text-dark
-                  w-100
-                 position-relative
-              "
-                >
                   <Link
                     className={`base-btn  cursor dashboard-color  ${
                       currentNavPage == "factorydashboard" ? "active" : ""
@@ -81,7 +73,6 @@ function Factorydash(props) {
                     <i className="fa-solid fa-box-open"></i>
                     <p className="sub-title cursor">Dashboard</p>
                   </Link>
-                </div>
 
                 {/* pprofile */}
                 <div className="">
@@ -116,92 +107,52 @@ function Factorydash(props) {
                   {/* drop down */}
                   <div id="drop-profile" className={`dropdwon-menu-style `}>
                     {/*  */}
-                    <Link
-                      className={` sub-btn  text-decoration-none  ${
-                        window?.location.href.includes("accountInformation")
-                          ? "active"
-                          : ""
-                      }`}
-                      to="factoryProfile#accountInformation"
-                      onClick={() => {
-                        setActiveMenu("accountInformation");
-                      }}
-                    >
-                      <div className="d-flex  align-items-center sub-icon-pro">
-                        <i className="fa-solid fa-gears pe-2 text-white"></i>
-                        <p className="sub-text cursor ">Account Inforamtion</p>
-                      </div>
-                    </Link>
+
+                    <div className="mt-3"></div>
+                    <DashListsDropDown
+                      path={"factoryProfile"}
+                      setActiveMenu={setActiveMenu}
+                      urlHashValue="accountInformation"
+                      title="Account Inforamtion"
+                      icon="fa-solid fa-gears"
+                    />
+
+                    {/* Password Change */}
+                    <DashListsDropDown
+                      path={"factoryProfile"}
+                      setActiveMenu={setActiveMenu}
+                      urlHashValue="PasswordChange"
+                      title="Password Change"
+                      icon="fa-solid fa-lock "
+                    />
+
                     {/*  */}
-                    <Link
-                      className={` sub-btn  text-decoration-none  ${
-                        window?.location.href.includes("PasswordChange")
-                          ? "active"
-                          : ""
-                      }`}
-                      to="factoryProfile#PasswordChange"
-                      onClick={() => {
-                        setActiveMenu("PasswordChange");
-                      }}
-                    >
-                      <div className="d-flex  align-items-center sub-icon-pro">
-                        <i className="fa-solid fa-lock pe-2 text-white"></i>
-                        <p className="sub-text cursor ">Password Change</p>
-                      </div>
-                    </Link>
 
-                    <Link
-                      //
-                      offset={-117}
-                      to="factoryProfile#EmailNotification"
-                      onClick={() => {
-                        setActiveMenu("EmailNotification");
-                      }}
-                      className={` sub-btn  text-decoration-none  ${
-                        window?.location.href.includes("EmailNotification")
-                          ? "active"
-                          : ""
-                      }`}
-                    >
-                      <div className="d-flex  align-items-center sub-icon-pro">
-                        <i className="fa-solid fa-bell pe-2 text-white"></i>
-                        <p className="sub-text cursor ">Notifications</p>
-                      </div>
-                    </Link>
+                    {/* Email Notification */}
+                    <DashListsDropDown
+                      path={"factoryProfile"}
+                      setActiveMenu={setActiveMenu}
+                      urlHashValue="EmailNotification"
+                      title="Notifications"
+                      icon="fa-solid fa-bell"
+                    />
+                    {/* legal docs */}
+                    <DashListsDropDown
+                      path={"factoryProfile"}
+                      setActiveMenu={setActiveMenu}
+                      urlHashValue="legalDocs"
+                      title="Legal Documents"
+                      icon="fa-solid fa-file-circle-check"
+                    />
 
-                    <Link
-                      to="factoryProfile#legalDocs"
-                      onClick={() => {
-                        setActiveMenu("legalDocs");
-                      }}
-                      className={` sub-btn  text-decoration-none  ${
-                        window?.location.href.includes("legalDocs")
-                          ? "active"
-                          : ""
-                      }`}
-                    >
-                      <div className="d-flex  align-items-center sub-icon-pro">
-                        <i className="fa-solid fa-file-circle-check pe-2 text-white"></i>
-                        <p className="sub-text cursor ">Legal Documents</p>
-                      </div>
-                    </Link>
-
-                    <Link
-                      to="factoryProfile#subscriptionPlan"
-                      onClick={() => {
-                        setActiveMenu("subscriptionPlan");
-                      }}
-                      className={` sub-btn  text-decoration-none  ${
-                        window?.location.href.includes("subscriptionPlan")
-                          ? "active"
-                          : ""
-                      }`}
-                    >
-                      <div className="d-flex  align-items-center sub-icon-pro">
-                        <i className="fa-solid fa-envelope-circle-check pe-2 text-white"></i>
-                        <p className="sub-text cursor ">Subscription Plan</p>
-                      </div>
-                    </Link>
+                    {/* legal docs */}
+                    <DashListsDropDown
+                      path={"factoryProfile"}
+                      setActiveMenu={setActiveMenu}
+                      urlHashValue="subscriptionPlan"
+                      title="Subscription Plan"
+                      icon="fa-solid fa-envelope-circle-check pe-2"
+                    />
                   </div>
                 </div>
 
@@ -237,92 +188,46 @@ function Factorydash(props) {
                     ></i>
                   </Link>
                   <div id="drop-mircoSite" className={`dropdwon-menu-style `}>
-                    <Link
-                      className={` sub-btn  text-decoration-none  ${
-                        window?.location.href.includes("factorylogo")
-                          ? "active"
-                          : ""
-                      }`}
-                      to="mircoSite#factorylogo"
-                      onClick={() => {
-                        setActiveMenu("factorylogo");
-                        // navigate("mircoSite");
-                      }}
-                    >
-                      <div className="d-flex  align-items-center sub-icon-pro">
-                        <i class="fa-solid fa-user pe-2 text-white"></i>
-                        <p className="sub-text cursor ">factory logo </p>
-                      </div>
-                    </Link>
+                    <DashListsDropDown
+                      path={"mircoSite"}
+                      setActiveMenu={setActiveMenu}
+                      urlHashValue="factorylogo"
+                      title="Factory Logo"
+                      icon="fa-solid fa-user"
+                    />
 
-                    <Link
-                      to="mircoSite#socialAccount"
-                      onClick={() => {
-                        setActiveMenu("socialAccount");
-                      }}
-                      className={` sub-btn  text-decoration-none  ${
-                        window?.location.href.includes("socialAccount")
-                          ? "active"
-                          : ""
-                      }`}
-                    >
-                      <div className="d-flex  align-items-center sub-icon-pro">
-                        <i className="fa-solid fa-share-nodes pe-2 text-white"></i>
-                        <p className="sub-text cursor ">Social Accounts</p>
-                      </div>
-                    </Link>
+                    <DashListsDropDown
+                      path={"mircoSite"}
+                      setActiveMenu={setActiveMenu}
+                      urlHashValue="socialAccount"
+                      title="Social Accounts"
+                      icon="fa-solid fa-share-nodes"
+                    />
 
-                    <Link
-                      to="mircoSite#factoryimages"
-                      onClick={() => {
-                        setActiveMenu("factoryimages");
-                      }}
-                      className={` sub-btn  text-decoration-none  ${
-                        window?.location.href.includes("factoryimages")
-                          ? "active"
-                          : ""
-                      }`}
-                    >
-                      <div className="d-flex  align-items-center sub-icon-pro">
-                        <i className="fa-solid fa-images pe-2 text-white"></i>
-                        <p className="sub-text cursor "> Cover Images</p>
-                      </div>
-                    </Link>
+                    <DashListsDropDown
+                      path={"mircoSite"}
+                      setActiveMenu={setActiveMenu}
+                      urlHashValue="factoryimages"
+                      title="Cover Images"
+                      icon="fa-solid fa-images"
+                    />
 
-                    <Link
-                      to="mircoSite#certificates"
-                      onClick={() => {
-                        setActiveMenu("certificates");
-                      }}
-                      className={` sub-btn  text-decoration-none  ${
-                        window?.location.href.includes("certificates")
-                          ? "active"
-                          : ""
-                      }`}
-                    >
-                      <div className="d-flex  align-items-center sub-icon-pro">
-                        <i className="fa-solid fa-stamp pe-2 text-white"></i>
-                        <p className="sub-text cursor ">Certificates</p>
-                      </div>
-                    </Link>
+                    <DashListsDropDown
+                      path={"mircoSite"}
+                      setActiveMenu={setActiveMenu}
+                      urlHashValue="certificates"
+                      title="Certificates"
+                      icon="fa-solid fa-stamp"
+                    />
 
-                    <Link
-                      to="mircoSite#CoverVideo"
-                      onClick={() => {
-                        setActiveMenu("CoverVideo");
-                      }}
-                      className={` sub-btn  text-decoration-none  ${
-                        window?.location.href.includes("CoverVideo")
-                          ? "active"
-                          : ""
-                      }`}
-                    >
-                      <div className="d-flex  align-items-center sub-icon-pro">
-                        <i className="fa-solid fa-images pe-2 text-white"></i>
-                        <p className="sub-text cursor ">Cover Video</p>
-                      </div>
-                    </Link>
-                    {/*  */}
+                    <DashListsDropDown
+                      path={"mircoSite"}
+                      setActiveMenu={setActiveMenu}
+                      urlHashValue="CoverVideo"
+                      title="Cover Video"
+                      icon="fa-solid fa-video"
+                    />
+
                     <Link
                       to="mircoSite#FactoryInforamtion"
                       onClick={() => {
@@ -334,14 +239,13 @@ function Factorydash(props) {
                           : ""
                       }`}
                     >
-                      <div className="d-flex  align-items-center sub-icon-pro">
+                      <div className="d-flex  align-items-center ms-4 ps-2">
                         <svg
                           style={{ width: "30px" }}
                           fill="white"
                           viewBox="10 -8 72 72"
                           xmlns="http://www.w3.org/2000/svg"
                         >
-                          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                           <g
                             id="SVGRepo_tracerCarrier"
                             strokeLinecap="round"
@@ -354,25 +258,18 @@ function Factorydash(props) {
                             <path d="M58.63,1.27a4,4,0,0,0-5.67,0,4.05,4.05,0,0,0-1.17,2.6,3.68,3.68,0,0,0-1.86,1,3.59,3.59,0,0,0-1,3.16,3,3,0,0,0-.33.28,2.46,2.46,0,0,0,0,3.49,2.41,2.41,0,0,0,1.74.72,2.45,2.45,0,0,0,1.75-.72,2.63,2.63,0,0,0,.52-.76A3.64,3.64,0,0,0,56,8.11,3.93,3.93,0,0,0,58.63,7a4,4,0,0,0,0-5.68Z"></path>
                           </g>
                         </svg>
-                        {/* <i className="fa-solid fa-gears pe-2 text-white"></i> */}
                         <p className="sub-text cursor ">Factory Inforamtion</p>
                       </div>
                     </Link>
                     {/*  */}
-                    <Link
-                      to="mircoSite#team"
-                      onClick={() => {
-                        setActiveMenu("team");
-                      }}
-                      className={` sub-btn  text-decoration-none  ${
-                        window?.location.href.includes("team") ? "active" : ""
-                      }`}
-                    >
-                      <div className="d-flex  align-items-center sub-icon-pro">
-                        <i className="fa-solid fa-envelope-circle-check pe-2 text-white"></i>
-                        <p className="sub-text cursor ">Team</p>
-                      </div>
-                    </Link>
+
+                    <DashListsDropDown
+                      path={"mircoSite"}
+                      setActiveMenu={setActiveMenu}
+                      urlHashValue="team"
+                      title="Team"
+                      icon="fa-solid fa-user-plus"
+                    />
                   </div>
                 </div>
 
