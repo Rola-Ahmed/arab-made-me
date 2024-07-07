@@ -6,7 +6,7 @@ export default function LoadingForm(props) {
   return (
     <>
       <Navbar />
-      <Header title={props?.title} subTitle={props?.subTitle} />
+      <Header title={props?.title}  />
 
       <div className="my-3 py-2 ">
         <div className="loading my-5 ">

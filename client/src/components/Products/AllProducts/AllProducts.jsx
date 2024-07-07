@@ -64,7 +64,7 @@ function AllProducts(props) {
         userType="Buyer"
       />
 
-      <Header title="All Products" subTitle="Products" />
+      <Header title="All Products" />
 
       <div className="container">
         <section className="  products-section all-products margin-sm-screen ">

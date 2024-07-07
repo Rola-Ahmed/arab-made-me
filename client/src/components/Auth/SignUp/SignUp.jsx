@@ -139,7 +139,7 @@ export default function SignUp() {
   }
   return (
     <>
-      <Header title="Create Account" subTitle="Sign Up" />
+      <Header title="Create Account"  />
 
       <section className="login">
         <div className="container d-flex justify-content-center align-content-center">

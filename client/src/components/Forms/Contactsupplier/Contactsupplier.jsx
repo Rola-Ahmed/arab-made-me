@@ -290,7 +290,7 @@ function Contactsupplier() {
         bgBlur={"bg-blur"}
       />
 
-      <Header title="Contact Supplier" subTitle="Contact Supplier" />
+      <Header title="Contact Supplier"  />
       <section className="send-rfq">
         {/* Factory Details */}
         <div className="container container-rfq ">

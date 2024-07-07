@@ -339,7 +339,7 @@ export default function AnswerQuotation() {
   return (
     <>
       <Navbar />
-      <Header title="Send Quotation " subTitle="Quotation" />
+      <Header title="Send Quotation "  />
       <form onSubmit={formValidation.handleSubmit}>
         <section id="view" className="req-visit">
           {/* Grid  */}

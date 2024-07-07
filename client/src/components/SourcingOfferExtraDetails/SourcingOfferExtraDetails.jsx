@@ -189,12 +189,12 @@ function SourcingOfferExtraDetails() {
         userType="Buyer"
       />
 
-      {isLoading?.pageLoading && <LoadingForm title="Send PO " subTitle="PO" />}
+      {isLoading?.pageLoading && <LoadingForm title="Send PO "  />}
 
       {!isLoading?.pageLoading && (
         <>
           <Navbar />
-          <Header title="Send PO " subTitle="PO" />
+          <Header title="Send PO "  />
           <section id="view" className="send-po">
             {/* Factory description */}
             <div className="container container-po ">

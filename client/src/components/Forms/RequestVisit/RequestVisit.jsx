@@ -92,7 +92,7 @@ function RequestVisit() {
 
   return (
     <>
-      <Header title="Request A visit" subTitle="Request A visit" />
+      <Header title="Request A visit"  />
       {/* <form id="view" onSubmit={formValidation.handleSubmit}> */}
       <section className="req-visit">
         <div className="container container-req ">

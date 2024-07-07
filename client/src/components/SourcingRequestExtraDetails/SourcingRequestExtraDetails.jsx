@@ -148,7 +148,7 @@ function SourcingRequestExtraDetails() {
       {!isLoading?.factoryInfo && (
         <>
           <Navbar />
-          <Header title="Sourcing Request Details " subTitle="PO" />
+          <Header title="Sourcing Request Details "  />
           <section id="view" className="send-po">
             {/* Grid  */}
             <div className="container container-po ">

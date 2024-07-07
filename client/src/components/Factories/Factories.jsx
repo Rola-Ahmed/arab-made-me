@@ -398,7 +398,7 @@ export default function TopFactories() {
         userType="Buyer"
       />
 
-      <Header title="All Factories" subTitle="Factories" />
+      <Header title="All Factories"  />
 
       <section className="fo2  margin-sm-screen">
         <div className="container search-bar   ">

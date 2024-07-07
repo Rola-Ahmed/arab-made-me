@@ -152,7 +152,7 @@ function Sign() {
 
   return (
     <>
-      <Header title="Sign in" subTitle="Sign In" />
+      <Header title="Sign in" />
       <section className="login">
         <div className="container d-flex justify-content-center align-content-center">
           <div className="frame-container-1">

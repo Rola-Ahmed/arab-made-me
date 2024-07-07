@@ -83,7 +83,7 @@ function ContactSupplierFactoryPg() {
         }
         distination={isLoggedReDirect}
       />
-      <Header title="Contact Supplier" subTitle="Contact" />
+      <Header title="Contact Supplier"  />
       <section id="view" className="contact-section">
         <div className="container">
           <div className="row">

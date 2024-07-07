@@ -842,7 +842,6 @@ export default function MircoSiteDash() {
   return (
     <>
       <ToastContainer />
-      {/* <Header title="Factory Profile " subTitle="Factory" /> */}
 
       <div className="section factory-profile  ms-5 me-5 mb-5 mt-2">
         <PageUtility currentPage="Mirco Site" />

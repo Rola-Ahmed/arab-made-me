@@ -3,7 +3,7 @@ import Header from "components/main/Header/Header";
 export default function LoadingForm2(props) {
   return (
     <>
-      <Header title={props?.title} subTitle={props?.subTitle} />
+      <Header title={props?.title}  />
 
       <div className="my-3 py-2 ">
         <div className="loading my-5 ">

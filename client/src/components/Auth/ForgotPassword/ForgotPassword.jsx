@@ -143,7 +143,7 @@ function ForgotPassword() {
 
   return (
     <>
-      <Header title="ForgotPassword " subTitle="ForgotPassword " />
+      <Header title="ForgotPassword " />
       <section className="login">
         <div className="container d-flex justify-content-center align-content-center">
           <div className="frame-container-1">

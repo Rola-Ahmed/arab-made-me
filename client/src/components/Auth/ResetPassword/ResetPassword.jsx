@@ -141,7 +141,7 @@ function ResetPassword() {
 
   return (
     <>
-      <Header title="Reset Password" subTitle="Reset Password" />
+      <Header title="Reset Password"  />
       <section className="login">
         <div className="container d-flex justify-content-center align-content-center">
           <div className="frame-container-1">

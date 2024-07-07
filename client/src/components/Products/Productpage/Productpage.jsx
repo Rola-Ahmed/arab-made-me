@@ -150,7 +150,7 @@ function Productpage(props) {
         userType="Buyer"
       />
 
-      <Header title="Product Page " subTitle="Productpage" />
+      <Header title="Product Page "  />
       <section className="product-page-section1">
         <div className="container">
           <div className="row product-parent">

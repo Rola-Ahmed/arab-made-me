@@ -9,7 +9,7 @@ function ResetPasswordMsg() {
 
   return (
     <>
-      <Header title="Check Your Email" subTitle="" />
+      <Header title="Check Your Email"  />
       <section className="register-msg login">
         <div className="container d-flex justify-content-center align-content-center">
           <div className="frame-container-1">

@@ -201,7 +201,7 @@ function Contact() {
 
   return (
     <>
-      <Header title="Contact Us" subTitle="Contact" />
+      <Header title="Contact Us" />
       <section id="view" className="contact-section">
         <div className="container">
           <div className="row">
