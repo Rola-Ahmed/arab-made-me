@@ -64,15 +64,15 @@ function Factorydash(props) {
 
             <div className="scroller-container">
               <div className="page-sub-menu">
-                  <Link
-                    className={`base-btn  cursor dashboard-color  ${
-                      currentNavPage == "factorydashboard" ? "active" : ""
-                    } text-decoration-none`}
-                    to=""
-                  >
-                    <i className="fa-solid fa-box-open"></i>
-                    <p className="sub-title cursor">Dashboard</p>
-                  </Link>
+                <Link
+                  className={`base-btn  cursor dashboard-color  ${
+                    currentNavPage == "factorydashboard" ? "active" : ""
+                  } text-decoration-none`}
+                  to=""
+                >
+                  <i className="fa-solid fa-box-open"></i>
+                  <p className="sub-title cursor">Dashboard</p>
+                </Link>
 
                 {/* pprofile */}
                 <div className="">

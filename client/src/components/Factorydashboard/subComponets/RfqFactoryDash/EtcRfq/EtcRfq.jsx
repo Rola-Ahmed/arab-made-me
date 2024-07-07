@@ -7,8 +7,7 @@ import { userDetails } from "Context/userType";
 import { pdfIcon } from "constants/Images";
 
 import { handleImageError } from "utils/ImgNotFound";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg/IsLoggedInMsg";
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
@@ -17,7 +16,6 @@ import Carousel from "react-grid-carousel";
 import SubPageUtility from "components/Shared/Dashboards/SubPageUtility";
 import { getMonthName as getDate } from "utils/getMonthName";
 
-import FactoryInfo from "components/Factorydashboard/Shared/FactoryInfo";
 import ImporterInfo from "components/Factorydashboard/Shared/ImporterInfo";
 import ContactBtn from "components/Factorydashboard/Shared/ContactBtn";
 
@@ -196,7 +194,6 @@ export default function EtcRfq() {
 
   return (
     <>
-      <ToastContainer />
       <IsLoggedIn
         show={modalShow.isLogin}
         onHide={() =>
@@ -234,8 +231,6 @@ export default function EtcRfq() {
         <div className="container gap-container">
           <div className="row">
             <div className="col-12  container-2-gap  p-0">
-              <FactoryInfo />
-
               <ImporterInfo importerData={requestedData?.importer} />
 
               <div className="container-profile-input w-100">
@@ -244,126 +239,104 @@ export default function EtcRfq() {
                   <div className="w-100 ">
                     <div className="row  row-gap">
                       <div className="col-6">
-                        <div className="grid-gap-col">
-                          <div className="form-group">
-                            <label>Product Name</label>
-                            <input
-                              className="form-control"
-                              value={requestedData?.productName || ""}
-                              readOnly
-                            />
-                          </div>
+                        <div className="form-group">
+                          <label>Product Name</label>
+                          <input
+                            className="form-control"
+                            value={requestedData?.productName || ""}
+                            readOnly
+                          />
                         </div>
                       </div>
 
                       <div className="col-6">
-                        <div className="grid-gap-col">
-                          <div className="form-group">
-                            <label>Quantity</label>
-                            <input
-                              className="form-control"
-                              value={requestedData?.quantity || ""}
-                              readOnly
-                            />
-                          </div>
+                        <div className="form-group">
+                          <label>Quantity</label>
+                          <input
+                            className="form-control"
+                            value={requestedData?.quantity || ""}
+                            readOnly
+                          />
                         </div>
                       </div>
                       <div className="col-6">
-                        <div className="grid-gap-col">
-                          <div className="form-group">
-                            <label>shipping Conditions</label>
-                            <input
-                              className="form-control"
-                              value={requestedData?.shippingConditions || ""}
-                              readOnly
-                            />
-                          </div>
+                        <div className="form-group">
+                          <label>shipping Conditions</label>
+                          <input
+                            className="form-control"
+                            value={requestedData?.shippingConditions || ""}
+                            readOnly
+                          />
                         </div>
                       </div>
 
                       <div className="col-6">
-                        <div className="grid-gap-col">
-                          <div className="form-group">
-                            <label>packing Conditions</label>
-                            <input
-                              className="form-control"
-                              value={requestedData?.packingConditions || ""}
-                              readOnly
-                            />
-                          </div>
+                        <div className="form-group">
+                          <label>packing Conditions</label>
+                          <input
+                            className="form-control"
+                            value={requestedData?.packingConditions || ""}
+                            readOnly
+                          />
                         </div>
                       </div>
 
                       <div className="col-6">
-                        <div className="grid-gap-col">
-                          <div className="form-group">
-                            <label>payment Terms</label>
-                            <input
-                              className="form-control"
-                              value={requestedData?.paymentTerms || ""}
-                              readOnly
-                            />
-                          </div>
+                        <div className="form-group">
+                          <label>payment Terms</label>
+                          <input
+                            className="form-control"
+                            value={requestedData?.paymentTerms || ""}
+                            readOnly
+                          />
                         </div>
                       </div>
 
                       <div className="col-6">
-                        <div className="grid-gap-col">
-                          <div className="form-group">
-                            <label>Quality Conditions</label>
-                            <input
-                              className="form-control"
-                              value={requestedData?.qualityConditions || ""}
-                              readOnly
-                            />
-                          </div>
+                        <div className="form-group">
+                          <label>Quality Conditions</label>
+                          <input
+                            className="form-control"
+                            value={requestedData?.qualityConditions || ""}
+                            readOnly
+                          />
                         </div>
                       </div>
 
                       <div className="col-6">
-                        <div className="grid-gap-col">
-                          <div className="form-group">
-                            <label>status</label>
-                            <input
-                              className="form-control"
-                              value={requestedData?.status || ""}
-                              readOnly
-                            />
-                          </div>
+                        <div className="form-group">
+                          <label>status</label>
+                          <input
+                            className="form-control"
+                            value={requestedData?.status || ""}
+                            readOnly
+                          />
                         </div>
                       </div>
 
                       <div className="col-6">
-                        <div className="grid-gap-col">
-                          <div className="form-group">
-                            <label>Created At </label>
-                            <input
-                              className="form-control"
-                              value={
-                                `${getMonthName(
-                                  requestedData?.createdAt?.split("T")?.[0]
-                                )}` || ""
-                              }
-                              readOnly
-                            />
-                          </div>
-                        </div>
+                        <label>Created At </label>
+                        <input
+                          className="form-control"
+                          value={
+                            `${getMonthName(
+                              requestedData?.createdAt?.split("T")?.[0]
+                            )}` || ""
+                          }
+                          readOnly
+                        />
                       </div>
                       <div className="col-6">
-                        <div className="grid-gap-col">
-                          <div className="form-group">
-                            <label>Deadline</label>
-                            <input
-                              className="form-control"
-                              value={
-                                `${getMonthName(
-                                  requestedData?.deadline?.split("T")?.[0]
-                                )}` || ""
-                              }
-                              readOnly
-                            />
-                          </div>
-                        </div>
+                        <label>Deadline</label>
+                        <input
+                          className="form-control"
+                          value={
+                            `${getMonthName(
+                              requestedData?.deadline?.split("T")?.[0]
+                            )}` || ""
+                          }
+                          readOnly
+                        />
                       </div>
 
                       <div className="col-12">
@@ -452,25 +425,6 @@ export default function EtcRfq() {
                     <p className="cursor">send Quote</p>
                   </button>
                 ) : (
-                  // {/* <button
-                  //   className="btn-edit border-btn bg-white"
-                  //   type="button"
-                  //   onClick={() => {
-                  //     UpdateData("accepted");
-                  //   }}
-                  // >
-                  //   <p className="cursor text-success">Accept Request</p>
-                  // </button> */}
-                  // {/* <button
-                  //   className="btn-edit  border-btn bg-white"
-                  //   type="button"
-                  //   onClick={() => {
-                  //     UpdateData("rejected");
-                  //   }}
-                  // >
-                  //   <p className="cursor text-danger">Reject Request</p>
-                  // </button> */}
-
                   <button
                     className="btn-edit "
                     type="button"
