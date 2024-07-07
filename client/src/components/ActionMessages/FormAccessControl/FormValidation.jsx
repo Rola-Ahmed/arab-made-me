@@ -24,7 +24,6 @@ export default function FormValidation(props) {
 
         <section className="register-msg ">
           <div className=" container ">
-            {/* sec-div */}
             <div className=" d-flex justify-content-center py-4 my-5">
               <div className="frame-container-1 ">
                 <div className="cont-frame-1 ">

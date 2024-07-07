@@ -1223,7 +1223,6 @@ export default function ImporterProfile() {
                 <div className="title-contianer-input w-100">
                   <p>Social Accounts</p>
                   <div className="w-100 ">
-                    {/* <form> */}
                     <div className="row grid-gap-col">
                       <div className="col-12  ">
                         <div className="d-flex justify-content-between align-items-center form-control">
@@ -1740,7 +1739,6 @@ export default function ImporterProfile() {
                   ""
                 )}
                 <div className="w-100 ">
-                  {/* <form> */}
                   <div className="row  row-gap">
                     <div className="col-12">
                       <div className="grid-gap-col">

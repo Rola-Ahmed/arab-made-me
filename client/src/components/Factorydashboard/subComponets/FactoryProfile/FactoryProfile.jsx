@@ -572,7 +572,6 @@ export default function FactoryProfile() {
               )}
               <div className="w-100 ">
                 <form onSubmit={AccountInfoValidation.handleSubmit}>
-                  {/* <form> */}
                   <div className="row  row-gap">
                     <div className="col-6">
                       <div className="grid-gap-col">

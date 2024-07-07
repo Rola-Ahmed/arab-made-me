@@ -6,7 +6,6 @@ export default function ImporterUnVerifiedPopUpMsg(directTo) {
     <>
       <Modal
         {...directTo}
-        // size="md-down"
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
@@ -20,7 +19,6 @@ export default function ImporterUnVerifiedPopUpMsg(directTo) {
           </Modal.Header>
 
           <div className="w-100 ">
-            {/* <form> */}
             <div className="row  row-gap">
               <div className="row row-container  border-css p-4">
                 <div className="col-12 mb-4">
@@ -86,8 +84,7 @@ export default function ImporterUnVerifiedPopUpMsg(directTo) {
               </div>
             </div>
           </div>
-          {/* </div> */}
-          {/* </div> */}
+        
         </Modal.Body>
       </Modal>
     </>

@@ -20,7 +20,6 @@ export default function FactoryUnVerifiedModal(directTo) {
         </Modal.Header>
 
         <div className="w-100 ">
-          {/* <form> */}
           <div className="row  row-gap">
             <div className="row row-container  border-css p-4">
               <div className="col-12 mb-4">
@@ -36,7 +35,6 @@ export default function FactoryUnVerifiedModal(directTo) {
                 <label className="h1    m-0 p-2 px-3 me-4 steps-text">1</label>
 
                 <label className="m-0 p-0">
-                  {/* Make sure you have provide all required legal document from factory profile.  */}
                   Make sure you have provided all the required legal documents
                   in your factory profile.
                 </label>
@@ -88,8 +86,7 @@ export default function FactoryUnVerifiedModal(directTo) {
             </div>
           </div>
         </div>
-        {/* </div> */}
-        {/* </div> */}
+      
       </Modal.Body>
     </Modal>
   );

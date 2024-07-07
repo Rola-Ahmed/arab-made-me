@@ -11,11 +11,9 @@ export default function ImporterUnVerifiedFullScreen(props) {
       <Modal
         {...props}
         fullscreen={true}
-        // size="md-down"
         aria-labelledby="contained-modal-title-vcenter"
         centered
         className="factory-profile "
-        // fullscreen={true}
       >
         <Modal.Body className="p-0">
           <Navbar />

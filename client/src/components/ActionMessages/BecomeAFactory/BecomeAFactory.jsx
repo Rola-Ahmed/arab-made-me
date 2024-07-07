@@ -43,8 +43,7 @@ export default function BecomomeAFactory(directTo) {
             </div>
           </div>
         </div>
-        {/* </div> */}
-        {/* </div> */}
+       
       </Modal.Body>
     </Modal>
   );
