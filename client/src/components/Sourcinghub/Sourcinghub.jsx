@@ -236,7 +236,7 @@ function Sourcinghub() {
               <div class=" row">
                 {allSourcingReqData?.map((item) => (
                   <div className="col-lg-4 sour-card">
-                    <div className="parentsourc justify-content-between">
+                    <div className="parentsourc justify-content-between ">
                       <div className="me-3">
                         <h5 className="sour-2">{item?.productName} </h5>
                         <p className="sourcing horizontal-text-handler ">
@@ -253,7 +253,9 @@ function Sourcinghub() {
                         </p>
                         <p className="mb-1">
                           <span className="fw-bold">Deadline</span>
-                          {getMonthName(item?.deadline?.split("T")?.[0])}
+                          {item?.deadline
+                            ? getMonthName(item?.deadline?.split("T")?.[0])
+                            : " - "}
                         </p>
 
                         {/* </div> */}

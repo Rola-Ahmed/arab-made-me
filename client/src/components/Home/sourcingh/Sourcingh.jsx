@@ -155,7 +155,7 @@ function Sourcingh() {
             {allSourcingReqData?.map((item) => (
               <Carousel.Item>
                 {/* <div className="col-lg-4 sour-card"> */}
-                <div className="parentsourc  pe-0">
+                <div className="parentsourc  pe-0 ">
                   <div className="row w-100">
                     <div className="col-9  ">
                       <div className=" ">
