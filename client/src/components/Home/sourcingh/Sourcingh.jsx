@@ -9,7 +9,6 @@ import { baseUrl, baseUrl_IMG } from "config.js";
 
 import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
 import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/FactoryUnVerifiedPopUpMsg";
-import BecomomeAFactory from "components/ActionMessages/BecomeAFactory/BecomeAFactory";
 
 import SourcingOffers from "components/Home/SourcingOffers/SourcingOffers";
 
@@ -116,16 +115,6 @@ function Sourcingh() {
           }))
         }
         // userType="Factory"
-      />
-
-      <BecomomeAFactory
-        show={modalShow.BecomeAfactory}
-        onHide={() =>
-          setModalShow((prevVal) => ({
-            ...prevVal,
-            BecomeAfactory: false,
-          }))
-        }
       />
 
       <div className="container sourcing-h-hom">
@@ -255,7 +244,7 @@ function Sourcingh() {
                               ) {
                                 setModalShow((prevVal) => ({
                                   ...prevVal,
-                                  BecomeAfactory: true,
+                                  isImporterVerified: true,
                                 }));
 
                                 return;

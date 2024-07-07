@@ -9,7 +9,7 @@ import { pdfIcon } from "constants/Images";
 import { handleImageError } from "utils/ImgNotFound";
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
-import BecomomeAFactory from "components/ActionMessages/BecomeAFactory/BecomeAFactory";
+// import BecomomeAFactory from "components/ActionMessages/BecomeAFactory/BecomeAFactory";
 
 import { useNavigate, useSearchParams } from "react-router-dom";
 

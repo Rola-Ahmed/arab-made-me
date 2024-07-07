@@ -1,10 +1,9 @@
 import { Button, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import "../EmailActivatedMsg.css";
+
 // pop up screean home page
 //  or if accessed dashbaord and user is not factory
-// appears on top of the page
-export default function BecomeAFactory(directTo) {
+export default function BecomomeAFactory(directTo) {
   let navigate = useNavigate();
   return (
     <Modal
@@ -13,7 +12,7 @@ export default function BecomeAFactory(directTo) {
       aria-labelledby="contained-modal-title-vcenter"
       centered
       className={`factory-profile ${directTo?.bgBlur} `}
-      // fullscreen={true}
+    
     >
       <Modal.Body>
         <Modal.Header closeButton></Modal.Header>
