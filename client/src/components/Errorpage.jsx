@@ -1,4 +1,4 @@
-import Img5 from "../../assets/images/PageNotFound.jpg"
+import Img5 from "../assets/images/PageNotFound.jpg"
 import { Link } from 'react-router-dom';
 function Errorpage() {
   return (

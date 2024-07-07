@@ -7,7 +7,7 @@ import Loading from "components/Loading/Loading";
 import Factories from "components/Factories/Factories";
 import AboutUs from "components/About-us/AboutUs";
 import Sourcinghub from "components/Sourcinghub/SourcingRequest/SourcingRequest";
-import Errorpage from "components/Errorpage/Errorpage";
+import Errorpage from "components/Errorpage";
 
 // contact for arab-made itself
 import ContactArabMade from "components/Contact/Contact";
@@ -132,8 +132,6 @@ const router = createBrowserRouter([
 
   // ---------------------------FORMS---------------
 
-
-
   {
     path: "/answerQuotation",
     element: <AnswerQuotation />,
@@ -160,10 +158,6 @@ const router = createBrowserRouter([
   // error pages
   {
     path: "*",
-    element: <Errorpage />,
-  },
-  {
-    path: "/PageNotfount",
     element: <Errorpage />,
   },
 
