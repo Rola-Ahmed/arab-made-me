@@ -12,7 +12,7 @@ import { qualityConditionsArr } from "constants/qualityConditionsArr";
 import { packingConditionsArr } from "constants/packingConditionsArr";
 
 import { useNavigate } from "react-router-dom";
-import ImporterUnVerified from "components/ActionMessages/ImporterUnVerifiedDash/ImporterUnVerifiedDash";
+import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/ImporterUnVerifiedDash";
 
 import { countriesMiddleEast } from "constants/countries";
 import "./SourcingRequest.css";
@@ -88,8 +88,7 @@ function SourcingRequest() {
 
     deadline: Yup.date().min(formattedDate, "Invalid Date"),
 
-    otherInfoRequest: Yup.string()
-    .max(255, "max legnth is 255"),
+    otherInfoRequest: Yup.string().max(255, "max legnth is 255"),
 
     productDescription: Yup.string()
       .required("Input field is Required")

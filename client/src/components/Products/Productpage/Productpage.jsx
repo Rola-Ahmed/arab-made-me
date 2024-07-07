@@ -16,8 +16,8 @@ import { UserToken } from "Context/userToken";
 import { BtnDescription } from "constants/BtnDescription";
 
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg/IsLoggedInMsg";
-import ImporterUnVerified from "components/ActionMessages/ImporterUnVerifiedModal/ImporterUnVerifiedModal";
-import UserNotAuthorized from "components/ActionMessages/UserNotAuthorized/UserNotAuthorized";
+import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/ImporterUnVerifiedPopUpMsg";
+import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
 // action btns
 import HandleUsersBtnAccess, {
   handleIsLoggedInBtn,

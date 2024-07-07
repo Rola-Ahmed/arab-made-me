@@ -14,8 +14,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { UserToken } from "Context/userToken";
 // modals
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg/IsLoggedInMsg";
-import ImporterUnVerified from "components/ActionMessages/ImporterUnVerifiedModal/ImporterUnVerifiedModal";
-import UserNotAuthorized from "components/ActionMessages/UserNotAuthorized/UserNotAuthorized";
+import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/ImporterUnVerifiedPopUpMsg";
+import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
 import DescritionPopUp from "components/Helpers/DescritionPopUp";
 
 import { userDetails } from "Context/userType";

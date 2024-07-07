@@ -1,24 +1,17 @@
 import "./FactoryUnVerifiedDash.css";
 import { useNavigate } from "react-router-dom";
 
+
 export default function FactoryUnVerifiedDash() {
   let navigate = useNavigate();
 
   return (
     <div className=" order-section verify-mesg   h-100 pt-5">
-      {/* section 1 */}
-      {/* <form className="header w-100"> */}
-
-      {/* ------------ */}
-
       <div className="container cont  verified-cont  ">
         <h3 className="fw-bolder mb-4">Factory is Not Verifiyed yet</h3>
         <div className="row row-container  border-css p-4">
           <div className="col-12 mb-4">
             <label>
-              {/* Thanks For signing uo for arab made. if we directed you to this
-              page, then you have not fiished registration. Make sure you have
-              done the following inorder to become verified: */}
               Thank you for signing up for Arab Made. If you've been directed to
               this page, it means you haven't completed the registration
               process. Ensure you've completed the following steps to become
@@ -30,7 +23,6 @@ export default function FactoryUnVerifiedDash() {
             <label className="h1    m-0 p-2 px-3 me-4 steps-text">1</label>
 
             <label className="m-0 p-0">
-              {/* Make sure you have provide all required legal document from factory profile.  */}
               Make sure you have provided all the required legal documents in
               your factory profile.
             </label>
@@ -70,7 +62,6 @@ export default function FactoryUnVerifiedDash() {
           </div>
         </div>
       </div>
-      {/* ------------ */}
     </div>
   );
 }

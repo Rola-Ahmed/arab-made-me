@@ -23,8 +23,8 @@ import { countriesMiddleEast } from "constants/countries";
 import your_geography_data from "constants/json/features.json";
 
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg/IsLoggedInMsg";
-import ImporterUnVerified from "components/ActionMessages/ImporterUnVerifiedModal/ImporterUnVerifiedModal";
-import UserNotAuthorized from "components/ActionMessages/UserNotAuthorized/UserNotAuthorized";
+import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/ImporterUnVerifiedPopUpMsg";
+import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
 
 import {
   ComposableMap,

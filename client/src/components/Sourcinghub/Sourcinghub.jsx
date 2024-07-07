@@ -16,8 +16,8 @@ import { useNavigate } from "react-router-dom";
 import { getMonthName as getDate } from "utils/getMonthName";
 
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg/IsLoggedInMsg";
-import BecomomeAFactory from "components/ActionMessages/BecomomeAFactory/BecomomeAFactory";
-import UserNotAuthorized from "components/ActionMessages/UserNotAuthorized/UserNotAuthorized";
+import BecomomeAFactory from "components/ActionMessages/BecomeAFactory/BecomeAFactory";
+import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
 import FactoryUnVerified from "components/ActionMessages/FactoryUnVerifiedModal/FactoryUnVerifiedModal";
 function Sourcinghub() {
   let { currentUserData } = useContext(userDetails);

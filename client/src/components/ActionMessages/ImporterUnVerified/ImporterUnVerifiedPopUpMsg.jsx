@@ -1,6 +1,6 @@
 import { Button, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-export default function ImporterUnVerifiedModal(directTo) {
+export default function ImporterUnVerifiedPopUpMsg(directTo) {
   let navigate = useNavigate();
   return (
     <>

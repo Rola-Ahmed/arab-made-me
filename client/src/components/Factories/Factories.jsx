@@ -15,8 +15,8 @@ import Header from "components/main/Header/Header";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg/IsLoggedInMsg";
-import ImporterUnVerified from "components/ActionMessages/ImporterUnVerifiedModal/ImporterUnVerifiedModal";
-import UserNotAuthorized from "components/ActionMessages/UserNotAuthorized/UserNotAuthorized";
+import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/ImporterUnVerifiedPopUpMsg";
+import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
 
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";

@@ -7,9 +7,9 @@ import Carousel from "react-grid-carousel";
 import { userDetails } from "Context/userType";
 import { baseUrl, baseUrl_IMG } from "config.js";
 
-import UserNotAuthorized from "components/ActionMessages/UserNotAuthorized/UserNotAuthorized";
+import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
 import FactoryUnVerified from "components/ActionMessages/FactoryUnVerifiedModal/FactoryUnVerifiedModal";
-import BecomomeAFactory from "components/ActionMessages/BecomomeAFactory/BecomomeAFactory";
+import BecomomeAFactory from "components/ActionMessages/BecomeAFactory/BecomeAFactory";
 
 import SourcingOffers from "components/Home/SourcingOffers/SourcingOffers";
 

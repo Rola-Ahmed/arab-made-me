@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-// import "./EmailActivatedMsg.css";
+
 
 // const
 import {

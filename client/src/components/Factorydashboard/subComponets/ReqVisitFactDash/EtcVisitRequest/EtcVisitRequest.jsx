@@ -9,7 +9,7 @@ import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
 
 // modals
-import BecomomeAFactory from "components/ActionMessages/BecomomeAFactory/BecomomeAFactory";
+import BecomomeAFactory from "components/ActionMessages/BecomeAFactory/BecomeAFactory";
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg/IsLoggedInMsg";
 // shared component accross  the components
 // utils function

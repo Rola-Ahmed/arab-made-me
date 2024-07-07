@@ -16,16 +16,12 @@ import FactoryLegalDocs from "components/Auth/FactorySignUp/FactoryLegalDocs";
 import ImporterRepDetails from "components/Auth/ImporterSignUp/ImporterRepDetails";
 import ImporterLegalDocs from "components/Auth/ImporterSignUp/ImporterLegalDocs";
 
-// full screen
-// import ImporterUnVerifiedFullScreen from "components/ActionMessages/ImporterUnVerifiedFullScreen/ImporterUnVerifiedFullScreen";
-
 // action message
-import SignUpMessage from "components/ActionMessages/SignUpMessage/SignUpMessage";
+// import SignUpMessage from "components/ActionMessages/SignUpMessage/SignUpMessage";
 import ResetPasswordMsg from "components/ActionMessages/ResetPasswordMsg/ResetPasswordMsg";
-import EmailActivatedMsg from "components/ActionMessages/EmailActivatedMsg/EmailActivatedMsg";
-import FactoryEmailActivatedMsg from "components/ActionMessages/FactoryEmailActivatedMsg/FactoryEmailActivatedMsg";
-import ImporterEmailActivatedMsg from "components/ActionMessages/ImporterEmailActivatedMsg/ImporterEmailActivatedMsg";
-
+// import EmailActivatedMsg from "components/ActionMessages/EmailActivatedMsg/EmailActivatedMsg";
+// import FactoryEmailActivatedMsg from "components/ActionMessages/FactoryEmailActivatedMsg/FactoryEmailActivatedMsg";
+// import ImporterEmailActivatedMsg from "components/ActionMessages/ImporterEmailActivatedMsg/ImporterEmailActivatedMsg";
 
 const authRoutes = [
   // Splats
@@ -97,29 +93,22 @@ const authRoutes = [
     element: <FactoryLegalDocs />,
   },
 
-  {
-    path: "/SignUpVerification",
-    element: <SignUpMessage />,
-  },
-  {
-    path: "/emailActivation",
-    element: <EmailActivatedMsg />,
-  },
-
-  {
-    path: "/factory/emailActivation",
-    element: <FactoryEmailActivatedMsg />,
-  },
-  {
-    path: "/importer/emailActivation",
-    element: <ImporterEmailActivatedMsg />,
-  },
-
-  
+  // {
+  //   path: "/SignUpVerification",
+  //   element: <SignUpMessage />,
+  // },
+  // {
+  //   path: "/emailActivation",
+  //   element: <EmailActivatedMsg />,
+  // },
 
   // {
-  //   path: "/buyer/verification",
-  //   element: <ImporterUnVerifiedFullScreen />,
+  //   path: "/factory/emailActivation",
+  //   element: <FactoryEmailActivatedMsg />,
+  // },
+  // {
+  //   path: "/importer/emailActivation",
+  //   element: <ImporterEmailActivatedMsg />,
   // },
 ];
 

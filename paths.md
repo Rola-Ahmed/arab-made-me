@@ -130,6 +130,27 @@ shippingConditions: "EXW", //required,
                               // }}
 
 
+<!--both are smiliar but one can't remove it and the other one is a pop up message  -->
+<!-- i can let them both in on page -->
+1- FactoryUnVerifiedDash
+2- FactoryUnVerifiedModal
+
+1- ImporterUnVerifiedDash
+2- ImporterUnVerifiedFullScreen
+3- ImporterUnVerifiedModal
+
+
+2- /recover/account/:message?
+
+
+<!-- both are the same but one covers the screen to prevent access && one is pop up message  -->
+3- UserNotAuthorized
+4- FormValidation 
+
+
+1- BecomeAFactory chane be exchanges with  FormValidation
+
+<!--  -->
 
 
 
@@ -140,13 +161,6 @@ shippingConditions: "EXW", //required,
 
 
 
-                                // onmouseout={() => {
-                            //   setTimeout(() => {
-                            //     document
-                            //       .getElementById(factoryitem?.id)
-                            //       .classList.toggle("d-block");
-                            //   }, 500); // Adjust the delay time as needed
-                            // }}
 
 
 
