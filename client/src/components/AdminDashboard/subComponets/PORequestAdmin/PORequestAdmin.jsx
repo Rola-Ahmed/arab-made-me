@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ReactPaginate from "react-paginate";
 import axios from "axios";
 
 import { baseUrl, baseUrl_IMG } from "config.js";

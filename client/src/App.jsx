@@ -6,7 +6,7 @@ import Home from "components/Home/home";
 import Loading from "components/Loading/Loading";
 import Factories from "components/Factories/Factories";
 import AboutUs from "components/About-us/AboutUs";
-import Sourcinghub from "components/Sourcinghub/Sourcinghub";
+import Sourcinghub from "components/Sourcinghub/SourcingRequest/SourcingRequest";
 import Errorpage from "components/Errorpage/Errorpage";
 
 // contact for arab-made itself

@@ -3,9 +3,12 @@ import "./sourcingh.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Carousel from "react-grid-carousel";
+import { UserToken } from "Context/userToken";
+import SourcingRequestCard from "components/Sourcinghub/SourcingRequest/SourcingRequestCard";
 
 import { userDetails } from "Context/userType";
 import { baseUrl, baseUrl_IMG } from "config.js";
+import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 
 import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
 import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/FactoryUnVerifiedPopUpMsg";
@@ -20,6 +23,7 @@ function Sourcingh() {
   // utils function
   let getMonthName = getDate;
   let { currentUserData } = useContext(userDetails);
+  let { isLogin } = useContext(UserToken);
 
   const [allSourcingReqData, setAllSourcingReqData] = useState([]);
   const [uniqueFactoryIDofProducts, setUniqueFactoryIDofProducts] = useState(
@@ -95,6 +99,17 @@ function Sourcingh() {
 
   return (
     <section className="margin-sm-screen">
+      <IsLoggedIn
+        show={modalShow.isLogin}
+        onHide={() =>
+          setModalShow((prevVal) => ({
+            ...prevVal,
+            isLogin: false,
+          }))
+        }
+        distination={`/sigin`}
+      />
+
       <UserNotAuthorized
         show={modalShow.isImporterVerified}
         onHide={() =>
@@ -276,6 +291,12 @@ function Sourcingh() {
                     </div>
                   </div>
                 </div>
+                <SourcingRequestCard
+                  item={item}
+                  setModalShow={setModalShow}
+                  isLogin={isLogin}
+                  currentUserData={currentUserData}
+                />
                 {/* </div> */}
               </Carousel.Item>
             ))}

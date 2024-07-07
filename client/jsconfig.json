@@ -5,6 +5,6 @@
     "module": "commonjs",
     "target": "es6"
   },
-  "include": ["src", "src/i18n.js", "../ignoore/willBE used in futue/EmailActivatedMsg", "../ignoore/willBE used in futue/FactoryEmailActivatedMsg", "../ignoore/willBE used in futue/ImporterEmailActivatedMsg", "../ignoore/willBE used in futue/SignUpMessage"],
+  "include": ["src", "src/i18n.js", "../ignoore/willBE used in futue/EmailActivatedMsg", "../ignoore/willBE used in futue/FactoryEmailActivatedMsg", "../ignoore/willBE used in futue/ImporterEmailActivatedMsg", "../ignoore/willBE used in futue/SignUpMessage", "../ignoore/SourcingRequest copy.jsx"],
   "exclude": ["node_modules", "build", "dist"]
 }

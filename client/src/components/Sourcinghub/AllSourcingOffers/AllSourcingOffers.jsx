@@ -5,7 +5,6 @@ import { getMonthName as getDate } from "utils/getMonthName";
 
 import { handleImageError } from "utils/ImgNotFound";
 
-// import "./source.css";
 import axios from "axios";
 import { baseUrl, baseUrl_IMG } from "config.js";
 
