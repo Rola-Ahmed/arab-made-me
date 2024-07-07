@@ -633,7 +633,7 @@ export default function AddSourcingOffer() {
         (!currentUserData.factoryEmailActivated && <FactoryUnVerified />)}
 
       <div className="m-4 order-section" id="view">
-        <ToastContainer />
+        
         {/* section 1 */}
         <form onSubmit={formValidation.handleSubmit} className="header w-100">
           {/* <form className="header w-100"> */}

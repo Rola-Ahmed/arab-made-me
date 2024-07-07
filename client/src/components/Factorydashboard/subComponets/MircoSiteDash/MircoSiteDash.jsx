@@ -15,8 +15,7 @@ import { userDetails } from "Context/userType";
 
 import { handleImageError } from "utils/ImgNotFound";
 import { countriesMiddleEast } from "constants/countries";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import { useOutletContext } from "react-router-dom";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 import FactoryInforamtion from "./subComponents/FactoryInforamtion";
@@ -841,7 +840,7 @@ export default function MircoSiteDash() {
 
   return (
     <>
-      <ToastContainer />
+     
 
       <div className="section factory-profile  ms-5 me-5 mb-5 mt-2">
         <PageUtility currentPage="Mirco Site" />
