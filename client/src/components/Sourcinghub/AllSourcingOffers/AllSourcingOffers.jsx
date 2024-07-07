@@ -122,7 +122,7 @@ function AllSourcingOffers() {
 
   return (
     <>
-      <Header title="Sourcing Hub" subTitle="Factory Offers" />
+      <Header title="Sourcing Hub" />
       <div className="container sourcing-hub-section-pg sourcing-pg">
         <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
           <li class="nav-item" role="presentation">

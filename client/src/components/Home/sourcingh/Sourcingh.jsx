@@ -174,7 +174,9 @@ function Sourcingh() {
                         </p>
                         <p className="mb-1">
                           <span className="fw-bold">Deadline</span>
-                          {getMonthName(item?.deadline?.split("T")?.[0])}
+                          {item?.deadline
+                            ? getMonthName(item?.deadline?.split("T")?.[0])
+                            : " - "}
                         </p>
 
                         {/* </div> */}
