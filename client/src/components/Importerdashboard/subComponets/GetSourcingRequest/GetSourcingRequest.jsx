@@ -457,10 +457,6 @@ export default function GetSourcingRequest() {
 
                 <th className=" col-4">Specifications (Keyword,description)</th>
 
-                {/* <th className=" col-1">Docs</th> */}
-
-                {/* <th className=" col-2">Unit Price</th> */}
-
                 <th className=" col-1 ">Sent Date</th>
 
                 <th className=" col-1">DeadLine</th>
@@ -495,8 +491,6 @@ export default function GetSourcingRequest() {
 
                   <th className=" col-4  d-flex align-items-center justify-content-between ">
                     <div className="trate-sub-title horizontal-text-handler">
-                      {/* {poItem?.specialCharacteristics} */}
-
                       {Object.entries(poItem?.specialCharacteristics).map(
                         ([key, value], index) => (
                           <div key={key} className="py-1 ">
@@ -535,8 +529,6 @@ export default function GetSourcingRequest() {
                     </div> */}
 
                     <div className="trate-sub-title horizontal-text-handler">
-                      {/* {poItem?.specialCharacteristics} */}
-
                       <p className="name-text">{poItem?.productDescription}</p>
                     </div>
                   </th>

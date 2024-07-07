@@ -3,6 +3,8 @@
   // If the difference is less than 3600 seconds (1 hour), it returns a string indicating the number of minutes ago.
   // If the difference is less than 86400 seconds (1 day), it returns a string indicating the number of hours ago.
   
+
+  // For Notification
 export function getTimeDifference(notificationTime) {
     const currentTime = new Date();
     const notificationDate = new Date(notificationTime);

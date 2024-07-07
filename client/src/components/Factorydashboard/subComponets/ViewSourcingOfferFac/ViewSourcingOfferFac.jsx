@@ -505,10 +505,6 @@ export default function ViewSourcingOfferFac() {
 
                 <th className=" col-4">Description</th>
 
-                {/* <th className=" col-1">Docs</th> */}
-
-                {/* <th className=" col-2">Unit Price</th> */}
-
                 <th className=" col-1 ">Sent Date</th>
                 <th className=" col-1">Price</th>
 

@@ -460,15 +460,6 @@ export default function PORequestAdmin() {
                       {/* view */}
                       <i class="fa-solid fa-up-right-from-square"></i>
                     </p>
-                    {/* <p
-                      className="trate-sub-title view-more-details cursor"
-                      title="delete the form"
-                      onClick={() => {
-                        deleteData(poItem?.id);
-                      }}
-                    >
-                      <i class="fa-regular fa-trash-can"></i>
-                    </p> */}
                   </th>
                 </tr>
               ))}

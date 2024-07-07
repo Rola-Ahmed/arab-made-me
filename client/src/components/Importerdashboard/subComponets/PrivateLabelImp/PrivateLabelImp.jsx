@@ -519,10 +519,6 @@ export default function PrivateLabelImp() {
 
                 <th className=" col-4">Specifications (Keyword,description)</th>
 
-                {/* <th className=" col-1">Docs</th> */}
-
-                {/* <th className=" col-2">Unit Price</th> */}
-
                 <th className=" col-1 ">Sent Date</th>
 
                 <th className=" col-1">Status</th>
@@ -568,8 +564,6 @@ export default function PrivateLabelImp() {
 
                   <th className=" col-4  d-flex align-items-center justify-content-between ">
                     <p className="trate-sub-title horizontal-text-handler">
-                      {/* {poItem?.specialCharacteristics} */}
-
                       {/* {Object.entries(poItem?.specialCharacteristics).map(
                         ([key, value]) => (
                           <div key={key} className="py-1">

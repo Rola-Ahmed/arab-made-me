@@ -376,7 +376,6 @@ export default function GetQuotationImp() {
                   </div>
                 </th>
 
-                {/* <th className=" col-1">Docs</th> */}
                 <th className=" col-1">Quantity</th>
 
                 <th className=" col-1 px-0">Unit Price</th>

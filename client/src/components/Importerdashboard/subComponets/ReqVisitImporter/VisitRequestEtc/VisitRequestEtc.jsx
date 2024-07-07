@@ -12,6 +12,7 @@ import ContactBtn from "components/Importerdashboard/Shared/ContactBtn";
 // utils function
 import SubPageUtility from "components/Shared/Dashboards/SubPageUtility";
 import { getMonthName as getDate } from "utils/getMonthName";
+import { formattedTime as getFornattedTime } from "utils/formattedTime";
 
 // import FactoryUnVerified from "components/ActionMessages/FactoryUnVerifiedDash/FactoryUnVerifiedDash";
 export default function VisitRequestEtc() {
@@ -19,6 +20,7 @@ export default function VisitRequestEtc() {
 
   let { isLogin } = useContext(UserToken);
   let { currentUserData } = useContext(userDetails);
+  let formattedTime = getFornattedTime;
 
   const [searchParams] = useSearchParams();
   const visitReqId = searchParams.get("visitReqId");
@@ -77,26 +79,6 @@ export default function VisitRequestEtc() {
 
   // utils function
   let getMonthName = getDate;
-
-  function formattedTime(timestamp) {
-    const dateObject = new Date(timestamp);
-
-    const dateOptions = { year: "numeric", month: "short", day: "numeric" };
-    const formattedDate = dateObject.toLocaleDateString("en-US", dateOptions);
-
-    // Define options for formatting time
-    const timeOptions = {
-      hour: "numeric",
-      minute: "numeric",
-      second: "numeric",
-      hour12: true,
-    };
-    const formattedTime = dateObject.toLocaleTimeString("en-US", timeOptions);
-
-    // Concatenate date and time with a space in between
-    const finalFormattedDate = `${formattedDate} ${formattedTime}`;
-    return finalFormattedDate;
-  }
 
   async function fetchImporterData() {
     try {

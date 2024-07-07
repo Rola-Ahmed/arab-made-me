@@ -288,32 +288,6 @@ export default function CusProductReqFactDash() {
                 >
                   <p className="dropdown-item">Newest</p>
                 </li>
-                {/* <li     onClick={(e) => {
-                    filtterData("rate", "sort","Rate");
-                  }}
-                  className=" cursor  text-start">
-                  <a class="dropdown-item" href="#">
-                    Rate
-                  </a>
-                </li> */}
-
-                {/* <li     onClick={(e) => {
-                    filtterData("price-ASC", "sort","Price :Low to High");
-                  }}
-                  className=" cursor  text-start">
-                  <a class="dropdown-item" href="#">
-                    Price :Low to High
-                  </a>
-                </li>
-
-                <li     onClick={(e) => {
-                    filtterData("date-DESC", "sort","Price :High to Low");
-                  }}
-                  className=" cursor  text-start">
-                  <a class="dropdown-item" href="#">
-                  Price :High to Low
-                  </a>
-                </li> */}
               </ul>
             </div>
           </div>
@@ -341,10 +315,6 @@ export default function CusProductReqFactDash() {
                 </th>
 
                 <th className=" col-4">Specifications (Keyword,description)</th>
-
-                {/* <th className=" col-1">Docs</th> */}
-
-                {/* <th className=" col-2">Unit Price</th> */}
 
                 <th className=" col-1 ">Sent Date</th>
 
@@ -381,8 +351,6 @@ export default function CusProductReqFactDash() {
 
                   <th className=" col-4  d-flex align-items-center justify-content-between ">
                     <div className="trate-sub-title horizontal-text-handler">
-                      {/* {poItem?.specialCharacteristics} */}
-
                       {Object.entries(poItem?.specialCharacteristics).map(
                         ([key, value], index) => (
                           <div key={key} className="py-1 ">
@@ -441,15 +409,7 @@ export default function CusProductReqFactDash() {
                       {/* view */}
                       <i class="fa-solid fa-up-right-from-square"></i>
                     </p>
-                    {/* <p
-                      className="trate-sub-title view-more-details cursor"
-                      title="delete the form"
-                      onClick={() => {
-                        deleteData(poItem?.id);
-                      }}
-                    >
-                      <i class="fa-regular fa-trash-can"></i>
-                    </p> */}
+                    
                   </th>
                 </tr>
               ))}
