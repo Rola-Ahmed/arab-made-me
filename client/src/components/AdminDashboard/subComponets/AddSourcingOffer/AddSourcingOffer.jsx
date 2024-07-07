@@ -9,7 +9,7 @@ import { userDetails } from "Context/userType";
 import { countriesMiddleEast } from "constants/countries";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import FactoryUnVerified from "components/ActionMessages/FactoryUnVerifiedDash/FactoryUnVerifiedDash";
+import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/FactoryUnVerifiedDash";
 import { GlobalMsgContext } from "Context/globalMessage";
 
 import { useNavigate } from "react-router-dom";

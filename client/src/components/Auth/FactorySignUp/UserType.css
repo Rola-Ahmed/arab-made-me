@@ -270,3 +270,13 @@
   height: 180px !important;
   object-fit: cover !important;
 }
+
+
+.recvoerAcc-icon{
+  text-align: center;
+  font-size: 9rem;
+}
+
+.checked-success{
+  color: green;
+  }

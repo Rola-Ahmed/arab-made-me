@@ -22,7 +22,7 @@ import { baseUrl, baseUrl_IMG } from "config.js";
 import { countriesMiddleEast } from "constants/countries";
 import your_geography_data from "constants/json/features.json";
 
-import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg/IsLoggedInMsg";
+import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/ImporterUnVerifiedPopUpMsg";
 import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
 

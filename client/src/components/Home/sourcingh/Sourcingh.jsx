@@ -8,7 +8,7 @@ import { userDetails } from "Context/userType";
 import { baseUrl, baseUrl_IMG } from "config.js";
 
 import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
-import FactoryUnVerified from "components/ActionMessages/FactoryUnVerifiedModal/FactoryUnVerifiedModal";
+import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/FactoryUnVerifiedPopUpMsg";
 import BecomomeAFactory from "components/ActionMessages/BecomeAFactory/BecomeAFactory";
 
 import SourcingOffers from "components/Home/SourcingOffers/SourcingOffers";

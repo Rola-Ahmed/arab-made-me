@@ -17,9 +17,9 @@ import Carousel from "react-grid-carousel";
 import { handleImageError } from "utils/ImgNotFound";
 import { pdfIcon } from "constants/Images";
 import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
-import FactoryUnVerified from "components/ActionMessages/FactoryUnVerifiedModal/FactoryUnVerifiedModal";
+import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/FactoryUnVerifiedPopUpMsg";
 
-import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg/IsLoggedInMsg";
+import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import BecomomeAFactory from "components/ActionMessages/BecomeAFactory/BecomeAFactory";
 
 function SourcingRequestExtraDetails() {

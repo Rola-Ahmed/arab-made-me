@@ -10,6 +10,7 @@ export default function FactoryUnVerifiedModal(directTo) {
       aria-labelledby="contained-modal-title-vcenter"
       centered
       className="factory-profile "
+      // fullscreen={true}
     >
       <Modal.Body>
         <Modal.Header closeButton>

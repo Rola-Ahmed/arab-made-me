@@ -10,7 +10,7 @@ import { handleImageError } from "utils/ImgNotFound";
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
 
 import { useNavigate, useSearchParams } from "react-router-dom";
-import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg/IsLoggedInMsg";
+import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 // import FactoryUnVerified from "components/ActionMessages/FactoryUnVerifiedDash/FactoryUnVerifiedDash";
 import Carousel from "react-grid-carousel";
 // utils function

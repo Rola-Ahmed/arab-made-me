@@ -10,7 +10,7 @@ import { userDetails } from "Context/userType";
 
 // modals
 import BecomomeAFactory from "components/ActionMessages/BecomeAFactory/BecomeAFactory";
-import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg/IsLoggedInMsg";
+import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 // shared component accross  the components
 // utils function
 import SubPageUtility from "components/Shared/Dashboards/SubPageUtility";

@@ -11,7 +11,7 @@ import { userDetails } from "Context/userType";
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
 
 import { handleImageError } from "utils/ImgNotFound";
-import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg/IsLoggedInMsg";
+import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import { pdfIcon } from "constants/Images";
 
 import { getMonthName as getDate } from "utils/getMonthName";

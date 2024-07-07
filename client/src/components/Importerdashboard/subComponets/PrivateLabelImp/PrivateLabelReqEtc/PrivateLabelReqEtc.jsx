@@ -11,7 +11,7 @@ import { handleImageError } from "utils/ImgNotFound";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
-import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg/IsLoggedInMsg";
+import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 // import BecomomeAFactory from "components/ActionMessages/BecomomeAFactory/BecomomeAFactory";
 
 import Carousel from "react-grid-carousel";

@@ -13,7 +13,7 @@ import { handleImageError } from "utils/ImgNotFound";
 import ContactBtn from "components/Importerdashboard/Shared/ContactBtn";
 
 import { useNavigate, useSearchParams } from "react-router-dom";
-import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg/IsLoggedInMsg";
+import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
 
 import Carousel from "react-grid-carousel";

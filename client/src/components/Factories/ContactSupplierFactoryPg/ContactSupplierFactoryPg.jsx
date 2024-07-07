@@ -7,7 +7,7 @@ import Header from "components/main/Header/Header";
 import { UserToken } from "Context/userToken";
 
 import { useNavigate, useSearchParams } from "react-router-dom";
-import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg/IsLoggedInMsg";
+import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 
 import { contact1, contact2 } from "constants/Images";
 
@@ -196,8 +196,7 @@ function ContactSupplierFactoryPg() {
                 className="contact-btn ms-4"
                 onClick={() => {
                   handleIsLoggedInBtn(
-                    `contactsupplier?userId=${factoryDetails?.userId}&factoryName=${factoryDetails?.name}`,
-                    
+                    `contactsupplier?userId=${factoryDetails?.userId}&factoryName=${factoryDetails?.name}`
                   );
                 }}
               >

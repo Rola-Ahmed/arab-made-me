@@ -3,7 +3,7 @@ import { UserToken } from "Context/userToken";
 import axios from "axios";
 import { baseUrl } from "config.js";
 import Factorydash from "components/Factorydashboard/Factorydash";
-import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg/IsLoggedInMsg";
+import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 // import BecomomeAFactory from "components/ActionMessages/BecomomeAFactory/BecomomeAFactory";
 
 export default function FactorydashContainer() {

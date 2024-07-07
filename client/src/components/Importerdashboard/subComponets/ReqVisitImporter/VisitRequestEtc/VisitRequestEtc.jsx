@@ -6,7 +6,7 @@ import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
 
 import { useNavigate, useSearchParams } from "react-router-dom";
-import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg/IsLoggedInMsg";
+import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import ContactBtn from "components/Importerdashboard/Shared/ContactBtn";
 
 // utils function

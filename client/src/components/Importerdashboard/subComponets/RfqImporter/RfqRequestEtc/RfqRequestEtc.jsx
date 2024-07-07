@@ -13,7 +13,7 @@ import { pdfIcon } from "constants/Images";
 
 // validation popup modal
 import { useNavigate, useSearchParams } from "react-router-dom";
-import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg/IsLoggedInMsg";
+import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 
 // sub component
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";

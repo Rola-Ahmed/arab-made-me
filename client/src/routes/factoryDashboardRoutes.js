@@ -22,7 +22,7 @@ import EditQuote from "components/Factorydashboard/subComponets/Quotations/EditQ
 
 // Importer Dashboard pages
 
-import FactoryUnVerified from "components/ActionMessages/FactoryUnVerifiedDash/FactoryUnVerifiedDash";
+import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/FactoryUnVerifiedDash";
 
 import VisitRequestFacEtc from "components/Factorydashboard/subComponets/ReqVisitFactDash/EtcVisitRequest/EtcVisitRequest";
 

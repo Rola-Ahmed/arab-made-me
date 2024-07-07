@@ -13,7 +13,7 @@ import HandleUsersBtnAccess, {
 import { Link, useNavigate } from "react-router-dom";
 import { UserToken } from "Context/userToken";
 // modals
-import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg/IsLoggedInMsg";
+import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/ImporterUnVerifiedPopUpMsg";
 import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
 import DescritionPopUp from "components/Helpers/DescritionPopUp";

@@ -7,7 +7,7 @@ import { baseUrl } from "config.js";
 import { UserToken } from "Context/userToken";
 
 //
-import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg/IsLoggedInMsg";
+import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 // import FactoryUnVerified from "components/ActionMessages/FactoryUnVerifiedDash/FactoryUnVerifiedDash";
 // import BecomomeAFactory from "components/ActionMessages/BecomomeAFactory/BecomomeAFactory";
 

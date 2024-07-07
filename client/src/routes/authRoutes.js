@@ -18,7 +18,7 @@ import ImporterLegalDocs from "components/Auth/ImporterSignUp/ImporterLegalDocs"
 
 // action message
 // import SignUpMessage from "components/ActionMessages/SignUpMessage/SignUpMessage";
-import ResetPasswordMsg from "components/ActionMessages/ResetPasswordMsg/ResetPasswordMsg";
+import ResetPasswordMsg from "components/ActionMessages/ResetPasswordMsg";
 // import EmailActivatedMsg from "components/ActionMessages/EmailActivatedMsg/EmailActivatedMsg";
 // import FactoryEmailActivatedMsg from "components/ActionMessages/FactoryEmailActivatedMsg/FactoryEmailActivatedMsg";
 // import ImporterEmailActivatedMsg from "components/ActionMessages/ImporterEmailActivatedMsg/ImporterEmailActivatedMsg";

@@ -8,7 +8,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { baseUrl, baseUrl_IMG } from "config.js";
 import { UserToken } from "Context/userToken";
 
-import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg/IsLoggedInMsg";
+import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
 
 import { pdfIcon } from "constants/Images";

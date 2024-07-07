@@ -14,7 +14,7 @@ import "slick-carousel/slick/slick.css";
 import Header from "components/main/Header/Header";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import ReactPaginate from "react-paginate";
-import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg/IsLoggedInMsg";
+import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/ImporterUnVerifiedPopUpMsg";
 import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
 

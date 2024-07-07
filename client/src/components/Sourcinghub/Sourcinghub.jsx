@@ -15,10 +15,10 @@ import { UserToken } from "Context/userToken";
 import { useNavigate } from "react-router-dom";
 import { getMonthName as getDate } from "utils/getMonthName";
 
-import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg/IsLoggedInMsg";
+import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import BecomomeAFactory from "components/ActionMessages/BecomeAFactory/BecomeAFactory";
 import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
-import FactoryUnVerified from "components/ActionMessages/FactoryUnVerifiedModal/FactoryUnVerifiedModal";
+import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/FactoryUnVerifiedPopUpMsg";
 function Sourcinghub() {
   let { currentUserData } = useContext(userDetails);
   let { isLogin } = useContext(UserToken);

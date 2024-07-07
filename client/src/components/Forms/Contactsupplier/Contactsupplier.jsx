@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import axios from "axios";
 // import { baseUrl, socket } from "config.js";
 import { baseUrl } from "config.js";
-import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg/IsLoggedInMsg";
+import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { UserToken } from "Context/userToken";

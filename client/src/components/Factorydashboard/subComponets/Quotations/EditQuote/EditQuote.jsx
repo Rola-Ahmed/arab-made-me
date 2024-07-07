@@ -13,7 +13,7 @@ import { userDetails } from "Context/userType";
 import { GlobalMsgContext } from "Context/globalMessage";
 
 // verififcation
-import FactoryUnVerified from "components/ActionMessages/FactoryUnVerifiedDash/FactoryUnVerifiedDash";
+import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/FactoryUnVerifiedDash";
 
 // constant
 import { qualityConditionsArr } from "constants/qualityConditionsArr";
