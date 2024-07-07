@@ -8,7 +8,7 @@ import { about1, about2, about3 } from "constants/Images";
 function AboutUs(props) {
   return (
     <>
-      <Header title="About Arab Made" subTitle="About" />
+      <Header title="About Arab Made"  />
       <section className="section-about-1 margin-sm-screen">
         <div className="container">
           <div className="row justify-content-between ">

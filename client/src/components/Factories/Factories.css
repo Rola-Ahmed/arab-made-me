@@ -218,7 +218,6 @@
 
 
 
-/* =-----------------pagination------------------------ */
 
 .fo3 .arrow-btn:hover {
 
@@ -231,89 +230,7 @@
 }
 
 
-.fo3 .pagination {
-    --bs-pagination-color: black;
-    gap: 12px;
 
-    padding-top: 87px;
-}
-
-.fo3 .page-link {
-    /* border-radius: 16px !important; */
-    border-radius: 50px !important;
-    /* padding: 10px 10px !important; */
-
-    /* border-color: var(--Gray-00) !important; */
-    outline: none !important;
-    box-shadow: none !important;
-
-
-    font-size: 17px !important;
-    /* padding: 3px 8px; */
-    /* padding-left: 10px!important;
-    padding-right: 10px!important; */
-}
-
-.page-link.arrow-link-color {
-    border-color: var(--secondary-color) !important;
-}
-
-/*start buttons on the left and right */
-.page-link.arrow-link-color.margin-prev {
-    margin-right: 10px;
-}
-
-.page-link.arrow-link-color.margin-next {
-    margin-left: 10px;
-}
-
-.page-link.arrow-link-color i {
-    color: var(--secondary-color) !important;
-}
-
-.fo3 .page-link a {
-    padding-top: 10px !important;
-    padding-bottom: 10px !important;
-
-}
-
-.page-item.disabled .page-link {
-    border-color: rgba(128, 128, 128, 0.542) !important;
-    background-color: rgba(128, 128, 128, 0.542) !important;
-}
-
-.page-item.disabled .page-link.arrow-link-color i {
-
-    color: white !important;
-}
-
-/*end buttons on the left and right */
-.fo3 .active>.page-link {
-
-    background: var(--secondary-color) !important;
-    border-color: var(--secondary-color);
-    /* border-color: black; */
-
-    /* color: black !important; */
-
-}
-
-.factories .page-link:hover {
-    color: black !important;
-    background-color: var(--secondary-color) !important;
-    border-color: var(--secondary-color) !important;
-    /* border-color: black !important; */
-}
-
-.factories .page-link:hover i {
-    color: white !important;
-}
-
-a:hover {
-    color: black;
-}
-
-/* -------------------------------------- */
 
 
 .fo3 .factoryCard {

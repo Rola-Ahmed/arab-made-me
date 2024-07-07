@@ -8,8 +8,8 @@ import { handleImageError } from "utils/ImgNotFound";
 import axios from "axios";
 import { baseUrl, baseUrl_IMG } from "config.js";
 
-import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
+import PublicPaginate from "components/Shared/PublicPaginate";
 
 function AllSourcingOffers() {
   let navigate = useNavigate();
@@ -106,14 +106,6 @@ function AllSourcingOffers() {
       } catch (error) {}
     });
   }, [apiLoadingData]);
-
-  const handlePageClick = (currentPage) => {
-    // why plus 1 bec react pagination library reads the 1st page with index 0 but in api  is read with index 1
-    setPagination((prevValue) => ({
-      ...prevValue,
-      currentPage: currentPage.selected + 1,
-    }));
-  };
 
   // utils function
   let getMonthName = getDate;
@@ -248,26 +240,7 @@ function AllSourcingOffers() {
           </div>
         </div>
 
-        <ReactPaginate
-          previousLabel={<i className="fa-solid fa-arrow-left"></i>}
-          nextLabel={<i className="fa-solid fa-arrow-right"></i>}
-          pageCount={pagination?.totalPage ?? 1} // total number to pages
-          pageRangeDisplayed={3}
-          marginPagesDisplayed={1}
-          forcePage={0}
-          onPageChange={handlePageClick}
-          containerClassName="pagination align-items-center justify-content-center"
-          pageClassName="page-item"
-          pageLinkClassName="page-link"
-          activeClassName="active"
-          breakClassName="page-item"
-          breakLinkClassName="page-link"
-          previousClassName="page-item "
-          previousLinkClassName="page-link arrow-link-color margin-prev"
-          nextClassName="page-item "
-          nextLinkClassName="page-link arrow-link-color margin-next"
-          navClassName="pagination-custom"
-        />
+        <PublicPaginate pagination={pagination} setPagination={setPagination} />
       </div>
     </>
   );

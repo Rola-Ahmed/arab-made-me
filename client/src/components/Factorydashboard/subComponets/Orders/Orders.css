@@ -332,9 +332,13 @@ th {
   border-bottom: none !important;
 }
 
+/* Dashboard Pagination */
+
 .order-section .row {
   --bs-gutter-x: 0 !important;
 }
+
+
 
 .order-section .pagination, .dash-home-section .pagination {
   padding: 0.5rem 0.5rem;
@@ -354,11 +358,7 @@ th {
   background-color: red !important;
 }
 
-/* .order-section .pagination,.dash-home-section .pagination   {
-  --bs-pagination-active-bg: var(--light-baby-blue) !important;
-  color: black !important;
-  border-radius: 6px !important;
-} */
+
 
 .order-section .page-link.text-dark.margin-prev, .dash-home-section .page-link.text-dark.margin-prev {
   border-radius: 6px !important;
@@ -377,11 +377,7 @@ th {
   box-shadow: none !important;
 }
 
-/* .order-section .page-item.disabled .page-link{
-  border-radius: 6px !important;
-  border-color:rgba(128, 128, 128, 0.542) !important;
-  background-color: rgba(128, 128, 128, 0.542) !important; 
-} */
+
 .ReactPaginate {
   padding: 0.5rem 0.5rem;
 }

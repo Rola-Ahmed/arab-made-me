@@ -13,7 +13,7 @@ import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import Header from "components/main/Header/Header";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
-import ReactPaginate from "react-paginate";
+
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/ImporterUnVerifiedPopUpMsg";
 import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
@@ -24,6 +24,7 @@ import DescritionPopUp from "components/Helpers/DescritionPopUp";
 
 // static variabls
 import { BtnDescription } from "constants/BtnDescription";
+import PublicPaginate from "components/Shared/PublicPaginate";
 
 export default function TopFactories() {
   document.title = "Factory Gallery";
@@ -56,7 +57,6 @@ export default function TopFactories() {
     filterByCategory: filterByCategory ?? "",
   });
   const [allsSectors, setAllSectors] = useState([]);
-  const [allsCategories, setAllCategories] = useState([]);
   const [apiLoadingData, setApiLoadingData] = useState({
     sectors: false,
     categories: false,
@@ -144,15 +144,6 @@ export default function TopFactories() {
 
       if (response.data.message === "done") {
         setAllSectors(response.data.sectors);
-      }
-    } catch (error) {}
-  }
-  async function fetchCategories() {
-    try {
-      const response = await axios.get(`${baseUrl}/categories?size=10`);
-
-      if (response.data.message === "done") {
-        setAllCategories(response.data.categories);
       }
     } catch (error) {}
   }
@@ -253,7 +244,6 @@ export default function TopFactories() {
   }, [pagination?.currentPage, filter]);
   useEffect(() => {
     fetchSectors();
-    fetchCategories();
   }, []);
 
   useEffect(() => {
@@ -303,13 +293,7 @@ export default function TopFactories() {
     // }));
   };
 
-  const handlePageClick = (currentPage) => {
-    // why plus 1 bec react pagination library reads the 1st page with index 0 but in api  is read with index 1
-    setPagination((prevValue) => ({
-      ...prevValue,
-      currentPage: currentPage.selected + 1,
-    }));
-  };
+ 
 
   function ToFactoryPageBtn(factoryId, factoryName) {
     navigate(`/factoryPage/${factoryId}-${factoryName}`);
@@ -921,26 +905,7 @@ export default function TopFactories() {
           {/* </div> */}
         </div>
 
-        <ReactPaginate
-          previousLabel={<i className="fa-solid fa-arrow-left"></i>}
-          nextLabel={<i className="fa-solid fa-arrow-right"></i>}
-          pageCount={pagination?.totalPage ?? 1} // total number to pages
-          pageRangeDisplayed={3}
-          marginPagesDisplayed={1}
-          forcePage={0}
-          onPageChange={handlePageClick}
-          containerClassName="pagination align-items-center justify-content-center"
-          pageClassName="page-item"
-          pageLinkClassName="page-link"
-          activeClassName="active"
-          breakClassName="page-item"
-          breakLinkClassName="page-link"
-          previousClassName="page-item "
-          previousLinkClassName="page-link arrow-link-color margin-prev"
-          nextClassName="page-item "
-          nextLinkClassName="page-link arrow-link-color margin-next"
-          navClassName="pagination-custom"
-        />
+        <PublicPaginate pagination={pagination} setPagination={setPagination} />
       </section>
 
       <Modal

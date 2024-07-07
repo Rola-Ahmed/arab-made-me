@@ -41,40 +41,7 @@ export const qualityConditionsArr = [
     value: "Packaging and Handling Standards",
     name: "Packaging and Handling Standards",
   },
-  // {
-  //   value: "productVariety",
-  //   name: " Product Variety and Quantity Per Carton",
-  // },
-  // {
-  //   value: "packingMaterials",
-  //   name: " Correct Packing Materials",
-  // },
-  // {
-  //   value: "barcodesAndLabeling",
-  //   name: "Barcodes and Labeling",
-  // },
-  // {
-  //   value: "packagingDurability",
-  //   //   {/* متانة التغليف */}
-  //   name: "Packaging Durability",
-  // },
-  // {
-  //   value: "primaryPackaging",
-  //   name: "Primary Packaging Inspection",
-  // },
-  // {
-  //   value: "secondaryPackaging",
-  //   name: "Secondary Packaging Inspection",
-  // },
-  // {
-  //   value: "tertiaryPackaging",
-  //   name: "Tertiary Packaging Inspection",
-  // },
-
-  // {
-  //   value: "markingsAndLabels",
-  //   name: "Required Markings and Labels",
-  // },
+ 
   {
     value: "other",
     name: "Other",

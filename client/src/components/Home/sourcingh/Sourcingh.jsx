@@ -7,7 +7,7 @@ import { UserToken } from "Context/userToken";
 import SourcingRequestCard from "components/Sourcinghub/SourcingRequest/SourcingRequestCard";
 
 import { userDetails } from "Context/userType";
-import { baseUrl, baseUrl_IMG } from "config.js";
+import { baseUrl } from "config.js";
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 
 import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
@@ -15,13 +15,8 @@ import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/Facto
 
 import SourcingOffers from "components/Home/SourcingOffers/SourcingOffers";
 
-import { getMonthName as getDate } from "utils/getMonthName";
-import { handleImageError } from "utils/ImgNotFound";
-
 function Sourcingh() {
-  let navigate = useNavigate();
   // utils function
-  let getMonthName = getDate;
   let { currentUserData } = useContext(userDetails);
   let { isLogin } = useContext(UserToken);
 
@@ -30,13 +25,8 @@ function Sourcingh() {
     []
   );
   const [apiLoadingData, setApiLoadingData] = useState(true);
+  const displayProductSize = 20;
 
-  const [pagination, setPagination] = useState(() => ({
-    // i want to display 3 pdoructs in the 1st page
-    displayProductSize: 20,
-
-    currentPage: 1,
-  }));
   const [modalShow, setModalShow] = useState({
     isFactoryVerified: false,
     isImporterVerified: false,
@@ -49,7 +39,7 @@ function Sourcingh() {
     try {
       let config = {
         method: "get",
-        url: `${baseUrl}/sourcingRequests/?size=${pagination?.displayProductSize}`,
+        url: `${baseUrl}/sourcingRequests/?size=${displayProductSize}`,
       };
 
       const response = await axios.request(config);
@@ -169,135 +159,12 @@ function Sourcingh() {
           >
             {allSourcingReqData?.map((item) => (
               <Carousel.Item>
-                {/* <div className="col-lg-4 sour-card"> */}
-                <div className="parentsourc  pe-0 ">
-                  <div className="row w-100">
-                    <div className="col-9  ">
-                      <div className=" ">
-                        <h5 className="sour-2">{item?.productName} </h5>
-                        <p className="sourcing horizontal-text-handler ">
-                          {item?.productDescription}
-                        </p>
-                        <p className="mb-1">
-                          <span className="fw-bold">Requested by</span>
-                          {item?.importerName}
-                        </p>
-                        {/* <div className="mb-1 d-flex"> */}
-                        <p className="mb-1 me-3">
-                          <span className="fw-bold">Quantity</span>
-                          {item?.quantity}
-                        </p>
-                        <p className="mb-1">
-                          <span className="fw-bold">Deadline</span>
-                          {item?.deadline
-                            ? getMonthName(item?.deadline?.split("T")?.[0])
-                            : " - "}
-                        </p>
-
-                        {/* </div> */}
-                        <p className="d-flex">
-                          <span className="fw-bold pe-1">
-                            Sourcing Countries
-                          </span>
-                          <span className="sourcing horizontal-text-handler-1">
-                            {item?.preferredCountries?.length === 0
-                              ? "All Countries"
-                              : item?.preferredCountries
-                                  ?.map((countryitem) => countryitem)
-                                  .join(", ")}
-                          </span>
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="col-3 pe-0 ">
-                      <div className="img-parent-source">
-                        <img
-                          className="sorcingh-img"
-                          src={`${baseUrl_IMG}/${item?.docs}`}
-                          onError={handleImageError}
-                          alt="sourcing request img"
-                        />
-                      </div>
-                    </div>
-                    <div className="col-12 pe-0">
-                      <div className="d-flex mt-2">
-                        {currentUserData?.datacompletelyLoaded ? (
-                          <button
-                            className="req-btn btn-color me-2 req-btn cursor"
-                            type="button"
-                          >
-                            <i className="fas fa-spinner fa-spin text-white"></i>
-                          </button>
-                        ) : (
-                          <button
-                            className="req-btn btn-color me-2 req-btn cursor"
-                            onClick={() => {
-                              if (currentUserData?.importerId !== null) {
-                                setModalShow((prevVal) => ({
-                                  ...prevVal,
-                                  isImporterVerified: true,
-                                }));
-
-                                return;
-                              }
-
-                              if (
-                                currentUserData?.factoryId !== null &&
-                                (currentUserData?.factoryVerified === "0" ||
-                                  !currentUserData?.factoryEmailActivated)
-                              ) {
-                                setModalShow((prevVal) => ({
-                                  ...prevVal,
-                                  isFactoryVerified: true,
-                                }));
-
-                                return;
-                              }
-
-                              if (
-                                currentUserData?.importerId == null &&
-                                currentUserData?.factoryId == null
-                              ) {
-                                setModalShow((prevVal) => ({
-                                  ...prevVal,
-                                  isImporterVerified: true,
-                                }));
-
-                                return;
-                              } else {
-                                navigate(
-                                  `/answerQuotation?sourcingRequestId=${item.id}&productName=${item?.productName}&userId=${item?.importerId}`
-                                );
-                              }
-                            }}
-                          >
-                            Send Quote
-                          </button>
-                        )}
-
-                        <button
-                          className="req-btn cursor "
-                          type="button"
-                          onClick={() => {
-                            navigate(
-                              `/sourcingBuyerRequest/${item?.id}?sourcingRequestId=${item?.id}&productName=${item?.productName}&userId=${item?.importerId}`
-                            );
-                          }}
-                        >
-                          More Details
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
                 <SourcingRequestCard
                   item={item}
                   setModalShow={setModalShow}
                   isLogin={isLogin}
                   currentUserData={currentUserData}
                 />
-                {/* </div> */}
               </Carousel.Item>
             ))}
           </Carousel>

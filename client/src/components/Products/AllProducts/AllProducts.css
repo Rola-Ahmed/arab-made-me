@@ -576,78 +576,7 @@
     background: var(--secondary-color) !important
 }
 
-/* =-----------------pagination------------------------ */
-.all-products .pagination {
-    --bs-pagination-color: black;
-    gap: 12px;
-    padding-top: 87px;
-}
 
-.all-products .page-link {
-    border-radius: 50px !important;
-
-    outline: none !important;
-    box-shadow: none !important;
-
-
-    font-size: 17px !important;
-}
-
-.page-link.arrow-link-color {
-    border-color: var(--secondary-color) !important;
-}
-
-/*start buttons on the left and right */
-.page-link.arrow-link-color.margin-prev {
-    margin-right: 10px;
-}
-
-.page-link.arrow-link-color.margin-next {
-    margin-left: 10px;
-}
-
-.page-link.arrow-link-color i {
-    color: var(--secondary-color) !important;
-}
-
-.all-products .page-link a {
-    padding-top: 10px !important;
-    padding-bottom: 10px !important;
-
-}
-
-.all-products .page-item.disabled .page-link {
-    border-color: rgba(128, 128, 128, 0.542) !important;
-    background-color: rgba(128, 128, 128, 0.542) !important;
-}
-
-.page-item.disabled .page-link.arrow-link-color i {
-
-    color: white !important;
-}
-
-/*end buttons on the left and right */
-.all-products .active>.page-link {
-    background: var(--secondary-color) !important;
-    border-color: var(--secondary-color);
-
-}
-
-.all-products .page-link:hover {
-    color: black !important;
-    background-color: var(--secondary-color) !important;
-    border-color: var(--secondary-color) !important;
-}
-
-.all-products .page-link:hover i {
-    color: white !important;
-}
-
-a:hover {
-    color: black;
-}
-
-/* -------------------------------------- */
 
 .all-products .card-img-top {
     height: 194px;
