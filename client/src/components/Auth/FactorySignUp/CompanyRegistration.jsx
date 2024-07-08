@@ -18,7 +18,6 @@ import * as Yup from "yup";
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
 import { countriesMiddleEast } from "constants/countries";
-import "./UserType.css";
 
 export default function CompanyRegistration() {
   let { isLogin } = useContext(UserToken);

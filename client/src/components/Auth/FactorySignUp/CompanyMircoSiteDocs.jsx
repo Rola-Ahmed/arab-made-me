@@ -13,7 +13,7 @@ import axios from "axios";
 import { baseUrl } from "config.js";
 
 import { UserToken } from "Context/userToken";
-import "./UserType.css";
+
 
 function CompanyMircoSiteDocs() {
   let { isLogin } = useContext(UserToken);

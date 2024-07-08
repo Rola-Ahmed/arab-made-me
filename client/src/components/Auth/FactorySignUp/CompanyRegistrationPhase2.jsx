@@ -17,7 +17,6 @@ import * as Yup from "yup";
 
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
-import "./UserType.css";
 
 function CompanyRegistrationPhase2() {
   let { isLogin } = useContext(UserToken);

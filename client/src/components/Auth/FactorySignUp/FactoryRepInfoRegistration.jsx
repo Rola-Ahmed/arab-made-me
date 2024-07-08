@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-
+import "./UserType.css";
 import {
   awaitImg,
   nextImg,
@@ -17,7 +17,6 @@ import * as Yup from "yup";
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
 import { countriesMiddleEast } from "constants/countries";
-import "./UserType.css";
 
 function FactoryRepInfoRegistration() {
   let { isLogin } = useContext(UserToken);
