@@ -82,6 +82,28 @@
 
 
 
+<!--  -->
+It defines a hook called useFormSubmission that takes three parameters:
+isLogin: a boolean indicating whether the user is logged in
+setErrorMsg: a function that sets an error message
+setIsLoading: a function that sets the loading state
+It uses the useState hook to manage three state variables:
+rfqAdded: an object with two properties: status and id, which will be updated when the RFQ is successfully submitted
+setRfqAdded: a function to update the rfqAdded state
+The hook defines several functions:
+setLoadingState: sets the loading state
+clearResponseError: clears any previous error messages
+scrollToView: scrolls to an element with the specified ID
+handleResponseError: handles an error response from the API
+The hook defines the main submission function submitForm, which takes three parameters:
+values: an object with form values
+selectedDocs: an array of selected files to upload
+The function sends a request to the API to create a new RFQ using the addRfqLabel service. If the request is successful, it updates the rfqAdded state and submits the selected files using the submitDocs function.
+The submitDocs function takes two parameters: qoute_id (the ID of the newly created RFQ) and selectedDocs. It sends a request to the API to upload the selected files using the addRfqMedia service.
+The code seems to be well-structured and follows best practices for React hooks. However, without more context, it's difficult to provide specific feedback or suggestions for improvement.
+<!--  -->
+
+
 
 
 
