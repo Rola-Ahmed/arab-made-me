@@ -1,6 +1,6 @@
 // it gets Date and Time
 export function errorHandler(error) {
-  if (error.response && error.response.status) {
+  if (error.response) {
     const statusCode = error.response.status;
     switch (statusCode) {
       case 400:
