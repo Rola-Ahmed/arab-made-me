@@ -17,10 +17,12 @@ function Sign() {
   const searchParams = new URLSearchParams(location?.search);
 
   // Resulting query string will be "?factoryId=3&factoryName=samsung"
-  if (searchParams?.size !== 0) {
+  if (searchParams?.size != 0) {
     const queryString = searchParams?.toString();
     params = `${params["*"]}?${queryString}`;
   }
+  console.log("params", params, params["*"]);
+
 
   const [errorMsg, setErrorMsg] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -77,7 +79,8 @@ function Sign() {
         //1st if condition  means there is a redirect page that needs sign in first
         // the other else conditons means that its only sign in && user is directed to a specific path based on his type
         if (params !== null && params !== undefined && params["*"] != "") {
-          navigate(`/${params}`);
+          console.log("params if", params);
+          navigate(`/${params["*"]}`);
         } else if (response?.data?.user?.factoryId !== null) {
           navigate(`/factorydashboard`);
         } else if (response?.data?.user?.role == "admin") {

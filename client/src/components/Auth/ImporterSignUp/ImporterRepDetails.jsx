@@ -53,7 +53,7 @@ export default function ImporterRepDetails() {
     repEmail: Yup.string()
       .email("Invalid email")
       .required("Input Field is Required")
-      .min(10, "min length is 10")
+
       .max(255, "max length is 255"),
 
     repPhone: phoneValidation,

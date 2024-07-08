@@ -34,7 +34,7 @@ function Contact() {
     email: Yup.string()
       .email("Invalid email")
       .required("Input Field is Required")
-      .min(10, "min length is 10")
+
       .max(255, "max length is 255"),
 
     repPhone: Yup.string()
@@ -47,7 +47,7 @@ function Contact() {
 
     description: Yup.string()
       .required("Input Field is Required")
-     
+
       .max(255, "max legnth is 255"),
   });
 
