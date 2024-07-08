@@ -60,6 +60,7 @@ const useFormSubmission = (
         email: values.repEmail,
         phone: values.repPhone,
       },
+      // otherConditions: values.otherConditions,
       productName: values.productName,
       quantity: values.quantity,
 

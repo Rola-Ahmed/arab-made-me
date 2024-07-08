@@ -15,6 +15,7 @@ import { SupplyLocationArr } from "constants/SupplyLocationArr";
 import { ShippingTypeSizeArr } from "constants/ShippingTypeSizeArr";
 import TimeLine from "../Shared/TimeLine/TimeLine";
 import InputField from "../Shared/InputField";
+import ProductMultiSelector from "../Shared/ProductMultiSelector";
 
 export default function WhiteLabelForm(props) {
   let {
@@ -69,62 +70,13 @@ export default function WhiteLabelForm(props) {
                 </div>
                 {!productIsSelected && (
                   <div className="col-12">
-                    <div className="form-group">
-                      <label>selected product</label>
-
-                      <button
-                        className="btn form-control dropdown-toggle w-100 text-center countries-drop d-flex "
-                        type="button"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                      >
-                        <p> Select Product *</p>
-                        <i className="fa-solid fa-chevron-down text-end my-auto"></i>
-                        {/* {Dropdown} */}
-                      </button>
-                      <ul className="dropdown-menu col-3 scroller">
-                        {allProductsArr.map((item) => (
-                          <li>
-                            <div className=" dropdown-item d-flex justify-content-start align-items-center width-drop bg-none">
-                              <input
-                                //
-                                onChange={formValidation.handleChange}
-                                onBlur={formValidation.handleBlur}
-                                onClick={(e) => {
-                                  formValidation.handleChange(e);
-                                  handleCheckboxProductNameChange(
-                                    item.name,
-                                    e.target.checked
-                                  );
-                                }}
-                                className="form-check-input cursor me-3 "
-                                type="checkbox"
-                                id="productId"
-                                name="productId"
-                                value={item.id}
-                              />
-                              <label
-                                className="form-check-label p-0 m-0 justify-content-between d-flex w-100"
-                                htmlFor="productId"
-                              >
-                                {item.name}
-                              </label>
-                              <button
-                                type="button"
-                                class="fa-solid fa-circle-info ps-3 bg-none border-0 p-0 m-0"
-                                title="view product details"
-                                onClick={() => {
-                                  setSelectedItem(item.id);
-                                }}
-                              ></button>
-                            </div>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <FormVlaidtionError
+                    <ProductMultiSelector
+                      productDetails={allProductsArr}
                       formValidation={formValidation}
-                      vlaidationName="productId"
+                      setSelectedItem={setSelectedItem}
+                      vlaidationNameOnId="productId"
+                      vliadationNameOnName="productName"
+                      title={"selected product"}
                     />
                   </div>
                 )}

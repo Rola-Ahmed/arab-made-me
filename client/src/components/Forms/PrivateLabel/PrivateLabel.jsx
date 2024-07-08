@@ -42,12 +42,12 @@ export default function PrivateLabel(props) {
   // ------------------------Form Validation
 
   let validationSchema = Yup.object().shape({
-    productId: Yup.array()
-      .of(Yup.string())
-      .test("non-empty-array", "Input field is Required", function (value) {
-        return value && value.length > 0;
-      }),
-    // .required("Input field is Required"),
+    // productId: Yup.array()
+    //   .of(Yup.string())
+    //   .test("non-empty-array", "Input field is Required", function (value) {
+    //     return value && value.length > 0;
+    //   }),
+    productId: Yup.string().required("Input field is Required"),
 
     quantity: Yup.string()
       .required("Input field is Required")
@@ -77,10 +77,12 @@ export default function PrivateLabel(props) {
   let initialValues = {
     factoryId: factoryId,
 
-    productId: productId ? [productId] : [],
-    productName: productName ? [productName] : [],
-    // productId: "77",
-    // productName: "paste G100",
+    // productId: productId ? [productId] : [],
+    // productName: productName ? [productName] : [],
+
+    productId: productId ? productId : "",
+    productName: productName ? productName : "",
+
     moreDetails: "",
 
     // new
@@ -132,7 +134,7 @@ export default function PrivateLabel(props) {
       handleSubmitMsg("Private Label Request");
     }
   }
-  console.log("formik", formValidation);
+  console.log("private formik", formValidation);
 
   return (
     <>

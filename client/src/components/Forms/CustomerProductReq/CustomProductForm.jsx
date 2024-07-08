@@ -49,7 +49,7 @@ function CustomProductForm(props) {
           </div>
 
           {/* end new */}
-          <div className="col-12 ms-3">
+          <div className="col-12 ms-3 ">
             <div className="border-row row">
               <div>
                 <label className="pb-2">Product Characteristics</label>

@@ -72,7 +72,7 @@ function PurchasingOrder(props) {
     qualityConditions: requiredStringValidate,
     qualityConditionsOther: otherTextAreaValidate("qualityConditions", "other"),
 
-    otherConditions: requiredStringValidate,
+    // otherConditions: requiredStringValidate,
 
     paymentType: requiredStringValidate,
     paymentTypeOther: otherTextAreaValidate("paymentType", "other"),
@@ -151,7 +151,7 @@ function PurchasingOrder(props) {
       },
     ],
 
-    otherConditions: "otherConditions",
+    // otherConditions: "",
   };
 
   useEffect(() => {

@@ -45,11 +45,13 @@ function SendRfq(props) {
 
   // ------------------------Form Validation
   let validationSchema = Yup.object().shape({
-    productId: Yup.array()
-      .of(Yup.string())
-      .test("non-empty-array", "Input field is Required", function (value) {
-        return value && value.length > 0;
-      }),
+    // productId: Yup.array()
+    //   .of(Yup.string())
+    //   .test("non-empty-array", "Input field is Required", function (value) {
+    //     return value && value.length > 0;
+    //   }),
+
+      productId: Yup.string().required("Input field is Required"),
     quantity: Yup.string()
       .required("Input field is Required")
       .matches(/^[0-9]+$/, "Input field must be numbers only")
@@ -96,8 +98,11 @@ function SendRfq(props) {
     //else it will display all the products of the selected factory
     // productId: 562,
     // productName: "Scarlett Mueller",
-    productId: productId ? [productId] : [],
-    productName: productName ? [productName] : [],
+    // productId: productId ? [productId] : [],
+    // productName: productName ? [productName] : [],
+
+    productId: productId ? productId : "",
+    productName: productName ? productName : "",
   };
 
   useEffect(() => {

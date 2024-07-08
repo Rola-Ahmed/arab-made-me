@@ -208,11 +208,11 @@ function PurchasingOrderForm(props) {
                     onBlur={formValidation.handleBlur}
                     value={formValidation.values.timeManufacturingDelay}
                   />
-                  <FormVlaidtionError
-                    formValidation={formValidation}
-                    vlaidationName="timeManufacturingDelay"
-                  />
                 </div>
+                <FormVlaidtionError
+                  formValidation={formValidation}
+                  vlaidationName="timeManufacturingDelay"
+                />
               </div>
             </div>
           )}
@@ -240,6 +240,15 @@ function PurchasingOrderForm(props) {
               title="instructions"
             />
           </div>
+
+          {/* <div className="col-12">
+            <TextareaInput
+              vlaidationName="otherConditions"
+              formValidation={formValidation}
+              isRequired={true}
+              title="other Conditions"
+            />
+          </div> */}
 
           <UploadDocument
             selectedDocs={selectedDocs}
@@ -287,8 +296,15 @@ function PurchasingOrderForm(props) {
                         behavior: "smooth",
                         block: "center",
                       });
+                    } else {
+                      const targetElement = document.getElementById("view");
+                      if (targetElement) {
+                        targetElement?.scrollIntoView({
+                          behavior: "smooth",
+                          block: "center",
+                        });
+                      }
                     }
-                    console.log("targetElement",targetElement, Object.keys(formValidation.errors)?.[0])
                   }
                 }}
               >

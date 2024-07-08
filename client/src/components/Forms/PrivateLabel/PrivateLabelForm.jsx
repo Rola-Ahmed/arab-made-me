@@ -60,7 +60,7 @@ export default function PrivateLabelForm(props) {
                       formValidation={formValidation}
                       setSelectedItem={setSelectedItem}
                       vlaidationNameOnId="productId"
-                      vliadationNameOnName="ProductName"
+                      vliadationNameOnName="productName"
                       title={"selected product"}
                     />
                   </div>
@@ -175,10 +175,20 @@ export default function PrivateLabelForm(props) {
                         Object.keys(formValidation.errors)?.[0]
                       );
 
-                      targetElement.scrollIntoView({
-                        behavior: "smooth",
-                        block: "center",
-                      });
+                      if (targetElement) {
+                        targetElement.scrollIntoView({
+                          behavior: "smooth",
+                          block: "center",
+                        });
+                      } else {
+                        const targetElement = document.getElementById("view");
+                        if (targetElement) {
+                          targetElement?.scrollIntoView({
+                            behavior: "smooth",
+                            block: "center",
+                          });
+                        }
+                      }
                     }
                   }}
                 >

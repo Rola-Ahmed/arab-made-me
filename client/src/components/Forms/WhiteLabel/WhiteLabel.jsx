@@ -39,7 +39,7 @@ export default function WhiteLabel(props) {
     setIsLoading((prev) => ({ ...prev, submitLoading: loadingStatus }));
   }
 
-  let { submitForm, privateLabelAdded, submitDocs } = useFormSubmission(
+  let { submitForm, privateLabelAdded, submitDocs,handleSubmitMsg } = useFormSubmission(
     isLogin,
     setErrorMsg,
     setLoadingState
@@ -47,13 +47,13 @@ export default function WhiteLabel(props) {
   // ------------------------Form Validation
 
   let validationSchema = Yup.object().shape({
-    productId: Yup.array()
-      .of(Yup.string())
-      .test("non-empty-array", "Input field is Required", function (value) {
-        return value && value.length > 0;
-      }),
-    // .required("Input field is Required"),
-
+    // productId: Yup.array()
+    //   .of(Yup.string())
+    //   .test("non-empty-array", "Input field is Required", function (value) {
+    //     return value && value.length > 0;
+    //   }),
+    // // .required("Input field is Required"),
+    productId: Yup.string().required("Input field is Required"),
     quantity: requiredStringValidate
       .matches(/^[0-9]+$/, "Input field must be numbers only")
       .min(1, "min 1 legnth"),
@@ -95,11 +95,11 @@ export default function WhiteLabel(props) {
   let initialValues = {
     factoryId: factoryId,
 
-    productId: productId ? [productId] : [],
-    productName: productName ? [productName] : [],
+    // productId: productId ? [productId] : [],
+    // productName: productName ? [productName] : [],
 
-    // productId: productId,
-    // productName: productName,
+    productId: productId ? productId : "",
+    productName: productName ? productName : "",
     moreDetails: "",
 
     // new
@@ -152,12 +152,14 @@ export default function WhiteLabel(props) {
     else if (selectedDocs?.length > 0) {
       setLoadingState(true);
       submitDocs(privateLabelAdded.id, selectedDocs);
+    } else {
+      handleSubmitMsg("White Label Request");
     }
   }
 
   return (
     <>
-      <Header title="White Label"   />
+      <Header title="White Label" />
 
       <section className="req-visit">
         {/* Factory Details */}

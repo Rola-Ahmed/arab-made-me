@@ -693,10 +693,21 @@ function AnsQuotationPrivateLabel() {
                           );
 
                           // Scroll to the target element
-                          targetElement.scrollIntoView({
-                            behavior: "smooth",
-                            block: "center",
-                          });
+                          if (targetElement) {
+                            targetElement.scrollIntoView({
+                              behavior: "smooth",
+                              block: "center",
+                            });
+                          } else {
+                            const targetElement =
+                              document.getElementById("view");
+                            if (targetElement) {
+                              targetElement?.scrollIntoView({
+                                behavior: "smooth",
+                                block: "center",
+                              });
+                            }
+                          }
                         }
                       }}
                     >

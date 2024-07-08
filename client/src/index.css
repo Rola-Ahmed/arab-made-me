@@ -182,7 +182,7 @@ p, button, div, textarea, input {
 }
 
 .row-gap-24 {
-  row-gap: 24
+  row-gap: 24px;
 }
 
 .gap-16 {
@@ -252,7 +252,7 @@ p, button, div, textarea, input {
   margin-top: .25rem;
 }
 
-.rounded{
+.rounded {
   border-radius: 6px !important;
 }
 

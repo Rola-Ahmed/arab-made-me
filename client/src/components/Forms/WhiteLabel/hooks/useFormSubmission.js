@@ -97,7 +97,7 @@ const useFormSubmission = (isLogin, setErrorMsg, setLoadingState) => {
     } catch (error) {}
   };
 
-  return { submitForm, privateLabelAdded, submitDocs };
+  return { submitForm, privateLabelAdded, submitDocs,handleSubmitMsg };
 };
 
 export default useFormSubmission;

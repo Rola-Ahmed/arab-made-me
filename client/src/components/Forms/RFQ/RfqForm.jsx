@@ -55,7 +55,7 @@ function RfqForm(props) {
                     formValidation={formValidation}
                     setSelectedItem={setSelectedItem}
                     vlaidationNameOnId="productId"
-                    vliadationNameOnName="ProductName"
+                    vliadationNameOnName="productName"
                     title={"selected product"}
                   />
                 </div>
@@ -154,13 +154,22 @@ function RfqForm(props) {
                         const targetElement = document.getElementById(
                           Object.keys(formValidation.errors)?.[0]
                         );
-                        console.log("targetElement", targetElement);
 
                         // Scroll to the target element
-                        targetElement.scrollIntoView({
-                          behavior: "smooth",
-                          block: "center",
-                        });
+                        if (targetElement) {
+                          targetElement.scrollIntoView({
+                            behavior: "smooth",
+                            block: "center",
+                          });
+                        } else {
+                          const targetElement = document.getElementById("view");
+                          if (targetElement) {
+                            targetElement?.scrollIntoView({
+                              behavior: "smooth",
+                              block: "center",
+                            });
+                          }
+                        }
                       }
                     }}
                   >
