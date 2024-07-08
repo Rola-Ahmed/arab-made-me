@@ -7,5 +7,5 @@ export const addPrivateLabel = async (header, data) => {
 
 // get spesific product Value
 export const addPrivateLabelMedia = async (id, header, data) => {
-  return await putRequest(`/privateLabelings/uploadMedia${id}`, header, data);
+  return await putRequest(`/privateLabelings/uploadMedia/${id}`, header, data);
 };
