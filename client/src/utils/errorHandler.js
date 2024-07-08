@@ -30,4 +30,10 @@ export function errorHandler(error) {
   } else {
     return "Something Went Wrong. Please try again later.";
   }
+
+  if (error.message === "Network Error") {
+    return "Something Went Wrong Please Try Again";
+  } else if (error.message === "error") {
+    return error?.response?.data?.errorMessage;
+  }
 }
