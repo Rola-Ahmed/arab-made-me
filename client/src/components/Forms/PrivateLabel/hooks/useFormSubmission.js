@@ -58,9 +58,9 @@ const useFormSubmission = (isLogin, setErrorMsg, setIsLoading) => {
       if (selectedDocs.length > 0) {
         setPrivateLabelAdded({
           status: true,
-          id: result.data.quotationRequest.id,
+          id: result.data?.privateLabeling?.id,
         });
-        await submitDocs(result.data.quotationRequest.id, selectedDocs);
+        await submitDocs(result.data?.privateLabeling?.id, selectedDocs);
       } else {
         // display  successfully submitted message
         handleSubmitMsg("Private Label Request");
