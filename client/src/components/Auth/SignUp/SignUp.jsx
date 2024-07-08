@@ -7,7 +7,7 @@ import * as Yup from "yup";
 import Header from "components/main/Header/Header";
 import { useNavigate } from "react-router-dom";
 import { UserToken } from "Context/userToken";
-
+import { addUser } from "Services/UserAuth.js";
 import "./SignUp.css";
 export default function SignUp() {
   let { setIsLogin } = useContext(UserToken);
@@ -23,7 +23,6 @@ export default function SignUp() {
     email: Yup.string()
       .email("Invalid email")
       .required("Input Field is Required")
-      .min(5, "min length is 5")
       .max(255, "max length is 255"),
     password: Yup.string()
       .required("Input Field is Required")
@@ -39,107 +38,35 @@ export default function SignUp() {
     validationSchema,
     onSubmit: submitForm,
   });
+
   async function submitForm(values) {
     setErrorMsg("");
+
+    // e.preventDefault();
+
     try {
       setIsLoading(true);
-
       let data = {
         email: values.email,
         password: values.password,
       };
 
-      let config = {
-        method: "post",
-        url: `${baseUrl}/users/signup`,
-
-        data: data,
-      };
-
-      const response = await axios.request(config);
-      setErrorMsg("");
-      setIsLoading(false);
-
-      if (response?.data?.message === "done") {
-        setIsLogin(response?.data?.token);
-
+      let result = await addUser(data);
+      if (result?.success) {
+        setIsLoading(true);
+        setIsLogin(result?.data?.token);
         navigate(`/userType`);
       } else {
-        setErrorMsg(response?.data?.message);
+        // setIsLoading(false);
+        setErrorMsg(result?.error);
         window.scrollTo({ top: 0 });
       }
-
-      // if (redirectTo === null || redirectTo === undefined) {
-      //   navigate(`/`);
-      // } else {
-      //   navigate(`/${redirectTo}`);
-      // }
-    } catch (error) {
-      if (error.response && error.response.status) {
-        const statusCode = error.response.status;
-        switch (statusCode) {
-          // case 200:
-          //   setErrorMsg("Success (200).");
-          //   break;
-          // case 204:
-          //   setErrorMsg("No Content (204).");
-          //   break;
-          case 400:
-            // setErrorMsg(error?.response?.data?.errorMessage);;
-            setErrorMsg(error?.response?.data?.errorMessage);
-
-            break;
-          case 401:
-            setErrorMsg(error?.response?.data?.message);
-            break;
-          case 403:
-            setErrorMsg(
-              "Forbidden, You do not have permission to access this resource."
-            );
-            break;
-          case 404:
-            setErrorMsg(
-              "Not Found (404). The requested resource was not found."
-            );
-            break;
-
-          case 500:
-            // status 500 // message error // errorMessage =>display the missig inputs
-            // setErrorMsg("Internal Server Error  Please try again later.");
-            setErrorMsg(error?.response?.data?.errorMessage);
-
-            break;
-
-          //  429 Too Many Requests
-          // The user has sent too many requests in a given amount of time ("rate limiting").
-          case 429:
-            setErrorMsg(" Too Many Requests , Please try again later.");
-            break;
-          case 402:
-            // 402
-            setErrorMsg(error?.response?.data?.message);
-            break;
-          default:
-            // case message== error
-            setErrorMsg(error?.response?.data?.errorMessage);
-            break;
-        }
-      } else {
-        setErrorMsg("An unexpected error occurred. Please try again later.");
-      }
-
-      if (error.message === "Network Error") {
-        setErrorMsg("Something Went Wrong Please Try Again");
-      } else if (error.message === "error") {
-        setErrorMsg(error?.response?.data?.errorMessage);
-      }
-      window.scrollTo({ top: 0 });
-    }
+    } catch (error) {}
     setIsLoading(false);
   }
   return (
     <>
-      <Header title="Create Account"  />
+      <Header title="Create Account" />
 
       <section className="login">
         <div className="container d-flex justify-content-center align-content-center">
@@ -150,7 +77,15 @@ export default function SignUp() {
                   <p>Login</p>
                 </div> */}
 
-                <form onSubmit={formValidation.handleSubmit} className="w-100">
+                <form
+                  // onSubmit={formValidation.handleSubmit}
+
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    formValidation.handleSubmit(e);
+                  }}
+                  className="w-100"
+                >
                   <div className="input-content">
                     {errorMsg ? (
                       <div className="alert mt-3 p-2 alert-danger form-control text-dark w-100">
@@ -241,9 +176,9 @@ export default function SignUp() {
                           <button
                             type="submit"
                             className="action-btn btn-1 w-100 submitButton"
-                            disabled={
-                              !(formValidation.isValid && formValidation.dirty)
-                            }
+                            // disabled={
+                            //   !(formValidation.isValid && formValidation.dirty)
+                            // }
                           >
                             Sign Up
                           </button>
