@@ -1,4 +1,4 @@
-import { getRequest } from "./authServices";
+import { getRequest, putRequest } from "./authServices";
 
 // Service for fetching all products of a specific factory
 //------------------------------------- factory products------------------------------------------
@@ -18,4 +18,8 @@ export const fetchFactories = async (size) => {
 
 export const fetchOneFactory = async (id) => {
   return await getRequest(`/factories/${id}`);
+};
+
+export const addFactoryMedia = async (header, data) => {
+  return await putRequest(`/factories/media`, header, data);
 };

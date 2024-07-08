@@ -35,13 +35,13 @@ const handleResponse = (response) => {
 // Handle API errors
 const handleError = (error) => {
   let errorMsg = "";
-  if (error.code === "ECONNABORTED") {
-    errorMsg = "Request timed out";
-  } else if (error.code === "ERR_NETWORK") {
-    errorMsg = "Network Error";
-  } else {
+  // if (error.code === "ECONNABORTED") {
+  //   errorMsg = "Request timed out";
+  // } else if (error.code === "ERR_NETWORK") {
+  //   errorMsg = "Network Error";
+  // } else {
     errorMsg = errorHandler(error);
-  }
+  // }
   return { data: null, loadingStatus: true, error: errorMsg, success: false };
 };
 

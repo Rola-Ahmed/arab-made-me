@@ -2,7 +2,6 @@ import React, { useState, useContext, useRef } from "react";
 import "./TopFactories.css";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { baseUrl_IMG } from "config.js";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -55,10 +54,13 @@ export default function TopFactories(props) {
     // dots: false,
     // fade: true,
     infinite: true,
+    vertical: false,
+    // verticalSwiping: true,
     rows: 1,
-    // slidesToShow: 4,
-    slidesToShow: allFactoriesData?.length > 4 ? 4 : allFactoriesData?.length,
+    slidesToShow: 4,
+    // slidesToShow: allFactoriesData?.length > 4 ? 4 : allFactoriesData?.length,
     slidesToScroll: 4,
+    // slidesToScroll: allFactoriesData?.length > 4 ? 4 : allFactoriesData?.length,
     responsive: [
       {
         breakpoint: 1398,
@@ -361,6 +363,2600 @@ export default function TopFactories(props) {
                 </div>
                 // {/* </div> */}
               ))}
+            
+            
+            
+            
+            
+            
+            
+            
+            {/*  */}
+            {allFactoriesData.map((factoryitem, factoryindex) => (
+                // <div className="col-sm-12 col-xl-4 col-xxl-3  col-lg-4  col-md-6 m-0  px-1">
+                <div className="card " key={factoryitem?.id}>
+                  {factoryitem?.images?.length > 0 ? (
+                    <Link
+                      className="cursor"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <BannerSlider factoryitem={factoryitem} />
+                    </Link>
+                  ) : (
+                    <Link
+                      className="cursor bg-info"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <img
+                        src={`handleImageError`}
+                        className="sliderImg w-100"
+                        alt={`no image available`}
+                        onError={handleImageError}
+                      />
+                    </Link>
+                  )}
+
+                  <div className="card-body cardBody">
+                    <div className="subCard ">
+                      <FactoryCard
+                        factoryitem={factoryitem}
+                        DirectToFactoryPage={DirectToFactoryPage}
+                      />
+
+                      {/*  product slider*/}
+                      <div className="profile-img w-100  ">
+                        {factoryitem?.productLength > 0 && (
+                          <ProductCarousel factoryitem={factoryitem} />
+                        )}
+                      </div>
+
+                      <div
+                        className="subText w-100 "
+                        // onClick={() =>
+                        //   DirectToFactoryPage(
+                        //     factoryitem?.id,
+                        //     factoryitem?.name
+                        //   )
+                        // }
+                      >
+                        <div className="text-truncate">
+                          <p className="text-truncate">
+                            products:
+                            <span>
+                              {factoryitem?.productLength > 0
+                                ? factoryitem?.productData?.map(
+                                    (item) => ` ${item?.name} ,`
+                                  )
+                                : " none"}
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="d-flex justify-content-between align-items-center   w-100">
+                        <div className="call-btns d-flex justify-content-between  align-items-center w-100  pe-2">
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-1  cursor px-5 ">
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                <i className="fas fa-spinner fa-spin text-white"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <button
+                              className="btn-call-1  cursor "
+                              onClick={() => {
+                                handleUserClickValidation1(
+                                  `privatelabel?factoryId=${factoryitem?.id}&factoryName=${factoryitem?.name} `
+                                );
+
+                                // return
+                              }}
+                            >
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                Private Label Request
+                              </div>
+                            </button>
+                          )}
+
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-2  cursor px-5 bg-white ">
+                              <div className="btn-text text-decoration-none cursor ">
+                                <i className="fas fa-spinner fa-spin text-dark"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <div
+                              className=" btn-call-2 padd text-dark text-decoration-none cursor"
+                              onClick={() => {
+                                handleUserClickValidLogin(
+                                  `contactsupplier?userId=${factoryitem?.userId}&factoryName=${factoryitem?.name}`
+                                );
+                              }}
+                            >
+                              <i
+                                class="fa-regular fa-comments fa-2x"
+                                style={{ fontSize: "1.5rem" }}
+                              ></i>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* pop up btn */}
+                        <DropdownActionBtnsFactory
+                          currentUserData={currentUserData}
+                          factoryitem={factoryitem}
+                          BtnDescription={BtnDescription}
+                          handleBtnCheckIfProductExisit={
+                            handleBtnCheckIfProductExisit
+                          }
+                          handleUserClickValidation1={
+                            handleUserClickValidation1
+                          }
+                          handleQuestionMarkClick={handleQuestionMarkClick}
+                          handleUserClickValidLogin={handleUserClickValidLogin}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                // {/* </div> */}
+              ))}
+            
+            {allFactoriesData.map((factoryitem, factoryindex) => (
+                // <div className="col-sm-12 col-xl-4 col-xxl-3  col-lg-4  col-md-6 m-0  px-1">
+                <div className="card " key={factoryitem?.id}>
+                  {factoryitem?.images?.length > 0 ? (
+                    <Link
+                      className="cursor"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <BannerSlider factoryitem={factoryitem} />
+                    </Link>
+                  ) : (
+                    <Link
+                      className="cursor bg-info"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <img
+                        src={`handleImageError`}
+                        className="sliderImg w-100"
+                        alt={`no image available`}
+                        onError={handleImageError}
+                      />
+                    </Link>
+                  )}
+
+                  <div className="card-body cardBody">
+                    <div className="subCard ">
+                      <FactoryCard
+                        factoryitem={factoryitem}
+                        DirectToFactoryPage={DirectToFactoryPage}
+                      />
+
+                      {/*  product slider*/}
+                      <div className="profile-img w-100  ">
+                        {factoryitem?.productLength > 0 && (
+                          <ProductCarousel factoryitem={factoryitem} />
+                        )}
+                      </div>
+
+                      <div
+                        className="subText w-100 "
+                        // onClick={() =>
+                        //   DirectToFactoryPage(
+                        //     factoryitem?.id,
+                        //     factoryitem?.name
+                        //   )
+                        // }
+                      >
+                        <div className="text-truncate">
+                          <p className="text-truncate">
+                            products:
+                            <span>
+                              {factoryitem?.productLength > 0
+                                ? factoryitem?.productData?.map(
+                                    (item) => ` ${item?.name} ,`
+                                  )
+                                : " none"}
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="d-flex justify-content-between align-items-center   w-100">
+                        <div className="call-btns d-flex justify-content-between  align-items-center w-100  pe-2">
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-1  cursor px-5 ">
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                <i className="fas fa-spinner fa-spin text-white"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <button
+                              className="btn-call-1  cursor "
+                              onClick={() => {
+                                handleUserClickValidation1(
+                                  `privatelabel?factoryId=${factoryitem?.id}&factoryName=${factoryitem?.name} `
+                                );
+
+                                // return
+                              }}
+                            >
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                Private Label Request
+                              </div>
+                            </button>
+                          )}
+
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-2  cursor px-5 bg-white ">
+                              <div className="btn-text text-decoration-none cursor ">
+                                <i className="fas fa-spinner fa-spin text-dark"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <div
+                              className=" btn-call-2 padd text-dark text-decoration-none cursor"
+                              onClick={() => {
+                                handleUserClickValidLogin(
+                                  `contactsupplier?userId=${factoryitem?.userId}&factoryName=${factoryitem?.name}`
+                                );
+                              }}
+                            >
+                              <i
+                                class="fa-regular fa-comments fa-2x"
+                                style={{ fontSize: "1.5rem" }}
+                              ></i>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* pop up btn */}
+                        <DropdownActionBtnsFactory
+                          currentUserData={currentUserData}
+                          factoryitem={factoryitem}
+                          BtnDescription={BtnDescription}
+                          handleBtnCheckIfProductExisit={
+                            handleBtnCheckIfProductExisit
+                          }
+                          handleUserClickValidation1={
+                            handleUserClickValidation1
+                          }
+                          handleQuestionMarkClick={handleQuestionMarkClick}
+                          handleUserClickValidLogin={handleUserClickValidLogin}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                // {/* </div> */}
+              ))}
+               {allFactoriesData.map((factoryitem, factoryindex) => (
+                // <div className="col-sm-12 col-xl-4 col-xxl-3  col-lg-4  col-md-6 m-0  px-1">
+                <div className="card " key={factoryitem?.id}>
+                  {factoryitem?.images?.length > 0 ? (
+                    <Link
+                      className="cursor"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <BannerSlider factoryitem={factoryitem} />
+                    </Link>
+                  ) : (
+                    <Link
+                      className="cursor bg-info"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <img
+                        src={`handleImageError`}
+                        className="sliderImg w-100"
+                        alt={`no image available`}
+                        onError={handleImageError}
+                      />
+                    </Link>
+                  )}
+
+                  <div className="card-body cardBody">
+                    <div className="subCard ">
+                      <FactoryCard
+                        factoryitem={factoryitem}
+                        DirectToFactoryPage={DirectToFactoryPage}
+                      />
+
+                      {/*  product slider*/}
+                      <div className="profile-img w-100  ">
+                        {factoryitem?.productLength > 0 && (
+                          <ProductCarousel factoryitem={factoryitem} />
+                        )}
+                      </div>
+
+                      <div
+                        className="subText w-100 "
+                        // onClick={() =>
+                        //   DirectToFactoryPage(
+                        //     factoryitem?.id,
+                        //     factoryitem?.name
+                        //   )
+                        // }
+                      >
+                        <div className="text-truncate">
+                          <p className="text-truncate">
+                            products:
+                            <span>
+                              {factoryitem?.productLength > 0
+                                ? factoryitem?.productData?.map(
+                                    (item) => ` ${item?.name} ,`
+                                  )
+                                : " none"}
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="d-flex justify-content-between align-items-center   w-100">
+                        <div className="call-btns d-flex justify-content-between  align-items-center w-100  pe-2">
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-1  cursor px-5 ">
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                <i className="fas fa-spinner fa-spin text-white"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <button
+                              className="btn-call-1  cursor "
+                              onClick={() => {
+                                handleUserClickValidation1(
+                                  `privatelabel?factoryId=${factoryitem?.id}&factoryName=${factoryitem?.name} `
+                                );
+
+                                // return
+                              }}
+                            >
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                Private Label Request
+                              </div>
+                            </button>
+                          )}
+
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-2  cursor px-5 bg-white ">
+                              <div className="btn-text text-decoration-none cursor ">
+                                <i className="fas fa-spinner fa-spin text-dark"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <div
+                              className=" btn-call-2 padd text-dark text-decoration-none cursor"
+                              onClick={() => {
+                                handleUserClickValidLogin(
+                                  `contactsupplier?userId=${factoryitem?.userId}&factoryName=${factoryitem?.name}`
+                                );
+                              }}
+                            >
+                              <i
+                                class="fa-regular fa-comments fa-2x"
+                                style={{ fontSize: "1.5rem" }}
+                              ></i>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* pop up btn */}
+                        <DropdownActionBtnsFactory
+                          currentUserData={currentUserData}
+                          factoryitem={factoryitem}
+                          BtnDescription={BtnDescription}
+                          handleBtnCheckIfProductExisit={
+                            handleBtnCheckIfProductExisit
+                          }
+                          handleUserClickValidation1={
+                            handleUserClickValidation1
+                          }
+                          handleQuestionMarkClick={handleQuestionMarkClick}
+                          handleUserClickValidLogin={handleUserClickValidLogin}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                // {/* </div> */}
+              ))}
+               {allFactoriesData.map((factoryitem, factoryindex) => (
+                // <div className="col-sm-12 col-xl-4 col-xxl-3  col-lg-4  col-md-6 m-0  px-1">
+                <div className="card " key={factoryitem?.id}>
+                  {factoryitem?.images?.length > 0 ? (
+                    <Link
+                      className="cursor"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <BannerSlider factoryitem={factoryitem} />
+                    </Link>
+                  ) : (
+                    <Link
+                      className="cursor bg-info"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <img
+                        src={`handleImageError`}
+                        className="sliderImg w-100"
+                        alt={`no image available`}
+                        onError={handleImageError}
+                      />
+                    </Link>
+                  )}
+
+                  <div className="card-body cardBody">
+                    <div className="subCard ">
+                      <FactoryCard
+                        factoryitem={factoryitem}
+                        DirectToFactoryPage={DirectToFactoryPage}
+                      />
+
+                      {/*  product slider*/}
+                      <div className="profile-img w-100  ">
+                        {factoryitem?.productLength > 0 && (
+                          <ProductCarousel factoryitem={factoryitem} />
+                        )}
+                      </div>
+
+                      <div
+                        className="subText w-100 "
+                        // onClick={() =>
+                        //   DirectToFactoryPage(
+                        //     factoryitem?.id,
+                        //     factoryitem?.name
+                        //   )
+                        // }
+                      >
+                        <div className="text-truncate">
+                          <p className="text-truncate">
+                            products:
+                            <span>
+                              {factoryitem?.productLength > 0
+                                ? factoryitem?.productData?.map(
+                                    (item) => ` ${item?.name} ,`
+                                  )
+                                : " none"}
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="d-flex justify-content-between align-items-center   w-100">
+                        <div className="call-btns d-flex justify-content-between  align-items-center w-100  pe-2">
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-1  cursor px-5 ">
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                <i className="fas fa-spinner fa-spin text-white"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <button
+                              className="btn-call-1  cursor "
+                              onClick={() => {
+                                handleUserClickValidation1(
+                                  `privatelabel?factoryId=${factoryitem?.id}&factoryName=${factoryitem?.name} `
+                                );
+
+                                // return
+                              }}
+                            >
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                Private Label Request
+                              </div>
+                            </button>
+                          )}
+
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-2  cursor px-5 bg-white ">
+                              <div className="btn-text text-decoration-none cursor ">
+                                <i className="fas fa-spinner fa-spin text-dark"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <div
+                              className=" btn-call-2 padd text-dark text-decoration-none cursor"
+                              onClick={() => {
+                                handleUserClickValidLogin(
+                                  `contactsupplier?userId=${factoryitem?.userId}&factoryName=${factoryitem?.name}`
+                                );
+                              }}
+                            >
+                              <i
+                                class="fa-regular fa-comments fa-2x"
+                                style={{ fontSize: "1.5rem" }}
+                              ></i>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* pop up btn */}
+                        <DropdownActionBtnsFactory
+                          currentUserData={currentUserData}
+                          factoryitem={factoryitem}
+                          BtnDescription={BtnDescription}
+                          handleBtnCheckIfProductExisit={
+                            handleBtnCheckIfProductExisit
+                          }
+                          handleUserClickValidation1={
+                            handleUserClickValidation1
+                          }
+                          handleQuestionMarkClick={handleQuestionMarkClick}
+                          handleUserClickValidLogin={handleUserClickValidLogin}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                // {/* </div> */}
+              ))}
+               {allFactoriesData.map((factoryitem, factoryindex) => (
+                // <div className="col-sm-12 col-xl-4 col-xxl-3  col-lg-4  col-md-6 m-0  px-1">
+                <div className="card " key={factoryitem?.id}>
+                  {factoryitem?.images?.length > 0 ? (
+                    <Link
+                      className="cursor"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <BannerSlider factoryitem={factoryitem} />
+                    </Link>
+                  ) : (
+                    <Link
+                      className="cursor bg-info"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <img
+                        src={`handleImageError`}
+                        className="sliderImg w-100"
+                        alt={`no image available`}
+                        onError={handleImageError}
+                      />
+                    </Link>
+                  )}
+
+                  <div className="card-body cardBody">
+                    <div className="subCard ">
+                      <FactoryCard
+                        factoryitem={factoryitem}
+                        DirectToFactoryPage={DirectToFactoryPage}
+                      />
+
+                      {/*  product slider*/}
+                      <div className="profile-img w-100  ">
+                        {factoryitem?.productLength > 0 && (
+                          <ProductCarousel factoryitem={factoryitem} />
+                        )}
+                      </div>
+
+                      <div
+                        className="subText w-100 "
+                        // onClick={() =>
+                        //   DirectToFactoryPage(
+                        //     factoryitem?.id,
+                        //     factoryitem?.name
+                        //   )
+                        // }
+                      >
+                        <div className="text-truncate">
+                          <p className="text-truncate">
+                            products:
+                            <span>
+                              {factoryitem?.productLength > 0
+                                ? factoryitem?.productData?.map(
+                                    (item) => ` ${item?.name} ,`
+                                  )
+                                : " none"}
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="d-flex justify-content-between align-items-center   w-100">
+                        <div className="call-btns d-flex justify-content-between  align-items-center w-100  pe-2">
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-1  cursor px-5 ">
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                <i className="fas fa-spinner fa-spin text-white"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <button
+                              className="btn-call-1  cursor "
+                              onClick={() => {
+                                handleUserClickValidation1(
+                                  `privatelabel?factoryId=${factoryitem?.id}&factoryName=${factoryitem?.name} `
+                                );
+
+                                // return
+                              }}
+                            >
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                Private Label Request
+                              </div>
+                            </button>
+                          )}
+
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-2  cursor px-5 bg-white ">
+                              <div className="btn-text text-decoration-none cursor ">
+                                <i className="fas fa-spinner fa-spin text-dark"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <div
+                              className=" btn-call-2 padd text-dark text-decoration-none cursor"
+                              onClick={() => {
+                                handleUserClickValidLogin(
+                                  `contactsupplier?userId=${factoryitem?.userId}&factoryName=${factoryitem?.name}`
+                                );
+                              }}
+                            >
+                              <i
+                                class="fa-regular fa-comments fa-2x"
+                                style={{ fontSize: "1.5rem" }}
+                              ></i>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* pop up btn */}
+                        <DropdownActionBtnsFactory
+                          currentUserData={currentUserData}
+                          factoryitem={factoryitem}
+                          BtnDescription={BtnDescription}
+                          handleBtnCheckIfProductExisit={
+                            handleBtnCheckIfProductExisit
+                          }
+                          handleUserClickValidation1={
+                            handleUserClickValidation1
+                          }
+                          handleQuestionMarkClick={handleQuestionMarkClick}
+                          handleUserClickValidLogin={handleUserClickValidLogin}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                // {/* </div> */}
+              ))}
+               {allFactoriesData.map((factoryitem, factoryindex) => (
+                // <div className="col-sm-12 col-xl-4 col-xxl-3  col-lg-4  col-md-6 m-0  px-1">
+                <div className="card " key={factoryitem?.id}>
+                  {factoryitem?.images?.length > 0 ? (
+                    <Link
+                      className="cursor"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <BannerSlider factoryitem={factoryitem} />
+                    </Link>
+                  ) : (
+                    <Link
+                      className="cursor bg-info"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <img
+                        src={`handleImageError`}
+                        className="sliderImg w-100"
+                        alt={`no image available`}
+                        onError={handleImageError}
+                      />
+                    </Link>
+                  )}
+
+                  <div className="card-body cardBody">
+                    <div className="subCard ">
+                      <FactoryCard
+                        factoryitem={factoryitem}
+                        DirectToFactoryPage={DirectToFactoryPage}
+                      />
+
+                      {/*  product slider*/}
+                      <div className="profile-img w-100  ">
+                        {factoryitem?.productLength > 0 && (
+                          <ProductCarousel factoryitem={factoryitem} />
+                        )}
+                      </div>
+
+                      <div
+                        className="subText w-100 "
+                        // onClick={() =>
+                        //   DirectToFactoryPage(
+                        //     factoryitem?.id,
+                        //     factoryitem?.name
+                        //   )
+                        // }
+                      >
+                        <div className="text-truncate">
+                          <p className="text-truncate">
+                            products:
+                            <span>
+                              {factoryitem?.productLength > 0
+                                ? factoryitem?.productData?.map(
+                                    (item) => ` ${item?.name} ,`
+                                  )
+                                : " none"}
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="d-flex justify-content-between align-items-center   w-100">
+                        <div className="call-btns d-flex justify-content-between  align-items-center w-100  pe-2">
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-1  cursor px-5 ">
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                <i className="fas fa-spinner fa-spin text-white"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <button
+                              className="btn-call-1  cursor "
+                              onClick={() => {
+                                handleUserClickValidation1(
+                                  `privatelabel?factoryId=${factoryitem?.id}&factoryName=${factoryitem?.name} `
+                                );
+
+                                // return
+                              }}
+                            >
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                Private Label Request
+                              </div>
+                            </button>
+                          )}
+
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-2  cursor px-5 bg-white ">
+                              <div className="btn-text text-decoration-none cursor ">
+                                <i className="fas fa-spinner fa-spin text-dark"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <div
+                              className=" btn-call-2 padd text-dark text-decoration-none cursor"
+                              onClick={() => {
+                                handleUserClickValidLogin(
+                                  `contactsupplier?userId=${factoryitem?.userId}&factoryName=${factoryitem?.name}`
+                                );
+                              }}
+                            >
+                              <i
+                                class="fa-regular fa-comments fa-2x"
+                                style={{ fontSize: "1.5rem" }}
+                              ></i>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* pop up btn */}
+                        <DropdownActionBtnsFactory
+                          currentUserData={currentUserData}
+                          factoryitem={factoryitem}
+                          BtnDescription={BtnDescription}
+                          handleBtnCheckIfProductExisit={
+                            handleBtnCheckIfProductExisit
+                          }
+                          handleUserClickValidation1={
+                            handleUserClickValidation1
+                          }
+                          handleQuestionMarkClick={handleQuestionMarkClick}
+                          handleUserClickValidLogin={handleUserClickValidLogin}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                // {/* </div> */}
+              ))}
+               {allFactoriesData.map((factoryitem, factoryindex) => (
+                // <div className="col-sm-12 col-xl-4 col-xxl-3  col-lg-4  col-md-6 m-0  px-1">
+                <div className="card " key={factoryitem?.id}>
+                  {factoryitem?.images?.length > 0 ? (
+                    <Link
+                      className="cursor"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <BannerSlider factoryitem={factoryitem} />
+                    </Link>
+                  ) : (
+                    <Link
+                      className="cursor bg-info"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <img
+                        src={`handleImageError`}
+                        className="sliderImg w-100"
+                        alt={`no image available`}
+                        onError={handleImageError}
+                      />
+                    </Link>
+                  )}
+
+                  <div className="card-body cardBody">
+                    <div className="subCard ">
+                      <FactoryCard
+                        factoryitem={factoryitem}
+                        DirectToFactoryPage={DirectToFactoryPage}
+                      />
+
+                      {/*  product slider*/}
+                      <div className="profile-img w-100  ">
+                        {factoryitem?.productLength > 0 && (
+                          <ProductCarousel factoryitem={factoryitem} />
+                        )}
+                      </div>
+
+                      <div
+                        className="subText w-100 "
+                        // onClick={() =>
+                        //   DirectToFactoryPage(
+                        //     factoryitem?.id,
+                        //     factoryitem?.name
+                        //   )
+                        // }
+                      >
+                        <div className="text-truncate">
+                          <p className="text-truncate">
+                            products:
+                            <span>
+                              {factoryitem?.productLength > 0
+                                ? factoryitem?.productData?.map(
+                                    (item) => ` ${item?.name} ,`
+                                  )
+                                : " none"}
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="d-flex justify-content-between align-items-center   w-100">
+                        <div className="call-btns d-flex justify-content-between  align-items-center w-100  pe-2">
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-1  cursor px-5 ">
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                <i className="fas fa-spinner fa-spin text-white"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <button
+                              className="btn-call-1  cursor "
+                              onClick={() => {
+                                handleUserClickValidation1(
+                                  `privatelabel?factoryId=${factoryitem?.id}&factoryName=${factoryitem?.name} `
+                                );
+
+                                // return
+                              }}
+                            >
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                Private Label Request
+                              </div>
+                            </button>
+                          )}
+
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-2  cursor px-5 bg-white ">
+                              <div className="btn-text text-decoration-none cursor ">
+                                <i className="fas fa-spinner fa-spin text-dark"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <div
+                              className=" btn-call-2 padd text-dark text-decoration-none cursor"
+                              onClick={() => {
+                                handleUserClickValidLogin(
+                                  `contactsupplier?userId=${factoryitem?.userId}&factoryName=${factoryitem?.name}`
+                                );
+                              }}
+                            >
+                              <i
+                                class="fa-regular fa-comments fa-2x"
+                                style={{ fontSize: "1.5rem" }}
+                              ></i>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* pop up btn */}
+                        <DropdownActionBtnsFactory
+                          currentUserData={currentUserData}
+                          factoryitem={factoryitem}
+                          BtnDescription={BtnDescription}
+                          handleBtnCheckIfProductExisit={
+                            handleBtnCheckIfProductExisit
+                          }
+                          handleUserClickValidation1={
+                            handleUserClickValidation1
+                          }
+                          handleQuestionMarkClick={handleQuestionMarkClick}
+                          handleUserClickValidLogin={handleUserClickValidLogin}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                // {/* </div> */}
+              ))}
+               {allFactoriesData.map((factoryitem, factoryindex) => (
+                // <div className="col-sm-12 col-xl-4 col-xxl-3  col-lg-4  col-md-6 m-0  px-1">
+                <div className="card " key={factoryitem?.id}>
+                  {factoryitem?.images?.length > 0 ? (
+                    <Link
+                      className="cursor"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <BannerSlider factoryitem={factoryitem} />
+                    </Link>
+                  ) : (
+                    <Link
+                      className="cursor bg-info"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <img
+                        src={`handleImageError`}
+                        className="sliderImg w-100"
+                        alt={`no image available`}
+                        onError={handleImageError}
+                      />
+                    </Link>
+                  )}
+
+                  <div className="card-body cardBody">
+                    <div className="subCard ">
+                      <FactoryCard
+                        factoryitem={factoryitem}
+                        DirectToFactoryPage={DirectToFactoryPage}
+                      />
+
+                      {/*  product slider*/}
+                      <div className="profile-img w-100  ">
+                        {factoryitem?.productLength > 0 && (
+                          <ProductCarousel factoryitem={factoryitem} />
+                        )}
+                      </div>
+
+                      <div
+                        className="subText w-100 "
+                        // onClick={() =>
+                        //   DirectToFactoryPage(
+                        //     factoryitem?.id,
+                        //     factoryitem?.name
+                        //   )
+                        // }
+                      >
+                        <div className="text-truncate">
+                          <p className="text-truncate">
+                            products:
+                            <span>
+                              {factoryitem?.productLength > 0
+                                ? factoryitem?.productData?.map(
+                                    (item) => ` ${item?.name} ,`
+                                  )
+                                : " none"}
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="d-flex justify-content-between align-items-center   w-100">
+                        <div className="call-btns d-flex justify-content-between  align-items-center w-100  pe-2">
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-1  cursor px-5 ">
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                <i className="fas fa-spinner fa-spin text-white"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <button
+                              className="btn-call-1  cursor "
+                              onClick={() => {
+                                handleUserClickValidation1(
+                                  `privatelabel?factoryId=${factoryitem?.id}&factoryName=${factoryitem?.name} `
+                                );
+
+                                // return
+                              }}
+                            >
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                Private Label Request
+                              </div>
+                            </button>
+                          )}
+
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-2  cursor px-5 bg-white ">
+                              <div className="btn-text text-decoration-none cursor ">
+                                <i className="fas fa-spinner fa-spin text-dark"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <div
+                              className=" btn-call-2 padd text-dark text-decoration-none cursor"
+                              onClick={() => {
+                                handleUserClickValidLogin(
+                                  `contactsupplier?userId=${factoryitem?.userId}&factoryName=${factoryitem?.name}`
+                                );
+                              }}
+                            >
+                              <i
+                                class="fa-regular fa-comments fa-2x"
+                                style={{ fontSize: "1.5rem" }}
+                              ></i>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* pop up btn */}
+                        <DropdownActionBtnsFactory
+                          currentUserData={currentUserData}
+                          factoryitem={factoryitem}
+                          BtnDescription={BtnDescription}
+                          handleBtnCheckIfProductExisit={
+                            handleBtnCheckIfProductExisit
+                          }
+                          handleUserClickValidation1={
+                            handleUserClickValidation1
+                          }
+                          handleQuestionMarkClick={handleQuestionMarkClick}
+                          handleUserClickValidLogin={handleUserClickValidLogin}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                // {/* </div> */}
+              ))}
+               {allFactoriesData.map((factoryitem, factoryindex) => (
+                // <div className="col-sm-12 col-xl-4 col-xxl-3  col-lg-4  col-md-6 m-0  px-1">
+                <div className="card " key={factoryitem?.id}>
+                  {factoryitem?.images?.length > 0 ? (
+                    <Link
+                      className="cursor"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <BannerSlider factoryitem={factoryitem} />
+                    </Link>
+                  ) : (
+                    <Link
+                      className="cursor bg-info"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <img
+                        src={`handleImageError`}
+                        className="sliderImg w-100"
+                        alt={`no image available`}
+                        onError={handleImageError}
+                      />
+                    </Link>
+                  )}
+
+                  <div className="card-body cardBody">
+                    <div className="subCard ">
+                      <FactoryCard
+                        factoryitem={factoryitem}
+                        DirectToFactoryPage={DirectToFactoryPage}
+                      />
+
+                      {/*  product slider*/}
+                      <div className="profile-img w-100  ">
+                        {factoryitem?.productLength > 0 && (
+                          <ProductCarousel factoryitem={factoryitem} />
+                        )}
+                      </div>
+
+                      <div
+                        className="subText w-100 "
+                        // onClick={() =>
+                        //   DirectToFactoryPage(
+                        //     factoryitem?.id,
+                        //     factoryitem?.name
+                        //   )
+                        // }
+                      >
+                        <div className="text-truncate">
+                          <p className="text-truncate">
+                            products:
+                            <span>
+                              {factoryitem?.productLength > 0
+                                ? factoryitem?.productData?.map(
+                                    (item) => ` ${item?.name} ,`
+                                  )
+                                : " none"}
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="d-flex justify-content-between align-items-center   w-100">
+                        <div className="call-btns d-flex justify-content-between  align-items-center w-100  pe-2">
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-1  cursor px-5 ">
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                <i className="fas fa-spinner fa-spin text-white"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <button
+                              className="btn-call-1  cursor "
+                              onClick={() => {
+                                handleUserClickValidation1(
+                                  `privatelabel?factoryId=${factoryitem?.id}&factoryName=${factoryitem?.name} `
+                                );
+
+                                // return
+                              }}
+                            >
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                Private Label Request
+                              </div>
+                            </button>
+                          )}
+
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-2  cursor px-5 bg-white ">
+                              <div className="btn-text text-decoration-none cursor ">
+                                <i className="fas fa-spinner fa-spin text-dark"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <div
+                              className=" btn-call-2 padd text-dark text-decoration-none cursor"
+                              onClick={() => {
+                                handleUserClickValidLogin(
+                                  `contactsupplier?userId=${factoryitem?.userId}&factoryName=${factoryitem?.name}`
+                                );
+                              }}
+                            >
+                              <i
+                                class="fa-regular fa-comments fa-2x"
+                                style={{ fontSize: "1.5rem" }}
+                              ></i>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* pop up btn */}
+                        <DropdownActionBtnsFactory
+                          currentUserData={currentUserData}
+                          factoryitem={factoryitem}
+                          BtnDescription={BtnDescription}
+                          handleBtnCheckIfProductExisit={
+                            handleBtnCheckIfProductExisit
+                          }
+                          handleUserClickValidation1={
+                            handleUserClickValidation1
+                          }
+                          handleQuestionMarkClick={handleQuestionMarkClick}
+                          handleUserClickValidLogin={handleUserClickValidLogin}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                // {/* </div> */}
+              ))}
+               {allFactoriesData.map((factoryitem, factoryindex) => (
+                // <div className="col-sm-12 col-xl-4 col-xxl-3  col-lg-4  col-md-6 m-0  px-1">
+                <div className="card " key={factoryitem?.id}>
+                  {factoryitem?.images?.length > 0 ? (
+                    <Link
+                      className="cursor"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <BannerSlider factoryitem={factoryitem} />
+                    </Link>
+                  ) : (
+                    <Link
+                      className="cursor bg-info"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <img
+                        src={`handleImageError`}
+                        className="sliderImg w-100"
+                        alt={`no image available`}
+                        onError={handleImageError}
+                      />
+                    </Link>
+                  )}
+
+                  <div className="card-body cardBody">
+                    <div className="subCard ">
+                      <FactoryCard
+                        factoryitem={factoryitem}
+                        DirectToFactoryPage={DirectToFactoryPage}
+                      />
+
+                      {/*  product slider*/}
+                      <div className="profile-img w-100  ">
+                        {factoryitem?.productLength > 0 && (
+                          <ProductCarousel factoryitem={factoryitem} />
+                        )}
+                      </div>
+
+                      <div
+                        className="subText w-100 "
+                        // onClick={() =>
+                        //   DirectToFactoryPage(
+                        //     factoryitem?.id,
+                        //     factoryitem?.name
+                        //   )
+                        // }
+                      >
+                        <div className="text-truncate">
+                          <p className="text-truncate">
+                            products:
+                            <span>
+                              {factoryitem?.productLength > 0
+                                ? factoryitem?.productData?.map(
+                                    (item) => ` ${item?.name} ,`
+                                  )
+                                : " none"}
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="d-flex justify-content-between align-items-center   w-100">
+                        <div className="call-btns d-flex justify-content-between  align-items-center w-100  pe-2">
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-1  cursor px-5 ">
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                <i className="fas fa-spinner fa-spin text-white"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <button
+                              className="btn-call-1  cursor "
+                              onClick={() => {
+                                handleUserClickValidation1(
+                                  `privatelabel?factoryId=${factoryitem?.id}&factoryName=${factoryitem?.name} `
+                                );
+
+                                // return
+                              }}
+                            >
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                Private Label Request
+                              </div>
+                            </button>
+                          )}
+
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-2  cursor px-5 bg-white ">
+                              <div className="btn-text text-decoration-none cursor ">
+                                <i className="fas fa-spinner fa-spin text-dark"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <div
+                              className=" btn-call-2 padd text-dark text-decoration-none cursor"
+                              onClick={() => {
+                                handleUserClickValidLogin(
+                                  `contactsupplier?userId=${factoryitem?.userId}&factoryName=${factoryitem?.name}`
+                                );
+                              }}
+                            >
+                              <i
+                                class="fa-regular fa-comments fa-2x"
+                                style={{ fontSize: "1.5rem" }}
+                              ></i>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* pop up btn */}
+                        <DropdownActionBtnsFactory
+                          currentUserData={currentUserData}
+                          factoryitem={factoryitem}
+                          BtnDescription={BtnDescription}
+                          handleBtnCheckIfProductExisit={
+                            handleBtnCheckIfProductExisit
+                          }
+                          handleUserClickValidation1={
+                            handleUserClickValidation1
+                          }
+                          handleQuestionMarkClick={handleQuestionMarkClick}
+                          handleUserClickValidLogin={handleUserClickValidLogin}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                // {/* </div> */}
+              ))}
+               {allFactoriesData.map((factoryitem, factoryindex) => (
+                // <div className="col-sm-12 col-xl-4 col-xxl-3  col-lg-4  col-md-6 m-0  px-1">
+                <div className="card " key={factoryitem?.id}>
+                  {factoryitem?.images?.length > 0 ? (
+                    <Link
+                      className="cursor"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <BannerSlider factoryitem={factoryitem} />
+                    </Link>
+                  ) : (
+                    <Link
+                      className="cursor bg-info"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <img
+                        src={`handleImageError`}
+                        className="sliderImg w-100"
+                        alt={`no image available`}
+                        onError={handleImageError}
+                      />
+                    </Link>
+                  )}
+
+                  <div className="card-body cardBody">
+                    <div className="subCard ">
+                      <FactoryCard
+                        factoryitem={factoryitem}
+                        DirectToFactoryPage={DirectToFactoryPage}
+                      />
+
+                      {/*  product slider*/}
+                      <div className="profile-img w-100  ">
+                        {factoryitem?.productLength > 0 && (
+                          <ProductCarousel factoryitem={factoryitem} />
+                        )}
+                      </div>
+
+                      <div
+                        className="subText w-100 "
+                        // onClick={() =>
+                        //   DirectToFactoryPage(
+                        //     factoryitem?.id,
+                        //     factoryitem?.name
+                        //   )
+                        // }
+                      >
+                        <div className="text-truncate">
+                          <p className="text-truncate">
+                            products:
+                            <span>
+                              {factoryitem?.productLength > 0
+                                ? factoryitem?.productData?.map(
+                                    (item) => ` ${item?.name} ,`
+                                  )
+                                : " none"}
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="d-flex justify-content-between align-items-center   w-100">
+                        <div className="call-btns d-flex justify-content-between  align-items-center w-100  pe-2">
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-1  cursor px-5 ">
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                <i className="fas fa-spinner fa-spin text-white"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <button
+                              className="btn-call-1  cursor "
+                              onClick={() => {
+                                handleUserClickValidation1(
+                                  `privatelabel?factoryId=${factoryitem?.id}&factoryName=${factoryitem?.name} `
+                                );
+
+                                // return
+                              }}
+                            >
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                Private Label Request
+                              </div>
+                            </button>
+                          )}
+
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-2  cursor px-5 bg-white ">
+                              <div className="btn-text text-decoration-none cursor ">
+                                <i className="fas fa-spinner fa-spin text-dark"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <div
+                              className=" btn-call-2 padd text-dark text-decoration-none cursor"
+                              onClick={() => {
+                                handleUserClickValidLogin(
+                                  `contactsupplier?userId=${factoryitem?.userId}&factoryName=${factoryitem?.name}`
+                                );
+                              }}
+                            >
+                              <i
+                                class="fa-regular fa-comments fa-2x"
+                                style={{ fontSize: "1.5rem" }}
+                              ></i>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* pop up btn */}
+                        <DropdownActionBtnsFactory
+                          currentUserData={currentUserData}
+                          factoryitem={factoryitem}
+                          BtnDescription={BtnDescription}
+                          handleBtnCheckIfProductExisit={
+                            handleBtnCheckIfProductExisit
+                          }
+                          handleUserClickValidation1={
+                            handleUserClickValidation1
+                          }
+                          handleQuestionMarkClick={handleQuestionMarkClick}
+                          handleUserClickValidLogin={handleUserClickValidLogin}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                // {/* </div> */}
+              ))}
+               {allFactoriesData.map((factoryitem, factoryindex) => (
+                // <div className="col-sm-12 col-xl-4 col-xxl-3  col-lg-4  col-md-6 m-0  px-1">
+                <div className="card " key={factoryitem?.id}>
+                  {factoryitem?.images?.length > 0 ? (
+                    <Link
+                      className="cursor"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <BannerSlider factoryitem={factoryitem} />
+                    </Link>
+                  ) : (
+                    <Link
+                      className="cursor bg-info"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <img
+                        src={`handleImageError`}
+                        className="sliderImg w-100"
+                        alt={`no image available`}
+                        onError={handleImageError}
+                      />
+                    </Link>
+                  )}
+
+                  <div className="card-body cardBody">
+                    <div className="subCard ">
+                      <FactoryCard
+                        factoryitem={factoryitem}
+                        DirectToFactoryPage={DirectToFactoryPage}
+                      />
+
+                      {/*  product slider*/}
+                      <div className="profile-img w-100  ">
+                        {factoryitem?.productLength > 0 && (
+                          <ProductCarousel factoryitem={factoryitem} />
+                        )}
+                      </div>
+
+                      <div
+                        className="subText w-100 "
+                        // onClick={() =>
+                        //   DirectToFactoryPage(
+                        //     factoryitem?.id,
+                        //     factoryitem?.name
+                        //   )
+                        // }
+                      >
+                        <div className="text-truncate">
+                          <p className="text-truncate">
+                            products:
+                            <span>
+                              {factoryitem?.productLength > 0
+                                ? factoryitem?.productData?.map(
+                                    (item) => ` ${item?.name} ,`
+                                  )
+                                : " none"}
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="d-flex justify-content-between align-items-center   w-100">
+                        <div className="call-btns d-flex justify-content-between  align-items-center w-100  pe-2">
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-1  cursor px-5 ">
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                <i className="fas fa-spinner fa-spin text-white"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <button
+                              className="btn-call-1  cursor "
+                              onClick={() => {
+                                handleUserClickValidation1(
+                                  `privatelabel?factoryId=${factoryitem?.id}&factoryName=${factoryitem?.name} `
+                                );
+
+                                // return
+                              }}
+                            >
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                Private Label Request
+                              </div>
+                            </button>
+                          )}
+
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-2  cursor px-5 bg-white ">
+                              <div className="btn-text text-decoration-none cursor ">
+                                <i className="fas fa-spinner fa-spin text-dark"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <div
+                              className=" btn-call-2 padd text-dark text-decoration-none cursor"
+                              onClick={() => {
+                                handleUserClickValidLogin(
+                                  `contactsupplier?userId=${factoryitem?.userId}&factoryName=${factoryitem?.name}`
+                                );
+                              }}
+                            >
+                              <i
+                                class="fa-regular fa-comments fa-2x"
+                                style={{ fontSize: "1.5rem" }}
+                              ></i>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* pop up btn */}
+                        <DropdownActionBtnsFactory
+                          currentUserData={currentUserData}
+                          factoryitem={factoryitem}
+                          BtnDescription={BtnDescription}
+                          handleBtnCheckIfProductExisit={
+                            handleBtnCheckIfProductExisit
+                          }
+                          handleUserClickValidation1={
+                            handleUserClickValidation1
+                          }
+                          handleQuestionMarkClick={handleQuestionMarkClick}
+                          handleUserClickValidLogin={handleUserClickValidLogin}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                // {/* </div> */}
+              ))}
+               {allFactoriesData.map((factoryitem, factoryindex) => (
+                // <div className="col-sm-12 col-xl-4 col-xxl-3  col-lg-4  col-md-6 m-0  px-1">
+                <div className="card " key={factoryitem?.id}>
+                  {factoryitem?.images?.length > 0 ? (
+                    <Link
+                      className="cursor"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <BannerSlider factoryitem={factoryitem} />
+                    </Link>
+                  ) : (
+                    <Link
+                      className="cursor bg-info"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <img
+                        src={`handleImageError`}
+                        className="sliderImg w-100"
+                        alt={`no image available`}
+                        onError={handleImageError}
+                      />
+                    </Link>
+                  )}
+
+                  <div className="card-body cardBody">
+                    <div className="subCard ">
+                      <FactoryCard
+                        factoryitem={factoryitem}
+                        DirectToFactoryPage={DirectToFactoryPage}
+                      />
+
+                      {/*  product slider*/}
+                      <div className="profile-img w-100  ">
+                        {factoryitem?.productLength > 0 && (
+                          <ProductCarousel factoryitem={factoryitem} />
+                        )}
+                      </div>
+
+                      <div
+                        className="subText w-100 "
+                        // onClick={() =>
+                        //   DirectToFactoryPage(
+                        //     factoryitem?.id,
+                        //     factoryitem?.name
+                        //   )
+                        // }
+                      >
+                        <div className="text-truncate">
+                          <p className="text-truncate">
+                            products:
+                            <span>
+                              {factoryitem?.productLength > 0
+                                ? factoryitem?.productData?.map(
+                                    (item) => ` ${item?.name} ,`
+                                  )
+                                : " none"}
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="d-flex justify-content-between align-items-center   w-100">
+                        <div className="call-btns d-flex justify-content-between  align-items-center w-100  pe-2">
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-1  cursor px-5 ">
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                <i className="fas fa-spinner fa-spin text-white"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <button
+                              className="btn-call-1  cursor "
+                              onClick={() => {
+                                handleUserClickValidation1(
+                                  `privatelabel?factoryId=${factoryitem?.id}&factoryName=${factoryitem?.name} `
+                                );
+
+                                // return
+                              }}
+                            >
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                Private Label Request
+                              </div>
+                            </button>
+                          )}
+
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-2  cursor px-5 bg-white ">
+                              <div className="btn-text text-decoration-none cursor ">
+                                <i className="fas fa-spinner fa-spin text-dark"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <div
+                              className=" btn-call-2 padd text-dark text-decoration-none cursor"
+                              onClick={() => {
+                                handleUserClickValidLogin(
+                                  `contactsupplier?userId=${factoryitem?.userId}&factoryName=${factoryitem?.name}`
+                                );
+                              }}
+                            >
+                              <i
+                                class="fa-regular fa-comments fa-2x"
+                                style={{ fontSize: "1.5rem" }}
+                              ></i>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* pop up btn */}
+                        <DropdownActionBtnsFactory
+                          currentUserData={currentUserData}
+                          factoryitem={factoryitem}
+                          BtnDescription={BtnDescription}
+                          handleBtnCheckIfProductExisit={
+                            handleBtnCheckIfProductExisit
+                          }
+                          handleUserClickValidation1={
+                            handleUserClickValidation1
+                          }
+                          handleQuestionMarkClick={handleQuestionMarkClick}
+                          handleUserClickValidLogin={handleUserClickValidLogin}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                // {/* </div> */}
+              ))}
+               {allFactoriesData.map((factoryitem, factoryindex) => (
+                // <div className="col-sm-12 col-xl-4 col-xxl-3  col-lg-4  col-md-6 m-0  px-1">
+                <div className="card " key={factoryitem?.id}>
+                  {factoryitem?.images?.length > 0 ? (
+                    <Link
+                      className="cursor"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <BannerSlider factoryitem={factoryitem} />
+                    </Link>
+                  ) : (
+                    <Link
+                      className="cursor bg-info"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <img
+                        src={`handleImageError`}
+                        className="sliderImg w-100"
+                        alt={`no image available`}
+                        onError={handleImageError}
+                      />
+                    </Link>
+                  )}
+
+                  <div className="card-body cardBody">
+                    <div className="subCard ">
+                      <FactoryCard
+                        factoryitem={factoryitem}
+                        DirectToFactoryPage={DirectToFactoryPage}
+                      />
+
+                      {/*  product slider*/}
+                      <div className="profile-img w-100  ">
+                        {factoryitem?.productLength > 0 && (
+                          <ProductCarousel factoryitem={factoryitem} />
+                        )}
+                      </div>
+
+                      <div
+                        className="subText w-100 "
+                        // onClick={() =>
+                        //   DirectToFactoryPage(
+                        //     factoryitem?.id,
+                        //     factoryitem?.name
+                        //   )
+                        // }
+                      >
+                        <div className="text-truncate">
+                          <p className="text-truncate">
+                            products:
+                            <span>
+                              {factoryitem?.productLength > 0
+                                ? factoryitem?.productData?.map(
+                                    (item) => ` ${item?.name} ,`
+                                  )
+                                : " none"}
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="d-flex justify-content-between align-items-center   w-100">
+                        <div className="call-btns d-flex justify-content-between  align-items-center w-100  pe-2">
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-1  cursor px-5 ">
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                <i className="fas fa-spinner fa-spin text-white"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <button
+                              className="btn-call-1  cursor "
+                              onClick={() => {
+                                handleUserClickValidation1(
+                                  `privatelabel?factoryId=${factoryitem?.id}&factoryName=${factoryitem?.name} `
+                                );
+
+                                // return
+                              }}
+                            >
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                Private Label Request
+                              </div>
+                            </button>
+                          )}
+
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-2  cursor px-5 bg-white ">
+                              <div className="btn-text text-decoration-none cursor ">
+                                <i className="fas fa-spinner fa-spin text-dark"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <div
+                              className=" btn-call-2 padd text-dark text-decoration-none cursor"
+                              onClick={() => {
+                                handleUserClickValidLogin(
+                                  `contactsupplier?userId=${factoryitem?.userId}&factoryName=${factoryitem?.name}`
+                                );
+                              }}
+                            >
+                              <i
+                                class="fa-regular fa-comments fa-2x"
+                                style={{ fontSize: "1.5rem" }}
+                              ></i>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* pop up btn */}
+                        <DropdownActionBtnsFactory
+                          currentUserData={currentUserData}
+                          factoryitem={factoryitem}
+                          BtnDescription={BtnDescription}
+                          handleBtnCheckIfProductExisit={
+                            handleBtnCheckIfProductExisit
+                          }
+                          handleUserClickValidation1={
+                            handleUserClickValidation1
+                          }
+                          handleQuestionMarkClick={handleQuestionMarkClick}
+                          handleUserClickValidLogin={handleUserClickValidLogin}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                // {/* </div> */}
+              ))}
+               {allFactoriesData.map((factoryitem, factoryindex) => (
+                // <div className="col-sm-12 col-xl-4 col-xxl-3  col-lg-4  col-md-6 m-0  px-1">
+                <div className="card " key={factoryitem?.id}>
+                  {factoryitem?.images?.length > 0 ? (
+                    <Link
+                      className="cursor"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <BannerSlider factoryitem={factoryitem} />
+                    </Link>
+                  ) : (
+                    <Link
+                      className="cursor bg-info"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <img
+                        src={`handleImageError`}
+                        className="sliderImg w-100"
+                        alt={`no image available`}
+                        onError={handleImageError}
+                      />
+                    </Link>
+                  )}
+
+                  <div className="card-body cardBody">
+                    <div className="subCard ">
+                      <FactoryCard
+                        factoryitem={factoryitem}
+                        DirectToFactoryPage={DirectToFactoryPage}
+                      />
+
+                      {/*  product slider*/}
+                      <div className="profile-img w-100  ">
+                        {factoryitem?.productLength > 0 && (
+                          <ProductCarousel factoryitem={factoryitem} />
+                        )}
+                      </div>
+
+                      <div
+                        className="subText w-100 "
+                        // onClick={() =>
+                        //   DirectToFactoryPage(
+                        //     factoryitem?.id,
+                        //     factoryitem?.name
+                        //   )
+                        // }
+                      >
+                        <div className="text-truncate">
+                          <p className="text-truncate">
+                            products:
+                            <span>
+                              {factoryitem?.productLength > 0
+                                ? factoryitem?.productData?.map(
+                                    (item) => ` ${item?.name} ,`
+                                  )
+                                : " none"}
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="d-flex justify-content-between align-items-center   w-100">
+                        <div className="call-btns d-flex justify-content-between  align-items-center w-100  pe-2">
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-1  cursor px-5 ">
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                <i className="fas fa-spinner fa-spin text-white"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <button
+                              className="btn-call-1  cursor "
+                              onClick={() => {
+                                handleUserClickValidation1(
+                                  `privatelabel?factoryId=${factoryitem?.id}&factoryName=${factoryitem?.name} `
+                                );
+
+                                // return
+                              }}
+                            >
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                Private Label Request
+                              </div>
+                            </button>
+                          )}
+
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-2  cursor px-5 bg-white ">
+                              <div className="btn-text text-decoration-none cursor ">
+                                <i className="fas fa-spinner fa-spin text-dark"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <div
+                              className=" btn-call-2 padd text-dark text-decoration-none cursor"
+                              onClick={() => {
+                                handleUserClickValidLogin(
+                                  `contactsupplier?userId=${factoryitem?.userId}&factoryName=${factoryitem?.name}`
+                                );
+                              }}
+                            >
+                              <i
+                                class="fa-regular fa-comments fa-2x"
+                                style={{ fontSize: "1.5rem" }}
+                              ></i>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* pop up btn */}
+                        <DropdownActionBtnsFactory
+                          currentUserData={currentUserData}
+                          factoryitem={factoryitem}
+                          BtnDescription={BtnDescription}
+                          handleBtnCheckIfProductExisit={
+                            handleBtnCheckIfProductExisit
+                          }
+                          handleUserClickValidation1={
+                            handleUserClickValidation1
+                          }
+                          handleQuestionMarkClick={handleQuestionMarkClick}
+                          handleUserClickValidLogin={handleUserClickValidLogin}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                // {/* </div> */}
+              ))}
+               {allFactoriesData.map((factoryitem, factoryindex) => (
+                // <div className="col-sm-12 col-xl-4 col-xxl-3  col-lg-4  col-md-6 m-0  px-1">
+                <div className="card " key={factoryitem?.id}>
+                  {factoryitem?.images?.length > 0 ? (
+                    <Link
+                      className="cursor"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <BannerSlider factoryitem={factoryitem} />
+                    </Link>
+                  ) : (
+                    <Link
+                      className="cursor bg-info"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <img
+                        src={`handleImageError`}
+                        className="sliderImg w-100"
+                        alt={`no image available`}
+                        onError={handleImageError}
+                      />
+                    </Link>
+                  )}
+
+                  <div className="card-body cardBody">
+                    <div className="subCard ">
+                      <FactoryCard
+                        factoryitem={factoryitem}
+                        DirectToFactoryPage={DirectToFactoryPage}
+                      />
+
+                      {/*  product slider*/}
+                      <div className="profile-img w-100  ">
+                        {factoryitem?.productLength > 0 && (
+                          <ProductCarousel factoryitem={factoryitem} />
+                        )}
+                      </div>
+
+                      <div
+                        className="subText w-100 "
+                        // onClick={() =>
+                        //   DirectToFactoryPage(
+                        //     factoryitem?.id,
+                        //     factoryitem?.name
+                        //   )
+                        // }
+                      >
+                        <div className="text-truncate">
+                          <p className="text-truncate">
+                            products:
+                            <span>
+                              {factoryitem?.productLength > 0
+                                ? factoryitem?.productData?.map(
+                                    (item) => ` ${item?.name} ,`
+                                  )
+                                : " none"}
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="d-flex justify-content-between align-items-center   w-100">
+                        <div className="call-btns d-flex justify-content-between  align-items-center w-100  pe-2">
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-1  cursor px-5 ">
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                <i className="fas fa-spinner fa-spin text-white"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <button
+                              className="btn-call-1  cursor "
+                              onClick={() => {
+                                handleUserClickValidation1(
+                                  `privatelabel?factoryId=${factoryitem?.id}&factoryName=${factoryitem?.name} `
+                                );
+
+                                // return
+                              }}
+                            >
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                Private Label Request
+                              </div>
+                            </button>
+                          )}
+
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-2  cursor px-5 bg-white ">
+                              <div className="btn-text text-decoration-none cursor ">
+                                <i className="fas fa-spinner fa-spin text-dark"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <div
+                              className=" btn-call-2 padd text-dark text-decoration-none cursor"
+                              onClick={() => {
+                                handleUserClickValidLogin(
+                                  `contactsupplier?userId=${factoryitem?.userId}&factoryName=${factoryitem?.name}`
+                                );
+                              }}
+                            >
+                              <i
+                                class="fa-regular fa-comments fa-2x"
+                                style={{ fontSize: "1.5rem" }}
+                              ></i>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* pop up btn */}
+                        <DropdownActionBtnsFactory
+                          currentUserData={currentUserData}
+                          factoryitem={factoryitem}
+                          BtnDescription={BtnDescription}
+                          handleBtnCheckIfProductExisit={
+                            handleBtnCheckIfProductExisit
+                          }
+                          handleUserClickValidation1={
+                            handleUserClickValidation1
+                          }
+                          handleQuestionMarkClick={handleQuestionMarkClick}
+                          handleUserClickValidLogin={handleUserClickValidLogin}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                // {/* </div> */}
+              ))}
+               {allFactoriesData.map((factoryitem, factoryindex) => (
+                // <div className="col-sm-12 col-xl-4 col-xxl-3  col-lg-4  col-md-6 m-0  px-1">
+                <div className="card " key={factoryitem?.id}>
+                  {factoryitem?.images?.length > 0 ? (
+                    <Link
+                      className="cursor"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <BannerSlider factoryitem={factoryitem} />
+                    </Link>
+                  ) : (
+                    <Link
+                      className="cursor bg-info"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <img
+                        src={`handleImageError`}
+                        className="sliderImg w-100"
+                        alt={`no image available`}
+                        onError={handleImageError}
+                      />
+                    </Link>
+                  )}
+
+                  <div className="card-body cardBody">
+                    <div className="subCard ">
+                      <FactoryCard
+                        factoryitem={factoryitem}
+                        DirectToFactoryPage={DirectToFactoryPage}
+                      />
+
+                      {/*  product slider*/}
+                      <div className="profile-img w-100  ">
+                        {factoryitem?.productLength > 0 && (
+                          <ProductCarousel factoryitem={factoryitem} />
+                        )}
+                      </div>
+
+                      <div
+                        className="subText w-100 "
+                        // onClick={() =>
+                        //   DirectToFactoryPage(
+                        //     factoryitem?.id,
+                        //     factoryitem?.name
+                        //   )
+                        // }
+                      >
+                        <div className="text-truncate">
+                          <p className="text-truncate">
+                            products:
+                            <span>
+                              {factoryitem?.productLength > 0
+                                ? factoryitem?.productData?.map(
+                                    (item) => ` ${item?.name} ,`
+                                  )
+                                : " none"}
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="d-flex justify-content-between align-items-center   w-100">
+                        <div className="call-btns d-flex justify-content-between  align-items-center w-100  pe-2">
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-1  cursor px-5 ">
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                <i className="fas fa-spinner fa-spin text-white"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <button
+                              className="btn-call-1  cursor "
+                              onClick={() => {
+                                handleUserClickValidation1(
+                                  `privatelabel?factoryId=${factoryitem?.id}&factoryName=${factoryitem?.name} `
+                                );
+
+                                // return
+                              }}
+                            >
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                Private Label Request
+                              </div>
+                            </button>
+                          )}
+
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-2  cursor px-5 bg-white ">
+                              <div className="btn-text text-decoration-none cursor ">
+                                <i className="fas fa-spinner fa-spin text-dark"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <div
+                              className=" btn-call-2 padd text-dark text-decoration-none cursor"
+                              onClick={() => {
+                                handleUserClickValidLogin(
+                                  `contactsupplier?userId=${factoryitem?.userId}&factoryName=${factoryitem?.name}`
+                                );
+                              }}
+                            >
+                              <i
+                                class="fa-regular fa-comments fa-2x"
+                                style={{ fontSize: "1.5rem" }}
+                              ></i>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* pop up btn */}
+                        <DropdownActionBtnsFactory
+                          currentUserData={currentUserData}
+                          factoryitem={factoryitem}
+                          BtnDescription={BtnDescription}
+                          handleBtnCheckIfProductExisit={
+                            handleBtnCheckIfProductExisit
+                          }
+                          handleUserClickValidation1={
+                            handleUserClickValidation1
+                          }
+                          handleQuestionMarkClick={handleQuestionMarkClick}
+                          handleUserClickValidLogin={handleUserClickValidLogin}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                // {/* </div> */}
+              ))}
+               {allFactoriesData.map((factoryitem, factoryindex) => (
+                // <div className="col-sm-12 col-xl-4 col-xxl-3  col-lg-4  col-md-6 m-0  px-1">
+                <div className="card " key={factoryitem?.id}>
+                  {factoryitem?.images?.length > 0 ? (
+                    <Link
+                      className="cursor"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <BannerSlider factoryitem={factoryitem} />
+                    </Link>
+                  ) : (
+                    <Link
+                      className="cursor bg-info"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <img
+                        src={`handleImageError`}
+                        className="sliderImg w-100"
+                        alt={`no image available`}
+                        onError={handleImageError}
+                      />
+                    </Link>
+                  )}
+
+                  <div className="card-body cardBody">
+                    <div className="subCard ">
+                      <FactoryCard
+                        factoryitem={factoryitem}
+                        DirectToFactoryPage={DirectToFactoryPage}
+                      />
+
+                      {/*  product slider*/}
+                      <div className="profile-img w-100  ">
+                        {factoryitem?.productLength > 0 && (
+                          <ProductCarousel factoryitem={factoryitem} />
+                        )}
+                      </div>
+
+                      <div
+                        className="subText w-100 "
+                        // onClick={() =>
+                        //   DirectToFactoryPage(
+                        //     factoryitem?.id,
+                        //     factoryitem?.name
+                        //   )
+                        // }
+                      >
+                        <div className="text-truncate">
+                          <p className="text-truncate">
+                            products:
+                            <span>
+                              {factoryitem?.productLength > 0
+                                ? factoryitem?.productData?.map(
+                                    (item) => ` ${item?.name} ,`
+                                  )
+                                : " none"}
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="d-flex justify-content-between align-items-center   w-100">
+                        <div className="call-btns d-flex justify-content-between  align-items-center w-100  pe-2">
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-1  cursor px-5 ">
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                <i className="fas fa-spinner fa-spin text-white"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <button
+                              className="btn-call-1  cursor "
+                              onClick={() => {
+                                handleUserClickValidation1(
+                                  `privatelabel?factoryId=${factoryitem?.id}&factoryName=${factoryitem?.name} `
+                                );
+
+                                // return
+                              }}
+                            >
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                Private Label Request
+                              </div>
+                            </button>
+                          )}
+
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-2  cursor px-5 bg-white ">
+                              <div className="btn-text text-decoration-none cursor ">
+                                <i className="fas fa-spinner fa-spin text-dark"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <div
+                              className=" btn-call-2 padd text-dark text-decoration-none cursor"
+                              onClick={() => {
+                                handleUserClickValidLogin(
+                                  `contactsupplier?userId=${factoryitem?.userId}&factoryName=${factoryitem?.name}`
+                                );
+                              }}
+                            >
+                              <i
+                                class="fa-regular fa-comments fa-2x"
+                                style={{ fontSize: "1.5rem" }}
+                              ></i>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* pop up btn */}
+                        <DropdownActionBtnsFactory
+                          currentUserData={currentUserData}
+                          factoryitem={factoryitem}
+                          BtnDescription={BtnDescription}
+                          handleBtnCheckIfProductExisit={
+                            handleBtnCheckIfProductExisit
+                          }
+                          handleUserClickValidation1={
+                            handleUserClickValidation1
+                          }
+                          handleQuestionMarkClick={handleQuestionMarkClick}
+                          handleUserClickValidLogin={handleUserClickValidLogin}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                // {/* </div> */}
+              ))}
+               {allFactoriesData.map((factoryitem, factoryindex) => (
+                // <div className="col-sm-12 col-xl-4 col-xxl-3  col-lg-4  col-md-6 m-0  px-1">
+                <div className="card " key={factoryitem?.id}>
+                  {factoryitem?.images?.length > 0 ? (
+                    <Link
+                      className="cursor"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <BannerSlider factoryitem={factoryitem} />
+                    </Link>
+                  ) : (
+                    <Link
+                      className="cursor bg-info"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <img
+                        src={`handleImageError`}
+                        className="sliderImg w-100"
+                        alt={`no image available`}
+                        onError={handleImageError}
+                      />
+                    </Link>
+                  )}
+
+                  <div className="card-body cardBody">
+                    <div className="subCard ">
+                      <FactoryCard
+                        factoryitem={factoryitem}
+                        DirectToFactoryPage={DirectToFactoryPage}
+                      />
+
+                      {/*  product slider*/}
+                      <div className="profile-img w-100  ">
+                        {factoryitem?.productLength > 0 && (
+                          <ProductCarousel factoryitem={factoryitem} />
+                        )}
+                      </div>
+
+                      <div
+                        className="subText w-100 "
+                        // onClick={() =>
+                        //   DirectToFactoryPage(
+                        //     factoryitem?.id,
+                        //     factoryitem?.name
+                        //   )
+                        // }
+                      >
+                        <div className="text-truncate">
+                          <p className="text-truncate">
+                            products:
+                            <span>
+                              {factoryitem?.productLength > 0
+                                ? factoryitem?.productData?.map(
+                                    (item) => ` ${item?.name} ,`
+                                  )
+                                : " none"}
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="d-flex justify-content-between align-items-center   w-100">
+                        <div className="call-btns d-flex justify-content-between  align-items-center w-100  pe-2">
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-1  cursor px-5 ">
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                <i className="fas fa-spinner fa-spin text-white"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <button
+                              className="btn-call-1  cursor "
+                              onClick={() => {
+                                handleUserClickValidation1(
+                                  `privatelabel?factoryId=${factoryitem?.id}&factoryName=${factoryitem?.name} `
+                                );
+
+                                // return
+                              }}
+                            >
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                Private Label Request
+                              </div>
+                            </button>
+                          )}
+
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-2  cursor px-5 bg-white ">
+                              <div className="btn-text text-decoration-none cursor ">
+                                <i className="fas fa-spinner fa-spin text-dark"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <div
+                              className=" btn-call-2 padd text-dark text-decoration-none cursor"
+                              onClick={() => {
+                                handleUserClickValidLogin(
+                                  `contactsupplier?userId=${factoryitem?.userId}&factoryName=${factoryitem?.name}`
+                                );
+                              }}
+                            >
+                              <i
+                                class="fa-regular fa-comments fa-2x"
+                                style={{ fontSize: "1.5rem" }}
+                              ></i>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* pop up btn */}
+                        <DropdownActionBtnsFactory
+                          currentUserData={currentUserData}
+                          factoryitem={factoryitem}
+                          BtnDescription={BtnDescription}
+                          handleBtnCheckIfProductExisit={
+                            handleBtnCheckIfProductExisit
+                          }
+                          handleUserClickValidation1={
+                            handleUserClickValidation1
+                          }
+                          handleQuestionMarkClick={handleQuestionMarkClick}
+                          handleUserClickValidLogin={handleUserClickValidLogin}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                // {/* </div> */}
+              ))}
+               {allFactoriesData.map((factoryitem, factoryindex) => (
+                // <div className="col-sm-12 col-xl-4 col-xxl-3  col-lg-4  col-md-6 m-0  px-1">
+                <div className="card " key={factoryitem?.id}>
+                  {factoryitem?.images?.length > 0 ? (
+                    <Link
+                      className="cursor"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <BannerSlider factoryitem={factoryitem} />
+                    </Link>
+                  ) : (
+                    <Link
+                      className="cursor bg-info"
+                      to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+                    >
+                      <img
+                        src={`handleImageError`}
+                        className="sliderImg w-100"
+                        alt={`no image available`}
+                        onError={handleImageError}
+                      />
+                    </Link>
+                  )}
+
+                  <div className="card-body cardBody">
+                    <div className="subCard ">
+                      <FactoryCard
+                        factoryitem={factoryitem}
+                        DirectToFactoryPage={DirectToFactoryPage}
+                      />
+
+                      {/*  product slider*/}
+                      <div className="profile-img w-100  ">
+                        {factoryitem?.productLength > 0 && (
+                          <ProductCarousel factoryitem={factoryitem} />
+                        )}
+                      </div>
+
+                      <div
+                        className="subText w-100 "
+                        // onClick={() =>
+                        //   DirectToFactoryPage(
+                        //     factoryitem?.id,
+                        //     factoryitem?.name
+                        //   )
+                        // }
+                      >
+                        <div className="text-truncate">
+                          <p className="text-truncate">
+                            products:
+                            <span>
+                              {factoryitem?.productLength > 0
+                                ? factoryitem?.productData?.map(
+                                    (item) => ` ${item?.name} ,`
+                                  )
+                                : " none"}
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="d-flex justify-content-between align-items-center   w-100">
+                        <div className="call-btns d-flex justify-content-between  align-items-center w-100  pe-2">
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-1  cursor px-5 ">
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                <i className="fas fa-spinner fa-spin text-white"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <button
+                              className="btn-call-1  cursor "
+                              onClick={() => {
+                                handleUserClickValidation1(
+                                  `privatelabel?factoryId=${factoryitem?.id}&factoryName=${factoryitem?.name} `
+                                );
+
+                                // return
+                              }}
+                            >
+                              <div className="btn-text text-decoration-none cursor text-white">
+                                Private Label Request
+                              </div>
+                            </button>
+                          )}
+
+                          {currentUserData?.datacompletelyLoaded ? (
+                            <button className="btn-call-2  cursor px-5 bg-white ">
+                              <div className="btn-text text-decoration-none cursor ">
+                                <i className="fas fa-spinner fa-spin text-dark"></i>
+                              </div>
+                            </button>
+                          ) : (
+                            <div
+                              className=" btn-call-2 padd text-dark text-decoration-none cursor"
+                              onClick={() => {
+                                handleUserClickValidLogin(
+                                  `contactsupplier?userId=${factoryitem?.userId}&factoryName=${factoryitem?.name}`
+                                );
+                              }}
+                            >
+                              <i
+                                class="fa-regular fa-comments fa-2x"
+                                style={{ fontSize: "1.5rem" }}
+                              ></i>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* pop up btn */}
+                        <DropdownActionBtnsFactory
+                          currentUserData={currentUserData}
+                          factoryitem={factoryitem}
+                          BtnDescription={BtnDescription}
+                          handleBtnCheckIfProductExisit={
+                            handleBtnCheckIfProductExisit
+                          }
+                          handleUserClickValidation1={
+                            handleUserClickValidation1
+                          }
+                          handleQuestionMarkClick={handleQuestionMarkClick}
+                          handleUserClickValidLogin={handleUserClickValidLogin}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                // {/* </div> */}
+              ))}
+            
+            
+            
+            
             </Slider>
           </div>
 

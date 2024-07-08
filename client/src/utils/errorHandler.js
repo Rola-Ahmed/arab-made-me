@@ -15,6 +15,10 @@ export function errorHandler(error) {
         return "Not Found (404). The requested resource was not found.";
 
       case 500:
+        // media error
+        if (error?.response?.data?.errorMessage?.includes("ENOENT")) {
+          return "Something Went Wrong Please Try Again";
+        }
         return error?.response?.data?.errorMessage;
       case 502:
         return "We apologize for the inconvenience, but it looks like there is a temporary issue with our server (Error 502: Bad Gateway). Our team is working hard to resolve this as quickly as possible.";
@@ -27,13 +31,12 @@ export function errorHandler(error) {
       default:
         return error?.response?.data?.errorMessage;
     }
-  } else {
-    return "Something Went Wrong. Please try again later.";
   }
-
   if (error.message === "Network Error") {
     return "Something Went Wrong Please Try Again";
   } else if (error.message === "error") {
     return error?.response?.data?.errorMessage;
+  } else {
+    return "Something Went Wrong. Please try again later.";
   }
 }

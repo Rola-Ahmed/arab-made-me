@@ -360,9 +360,7 @@ background: red;
 
 
 
-.topFactory .factoryCard .card .slick-slider {
-  /* overflow: hidden; */
-}
+
 
 
 .topFactory .btn-call-1 {
@@ -381,8 +379,14 @@ background: red;
 .topFactory .slick-track {
   /* width: auto !important; */
   /* width: 3652px !important; */
+  /* width:100% !important; */
 }
 
+
+.topFactory .slick-slide.slick-active.slick-cloned {
+  display: none !important;
+}
+.slick-track{ margin-left: 0 !important; }
 @media (max-width: 765px) {
 
 
