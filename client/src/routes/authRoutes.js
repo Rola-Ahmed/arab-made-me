@@ -6,7 +6,7 @@ import ResetPassword from "components/Auth/ResetPassword/ResetPassword";
 import UserType from "components/Auth/UserType/UserType";
 
 // factory registration
-import CompanyRegistration from "components/Auth/FactorySignUp/CompanyRegistration";
+import CompanyRegistration from "components/Auth/FactorySignUp/CompanyRegistration/CompanyRegistration";
 import CompanyRegistrationPhase2 from "components/Auth/FactorySignUp/CompanyRegistrationPhase2";
 import CompanyMircoSiteDocs from "components/Auth/FactorySignUp/CompanyMircoSiteDocs";
 import FactoryRepInfoRegistration from "components/Auth/FactorySignUp/FactoryRepInfoRegistration";

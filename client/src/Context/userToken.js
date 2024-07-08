@@ -25,11 +25,12 @@ export function UserTokenProvider({ children }) {
   };
 
   // Memoize the context value to avoid unnecessary renders
-  const contextValue = useMemo(() => ({ isLogin, setIsLogin: setAndStoreIsLogin }), [isLogin]);
+  const contextValue = useMemo(
+    () => ({ isLogin, setIsLogin: setAndStoreIsLogin }),
+    [isLogin]
+  );
   return (
-    <UserToken.Provider value={contextValue}>
-      {children}
-    </UserToken.Provider>
+    <UserToken.Provider value={contextValue}>{children}</UserToken.Provider>
   );
 
   // return (

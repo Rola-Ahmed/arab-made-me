@@ -11,6 +11,7 @@ export const userDetails = createContext("");
 export function UserTypeProvider({ children }) {
   let { isLogin, setIsLogin } = useContext(UserToken);
 
+
   // State for user data
   // const [currentUserData, setCurrentUserData] = useState(() => "");
 
@@ -85,10 +86,13 @@ export function UserTypeProvider({ children }) {
               : true,
         }));
       } else {
+        console.log(" user currentUserData",currentUserData)
         setIsLogin("");
         localStorage.clear();
       }
     } catch (error) {
+      console.log(" user error currentUserData",currentUserData)
+
       console.log("Errorrrr", error);
       if (error?.response?.data?.message == "users not found") {
         setIsLogin("");
@@ -123,10 +127,17 @@ export function UserTypeProvider({ children }) {
               datacompletelyLoaded: false,
               profile: response.data.factories.coverImage,
             }));
+            
+            console.log(" factories done currentUserData",currentUserData)
+          }else{
+            console.log(" factories else currentUserData",currentUserData)
+
           }
         })
         .catch((error) => {});
     }
+    console.log(" factories fn currentUserData",currentUserData)
+    
   }
   async function getImporter() {
     if (currentUserData.importerId !== null) {
@@ -160,15 +171,28 @@ export function UserTypeProvider({ children }) {
 
   useEffect(() => {
     if (!loading) {
-      if (currentUserData.factoryId !== null) {
+      if (currentUserData.factoryId != null) {
         getFactory();
       }
 
-      if (currentUserData.importerId !== null) {
+      if (currentUserData.importerId != null) {
         getImporter();
       }
     }
-  }, [loading, currentUserData.factoryId, currentUserData.importerId]);
+  }, [loading, currentUserData.factoryId, currentUserData.importerId,isLogin]);
+
+  const clearSesssion = () => {
+    // setUser(null);
+    // setToken("");
+    // localStorage.removeItem("site");
+    // navigate("/login");
+
+    setIsLogin("");
+    // localStorage.clear();
+    localStorage.remove("tocker");
+
+    // navigate("/");
+  };
 
   const setAndStoreData = (newValue) => {
     setCurrentUserData(newValue);
@@ -176,7 +200,7 @@ export function UserTypeProvider({ children }) {
 
   return (
     <userDetails.Provider
-      value={{ currentUserData, setCurrentUserData: setAndStoreData }}
+      value={{ currentUserData, setCurrentUserData: setAndStoreData,clearSesssion }}
     >
       {children}
     </userDetails.Provider>

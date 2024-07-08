@@ -1,4 +1,4 @@
-import { getRequest, putRequest } from "./authServices";
+import { getRequest, putRequest,postRequest } from "./authServices";
 
 // Service for fetching all products of a specific factory
 //------------------------------------- factory products------------------------------------------
@@ -24,6 +24,13 @@ export const addFactoryMedia = async (header, data) => {
   return await putRequest(`/factories/media`, header, data);
 };
 
+
+
+// factories
 export const addFactory = async (header, data) => {
-  return await putRequest(`/factories/add`, header, data);
+  return await postRequest(`/factories/add`, header, data);
 };
+export const updateFactoryFromUser = async (header, data) => {
+  return await putRequest(`/factories/update/fromUser`, header, data);
+};
+

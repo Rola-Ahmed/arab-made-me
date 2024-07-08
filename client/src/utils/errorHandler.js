@@ -4,7 +4,11 @@ export function errorHandler(error) {
     const statusCode = error.response.status;
     switch (statusCode) {
       case 400:
-        return error?.response?.data?.errorMessage;
+        // if (error?.response?.data?.errorMessage == "Validation error") {
+        //   return "Email must be unique";
+        // } else {
+          return error?.response?.data?.errorMessage;
+        // }
       case 401:
         return "User is not Unauthorized ";
 
