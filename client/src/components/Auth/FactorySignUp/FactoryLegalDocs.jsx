@@ -16,7 +16,6 @@ import { UserToken } from "Context/userToken";
 import { useFormik } from "formik";
 
 import * as Yup from "yup";
-import "./UserType.css";
 
 function FactoryLegalDocs() {
   let { isLogin } = useContext(UserToken);

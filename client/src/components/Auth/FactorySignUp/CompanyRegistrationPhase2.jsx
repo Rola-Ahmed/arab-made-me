@@ -1,17 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
 
-import {
-  awaitImg,
-  nextImg,
-  subPoint,
-  currentsubPoint,
-  checkedImg,
-} from "constants/Images";
+import { awaitImg, subPoint, currentsubPoint } from "constants/Images";
+import LastPointStatus from "components/Auth/FactorySignUp/TimeLineHeader/LastPointStatus";
+import SelectRole from "components/Auth/FactorySignUp/TimeLineHeader/SelectRole";
+import NextPoint from "components/Auth/FactorySignUp/TimeLineHeader/NextPoint";
+import { updateFactoryFromUser } from "Services/factory";
 
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
-import axios from "axios";
-import { baseUrl } from "config.js";
 
 import * as Yup from "yup";
 
@@ -20,18 +16,20 @@ import { userDetails } from "Context/userType";
 
 function CompanyRegistrationPhase2() {
   let { isLogin } = useContext(UserToken);
-  let { setCurrentUserData } = useContext(userDetails);
+  let { currentUserData } = useContext(userDetails);
+  let navigate = useNavigate();
 
   document.title = "Company Registration";
+  let currentUrl = window.location.pathname;
   useEffect(() => {
     if (!isLogin) {
-      navigate(`/signIn/CompanyDetails/setp2`);
+      navigate(`/signIn/${currentUrl}`);
     }
+    if (currentUserData && currentUserData?.importerId) {
+      navigate("/403");
+    }
+  }, [isLogin, currentUserData]);
 
-    // }
-  }, [isLogin]);
-
-  let navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -43,10 +41,6 @@ function CompanyRegistrationPhase2() {
       .min(3, "min length is 3")
       .max(255, "max length is 255"),
 
-    // addressLink: Yup.string()
-    //   .min(3, "min length is 3")
-    //   .max(255, "max length is 255"),
-
     yearOfEstablishmint: Yup.string()
       // .required("Input Field is Required")
       .matches(/^[0-9]+$/, "Input Field should contain numbers only")
@@ -57,7 +51,6 @@ function CompanyRegistrationPhase2() {
   let formValidation = useFormik({
     initialValues: {
       address: "",
-      // addressLink:"",
       yearOfEstablishmint: "",
       yearlySalesIncome: "",
       numberOfEmployees: "", //select optiton
@@ -67,143 +60,50 @@ function CompanyRegistrationPhase2() {
   });
   async function submitForm(values) {
     setIsLoading(true);
-
     setErrorMsg((prevErrors) => {
       const { response, ...restErrors } = prevErrors || {};
       return restErrors;
     });
 
     try {
-      // setIsLoading(true);
 
-      let data = {};
-
-      if (values.address !== "") data.address = [values.address];
-      // if (values.addressLink !== "") data.address.push(values.addressLink)
-
-      if (values.numberOfEmployees !== "")
-        data.numberOfEmployees = values.numberOfEmployees;
-
-      if (values.yearOfEstablishmint !== "")
-        data.yearOfEstablishmint = values.yearOfEstablishmint;
-
-      if (values.yearlySalesIncome !== "")
-        data.yearlySalesIncome = values.yearlySalesIncome;
-
-      // return (data)
-      let config = {
-        method: "put",
-
-        url: `${baseUrl}/factories/update/fromUser`,
-        data: data,
-        headers: {
-          authorization: isLogin,
-        },
+      let data = {
+        // if  values.moreDetails!==null add value
+        ...(values.address && { address: [values.address] }),
+        ...(values.numberOfEmployees && {
+          numberOfEmployees: values.numberOfEmployees,
+        }),
+        ...(values.yearOfEstablishmint && {
+          yearOfEstablishmint: values.yearOfEstablishmint,
+        }),
+        ...(values.yearlySalesIncome && {
+          yearlySalesIncome: values.yearlySalesIncome,
+        }),
       };
 
-      const response = await axios.request(config);
-      setErrorMsg((prevErrors) => {
-        const { response, ...restErrors } = prevErrors || {};
-        return restErrors;
-      });
+      let result = await updateFactoryFromUser(
+        { authorization: isLogin },
+        data
+      );
 
-      if (response?.data?.message === "done") {
+      if (result?.success) {
         navigate(`/CompanyDetails/MircoSiteDocs`);
-        setCurrentUserData((prevUserData) => ({
-          ...prevUserData,
-          factoryId: response?.data?.factory?.id,
-        }));
-
-        setIsLoading(true);
       } else {
+        setIsLoading(false);
         setErrorMsg((prevErrors) => ({
           ...prevErrors,
-          response: response?.data?.message,
+          response: result?.error,
         }));
 
         const targetElement = document.getElementById("view");
-        targetElement.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-        setIsLoading(false);
-      }
-    } catch (error) {
-      setIsLoading(false);
-
-      if (error.response) {
-        const statusCode = error.response.status;
-        switch (statusCode) {
-          case 400:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.errorMessage,
-            }));
-            break;
-          case 401:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: "User is not Unauthorized ",
-            }));
-            break;
-          case 403:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response:
-                "Forbidden, You do not have permission to access this resource.",
-            }));
-            break;
-          case 404:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response:
-                "Not Found (404). The requested resource was not found.",
-            }));
-            break;
-
-          case 500:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.errorMessage,
-            }));
-            break;
-
-          //  429 Too Many Requests
-          // The user has sent too many requests in a given amount of time ("rate limiting").
-          case 429:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: " Too Many Requests , Please try again later.",
-            }));
-            break;
-          case 402:
-            // 402
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.message,
-            }));
-            break;
-          default:
-            // case message== error
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.errorMessage,
-            }));
-            break;
+        if (targetElement) {
+          targetElement.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
         }
-      } else {
-        setErrorMsg((prevErrors) => ({
-          ...prevErrors,
-          response: "An unexpected error occurred. Please try again later.",
-        }));
       }
-
-      const targetElement = document.getElementById("view");
-      targetElement.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
+    } catch (error) {}
     // }
   }
 
@@ -213,16 +113,7 @@ function CompanyRegistrationPhase2() {
         <div className=" container ">
           <div className=" cont-1 d-flex justify-content-center align-items-center mx-auto  ">
             <div className=" sub-cont w-100">
-              <div className=" text-check ">
-                <div className="  timeline-reg d-flex">
-                  <div className="img-cont ms-5">
-                    <img src={checkedImg} alt="" />
-                  </div>
-
-                  <div className="w-100 vertical-line  mt-auto mb-auto"></div>
-                </div>
-                <p className="text-cont  ">Select Your Role</p>
-              </div>
+              <SelectRole />
 
               <div className=" text-check ">
                 <div className="  timeline-reg d-flex">
@@ -252,29 +143,9 @@ function CompanyRegistrationPhase2() {
                 </p>
               </div>
 
-              <div className=" text-check ">
-                <div className="  timeline-reg d-flex">
-                  <div className="w-100 vertical-line-after  mt-auto mb-auto"></div>
-                  <div className="img-cont">
-                    <img src={nextImg} alt="" />
-                  </div>
+              <NextPoint title="Representive Information" />
 
-                  <div className="w-100 vertical-line-after  mt-auto mb-auto"></div>
-                </div>
-                <p className="text-cont text-center">
-                  Representive Information
-                </p>
-              </div>
-
-              <div className=" text-check ">
-                <div className="  timeline-reg d-flex">
-                  <div className="w-100 vertical-line-after  mt-auto mb-auto"></div>
-                  <div className="img-cont me-5">
-                    <img src={nextImg} alt="" />
-                  </div>
-                </div>
-                <p className="text-cont text-end">Legal Documents</p>
-              </div>
+              <LastPointStatus title="Legal Documents" isCurrentPoint={false} />
             </div>
           </div>
 

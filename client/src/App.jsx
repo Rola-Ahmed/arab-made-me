@@ -46,6 +46,7 @@ import formRoutes from "routes/formRoutes";
 
 import MeetingRoom from "components/MeetingRoom/MeetingRoom";
 import Invitaion from "components/MeetingRoom/Invitaion";
+import UnAuthPage from "components/UnAuthPage";
 
 const router = createBrowserRouter([
   {
@@ -160,6 +161,10 @@ const router = createBrowserRouter([
     path: "*",
     element: <Errorpage />,
   },
+  {
+    path: "403",
+    element: <UnAuthPage />,
+  },
 
   ...adminDashboardRoutes,
   ...importerDashboardRoutes,
@@ -168,9 +173,9 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense fallback={<div></div>}>
       <RouterProvider router={router} />
-    </Suspense>
+     </Suspense>
   );
 }
 

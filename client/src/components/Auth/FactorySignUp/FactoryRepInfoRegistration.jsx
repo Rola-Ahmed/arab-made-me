@@ -1,26 +1,26 @@
 import React, { useState, useContext, useEffect } from "react";
 import "./UserType.css";
-import {
-  awaitImg,
-  nextImg,
-  currentsubPoint,
-  checkedImg,
-} from "constants/Images";
+import { currentsubPoint, checkedImg } from "constants/Images";
+import LastPointStatus from "components/Auth/FactorySignUp/TimeLineHeader/LastPointStatus";
+import SelectRole from "components/Auth/FactorySignUp/TimeLineHeader/SelectRole";
+import { updateFactoryFromUser } from "Services/factory";
+import FormVlaidtionError from "components/Forms/Shared/FormVlaidtionError";
 
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
-import axios from "axios";
-import { baseUrl } from "config.js";
 
 import * as Yup from "yup";
+
+import InputField from "components/Forms/Shared/InputField";
 
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
 import { countriesMiddleEast } from "constants/countries";
+import CurrentPoint from "./TimeLineHeader/CurrentPoint";
 
 function FactoryRepInfoRegistration() {
   let { isLogin } = useContext(UserToken);
-  let { currentUserData, setCurrentUserData } = useContext(userDetails);
+  let { currentUserData } = useContext(userDetails);
 
   document.title = "Company RegistrationUser Type";
   useEffect(() => {
@@ -37,22 +37,16 @@ function FactoryRepInfoRegistration() {
   const [isLoading, setIsLoading] = useState(false);
 
   let validationSchema = Yup.object().shape({
-    userType: Yup.string(),
-
-    // if user type == factory
     repName: Yup.string()
-      .min(3, "min length is 3")
       .max(50, "max length is 50")
       .required("Input field is Required"),
     repLastName: Yup.string()
-      .min(3, "min length is 3")
       .max(50, "max length is 50")
       .required("Input field is Required"),
 
     repEmail: Yup.string()
       .email("Invalid email")
       .required("Input Field is Required")
-      .min(10, "min length is 10")
       .max(255, "max length is 255"),
 
     repPhone: Yup.string()
@@ -81,7 +75,6 @@ function FactoryRepInfoRegistration() {
 
   async function submitForm(values) {
     setIsLoading(true);
-
     setErrorMsg((prevErrors) => {
       const { response, ...restErrors } = prevErrors || {};
       return restErrors;
@@ -96,137 +89,36 @@ function FactoryRepInfoRegistration() {
         repPhone: `${values.repPhoneCode}${values.repPhone}`,
       };
 
-      // return (data)
-      let config = {
-        method: "put",
+      let result = await updateFactoryFromUser(
+        { authorization: isLogin },
+        data
+      );
 
-        url: `${baseUrl}/factories/update/fromUser`,
-        data: data,
-        headers: {
-          authorization: isLogin,
-        },
-      };
-
-      const response = await axios.request(config);
-      setErrorMsg((prevErrors) => {
-        const { response, ...restErrors } = prevErrors || {};
-        return restErrors;
-      });
-
-      if (response?.data?.message === "done") {
+      if (result?.success) {
         navigate(`/CompanyDetails/LegalDocuments`);
-
-        setCurrentUserData((prevUserData) => ({
-          ...prevUserData,
-          factoryId: response?.data?.factory?.id,
-        }));
-
-        setIsLoading(true);
       } else {
+        setIsLoading(false);
+
+        let error = "";
+        if (result?.error == "Validation error") {
+          error = "This email is already in use. Please use a different email.";
+        } else {
+          error = result?.error;
+        }
         setErrorMsg((prevErrors) => ({
           ...prevErrors,
-          response: response?.data?.message,
+          response: error,
         }));
 
         const targetElement = document.getElementById("view");
-        targetElement.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-        setIsLoading(false);
-      }
-    } catch (error) {
-      setIsLoading(false);
-
-      if (error.response && error.response.status) {
-        const statusCode = error.response.status;
-        switch (statusCode) {
-          case 400:
-            if (error?.response?.data?.errorMessage == "Validation error") {
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                response: "Email must be unique",
-              }));
-            } else {
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                response: error?.response?.data?.errorMessage,
-              }));
-            }
-
-            break;
-          case 401:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: "User is not Unauthorized ",
-            }));
-            break;
-          case 403:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response:
-                "Forbidden, You do not have permission to access this resource.",
-            }));
-            break;
-          case 404:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response:
-                "Not Found (404). The requested resource was not found.",
-            }));
-            break;
-
-          case 500:
-            if (error?.response?.data?.errorMessage == "Validation error") {
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                response: "Comapny Name must be unique",
-              }));
-            } else {
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                response: error?.response?.data?.errorMessage,
-              }));
-            }
-
-            break;
-
-          //  429 Too Many Requests
-          // The user has sent too many requests in a given amount of time ("rate limiting").
-          case 429:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: " Too Many Requests , Please try again later.",
-            }));
-            break;
-          case 402:
-            // 402
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.message,
-            }));
-            break;
-          default:
-            // case message== error
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.errorMessage,
-            }));
-            break;
+        if (targetElement) {
+          targetElement.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
         }
-      } else {
-        setErrorMsg((prevErrors) => ({
-          ...prevErrors,
-          response: "An unexpected error occurred. Please try again later.",
-        }));
       }
-
-      const targetElement = document.getElementById("view");
-      targetElement.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
+    } catch (error) {}
     // }
   }
 
@@ -236,16 +128,7 @@ function FactoryRepInfoRegistration() {
         <div className=" container ">
           <div className=" cont-1 d-flex justify-content-center align-items-center mx-auto  ">
             <div className=" sub-cont w-100">
-              <div className=" text-check ">
-                <div className="  timeline-reg d-flex">
-                  <div className="img-cont ms-5">
-                    <img src={checkedImg} alt="" />
-                  </div>
-
-                  <div className="w-100 vertical-line  mt-auto mb-auto"></div>
-                </div>
-                <p className="text-cont  ">Select Your Role</p>
-              </div>
+              <SelectRole />
 
               <div className=" text-check ">
                 <div className="  timeline-reg d-flex">
@@ -275,29 +158,9 @@ function FactoryRepInfoRegistration() {
                 </p>
               </div>
 
-              <div className=" text-check ">
-                <div className="  timeline-reg d-flex">
-                  <div className="w-100 vertical-line  mt-auto mb-auto"></div>
-                  <div className="img-cont">
-                    <img src={awaitImg} alt="" />
-                  </div>
+              <CurrentPoint title="Representive Information" />
 
-                  <div className="w-100 vertical-line-after  mt-auto mb-auto"></div>
-                </div>
-                <p className="text-cont text-center">
-                  Representive Information
-                </p>
-              </div>
-
-              <div className=" text-check ">
-                <div className="  timeline-reg d-flex">
-                  <div className="w-100 vertical-line-after  mt-auto mb-auto"></div>
-                  <div className="img-cont me-5">
-                    <img src={nextImg} alt="" />
-                  </div>
-                </div>
-                <p className="text-cont text-end">Legal Documents</p>
-              </div>
+              <LastPointStatus title="Legal Documents" isCurrentPoint={false} />
             </div>
           </div>
 
@@ -313,91 +176,30 @@ function FactoryRepInfoRegistration() {
 
                   <div className="row gap-row-2">
                     <div className="col-12">
-                      <div className="grid-gap-col">
-                        <div className="form-group gap">
-                          <label className="form-title">
-                            Representive first Name
-                            <span className="text-danger"> * </span>
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control input-style"
-                            id="repName"
-                            name="repName"
-                            placeholder="Enter full Name"
-                            onChange={formValidation.handleChange}
-                            onBlur={formValidation.handleBlur}
-                            value={formValidation.values.repName}
-                          />
-                          {formValidation.errors.repName &&
-                          formValidation.touched.repName ? (
-                            <small className="text-danger">
-                              {formValidation.errors.repName}
-                            </small>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                      </div>
+                      <InputField
+                        isRequired={true}
+                        title={"Representive first Name"}
+                        formValidation={formValidation}
+                        vlaidationName={"repName"}
+                      />
                     </div>
 
                     <div className="col-12">
-                      <div className="grid-gap-col">
-                        <div className="form-group gap">
-                          <label className="form-title">
-                            Representive last Name
-                            <span className="text-danger"> * </span>
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control input-style"
-                            id="repLastName"
-                            name="repLastName"
-                            placeholder="Enter full Name"
-                            onChange={formValidation.handleChange}
-                            onBlur={formValidation.handleBlur}
-                            value={formValidation.values.repLastName}
-                          />
-                          {formValidation.errors.repLastName &&
-                          formValidation.touched.repLastName ? (
-                            <small className="text-danger">
-                              {formValidation.errors.repLastName}
-                            </small>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                      </div>
+                      <InputField
+                        isRequired={true}
+                        title={"Representive last Name"}
+                        formValidation={formValidation}
+                        vlaidationName={"repLastName"}
+                      />
                     </div>
 
                     <div className="col-12">
-                      <div className="grid-gap-col">
-                        <div className="form-group gap">
-                          <label className="form-title">
-                            Representive Email
-                            <span className="text-danger"> * </span>
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control input-style"
-                            id="repEmail"
-                            name="repEmail"
-                            placeholder="enter Representive Email"
-                            onChange={formValidation.handleChange}
-                            onBlur={formValidation.handleBlur}
-                            value={formValidation.values.repEmail}
-                          />
-
-                          {formValidation.errors.repEmail &&
-                          formValidation.touched.repEmail ? (
-                            <small className="text-danger">
-                              {formValidation.errors.repEmail}
-                            </small>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                      </div>
+                      <InputField
+                        isRequired={true}
+                        title={"Representive Email"}
+                        formValidation={formValidation}
+                        vlaidationName={"repEmail"}
+                      />
                     </div>
 
                     {/* ----------------------- */}
@@ -439,14 +241,10 @@ function FactoryRepInfoRegistration() {
                               onBlur={formValidation.handleBlur}
                             />
                           </div>
-                          {formValidation.errors.repPhone &&
-                          formValidation.touched.repPhone ? (
-                            <small className="form-text text-danger">
-                              {formValidation.errors.repPhone}
-                            </small>
-                          ) : (
-                            ""
-                          )}
+                          <FormVlaidtionError
+                            formValidation={formValidation}
+                            vlaidationName={"repPhone"}
+                          />
                         </div>
                       </div>
                     </div>
@@ -464,7 +262,6 @@ function FactoryRepInfoRegistration() {
                           onBlur={formValidation.handleBlur}
                           value={formValidation.values.allowEmailNotification}
                         />
-                        {/* </div> */}
                       </div>
                     </div>
 
@@ -487,10 +284,12 @@ function FactoryRepInfoRegistration() {
                               );
 
                               // Scroll to the target element
-                              targetElement.scrollIntoView({
-                                behavior: "smooth",
-                                block: "center",
-                              });
+                              if (targetElement) {
+                                targetElement.scrollIntoView({
+                                  behavior: "smooth",
+                                  block: "center",
+                                });
+                              }
                             }
                           }}
                         >
