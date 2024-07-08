@@ -7,23 +7,21 @@ export default function InputField({
   title,
 }) {
   return (
-    <>
-      <div className="form-group">
-        <label>
-          {title} {isRequired && "*"}
-        </label>
-        <input
-          className="form-control"
-          id={vlaidationName}
-          onChange={formValidation.handleChange}
-          onBlur={formValidation.handleBlur}
-          value={formValidation.values[vlaidationName]}
-        />
-        <FormVlaidtionError
-          formValidation={formValidation}
-          vlaidationName={vlaidationName}
-        />
-      </div>
-    </>
+    <div className="form-group">
+      <label class={"form-title"}>
+        {title} {isRequired && "*"}
+      </label>
+      <input
+        className="form-control "
+        id={vlaidationName}
+        onChange={formValidation.handleChange}
+        onBlur={formValidation.handleBlur}
+        value={formValidation.values[vlaidationName]}
+      />
+      <FormVlaidtionError
+        formValidation={formValidation}
+        vlaidationName={vlaidationName}
+      />
+    </div>
   );
 }

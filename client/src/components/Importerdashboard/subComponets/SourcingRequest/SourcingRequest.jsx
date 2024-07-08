@@ -92,7 +92,7 @@ function SourcingRequest() {
 
     productDescription: Yup.string()
       .required("Input field is Required")
-      .min(10, "min legnth is 10")
+
       .max(255, "max legnth is 255"),
 
     country: Yup.array().of(Yup.string()).nullable(),

@@ -79,7 +79,7 @@ export default function ImporterRepDetails() {
 
     description: Yup.string()
       .required("Input Field is Required")
-      .min(10, "min legnth is 10")
+
       .max(255, "max legnth is 255"),
   });
 

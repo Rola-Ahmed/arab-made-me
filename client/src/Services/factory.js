@@ -23,3 +23,7 @@ export const fetchOneFactory = async (id) => {
 export const addFactoryMedia = async (header, data) => {
   return await putRequest(`/factories/media`, header, data);
 };
+
+export const addFactory = async (header, data) => {
+  return await putRequest(`/factories/add`, header, data);
+};

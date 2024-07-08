@@ -1,7 +1,5 @@
 import React, { useState, useContext } from "react";
 import { useFormik } from "formik";
-import axios from "axios";
-import { baseUrl } from "config.js";
 
 import * as Yup from "yup";
 import Header from "components/main/Header/Header";
