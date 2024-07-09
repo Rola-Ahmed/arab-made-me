@@ -21,6 +21,7 @@ export function UserTokenProvider({ children }) {
     setIsLogin(newValue);
     // Store the new value in localStorage
     // localStorage.setItem('userToken', JSON.stringify(newValue));
+    // localStorage.setItem("userToken", newValue);
     localStorage.setItem("userToken", newValue);
   };
 

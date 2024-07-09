@@ -3,7 +3,7 @@ import { sendMail } from "../../utils/email.js";
 import { asyncHandler } from "../../utils/error_handling.js";
 import jwt, { decode } from "jsonwebtoken"
 import bcrypt from "bcrypt"
-import Trim from "trim";
+// import Trim from "trim";
 import { Op } from "sequelize";
 import { crudOps } from "../../utils/crud_ops.js";
 import { checkLoginTimes } from "../login_times/login_times.js";
@@ -168,7 +168,7 @@ export const createAdmin=asyncHandler(
         const { firstName, lastName, email, password, phone } = req.body
         const userExisit=await User.findOne({where:{email}})
         if(userExisit) return res.json({message:"email already exisits"})
-        let name = [Trim(firstName), Trim(lastName)]
+        let name = [firstName,' ', lastName]
         const user = await User.create({ email, password, name, phone,role:'admin',emailActivated:true })
         return res.status(201).json({message:"done",user})
     }

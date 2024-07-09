@@ -16,7 +16,8 @@ import { userDetails } from "Context/userType";
 
 function CompanyRegistrationPhase2() {
   let { isLogin } = useContext(UserToken);
-  let { currentUserData } = useContext(userDetails);
+
+  let { currentUserData, setCurrentUserData } = useContext(userDetails);
   let navigate = useNavigate();
 
   document.title = "Company Registration";
@@ -66,7 +67,6 @@ function CompanyRegistrationPhase2() {
     });
 
     try {
-
       let data = {
         // if  values.moreDetails!==null add value
         ...(values.address && { address: [values.address] }),
@@ -87,6 +87,11 @@ function CompanyRegistrationPhase2() {
       );
 
       if (result?.success) {
+        setCurrentUserData((prevUserData) => ({
+          ...prevUserData,
+          factoryId: result?.data?.factory?.id,
+        }));
+
         navigate(`/CompanyDetails/MircoSiteDocs`);
       } else {
         setIsLoading(false);

@@ -20,18 +20,19 @@ import CurrentPoint from "./TimeLineHeader/CurrentPoint";
 
 function FactoryRepInfoRegistration() {
   let { isLogin } = useContext(UserToken);
-  let { currentUserData } = useContext(userDetails);
+  let { currentUserData, setCurrentUserData } = useContext(userDetails);
+  let currentUrl = window.location.pathname;
+  let navigate = useNavigate();
 
   document.title = "Company RegistrationUser Type";
   useEffect(() => {
     if (!isLogin) {
-      navigate(`/signIn/CompanyDetails/RepresentiveDetails`);
+      navigate(`/signIn${currentUrl}`);
     }
-
-    // }
-  }, [isLogin]);
-
-  let navigate = useNavigate();
+    if (currentUserData && currentUserData?.importerId) {
+      navigate("/403");
+    }
+  }, [isLogin, currentUserData]);
   const [errorMsg, setErrorMsg] = useState();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -95,6 +96,10 @@ function FactoryRepInfoRegistration() {
       );
 
       if (result?.success) {
+        setCurrentUserData((prevUserData) => ({
+          ...prevUserData,
+          factoryId: result?.data?.factory?.id,
+        }));
         navigate(`/CompanyDetails/LegalDocuments`);
       } else {
         setIsLoading(false);

@@ -8,12 +8,12 @@ export const multerUploader = (path, types) => {
 
   const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      if (!fs.existsSync(`uploads/${path}`)) {
-        fs.mkdirSync(`uploads/${path}`, { recursive: true })
+      if (!fs.existsSync(`uploads`)) {
+        fs.mkdirSync(`uploads`, { recursive: true })
       }
 
 
-      cb(null, `uploads/${path}`)
+      cb(null, `uploads`)
 
     },
     filename: function (req, file, cb) {
@@ -21,7 +21,7 @@ export const multerUploader = (path, types) => {
       console.log(file.originalname);
 
 
-      file.finalPath = `uploads/${path}/${uniqueSuffix}${file.originalname}`
+      file.finalPath = `uploads/${uniqueSuffix}${file.originalname}`
 
       cb(null, uniqueSuffix + file.originalname)
     }

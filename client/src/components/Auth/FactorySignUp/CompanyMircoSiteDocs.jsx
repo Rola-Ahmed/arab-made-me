@@ -11,21 +11,24 @@ import { UserToken } from "Context/userToken";
 import SelectRole from "./TimeLineHeader/SelectRole";
 import Nextpoint from "./TimeLineHeader/NextPoint";
 import LastPointStatus from "./TimeLineHeader/LastPointStatus";
+import { userDetails } from "Context/userType";
 
 function CompanyMircoSiteDocs() {
   let { isLogin } = useContext(UserToken);
-  let navigate = useNavigate();
+  let { setCurrentUserData, currentUserData } = useContext(userDetails);
 
+  let navigate = useNavigate();
+  let currentUrl = window.location.pathname;
   document.title = "Company Registration";
 
   useEffect(() => {
     if (!isLogin) {
-      navigate(`/signIn/CompanyDetails/MircoSiteDocs`);
+      navigate(`/signIn${currentUrl}`);
     }
-
-    // }
-  }, [isLogin]);
-
+    if (currentUserData && currentUserData?.importerId) {
+      navigate("/403");
+    }
+  }, [isLogin, currentUserData]);
   const [errorMsg, setErrorMsg] = useState();
 
   const [isLoading, setIsLoading] = useState("");
@@ -39,6 +42,11 @@ function CompanyMircoSiteDocs() {
     try {
       let result = await addFactoryMedia({ authorization: isLogin }, data);
       if (result?.success) {
+        setCurrentUserData((prevUserData) => ({
+          ...prevUserData,
+          factoryId: result?.data?.factory?.id,
+        }));
+
         setIsLoading(true);
         navigate(`/CompanyDetails/RepresentiveDetails`);
       } else {

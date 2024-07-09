@@ -95,3 +95,4 @@ client/src/components/Home/TopFactories/TopFactories copy.jsx
 client/src/components/Auth/FactorySignUp/CompanyMircoSiteDocs copy.jsx
 client/src/components/Auth/SignUp/SignUp copy.jsx
 client/src/components/Auth/FactorySignUp/CompanyRegistration copy.jsx
+server/src/database/connection.js
