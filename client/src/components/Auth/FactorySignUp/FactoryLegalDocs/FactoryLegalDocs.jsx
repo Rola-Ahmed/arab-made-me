@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import SelectRole from "components/Auth/FactorySignUp/TimeLineHeader/SelectRole";
 import UploadDocument from "components/Forms/Shared/UploadDocument";
+import useFormSubmission from "./useFormSubmission";
 
 import {
   awaitImg,
@@ -10,8 +11,6 @@ import {
 } from "constants/Images";
 
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { baseUrl } from "config.js";
 
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
@@ -24,6 +23,7 @@ function FactoryLegalDocs() {
   let { currentUserData, setCurrentUserData } = useContext(userDetails);
   let navigate = useNavigate();
   let currentUrl = window.location.pathname;
+  document.title = "Company Registration";
 
   useEffect(() => {
     if (!isLogin) {
@@ -34,130 +34,9 @@ function FactoryLegalDocs() {
     }
   }, [isLogin, currentUserData]);
 
-  document.title = "Company Registration";
-
   const [errorMsg, setErrorMsg] = useState();
 
   const [isLoading, setIsLoading] = useState(false);
-
-  // ------------------------------------------------new
-  async function UploadDocs(e) {
-    // e.preventDefault();
-
-    setIsLoading(true);
-
-    const FormData = require("form-data");
-    let data = new FormData();
-
-    selectedDocs?.map((item) => data.append(item.keyWord, item.pdfFile));
-
-    let config = {
-      method: "put",
-      url: `${baseUrl}/factories/media`,
-
-      headers: {
-        authorization: isLogin,
-      },
-      data: data,
-    };
-
-    axios
-      .request(config)
-      .then((response) => {
-        if (response.data.message == "done") {
-          setIsLoading(true);
-
-          navigate(`/factorydashboard`);
-        } else {
-          setErrorMsg((prevErrors) => ({
-            ...prevErrors,
-            response: response?.data?.message,
-          }));
-          const targetElement = document.getElementById("view");
-          targetElement.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-          });
-        }
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        if (error.response && error.response.status) {
-          const statusCode = error.response.status;
-          switch (statusCode) {
-            case 400:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                response: error?.response?.data?.errorMessage,
-              }));
-              break;
-            case 401:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                response: "User is not Unauthorized ",
-              }));
-              break;
-            case 403:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                response:
-                  "Forbidden, You do not have permission to access this resource.",
-              }));
-              break;
-            case 404:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                response:
-                  "Not Found (404). The requested resource was not found.",
-              }));
-              break;
-
-            case 500:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                response: error?.response?.data?.errorMessage,
-              }));
-              break;
-
-            //  429 Too Many Requests
-            // The user has sent too many requests in a given amount of time ("rate limiting").
-            case 429:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                response: " Too Many Requests , Please try again later.",
-              }));
-              break;
-            case 402:
-              // 402
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                response: error?.response?.data?.message,
-              }));
-              break;
-            default:
-              // case message== error
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                response: error?.response?.data?.errorMessage,
-              }));
-              break;
-          }
-        } else {
-          setErrorMsg((prevErrors) => ({
-            ...prevErrors,
-            response: "An unexpected error occurred. Please try again later.",
-          }));
-        }
-
-        const targetElement = document.getElementById("view");
-        targetElement.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      });
-    setIsLoading(false);
-  }
 
   const [selectedDocs, setSelectedDocs] = useState([
     // {
@@ -166,6 +45,11 @@ function FactoryLegalDocs() {
     // },
   ]);
 
+  let { submitForm, requestAddedText, submitDocs } = useFormSubmission(
+    isLogin,
+    setErrorMsg,
+    setIsLoading
+  );
   // ----------------------------------------------------------
   let validation = Yup.string()
     .matches(/^[0-9]+$/, "Input Field should contain numbers only")
@@ -186,148 +70,25 @@ function FactoryLegalDocs() {
       IndustrialRegistrationNumber: "",
     },
     validationSchema,
-    onSubmit: submitForm,
+    onSubmit: submit,
   });
 
-  async function submitForm(values) {
-    setIsLoading(true);
-
-    setErrorMsg((prevErrors) => {
-      const { response, ...restErrors } = prevErrors || {};
-      return restErrors;
-    });
-
-    try {
-      let data = {
-        ...(values.taxRegisterationNumber && {
-          taxRegisterationNumber: values.taxRegisterationNumber,
-        }),
-        ...(values.commercialRegisterationNumber && {
-          commercialRegisterationNumber: values.commercialRegisterationNumber,
-        }),
-        ...(values.IndustrialLicenseNumber && {
-          IndustrialLicenseNumber: values.IndustrialLicenseNumber,
-        }),
-        ...(values.IndustrialRegistrationNumber && {
-          IndustrialRegistrationNumber: values.IndustrialRegistrationNumber,
-        }),
-      };
-
-      let config = {
-        method: "put",
-        url: `${baseUrl}/factories/update/fromUser`,
-        data: data,
-        headers: {
-          authorization: isLogin,
-        },
-      };
-
-      const response = await axios.request(config);
-      //   setErrorMsg("");
-
-      if (response?.data?.message === "done") {
-        if (selectedDocs?.length > 0) {
-          await UploadDocs();
-        } else {
-          navigate(`/factorydashboard`);
-        }
-
-        setIsLoading(true);
-      } else {
-        setIsLoading(false);
-        setErrorMsg((prevErrors) => ({
-          ...prevErrors,
-          response: response?.data?.message,
-        }));
-
-        const targetElement = document.getElementById("view");
-        targetElement.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      }
-    } catch (error) {
-      setIsLoading(false);
-
-      if (error.response && error.response.status) {
-        const statusCode = error.response.status;
-        switch (statusCode) {
-          case 400:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.errorMessage,
-            }));
-            break;
-          case 401:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: "User is not Unauthorized ",
-            }));
-            break;
-          case 403:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response:
-                "Forbidden, You do not have permission to access this resource.",
-            }));
-            break;
-          case 404:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response:
-                "Not Found (404). The requested resource was not found.",
-            }));
-            break;
-
-          case 500:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.errorMessage,
-            }));
-            break;
-
-          //  429 Too Many Requests
-          // The user has sent too many requests in a given amount of time ("rate limiting").
-          case 429:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response:
-                " Too Many Requests , Please try again after 15 miuntes.",
-            }));
-            break;
-          case 402:
-            // 402
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.message,
-            }));
-            break;
-          default:
-            // case message== error
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.errorMessage,
-            }));
-            break;
-        }
-      } else {
-        setErrorMsg((prevErrors) => ({
-          ...prevErrors,
-          response: "An unexpected error occurred. Please try again later.",
-        }));
-      }
-
-      const targetElement = document.getElementById("view");
-      targetElement.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-
-        inline: "start",
-      });
+  function submit(values) {
+    // if data is not added yet
+    if (!requestAddedText) {
+      submitForm(values, selectedDocs);
     }
-    // }
+    // if textApi is added and selectedDocs is greater that 0
+    // call media
+    // this case means that error ouccured in meidaApi so i need only to call media api
+    // else
+    // if (privateLabelAdded.status && selectedDocs?.length > 0) {
+    else if (selectedDocs?.length > 0) {
+      submitDocs(selectedDocs);
+    } else {
+      navigate(`/factorydashboard`);
+    }
   }
-
   return (
     <section id="view" className="register-msg ">
       {/* <div className="container "> */}
@@ -535,13 +296,12 @@ function FactoryLegalDocs() {
                             );
 
                             // Scroll to the target element
-                            if(targetElement){
+                            if (targetElement) {
                               targetElement.scrollIntoView({
                                 behavior: "smooth",
                                 block: "center",
                               });
                             }
-                            
                           }
                         }}
                       >

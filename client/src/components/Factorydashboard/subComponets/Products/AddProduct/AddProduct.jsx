@@ -236,7 +236,6 @@ export default function AddProduct() {
       try {
         let data = {
           country: values.country,
-          city: values.city,
           name: values.name,
 
           categoryId: values.categoryId,
@@ -249,6 +248,9 @@ export default function AddProduct() {
           minOrderQuantity: values.minOrderQuantity,
 
           specialCharacteristics: {},
+
+          ...(values.city && {city: values.city}),
+
         };
 
         if (values.guarantee !== "") {

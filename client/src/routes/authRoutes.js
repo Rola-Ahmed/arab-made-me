@@ -10,7 +10,7 @@ import CompanyRegistration from "components/Auth/FactorySignUp/CompanyRegistrati
 import CompanyRegistrationPhase2 from "components/Auth/FactorySignUp/CompanyRegistrationPhase2";
 import CompanyMircoSiteDocs from "components/Auth/FactorySignUp/CompanyMircoSiteDocs";
 import FactoryRepInfoRegistration from "components/Auth/FactorySignUp/FactoryRepInfoRegistration";
-import FactoryLegalDocs from "components/Auth/FactorySignUp/FactoryLegalDocs";
+import FactoryLegalDocs from "components/Auth/FactorySignUp/FactoryLegalDocs/FactoryLegalDocs";
 
 // Buyer registration
 import ImporterRepDetails from "components/Auth/ImporterSignUp/ImporterRepDetails";
@@ -74,7 +74,7 @@ const authRoutes = [
     element: <CompanyRegistration />,
   },
   {
-    path: "/CompanyDetails/setp2",
+    path: "/CompanyDetails/step2",
     element: <CompanyRegistrationPhase2 />,
   },
 
@@ -93,6 +93,7 @@ const authRoutes = [
     element: <FactoryLegalDocs />,
   },
 
+  // will need it agaib
   // {
   //   path: "/SignUpVerification",
   //   element: <SignUpMessage />,

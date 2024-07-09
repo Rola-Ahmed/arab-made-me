@@ -76,7 +76,7 @@ export default function CompanyRegistration() {
           factoryId: result?.data?.factory?.id,
         }));
 
-        navigate(`/CompanyDetails/setp2`);
+        navigate(`/CompanyDetails/step2`);
         setIsLoading(true);
       } else {
         setIsLoading(false);

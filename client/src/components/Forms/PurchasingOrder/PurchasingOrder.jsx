@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Header from "components/main/Header/Header";
@@ -140,7 +140,7 @@ function PurchasingOrder(props) {
     conditionsOfDelays: "",
     instructions: "",
 
-    repName: factoryData?.repName || "ct",
+    repName: factoryData?.repName.join(", ") || "",
     repEmail: factoryData?.repEmail || "",
     repPhone: factoryData?.repPhone || "",
 
@@ -154,6 +154,7 @@ function PurchasingOrder(props) {
     // otherConditions: "",
   };
 
+  console.log("factoryData",factoryData)
   useEffect(() => {
     if (factoryData?.length != 0) {
       formValidation.setValues(initialValues);

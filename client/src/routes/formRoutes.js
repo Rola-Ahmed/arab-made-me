@@ -33,10 +33,6 @@ const formRoutess = [
     path: "/purchasingOrder/:requestType",
     element: <FetchPurchasingOrder />,
   },
-
-
-
-  
   {
     path: "/requestVisit",
     element: <RequestVisit />,

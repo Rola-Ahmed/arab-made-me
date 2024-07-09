@@ -51,7 +51,7 @@ function SendRfq(props) {
     //     return value && value.length > 0;
     //   }),
 
-      productId: Yup.string().required("Input field is Required"),
+    productId: Yup.string().required("Input field is Required"),
     quantity: Yup.string()
       .required("Input field is Required")
       .matches(/^[0-9]+$/, "Input field must be numbers only")
