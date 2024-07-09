@@ -1,5 +1,4 @@
-import { Chart as ChartJS } from "chart.js/auto";
-import { Line, Doughnut } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 import "./DashBoard.css";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 import ReactPaginate from "react-paginate";
@@ -136,50 +135,6 @@ export default function DashBoard() {
       },
     },
   };
-  const options2 = {
-    plugins: {
-      legend: {
-        labels: {
-          // This more specific font property overrides the global property
-          font: {
-            // size: 400,
-          },
-        },
-      },
-    },
-  };
-  const options4 = {
-    scales: {
-      x: [
-        {
-          ticks: {
-            fontSize: 14,
-            autoSkip: true,
-            maxTicksLimit: 10,
-            maxRotation: 45,
-          },
-          layout: {
-            padding: {
-              bottom: 10, // Adjust the bottom padding to reduce the gap
-            },
-          },
-        },
-      ],
-      y: [
-        {
-          ticks: {
-            fontSize: 14,
-            autoSkip: true,
-            maxTicksLimit: 10,
-            maxRotation: 45,
-            stepSize: 200,
-            min: 0,
-            max: 1000,
-          },
-        },
-      ],
-    },
-  };
 
   return (
     <div className="m-4 dash-home-section">
@@ -231,12 +186,6 @@ export default function DashBoard() {
                   legend: {
                     display: false, // This will hide the legend
                   },
-                },
-                // scalesused to hide the x lines
-                scales: {
-                  // x:{
-                  //   display:false , // This will hide the x-axis labels
-                  // }
                 },
               }}
             />

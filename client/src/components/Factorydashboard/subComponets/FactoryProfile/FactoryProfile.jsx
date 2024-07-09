@@ -745,7 +745,7 @@ export default function FactoryProfile() {
             <div className="title-contianer-input w-100">
               <Modal.Header closeButton>
                 <Modal.Title>
-                  <p className="bg-info">Legal Documents</p>
+                  <p >Legal Documents</p>
                 </Modal.Title>
               </Modal.Header>
               {errorMsg?.response ? (

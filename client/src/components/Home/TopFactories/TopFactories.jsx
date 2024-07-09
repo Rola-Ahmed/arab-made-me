@@ -246,7 +246,7 @@ export default function TopFactories(props) {
                     </Link>
                   ) : (
                     <Link
-                      className="cursor bg-info"
+                      className="cursor "
                       to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
                     >
                       <img
