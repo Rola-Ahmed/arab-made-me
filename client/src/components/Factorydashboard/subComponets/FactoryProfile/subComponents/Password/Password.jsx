@@ -25,7 +25,7 @@ export default function Password(props) {
     isLogin,
     isLoading,
   } = props;
-  console.log("props",props)
+  // console.log("props",props)
   let navigate = useNavigate();
   const { setGlobalMsg } = useContext(GlobalMsgContext);
 

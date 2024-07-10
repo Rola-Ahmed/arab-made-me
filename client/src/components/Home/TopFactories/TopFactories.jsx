@@ -272,15 +272,7 @@ export default function TopFactories(props) {
                         )}
                       </div>
 
-                      <div
-                        className="subText w-100 "
-                        // onClick={() =>
-                        //   DirectToFactoryPage(
-                        //     factoryitem?.id,
-                        //     factoryitem?.name
-                        //   )
-                        // }
-                      >
+                      <div className="subText w-100 ">
                         <div className="text-truncate">
                           <p className="text-truncate">
                             products:

@@ -61,7 +61,7 @@ export default function LeftSideFilter(props) {
               value=""
               defaultChecked
             />
-            <label className="form-check-label" htmlFor="flexRadioDefault1">
+            <label className="form-check-label" >
               {`All`}
             </label>
           </div>
@@ -76,7 +76,7 @@ export default function LeftSideFilter(props) {
                 id="country"
                 value={item.code}
               />
-              <label className="form-check-label" htmlFor="flexRadioDefault1">
+              <label className="form-check-label" >
                 {item.name}
               </label>
             </div>

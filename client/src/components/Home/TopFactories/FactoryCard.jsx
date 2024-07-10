@@ -5,7 +5,6 @@ export default function FactoryCard(props) {
   let { factoryitem, DirectToFactoryPage } = props;
   return (
     <div
-      className="new div"
       onClick={() => DirectToFactoryPage(factoryitem?.id, factoryitem?.name)}
     >
       <div className="card-title d-flex w-100 cursorcursor">
