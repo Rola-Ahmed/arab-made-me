@@ -16,7 +16,7 @@ const createRequestConfig = (method, url, headers, data) => ({
 
 // Handle API response
 const handleResponse = (response) => {
-  if (response.data.message === "done") {
+  if (response.data.message === "done" || response.data.message == "updated") {
     return {
       data: response.data,
       loadingStatus: false,
@@ -40,7 +40,7 @@ const handleError = (error) => {
   // } else if (error.code === "ERR_NETWORK") {
   //   errorMsg = "Network Error";
   // } else {
-    errorMsg = errorHandler(error);
+  errorMsg = errorHandler(error);
   // }
   return { data: null, loadingStatus: true, error: errorMsg, success: false };
 };

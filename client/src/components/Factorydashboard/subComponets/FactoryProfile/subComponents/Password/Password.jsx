@@ -5,11 +5,13 @@ import Modal from "react-bootstrap/Modal";
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-import { baseUrl } from "config.js";
 import { GlobalMsgContext } from "Context/globalMessage";
+
+import { passwordValidate } from "utils/validationUtils";
+import FormVlaidtionError from "components/Forms/Shared/FormVlaidtionError";
+import { updateFromUser } from "Services/UserAuth";
 
 export default function Password(props) {
   let {
@@ -23,6 +25,7 @@ export default function Password(props) {
     isLogin,
     isLoading,
   } = props;
+  console.log("props",props)
   let navigate = useNavigate();
   const { setGlobalMsg } = useContext(GlobalMsgContext);
 
@@ -40,6 +43,31 @@ export default function Password(props) {
     navigate("/");
   };
 
+  const submitPasswordForm = async (values) => {
+    setErrorMsg((prevErrors) => {
+      const { response, ...restErrors } = prevErrors || {};
+      return restErrors;
+    });
+    let data = {
+      oldPassword: values.oldPassword,
+      password: values.password,
+    };
+
+    // try {
+    let result = await updateFromUser({ authorization: isLogin }, data);
+
+    if (result?.success) {
+      logOuut();
+      ModalClose();
+      setGlobalMsg("Password updated Successfully");
+    } else {
+      setErrorMsg((prevErrors) => ({
+        ...prevErrors,
+        response: result.error,
+      }));
+    }
+  };
+
   //
   // Password Validation
   let formPasswordValidation = useFormik({
@@ -51,65 +79,16 @@ export default function Password(props) {
     },
 
     validationSchema: Yup.object().shape({
-      oldPassword: Yup.string()
-        .required("Input Field is Required")
-        .min(6, "min length is 6")
-        .max(255, "max length is 255"),
+      oldPassword: passwordValidate,
 
-      password: Yup.string()
-        .required("Input Field is Required")
-        .min(6, "min length is 6")
-        .max(255, "max length is 255"),
+      password: passwordValidate,
       confirmPassword: Yup.string()
         .required("Input Field is required")
         .oneOf([Yup.ref("password")], "Passwords must match"),
     }),
     onSubmit: submitPasswordForm,
   });
-  async function submitPasswordForm(values) {
-    setErrorMsg((prevErrors) => {
-      const { response, ...restErrors } = prevErrors || {};
-      return restErrors;
-    });
-    let data = {};
-    // cotinue
-    data = {
-      oldPassword: values.oldPassword,
 
-      password: values.password,
-    };
-
-    try {
-      let config = {
-        method: "put",
-        url: `${baseUrl}/users/update/fromUser`,
-        headers: {
-          authorization: isLogin,
-        },
-        data: data,
-      };
-
-      const response = await axios.request(config);
-
-      if (response.data.message == "updated") {
-        logOuut();
-        ModalClose();
-
-        setGlobalMsg("Password updated Successfully");
-      } else {
-        setErrorMsg((prevErrors) => ({
-          ...prevErrors,
-          response: response?.data?.message,
-        }));
-      }
-    } catch (error) {
-      setErrorMsg((prevErrors) => ({
-        ...prevErrors,
-        response: error?.response?.data?.message,
-      }));
-      window.scrollTo({ top: 1642.4000244140625 });
-    }
-  }
   return (
     <>
       <div id="PasswordChange"></div>
@@ -206,10 +185,6 @@ export default function Password(props) {
                               onChange={formPasswordValidation.handleChange}
                               onBlur={formPasswordValidation.handleBlur}
                               value={formPasswordValidation.values.oldPassword}
-                              // didnt allow pating
-                              // onPaste={(e) => e.preventDefault()}
-
-                              // placeholder="Change Password"
                             />
                             <div
                               class="input-group-append h-100 cursor"
@@ -229,15 +204,10 @@ export default function Password(props) {
                               ></span>
                             </div>
                           </div>
-                          {/*  */}
-                          {formPasswordValidation.errors.oldPassword &&
-                          formPasswordValidation.touched.oldPassword ? (
-                            <small className="text-danger">
-                              {formPasswordValidation.errors.oldPassword}
-                            </small>
-                          ) : (
-                            ""
-                          )}
+                          <FormVlaidtionError
+                            formValidation={formPasswordValidation}
+                            vlaidationName="oldPassword"
+                          />
                         </div>
                       </div>
                     </div>
@@ -283,14 +253,11 @@ export default function Password(props) {
                             </div>
                           </div>
                           {/*  */}
-                          {formPasswordValidation.errors.password &&
-                          formPasswordValidation.touched.password ? (
-                            <small className="text-danger">
-                              {formPasswordValidation.errors.password}
-                            </small>
-                          ) : (
-                            ""
-                          )}
+
+                          <FormVlaidtionError
+                            formValidation={formPasswordValidation}
+                            vlaidationName="password"
+                          />
                         </div>
                       </div>
                     </div>
@@ -308,11 +275,6 @@ export default function Password(props) {
                                 : "password"
                             }`}
                             className="form-control"
-                            // onPaste={(event) => {
-                            //   // paste is not allowed
-                            //   event.preventDefault();
-                            //   event.clipboardData.getData("text/plain");
-                            // }}
                             id="confirmPassword"
                             name="confirmPassword"
                             placeholder="Confirm Password"
@@ -343,14 +305,10 @@ export default function Password(props) {
                         </div>
                         {/*  */}
 
-                        {formPasswordValidation.errors.confirmPassword &&
-                        formPasswordValidation.touched.confirmPassword ? (
-                          <small className="text-danger">
-                            {formPasswordValidation.errors.confirmPassword}
-                          </small>
-                        ) : (
-                          ""
-                        )}
+                        <FormVlaidtionError
+                          formValidation={formPasswordValidation}
+                          vlaidationName="confirmPassword"
+                        />
                       </div>
                     </div>
 

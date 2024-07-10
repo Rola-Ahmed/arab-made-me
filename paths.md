@@ -367,3 +367,16 @@ shippingConditions: "EXW", //required,
           response: "An unexpected error occurred. Please try again later.",
         }));
       }
+
+
+
+
+
+
+
+
+
+
+
+
+      This version maintains a clear and concise tone, ensuring the user understands the action and its consequence.

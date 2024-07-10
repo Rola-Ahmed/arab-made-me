@@ -34,6 +34,9 @@ export default function FormValidation(props) {
                   <p className="text-sub m-auto">
                     Kindly register as a {props.userType} to obtain access.
                   </p>
+                  <p className="text-sub m-auto">
+                  By clicking "Sign In," you will be signed out of your current account and redirected to the Sign In page.
+                  </p>
 
                   <div className="row gap-row">
                     <div className="col-12 action">
