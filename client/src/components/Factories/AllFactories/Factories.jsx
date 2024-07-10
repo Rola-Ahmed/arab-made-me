@@ -1,20 +1,13 @@
 import React, { useEffect, useState, useContext } from "react";
 import "../Factories.css";
 import { countriesMiddleEast } from "constants/countries";
-import { handleImageError } from "utils/ImgNotFound";
 import Loading from "components/Loading/Loading";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useFetchSectors } from "components/Home/sectors/useFetchSectors";
-import { Link } from "react-router-dom";
 import HandleUsersBtnAccess, {
   handleIsLoggedInBtn,
 } from "utils/actionBtns/HandleUsersBtnAccess";
-import DropdownActionBtnsFactory from "components/Shared/DropdownActionBtns/FactoryBtns/DropdownActionBtnsFactory";
-
-import BannerSlider from "components/Home/TopFactories/BannerSlider/BannerSlider";
-import FactoryCard from "components/Home/TopFactories/FactoryCard";
-import ProductCarousel from "components/Home/TopFactories/ProductCarousel/ProductCarousel";
 
 import Header from "components/main/Header/Header";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
@@ -28,8 +21,8 @@ import { userDetails } from "Context/userType";
 import DescritionPopUp from "components/Helpers/DescritionPopUp";
 
 // static variabls
-import { BtnDescription } from "constants/BtnDescription";
 import PublicPaginate from "components/Shared/PublicPaginate";
+import FactoryCardParent from "components/Home/TopFactories/Shared/FactoryCardParent";
 
 export default function TopFactories(props) {
   let {
@@ -54,8 +47,7 @@ export default function TopFactories(props) {
   const filterBySector = searchParams.get("filterBySector");
   const filterByCategory = searchParams.get("filterByCategory");
 
-
-  console.log("allFactoriesDataallFactoriesData",allFactoriesData);
+  // console.log("allFactoriesDataallFactoriesData", allFactoriesData,apiLoadingData);
   const [modalShow, setModalShow] = useState({
     isLogin: false,
     isImporterVerified: false,
@@ -130,10 +122,6 @@ export default function TopFactories(props) {
     setDescription(desc);
   };
 
-  function ToFactoryPageBtn(factoryId, factoryName) {
-    navigate(`/factoryPage/${factoryId}-${factoryName}`);
-  }
-
   function handleButtonClick(loginPath) {
     if (
       currentUserData?.importerId !== null &&
@@ -168,39 +156,7 @@ export default function TopFactories(props) {
     navigate(`/${loginPath}`);
   }
 
-  function handleButtonClick(loginPath) {
-    if (
-      currentUserData?.importerId !== null &&
-      (currentUserData?.importerVerified === "0" ||
-        !currentUserData?.importerEmailActivated)
-    ) {
-      setModalShow((prevVal) => ({
-        ...prevVal,
-        isImporterVerified: true,
-      }));
-      return;
-    }
-
-    if (currentUserData?.factoryId !== null) {
-      setModalShow((prevVal) => ({
-        ...prevVal,
-        isFactoryVerified: true,
-      }));
-      return;
-    }
-
-    if (!isLogin) {
-      setModalShow((prevVal) => ({
-        ...prevVal,
-        isLogin: true,
-      }));
-
-      setisLoggedReDirect(`/signIn/${loginPath}`);
-      return;
-    }
-
-    navigate(`/${loginPath}`);
-  }
+  
 
   const handleBtnCheckIfProductExisit = (
     loginPath,
@@ -420,137 +376,20 @@ export default function TopFactories(props) {
                           className="  
                         col-xxl-4 col-xl-4  col-lg-6 col-12 pe-0 bg-info"
                         >
-                          <div
-                            // className="card height  mobile-w container"
-                            // className="card height  mobile-w "
-                            className="card "
-                            key={factoryindex}
-                          >
-                            {factoryitem?.images?.length > 0 ? (
-                              <Link
-                                className="cursor"
-                                to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
-                              >
-                                <BannerSlider factoryitem={factoryitem} />
-                              </Link>
-                            ) : (
-                              <img
-                                onClick={() =>
-                                  ToFactoryPageBtn(
-                                    factoryitem?.id,
-                                    factoryitem?.name
-                                  )
-                                }
-                                src={`handleImageError`}
-                                className="sliderImg cursor"
-                                alt={`Factory Slider `}
-                                onError={handleImageError}
-                              />
-                            )}
-
-                            <div className="card-body cardBody">
-                              <div className="subCard ">
-                                <FactoryCard
-                                  factoryitem={factoryitem}
-                                  DirectToFactoryPage={ToFactoryPageBtn}
-                                />
-
-                                {/*  product slider*/}
-                                <div className="profile-img w-100  ">
-                                  {factoryitem?.productLength > 0 && (
-                                    <ProductCarousel
-                                      factoryitem={factoryitem}
-                                    />
-                                  )}
-                                </div>
-
-                                <div className="subText w-100 ">
-                                  <div className="text-truncate">
-                                    <p className="text-truncate">
-                                      products:
-                                      <span>
-                                        {factoryitem?.productLength > 0
-                                          ? factoryitem?.productData?.map(
-                                              (item) => ` ${item?.name} ,`
-                                            )
-                                          : " none"}
-                                      </span>
-                                    </p>
-                                  </div>
-                                </div>
-                                {/* ----------------- */}
-
-                                <div className="d-flex justify-content-between align-items-center   w-100">
-                                  <div className="call-btns d-flex justify-content-between  align-items-center w-100  pe-2">
-                                    {currentUserData?.datacompletelyLoaded ? (
-                                      <button className="btn-call-1  cursor px-5 ">
-                                        <div className="btn-text text-decoration-none cursor text-white">
-                                          <i className="fas fa-spinner fa-spin text-white"></i>
-                                        </div>
-                                      </button>
-                                    ) : (
-                                      <button
-                                        className="btn-call-1  cursor "
-                                        onClick={() => {
-                                          handleUserClickValidation1(
-                                            `privatelabel?factoryId=${factoryitem?.id}&factoryName=${factoryitem?.name} `
-                                          );
-
-                                          // return
-                                        }}
-                                      >
-                                        <div className="btn-text text-decoration-none cursor text-white">
-                                          Private Label Request
-                                        </div>
-                                      </button>
-                                    )}
-
-                                    {currentUserData?.datacompletelyLoaded ? (
-                                      <button className="btn-call-2  cursor px-5 bg-white ">
-                                        <div className="btn-text text-decoration-none cursor ">
-                                          <i className="fas fa-spinner fa-spin text-dark"></i>
-                                        </div>
-                                      </button>
-                                    ) : (
-                                      <div
-                                        className=" btn-call-2 padd text-dark text-decoration-none cursor"
-                                        onClick={() => {
-                                          handleUserClickValidLogin(
-                                            `contactsupplier?userId=${factoryitem?.userId}&factoryName=${factoryitem?.name}`
-                                          );
-                                        }}
-                                      >
-                                        <i
-                                          class="fa-regular fa-comments fa-2x"
-                                          style={{ fontSize: "1.5rem" }}
-                                        ></i>
-                                      </div>
-                                    )}
-                                  </div>
-
-                                  {/* pop up btn */}
-                                  <DropdownActionBtnsFactory
-                                    currentUserData={currentUserData}
-                                    factoryitem={factoryitem}
-                                    BtnDescription={BtnDescription}
-                                    handleBtnCheckIfProductExisit={
-                                      handleBtnCheckIfProductExisit
-                                    }
-                                    handleUserClickValidation1={
-                                      handleUserClickValidation1
-                                    }
-                                    handleQuestionMarkClick={
-                                      handleQuestionMarkClick
-                                    }
-                                    handleUserClickValidLogin={
-                                      handleUserClickValidLogin
-                                    }
-                                  />
-                                </div>
-                                {/* ------ */}
-                              </div>
-                            </div>
-                          </div>
+                          <FactoryCardParent
+                            factoryitem={factoryitem}
+                            currentUserData={currentUserData}
+                            handleUserClickValidation1={
+                              handleUserClickValidation1
+                            }
+                            handleUserClickValidLogin={
+                              handleUserClickValidLogin
+                            }
+                            handleQuestionMarkClick={handleQuestionMarkClick}
+                            handleBtnCheckIfProductExisit={
+                              handleBtnCheckIfProductExisit
+                            }
+                          />
                         </div>
                       ))}
                     </>
@@ -582,7 +421,7 @@ export default function TopFactories(props) {
       >
         <Modal.Body closeButton>
           <Modal.Header closeButton>
-            <Modal.Title>Factory Has No Products</Modal.Title>
+            <Modal.Title>Factory Has No Products Yet</Modal.Title>
           </Modal.Header>
           <div className="w-100 ">
             <div className="row  row-gap">

@@ -9,7 +9,7 @@ import HandleUsersBtnAccess, {
   handleIsLoggedInBtn,
 } from "utils/actionBtns/HandleUsersBtnAccess";
 
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { UserToken } from "Context/userToken";
 // modals
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
@@ -20,7 +20,7 @@ import DescritionPopUp from "components/Helpers/DescritionPopUp";
 import { userDetails } from "Context/userType";
 // static variabls
 
-// import FactoryCardParent from "./Shared/FactoryCardParent";
+import FactoryCardParent from "./Shared/FactoryCardParent";
 
 export default function TopFactories(props) {
   let { allFactoriesData } = props;
@@ -90,10 +90,6 @@ export default function TopFactories(props) {
     ],
   };
 
-  function DirectToFactoryPage(factoryId, factoryName) {
-    navigate(`/factoryPage/${factoryId}-${factoryName}`);
-  }
-
   const handleBtnCheckIfProductExisit = (
     loginPath,
     productLength,
@@ -132,10 +128,6 @@ export default function TopFactories(props) {
 
   const handleQuestionMarkClick = (desc) => {
     setDescription(desc);
-    setModalShow((prevVal) => ({
-      ...prevVal,
-      displayDescr: true,
-    }));
   };
 
   return (
@@ -231,10 +223,18 @@ export default function TopFactories(props) {
           <div className="factoryCard  container m-0 p-0 overflow-hidden ">
             <Slider {...settingsMain} ref={sliderRef}>
               {allFactoriesData.map((factoryitem, factoryindex) => (
-                // <div className="col-sm-12 col-xl-4 col-xxl-3  col-lg-4  col-md-6 m-0  px-1">
-              //  <FactoryCardParent/>
-                // {/* </div> */}
+                // <div className="col-sm-12 col-xl-4 col-xxl-3  col-lg-4  col-md-6 m-0  px-1"
                 <>
+                  <FactoryCardParent
+                    factoryitem={factoryitem}
+                    currentUserData={currentUserData}
+                    handleUserClickValidation1={handleUserClickValidation1}
+                    handleUserClickValidLogin={handleUserClickValidLogin}
+                    handleQuestionMarkClick={handleQuestionMarkClick}
+                    handleBtnCheckIfProductExisit={
+                      handleBtnCheckIfProductExisit
+                    }
+                  />
                 </>
               ))}
             </Slider>
@@ -286,8 +286,6 @@ export default function TopFactories(props) {
                     handleUserClickValidation1(
                       `CustomerProductReq?${factoryHasProduct.location}&productName=CreateYourOwnBrand `
                     );
-
-                    // return
                   }}
                 >
                   <p className="cursor "> Custom Product Request</p>
@@ -310,18 +308,13 @@ export default function TopFactories(props) {
         </Modal.Body>
       </Modal>
 
-      {modalShow.displayDescr && (
-        <DescritionPopUp
-          show={modalShow.displayDescr}
-          description={description}
-          onClose={() => {
-            setModalShow((prevVal) => ({
-              ...prevVal,
-              displayDescr: false,
-            }));
-          }}
-        />
-      )}
+      <DescritionPopUp
+        show={description != ""}
+        description={description}
+        onClose={() => {
+          handleQuestionMarkClick("");
+        }}
+      />
     </>
   );
 }
