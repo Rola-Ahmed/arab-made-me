@@ -1,25 +1,84 @@
 import React, { useEffect, useState } from "react";
+import Factories from "./Factories";
 
 import {
   fetchFactorieswithParam,
   fetchFactoryProductsSize,
 } from "Services/factory";
-import TopFactories from "./TopFactories";
 
-export default function FetchTopFactories() {
-  const numOfFactoriesFetch = 30;
+export default function FetchFactories() {
   const numOfProductsFetch = 20;
+  const [pagination, setPagination] = useState(() => ({
+    // i want to display 3 pdoructs in the 1st page
+    displayProductSize: 9,
+    currentPage: 1,
+    totalPage: 1,
+  }));
   const [allFactoriesData, setAllFactoriesData] = useState([]);
-
   const [uniqueFactoryIDofProducts, setUniqueFactoryIDofProducts] = useState(
     []
   );
 
+  const [filter, setFilter] = useState({
+    filterSearch: "",
+    filterByCountry: "",
+    filterBySector: [],
+    // filterBySector: filterBySector?.split(",")?.map(String) ?? [],
+  });
+
+  const [apiLoadingData, setApiLoadingData] = useState({
+    loadingPage: true,
+    errorCausedMsg: true,
+  });
+
+  function getcurrentFilter(location, search, sector) {
+    let param = "";
+
+    if (filter?.filterSearch) {
+      param = `param` + `&filter=${location}`;
+    }
+    if (filter?.filterByCountry) {
+      param = `param` + `&location=${search}`;
+    }
+    return param;
+  }
+
+  async function FetchTotalLen() {
+    try {
+      let param = getcurrentFilter(filter?.location, filter?.filterSearch, "");
+
+      let result = await fetchFactorieswithParam(param);
+
+      if (result?.success) {
+        setPagination((prevValue) => ({
+          ...prevValue,
+          totalPage: Math.ceil(
+            (result.data.factories.length || 0) / prevValue.displayProductSize
+          ),
+        }));
+      } else {
+        setApiLoadingData({
+          loadingPage: result?.loadingStatus,
+          errorCausedMsg: result?.error,
+        });
+      }
+    } catch (error) {}
+  }
+
+  useEffect(() => {
+    FetchTotalLen();
+  }, [filter]);
+
   useEffect(() => {
     const fetchFactoriesData = async () => {
       try {
+        let param = getcurrentFilter(
+          filter?.location,
+          filter?.filterSearch,
+          ""
+        );
         let result = await fetchFactorieswithParam(
-          `size=${numOfFactoriesFetch}`
+          `size=${pagination?.displayProductSize}&page=${pagination?.currentPage}&${param}`
         );
 
         // if there is error
@@ -43,8 +102,15 @@ export default function FetchTopFactories() {
     };
 
     fetchFactoriesData();
-  }, []);
 
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "instant",
+    });
+  }, [pagination, filter]);
+
+  //   factory products
   const getFactoryProduct = async (factoryId) => {
     try {
       let result = await fetchFactoryProductsSize(
@@ -80,6 +146,7 @@ export default function FetchTopFactories() {
     } catch (error) {}
   };
 
+  //   loop on factory products
   useEffect(() => {
     if (uniqueFactoryIDofProducts !== null) {
       uniqueFactoryIDofProducts?.map((factoryId) => (
@@ -89,5 +156,15 @@ export default function FetchTopFactories() {
   }, [uniqueFactoryIDofProducts]);
 
   console.log("allFactoriesData", allFactoriesData);
-  return <TopFactories allFactoriesData={allFactoriesData} />;
+
+  return (
+    <Factories
+      setFilter={setFilter}
+      allFactoriesData={allFactoriesData}
+      pagination={pagination}
+      filter={filter}
+      setPagination={setPagination}
+      apiLoadingData={apiLoadingData}
+    />
+  );
 }

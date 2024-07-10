@@ -12,8 +12,8 @@ export const fetchFactoryProductsSize = async (factoryId, size) => {
 
 //------------------------------------- factory data------------------------------------------
 
-export const fetchFactories = async (size) => {
-  return await getRequest(`/factories?size=${size}`);
+export const fetchFactorieswithParam = async (param) => {
+  return await getRequest(`/factories?param`);
 };
 
 export const fetchOneFactory = async (id) => {

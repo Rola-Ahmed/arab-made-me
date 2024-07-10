@@ -47,6 +47,7 @@ import formRoutes from "routes/formRoutes";
 import MeetingRoom from "components/MeetingRoom/MeetingRoom";
 import Invitaion from "components/MeetingRoom/Invitaion";
 import UnAuthPage from "components/UnAuthPage";
+import FetchFactories from "components/Factories/AllFactories/FetchFactories";
 
 const router = createBrowserRouter([
   {
@@ -136,6 +137,11 @@ const router = createBrowserRouter([
   {
     path: "/answerQuotation",
     element: <AnswerQuotation />,
+  },
+
+   {
+    path: "/fetchFactory",
+    element: <FetchFactories />,
   },
   {
     path: "/answerQuotationPrivateLabel",

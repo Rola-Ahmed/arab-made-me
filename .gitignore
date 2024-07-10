@@ -96,3 +96,8 @@ client/src/components/Auth/FactorySignUp/CompanyMircoSiteDocs copy.jsx
 client/src/components/Auth/SignUp/SignUp copy.jsx
 client/src/components/Auth/FactorySignUp/CompanyRegistration copy.jsx
 server/src/database/connection.js
+client/src/components/Factories/AllFactories/Factories copy.jsx
+client/src/components/Factories/AllFactories/Factories copy 3.jsx
+client/src/components/Factories/AllFactories/Factories copy 2.jsx
+client/src/components/Factories/AllFactories/Factories copy 4.jsx
+client/src/components/Home/TopFactories/Shared/FactoryCardParent copy.jsx

@@ -246,6 +246,7 @@
 
 .fo3 .row.gap {
     row-gap: 25px;
+    margin-left:0 !important ;
 
 }
 
@@ -385,9 +386,14 @@
 
 
 .factories .profile-img {
-    gap: 8px;
+    /* gap: 8px;
     display: flex;
-    width: auto;
+    width: auto; */
+
+    /* gap: 8px; */
+    /* width: 100%; */
+    height: 53px;
+    border-radius: 0%;
 
 }
 
@@ -407,16 +413,26 @@
 }
 
 .btn-container .btn-1 {
-    color: #FAFAFA;
+    /* color: #FAFAFA;
     border-radius: 8px;
     background: var(--primary-color);
     display: flex;
-    /* padding: 10px 20px; */
     padding: 10px 15px;
     justify-content: center;
     align-items: center;
     gap: 8px;
-    border: none;
+    border: none; */
+
+
+
+    color: #FAFAFA;
+    border-radius: 8px;
+    background: var(--primary-color);
+    display: flex;
+    padding: 10px 20px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
 }
 
 .btn-container .btn-1 .rfq-icon {

@@ -15,7 +15,8 @@ const DropdownActionBtnsFactory = ({
       {currentUserData?.datacompletelyLoaded ? (
         <i className="fas fa-spinner fa-spin text-dark"></i>
       ) : (
-        <i className="ellipsis px-2 py-3 fa-solid fa-ellipsis-vertical"></i>
+        // <i className="ellipsis px-2 py-3 fa-solid fa-ellipsis-vertical"></i>
+        <i className="ellipsis  fa-solid fa-ellipsis-vertical"></i>
       )}
       {!currentUserData?.datacompletelyLoaded && (
         <ul className="dropdown-menu-top p-3 m-2">
