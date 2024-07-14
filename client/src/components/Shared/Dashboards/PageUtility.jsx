@@ -7,9 +7,6 @@ export default function PageUtility(props) {
       <Link
         to="/"
         className="back-btn-dash cursor text-decoration-none text-muted"
-        onClick={() => {
-          localStorage.setItem("ToHomePage", "true");
-        }}
       >
         Home
       </Link>

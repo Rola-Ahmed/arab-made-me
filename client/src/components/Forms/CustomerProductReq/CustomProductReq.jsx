@@ -49,7 +49,7 @@ function CustomerProductReq(props) {
     specialCharDesc: Yup.string().when("specialCharKeyWord", {
       is: (schema) => !!schema,
       then: (schema) =>
-        schema.min(3, "min length is 3").max(50, "max length is 50"),
+        schema.max(50, "max length is 50"),
     }),
 
     technicalSpecifications: Yup.string()

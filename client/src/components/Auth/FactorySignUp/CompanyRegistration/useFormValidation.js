@@ -19,7 +19,7 @@ let validationSchema = Yup.object().shape({
   description: Yup.string()
     .required("Input Field is Required")
     .max(255, "max legnth is 255"),
-  city: Yup.string().min(3, "min length is 3").max(60, "max length is 60"),
+  city: Yup.string().max(60, "max length is 60"),
 });
 
 export const useFormValidation = (countriesMiddleEast, submitForm) => {

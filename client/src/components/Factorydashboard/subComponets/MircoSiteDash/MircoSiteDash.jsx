@@ -360,7 +360,6 @@ export default function MircoSiteDash() {
 
   let nameValidation = Yup.string()
     .required("Input Field is Required")
-    .min(3, "min length is 3")
     .max(25, "max length is 25");
   let phoneValidation = Yup.string()
     .required("Input Field is Required")

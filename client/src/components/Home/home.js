@@ -11,7 +11,7 @@ import Freq from "./freq/Freq";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Sourcingh from "./sourcingh/Sourcingh";
-import { Chat } from "@aidbase/chat";
+
 function Home() {
   
   if (localStorage.getItem("ToHomePage")) {

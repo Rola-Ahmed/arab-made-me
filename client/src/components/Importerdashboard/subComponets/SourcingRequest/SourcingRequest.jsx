@@ -45,7 +45,6 @@ function SourcingRequest() {
   let validationSchema = Yup.object().shape({
     productName: Yup.string()
       .required("Input Field is Required")
-      .min(3, "min length is 3")
       .max(25, "max length is 25"),
 
     quantity: Yup.string()

@@ -8,9 +8,7 @@ export default function SubPageUtility(props) {
       <Link
         to="/"
         className="back-btn-dash cursor text-decoration-none text-muted"
-        onClick={() => {
-          localStorage.setItem("ToHomePage", "true");
-        }}
+        
       >
         Home
       </Link>
@@ -20,7 +18,6 @@ export default function SubPageUtility(props) {
         to="-1"
         className="back-btn-dash cursor text-decoration-none text-muted"
         onClick={() => {
-          localStorage.setItem("ToHomePage", "true");
           navigate(-1);
         }}
       >

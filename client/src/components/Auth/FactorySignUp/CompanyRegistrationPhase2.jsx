@@ -39,7 +39,6 @@ function CompanyRegistrationPhase2() {
     userType: Yup.string(),
 
     address: Yup.string()
-      .min(3, "min length is 3")
       .max(255, "max length is 255"),
 
     yearOfEstablishmint: Yup.string()

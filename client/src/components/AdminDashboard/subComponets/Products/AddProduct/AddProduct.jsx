@@ -123,14 +123,14 @@ export default function AddProduct() {
 
     specialCharKeyWord: Yup.string()
       // .required("Input field is Required")
-      .min(3, "min legnth is 3")
+      
       .max(50, "max legnth is 50"),
 
     specialCharDesc: Yup.string().when("specialCharKeyWord", {
       is: (schema) => !!schema,
       then: (schema) =>
         schema
-          .min(3, "min length is 3")
+          
           .required("Input field is Required")
           .max(50, "max length is 50"),
       otherwise: (schema) => schema.nullable(),

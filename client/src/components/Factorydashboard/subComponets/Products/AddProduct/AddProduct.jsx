@@ -133,7 +133,6 @@ export default function AddProduct() {
       is: (schema) => !!schema,
       then: (schema) =>
         schema
-          .min(3, "min length is 3")
           .required("Input field is Required")
           .max(50, "max length is 50"),
       otherwise: (schema) => schema.nullable(),

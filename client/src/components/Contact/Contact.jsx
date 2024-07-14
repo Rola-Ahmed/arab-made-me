@@ -20,21 +20,20 @@ function Contact() {
     // userType: Yup.string(),
 
     firstName: Yup.string()
-      .min(3, "min length is 3")
+      
       .max(50, "max length is 50")
       .required("Input field is Required"),
     lastName: Yup.string()
-      .min(3, "min length is 3")
+     
       .max(50, "max length is 50")
       .required("Input field is Required"),
 
-    company: Yup.string().min(3, "min length is 3").max(50, "max length is 50"),
+    company: Yup.string().max(50, "max length is 50"),
     // .required("Input field is Required"),
 
     email: Yup.string()
       .email("Invalid email")
       .required("Input Field is Required")
-
       .max(255, "max length is 255"),
 
     repPhone: Yup.string()

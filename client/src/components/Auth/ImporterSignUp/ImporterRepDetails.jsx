@@ -41,12 +41,12 @@ export default function ImporterRepDetails() {
     // userType: Yup.string(),
 
     repName: Yup.string()
-      .min(3, "min length is 3")
+      
       .max(50, "max length is 50")
       .required("Input field is Required"),
 
     importerName: Yup.string()
-      .min(3, "min length is 3")
+      
       .max(50, "max length is 50")
       .required("Input field is Required"),
 
@@ -74,7 +74,7 @@ export default function ImporterRepDetails() {
     ),
 
     address: Yup.string()
-      .min(3, "min length is 3")
+      
       .max(255, "max length is 255"),
 
     description: Yup.string()

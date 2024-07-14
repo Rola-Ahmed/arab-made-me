@@ -141,7 +141,6 @@ export default function ImporterProfile() {
 
   let nameValidation = Yup.string()
     .required("Input Field is Required")
-    .min(3, "min length is 3")
     .max(25, "max length is 25");
   let phoneValidation = Yup.string()
     .required("Input Field is Required")
@@ -220,7 +219,7 @@ export default function ImporterProfile() {
       exportingCountries: "",
     },
     validationSchema: Yup.object().shape({
-      city: Yup.string().min(3, "min length is 3").max(60, "max length is 60"),
+      city: Yup.string().max(60, "max length is 60"),
 
       commercialRegisterationNumber: Yup.string()
         // .required("Input Field is Required")
