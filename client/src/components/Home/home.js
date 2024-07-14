@@ -13,42 +13,26 @@ import "react-toastify/dist/ReactToastify.css";
 import Sourcingh from "./sourcingh/Sourcingh";
 
 function Home() {
-  
+  document.title = "Home";
   if (localStorage.getItem("ToHomePage")) {
     // if true then direct only to the holme page
     // there is two conditions either success message or page is not found
-
-    if (localStorage.getItem("ToHomePage") !== "true") {
-      if (localStorage.getItem("ToHomePage") === "Page Not Found") {
-        toast(localStorage.getItem("ToHomePage"), {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          // //pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-          type: "error",
-        });
-        // ferfref
-      } else {
-        toast(localStorage.getItem("ToHomePage"), {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-          type: "success",
-        });
-      }
+    if (localStorage.getItem("ToHomePage") === "Page Not Found") {
+      toast(localStorage.getItem("ToHomePage"), {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        // //pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        type: "error",
+      });
     }
 
     localStorage.removeItem("ToHomePage");
   }
-  document.title = "Home";
 
   return (
     <>
