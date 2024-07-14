@@ -38,3 +38,9 @@ export const passwordValidate = Yup.string()
   .required("Input Field is Required")
   .min(6, "min length is 6")
   .max(255, "max length is 255");
+
+  export const reqQualityValidate = Yup.string()
+  .required("Input field is Required")
+  .matches(/^[0-9]+$/, "Input field must be numbers only")
+  .min(1, "min 1 legnth");
+

@@ -12,6 +12,7 @@ import {
   textAreaValidate,
   otherTextAreaValidate,
   requiredStringValidate,
+  reqQualityValidate,
 } from "utils/validationUtils";
 
 import useFormSubmission from "./hooks/useFormSubmission";
@@ -47,12 +48,10 @@ export default function PrivateLabel(props) {
     //   .test("non-empty-array", "Input field is Required", function (value) {
     //     return value && value.length > 0;
     //   }),
-    productId: Yup.string().required("Input field is Required"),
+    // productId: Yup.string().required("Input field is Required"),
+    productId: Yup.string(),
 
-    quantity: Yup.string()
-      .required("Input field is Required")
-      .matches(/^[0-9]+$/, "Input field must be numbers only")
-      .min(1, "min 1 legnth"),
+    quantity: reqQualityValidate,
 
     packingConditions: requiredStringValidate,
     packingConditionsOther: otherTextAreaValidate("packingConditions", "other"),

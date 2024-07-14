@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import useSubmitFormMsg from "hooks/useSubmitFormMsg";
 
 import axios from "axios";
 import { baseUrl } from "config.js";
@@ -12,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 
 function Contact() {
   let navigate = useNavigate();
+  const handleSubmitMsg = useSubmitFormMsg();
 
   const [errorMsg, setErrorMsg] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -20,11 +22,11 @@ function Contact() {
     // userType: Yup.string(),
 
     firstName: Yup.string()
-      
+
       .max(50, "max length is 50")
       .required("Input field is Required"),
     lastName: Yup.string()
-     
+
       .max(50, "max length is 50")
       .required("Input field is Required"),
 
@@ -104,10 +106,7 @@ function Contact() {
       });
 
       if (response?.data?.message === "done") {
-        localStorage.setItem("ToHomePage", "From submitted successfully");
-
-        navigate("/");
-
+        handleSubmitMsg("Custom product Request");
         setIsLoading(true);
       } else {
         setErrorMsg((prevErrors) => ({
