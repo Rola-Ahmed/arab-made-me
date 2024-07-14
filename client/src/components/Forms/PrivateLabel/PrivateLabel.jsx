@@ -134,7 +134,6 @@ export default function PrivateLabel(props) {
       handleSubmitMsg("Private Label Request");
     }
   }
-  console.log("private formik", formValidation);
 
   return (
     <>

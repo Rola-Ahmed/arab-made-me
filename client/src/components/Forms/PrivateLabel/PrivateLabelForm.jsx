@@ -157,44 +157,45 @@ export default function PrivateLabelForm(props) {
                   setErrorMsg={setErrorMsg}
                   title="Upload Documents"
                 />
-              </div>
-            </div>
 
-            <div className="col-12 action">
-              {isLoading?.submitLoading ? (
-                <button type="button" className="action-btn btn-1 w-100 ">
-                  <i className="fas fa-spinner fa-spin"></i>
-                </button>
-              ) : (
-                <button
-                  className="action-btn btn-1 w-100"
-                  type="submit"
-                  onClick={() => {
-                    if (formValidation.isValid == false) {
-                      const targetElement = document.getElementById(
-                        Object.keys(formValidation.errors)?.[0]
-                      );
+                <div className="col-12 action py-0">
+                  {isLoading?.submitLoading ? (
+                    <button type="button" className="action-btn btn-1 w-100 ">
+                      <i className="fas fa-spinner fa-spin"></i>
+                    </button>
+                  ) : (
+                    <button
+                      className="action-btn btn-1 w-100"
+                      type="submit"
+                      onClick={() => {
+                        if (formValidation.isValid == false) {
+                          const targetElement = document.getElementById(
+                            Object.keys(formValidation.errors)?.[0]
+                          );
 
-                      if (targetElement) {
-                        targetElement.scrollIntoView({
-                          behavior: "smooth",
-                          block: "center",
-                        });
-                      } else {
-                        const targetElement = document.getElementById("view");
-                        if (targetElement) {
-                          targetElement?.scrollIntoView({
-                            behavior: "smooth",
-                            block: "center",
-                          });
+                          if (targetElement) {
+                            targetElement.scrollIntoView({
+                              behavior: "smooth",
+                              block: "center",
+                            });
+                          } else {
+                            const targetElement =
+                              document.getElementById("view");
+                            if (targetElement) {
+                              targetElement?.scrollIntoView({
+                                behavior: "smooth",
+                                block: "center",
+                              });
+                            }
+                          }
                         }
-                      }
-                    }
-                  }}
-                >
-                  Send
-                </button>
-              )}
+                      }}
+                    >
+                      Send
+                    </button>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
           {/*  */}

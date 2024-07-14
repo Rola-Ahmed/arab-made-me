@@ -44,8 +44,11 @@ const useFormSubmission = (isLogin, setErrorMsg, setIsLoading) => {
 
     let data = {
       factoryId: values?.factoryId,
-      productId: values?.productId,
-      productName: values.productName,
+      // productId: values?.productId,
+      // productName: values.productName,
+
+      ...(values.productId && { productId: values.productId }),
+      ...(values.productName && { productName: values.productName }),
 
       // if  values.moreDetails!==null add value
       ...(values.moreDetails && { moreDetails: values.moreDetails }),
