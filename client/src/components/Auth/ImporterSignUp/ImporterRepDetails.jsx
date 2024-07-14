@@ -41,12 +41,12 @@ export default function ImporterRepDetails() {
     // userType: Yup.string(),
 
     repName: Yup.string()
-      
+
       .max(50, "max length is 50")
       .required("Input field is Required"),
 
     importerName: Yup.string()
-      
+
       .max(50, "max length is 50")
       .required("Input field is Required"),
 
@@ -74,8 +74,7 @@ export default function ImporterRepDetails() {
     ),
 
     address: Yup.string()
-      
-      .max(255, "max length is 255"),
+    .max(255, "max length is 255"),
 
     description: Yup.string()
       .required("Input Field is Required")
@@ -621,7 +620,7 @@ export default function ImporterRepDetails() {
                         onBlur={formValidation.handleBlur}
                         value={formValidation.values.sectorId}
                       >
-                        {allSectors.map((item) => (
+                        {allSectors?.map((item) => (
                           <option value={item?.id}>{item?.name}</option>
                         ))}
                       </select>

@@ -10,13 +10,16 @@ import { useFetchSectors } from "components/Home/sectors/useFetchSectors";
 import { fetchSectorProducts } from "Services/sector";
 
 function Sectors() {
-  let allSectors = useFetchSectors();
+  let allSectors,
+    errormsg = useFetchSectors();
+  console.log("errormsg", errormsg);
+
   const [allsSectors, setAllSectors] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProductData = async () => {
-      if (allSectors) {
+      if (Array.isArray(allSectors) && allSectors.length > 0) {
         const updatedSectors = await Promise.all(
           allSectors?.map(async (item) => {
             let result = await fetchSectorProducts(item?.id);
@@ -47,6 +50,9 @@ function Sectors() {
         </div>
         <div className="sector-container">
           <div className="sec-r-container secrotr-row">
+            <div className=" text-center m-auto w-100 rounded-3 border-2 border-row fw-bold m-auto py-5 rounded-3 text-center text-muted w-100">
+              {errormsg}
+            </div>
             {allsSectors?.map((item, index) => (
               <div className="sec-r-item">
                 <div

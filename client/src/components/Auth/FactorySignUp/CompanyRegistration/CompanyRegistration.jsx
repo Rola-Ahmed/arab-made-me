@@ -284,7 +284,7 @@ export default function CompanyRegistration() {
                       >
                         <option value="">Select</option>
 
-                        {allSectors.map((item) => (
+                        {allSectors?.map((item) => (
                           <option value={item?.id}>{item?.name}</option>
                         ))}
                       </select>

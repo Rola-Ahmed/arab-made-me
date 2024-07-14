@@ -41,6 +41,7 @@ const handleError = (error) => {
   //   errorMsg = "Network Error";
   // } else {
   errorMsg = errorHandler(error);
+  console.log("errorerrorerrorerror",error)
   // }
   return { data: null, loadingStatus: true, error: errorMsg, success: false };
 };

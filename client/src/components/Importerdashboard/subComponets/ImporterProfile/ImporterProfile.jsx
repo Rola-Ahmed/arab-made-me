@@ -1973,7 +1973,7 @@ export default function ImporterProfile() {
                           value={ImporterInfoValidation.values.sectorId}
                         >
                           <option value="">Select sector</option>
-                          {allSectors.map((item) => (
+                          {allSectors?.map((item) => (
                             <option value={item?.id}>{item?.name}</option>
                           ))}
                         </select>

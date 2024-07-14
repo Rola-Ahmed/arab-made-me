@@ -7,8 +7,8 @@ export function errorHandler(error) {
         // if (error?.response?.data?.errorMessage == "Validation error") {
         //   return "Email must be unique";
         // } else {
-          return error?.response?.data?.errorMessage;
-        // }
+        return error?.response?.data?.errorMessage;
+      // }
       case 401:
         return "User is not Unauthorized ";
 
@@ -16,12 +16,12 @@ export function errorHandler(error) {
         return "factory is not verified Yet or factory representive Email is not activated";
 
       case 404:
-        return "Not Found (404). The requested resource was not found.";
+        return "Not Found (404). Something went wrong please try again later";
 
       case 500:
         // media error
         if (error?.response?.data?.errorMessage?.includes("ENOENT")) {
-          return "Something Went Wrong Please Try Again";
+          return "Our server is currently under maintenance. Please try again later.";
         }
         return error?.response?.data?.errorMessage;
       case 502:
@@ -35,11 +35,32 @@ export function errorHandler(error) {
       default:
         return error?.response?.data?.errorMessage;
     }
+  } 
+  // else if (error.message.includes("ERR_CONNECTION_REFUSED")) {
+  //   return "Server Maintenance: Our server is currently under maintenance. Please try again later.";
+  // } else if (error.message.includes("ERR_NAME_NOT_RESOLVED")) {
+  //   return "DNS Error: The server name could not be resolved.";
+  // } else if (error.message.includes("ERR_INTERNET_DISCONNECTED")) {
+  //   return "Internet Disconnected: Please check your internet connection.";
+  // } else if (error.message.includes("ERR_TIMED_OUT")) {
+  //   return "Request Timed Out: The server took too long to respond.";
+  // } else if (error.message.includes("ERR_NETWORK_CHANGED")) {
+  //   return "Network Changed: The network connection was changed.";
+  // }
+
+   else if (error.message === "error") {
+    return error?.response?.data?.errorMessage;
   }
   if (error.message === "Network Error") {
-    return "Something Went Wrong Please Try Again";
-  } else if (error.message === "error") {
-    return error?.response?.data?.errorMessage;
+    // if (error.message.includes("ERR_CONNECTION_REFUSED")) {
+    //   return "Server Maintenance: Our server is currently under maintenance. Please try again later.";
+    // }
+    // if (error.message.includes("ERR_INTERNET_DISCONNECTED")) {
+    //   return "Internet Disconnected: Please check your internet connection.";
+    // }
+    // console.log("netwoerkk", error);
+    // // return "Something Went Wrong Please Try Again";
+    return "Server Maintenance: Our server is currently under maintenance. Please try again later.";
   } else {
     return "Something Went Wrong. Please try again later.";
   }
