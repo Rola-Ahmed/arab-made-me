@@ -3,19 +3,24 @@ import { useState, useEffect } from "react";
 import { FetchSectors } from "Services/sector";
 export const useFetchSectors = () => {
   const [allSectors, setAllSectors] = useState([]);
+  const [errormsg, setErrorMsg] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
+      // try {
         let result = await FetchSectors();
         if (result?.success) {
           setAllSectors(result?.data?.sectors);
+        }else{
+
+          setErrorMsg(result?.success)
+          console.log("errormsg",errormsg)
         }
-      } catch (error) {}
+      // } catch (error) {}
     };
 
     fetchData(); // Call the asynchronous function
   }, []);
 
-  return allSectors;
+  return allSectors,errormsg;
 };
