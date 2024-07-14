@@ -98,22 +98,22 @@ function SourcingRequest() {
 
     specialCharKeyWord: Yup.string()
       // .required("Input field is Required")
-      .min(3, "min legnth is 3")
+
       .max(50, "max legnth is 50"),
     specialCharDesc: Yup.string()
       // .required("Input field is Required")
-      .min(3, "min legnth is 3")
+
       .max(50, "max legnth is 50"),
 
     ...specialCharacteristicsArr?.reduce((acc, _, index) => {
       acc[`specialCharKeyWord${index}`] = Yup.string()
         //   .required("Input field is Required")
-        .min(3, "min legnth is 3")
+
         .max(50, "max legnth is 50");
 
       acc[`specialCharDesc${index}`] = Yup.string()
         //   .required("Input field is Required")
-        .min(3, "min legnth is 3")
+
         .max(50, "max legnth is 50");
 
       return acc;
