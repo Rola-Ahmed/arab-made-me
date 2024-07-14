@@ -55,16 +55,15 @@ const useFormSubmission = (
 
     let data = {
       factoryId: values?.factoryId || "",
-      repName: values.repName,
-      contactData: {
-        email: values.repEmail,
-        phone: values.repPhone,
-      },
+      // repName: values.repName,
+      // contactData: {
+      //   email: values.repEmail,
+      //   phone: values.repPhone,
+      // },
       // otherConditions: values.otherConditions,
       productName: values.productName,
       quantity: values.quantity,
 
-      timeLine: [],
       ...(values.instructions && { instructions: values.instructions }),
       ...(values.conditionsOfDelays && {
         conditionsOfDelays: values.conditionsOfDelays,
@@ -84,16 +83,19 @@ const useFormSubmission = (
           ? values.paymentTypeOther
           : values.paymentType,
 
-      // qualityConditions:
-      //   values.qualityConditions == "other"
-      //     ? values.qualityConditionsOther
-      //     : values.qualityConditions,
+      qualityConditions:
+        values.qualityConditions == "other"
+          ? values.qualityConditionsOther
+          : values.qualityConditions,
 
       ...(values.timeManufacturingDelay && {
         timeOfManufacturingDelay: `${values.timeManufacturingDelay} ${values.timeManufacturingDelayDuration}`,
-
         timeLine: values.timeLine,
       }),
+
+      // ---------new-----------
+      supplyLocation: values.SupplyLocation,
+      // ShippingTypeSize:values.SupplyLocation,
     };
 
     if (values.productId !== "") {

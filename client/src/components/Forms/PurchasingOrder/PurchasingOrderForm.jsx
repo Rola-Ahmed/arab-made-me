@@ -52,7 +52,6 @@ function PurchasingOrderForm(props) {
                 <label>selected product</label>
                 <select
                   id="productId"
-                  // name="productId"
                   className="form-select form-control"
                   onChange={formValidation.handleChange}
                   onBlur={formValidation.handleBlur}
@@ -185,7 +184,6 @@ function PurchasingOrderForm(props) {
                   <div className="input-group-prepend">
                     <select
                       className="input-group-text h-100 p-2 m-0"
-                      // name="timeManufacturingDelayDuration"
                       id="timeManufacturingDelayDuration"
                       onChange={formValidation.handleChange}
                       onBlur={formValidation.handleBlur}
@@ -202,7 +200,6 @@ function PurchasingOrderForm(props) {
                   <input
                     className="form-control"
                     id="timeManufacturingDelay"
-                    // name="timeManufacturingDelay"
                     placeholder="1 week"
                     onChange={formValidation.handleChange}
                     onBlur={formValidation.handleBlur}
@@ -255,7 +252,7 @@ function PurchasingOrderForm(props) {
             errorMsg={errorMsg}
             setSelectedDocs={setSelectedDocs}
             MediaName="legalStamp"
-            mediaMaxLen="3"
+            mediaMaxLen="1"
             meidaAcceptedExtensions={["pdf", "png", "jpeg", "jpg"]}
             setErrorMsg={setErrorMsg}
             title="legal Stamp"

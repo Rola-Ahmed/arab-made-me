@@ -8,7 +8,8 @@ export default function InputField({
 }) {
   return (
     <div className="form-group">
-      <label class={"form-title"}>
+      {/* <label class={"form-title"}> */}
+      <label>
         {title} {isRequired && "*"}
       </label>
       <input

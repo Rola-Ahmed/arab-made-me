@@ -16,6 +16,16 @@ export default function TimeLine(props) {
     formValidation.setFieldValue(vlaidationName, combinedArray);
   }
 
+  function oneBatch() {
+    let newArray = formValidation.values[vlaidationName]?.slice(0, 1);
+
+    // Merge the existing files with the new files
+    const combinedArray = newArray;
+
+    // Update the form state with the combined files
+    formValidation.setFieldValue(vlaidationName, combinedArray);
+  }
+
   return (
     // <div className="col-12" id={formValidation.values[vlaidationName]}>
     <div className="col-12" id={vlaidationName}>
@@ -25,20 +35,23 @@ export default function TimeLine(props) {
           <div className="d-flex justify-content-between align-items-center w-100 ">
             <div class="form-check w-100 d-blcok ">
               <input
-                class="form-check-input"
+                class="form-check-input p-0"
                 type="radio"
                 id="recurrence"
                 name="recurrence"
                 onChange={formValidation.handleChange}
                 onBlur={formValidation.handleBlur}
                 value={"oneBatch"}
+                onClick={() => {
+                  oneBatch();
+                }}
               />
               <label class="form-check-label">1 Batch</label>
             </div>
 
             <div class="form-check w-100 d-blcok ">
               <input
-                class="form-check-input"
+                class="form-check-input p-0"
                 type="radio"
                 id="recurrence"
                 name="recurrence"

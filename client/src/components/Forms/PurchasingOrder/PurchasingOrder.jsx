@@ -12,6 +12,7 @@ import {
   otherTextAreaValidate,
   requiredStringValidate,
   requiredDateValidate,
+  reqQualityValidate,
 } from "utils/validationUtils";
 import ProductDetails from "../Shared/SelectedProductDetails";
 import PurchasingOrderForm from "./PurchasingOrderForm";
@@ -51,10 +52,7 @@ function PurchasingOrder(props) {
   // Format the date as per the 'datetime-local' input type
   // ------------------------Form Validation
   let validationSchema = Yup.object().shape({
-    quantity: Yup.string()
-      .required("Input field is Required")
-      .matches(/^[0-9]+$/, "Input field must be numbers only")
-      .min(1, "min 1 legnth"),
+    quantity: reqQualityValidate,
 
     productId: requiredStringValidate,
     packingConditions: requiredStringValidate,
@@ -82,7 +80,6 @@ function PurchasingOrder(props) {
       is: true,
       then: (schema) =>
         schema
-
           .matches(/^[0-9]+$/, "Input field must be numbers only")
           .min(1, "min 1 legnth")
           .required("Input field is Required"),
@@ -95,10 +92,7 @@ function PurchasingOrder(props) {
       .of(
         Yup.object().shape({
           date: requiredDateValidate,
-          quantity: Yup.string()
-            .required("Input field is Required")
-            .matches(/^[0-9]+$/, "Input field must be numbers only")
-            .min(1, "min 1 length"),
+          quantity: reqQualityValidate,
         })
       )
       .min(1, "minimum length is 1"),
@@ -140,10 +134,6 @@ function PurchasingOrder(props) {
     conditionsOfDelays: "",
     instructions: "",
 
-    repName: factoryData?.repName.join(", ") || "",
-    repEmail: factoryData?.repEmail || "",
-    repPhone: factoryData?.repPhone || "",
-
     timeLine: [
       {
         date: "",
@@ -154,7 +144,7 @@ function PurchasingOrder(props) {
     // otherConditions: "",
   };
 
-  console.log("factoryData",factoryData)
+  // console.log("factoryData",factoryData)
   useEffect(() => {
     if (factoryData?.length != 0) {
       formValidation.setValues(initialValues);
@@ -167,7 +157,7 @@ function PurchasingOrder(props) {
     validationSchema,
     onSubmit: submit,
   });
-
+ console.log("values.timeLine?.slice(0, 1)",formValidation.values.timeLine?.slice(0, 1))
   function submit(values) {
     // if data is not added yet
     if (!poAdded.status) {
@@ -191,7 +181,7 @@ function PurchasingOrder(props) {
     // },
   ]);
 
-  console.log("formik", formValidation);
+  console.log("formik vaidation", formValidation.values);
   return (
     <>
       <Header title="Send PO " />

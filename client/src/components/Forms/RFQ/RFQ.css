@@ -124,13 +124,21 @@
 }
 
 .send-rfq .input-group-text,
-.req-visit .input-group-text,
-.send-po .input-group-text {
+.req-visit .input-group-text {
   padding: 10px 14px !important;
   border-top-left-radius: 0 !important;
   border-bottom-left-radius: 0 !important;
   background-color: white !important;
   height: 100%;
+}
+
+.send-po .input-group-text {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+.send-po .input-group-text:focus-visible{
+  outline-color : var(--Gray-300);
+  /* 1px solid var(--Gray-300) */
 }
 
 
@@ -291,6 +299,14 @@ progress {
   border-top-left-radius: 8px !important;
   border-bottom-left-radius: 8px !important;
 }
+
+
+
+.timeline-container .form-check-input {
+  margin-top: 6px;
+}
+
+
 
 @media (max-width: 992px) {
   .send-rfq .container-rfq, .req-visit .container-req, .send-po .container-po {

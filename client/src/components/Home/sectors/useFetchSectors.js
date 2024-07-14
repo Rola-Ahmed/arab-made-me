@@ -7,20 +7,18 @@ export const useFetchSectors = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      // try {
+    
       let result = await FetchSectors();
       if (result?.success) {
         setAllSectors(result?.data?.sectors);
       } else {
         setErrorMsg(result?.error);
       }
-      // } catch (error) {}
     };
 
     fetchData(); // Call the asynchronous function
   }, []);
 
-  // console.log("useallsSectors",allSectors);
 
   return {allSectors, errormsg};
 };
