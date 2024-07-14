@@ -362,7 +362,7 @@ export default function TopFactories(props) {
               ) : (
                 // <div className="factoryCard ">
                 <div className="row gap  w-100 me-0">
-                  {allFactoriesData.length === 0 ? (
+                  {allFactoriesData?.length === 0 ? (
                     <>
                       <span></span> <p className="h3 "> No record </p>
                       <span></span>
