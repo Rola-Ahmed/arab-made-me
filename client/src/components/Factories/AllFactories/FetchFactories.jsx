@@ -90,7 +90,7 @@ export default function FetchFactories() {
         }
         if (result && result.success) {
           setAllFactoriesData(
-            result.data.factories.filter((item) => item?.factoryId !== null)
+            result.data.factories
           );
           const uniqueIds = [
             ...new Set(
@@ -124,7 +124,7 @@ export default function FetchFactories() {
         numOfProductsFetch
       );
 
-      if (result && result.success) {
+      if (result?.success) {
         // Extract specific attributes (id, name, coverImage) and filter out the rest
         const filteredAttributes = result.data.products.map((item) => {
           // Extract specific attributes
@@ -138,7 +138,7 @@ export default function FetchFactories() {
         });
 
         setAllFactoriesData((prevData) =>
-          prevData.map((item) =>
+          prevData?.map((item) =>
             item?.id === factoryId
               ? {
                   ...item,
@@ -161,7 +161,7 @@ export default function FetchFactories() {
     }
   }, [uniqueFactoryIDofProducts]);
 
-  console.log("allFactoriesData", allFactoriesData);
+  console.log("allFactoriesData fetch", allFactoriesData);
 
   return (
     <Factories
