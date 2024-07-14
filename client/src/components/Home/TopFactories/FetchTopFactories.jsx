@@ -22,10 +22,7 @@ export default function FetchTopFactories() {
           `size=${numOfFactoriesFetch}`
         );
 
-        // if there is error
-        if (result && result.error) {
-        }
-        if (result && result.success) {
+        if (result?.success) {
           setAllFactoriesData(
             result.data.factories.filter((item) => item?.factoryId !== null)
           );
@@ -52,7 +49,7 @@ export default function FetchTopFactories() {
         numOfProductsFetch
       );
 
-      if (result && result.success) {
+      if (result?.success) {
         // Extract specific attributes (id, name, coverImage) and filter out the rest
         const filteredAttributes = result.data.products.map((item) => {
           // Extract specific attributes
@@ -88,6 +85,6 @@ export default function FetchTopFactories() {
     }
   }, [uniqueFactoryIDofProducts]);
 
-  console.log("allFactoriesData", allFactoriesData);
+  // console.log("allFactoriesData", allFactoriesData);
   return <TopFactories allFactoriesData={allFactoriesData} />;
 }

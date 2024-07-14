@@ -49,7 +49,7 @@ export default function FetchFactories() {
 
       let result = await fetchFactorieswithParam(param);
 
-    //   console.log("FetchTotalLen result",result)
+      //   console.log("FetchTotalLen result",result)
       if (result?.success) {
         setPagination((prevValue) => ({
           ...prevValue,
@@ -57,14 +57,14 @@ export default function FetchFactories() {
             (result.data.factories.length || 0) / prevValue.displayProductSize
           ),
         }));
-    }
-    //   } else {
+      }
+      //   } else {
 
-        setApiLoadingData({
-          loadingPage: result?.loadingStatus,
-          errorCausedMsg: result?.error,
-        });
-    //   }
+      setApiLoadingData({
+        loadingPage: result?.loadingStatus,
+        errorCausedMsg: result?.error,
+      });
+      //   }
     } catch (error) {}
   }
 
@@ -83,15 +83,13 @@ export default function FetchFactories() {
         let result = await fetchFactorieswithParam(
           `size=${pagination?.displayProductSize}&page=${pagination?.currentPage}&${param}`
         );
-        console.log("fetchFactoriesData result",result)
+        console.log("fetchFactoriesData result", result);
 
         // if there is error
         if (result && result.error) {
         }
-        if (result && result.success) {
-          setAllFactoriesData(
-            result.data.factories
-          );
+        if (result?.success) {
+          setAllFactoriesData(result.data.factories);
           const uniqueIds = [
             ...new Set(
               result.data.factories
@@ -101,8 +99,6 @@ export default function FetchFactories() {
           ];
 
           setUniqueFactoryIDofProducts(uniqueIds);
-
-          
         }
       } catch (error) {}
     };

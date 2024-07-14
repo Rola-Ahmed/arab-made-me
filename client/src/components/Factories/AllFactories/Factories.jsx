@@ -7,6 +7,7 @@ import Modal from "react-bootstrap/Modal";
 import { useFetchSectors } from "components/Home/sectors/useFetchSectors";
 import HandleUsersBtnAccess, {
   handleIsLoggedInBtn,
+  // handleButtonClick
 } from "utils/actionBtns/HandleUsersBtnAccess";
 
 import Header from "components/main/Header/Header";
@@ -122,40 +123,6 @@ export default function TopFactories(props) {
   const handleQuestionMarkClick = (desc) => {
     setDescription(desc);
   };
-
-  function handleButtonClick(loginPath) {
-    if (
-      currentUserData?.importerId !== null &&
-      (currentUserData?.importerVerified === "0" ||
-        !currentUserData?.importerEmailActivated)
-    ) {
-      setModalShow((prevVal) => ({
-        ...prevVal,
-        isImporterVerified: true,
-      }));
-      return;
-    }
-
-    if (currentUserData?.factoryId !== null) {
-      setModalShow((prevVal) => ({
-        ...prevVal,
-        isFactoryVerified: true,
-      }));
-      return;
-    }
-
-    if (!isLogin) {
-      setModalShow((prevVal) => ({
-        ...prevVal,
-        isLogin: true,
-      }));
-
-      setisLoggedReDirect(`/signIn/${loginPath}`);
-      return;
-    }
-
-    navigate(`/${loginPath}`);
-  }
 
   const handleBtnCheckIfProductExisit = (
     loginPath,
@@ -435,7 +402,7 @@ export default function TopFactories(props) {
                 <Button
                   className="btn-edit "
                   onClick={() => {
-                    handleButtonClick(
+                    handleUserClickValidation1(
                       `CustomerProductReq?${factoryHasProduct.location}&productName=CreateYourOwnBrand `
                     );
 
@@ -447,7 +414,7 @@ export default function TopFactories(props) {
                 <button
                   className="btn-edit border bg-white "
                   onClick={() => {
-                    handleButtonClick(
+                    handleUserClickValidation1(
                       `privatelabel?${factoryHasProduct.location} `
                     );
 
