@@ -3,7 +3,7 @@ import "./AllProducts.css";
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/ImporterUnVerifiedPopUpMsg";
 import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
-
+import PropTypes from "prop-types";
 // shared components
 import Loading from "components/Loading/Loading";
 // sub components
@@ -25,6 +25,7 @@ function AllProducts(props) {
     setModalShow,
     isLoggedReDirect,
     setisLoggedReDirect,
+    headerTitle,
   } = props;
   document.title = "Product Marketplace";
 
@@ -64,7 +65,7 @@ function AllProducts(props) {
         userType="Buyer"
       />
 
-      <Header title="All Products" />
+      <Header title={headerTitle} />
 
       <div className="container">
         <section className="  products-section all-products margin-sm-screen ">
@@ -114,3 +115,11 @@ function AllProducts(props) {
 }
 
 export default AllProducts;
+
+AllProducts.propTypes = {
+  headerTitle: PropTypes.string,
+};
+
+AllProducts.defaultProps = {
+  headerTitle: "All Products",
+};

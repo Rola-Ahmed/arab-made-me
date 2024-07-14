@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import { baseUrl } from "config.js";
-
-import FactoryProducts from "components/Factories/FactoryProducts/FactoryProducts";
+import AllProducts from "components/Products/AllProducts/AllProducts";
 import { useLocation, useSearchParams } from "react-router-dom";
 
 export default function FactoryProductsContainer() {
@@ -104,18 +103,20 @@ export default function FactoryProductsContainer() {
   }, [pagination?.currentPage, filter, pagination?.displayProductSize]);
 
   return (
-    <FactoryProducts
-      factoryName={factoryName}
-      allProductsData={allProductsData}
-      apiLoadingData={apiLoadingData}
-      filter={filter}
-      setFilter={setFilter}
-      pagination={pagination}
-      setPagination={setPagination}
-      modalShow={modalShow}
-      setModalShow={setModalShow}
-      isLoggedReDirect={isLoggedReDirect}
-      setisLoggedReDirect={setisLoggedReDirect}
-    />
+    <>
+      <AllProducts
+        headerTitle={`${factoryName} Products`}
+        allProductsData={allProductsData}
+        apiLoadingData={apiLoadingData}
+        filter={filter}
+        setFilter={setFilter}
+        pagination={pagination}
+        setPagination={setPagination}
+        modalShow={modalShow}
+        setModalShow={setModalShow}
+        isLoggedReDirect={isLoggedReDirect}
+        setisLoggedReDirect={setisLoggedReDirect}
+      />
+    </>
   );
 }

@@ -29,10 +29,10 @@ import SourcingOfferExtraDetails from "components/SourcingOfferExtraDetails/Sour
 import SourcingRequestExtraDetails from "components/SourcingRequestExtraDetails/SourcingRequestExtraDetails";
 
 import Factorypage from "components/Factories/FactoryPage/Factorypage";
-import FactoryProducts from "containers/Factories/FactoryProducts/FactoryProductsContainer";
+import FactoryProducts from "components/Factories/FactoryProducts/FactoryProductsContainer";
 
-import Productpage from "containers/Products/ProductPageContainer";
-import AllProducts from "containers/Products/AllProductsContainer";
+import Productpage from "components/Products/Productpage/ProductPageContainer";
+import AllProducts from "components/Products/AllProducts/AllProductsContainer";
 
 // Factory Dashboard pages
 import AllSourcingOffers from "components/Sourcinghub/AllSourcingOffers/AllSourcingOffers";
