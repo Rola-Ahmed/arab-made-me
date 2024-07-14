@@ -4,7 +4,7 @@ import { StrictMode, Suspense } from "react";
 
 import Home from "components/Home/home";
 import Loading from "components/Loading/Loading";
-import Factories from "components/Factories/AllFactories/Factories";
+import Factories from "components/Factories/AllFactories/FetchFactories";
 import AboutUs from "components/About-us/AboutUs";
 import Sourcinghub from "components/Sourcinghub/SourcingRequest/SourcingRequest";
 import Errorpage from "components/Errorpage";
