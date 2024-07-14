@@ -10,11 +10,12 @@ import { useFetchSectors } from "components/Home/sectors/useFetchSectors";
 import { fetchSectorProducts } from "Services/sector";
 
 function Sectors() {
-  let allSectors,
-    errormsg = useFetchSectors();
-  console.log("errormsg", errormsg);
+  let {allSectors,errormsg} = useFetchSectors();
+  // let  errormsg = useFetchSectors();
+  // console.log("errormsg", errormsg);
 
-  const [allsSectors, setAllSectors] = useState();
+  const [allsSectors, setAllSectors] = useState([]);
+  console.log("allsSectors", allsSectors,allSectors);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -50,9 +51,6 @@ function Sectors() {
         </div>
         <div className="sector-container">
           <div className="sec-r-container secrotr-row">
-            <div className=" text-center m-auto w-100 rounded-3 border-2 border-row fw-bold m-auto py-5 rounded-3 text-center text-muted w-100">
-              {errormsg}
-            </div>
             {allsSectors?.map((item, index) => (
               <div className="sec-r-item">
                 <div
@@ -78,6 +76,41 @@ function Sectors() {
                 </div>
               </div>
             ))}
+            {errormsg !== "" ? (
+              <div className=" text-center m-auto w-100 rounded-3 border-2 border-row fw-bold m-auto py-5 rounded-3 text-center text-muted w-100">
+                {errormsg}
+              </div>
+            ) : (
+              <>
+                {allsSectors?.map((item, index) => (
+                  <div className="sec-r-item">
+                    <div
+                      className="card-sector cursor"
+                      onClick={() => {
+                        navigate(
+                          `productMarketPlace/${item?.id}-${item?.name}`
+                        );
+                      }}
+                    >
+                      <div className="sector-img">
+                        <img
+                          id={index}
+                          className={`m-0 p-0  borderContainer`}
+                          src={`${baseUrl_IMG}/${item?.image}`}
+                          alt={`${baseUrl_IMG}/${item?.image}`}
+                          onError={handleImageError}
+                        />
+                      </div>
+                      <div className="sector-text">
+                        <h4>{item?.name?.replace(/\bSupplies\b/gi, "")}</h4>
+
+                        <p> {item?.productQuntity} Factory</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </>
+            )}
           </div>
         </div>
       </div>

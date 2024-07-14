@@ -34,7 +34,7 @@ export default function TopFactories(props) {
     apiLoadingData,
   } = props;
   document.title = "Factory Gallery";
-  let allSectors = useFetchSectors();
+  let { allSectors } = useFetchSectors();
 
   let location = useLocation();
   let navigate = useNavigate();
@@ -155,8 +155,6 @@ export default function TopFactories(props) {
 
     navigate(`/${loginPath}`);
   }
-
-  
 
   const handleBtnCheckIfProductExisit = (
     loginPath,

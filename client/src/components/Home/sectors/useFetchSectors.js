@@ -20,5 +20,7 @@ export const useFetchSectors = () => {
     fetchData(); // Call the asynchronous function
   }, []);
 
-  return allSectors, errormsg;
+  // console.log("useallsSectors",allSectors);
+
+  return {allSectors, errormsg};
 };

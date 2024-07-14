@@ -21,7 +21,7 @@ export default function CompanyRegistration() {
   let { isLogin } = useContext(UserToken);
   let { setCurrentUserData, currentUserData } = useContext(userDetails);
   let formValidation = useFormValidation(countriesMiddleEast, submitForm);
-  let allSectors = useFetchSectors();
+  let { allSectors } = useFetchSectors();
   // Ensure formValidation is not undefined
   // if (!formValidation) formValidation = null;
   // if (currentUserData?.factoryId)
