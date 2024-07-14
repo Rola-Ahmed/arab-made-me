@@ -66,7 +66,7 @@ export default function FetchTopFactories() {
         });
 
         setAllFactoriesData((prevData) =>
-          prevData.map((item) =>
+          prevData?.map((item) =>
             item?.id === factoryId
               ? {
                   ...item,
