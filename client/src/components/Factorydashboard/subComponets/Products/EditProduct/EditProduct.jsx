@@ -86,7 +86,7 @@ export default function EditProduct() {
   let validationSchema = Yup.object().shape({
     name: Yup.string()
       .required("Input Field is Required")
-      .min(3, "min 3 legnth")
+      
       .max(255, "max 255 legnth"),
 
     price: Yup.string()
@@ -109,7 +109,6 @@ export default function EditProduct() {
     // guarantee\\\" is not allowed to be em
 
     guarantee: Yup.string()
-      .min(3, "Minimum  length is 3")
       .max(255, "max 255 is legnth"),
     minOrderQuantity: Yup.string()
       .matches(/^[0-9]+$/, "Input Field should contain numbers only")
@@ -126,7 +125,7 @@ export default function EditProduct() {
 
     specialCharKeyWord: Yup.string()
       // .required("Input field is Required")
-      .min(3, "min legnth is 3")
+      
       .max(50, "max legnth is 50"),
 
     specialCharDesc: Yup.string().when("specialCharKeyWord", {
@@ -141,11 +140,11 @@ export default function EditProduct() {
       Yup.object().shape({
         specialCharKeyWord: Yup.string()
           // .required("Input field is Required")
-          // .min(3, "min legnth is 3")
+          // 
           .max(50, "max legnth is 50"),
         specialCharDesc: Yup.string()
           // .required("Input field is Required")
-          // .min(3, "min legnth is 3")
+          // 
           .max(50, "max legnth is 50"),
       })
     ),
