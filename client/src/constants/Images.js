@@ -1,6 +1,7 @@
 // shared between alot of components
 import pdfIcon from "assets/images/pdf-icon.png";
 import logo from "assets/images/Arab-Made transparent logo.png";
+import Whitelogo from "assets/images/white-logo.svg";
 
 // used in aboutUs
 import about1 from "assets/images/about-1.png";
@@ -29,6 +30,7 @@ import vid1 from "assets/vid/-ff63-4404-a737-1d3798f58400.mp4";
 
 export {
   logo,
+  Whitelogo,
   vid1,
   contact1,
   contact2,

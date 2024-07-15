@@ -1,13 +1,11 @@
 import { useEffect, useState, useContext } from "react";
-import axios from "axios";
-import { baseUrl, baseUrl_IMG } from "config.js";
+import { baseUrl_IMG } from "config.js";
 
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
 import { pdfIcon } from "constants/Images";
 
 import { handleImageError } from "utils/ImgNotFound";
-import { toast } from "react-toastify";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
@@ -19,7 +17,10 @@ import { getMonthName as getDate } from "utils/getMonthName";
 import ImporterInfo from "components/Factorydashboard/Shared/ImporterInfo";
 import ContactBtn from "components/Factorydashboard/Shared/ContactBtn";
 
-export default function EtcRfq() {
+import { getOneRFQ } from "Services/rfq";
+import { getQuotes } from "Services/FactoryRequests/quotations";
+import { updateRFQ } from "Services/FactoryRequests/rfq";
+export default function OneRfqs() {
   let navigate = useNavigate();
 
   let { isLogin } = useContext(UserToken);
@@ -29,181 +30,86 @@ export default function EtcRfq() {
   const rfqReqId = searchParams.get("rfqReqId");
 
   const [apiLoadingData, setApiLoadingData] = useState(true);
-  const [modalShow, setModalShow] = useState({
-    isLogin: false,
-    isImporterVerified: false,
-    isFactoryVerified: false,
-  });
+  const [error, setError] = useState(true);
+
   const [showImagePop, setShowImagePop] = useState({
     display: false,
     imagePath: "",
   });
-  const [isLoggedReDirect, setisLoggedReDirect] = useState([]);
 
   const [requestedData, setRequestedData] = useState({ quoteId: null });
 
   async function fetchReqData() {
     setApiLoadingData(true);
 
-    try {
-      let config = {
-        method: "get",
-        url: `${baseUrl}/rfqs/${rfqReqId}?include=importer`,
-        headers: {
-          authorization: isLogin,
-        },
-      };
+    let result = await getOneRFQ(rfqReqId, "include=importer");
 
-      // check if private label has qoutations
-
-      const response = await axios.request(config);
-
-      if (response?.data?.message == "done") {
-        setRequestedData((prevData) => ({
-          ...prevData,
-          ...response.data.quotationrequests,
-        }));
-
-        setApiLoadingData(false);
-      } else {
-        setApiLoadingData(true);
-      }
-    } catch (error) {
-      setApiLoadingData(true);
+    if (result?.success) {
+      setRequestedData((prevData) => ({
+        ...prevData,
+        ...result.data.quotationrequests,
+      }));
+    } else {
+      setError(result?.error);
     }
+    setApiLoadingData(false);
 
-    let QouteIdConfig = {
-      method: "get",
-      url: `${baseUrl}/factories/factory/quotations`,
-      headers: {
+    const QouteIdConfigResp = await getQuotes(
+      {},
+      {
         authorization: isLogin,
-      },
-    };
-
-    try {
-      const response2 = await axios(QouteIdConfig);
-
-      if (response2.data.message === "done") {
-        // Extract the quotations array from the response
-        const { quotations } = response2.data;
-
-        quotations.forEach((item) => {
-          if (item.quotationRequestId == rfqReqId) {
-            // Use item.id to match with privateLabelId
-            setRequestedData((prevData) => ({
-              ...prevData,
-              quoteId: item.id, // Use item.id directly
-            }));
-          }
-        });
       }
-    } catch (error) {}
+    );
+
+    if (QouteIdConfigResp?.success) {
+      // Extract the quotations array from the response
+      const { quotations } = QouteIdConfigResp.data;
+
+      quotations.forEach((item) => {
+        if (item.quotationRequestId == rfqReqId) {
+          // Use item.id to match with privateLabelId
+          setRequestedData((prevData) => ({
+            ...prevData,
+            quoteId: item.id, // Use item.id directly
+          }));
+        }
+      });
+    }
   }
 
   async function UpdateData(status) {
     setApiLoadingData(true);
 
-    try {
-      let config = {
-        method: "put",
-        url: `${baseUrl}/rfqs/factory/${rfqReqId}`,
-        headers: {
-          authorization: isLogin,
-        },
-        data: {
-          status: status,
-        },
-      };
-
-      const response = await axios.request(config);
-
-      if (response?.data?.message == "done") {
-        setRequestedData((prevVal) => ({
-          ...prevVal,
-          status: status,
-        }));
-
-        if (status !== "seen") {
-          toast("Status Updated", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            draggable: true,
-            theme: "colored",
-            type: "success",
-          });
-        }
-      } else {
-        if (status !== "seen") {
-          toast("Something Went Wrong, please try Again Later", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            draggable: true,
-            theme: "colored",
-            type: "error",
-          });
-        }
-      }
-    } catch (error) {
-      if (status !== "seen") {
-        toast("Something Went Wrong, please try Again Later", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          draggable: true,
-          theme: "colored",
-          type: "error",
-        });
-      }
+    let response = await updateRFQ(
+      rfqReqId,
+      { authorization: isLogin },
+      { status: status }
+    );
+    if (response?.success) {
+      setRequestedData((prevVal) => ({
+        ...prevVal,
+        status: status,
+      }));
     }
   }
 
   useEffect(() => {
+    // fetch inial data
     fetchReqData();
-
+    // Check if data is being opened for the first time
     // call if once the page is loaded
-    if (
-      requestedData &&
-      requestedData?.status !== "rejected" &&
-      requestedData?.status !== "accepted"
-    ) {
+
+    if (requestedData && requestedData.status === "open") {
       UpdateData("seen");
     }
-  }, [rfqReqId, requestedData && requestedData?.status == "open"]);
+  }, [rfqReqId, requestedData]);
 
   // utils function
   let getMonthName = getDate;
 
-  function handleIsLoggedInBtn(loginPath, storgaeName) {
-    if (!isLogin) {
-      setModalShow((prevVal) => ({
-        ...prevVal,
-        isLogin: true,
-      }));
-
-      setisLoggedReDirect(`/signIn/${loginPath}`);
-      return;
-    }
-
-    navigate(`/${loginPath}`);
-  }
-
   return (
     <>
-      <IsLoggedIn
-        show={modalShow.isLogin}
-        onHide={() =>
-          setModalShow((prevVal) => ({
-            ...prevVal,
-            isLogin: false,
-          }))
-        }
-        distination={isLoggedReDirect}
-      />
+     
 
       <div id="view" className="m-4 order-section  ">
         <SubPageUtility currentPage="More Details" PrevPage="RFQs" />

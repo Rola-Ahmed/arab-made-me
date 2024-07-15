@@ -1,67 +1,78 @@
-li{
+li {
     list-style: none;
     color: white;
-text-align: center;
+    text-align: center;
 
-/* text-base/font-medium */
-font-family: "Inter-med";
-font-size: 16px;
-font-style: normal;
-font-weight: 500;
-line-height: 150%; /* 24px */
+    /* text-base/font-medium */
+    font-family: "Inter-med";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%;
+    /* 24px */
 }
-.footer-section{
+
+.fotter-logo {
+    height: 48px;
+}
+
+.footer-section {
     display: flex;
-padding: 48px 0px;
-flex-direction: column;
-align-items: center;
-gap: 64px;
-background: var(--primary-color);
+    padding: 48px 0px;
+    flex-direction: column;
+    align-items: center;
+    gap: 64px;
+    background: var(--primary-color);
 }
-.container-1{
+
+.container-1 {
     display: flex;
-padding: 0px 32px;
-flex-direction: column;
-align-items: flex-start;
-gap: 32px;
+    padding: 0px 32px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
 }
-.logo{
+
+.logo {
     width: 131.603px;
-height: 38.539px;
+    height: 38.539px;
 }
-.footer-content{
+
+.footer-content {
     display: flex;
     /* justify-content: space-between; */
     align-items: center;
     align-self: stretch;
     row-gap: 25px;
-    
+
 
 
     flex-wrap: wrap;
     justify-content: space-evenly;
-    
+
     width: 100%;
-    
+
     align-items: flex-start;
 }
-.footer-links{
+
+.footer-links {
     display: flex;
-  /* width: 45.5vw; */
-justify-content: center;
-align-items: center;
-gap: 32px;
-flex-shrink: 0;
+    /* width: 45.5vw; */
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+    flex-shrink: 0;
 }
-.copy{
+
+.copy {
     width: 160px;
     color: var(--light-gray);
-text-align: right;
+    text-align: right;
 
-/* Text md/Regular */
-font-family: "Inter-reg";
-font-size: 16px;
-font-style: normal;
-font-weight: 400;
-line-height: 24px; 
+    /* Text md/Regular */
+    font-family: "Inter-reg";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
 }

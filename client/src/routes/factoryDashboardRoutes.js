@@ -29,7 +29,7 @@ import VisitRequestFacEtc from "components/Factorydashboard/subComponets/ReqVisi
 import PurchasingOrdersFacEtc from "components/ViewMoreDetailsFormDash/PurchasingOrderEtc/PurchasingOrdersFacEtc";
 
 import CustomProductReqFacEtc from "components/Factorydashboard/subComponets/CusProductReqFactDash/EtcCustomProductReq/EtcCustomProductReq";
-import RfqRequestFacEtc from "components/Factorydashboard/subComponets/RfqFactoryDash/EtcRfq/EtcRfq";
+import RfqRequestFacEtc from "components/Factorydashboard/subComponets/RfqFactoryDash/OneRfqs/OneRfqs";
 
 // factory only
 import ProductsFacEtc from "components/ViewMoreDetailsFormDash/ProductsFacEtc/ProductsFacEtc";
