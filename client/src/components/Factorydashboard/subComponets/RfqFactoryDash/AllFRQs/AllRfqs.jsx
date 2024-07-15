@@ -1,10 +1,9 @@
-import { useEffect, useState, useContext } from "react";
+import { useState, useContext } from "react";
 
 //
 // shared components
 import PaginationDash from "components/Shared/Dashboards/PaginationDash";
-import axios from "axios";
-import { baseUrl, baseUrl_IMG } from "config.js";
+import { baseUrl_IMG } from "config.js";
 
 import StarRating from "components/Shared/stars";
 import { UserToken } from "Context/userToken";
@@ -13,30 +12,21 @@ import PageUtility from "components/Shared/Dashboards/PageUtility";
 import { getMonthName as getDate } from "utils/getMonthName";
 import { handleImageError } from "utils/ImgNotFound";
 
+import useRFQData from "./useRfq";
 // Container Components
-import RfqNotification from "containers/Factorydashboard/Notifcations/RFqNotification";
+import RfqNotification from "components/Factorydashboard/subComponets/RfqFactoryDash/AllFRQs/FetchRfqNotification";
 
-export default function RfqFactoryDash() {
-  // const notifcationData = RfqNotification();
-
+export default function AllRfqs() {
   const { isLogin } = useContext(UserToken);
   const navigate = useNavigate();
-  // State variables
-  const [allAnsRfqData, setAllAnsRfqData] = useState([]);
-  const [apiLoadingData, setApiLoadingData] = useState(true);
-  const [errorsMsg, setErrorsMsg] = useState();
-  const [pagination, setPagination] = useState(() => ({
-    // i want to display 3 pdoructs in the 1st page
-    displayProductSize: 8,
-    currentPage: 1,
-    totalPage: 1,
-  }));
+  // utils function
+  let getMonthName = getDate;
+
   const [filter, setFilter] = useState({
     formsFilter: "",
     sort: "date-DESC",
     sort_name: "",
   });
-
   function filtterData(value, keyword, name) {
     setFilter((prevValue) => ({
       ...prevValue,
@@ -45,107 +35,8 @@ export default function RfqFactoryDash() {
     }));
   }
 
-  // Fetch data length on filter change
-  useEffect(() => {
-    const fetchDataLenght = async () => {
-      try {
-        const response1 = await axios.get(
-          `${baseUrl}/factories/factory/rfqs?formsFilter=${filter?.formsFilter}&sort=${filter?.sort}`,
-          {
-            headers: {
-              authorization: isLogin,
-            },
-          }
-        );
-
-        if (response1?.data?.message === "done") {
-          setPagination((prevValue) => ({
-            ...prevValue,
-            totalPage: Math.ceil(
-              (response1.data?.rfqs?.length || 0) / prevValue.displayProductSize
-            ),
-          }));
-        }
-      } catch (error) {}
-    };
-
-    fetchDataLenght();
-  }, [filter]);
-
-  async function fetchFactoriesData() {
-    setApiLoadingData(true);
-
-    try {
-      let config = {
-        method: "get",
-        url: `${baseUrl}/factories/factory/rfqs?size=${pagination?.displayProductSize}&page=${pagination?.currentPage}&formsFilter=${filter?.formsFilter}&sort=${filter?.sort}&include=importer&include=product`,
-        headers: {
-          authorization: isLogin,
-        },
-      };
-
-      const response = await axios.request(config);
-      if (response?.data?.message == "done") {
-        setAllAnsRfqData(response.data.rfqs);
-
-        setApiLoadingData(false);
-      } else {
-        setErrorsMsg(response?.data?.message);
-      }
-    } catch (error) {
-      setApiLoadingData(false);
-
-      if (error.response && error.response.status) {
-        const statusCode = error.response.status;
-        switch (statusCode) {
-          case 400:
-            setErrorsMsg(error?.data?.errorMessage);
-            break;
-          case 401:
-            setErrorsMsg(error?.response?.data?.message);
-            break;
-          case 403:
-            setErrorsMsg(
-              // error?.data?.message,
-              error?.response?.data?.message
-            );
-            break;
-          case 404:
-            setErrorsMsg(
-              "Not Found (404). The requested resource was not found."
-            );
-            break;
-
-          case 500:
-            setErrorsMsg(error?.response?.data?.errorMessage);
-            break;
-
-          //  429 Too Many Requests
-          // The user has sent too many requests in a given amount of time ("rate limiting").
-          case 429:
-            setErrorsMsg(" Too Many Requests , Please try again later.");
-            break;
-          case 402:
-            // 402
-            setErrorsMsg(error?.response?.data?.message);
-            break;
-          default:
-            // case message== error
-            setErrorsMsg(error?.response?.data?.errorMessage);
-            break;
-        }
-      } else {
-        setErrorsMsg("An unexpected error occurred. Please try again later.");
-      }
-    }
-  }
-
-  useEffect(() => {
-    fetchFactoriesData();
-  }, [pagination?.currentPage, filter]);
-
-  // utils function
-  let getMonthName = getDate;
+  let { allAnsRfqData, pagination, apiLoadingData, errorsMsg, setPagination } =
+    useRFQData(isLogin, filter);
 
   const downloadCsv = () => {
     const attributesToFilter = [
@@ -228,8 +119,6 @@ export default function RfqFactoryDash() {
               </button>
             </div>
           </div>
-
-          {/*  <p className="sub-text">view your team's trades and transactions.</p>*/}
         </div>
 
         {/* search filter section */}
@@ -490,7 +379,8 @@ export default function RfqFactoryDash() {
                             <span class="sr-only">Loading...</span>
                           </div>
                         ) : (
-                          errorsMsg ?? "No Records"
+                          errorsMsg || "No Records"
+                          // errorsMsg!=''?errorsMsg : "No Records"
                         )}
                       </p>
                     </div>

@@ -74,7 +74,7 @@ const useFormSubmission = (isLogin, setIsLoading, setErrorMsg) => {
         handleResponseError(result.error);
       }
     } catch (error) {
-      handleResponseError(errorHandler(error));
+      // handleResponseError(errorHandler(error));
     }
   };
 

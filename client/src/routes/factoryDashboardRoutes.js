@@ -8,7 +8,7 @@ import EtcPrivateLabelReq from "containers/Factorydashboard/subComponets/Private
 import FactoryProfile from "components/Factorydashboard/subComponets/FactoryProfile/FactoryProfile";
 import Orders from "components/Factorydashboard/subComponets/Orders/Orders";
 import DashBoard from "components/Factorydashboard/subComponets/DashBoard/DashBoard";
-import RfqFactoryDash from "components/Factorydashboard/subComponets/RfqFactoryDash/RfqFactoryDash";
+import RfqFactoryDash from "components/Factorydashboard/subComponets/RfqFactoryDash/AllFRQs/AllRfqs";
 
 import CusProductReqFactDash from "components/Factorydashboard/subComponets/CusProductReqFactDash/CusProductReqFactDash";
 import ReqVisitFactDash from "components/Factorydashboard/subComponets/ReqVisitFactDash/ReqVisitFactDash";
