@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 
 // shared components
 import PaginationDash from "components/Shared/Dashboards/PaginationDash";

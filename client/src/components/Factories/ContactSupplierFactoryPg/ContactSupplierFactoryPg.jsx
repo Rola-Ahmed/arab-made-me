@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 
 import axios from "axios";
 import { baseUrl } from "config.js";
@@ -83,7 +83,7 @@ function ContactSupplierFactoryPg() {
         }
         distination={isLoggedReDirect}
       />
-      <Header title="Contact Supplier"  />
+      <Header title="Contact Supplier" />
       <section id="view" className="contact-section">
         <div className="container">
           <div className="row">

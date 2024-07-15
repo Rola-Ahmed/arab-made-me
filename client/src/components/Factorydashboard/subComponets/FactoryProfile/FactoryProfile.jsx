@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, useReducer } from "react";
+import { useEffect, useState, useContext, useReducer } from "react";
 import axios from "axios";
 import { baseUrl } from "config.js";
 import { errorHandler } from "utils/errorHandler";
@@ -744,7 +744,7 @@ export default function FactoryProfile() {
             <div className="title-contianer-input w-100">
               <Modal.Header closeButton>
                 <Modal.Title>
-                  <p >Legal Documents</p>
+                  <p>Legal Documents</p>
                 </Modal.Title>
               </Modal.Header>
               {errorMsg?.response ? (

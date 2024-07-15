@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { UserToken } from "Context/userToken";
@@ -48,8 +48,7 @@ function CustomerProductReq(props) {
 
     specialCharDesc: Yup.string().when("specialCharKeyWord", {
       is: (schema) => !!schema,
-      then: (schema) =>
-        schema.max(50, "max length is 50"),
+      then: (schema) => schema.max(50, "max length is 50"),
     }),
 
     technicalSpecifications: Yup.string()

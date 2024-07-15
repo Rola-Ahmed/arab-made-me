@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 // import { propTypes } from "prop-types";
 import propTypes from "prop-types";

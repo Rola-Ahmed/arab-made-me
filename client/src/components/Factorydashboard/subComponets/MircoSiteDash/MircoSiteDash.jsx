@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, useReducer } from "react";
+import { useEffect, useState, useContext, useReducer } from "react";
 import axios from "axios";
 import { baseUrl, baseUrl_IMG } from "config.js";
 import { errorHandler } from "utils/errorHandler";
@@ -839,8 +839,6 @@ export default function MircoSiteDash() {
 
   return (
     <>
-     
-
       <div className="section factory-profile  ms-5 me-5 mb-5 mt-2">
         <PageUtility currentPage="Mirco Site" />
         {/*  */}

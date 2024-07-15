@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, useRef } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
 import { handleImageError } from "utils/ImgNotFound";
 // shared components
 import axios from "axios";
@@ -310,7 +310,6 @@ export default function Conversation() {
 
         <SendMsg
           setAllPosData={setAllPosData}
-
           SetNewMessageSuccess={SetNewMessageSuccess}
           recieverUserId={
             allPosData?.userTwoId != currentUserData?.userID

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { baseUrl, baseUrl_IMG } from "config.js";
 
@@ -148,7 +148,7 @@ function SourcingRequestExtraDetails() {
       {!isLoading?.factoryInfo && (
         <>
           <Navbar />
-          <Header title="Sourcing Request Details "  />
+          <Header title="Sourcing Request Details " />
           <section id="view" className="send-po">
             {/* Grid  */}
             <div className="container container-po ">

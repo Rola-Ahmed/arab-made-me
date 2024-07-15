@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -92,7 +92,7 @@ function RequestVisit() {
 
   return (
     <>
-      <Header title="Request A visit"  />
+      <Header title="Request A visit" />
       {/* <form id="view" onSubmit={formValidation.handleSubmit}> */}
       <section className="req-visit">
         <div className="container container-req ">

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import "./UserType.css";
 import { currentsubPoint, checkedImg } from "constants/Images";
 import LastPointStatus from "components/Auth/FactorySignUp/TimeLineHeader/LastPointStatus";

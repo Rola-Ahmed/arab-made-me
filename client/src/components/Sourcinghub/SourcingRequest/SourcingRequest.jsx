@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 
 import Header from "components/main/Header/Header";
 import { userDetails } from "Context/userType";
@@ -171,7 +171,10 @@ function Sourcinghub() {
       />
       <Header title="Sourcing Hub" />
 
-      <div className="container sourcing-hub-section-pg sourcing-pg" id="sourcing-pg">
+      <div
+        className="container sourcing-hub-section-pg sourcing-pg"
+        id="sourcing-pg"
+      >
         <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
           <li class="nav-item" role="presentation">
             <button

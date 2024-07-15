@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import Products from "./Products/Products";
 import Questions from "./Questions/Questions";
 import TopFactories from "./TopFactories/FetchTopFactories";

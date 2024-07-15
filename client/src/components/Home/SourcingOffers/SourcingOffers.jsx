@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./SourcingOffers.css";
 import { handleImageError } from "utils/ImgNotFound";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import axios from "axios";
 import { baseUrl, baseUrl_IMG } from "config.js";
@@ -185,7 +185,6 @@ export default function SourcingOffers() {
           Sourcing Hub
         </div>
       </div>
-     
     </>
   );
 }

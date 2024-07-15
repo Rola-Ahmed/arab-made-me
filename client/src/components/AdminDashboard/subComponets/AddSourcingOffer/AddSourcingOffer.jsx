@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
@@ -633,7 +633,6 @@ export default function AddSourcingOffer() {
         (!currentUserData.factoryEmailActivated && <FactoryUnVerified />)}
 
       <div className="m-4 order-section" id="view">
-        
         {/* section 1 */}
         <form onSubmit={formValidation.handleSubmit} className="header w-100">
           {/* <form className="header w-100"> */}

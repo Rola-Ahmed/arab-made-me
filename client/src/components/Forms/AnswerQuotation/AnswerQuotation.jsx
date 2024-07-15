@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
@@ -107,8 +107,7 @@ export default function AnswerQuotation() {
     startDeliveryDate: Yup.date().min(formattedDate, "Invalid Date"),
     endDeliveryDate: Yup.date().min(formattedDate, "Invalid Date"),
 
-    notes: Yup.string()
-    .max(255, "max legnth is 255"),
+    notes: Yup.string().max(255, "max legnth is 255"),
   });
 
   let initialValues = {
@@ -339,7 +338,7 @@ export default function AnswerQuotation() {
   return (
     <>
       <Navbar />
-      <Header title="Send Quotation "  />
+      <Header title="Send Quotation " />
       <form onSubmit={formValidation.handleSubmit}>
         <section id="view" className="req-visit">
           {/* Grid  */}

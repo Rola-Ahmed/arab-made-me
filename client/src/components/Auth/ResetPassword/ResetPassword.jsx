@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
@@ -141,7 +141,7 @@ function ResetPassword() {
 
   return (
     <>
-      <Header title="Reset Password"  />
+      <Header title="Reset Password" />
       <section className="login">
         <div className="container d-flex justify-content-center align-content-center">
           <div className="frame-container-1">

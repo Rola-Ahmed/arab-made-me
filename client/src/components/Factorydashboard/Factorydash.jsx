@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import useGlobalMessage from "hooks/useGlobalMessage";
 
 import "./Factorydash.css";

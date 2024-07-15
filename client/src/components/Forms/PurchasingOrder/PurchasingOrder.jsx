@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Header from "components/main/Header/Header";
@@ -157,7 +157,10 @@ function PurchasingOrder(props) {
     validationSchema,
     onSubmit: submit,
   });
- console.log("values.timeLine?.slice(0, 1)",formValidation.values.timeLine?.slice(0, 1))
+  console.log(
+    "values.timeLine?.slice(0, 1)",
+    formValidation.values.timeLine?.slice(0, 1)
+  );
   function submit(values) {
     // if data is not added yet
     if (!poAdded.status) {

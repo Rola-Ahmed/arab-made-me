@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { baseUrl } from "config.js";
 
@@ -61,9 +61,7 @@ export default function LeftSideFilter(props) {
               value=""
               defaultChecked
             />
-            <label className="form-check-label" >
-              {`All`}
-            </label>
+            <label className="form-check-label">{`All`}</label>
           </div>
 
           {countriesMiddleEast.map((item) => (
@@ -76,9 +74,7 @@ export default function LeftSideFilter(props) {
                 id="country"
                 value={item.code}
               />
-              <label className="form-check-label" >
-                {item.name}
-              </label>
+              <label className="form-check-label">{item.name}</label>
             </div>
           ))}
         </div>

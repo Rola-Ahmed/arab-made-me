@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 import TextareaInput from "../Shared/TextareaInput";
 import EtcProductPopUp from "../Shared/EtcProductPopUp";

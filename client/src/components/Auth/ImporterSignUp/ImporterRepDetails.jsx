@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 
 import { awaitImg, nextImg, checkedImg } from "constants/Images";
 
@@ -73,8 +73,7 @@ export default function ImporterRepDetails() {
       "Invalid URL"
     ),
 
-    address: Yup.string()
-    .max(255, "max length is 255"),
+    address: Yup.string().max(255, "max length is 255"),
 
     description: Yup.string()
       .required("Input Field is Required")

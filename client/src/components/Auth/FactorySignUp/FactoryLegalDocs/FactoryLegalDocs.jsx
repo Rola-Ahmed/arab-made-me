@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import SelectRole from "components/Auth/FactorySignUp/TimeLineHeader/SelectRole";
 import UploadDocument from "components/Forms/Shared/UploadDocument";
 import useFormSubmission from "./useFormSubmission";

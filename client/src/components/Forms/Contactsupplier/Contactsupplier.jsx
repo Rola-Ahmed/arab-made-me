@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
@@ -290,7 +290,7 @@ function Contactsupplier() {
         bgBlur={"bg-blur"}
       />
 
-      <Header title="Contact Supplier"  />
+      <Header title="Contact Supplier" />
       <section className="send-rfq">
         {/* Factory Details */}
         <div className="container container-rfq ">

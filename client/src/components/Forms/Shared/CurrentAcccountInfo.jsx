@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { baseUrl } from "config.js";
 import { userDetails } from "Context/userType";

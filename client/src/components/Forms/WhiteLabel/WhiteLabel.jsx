@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { UserToken } from "Context/userToken";
@@ -39,11 +39,8 @@ export default function WhiteLabel(props) {
     setIsLoading((prev) => ({ ...prev, submitLoading: loadingStatus }));
   }
 
-  let { submitForm, privateLabelAdded, submitDocs,handleSubmitMsg } = useFormSubmission(
-    isLogin,
-    setErrorMsg,
-    setLoadingState
-  );
+  let { submitForm, privateLabelAdded, submitDocs, handleSubmitMsg } =
+    useFormSubmission(isLogin, setErrorMsg, setLoadingState);
   // ------------------------Form Validation
 
   let validationSchema = Yup.object().shape({

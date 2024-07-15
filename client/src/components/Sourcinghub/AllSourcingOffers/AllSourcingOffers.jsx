@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import Header from "components/main/Header/Header";
 import { getMonthName as getDate } from "utils/getMonthName";

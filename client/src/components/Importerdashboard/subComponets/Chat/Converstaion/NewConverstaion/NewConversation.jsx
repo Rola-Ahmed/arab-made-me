@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import { handleImageError } from "utils/ImgNotFound";
 // shared components
 import axios from "axios";
@@ -118,99 +118,101 @@ export default function Conversation() {
 
         <div className=" h-100  cont-23">
           <div className="row">
-          <div className="col-8">
-            <div className="cont-chat-3">
-              {allPosData?.messages?.map((poItem) => (
-                // <>{poItem?.sender}</>
-                <>
-                  {poItem?.sender == currentUserData?.userID ? (
-                    <>
-                      <div className=" justify-content-end align-items-start d-grid ">
-                        <div className="d-grid gap-1 h-fit-content single-msg right">
-                          <p className=" fs-16 lh-normal text-white">
-                            {poItem?.message}
-                          </p>
+            <div className="col-8">
+              <div className="cont-chat-3">
+                {allPosData?.messages?.map((poItem) => (
+                  // <>{poItem?.sender}</>
+                  <>
+                    {poItem?.sender == currentUserData?.userID ? (
+                      <>
+                        <div className=" justify-content-end align-items-start d-grid ">
+                          <div className="d-grid gap-1 h-fit-content single-msg right">
+                            <p className=" fs-16 lh-normal text-white">
+                              {poItem?.message}
+                            </p>
+                          </div>
+                          <small className="d-flex justify-content-end text-muted fs-12 ">
+                            {getTimeDifference(allPosData?.createdAt)}
+
+                            <i class="fa-solid fa-check-double text-muted my-auto ms-2"></i>
+                            {/* {allPosData?.createdA} */}
+                          </small>
                         </div>
-                        <small className="d-flex justify-content-end text-muted fs-12 ">
-                          {getTimeDifference(allPosData?.createdAt)}
-
-                          <i class="fa-solid fa-check-double text-muted my-auto ms-2"></i>
-                          {/* {allPosData?.createdA} */}
-                        </small>
-                      </div>
-                    </>
-                  ) : (
-                    <div className="gap-16 justify-content-start align-items-start d-grid cont-mssg-parent">
-                      <div className="profile-img-3 ">
-                        <img
-                          className="w-100 h-100"
-                          src={`${baseUrl_IMG}/`}
-                          onError={handleImageError}
-                        />
-                      </div>
-                      <div className="w-fit-content">
-                        <div className="d-grid gap-1 h-fit-content single-msg left">
-                          <p className=" fs-16 lh-normal">{poItem?.message}</p>
-                        </div>
-                        <small className="d-flex justify-content-end text-muted fs-12 ">
-                          {getTimeDifference(allPosData?.createdAt)}
-                          {/* {allPosData?.createdA} */}
-                        </small>
-                      </div>
-                    </div>
-                  )}
-                </>
-              ))}
-
-              {newMessageSuccess?.input != null && (
-                <div className=" justify-content-end align-items-start d-grid ">
-                  <div className="d-grid gap-1 h-fit-content single-msg right">
-                    <p className=" fs-16 lh-normal text-white">
-                      {newMessageSuccess?.input}
-                    </p>
-                  </div>
-                  <small className="d-flex justify-content-end text-muted fs-12 ">
-                    {getTimeDifference(allPosData?.createdAt)}
-
-                    {newMessageSuccess?.send ? (
-                      <i class="fa-solid fa-check-double text-muted my-auto ms-2"></i>
+                      </>
                     ) : (
-                      <i class="fa-solid fa-check text-muted my-auto ms-2"></i>
+                      <div className="gap-16 justify-content-start align-items-start d-grid cont-mssg-parent">
+                        <div className="profile-img-3 ">
+                          <img
+                            className="w-100 h-100"
+                            src={`${baseUrl_IMG}/`}
+                            onError={handleImageError}
+                          />
+                        </div>
+                        <div className="w-fit-content">
+                          <div className="d-grid gap-1 h-fit-content single-msg left">
+                            <p className=" fs-16 lh-normal">
+                              {poItem?.message}
+                            </p>
+                          </div>
+                          <small className="d-flex justify-content-end text-muted fs-12 ">
+                            {getTimeDifference(allPosData?.createdAt)}
+                            {/* {allPosData?.createdA} */}
+                          </small>
+                        </div>
+                      </div>
                     )}
-                    {/* {allPosData?.createdA} */}
-                  </small>
-                </div>
-              )}
-            </div>
-          </div>
+                  </>
+                ))}
 
-          <div className="sticky-2 col-4">
-            <div className="cover-2">
-              <div className="position-relative">
-                <div className="bg-header-dash"></div>
-                <div className="position-absolute header-img">
-                  <div className="img-cont-chat">
-                    <img
-                      className="w-100 h-100"
-                      src={`${baseUrl_IMG}/${allPosData?.UserTwoImage}`}
-                      onError={handleImageError}
-                      alt="profile"
-                    />
+                {newMessageSuccess?.input != null && (
+                  <div className=" justify-content-end align-items-start d-grid ">
+                    <div className="d-grid gap-1 h-fit-content single-msg right">
+                      <p className=" fs-16 lh-normal text-white">
+                        {newMessageSuccess?.input}
+                      </p>
+                    </div>
+                    <small className="d-flex justify-content-end text-muted fs-12 ">
+                      {getTimeDifference(allPosData?.createdAt)}
+
+                      {newMessageSuccess?.send ? (
+                        <i class="fa-solid fa-check-double text-muted my-auto ms-2"></i>
+                      ) : (
+                        <i class="fa-solid fa-check text-muted my-auto ms-2"></i>
+                      )}
+                      {/* {allPosData?.createdA} */}
+                    </small>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="sticky-2 col-4">
+              <div className="cover-2">
+                <div className="position-relative">
+                  <div className="bg-header-dash"></div>
+                  <div className="position-absolute header-img">
+                    <div className="img-cont-chat">
+                      <img
+                        className="w-100 h-100"
+                        src={`${baseUrl_IMG}/${allPosData?.UserTwoImage}`}
+                        onError={handleImageError}
+                        alt="profile"
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="title-header-2 pad-decr-1">
-                <p className="fw-600 fs-24">{allPosData?.UserTwoName}</p>
-                <p className=" fw-16 lh-normal">{allPosData?.UserTwoEmail}</p>
-              </div>
+                <div className="title-header-2 pad-decr-1">
+                  <p className="fw-600 fs-24">{allPosData?.UserTwoName}</p>
+                  <p className=" fw-16 lh-normal">{allPosData?.UserTwoEmail}</p>
+                </div>
 
-              <div className="describe-conv  pad-decr-1">
-                <p className="fw-16 fw-bold">About</p>
-                <p className="fw-16">{allPosData?.UserTwoDescription}</p>
+                <div className="describe-conv  pad-decr-1">
+                  <p className="fw-16 fw-bold">About</p>
+                  <p className="fw-16">{allPosData?.UserTwoDescription}</p>
+                </div>
               </div>
             </div>
-          </div>
           </div>
         </div>
         {/* <div className=" data-container w-100 p-3">

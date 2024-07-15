@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { baseUrl_IMG } from "config.js";
 import { handleImageError } from "utils/ImgNotFound";
 import { useNavigate } from "react-router-dom";

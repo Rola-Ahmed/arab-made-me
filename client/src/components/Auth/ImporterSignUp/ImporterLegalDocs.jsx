@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 
 import { awaitImg, checkedImg, pdfIcon } from "constants/Images";
 

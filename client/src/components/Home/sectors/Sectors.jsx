@@ -1,5 +1,5 @@
 import "./sector.css";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { baseUrl_IMG } from "config.js";
 
@@ -10,12 +10,12 @@ import { useFetchSectors } from "components/Home/sectors/useFetchSectors";
 import { fetchSectorProducts } from "Services/sector";
 
 function Sectors() {
-  let {allSectors,errormsg} = useFetchSectors();
+  let { allSectors, errormsg } = useFetchSectors();
   // let  errormsg = useFetchSectors();
   // console.log("errormsg", errormsg);
 
   const [allsSectors, setAllSectors] = useState([]);
-  console.log("allsSectors", allsSectors,allSectors);
+  console.log("allsSectors", allsSectors, allSectors);
   const navigate = useNavigate();
 
   useEffect(() => {

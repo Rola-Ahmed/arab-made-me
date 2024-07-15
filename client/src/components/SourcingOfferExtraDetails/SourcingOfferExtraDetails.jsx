@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 
 import axios from "axios";
 import { baseUrl } from "config.js";
@@ -189,12 +189,12 @@ function SourcingOfferExtraDetails() {
         userType="Buyer"
       />
 
-      {isLoading?.pageLoading && <LoadingForm title="Send PO "  />}
+      {isLoading?.pageLoading && <LoadingForm title="Send PO " />}
 
       {!isLoading?.pageLoading && (
         <>
           <Navbar />
-          <Header title="Send PO "  />
+          <Header title="Send PO " />
           <section id="view" className="send-po">
             {/* Factory description */}
             <div className="container container-po ">

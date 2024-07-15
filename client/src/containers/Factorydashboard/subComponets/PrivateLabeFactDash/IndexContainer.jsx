@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 
 import { baseUrl } from "config.js";
@@ -14,7 +14,7 @@ export default function PrivateLabeReqIndexContainer() {
   const [allprivateLabelData, setAllprivateLabelData] = useState([]);
   const [apiLoadingData, setApiLoadingData] = useState(true);
   const [errorsMsg, setErrorsMsg] = useState();
-  // filter update 
+  // filter update
   const [dataFilterFromChild, setFilterDataFromChild] = useState("");
 
   const [pagination, setPagination] = useState(() => ({

@@ -1,6 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
-
-
+import { useState, useContext, useEffect } from "react";
 
 import { useSearchParams, useParams } from "react-router-dom";
 import { fetchFactoryProducts } from "Services/factory";
@@ -24,7 +22,6 @@ function FetchPurchasingOrder() {
     fromSourcingReuqest: "fromsourcingreuqest",
     fromQuotation: "fromquotation",
   };
-
 
   const [isLoading, setIsLoading] = useState({
     submitLoading: false,

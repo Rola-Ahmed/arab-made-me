@@ -1,5 +1,5 @@
 // 3rd party
-import React, { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import Carousel from "react-grid-carousel";
 

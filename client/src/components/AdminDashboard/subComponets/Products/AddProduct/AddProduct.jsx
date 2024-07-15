@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
@@ -83,7 +83,7 @@ export default function AddProduct() {
   let validationSchema = Yup.object().shape({
     name: Yup.string()
       .required("Input Field is Required")
-      
+
       .max(255, "max 255 legnth"),
 
     price: Yup.string()
@@ -106,8 +106,7 @@ export default function AddProduct() {
     // guarantee\\\" is not allowed to be em
 
     guarantee: Yup.string()
-      
-      .max(255, "max 255 is legnth"),
+    .max(255, "max 255 is legnth"),
     minOrderQuantity: Yup.string()
       .matches(/^[0-9]+$/, "Input Field should contain numbers only")
       .required("Input Field is Required")
@@ -123,28 +122,25 @@ export default function AddProduct() {
 
     specialCharKeyWord: Yup.string()
       // .required("Input field is Required")
-      
+
       .max(50, "max legnth is 50"),
 
     specialCharDesc: Yup.string().when("specialCharKeyWord", {
       is: (schema) => !!schema,
       then: (schema) =>
-        schema
-          
-          .required("Input field is Required")
-          .max(50, "max length is 50"),
+        schema.required("Input field is Required").max(50, "max length is 50"),
       otherwise: (schema) => schema.nullable(),
     }),
 
     ...specialCharacteristicsArr?.reduce((acc, _, index) => {
       acc[`specialCharKeyWord${index}`] = Yup.string()
         .required("Input field is Required")
-        
+
         .max(50, "max legnth is 50");
 
       acc[`specialCharDesc${index}`] = Yup.string()
         .required("Input field is Required")
-        
+
         .max(50, "max legnth is 50");
 
       return acc;

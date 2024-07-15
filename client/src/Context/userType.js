@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, useEffect } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { baseUrl } from "config.js";
 
@@ -10,7 +10,6 @@ export const userDetails = createContext("");
 
 export function UserTypeProvider({ children }) {
   let { isLogin, setIsLogin } = useContext(UserToken);
-
 
   // State for user data
   // const [currentUserData, setCurrentUserData] = useState(() => "");
@@ -86,12 +85,12 @@ export function UserTypeProvider({ children }) {
               : true,
         }));
       } else {
-        console.log(" user currentUserData",currentUserData)
+        console.log(" user currentUserData", currentUserData);
         setIsLogin("");
         localStorage.clear();
       }
     } catch (error) {
-      console.log(" user error currentUserData",currentUserData)
+      console.log(" user error currentUserData", currentUserData);
 
       console.log("Errorrrr", error);
       if (error?.response?.data?.message == "users not found") {
@@ -127,17 +126,15 @@ export function UserTypeProvider({ children }) {
               datacompletelyLoaded: false,
               profile: response.data.factories.coverImage,
             }));
-            
-            console.log(" factories done currentUserData",currentUserData)
-          }else{
-            console.log(" factories else currentUserData",currentUserData)
 
+            console.log(" factories done currentUserData", currentUserData);
+          } else {
+            console.log(" factories else currentUserData", currentUserData);
           }
         })
         .catch((error) => {});
     }
-    console.log(" factories fn currentUserData",currentUserData)
-    
+    console.log(" factories fn currentUserData", currentUserData);
   }
   async function getImporter() {
     if (currentUserData.importerId !== null) {
@@ -179,7 +176,7 @@ export function UserTypeProvider({ children }) {
         getImporter();
       }
     }
-  }, [loading, currentUserData.factoryId, currentUserData.importerId,isLogin]);
+  }, [loading, currentUserData.factoryId, currentUserData.importerId, isLogin]);
 
   const clearSesssion = () => {
     // setUser(null);
@@ -198,10 +195,14 @@ export function UserTypeProvider({ children }) {
     setCurrentUserData(newValue);
   };
 
-  console.log("currentUserData",currentUserData)
+  console.log("currentUserData", currentUserData);
   return (
     <userDetails.Provider
-      value={{ currentUserData, setCurrentUserData: setAndStoreData,clearSesssion }}
+      value={{
+        currentUserData,
+        setCurrentUserData: setAndStoreData,
+        clearSesssion,
+      }}
     >
       {children}
     </userDetails.Provider>

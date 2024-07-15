@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from "react";
+import { useState, useContext, useRef } from "react";
 import "./TopFactories.css";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";

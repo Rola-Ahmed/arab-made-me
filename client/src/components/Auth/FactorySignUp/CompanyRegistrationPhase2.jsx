@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 
 import { awaitImg, subPoint, currentsubPoint } from "constants/Images";
 import LastPointStatus from "components/Auth/FactorySignUp/TimeLineHeader/LastPointStatus";
@@ -38,8 +38,7 @@ function CompanyRegistrationPhase2() {
   let validationSchema = Yup.object().shape({
     userType: Yup.string(),
 
-    address: Yup.string()
-      .max(255, "max length is 255"),
+    address: Yup.string().max(255, "max length is 255"),
 
     yearOfEstablishmint: Yup.string()
       // .required("Input Field is Required")

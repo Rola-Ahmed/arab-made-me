@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, useRef } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
 import { handleImageError } from "utils/ImgNotFound";
 // shared components
 import axios from "axios";
