@@ -1,9 +1,8 @@
 import { useEffect, useState, useContext } from "react";
 import { UserToken } from "Context/userToken";
-import RfqNotificationList from "components/Factorydashboard/subComponets/RfqFactoryDash/AllFRQs/RfqNotificationList";
 import { getRFQs } from "Services/FactoryRequests/rfq";
 
-export default function FetchRfqNotification() {
+const useRfqNotification = () => {
   const { isLogin } = useContext(UserToken);
   const dataSize = 8;
 
@@ -51,15 +50,17 @@ export default function FetchRfqNotification() {
     fetchTotalPageData();
   }, []);
 
-  return (
-    <div>
-      <RfqNotificationList
-        notifcationData={notificationData}
-        isLoading={apiLoadingData}
-        handleDisplayPrevData={handleDisplayPrevData}
-        page={page}
-        totalPage={totalPage}
-      />
-    </div>
-  );
-}
+  return { notificationData, apiLoadingData, handleDisplayPrevData, page, totalPage };
+
+  // <div>
+  //   <RfqNotificationList
+  //     notifcationData={notificationData}
+  //     isLoading={apiLoadingData}
+  //     handleDisplayPrevData={handleDisplayPrevData}
+  //     page={page}
+  //     totalPage={totalPage}
+  //   />
+
+  // </div>
+};
+export default useRfqNotification;

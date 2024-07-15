@@ -14,8 +14,12 @@ const createRequestConfig = (method, url, headers, data) => ({
   data,
 });
 
+// const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 // Handle API response
 const handleResponse = (response) => {
+
+  // delay(500)
   if (response.data.message === "done" || response.data.message == "updated") {
     return {
       data: response.data,

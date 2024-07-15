@@ -24,16 +24,24 @@ const useRFQData = (isLogin, filter) => {
   };
 
   const fetchReqData = async () => {
+
+    // why added SetTimeOut? inorder for the user to see that the data has changes when using filtter or seach
+    // bec sometime it returns the same data
     setApiLoadingData(true);
+    setAllAnsRfqData([]);
     const params = `size=${pagination.displayProductSize}&page=${pagination.currentPage}&formsFilter=${filter?.formsFilter}&sort=${filter?.sort}&include=importer&include=product`;
     const result = await getRFQs(params, { authorization: isLogin });
-    console.log("result",result)
+    // console.log("result",result)
     if (result?.success) {
       setAllAnsRfqData(result?.data?.rfqs);
+      setTimeout(() => {   setAllAnsRfqData(result?.data?.rfqs); }, 50);
     } else {
       setErrorsMsg(result?.error);
     }
     setApiLoadingData(false);
+    
+    setTimeout(() => {  setApiLoadingData(false); }, 50);
+
   };
 
   useEffect(() => {

@@ -14,7 +14,8 @@ import { handleImageError } from "utils/ImgNotFound";
 
 import useRFQData from "./useRfq";
 // Container Components
-import RfqNotification from "components/Factorydashboard/subComponets/RfqFactoryDash/AllFRQs/FetchRfqNotification";
+// stand alone component
+import RfqNotification from "components/Factorydashboard/subComponets/RfqFactoryDash/AllFRQs/RfqNotificationList";
 
 export default function AllRfqs() {
   const { isLogin } = useContext(UserToken);
@@ -162,6 +163,7 @@ export default function AllRfqs() {
                 <i className="fa-solid fa-filter"></i>
                 <p>
                   {filter?.sort_name !== "" ? filter?.sort_name : "Sort By"}
+                  
                 </p>
               </button>
 
