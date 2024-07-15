@@ -5,8 +5,6 @@ import { logo } from "constants/Images";
 import { userDetails } from "Context/userType";
 import { UserToken } from "Context/userToken";
 // import { GlobalMsgContext } from "Context/globalMessage";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import AllUsersDropListComp from "./AllUsersDropListComp";
 import useGlobalMessage from "hooks/useGlobalMessage";
 import "./navbar.css";
@@ -31,7 +29,6 @@ function Navbar(props) {
   return (
     <>
       <ScrollToTop />
-      <ToastContainer />
       <header className="header-nav">
         <nav className="navbar navbar-expand-lg navbar-dark  ">
           <div className="container-fluid">

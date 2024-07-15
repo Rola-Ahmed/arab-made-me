@@ -1,6 +1,8 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "components/Layout/Layout";
 import { StrictMode, Suspense } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import Home from "components/Home/home";
 import Loading from "components/Loading/Loading";
@@ -139,7 +141,7 @@ const router = createBrowserRouter([
     element: <AnswerQuotation />,
   },
 
-   {
+  {
     path: "/fetchFactory",
     element: <FetchFactories />,
   },
@@ -180,8 +182,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <Suspense fallback={<div></div>}>
+      <ToastContainer />
       <RouterProvider router={router} />
-     </Suspense>
+    </Suspense>
   );
 }
 
