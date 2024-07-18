@@ -164,6 +164,8 @@ export default function AnswerQuotation() {
       quantity,
       minQuantity,
       price,
+      deadline,
+      SupplyLocation,
       //
       qualityConditions,
       qualityConditionsOther,
@@ -177,17 +179,23 @@ export default function AnswerQuotation() {
       shippingConditions,
       shippingConditionsOther,
       //
+      ShippingTypeSize,
+      ShippingTypeSizeOther,
+      //
       moreDetails,
       discounts,
+      timeLine,
       notes,
     } = values;
     let data = {
       importerId,
       productName,
       price,
-
       quantity,
       minQuantity,
+      deadline,
+      timeLine,
+      supplyLocation: SupplyLocation,
 
       qualityConditions:
         qualityConditions == "other"
@@ -203,6 +211,9 @@ export default function AnswerQuotation() {
         packingConditions == "other"
           ? packingConditionsOther
           : packingConditions,
+
+      shippingSize:
+        ShippingTypeSize == "other" ? ShippingTypeSizeOther : ShippingTypeSize,
 
       paymentTerms: paymentType == "other" ? paymentTypeOther : paymentType,
 
