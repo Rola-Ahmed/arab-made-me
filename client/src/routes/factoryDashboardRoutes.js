@@ -53,6 +53,19 @@ const factoryDashboardRoutes = [
     children: [
       { path: "", element: <DashBoard /> },
 
+
+
+
+      // RFQ
+      { path: "RfqRequests", element: <RfqFactoryDash /> },
+      {
+        path: "RFQReq/moreDetails",
+
+        element: <RfqRequestFacEtc />,
+      },
+
+      
+
       // private label req
       { path: "PrivateLabel", element: <PrivateLabeLReq /> },
       {
@@ -64,7 +77,7 @@ const factoryDashboardRoutes = [
       // { path: "editQuote/:quoteId", element: <EditQuote /> },
       { path: "editQuote/:quoteId", element: <EditQuote /> },
 
-      { path: "RfqRequests", element: <RfqFactoryDash /> },
+     
       { path: "purchasingOrders", element: <Orders /> },
 
       { path: "CustomerProductRequest", element: <CusProductReqFactDash /> },
@@ -98,11 +111,7 @@ const factoryDashboardRoutes = [
         element: <VisitRequestFacEtc />,
       },
 
-      {
-        path: "RFQReq/moreDetails",
-
-        element: <RfqRequestFacEtc />,
-      },
+    
 
       {
         path: "purchasingOrderReq/moreDetails",

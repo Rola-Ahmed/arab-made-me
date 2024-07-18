@@ -36,13 +36,9 @@ function SendRfq(props) {
     setErrorMsg,
     setIsLoading
   );
-  //Document Validation
-  const [selectedDocs, setSelectedDocs] = useState([
-    // {
-    //   pdfName: null,
-    //   pdfFile: null,
-    // },
-  ]);
+  //Document Validation 
+  // array f objects
+  const [selectedDocs, setSelectedDocs] = useState([]);
 
   // ------------------------Form Validation
   let validationSchema = Yup.object().shape({

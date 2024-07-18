@@ -5,6 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+
 import HandleUsersBtnAccess, {
   handleIsLoggedInBtn,
 } from "utils/actionBtns/HandleUsersBtnAccess";
@@ -227,6 +228,7 @@ export default function TopFactories(props) {
                 <>
                   <FactoryCardParent
                     factoryitem={factoryitem}
+                    
                     currentUserData={currentUserData}
                     handleUserClickValidation1={handleUserClickValidation1}
                     handleUserClickValidLogin={handleUserClickValidLogin}

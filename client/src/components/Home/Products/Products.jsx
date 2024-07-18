@@ -87,7 +87,6 @@ function Products(title) {
     }
 
     if (currentUserData?.factoryId !== null) {
-      console.log("loginPath 90");
 
       setModalShow((prevVal) => ({
         ...prevVal,
@@ -100,7 +99,6 @@ function Products(title) {
       currentUserData?.importerId == null &&
       currentUserData?.factoryId == null
     ) {
-      console.log("loginPath 104");
 
       setModalShow((prevVal) => ({
         ...prevVal,
@@ -110,7 +108,6 @@ function Products(title) {
     }
 
     if (!isLogin) {
-      console.log("loginPath 105");
 
       setModalShow((prevVal) => ({
         ...prevVal,
@@ -120,7 +117,6 @@ function Products(title) {
       setisLoggedReDirect(`/signIn/${loginPath}`);
       return;
     }
-    console.log("loginPath 123");
 
     navigate(`${loginPath}`);
   }

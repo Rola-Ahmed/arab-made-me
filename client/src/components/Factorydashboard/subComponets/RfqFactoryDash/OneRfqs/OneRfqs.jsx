@@ -6,7 +6,7 @@ import { userDetails } from "Context/userType";
 import { pdfIcon } from "constants/Images";
 
 import { handleImageError } from "utils/ImgNotFound";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
 import Carousel from "react-grid-carousel";
@@ -20,6 +20,9 @@ import ContactBtn from "components/Factorydashboard/Shared/ContactBtn";
 import { getOneRFQ } from "Services/rfq";
 import { getQuotes } from "Services/FactoryRequests/quotations";
 import { updateRFQ } from "Services/FactoryRequests/rfq";
+
+import ProductDetails from "components/Forms/Shared/SelectedProductDetails";
+
 export default function OneRfqs() {
   let navigate = useNavigate();
 
@@ -42,8 +45,9 @@ export default function OneRfqs() {
   async function fetchReqData() {
     setApiLoadingData(true);
 
-    let result = await getOneRFQ(rfqReqId, "include=importer");
+    let result = await getOneRFQ(rfqReqId, "include=importer&include=product");
 
+    console.log("result, rfq", result);
     if (result?.success) {
       setRequestedData((prevData) => ({
         ...prevData,
@@ -109,8 +113,6 @@ export default function OneRfqs() {
 
   return (
     <>
-     
-
       <div id="view" className="m-4 order-section  ">
         <SubPageUtility currentPage="More Details" PrevPage="RFQs" />
 
@@ -261,6 +263,9 @@ export default function OneRfqs() {
                 </div>
               </div>
 
+              <div className="container-profile-input w-100">
+                <ProductDetails productDetails={requestedData?.product} />
+              </div>
               {requestedData?.docs?.length > 0 && (
                 <div className="container-profile-input w-100">
                   <div className="title-contianer-input w-100">
@@ -316,6 +321,8 @@ export default function OneRfqs() {
                   </div>
                 </div>
               )}
+
+              {/* <Link>View Quotation on FRQ</Link> */}
 
               <div className="col-12 d-flex justify-content-start btn-modal-gap">
                 {requestedData && requestedData?.quoteId == null ? (
