@@ -9,7 +9,7 @@ import FactoryInfo from "../Shared/FactoryInfo";
 import CurrentAcccountInfo from "../Shared/CurrentAcccountInfo";
 import CustomProductForm from "./CustomProductForm";
 import {
-  formattedDateValidate,
+  
   requiredStringValidate,
   otherTextAreaValidate,
   reqQualityValidate,
@@ -74,9 +74,7 @@ function CustomerProductReq(props) {
     timeLine: Yup.array()
       .of(
         Yup.object().shape({
-          date: Yup.date()
-            .required("Input field is Required")
-            .min(formattedDateValidate, "Invalid Date"),
+          date: requiredDateValidate,
           quantity: reqQualityValidate,
         })
       )

@@ -8,3 +8,6 @@ export const getOneRFQ = async (param, header,data) => {
     return await getRequestDataHeader(`/rfqs?${param}`, header, data);
   };
   
+
+
+  
