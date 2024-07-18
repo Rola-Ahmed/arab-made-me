@@ -31,9 +31,9 @@ export const ShippingTypeSizeArr = [
     ],
   },
 
-  // {
-  //   value: "other",
-  //   name: "Other",
-  //   subValues: ["other"],
-  // },
+  {
+    value: "other",
+    name: "Other",
+    subValues: ["other"],
+  },
 ];

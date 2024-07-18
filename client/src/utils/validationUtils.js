@@ -1,6 +1,5 @@
 import * as Yup from "yup";
 
-
 // Utility to validate a conditional text area field
 export const otherTextAreaValidate = (field, value) => {
   return Yup.string().when(field, {
@@ -9,7 +8,6 @@ export const otherTextAreaValidate = (field, value) => {
       schema.required("Input field is Required").max(255, "max length is 255"),
   });
 };
-
 
 // Utility to validate a standard text area field textAreaValidate()
 export const textAreaValidate = () =>
@@ -20,11 +18,16 @@ export let requiredStringValidate = Yup.string().required(
   "Input field is Required"
 );
 
+export let requiredStringMax255 = Yup.string()
+  .required("Input field is Required")
+  .max(255, "max legnth is 255");
+
 // Utility to validate a date field that must be in the future
 const now = new Date();
 export const formattedDateValidate = new Date(
   now.getTime() + 24 * 60 * 60 * 1000
-).toISOString()
+)
+  .toISOString()
   .slice(0, 16);
 export const requiredDateValidate = Yup.date()
   .required("Input field is Required")
@@ -39,8 +42,7 @@ export const passwordValidate = Yup.string()
   .min(6, "min length is 6")
   .max(255, "max length is 255");
 
-  export const reqQualityValidate = Yup.string()
+export const reqQualityValidate = Yup.string()
   .required("Input field is Required")
   .matches(/^[0-9]+$/, "Input field must be numbers only")
   .min(1, "min 1 legnth");
-

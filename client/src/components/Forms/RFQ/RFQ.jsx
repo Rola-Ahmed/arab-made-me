@@ -14,6 +14,7 @@ import {
   otherTextAreaValidate,
   requiredStringValidate,
   requiredDateValidate,
+  reqQualityValidate,
 } from "utils/validationUtils";
 
 function SendRfq(props) {
@@ -51,11 +52,8 @@ function SendRfq(props) {
     //     return value && value.length > 0;
     //   }),
 
-    productId: Yup.string().required("Input field is Required"),
-    quantity: Yup.string()
-      .required("Input field is Required")
-      .matches(/^[0-9]+$/, "Input field must be numbers only")
-      .min(1, "min 1 legnth"),
+    productId: requiredStringValidate,
+    quantity: reqQualityValidate,
 
     shippingConditions: requiredStringValidate,
     shippingConditionsOther: otherTextAreaValidate(
@@ -73,7 +71,7 @@ function SendRfq(props) {
     paymentType: requiredStringValidate,
     paymentTypeOther: otherTextAreaValidate("paymentType", "other"),
 
-    deadLine: requiredDateValidate,
+    deadline: requiredDateValidate,
 
     otherInformation: textAreaValidate(),
   });
@@ -91,7 +89,7 @@ function SendRfq(props) {
     paymentType: "",
     paymentTypeOther: "",
     // optional
-    deadLine: "",
+    deadline: "",
     otherInformation: "",
 
     // if user selected a product then productId

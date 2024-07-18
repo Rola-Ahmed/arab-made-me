@@ -16,6 +16,8 @@ import { ShippingTypeSizeArr } from "constants/ShippingTypeSizeArr";
 import TimeLine from "../Shared/TimeLine/TimeLine";
 import InputField from "../Shared/InputField";
 import ProductMultiSelector from "../Shared/ProductMultiSelector";
+import DateTimeInput from "../Shared/DateTimeInput";
+import SelectOption from "../Shared/SelectOption";
 
 export default function WhiteLabelForm(props) {
   let {
@@ -50,6 +52,7 @@ export default function WhiteLabelForm(props) {
         id="view"
         className="container container-req "
         onSubmit={formValidation.handleSubmit}
+        style={{ scrollMargin: "300vh !important" }}
       >
         <div className="input-content ">
           {errorMsg?.response ? (
@@ -86,6 +89,14 @@ export default function WhiteLabelForm(props) {
                     formValidation={formValidation}
                     vlaidationName={"quantity"}
                     title="Quantity"
+                  />
+                </div>
+                <div className="col-md-6 col-sm-12">
+                  <DateTimeInput
+                    isRequired={true}
+                    title={"Form Deadline"}
+                    formValidation={formValidation}
+                    vlaidationName={"deadline"}
                   />
                 </div>
 
@@ -139,25 +150,13 @@ export default function WhiteLabelForm(props) {
                 </div>
 
                 <div className="col-md-6 col-sm-12">
-                  <div className="form-group">
-                    <label>Supply Location *</label>
-                    <select
-                      id="SupplyLocation"
-                      className="form-select form-control"
-                      onChange={formValidation.handleChange}
-                      onBlur={formValidation.handleBlur}
-                      value={formValidation.values.SupplyLocation}
-                    >
-                      {SupplyLocationArr.map((item) => (
-                        <option value={item?.value}>{item?.name}</option>
-                      ))}
-                    </select>
-
-                    <FormVlaidtionError
-                      formValidation={formValidation}
-                      vlaidationName="SupplyLocation"
-                    />
-                  </div>
+                  <SelectOption
+                    formValidation={formValidation}
+                    vlaidationName={"SupplyLocation"}
+                    isRequired={true}
+                    title={"Supply Location"}
+                    array={SupplyLocationArr}
+                  />
                 </div>
 
                 <TextareaInput
@@ -203,8 +202,15 @@ export default function WhiteLabelForm(props) {
                           Object.keys(formValidation.errors)?.[0]
                         );
 
+                        console.log("targetElement", targetElement);
                         // Scroll to the target element
                         if (targetElement) {
+                          targetElement.scrollIntoView({
+                            behavior: "smooth",
+                            block: "center",
+                          });
+                        } else {
+                          const targetElement = document.getElementById("view");
                           targetElement.scrollIntoView({
                             behavior: "smooth",
                             block: "center",

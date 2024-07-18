@@ -3,14 +3,11 @@ import useSubmitFormMsg from "hooks/useSubmitFormMsg";
 
 import { addRfqMedia, addRfqLabel } from "Services/rfq";
 
-
-
 const useFormSubmission = (isLogin, setErrorMsg, setIsLoading) => {
   const [rfqAdded, setRfqAdded] = useState({
     status: false,
     id: "",
   });
-
 
   function setLoadingState(loadingStatus) {
     setIsLoading((prev) => ({ ...prev, submitLoading: loadingStatus }));
@@ -45,34 +42,61 @@ const useFormSubmission = (isLogin, setErrorMsg, setIsLoading) => {
     setLoadingState(true);
     clearResponseError();
 
-    let data = {
-      factoryId: values.factoryId,
-      productId: values.productId,
-      productName: values.productName,
+    let {
+      factoryId,
+      productId,
+      productName,
+      quantity,
+      SupplyLocation,
+      deadline,
+      //
+      ShippingTypeSizeOther,
+      ShippingTypeSize,
+      //
+      shippingConditionsOther,
+      shippingConditions,
+      //
+      packingConditions,
+      packingConditionsOther,
+      //
+      paymentType,
+      paymentTypeOther,
+      //
+      qualityConditions,
+      qualityConditionsOther,
+      otherInformation,
+    } = values;
 
-      deadline: values.deadLine,
-      quantity: values.quantity,
+    let data = {
+      factoryId,
+      productId,
+      productName,
+      deadline,
+      quantity,
+
+      supplyLocation: SupplyLocation,
+
+      shippingSize:
+        ShippingTypeSize == "other" ? ShippingTypeSizeOther : ShippingTypeSize,
       shippingConditions:
-        values.shippingConditions == "other"
-          ? values.shippingConditionsOther
-          : values.shippingConditions,
+        shippingConditions == "other"
+          ? shippingConditionsOther
+          : shippingConditions,
       packingConditions:
-        values.packingConditions == "other"
-          ? values.packingConditionsOther
-          : values.packingConditions,
-      paymentTerms:
-        values.paymentType == "other"
-          ? values.paymentTypeOther
-          : values.paymentType,
+        packingConditions == "other"
+          ? packingConditionsOther
+          : packingConditions,
       qualityConditions:
-        values.qualityConditions == "other"
-          ? values.qualityConditionsOther
-          : values.qualityConditions,
+        qualityConditions == "other"
+          ? qualityConditionsOther
+          : qualityConditions,
 
       // if  values.moreDetails!==null add value
-      ...(values.otherInformation && {
-        otherInfoRequest: values.otherInformation,
+      ...(otherInformation && {
+        otherInfoRequest: otherInformation,
       }),
+
+      paymentTerms: paymentType == "other" ? paymentTypeOther : paymentType,
     };
 
     // try {
@@ -119,7 +143,7 @@ const useFormSubmission = (isLogin, setErrorMsg, setIsLoading) => {
     } catch (error) {}
   };
 
-  return { submitForm, rfqAdded, submitDocs,handleSubmitMsg };
+  return { submitForm, rfqAdded, submitDocs, handleSubmitMsg };
 };
 
 export default useFormSubmission;

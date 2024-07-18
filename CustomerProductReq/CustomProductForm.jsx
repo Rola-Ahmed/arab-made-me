@@ -12,7 +12,6 @@ import { ShippingTypeSizeArr } from "constants/ShippingTypeSizeArr";
 import { qualityConditionsArr } from "constants/qualityConditionsArr";
 import SpecialChar from "../Shared/SpecialChar/SpecialChar";
 import RadioInput from "../Shared/RadioInput";
-import DateTimeInput from "../Shared/DateTimeInput";
 function CustomProductForm(props) {
   let {
     isLoading,
@@ -22,9 +21,6 @@ function CustomProductForm(props) {
     errorMsg,
     setErrorMsg,
   } = props;
-
-  console.log("formvaliation", formValidation.errors);
-  console.log("formvaliation", formValidation.values);
 
   return (
     <form
@@ -57,9 +53,45 @@ function CustomProductForm(props) {
             <div className="border-row row">
               <div>
                 <label className="pb-2">Product Characteristics</label>
+                <div className="d-flex justify-content-between align-items-center">
+                  <div class="form-check w-100 d-block ">
+                    <RadioInput
+                      formValidation={formValidation}
+                      vlaidationName="productType"
+                      label="Text"
+                      value="text"
+                      defaultChecked={true}
+                    />
+                  </div>
+
+                  <div class="form-check w-100 d-block ">
+                    <RadioInput
+                      formValidation={formValidation}
+                      vlaidationName="productType"
+                      label="Upload Documents"
+                      value="docs"
+                      defaultChecked={false}
+                    />
+                  </div>
+                </div>
               </div>
 
-              <SpecialChar formValidation={formValidation} />
+              {formValidation.values.productType == "text" && (
+                <SpecialChar formValidation={formValidation} />
+              )}
+
+              {formValidation.values.productType == "docs" && (
+                <UploadDocument
+                  selectedDocs={selectedDocs}
+                  errorMsg={errorMsg}
+                  setSelectedDocs={setSelectedDocs}
+                  MediaName="productDocs"
+                  mediaMaxLen="3"
+                  meidaAcceptedExtensions={["pdf", "png", "jpeg", "jpg"]}
+                  setErrorMsg={setErrorMsg}
+                  title="Upload Documents"
+                />
+              )}
             </div>
           </div>
 
@@ -71,15 +103,6 @@ function CustomProductForm(props) {
               formValidation={formValidation}
               vlaidationName={"quantity"}
               title="Quantity"
-            />
-          </div>
-
-          <div className="col-md-6 col-sm-12">
-            <DateTimeInput
-              isRequired={true}
-              title={"Form Deadline"}
-              formValidation={formValidation}
-              vlaidationName={"deadline"}
             />
           </div>
 

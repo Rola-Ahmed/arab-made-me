@@ -15,6 +15,7 @@ import FormVlaidtionError from "../Shared/FormVlaidtionError";
 import SelectWithTextarea from "../Shared/SelectWithTextarea";
 import InputField from "../Shared/InputField";
 import SelectOption from "../Shared/SelectOption";
+import DateTimeInput from "../Shared/DateTimeInput";
 
 function PurchasingOrderForm(props) {
   let {
@@ -92,6 +93,14 @@ function PurchasingOrderForm(props) {
               formValidation={formValidation}
               vlaidationName={"quantity"}
               title="Total Quantity"
+            />
+          </div>
+          <div className="col-md-6 col-sm-12">
+            <DateTimeInput
+              isRequired={true}
+              title={"Form Deadline"}
+              formValidation={formValidation}
+              vlaidationName={"deadline"}
             />
           </div>
 

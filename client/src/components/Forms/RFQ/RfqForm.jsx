@@ -119,7 +119,7 @@ function RfqForm(props) {
                   isRequired={true}
                   title={"Deadline"}
                   formValidation={formValidation}
-                  vlaidationName={"deadLine"}
+                  vlaidationName={"deadline"}
                 />
               </div>
 

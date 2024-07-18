@@ -9,6 +9,7 @@ import {
   otherTextAreaValidate,
   requiredStringValidate,
   requiredDateValidate,
+  reqQualityValidate,
 } from "utils/validationUtils";
 
 import FactoryInfo from "../Shared/FactoryInfo";
@@ -51,9 +52,9 @@ export default function WhiteLabel(props) {
     //   }),
     // // .required("Input field is Required"),
     productId: Yup.string().required("Input field is Required"),
-    quantity: requiredStringValidate
-      .matches(/^[0-9]+$/, "Input field must be numbers only")
-      .min(1, "min 1 legnth"),
+    quantity: reqQualityValidate,
+
+    deadline: requiredDateValidate,
 
     packingConditions: requiredStringValidate,
     packingConditionsOther: otherTextAreaValidate("packingConditions", "other"),
@@ -79,10 +80,7 @@ export default function WhiteLabel(props) {
       .of(
         Yup.object().shape({
           date: requiredDateValidate,
-          quantity: Yup.string()
-            .required("Input field is Required")
-            .matches(/^[0-9]+$/, "Input field must be numbers only")
-            .min(1, "min 1 legnth"),
+          quantity: reqQualityValidate,
         })
       )
       .min("1", "minimum length is 1"),
@@ -98,6 +96,7 @@ export default function WhiteLabel(props) {
     productId: productId ? productId : "",
     productName: productName ? productName : "",
     moreDetails: "",
+    deadline: "",
 
     // new
     recurrence: "oneBatch",

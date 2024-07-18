@@ -53,57 +53,87 @@ const useFormSubmission = (
     setLoadingState(true);
     clearResponseError();
 
+    let {
+      factoryId,
+      productName,
+      quantity,
+      instructions,
+      conditionsOfDelays,
+      timeLine,
+      deadline,
+      // ,
+      timeManufacturingDelay,
+      timeManufacturingDelayDuration,
+
+      //if condtion
+      sourcingOfferId,
+      productId,
+
+      SupplyLocation,
+      //
+      ShippingTypeSizeOther,
+      ShippingTypeSize,
+      //
+      shippingConditionsOther,
+      shippingConditions,
+      //
+      packingConditions,
+      packingConditionsOther,
+      //
+      paymentType,
+      paymentTypeOther,
+      //
+      qualityConditions,
+      qualityConditionsOther,
+    } = values;
+
     let data = {
-      factoryId: values?.factoryId || "",
-      // repName: values.repName,
-      // contactData: {
-      //   email: values.repEmail,
-      //   phone: values.repPhone,
-      // },
+      factoryId,
+      deadline,
+
       // otherConditions: values.otherConditions,
-      productName: values.productName,
-      quantity: values.quantity,
+      productName,
+      quantity,
+      supplyLocation: SupplyLocation,
 
-      ...(values.instructions && { instructions: values.instructions }),
-      ...(values.conditionsOfDelays && {
-        conditionsOfDelays: values.conditionsOfDelays,
-
-        shippingConditions:
-          values.shippingConditions == "other"
-            ? values.shippingConditionsOther
-            : values.shippingConditions,
+      ...(instructions && { instructions: instructions }),
+      ...(conditionsOfDelays && {
+        conditionsOfDelays: conditionsOfDelays,
       }),
+
+      shippingConditions:
+        shippingConditions == "other"
+          ? shippingConditionsOther
+          : shippingConditions,
 
       packingConditions:
-        values.packingConditions == "other"
-          ? values.packingConditionsOther
-          : values.packingConditions,
-      paymentTerms:
-        values.paymentType == "other"
-          ? values.paymentTypeOther
-          : values.paymentType,
+        packingConditions == "other"
+          ? packingConditionsOther
+          : packingConditions,
+      paymentTerms: paymentType == "other" ? paymentTypeOther : paymentType,
 
       qualityConditions:
-        values.qualityConditions == "other"
-          ? values.qualityConditionsOther
-          : values.qualityConditions,
+        qualityConditions == "other"
+          ? qualityConditionsOther
+          : qualityConditions,
 
-      ...(values.timeManufacturingDelay && {
-        timeOfManufacturingDelay: `${values.timeManufacturingDelay} ${values.timeManufacturingDelayDuration}`,
-        timeLine: values.timeLine,
+      ...(timeManufacturingDelay && {
+        timeOfManufacturingDelay: `${timeManufacturingDelay} ${timeManufacturingDelayDuration}`,
+        timeLine: timeLine,
       }),
 
+      shippingTypeAndSize:
+        ShippingTypeSize == "other" ? ShippingTypeSizeOther : ShippingTypeSize,
+
       // ---------new-----------
-      supplyLocation: values.SupplyLocation,
-      // ShippingTypeSize:values.SupplyLocation,
     };
 
-    if (values.productId !== "") {
-      data.productId = values.productId;
+    if (productId !== "") {
+      data.productId = productId;
     }
 
-    if (values.sourcingOfferId !== "") {
-      data.sourcingOfferId = values.sourcingOfferId;
+    if (sourcingOfferId !== "") {
+      data.sourcingOfferId = sourcingOfferId;
     }
 
     // try {

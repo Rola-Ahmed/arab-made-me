@@ -68,11 +68,14 @@ function Products(title) {
   }
 
   function handleButtonClick(loginPath) {
+    console.log("loginPath", loginPath);
     if (
       currentUserData?.importerId !== null &&
       (currentUserData?.importerVerified === "0" ||
         !currentUserData?.importerEmailActivated)
     ) {
+      console.log("loginPath 77");
+
       setModalShow((prevVal) => ({
         ...prevVal,
         isImporterVerified: true,
@@ -84,6 +87,8 @@ function Products(title) {
     }
 
     if (currentUserData?.factoryId !== null) {
+      console.log("loginPath 90");
+
       setModalShow((prevVal) => ({
         ...prevVal,
         isFactoryVerified: true,
@@ -95,6 +100,8 @@ function Products(title) {
       currentUserData?.importerId == null &&
       currentUserData?.factoryId == null
     ) {
+      console.log("loginPath 104");
+
       setModalShow((prevVal) => ({
         ...prevVal,
         isFactoryVerified: true,
@@ -103,6 +110,8 @@ function Products(title) {
     }
 
     if (!isLogin) {
+      console.log("loginPath 105");
+
       setModalShow((prevVal) => ({
         ...prevVal,
         isLogin: true,
@@ -111,11 +120,12 @@ function Products(title) {
       setisLoggedReDirect(`/signIn/${loginPath}`);
       return;
     }
+    console.log("loginPath 123");
 
-    navigate(`/${loginPath}`);
+    navigate(`${loginPath}`);
   }
 
-  function handleIsLoggedInBtn(loginPath, storgaeName) {
+  function handleIsLoggedInBtn(loginPath) {
     if (!isLogin) {
       setModalShow((prevVal) => ({
         ...prevVal,

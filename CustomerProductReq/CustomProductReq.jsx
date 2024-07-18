@@ -12,9 +12,6 @@ import {
   formattedDateValidate,
   requiredStringValidate,
   otherTextAreaValidate,
-  reqQualityValidate,
-  requiredStringMax255,
-  requiredDateValidate,
 } from "utils/validationUtils";
 function CustomerProductReq(props) {
   let { factoryDetails, isLoading, setIsLoading, factoryId } = props;
@@ -46,12 +43,25 @@ function CustomerProductReq(props) {
     productName: Yup.string()
       .required("Input field is Required")
       .max(50, "max legnth is 50"),
-    deadline: requiredDateValidate,
 
-    technicalSpecifications: requiredStringMax255,
-    inqueries: requiredStringMax255,
+    specialCharKeyWord: Yup.string().max(50, "max legnth is 50"),
 
-    quantity: reqQualityValidate,
+    specialCharDesc: Yup.string().when("specialCharKeyWord", {
+      is: (schema) => !!schema,
+      then: (schema) => schema.max(50, "max length is 50"),
+    }),
+
+    technicalSpecifications: Yup.string()
+      .required("Input field is Required")
+      .max(255, "max legnth is 255"),
+    inqueries: Yup.string()
+      .required("Input field is Required")
+      .max(255, "max legnth is 255"),
+
+    quantity: Yup.string()
+      .required("Input field is Required")
+      .matches(/^[0-9]+$/, "Input field must be numbers only")
+      .min(1, "min 1 legnth"),
 
     packingConditions: requiredStringValidate,
     packingConditionsOther: otherTextAreaValidate("packingConditions", "other"),
@@ -74,10 +84,11 @@ function CustomerProductReq(props) {
     timeLine: Yup.array()
       .of(
         Yup.object().shape({
-          date: Yup.date()
+          date: formattedDateValidate(),
+          quantity: Yup.string()
             .required("Input field is Required")
-            .min(formattedDateValidate, "Invalid Date"),
-          quantity: reqQualityValidate,
+            .matches(/^[0-9]+$/, "Input field must be numbers only")
+            .min(1, "min 1 legnth"),
         })
       )
       .min("1", "minimum length is 1"),
@@ -93,7 +104,6 @@ function CustomerProductReq(props) {
   let initialValues = {
     factoryId: factoryId,
     productName: "",
-    deadline: "",
 
     specialCharKeyWord: "",
     specialCharDesc: "",

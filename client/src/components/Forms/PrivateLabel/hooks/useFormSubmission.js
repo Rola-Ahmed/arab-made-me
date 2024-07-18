@@ -42,16 +42,61 @@ const useFormSubmission = (isLogin, setErrorMsg, setIsLoading) => {
     setLoadingState(true);
     clearResponseError();
 
+    let {
+      factoryId,
+      quantity,
+      SupplyLocation,
+      moreDetails,
+      productName,
+      productId,
+      deadline,
+      //
+      ShippingTypeSizeOther,
+      ShippingTypeSize,
+      //
+      shippingConditionsOther,
+      shippingConditions,
+      //
+      packingConditions,
+      packingConditionsOther,
+      //
+      // paymentType,
+      // paymentTypeOther,
+      //
+      qualityConditions,
+      qualityConditionsOther,
+    } = values;
     let data = {
-      factoryId: values?.factoryId,
-      // productId: values?.productId,
-      // productName: values.productName,
+      factoryId,
+      quantity,
+      // factoryId: factoryId,
+      // quantity: quantity,
+      supplyLocation: SupplyLocation,
+      deadline,
 
-      ...(values.productId && { productId: values.productId }),
-      ...(values.productName && { productName: values.productName }),
+      // can be null
+      ...(productId && { productId }),
+      ...(productName && { productName }),
+      ...(moreDetails && { moreDetails }),
 
-      // if  values.moreDetails!==null add value
-      ...(values.moreDetails && { moreDetails: values.moreDetails }),
+      shippingSize:
+        ShippingTypeSize == "other" ? ShippingTypeSizeOther : ShippingTypeSize,
+
+      shippingConditions:
+        shippingConditions == "other"
+          ? shippingConditionsOther
+          : shippingConditions,
+
+      packingConditions:
+        packingConditions == "other"
+          ? packingConditionsOther
+          : packingConditions,
+      qualityConditions:
+        qualityConditions == "other"
+          ? qualityConditionsOther
+          : qualityConditions,
+
+      // paymentTerms: paymentType == "other" ? paymentTypeOther : paymentType,
     };
 
     // try {

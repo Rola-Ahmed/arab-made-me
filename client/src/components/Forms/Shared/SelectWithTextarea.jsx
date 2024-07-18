@@ -21,8 +21,6 @@ export default function SelectWithTextarea(props) {
       />
 
     
-
-      
       {formValidation.values[vlaidationName] == "other" && (
         <textarea
           className="form-control w-100 "

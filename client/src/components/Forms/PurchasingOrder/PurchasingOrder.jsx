@@ -53,6 +53,7 @@ function PurchasingOrder(props) {
   // ------------------------Form Validation
   let validationSchema = Yup.object().shape({
     quantity: reqQualityValidate,
+    deadline: requiredDateValidate,
 
     productId: requiredStringValidate,
     packingConditions: requiredStringValidate,
@@ -140,6 +141,7 @@ function PurchasingOrder(props) {
         quantity: "",
       },
     ],
+    deadline: "",
 
     // otherConditions: "",
   };

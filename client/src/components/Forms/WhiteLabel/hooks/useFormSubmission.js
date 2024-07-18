@@ -38,16 +38,59 @@ const useFormSubmission = (isLogin, setErrorMsg, setLoadingState) => {
     setLoadingState(true);
     clearResponseError();
 
+    let {
+      factoryId,
+      productId,
+      productName,
+      moreDetails,
+
+      deadline,
+      SupplyLocation,
+
+      // SupplyLocation,
+      //
+      ShippingTypeSizeOther,
+      ShippingTypeSize,
+      //
+      shippingConditionsOther,
+      shippingConditions,
+      //
+      packingConditions,
+      packingConditionsOther,
+      //
+      paymentType,
+      paymentTypeOther,
+      //
+      qualityConditions,
+      qualityConditionsOther,
+    } = values;
+
     let data = {
-      factoryId: values?.factoryId,
-      productId: values?.productId,
-      productName: values.productName,
+      factoryId,
+      productId,
+      productName,
+      deadline,
+      supplyLocation: SupplyLocation,
 
-      // productId: 562,
-      // productName: "Scarlett Mueller",
+      ...(moreDetails && { moreDetails: moreDetails }),
 
-      // if  values.moreDetails!==null add value
-      ...(values.moreDetails && { moreDetails: values.moreDetails }),
+      shippingSize:
+        ShippingTypeSize == "other" ? ShippingTypeSizeOther : ShippingTypeSize,
+
+      shippingConditions:
+        shippingConditions == "other"
+          ? shippingConditionsOther
+          : shippingConditions,
+
+      packingConditions:
+        packingConditions == "other"
+          ? packingConditionsOther
+          : packingConditions,
+      paymentTerms: paymentType == "other" ? paymentTypeOther : paymentType,
+      qualityConditions:
+        qualityConditions == "other"
+          ? qualityConditionsOther
+          : qualityConditions,
     };
 
     // try {
@@ -97,7 +140,7 @@ const useFormSubmission = (isLogin, setErrorMsg, setLoadingState) => {
     } catch (error) {}
   };
 
-  return { submitForm, privateLabelAdded, submitDocs,handleSubmitMsg };
+  return { submitForm, privateLabelAdded, submitDocs, handleSubmitMsg };
 };
 
 export default useFormSubmission;

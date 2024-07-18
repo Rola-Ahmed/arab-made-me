@@ -1,5 +1,5 @@
 import FormVlaidtionError from "./FormVlaidtionError";
-
+import PropTypes from "prop-types";
 export default function ProductMultiSelector(props) {
   let {
     productDetails,
@@ -7,6 +7,7 @@ export default function ProductMultiSelector(props) {
     setSelectedItem,
     vliadationNameOnName,
     vlaidationNameOnId,
+    isRequired,
   } = props;
 
   // const handleCheckboxProductNameChange = (name, isChecked, id) => {
@@ -29,7 +30,7 @@ export default function ProductMultiSelector(props) {
   return (
     <>
       <div className="form-group">
-        <label>selected product *</label>
+        <label>selected product {isRequired && "*"}</label>
         <button
           className="btn form-control dropdown-toggle w-100 text-center countries-drop d-flex rounded"
           type="button"
@@ -100,3 +101,11 @@ export default function ProductMultiSelector(props) {
     </>
   );
 }
+
+ProductMultiSelector.propTypes = {
+  isRequired: PropTypes.bool,
+};
+
+ProductMultiSelector.defaultProps = {
+  isRequired: true,
+};

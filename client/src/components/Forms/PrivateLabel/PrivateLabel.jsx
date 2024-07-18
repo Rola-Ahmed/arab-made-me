@@ -13,6 +13,7 @@ import {
   otherTextAreaValidate,
   requiredStringValidate,
   reqQualityValidate,
+  requiredDateValidate
 } from "utils/validationUtils";
 
 import useFormSubmission from "./hooks/useFormSubmission";
@@ -72,6 +73,7 @@ export default function PrivateLabel(props) {
 
     moreDetails: textAreaValidate(),
     otherConditions: textAreaValidate(),
+    deadline: requiredDateValidate,
   });
   let initialValues = {
     factoryId: factoryId,
@@ -103,6 +105,7 @@ export default function PrivateLabel(props) {
     qualityConditions: "",
     qualityConditionsOther: "",
     trademarkCheckBox: false,
+    deadline: "",
   };
   useEffect(() => {
     if (productDetails && factoryId) {

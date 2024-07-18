@@ -44,7 +44,6 @@ const useFormSubmission = (isLogin, setIsLoading, setErrorMsg) => {
       technicalSpecifications,
       inqueries,
       quantity,
-      deadline,
 
       SupplyLocation,
       //
@@ -57,8 +56,8 @@ const useFormSubmission = (isLogin, setIsLoading, setErrorMsg) => {
       packingConditions,
       packingConditionsOther,
       //
-      // paymentType,
-      // paymentTypeOther,
+      paymentType,
+      paymentTypeOther,
       //
       qualityConditions,
       qualityConditionsOther,
@@ -71,7 +70,6 @@ const useFormSubmission = (isLogin, setIsLoading, setErrorMsg) => {
       inqueries,
       quantity,
       supplyLocation: SupplyLocation,
-      deadline,
 
       specialCharacteristics: {},
 
@@ -87,14 +85,8 @@ const useFormSubmission = (isLogin, setIsLoading, setErrorMsg) => {
         shippingConditions == "other"
           ? shippingConditionsOther
           : shippingConditions,
-
-      qualityConditions:
-        qualityConditions == "other"
-          ? qualityConditionsOther
-          : qualityConditions,
-
-      // paymentTerms: paymentType == "other" ? paymentTypeOther : paymentType,
     };
+   
 
     if (Object.keys(values.productCharacteristic).length != 0) {
       // create an object with the keyword property as the key and the value property as the value.
@@ -104,21 +96,25 @@ const useFormSubmission = (isLogin, setIsLoading, setErrorMsg) => {
       data.specialCharacteristics = obj;
     }
 
-    let result = await addCustomProduct({ authorization: isLogin }, data);
+    try {
+      let result = await addCustomProduct({ authorization: isLogin }, data);
 
-    if (result?.success) {
-      if (selectedDocs.length > 0) {
-        setPoAdded({
-          status: true,
-          id: result.data.specialManufacturing.id,
-        });
-        await submitDocs(result.data.specialManufacturing.id, selectedDocs);
+      if (result?.success) {
+        if (selectedDocs.length > 0) {
+          setPoAdded({
+            status: true,
+            id: result.data.specialManufacturing.id,
+          });
+          await submitDocs(result.data.specialManufacturing.id, selectedDocs);
+        } else {
+          // display  successfully submitted message
+          handleSubmitMsg("Custom product Request");
+        }
       } else {
-        // display  successfully submitted message
-        handleSubmitMsg("Custom product Request");
+        handleResponseError(result.error);
       }
-    } else {
-      handleResponseError(result.error);
+    } catch (error) {
+      // handleResponseError(errorHandler(error));
     }
   };
 

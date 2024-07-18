@@ -15,6 +15,8 @@ import SelectWithTextarea from "../Shared/SelectWithTextarea";
 import { SupplyLocationArr } from "constants/SupplyLocationArr";
 import { ShippingTypeSizeArr } from "constants/ShippingTypeSizeArr";
 import SelectOption from "../Shared/SelectOption";
+import SelectGroup from "../Shared/SelectGroup";
+import DateTimeInput from "../Shared/DateTimeInput";
 
 export default function PrivateLabelForm(props) {
   let {
@@ -29,6 +31,9 @@ export default function PrivateLabelForm(props) {
   } = props;
   // State variables
 
+  console.log(formValidation.errors, "formValidation");
+  console.log(formValidation.values, "formValidation");
+  console.log("selectedDocs", selectedDocs);
   const [selectedItem, setSelectedItem] = useState(null);
 
   return (
@@ -62,6 +67,7 @@ export default function PrivateLabelForm(props) {
                       vlaidationNameOnId="productId"
                       vliadationNameOnName="productName"
                       title={"selected product"}
+                      isRequired={false}
                     />
                   </div>
                 )}
@@ -72,6 +78,15 @@ export default function PrivateLabelForm(props) {
                     title={"quantity"}
                     formValidation={formValidation}
                     vlaidationName={"quantity"}
+                  />
+                </div>
+
+                <div className="col-md-6 col-sm-12">
+                  <DateTimeInput
+                    isRequired={true}
+                    title={"Form Deadline"}
+                    formValidation={formValidation}
+                    vlaidationName={"deadline"}
                   />
                 </div>
 
@@ -107,9 +122,9 @@ export default function PrivateLabelForm(props) {
                   />
                 </div>
                 <div className="col-md-6 col-sm-12">
-                  <SelectWithTextarea
+                  <SelectGroup
                     formValidation={formValidation}
-                    vlaidationName={"ShippingTypeSize"}
+                    vlaidationName="ShippingTypeSize"
                     textAreaOther={"ShippingTypeSizeOther"}
                     isRequired={true}
                     title={"Shipping Type and Size"}
@@ -133,7 +148,7 @@ export default function PrivateLabelForm(props) {
                   selectedDocs={selectedDocs}
                   // sub section
                   setSelectedDocs={setSelectedDocs}
-                  MediaName="TrademakrDocs"
+                  MediaName="tradeMark"
                   mediaMaxLen="3"
                   meidaAcceptedExtensions={["pdf", "png", "jpeg", "jpg"]}
                   setErrorMsg={setErrorMsg}

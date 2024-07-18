@@ -8,6 +8,7 @@ export default function Trademakr(props) {
     setErrorMsg,
     setSelectedDocs,
     title,
+    MediaName,
   } = props;
   return (
     <>
@@ -30,7 +31,7 @@ export default function Trademakr(props) {
           selectedDocs={selectedDocs}
           errorMsg={errorMsg}
           setSelectedDocs={setSelectedDocs}
-          MediaName="productDocs"
+          MediaName={MediaName}
           mediaMaxLen="3"
           meidaAcceptedExtensions={["pdf", "png", "jpeg", "jpg"]}
           setErrorMsg={setErrorMsg}
