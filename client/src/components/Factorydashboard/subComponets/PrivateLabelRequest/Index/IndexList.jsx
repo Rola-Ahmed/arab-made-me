@@ -10,19 +10,22 @@ import StarRating from "components/Shared/stars";
 
 // sub components
 import HeaderSection from "./HeaderSection";
-import SearchFilterSection from "./SearchFilterSection";
 
 // shared components
 import PaginationDash from "components/Shared/Dashboards/PaginationDash";
+import SearchFilterByOrderPrice from "components/Shared/Dashboards/SearchFilterByOrderPrice";
+import StatusMessage from "components/Shared/Dashboards/StatusMessage";
 
 export default function IndexList(props) {
   let {
     allprivateLabelData,
     pagination,
     setPagination,
-    handleDataFromChild,
+    // handleDataFromChild,
+    filter,
     apiLoadingData,
     errorsMsg,
+    filtterData,
   } = props;
   let navigate = useNavigate();
   let getMonthName = getDate;
@@ -36,7 +39,7 @@ export default function IndexList(props) {
         <HeaderSection allprivateLabelData={allprivateLabelData} />
 
         {/* search filter section */}
-        <SearchFilterSection handleDataFromChild={handleDataFromChild} />
+        <SearchFilterByOrderPrice filtterData={filtterData} filter={filter} />
         {/* data section */}
 
         <div className=" data-container w-100 p-3">
@@ -52,7 +55,6 @@ export default function IndexList(props) {
                         className="form-check-input"
                         type="checkbox"
                         value=""
-                        id="flexCheckDefault"
                       />
                     </div>
                     Product Name
@@ -73,7 +75,7 @@ export default function IndexList(props) {
 
             <tbody>
               {/* row1 */}
-              {allprivateLabelData.map((poItem) => (
+              {allprivateLabelData?.map((poItem) => (
                 <tr className="row">
                   <th className=" col-2  ">
                     <div className=" th-1st-title-gap d-flex justify-content-start align-items-center">
@@ -82,7 +84,7 @@ export default function IndexList(props) {
                           className="form-check-input"
                           type="checkbox"
                           value=""
-                          id="flexCheckDefault"
+                          // id="flexCheckDefault"
                         />
                       </div>
                       <td className="">
@@ -132,8 +134,8 @@ export default function IndexList(props) {
                         />
                       </div>
                       <div>
-                        <p className=" name-text">{poItem?.importer?.name}</p>
-                        <p className=" email-text">
+                        <p className="name-text">{poItem?.importer?.name}</p>
+                        <p className=" mail-text">
                           {poItem?.importer?.repEmail}
                         </p>
                       </div>
@@ -157,30 +159,12 @@ export default function IndexList(props) {
                 </tr>
               ))}
 
-              {allprivateLabelData?.length == 0 ? (
-                <tr className="row">
-                  <div className="col-12  w-100 h-100 my-5 py-5">
-                    <div className="text-center">
-                      <p className="trate-sub-title ">
-                        {apiLoadingData ? (
-                          <div
-                            class="spinner-border spinner-border-sm"
-                            role="status"
-                          >
-                            <span class="sr-only">Loading...</span>
-                          </div>
-                        ) : errorsMsg ? (
-                          errorsMsg
-                        ) : (
-                          "No Records Found"
-                        )}
-                      </p>
-                    </div>
-                  </div>
-                </tr>
-              ) : (
-                " "
-              )}
+              {/* is data is still loading or error occured */}
+              <StatusMessage
+                reqDataLength={allprivateLabelData?.length}
+                apiLoadingData={apiLoadingData}
+                errorsMsg={errorsMsg}
+              />
 
               <tr className="row">
                 <div className="col-12  ReactPaginate">

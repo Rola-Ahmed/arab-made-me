@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import Carousel from "react-grid-carousel";
 import Loading from "components/Loading/Loading";
 
@@ -40,8 +38,6 @@ export default function EtcPrivateLabelReq(props) {
 
   return (
     <>
-      <ToastContainer />
-
       <HeaderSection />
 
       <div className="section factory-profile m-5 ">
@@ -211,18 +207,7 @@ export default function EtcPrivateLabelReq(props) {
                     <p className="cursor">Edit Quote</p>
                   </button>
                 )}
-                <button
-                  className="btn-edit border-btn bg-white d-none"
-                  type="button"
-                  onClick={() => {
-                    // UpdateData("accepted");
-                    navigate(
-                      `/contactsupplier?userId=${requestedData?.importer?.userId}&importerName=${requestedData?.importer?.name}`
-                    );
-                  }}
-                >
-                  <p className="cursor text-success text-dark">Contact Buyer</p>
-                </button>
+                
                 <ContactBtn
                   isLogin={isLogin}
                   // handleIsLoggedInBtn={handleIsLoggedInBtn}

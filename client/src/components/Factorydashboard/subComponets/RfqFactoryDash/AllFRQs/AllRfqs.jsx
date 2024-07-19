@@ -16,6 +16,7 @@ import useRFQData from "./useRfq";
 // Container Components
 // stand alone component
 import RfqNotification from "components/Factorydashboard/subComponets/RfqFactoryDash/AllFRQs/RfqNotificationList";
+import SearchFilterByOrder from "components/Shared/Dashboards/SearchFilterByOrder";
 
 export default function AllRfqs() {
   const { isLogin } = useContext(UserToken);
@@ -96,107 +97,35 @@ export default function AllRfqs() {
       {/* section 1 */}
       <div className="header w-100">
         <PageUtility currentPage="RFQs" />
-        <div>
-          <div className=" d-flex justify-content-between align-items-center ">
-            <h2>RFQs</h2>
+        {/* <div> */}
+        <div className=" d-flex justify-content-between align-items-center ">
+          <h2>RFQs</h2>
 
-            <div className="btn-container">
-              <div>
-                <button
-                  className="notific-btn dropdown-toggle fa-solid fa-bell btn-container bg-white"
-                  type="button"
-                  data-bs-toggle="dropdown"
-                ></button>
-
-                <RfqNotification />
-              </div>
+          <div className="btn-container">
+            <div>
               <button
-                className="order-btn-1"
-                onClick={downloadCsv}
-                disabled={!allAnsRfqData?.length}
-              >
-                <i className="fa-solid fa-cloud-arrow-down"></i>
-                <p className="cursor">Download CSV</p>
-              </button>
+                className="notific-btn dropdown-toggle fa-solid fa-bell btn-container bg-white"
+                type="button"
+                data-bs-toggle="dropdown"
+              ></button>
+
+              <RfqNotification />
             </div>
+            <button
+              className="order-btn-1"
+              onClick={downloadCsv}
+              disabled={!allAnsRfqData?.length}
+            >
+              <i className="fa-solid fa-cloud-arrow-down"></i>
+              <p className="cursor">Download CSV</p>
+            </button>
           </div>
         </div>
+        {/* </div> */}
 
         {/* search filter section */}
-        <div className=" search-container d-flex justify-content-between align-items-center p-3">
-          <div className="input-group width-size">
-            <div
-              className="input-group-prepend  cursor"
-              onClick={(e) => {
-                let value = document.getElementById("formsFilter").value;
-                filtterData(value, "formsFilter");
-              }}
-            >
-              <span
-                className="input-group-text bg-white icon-search-container pe-0"
-                id="inputGroup-sizing-default"
-              >
-                <i className="fa-solid fa-magnifying-glass icon-search"></i>
-              </span>
-            </div>
-            <input
-              type="text"
-              className="form-control input-search "
-              placeholder="Search by product name"
-              id="formsFilter"
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  filtterData(e.target.value, "formsFilter");
-                }
-              }}
-            />
-          </div>
 
-          <div className=" btn-container d-flex justify-content-between align-items-center">
-            <div class="dropdown">
-              <button
-                className=" dropdown-toggle order-toggle d-flex justify-content-center align-items-center"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                <i className="fa-solid fa-filter"></i>
-                <p>
-                  {filter?.sort_name !== "" ? filter?.sort_name : "Sort By"}
-                  
-                </p>
-              </button>
-
-              <ul class="dropdown-menu  ">
-                <li
-                  onClick={(e) => {
-                    filtterData("date-DESC", "sort", "Sort By");
-                  }}
-                  className=" cursor text-start"
-                >
-                  <p className="dropdown-item">Sort By</p>
-                </li>
-
-                <li
-                  onClick={(e) => {
-                    filtterData("date-ASC", "sort", "Oldest");
-                  }}
-                  className=" cursor  text-start"
-                >
-                  <p className="dropdown-item">Oldest</p>
-                </li>
-                <li
-                  onClick={(e) => {
-                    filtterData("date-DESC", "sort", "Newest");
-                  }}
-                  className=" cursor  text-start"
-                >
-                  <p className="dropdown-item">Newest</p>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
+        <SearchFilterByOrder filtterData={filtterData} filter={filter} />
         {/* data section */}
 
         <div className=" data-container w-100 p-3">
@@ -212,7 +141,6 @@ export default function AllRfqs() {
                         className="form-check-input"
                         type="checkbox"
                         value=""
-                        id="flexCheckDefault"
                       />
                     </div>
                     Product Name
@@ -251,7 +179,7 @@ export default function AllRfqs() {
                           className="form-check-input"
                           type="checkbox"
                           value=""
-                          id="flexCheckDefault"
+                          // id="flexCheckDefault"
                         />
                       </div>
                       <td className="">
@@ -316,9 +244,7 @@ export default function AllRfqs() {
 
                   <th className=" col-2 ps-3  d-flex align-items-center ">
                     <p className="trate-sub-title">
-                      {poItem?.deadline !== null
-                        ? getMonthName(poItem?.deadline?.split("T")?.[0])
-                        : ""}
+                      {getMonthName(poItem?.deadline?.split("T")?.[0])}
                     </p>
                   </th>
 
@@ -381,7 +307,7 @@ export default function AllRfqs() {
                             <span class="sr-only">Loading...</span>
                           </div>
                         ) : (
-                          errorsMsg || "No Records"
+                          errorsMsg || "No Records Found"
                           // errorsMsg!=''?errorsMsg : "No Records"
                         )}
                       </p>
