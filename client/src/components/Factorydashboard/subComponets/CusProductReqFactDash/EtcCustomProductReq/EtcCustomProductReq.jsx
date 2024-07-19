@@ -377,7 +377,7 @@ export default function EtcCustomProductReq() {
                     type="button"
                     onClick={() => {
                       navigate(
-                        `/answerQuotation?specialManufacturingRequestId=${requestedData?.id}&productName=${requestedData?.productName}&userId=${requestedData?.importerId}`
+                        `/answerQuotation/spmf?id=${requestedData?.id}&productName=${requestedData?.productName}&userId=${requestedData?.importerId}`
                       );
                     }}
                   >

@@ -10,7 +10,8 @@ import {
 
 const useFormSubmitForAllQoutes = (isLogin, setErrorMsg, setIsLoading) => {
   function setLoadingState(loadingStatus) {
-    setIsLoading((prev) => ({ ...prev, submitLoading: loadingStatus }));
+    // setIsLoading((prev) => ({ ...prev, submitLoading: loadingStatus }));
+    setIsLoading(loadingStatus);
   }
 
   const handleSubmitMsg = useSubmitFormMsg();
@@ -46,7 +47,7 @@ const useFormSubmitForAllQoutes = (isLogin, setErrorMsg, setIsLoading) => {
     let {
       importerId,
       //   productName,
-    //   quantity,
+      //   quantity,
       minQuantity,
       price,
       deadline,
@@ -77,7 +78,7 @@ const useFormSubmitForAllQoutes = (isLogin, setErrorMsg, setIsLoading) => {
       importerId,
       //   productName,
       price,
-    //   quantity,
+      //   quantity,
       minQuantity,
       deadline,
       timeLine,
@@ -111,24 +112,34 @@ const useFormSubmitForAllQoutes = (isLogin, setErrorMsg, setIsLoading) => {
       ...extraDataForSecpificForm,
     };
 
-
-    console.log("dataa quote",data)
     let result = "";
     if (requestType == "rfq") {
       result = await addqouteForRfq({ authorization: isLogin }, data);
+    } else if (requestType == "spmf") {
+      result = await addqouteForSpmf({ authorization: isLogin }, data);
+    } else if (requestType == "WhiteLabel") {
+      result = await addqouteForWhiteLabel({ authorization: isLogin }, data);
+    } else if (requestType == "PrivateLabel") {
+      result = await addqouteForPrivateLabel({ authorization: isLogin }, data);
+    } else if (requestType == "SourcingReq") {
+      result = await addqouteForSourcingReq({ authorization: isLogin }, data);
     }
+
+    console.log("dataa quote data", data);
+
+    console.log("dataa quote", result);
+    console.log("dataa quote requestType", result);
 
     if (result?.success) {
       // display  successfully submitted message
       handleSubmitMsg("Quotation");
     } else {
+      setLoadingState(false);
       handleResponseError(result.error);
     }
   };
 
-  return { submitForm  };
+  return { submitForm };
 };
 
 export default useFormSubmitForAllQoutes;
-
-

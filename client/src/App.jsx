@@ -23,7 +23,6 @@ import ContactSupplierFactoryPg from "components/Factories/ContactSupplierFactor
 // forms
 import Contactsupplier from "components/Forms/Contactsupplier/Contactsupplier";
 
-import AnsQuotationPrivateLabel from "components/Forms/AnswerQuotation/AnsQuotationPrivateLabel";
 
 // more details form
 import SourcingOfferExtraDetails from "components/SourcingOfferExtraDetails/SourcingOfferExtraDetails";
@@ -43,7 +42,7 @@ import adminDashboardRoutes from "routes/adminDashboardRoutes";
 import importerDashboardRoutes from "routes/importerDashboardRoutes";
 import factoryDashboardRoutes from "routes/factoryDashboardRoutes";
 import authRoutes from "routes/authRoutes";
-import formRoutes from "routes/formRoutes";
+import formRoutes from "routes/FormRoutes";
 
 import MeetingRoom from "components/MeetingRoom/MeetingRoom";
 import Invitaion from "components/MeetingRoom/Invitaion";
@@ -141,10 +140,7 @@ const router = createBrowserRouter([
     path: "/fetchFactory",
     element: <FetchFactories />,
   },
-  {
-    path: "/answerQuotationPrivateLabel",
-    element: <AnsQuotationPrivateLabel />,
-  },
+ 
 
   // view More Details Home page
   {

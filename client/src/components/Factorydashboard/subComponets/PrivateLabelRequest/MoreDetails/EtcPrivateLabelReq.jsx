@@ -192,7 +192,7 @@ export default function EtcPrivateLabelReq(props) {
                     type="button"
                     onClick={() => {
                       navigate(
-                        `/answerQuotationPrivateLabel?privateLabelingId=${requestedData?.id}&productName=${requestedData?.productName}&userId=${requestedData?.importerId}`
+                        `/answerQuotation/PrivateLabel?id=${requestedData?.id}&productName=${requestedData?.productName}&userId=${requestedData?.importerId}`
                       );
                     }}
                   >
