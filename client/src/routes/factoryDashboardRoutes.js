@@ -53,16 +53,9 @@ const factoryDashboardRoutes = [
     children: [
       { path: "", element: <DashBoard /> },
 
-
-
-
-      // RFQ
+      // RFQ Done
       { path: "RfqRequests", element: <RfqFactoryDash /> },
-      {
-        path: "RFQReq/moreDetails",
-
-        element: <RfqRequestFacEtc />,
-      },
+      { path: "RFQReq/moreDetails", element: <RfqRequestFacEtc /> },
 
       
 
@@ -77,7 +70,6 @@ const factoryDashboardRoutes = [
       // { path: "editQuote/:quoteId", element: <EditQuote /> },
       { path: "editQuote/:quoteId", element: <EditQuote /> },
 
-     
       { path: "purchasingOrders", element: <Orders /> },
 
       { path: "CustomerProductRequest", element: <CusProductReqFactDash /> },
@@ -110,8 +102,6 @@ const factoryDashboardRoutes = [
 
         element: <VisitRequestFacEtc />,
       },
-
-    
 
       {
         path: "purchasingOrderReq/moreDetails",
