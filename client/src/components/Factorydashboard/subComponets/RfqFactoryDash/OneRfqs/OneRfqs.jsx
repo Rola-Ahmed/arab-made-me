@@ -324,14 +324,14 @@ export default function OneRfqs() {
 
               {/* <Link>View Quotation on FRQ</Link> */}
 
-              <div className="col-12 d-flex justify-content-start btn-modal-gap">
+              <div className="col-12 d-flex justify-content-start btn-modal-gap"> 
                 {requestedData && requestedData?.quoteId == null ? (
                   <button
                     className="btn-edit "
                     type="button"
                     onClick={() => {
                       navigate(
-                        `/answerQuotation?quotationRequestId=${requestedData?.id}&productName=${requestedData?.productName}&userId=${requestedData?.importerId}&productId=${requestedData?.productId}`
+                        `/answerQuotation/rfq?id=${requestedData?.id}&productName=${requestedData?.productName}&userId=${requestedData?.importerId}&productId=${requestedData?.productId}`
                       );
                     }}
                   >

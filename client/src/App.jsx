@@ -23,7 +23,6 @@ import ContactSupplierFactoryPg from "components/Factories/ContactSupplierFactor
 // forms
 import Contactsupplier from "components/Forms/Contactsupplier/Contactsupplier";
 
-import AnswerQuotation from "components/Forms/AnswerQuotation/AnswerQuotation";
 import AnsQuotationPrivateLabel from "components/Forms/AnswerQuotation/AnsQuotationPrivateLabel";
 
 // more details form
@@ -136,10 +135,7 @@ const router = createBrowserRouter([
 
   // ---------------------------FORMS---------------
 
-  {
-    path: "/answerQuotation",
-    element: <AnswerQuotation />,
-  },
+  
 
   {
     path: "/fetchFactory",

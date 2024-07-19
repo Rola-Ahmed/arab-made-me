@@ -6,8 +6,9 @@ import WhiteLabelContainer from "components/Forms/WhiteLabel/FetchWhiteLabelCont
 import SendRfq from "components/Forms/RFQ/FetchRfqContainer";
 import PrivateLabel from "components/Forms/PrivateLabel/PrivateLabelContainer";
 import FetchPurchasingOrder from "components/Forms/PurchasingOrder/FetchPurchasingOrder";
-
 import RequestVisit from "components/Forms/RequestVisit/RequestVisit";
+
+import AnswerQuotation from "components/Forms/AnswerQuotation/AnswerQuotation";
 
 const formRoutess = [
   {
@@ -36,6 +37,15 @@ const formRoutess = [
   {
     path: "/requestVisit",
     element: <RequestVisit />,
+  },
+
+  // factory forms
+
+  {
+    path: "/answerQuotation/:requestType",
+    element: <AnswerQuotation />,
+
+    // /answerQuotation/rfq?id=${requestedData?.id}&productName=${requestedData?.productName}&userId=${requestedData?.importerId}&productId=${requestedData?.productId}
   },
 ];
 

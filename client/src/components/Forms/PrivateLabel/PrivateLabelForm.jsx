@@ -31,9 +31,9 @@ export default function PrivateLabelForm(props) {
   } = props;
   // State variables
 
-  console.log(formValidation.errors, "formValidation");
-  console.log(formValidation.values, "formValidation");
-  console.log("selectedDocs", selectedDocs);
+  // console.log(formValidation.errors, "formValidation");
+  // console.log(formValidation.values, "formValidation");
+  // console.log("selectedDocs", selectedDocs);
   const [selectedItem, setSelectedItem] = useState(null);
 
   return (
