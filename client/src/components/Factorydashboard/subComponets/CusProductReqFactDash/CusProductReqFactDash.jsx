@@ -12,7 +12,8 @@ import { UserToken } from "Context/userToken";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
-import SpmfsNotification from "containers/Factorydashboard/Notifcations/SpmfNotification";
+import SpmfsNotification from "components/Factorydashboard/subComponets/CusProductReqFactDash/SpmfNotification";
+
 import { GlobalMsgContext } from "Context/globalMessage";
 
 // utils import

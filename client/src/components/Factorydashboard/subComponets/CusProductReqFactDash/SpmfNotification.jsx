@@ -3,7 +3,7 @@ import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { baseUrl } from "config.js";
 import { UserToken } from "Context/userToken";
-import SpmfsNotificationList from "components/Factorydashboard/Notification/SpmfsNotificationList";
+import SpmfsNotificationList from "components/Factorydashboard/subComponets/CusProductReqFactDash/SpmfsNotificationList";
 
 export default function SpmfNotification() {
   const { isLogin } = useContext(UserToken);
@@ -28,7 +28,10 @@ export default function SpmfNotification() {
 
       const response = await axios.request(config);
       if (response?.data?.message == "done") {
-        setNotificationData((prevData) => [...prevData, ...response.data.spmfs]);
+        setNotificationData((prevData) => [
+          ...prevData,
+          ...response.data.spmfs,
+        ]);
 
         setApiLoadingData(false);
       }
