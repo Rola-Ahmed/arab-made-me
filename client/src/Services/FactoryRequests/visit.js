@@ -1,4 +1,4 @@
-import { getRequestDataHeader ,putRequest} from "../authServices";
+import { getRequestDataHeader, putRequest } from "../authServices";
 
 export const getVisitReqs = async (param, header) => {
   return await getRequestDataHeader(
@@ -8,9 +8,6 @@ export const getVisitReqs = async (param, header) => {
   );
 };
 
-
-
-
-export const updateSpmf= async (id, header, data) => {
-  return await putRequest(`/spmfs/factory/${id}`, header, data);
+export const updateVisit = async (id, header, data) => {
+  return await putRequest(`/visits/factory/${id}`, header, data);
 };

@@ -142,21 +142,20 @@ export default function ChatList() {
 
         socket.on("socketAuth", (data) => {
           console.log("New message received:", data);
-          fetchFactoriesData()
+          fetchFactoriesData();
           // Optionally handle the received message (e.g., update state or UI)
           // setGlobalMsg(`New message: ${data}`);
         });
 
         socket.on("authorization", (data) => {
           console.log("New message received:", data);
-          fetchFactoriesData()
+          fetchFactoriesData();
           // Optionally handle the received message (e.g., update state or UI)
           // setGlobalMsg(`New message: ${data}`);
         });
 
-
         socket.on("newMessage", (data) => {
-          fetchFactoriesData()
+          fetchFactoriesData();
 
           console.log("New message received:", data);
           // setAllPosData((prevMessages) => [...prevMessages, data]); // Update state with the new message
@@ -368,7 +367,7 @@ export default function ChatList() {
                   </th>
                   <th className=" col-2 d-flex align-items-center justify-content-center gap-icon-table">
                     <small className="notifi-date text-muted  lh-base">
-                      <i class="fa-regular fa-clock"></i>
+                      <i class="fa-regular fa-clock me-1"></i>
                       <span className="pe-1">
                         {getTimeDifference(poItem?.createdAt)}
                       </span>

@@ -11,7 +11,7 @@ import DashBoard from "components/Factorydashboard/subComponets/DashBoard/DashBo
 import RfqFactoryDash from "components/Factorydashboard/subComponets/RfqFactoryDash/AllFRQs/AllRfqs";
 
 import CusProductReq from "components/Factorydashboard/subComponets/CusProductReq/AllSpmf/AllSpmf";
-import ReqVisitFactDash from "components/Factorydashboard/subComponets/ReqVisitFactDash/ReqVisitFactDash";
+import ReqVisitFactDash from "components/Factorydashboard/subComponets/ReqVisitFactDash/AllReqVisit/ReqVisitFactDash";
 import GetAllFactoryProduct from "components/Factorydashboard/subComponets/Products/GetProducts/GetProducts";
 import EditProduct from "components/Factorydashboard/subComponets/Products/EditProduct/EditProduct";
 import AddProduct from "components/Factorydashboard/subComponets/Products/AddProduct/AddProduct";

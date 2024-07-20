@@ -12,9 +12,10 @@ import PageUtility from "components/Shared/Dashboards/PageUtility";
 import { getMonthName as getDate } from "utils/getMonthName";
 import useVisit from "./useVisit";
 import SearchFilterByOrder from "components/Shared/Dashboards/SearchFilterByOrder";
+import StatusMessage from "components/Shared/Dashboards/StatusMessage";
 
 // Container Components
-import VisitReqNotification from "components/Factorydashboard/subComponets/ReqVisitFactDash/VisitReqNotification";
+import VisitReqNotification from "components/Factorydashboard/subComponets/ReqVisitFactDash/AllReqVisit/VisitReqNotificationList";
 
 export default function ReqVisitFactDash() {
   let navigate = useNavigate();
@@ -256,42 +257,16 @@ export default function ReqVisitFactDash() {
                       {/* view */}
                       <i class="fa-solid fa-up-right-from-square"></i>
                     </p>
-                    {/* <p
-                      className="trate-sub-title view-more-details cursor"
-                      title="delete the form "
-                      onClick={() => {
-                        deleteData(poItem?.id);
-                      }}
-                    >
-                      <i class="fa-regular fa-trash-can"></i>
-                    </p> */}
                   </th>
                 </tr>
               ))}
-              {reqData?.length == 0 ? (
-                <tr className="row">
-                  <div className="col-12  w-100 h-100 my-5 py-5">
-                    <div className="text-center">
-                      <p className="trate-sub-title ">
-                        {apiLoadingData ? (
-                          <div
-                            class="spinner-border spinner-border-sm"
-                            role="status"
-                          >
-                            <span class="sr-only">Loading...</span>
-                          </div>
-                        ) : errorsMsg ? (
-                          errorsMsg
-                        ) : (
-                          "No Records Found"
-                        )}
-                      </p>
-                    </div>
-                  </div>
-                </tr>
-              ) : (
-                " "
-              )}
+
+              {/* is data is still loading or error occured */}
+              <StatusMessage
+                reqDataLength={reqData?.length}
+                apiLoadingData={apiLoadingData}
+                errorsMsg={errorsMsg}
+              />
 
               <tr className="row">
                 <div className="col-12  ReactPaginate">

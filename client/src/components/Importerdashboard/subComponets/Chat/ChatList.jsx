@@ -260,7 +260,7 @@ export default function ChatList() {
                   </th>
                   <th className=" col-2 d-flex align-items-center justify-content-center gap-icon-table">
                     <small className="notifi-date text-muted  lh-base">
-                      <i class="fa-regular fa-clock"></i>
+                      <i class="fa-regular fa-clock me-1"></i>
                       <span className="pe-1">
                         {getTimeDifference(poItem?.createdAt)}
                       </span>

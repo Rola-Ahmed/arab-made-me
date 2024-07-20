@@ -71,7 +71,7 @@ export default function SpmfsNotificationList(props) {
                     {item?.importer?.name} sent you a request
                   </small>
                   <small className="notifi-date text-muted  lh-base">
-                    <i class="fa-regular fa-clock"></i>
+                    <i class="fa-regular fa-clock me-1"></i>
                     <span className="pe-1">
                       {getTimeDifference(item?.createdAt)}
                     </span>

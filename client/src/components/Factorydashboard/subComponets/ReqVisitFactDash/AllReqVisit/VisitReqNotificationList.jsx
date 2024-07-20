@@ -1,29 +1,16 @@
 import { useRef } from "react";
-import { useNavigate } from "react-router-dom";
-// import { propTypes } from "prop-types";
-import propTypes from "prop-types";
-
 import { baseUrl_IMG } from "config.js";
-
 import { handleImageError } from "utils/ImgNotFound";
+import { useNavigate } from "react-router-dom";
 
+// utils
 import { getTimeDifference as getTimeDiff } from "utils/getTimeDifference";
 import { getMonthName as getDate } from "utils/getMonthName";
+import useVisitNotific from "./useVisitNotific";
 
-// PrivateLabelNotificationList.defaultProps = {
-// typechecking on the props for a component,
-//  assign the special  propTypes property:
-//   PrivateLabelNotificationList.propTypes = {
-//   isLoading: false,
-//   notifcationData: [],
-//   page: 1,
-//   handleDisplayPrevData: () => {}, // Provide a default function if needed
-//   totalPage: 0,
-// };
-
-function PrivateLabelNotificationList(props) {
-  let { isLoading, notifcationData, page, handleDisplayPrevData, totalPage } =
-    props;
+export default function VisitReqNotificationList() {
+  let { isLoading, notificationData, page, handleDisplayPrevData, totalPage } =
+    useVisitNotific();
 
   let currentScroller = useRef(null);
 
@@ -62,7 +49,7 @@ function PrivateLabelNotificationList(props) {
         <h4 className="fw-bolder dropdown-item text ">Notifcations</h4>
       </div>
 
-      {notifcationData?.map((item) => (
+      {notificationData?.map((item) => (
         <div
           className={`dropdown-item  cont-notif  ${
             item?.status === "open" && "active-Notifi"
@@ -80,7 +67,7 @@ function PrivateLabelNotificationList(props) {
             </div>
             <div className="d-grid gap-2">
               <div className="d-grid gap-0">
-                <small className="d-block  lh-base text-truncate req-name-noti">
+                <small className="d-block  lh-base text-truncate req-name-noti req-name-noti">
                   {item?.importer?.name} sent you a request
                 </small>
                 <small className="notifi-date text-muted  lh-base">
@@ -88,15 +75,15 @@ function PrivateLabelNotificationList(props) {
                   <span className="pe-1">
                     {getTimeDifference(item?.createdAt)}
                   </span>
-                  <span> {getMonthName(item?.createdAt.split("T")?.[0])}</span>
+                  <span>{getMonthName(item?.createdAt.split("T")?.[0])}</span>
                 </small>
               </div>
               <button
                 className="order-btn-1 btn-2 w-100"
                 onClick={() => {
                   navigate(
-                    `/factorydashboard/PrivateLabelReq/moreDetails?privateLabelId=${item?.id}`
-                    // &factoryName=${item?.factory?.name}
+                    `/factorydashboard/factoryVisitReq/moreDetails?visitReqId=${item?.id}`
+                    // &factoryName=undefined
                   );
                 }}
               >
@@ -117,21 +104,3 @@ function PrivateLabelNotificationList(props) {
     </ul>
   );
 }
-
-PrivateLabelNotificationList.propTypes = {
-  isLoading: propTypes.bool,
-  notifcationData: propTypes.array,
-  page: propTypes.number,
-  handleDisplayPrevData: propTypes.func,
-  totalPage: propTypes.number,
-};
-
-PrivateLabelNotificationList.defaultProps = {
-  isLoading: false,
-  notifcationData: [],
-  page: 1,
-  handleDisplayPrevData: () => {}, // Provide a default function if needed
-  totalPage: 0,
-};
-
-export default PrivateLabelNotificationList;
