@@ -10,7 +10,7 @@ import Orders from "components/Factorydashboard/subComponets/Orders/Orders";
 import DashBoard from "components/Factorydashboard/subComponets/DashBoard/DashBoard";
 import RfqFactoryDash from "components/Factorydashboard/subComponets/RfqFactoryDash/AllFRQs/AllRfqs";
 
-import CusProductReqFactDash from "components/Factorydashboard/subComponets/CusProductReqFactDash/CusProductReqFactDash";
+import CusProductReqFactDash from "components/Factorydashboard/subComponets/CusProductReqFactDash/AllSpmf/AllSpmf";
 import ReqVisitFactDash from "components/Factorydashboard/subComponets/ReqVisitFactDash/ReqVisitFactDash";
 import GetAllFactoryProduct from "components/Factorydashboard/subComponets/Products/GetProducts/GetProducts";
 import EditProduct from "components/Factorydashboard/subComponets/Products/EditProduct/EditProduct";
