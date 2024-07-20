@@ -1,4 +1,4 @@
-import { postRequest, putRequest,getRequestDataHeader } from "./authServices";
+import { postRequest, putRequest, getRequestDataHeader } from "./authServices";
 
 // get spesific product Value
 export const addPrivateLabel = async (header, data) => {
@@ -9,7 +9,6 @@ export const addPrivateLabel = async (header, data) => {
 export const addPrivateLabelMedia = async (id, header, data) => {
   return await putRequest(`/privateLabelings/uploadMedia/${id}`, header, data);
 };
-
 
 export const getOnePrivateLabel = async (id, param) => {
   return await getRequestDataHeader(`/privateLabelings/${id}?${param}`, {}, {});

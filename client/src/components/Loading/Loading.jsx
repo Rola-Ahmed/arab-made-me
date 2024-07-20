@@ -1,8 +1,9 @@
 import "./Loading.css";
 export default function Loading() {
   return (
-    <div className="loading">
-      <div className="square-3"> </div>
+    <div className="d-flex align-items-center py-5 px-5">
+      <p fw-bolder>Loading</p>
+      <div class="loader"></div>
     </div>
   );
 }

@@ -45,14 +45,22 @@ export default function EtcPrivateLabelReq() {
         <div className="container gap-container">
           <div className="row">
             <div className="col-12  container-2-gap  p-0">
-              <ImporterInfo importerData={requestedData?.importer} />
-
               {apiLoadingData?.reqData ? (
                 <div className="d-flex justify-content-center w-100">
-                  <Loading />
+                  {apiLoadingData?.errorWhileLoading ? (
+                    <div className="border-3 border-row py-5">
+                      <p className="text-muted fw-semibold text-center my-5 py-5">
+                        {apiLoadingData?.errorWhileLoading}
+                      </p>
+                    </div>
+                  ) : (
+                    <Loading />
+                  )}
                 </div>
               ) : (
                 <>
+                  <ImporterInfo importerData={requestedData?.importer} />
+
                   <div className="container-profile-input w-100">
                     <div className="title-contianer-input w-100">
                       <p> Private Label Details</p>

@@ -12,6 +12,7 @@ export function usePrivateLabel() {
 
   const [apiLoadingData, setApiLoadingData] = useState({
     reqData: true,
+    errorWhileLoading: null,
     findQuotation: true,
   });
 
@@ -48,6 +49,12 @@ export function usePrivateLabel() {
         setApiLoadingData((prevVal) => ({
           ...prevVal,
           reqData: false,
+        }));
+      } else {
+        setApiLoadingData((prevVal) => ({
+          ...prevVal,
+          reqData: true,
+          errorWhileLoading: result?.error,
         }));
       }
 
