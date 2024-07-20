@@ -1,187 +1,41 @@
-import { useEffect, useState, useContext } from "react";
-import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import Carousel from "react-grid-carousel";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import { baseUrl, baseUrl_IMG } from "config.js";
-import { UserToken } from "Context/userToken";
+import Loading from "components/Loading/Loading";
 
-import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
+// import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
-
-import { pdfIcon } from "constants/Images";
-import { handleImageError } from "utils/ImgNotFound";
 
 import ImporterInfo from "components/Factorydashboard/Shared/ImporterInfo";
 import HeaderSection from "./HeaderSection";
 import { getMonthName as getDate } from "utils/getMonthName";
 import ContactBtn from "components/Factorydashboard/Shared/ContactBtn";
+import { useSpmf } from "./useSpmf";
+import ReadOnly from "components/Forms/Shared/ReadOnly";
+import DisplayMultiImages from "components/Shared/Dashboards/DisplayMultiImages";
+import DisplayOneImage from "components/Shared/Dashboards/DisplayOneImage";
 
 export default function EtcCustomProductReq() {
   let navigate = useNavigate();
 
-  let { isLogin } = useContext(UserToken);
   let getMonthName = getDate;
+  let { isLogin, requestedData, apiLoadingData } = useSpmf();
 
-  const [searchParams] = useSearchParams();
-  const customProductId = searchParams.get("customProductId");
-
-  const [apiLoadingData, setapiLoadingData] = useState(true);
-  const [modalShow, setModalShow] = useState({
-    isLogin: false,
-    isImporterVerified: false,
-    isFactoryVerified: false,
-  });
+  console.log("requestedData",requestedData)
   const [showImagePop, setShowImagePop] = useState({
     display: false,
     imagePath: "",
   });
-
-  const [requestedData, setRequestedData] = useState({ quoteId: null });
-
-  async function fetchReqData() {
-    setapiLoadingData(true);
-
-    // check if private label has qoutations
-
-    try {
-      let config = {
-        method: "get",
-        url: `${baseUrl}/spmfs/${customProductId}?include=importer`,
-      };
-
-      const response = await axios.request(config);
-
-      if (response?.data?.message == "done") {
-        // setRequestedData(response.data.specialmanufacturingrequests);
-
-        setRequestedData((prevData) => ({
-          ...prevData,
-          ...response.data.specialmanufacturingrequests,
-        }));
-
-        setapiLoadingData(false);
-      } else {
-        setapiLoadingData(true);
-      }
-    } catch (error) {
-      setapiLoadingData(true);
-    }
-
-    try {
-      let QouteIdConfig = {
-        method: "get",
-        url: `${baseUrl}/factories/factory/quotations`,
-        headers: {
-          authorization: isLogin,
-        },
-      };
-
-      const response = await axios.request(QouteIdConfig);
-
-      if (response?.data?.message == "done") {
-        const { quotations } = response.data;
-
-        quotations.forEach((item) => {
-          if (item.specialManufacturingRequestId == customProductId) {
-            // Use item.id to match with privateLabelId
-            setRequestedData((prevData) => ({
-              ...prevData,
-              quoteId: item.id, // Use item.id directly
-            }));
-          }
-        });
-
-        setapiLoadingData(false);
-      } else {
-        setapiLoadingData(true);
-      }
-    } catch (error) {
-      setapiLoadingData(true);
-    }
-  }
-
-  async function UpdateData(status) {
-    setapiLoadingData(true);
-
-    try {
-      let config = {
-        method: "put",
-        url: `${baseUrl}/spmfs/factory/${customProductId}`,
-        headers: {
-          authorization: isLogin,
-        },
-        data: {
-          status: status,
-        },
-      };
-
-      const response = await axios.request(config);
-
-      if (response?.data?.message == "done") {
-        setRequestedData((prevVal) => ({
-          ...prevVal,
-          status: status,
-        }));
-
-        if (status !== "seen") {
-          toast("Status Updated", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            draggable: true,
-            theme: "colored",
-            type: "success",
-          });
-        }
-      } else {
-        if (status !== "seen") {
-          toast("Something Went Wrong, please try Again Later", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            draggable: true,
-            theme: "colored",
-            type: "error",
-          });
-        }
-      }
-    } catch (error) {
-      if (status !== "seen") {
-        toast("Something Went Wrong, please try Again Later", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          draggable: true,
-          theme: "colored",
-          type: "error",
-        });
-      }
-    }
-  }
-
-  useEffect(() => {
-    fetchReqData();
-
-    if (
-      requestedData &&
-      requestedData?.status !== "rejected" &&
-      requestedData?.status !== "accepted"
-    ) {
-      UpdateData("seen");
-    }
-  }, [customProductId, requestedData && requestedData?.status == "open"]);
+  const handleImageClick = (imagePath) => {
+    setShowImagePop({
+      display: true,
+      imagePath,
+    });
+  };
 
   return (
     <>
-      <ToastContainer />
-
-      <IsLoggedIn
+      {/* <IsLoggedIn
         show={modalShow.isLogin}
         onHide={() =>
           setModalShow((prevVal) => ({
@@ -189,11 +43,31 @@ export default function EtcCustomProductReq() {
             isLogin: false,
           }))
         }
-      />
+      /> */}
 
       <HeaderSection />
 
-      <div className="section factory-profile m-5">
+      {apiLoadingData?.reqData && (
+        <div className="section factory-profile m-5 ">
+          <div className="container gap-container">
+            <div className="row">
+              <div className="d-flex justify-content-center w-100">
+                {apiLoadingData?.errorWhileLoading ? (
+                  <div className="border-3 border-row py-5">
+                    <p className="text-muted fw-semibold text-center my-5 py-5">
+                      {apiLoadingData?.errorWhileLoading}
+                    </p>
+                  </div>
+                ) : (
+                  <Loading />
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {!apiLoadingData?.reqData && <div className="section factory-profile m-5">
         <div className="container gap-container">
           <div className="row">
             <div className="col-12  container-2-gap  p-0">
@@ -205,59 +79,80 @@ export default function EtcCustomProductReq() {
                   <div className="w-100 ">
                     <div className="row  row-gap">
                       <div className="col-6">
-                        <div className="grid-gap-col">
-                          <div className="form-group">
-                            <label>Product Name</label>
-                            <input
-                              className="form-control"
-                              value={requestedData?.productName || ""}
-                              readOnly
-                            />
-                          </div>
-                        </div>
+                        <ReadOnly
+                          title="Product Name"
+                          value={requestedData?.productName}
+                        />
                       </div>
 
                       <div className="col-6">
-                        <div className="grid-gap-col">
-                          <div className="form-group">
-                            <label>status</label>
-                            <input
-                              className="form-control"
-                              value={requestedData?.status || ""}
-                              readOnly
-                            />
-                          </div>
-                        </div>
+                        <ReadOnly
+                          title="status"
+                          value={requestedData?.status}
+                        />
+                      </div>
+                      <div className="col-6">
+                        <ReadOnly
+                          title="shipping Conditions"
+                          value={requestedData?.shippingConditions}
+                        />
                       </div>
 
                       <div className="col-6">
-                        <div className="grid-gap-col">
-                          <div className="form-group">
-                            <label>Created At </label>
-                            <input
-                              className="form-control"
-                              value={
-                                `${getMonthName(
-                                  requestedData?.createdAt?.split("T")?.[0]
-                                )}` || ""
-                              }
-                              readOnly
-                            />
-                          </div>
-                        </div>
+                        <ReadOnly
+                          title="shipping Type and Size"
+                          value={requestedData?.shippingSize}
+                        />
+                      </div>
+
+                      <div className="col-6">
+                        <ReadOnly
+                          title="supply Location"
+                          value={requestedData?.supplyLocation}
+                        />
+                      </div>
+
+                      <div className="col-6">
+                        <ReadOnly
+                          title="packing Conditions"
+                          value={requestedData?.packingType}
+                        />
+                      </div>
+
+                      <div className="col-6">
+                        <ReadOnly
+                          title="qualityConditions"
+                          value={requestedData?.qualityConditions}
+                        />
+                      </div>
+
+                      <div className="col-6">
+                        <ReadOnly
+                          title="Created At"
+                          value={getMonthName(
+                            requestedData?.createdAt?.split("T")?.[0]
+                          )}
+                        />
+                      </div>
+
+                      <div className="col-6">
+                        <ReadOnly
+                          title="Deadline "
+                          value={getMonthName(
+                            requestedData?.deadline?.split("T")?.[0]
+                          )}
+                        />
                       </div>
 
                       {/* ---------------------------- */}
 
                       {requestedData?.specialCharacteristics &&
-                        Object?.keys(requestedData?.specialCharacteristics)
+                        Object.keys(requestedData?.specialCharacteristics)
                           ?.length > 0 && (
                           <div className="col-12 ">
-                            <div className="grid-gap-col">
-                              <div className="form-group">
-                                <label>Product Characteristics</label>
-                              </div>
-                            </div>
+                            <label className="fw-600 mb-1">
+                              Product Characteristics
+                            </label>
 
                             <div className="form-group form-control p-4 ">
                               <div className="row row-gap">
@@ -265,16 +160,7 @@ export default function EtcCustomProductReq() {
                                   requestedData?.specialCharacteristics
                                 )?.map(([key, value], index) => (
                                   <div className="col-6">
-                                    <div className="grid-gap-col">
-                                      <div className="form-group">
-                                        <label>{key} </label>
-                                        <input
-                                          className="form-control"
-                                          value={value || ""}
-                                          readOnly
-                                        />
-                                      </div>
-                                    </div>
+                                    <ReadOnly title={key} value={value} />
                                   </div>
                                 ))}
                               </div>
@@ -284,90 +170,44 @@ export default function EtcCustomProductReq() {
                       {/* ----------------------------------------- */}
 
                       <div className="col-12">
-                        <div className="form-group">
-                          <label> Technical Specifications</label>
-                          <textarea
-                            className="form-control"
-                            rows="3"
-                            value={requestedData?.technicalSpecifications || ""}
-                            readOnly
-                          ></textarea>
-                        </div>
+                        <ReadOnly
+                          title="Technical Specifications"
+                          value={requestedData?.technicalSpecifications}
+                        />
                       </div>
 
                       <div className="col-12">
-                        <div className="form-group">
-                          <label>inqueries</label>
-                          <textarea
-                            className="form-control"
-                            rows="3"
-                            value={requestedData?.inqueries || ""}
-                            readOnly
-                          ></textarea>
-                        </div>
+                        <ReadOnly
+                          title="inqueries"
+                          value={requestedData?.inqueries}
+                        />
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              {requestedData?.docs?.length > 0 && (
-                <div className="container-profile-input w-100">
-                  <div className="title-contianer-input w-100">
-                    <p> Documents</p>
-                    <div className="w-100 ">
-                      {/* ----------------------- */}
-                      <div className="row grid-gap-col">
-                        <div className="col-12">
-                          {requestedData?.docs ? (
-                            <Carousel
-                              cols={2}
-                              rows={1}
-                              gap={10}
-                              scrollSnap={true}
-                              loop
-                              showDots
-                              hideArrow={false}
-                            >
-                              {requestedData?.docs?.map((item) => (
-                                <Carousel.Item>
-                                  <div
-                                    className="dots-slider-img w-100  cursor"
-                                    onClick={() => {
-                                      setShowImagePop({
-                                        display: true,
-                                        imagePath: `${baseUrl_IMG}/${item}`,
-                                      });
-                                      // }
-                                    }}
-                                  >
-                                    <img
-                                      className="h-100 w-100 "
-                                      id={handleImageError}
-                                      src={
-                                        item?.includes("pdf")
-                                          ? pdfIcon
-                                          : `${baseUrl_IMG}/${item}`
-                                      }
-                                      alt={item?.pdfFile?.name?.includes("pdf")}
-                                      onError={handleImageError}
-                                    />
-                                  </div>
-                                </Carousel.Item>
-                              ))}
-                            </Carousel>
-                          ) : (
-                            <h5 className="text-muted text-center py-3">
-                              Empty
-                            </h5>
-                          )}
-                        </div>
-                      </div>
-                      {/* </form> */}
-                      {/* ----------------------- */}
-                    </div>
-                  </div>
+
+              <div className="container-profile-input w-100">
+                <div className="title-contianer-input w-100">
+                  <p> Documents</p>
+                  <DisplayMultiImages
+                    handleImageClick={handleImageClick}
+                    images={requestedData?.docs}
+                  />
                 </div>
-              )}
+              </div>
+
+              <div className="container-profile-input w-100">
+                <div className="title-contianer-input w-100">
+                  <p> TradeMark</p>
+
+                  <DisplayOneImage
+                    handleImageClick={handleImageClick}
+                    image={requestedData?.tradeMark}
+                  />
+                </div>
+              </div>
+
               <div className="col-12 d-flex justify-content-start btn-modal-gap">
                 {requestedData && requestedData?.quoteId == null ? (
                   <button
@@ -414,7 +254,8 @@ export default function EtcCustomProductReq() {
             </div>
           </div>
         </div>
-      </div>
+      </div>}
+      
 
       <MediaPopUp
         show={showImagePop.display}

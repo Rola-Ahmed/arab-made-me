@@ -5,7 +5,7 @@ export default function ReadOnly({ title, value }) {
     <div className="form-group">
       <label className="text-capitalize">{title}</label>
       {/* <input className="form-control" value={value || ""} readOnly /> */}
-      <p className="form-control readOnly">{value}</p>
+      <p className="form-control readOnly">{value ?? '-'} </p>
     </div>
   );
 }

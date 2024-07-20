@@ -23,7 +23,7 @@ function CustomProductForm(props) {
     setErrorMsg,
   } = props;
 
-
+  console.log("selectedDocs",selectedDocs)
   return (
     <form
       onSubmit={formValidation.handleSubmit}
@@ -179,7 +179,7 @@ function CustomProductForm(props) {
             selectedDocs={selectedDocs}
             // sub section
             setSelectedDocs={setSelectedDocs}
-            MediaName="TrademakrDocs"
+            MediaName="tradeMark"
             mediaMaxLen="3"
             meidaAcceptedExtensions={["pdf", "png", "jpeg", "jpg"]}
             setErrorMsg={setErrorMsg}
