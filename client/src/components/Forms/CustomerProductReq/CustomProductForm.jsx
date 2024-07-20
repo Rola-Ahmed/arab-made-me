@@ -23,7 +23,7 @@ function CustomProductForm(props) {
     setErrorMsg,
   } = props;
 
-  console.log("selectedDocs",selectedDocs)
+  // console.log("selectedDocs",selectedDocs)
   return (
     <form
       onSubmit={formValidation.handleSubmit}

@@ -10,7 +10,7 @@ import { baseUrl_IMG } from "config.js";
 import { UserToken } from "Context/userToken";
 import { useNavigate } from "react-router-dom";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
-import SpmfsNotification from "components/Factorydashboard/subComponets/CusProductReqFactDash/AllSpmf/SpmfsNotificationList";
+import SpmfsNotification from "components/Factorydashboard/subComponets/CusProductReq/AllSpmf/SpmfsNotificationList";
 
 import useSpmfs from "./useSpmfs";
 // utils import

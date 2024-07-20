@@ -24,7 +24,7 @@ const adminDashboardRoutes = [
       // { path: "quotations", element: <ViewQuotations /> },
       // { path: "purchasingOrders", element: <Orders /> },
 
-      // { path: "CustomerProductRequest", element: <CusProductReqFactDash /> },
+      // { path: "CustomerProductRequest", element: <CusProductReq /> },
 
       // { path: "AllFactoryProducts", element: <GetAllFactoryProduct /> },
       // { path: "addProduct", element: <AddProduct /> },

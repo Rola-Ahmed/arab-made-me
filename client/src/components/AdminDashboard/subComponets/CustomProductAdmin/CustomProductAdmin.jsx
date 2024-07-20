@@ -18,7 +18,7 @@ import { getMonthName as getDate } from "utils/getMonthName";
 //Continaer :- fetch data
 import SpmfsNotification from "containers/Admindashboard/Notifcations/SpmfNotification";
 
-export default function CusProductReqFactDash() {
+export default function CusProductReq() {
   let { isLogin } = useContext(UserToken);
   let navigate = useNavigate();
 

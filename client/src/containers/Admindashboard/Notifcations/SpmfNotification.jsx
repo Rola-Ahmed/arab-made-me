@@ -3,7 +3,7 @@ import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { baseUrl } from "config.js";
 import { UserToken } from "Context/userToken";
-import SpmfsNotificationList from "components/Factorydashboard/subComponets/CusProductReqFactDash/AllSpmf/SpmfsNotificationList";
+import SpmfsNotificationList from "components/Factorydashboard/subComponets/CusProductReq/AllSpmf/SpmfsNotificationList";
 
 export default function SpmfNotification() {
   const { isLogin } = useContext(UserToken);
