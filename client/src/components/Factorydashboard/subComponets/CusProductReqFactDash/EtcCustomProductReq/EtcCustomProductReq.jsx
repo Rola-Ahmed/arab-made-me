@@ -14,7 +14,6 @@ import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
 import { pdfIcon } from "constants/Images";
 import { handleImageError } from "utils/ImgNotFound";
 
-import FactoryInfo from "components/Factorydashboard/Shared/FactoryInfo";
 import ImporterInfo from "components/Factorydashboard/Shared/ImporterInfo";
 import HeaderSection from "./HeaderSection";
 import { getMonthName as getDate } from "utils/getMonthName";
@@ -199,7 +198,6 @@ export default function EtcCustomProductReq() {
           <div className="row">
             <div className="col-12  container-2-gap  p-0">
               {/* contains its own fetch i just called it */}
-              <FactoryInfo />
               <ImporterInfo importerData={requestedData?.importer} />
               <div className="container-profile-input w-100">
                 <div className="title-contianer-input w-100">

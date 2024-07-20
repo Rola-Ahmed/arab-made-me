@@ -3,6 +3,8 @@ import * as Yup from "yup";
 import axios from "axios";
 import { useFormik } from "formik";
 import { baseUrl } from "config.js";
+import { socket } from "config.js";
+
 
 export default function SendMsg(props) {
   let { recieverUserId, isLogin, SetNewMessageSuccess, setAllPosData } = props;
@@ -52,6 +54,14 @@ export default function SendMsg(props) {
         data: data,
       };
 
+      socket.emit("newMessage", data);
+      // socket.emit("socketAuth", isLogin);
+      // socket.emit("authorization", isLogin);
+
+      // socket.on("newMessage", data);
+      // socket.on("socketAuth", isLogin);
+      // socket.on("authorization", isLogin);
+
       const response = await axios.request(config);
 
       if (response.data.message == "done") {
@@ -77,6 +87,73 @@ export default function SendMsg(props) {
 
     // }, []);
   }
+
+    useEffect(() => {
+    if (isLogin) {
+      const connectSocket = () => {
+        console.log("Attempting to connect socket..."); // Debugging message
+        socket.connect();
+        console.log("Socket state after connect:", socket); // Debugging message
+
+        socket.on("connect", () => {
+          console.log("Connected to server");
+        });
+
+        socket.on("newMessage", (data) => {
+          try {
+            console.log("Message received:", data);
+            // Handle the message
+          } catch (error) {
+            console.error("Error handling newMessage:", error);
+          }
+        });
+
+        socket.on("authorization", (data) => {
+          console.log("New message received authorization:", data);
+        });
+
+        socket.on("connect_error", (err) => {
+          console.error("Connection error:", err);
+        });
+
+        socket.on("connect_timeout", (err) => {
+          console.error("Connection timeout:", err);
+        });
+
+        socket.on("error", (err) => {
+          console.error("General error:", err);
+        });
+
+        socket.on("reconnect_error", (err) => {
+          console.error("Reconnect error:", err);
+        });
+
+        socket.on("reconnect_failed", () => {
+          console.error("Reconnect failed");
+        });
+
+        // Cleanup on unmount
+        return () => {
+          socket.off("connect");
+          socket.off("newMessage");
+          socket.off("authorization");
+          socket.off("connect_error");
+          socket.off("connect_timeout");
+          socket.off("error");
+          socket.off("reconnect_error");
+          socket.off("reconnect_failed");
+          socket.disconnect();
+        };
+      };
+
+      connectSocket();
+
+      return () => {
+        // console.log("Disconnecting socket..."); // Debugging message
+        socket.disconnect();
+      };
+    }
+  }, [isLogin]);
   return (
     <form
       className="text-area-2 position-relative"

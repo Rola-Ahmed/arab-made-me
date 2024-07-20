@@ -1,9 +1,8 @@
 import { useState, useContext, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
-// import { baseUrl, socket } from "config.js";
-import { baseUrl } from "config.js";
+import { socket } from "config.js";
+// import { baseUrl } from "config.js";
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -12,6 +11,9 @@ import { userDetails } from "Context/userType";
 
 import Header from "components/main/Header/Header";
 import { GlobalMsgContext } from "Context/globalMessage";
+import { addChat } from "Services/chat";
+import { fetchOneFactory } from "Services/factory";
+import { fetchOneImporter } from "Services/importer";
 
 function Contactsupplier() {
   let navigate = useNavigate();
@@ -35,44 +37,29 @@ function Contactsupplier() {
 
   // factory details
   async function fetchFactoryData() {
-    try {
-      let config = {
-        method: "get",
-        url: `${baseUrl}/factories/${currentUserData?.factoryId}`,
-      };
+    let result = await fetchOneFactory(currentUserData?.factoryId);
 
-      const response = await axios.request(config);
-
-      if (response.data.message == "done") {
-        setFactoryDetails(response.data.factories);
-      } else if (response.data.message == "404 Not Found") {
-        // errorsMsg("404");
-      }
-    } catch (error) {}
+    if (result?.success) {
+      setFactoryDetails(result?.data?.factories);
+    } else {
+      // errorsMsg("404");
+    }
   }
 
   async function fetchImporterData() {
-    try {
-      let config = {
-        method: "get",
-        url: `${baseUrl}/importers/${currentUserData?.importerId}`,
-      };
+    const result = await fetchOneImporter(currentUserData?.importerId, {});
 
-      const response = await axios.request(config);
-
-      if (response.data.message == "done") {
-        setFactoryDetails(response.data.importers);
-      } else if (response.data.message == "404 Not Found") {
-        // errorsMsg("404");
-      }
-    } catch (error) {}
+    if (result?.success) {
+      setFactoryDetails(result?.data?.importers);
+    } else {
+      // errorsMsg("404");
+    }
   }
 
   // product data
   // ------------------------Form Validation
   let validationSchema = Yup.object().shape({
     message: Yup.string()
-      .min(5, "min legnth is 5")
       .required("Input field is Required")
       .max(255, "max legnth is 255"),
   });
@@ -117,154 +104,47 @@ function Contactsupplier() {
       },
     };
 
-    try {
-      let config = {
-        method: "post",
-        url: `${baseUrl}/chats/add`,
-        headers: {
-          authorization: isLogin,
-        },
-        data: data,
-      };
+    let result = await addChat(
+      {
+        authorization: isLogin,
+      },
+      data
+    );
 
-      const response = await axios.request(config);
-
-      if (response.data.message == "done") {
-        setGlobalMsg("Your form has been successfully submitted.");
-        navigate(-1);
-        // socket.on("connect", () => {
-        //   console.log("Connected to server");
-        // });
-        // socket.emit("newMessage", values.message);
-
-        // // Listen for new messages
-        // socket.on("newMessage", values.message);
-        // socket.on("newMessage", (data) => {
-        //   console.log("New message received:", data);
-        // });
-
-        // Cleanup on unmount
-        // return () => {
-        //   socket.off("connect");
-        //   socket.off("newMessage");
-        // };
-        // Track errors
-        // socket.on("connect_error", (err) => {
-        //   console.error("Connection error:", err);
-        // });
-
-        // socket.on("connect_timeout", (err) => {
-        //   console.error("Connection timeout:", err);
-        // });
-
-        // socket.on("error", (err) => {
-        //   console.error("General error:", err);
-        // });
-
-        // socket.on("reconnect_error", (err) => {
-        //   console.error("Reconnect error:", err);
-        // });
-
-        // socket.on("reconnect_failed", () => {
-        //   console.error("Reconnect failed");
-        // });
-      } else {
-        setErrorMsg((prevErrors) => ({
-          ...prevErrors,
-          response: response?.data?.message,
-        }));
-        window.scrollTo({ top: 1125.5999755859375 });
-      }
-      setIsLoading(false);
-    } catch (error) {
-      setIsLoading(false);
-
-      if (error.response && error.response.status) {
-        const statusCode = error.response.status;
-        switch (statusCode) {
-          // case 200:
-          //   setErrorMsg("Success (200).");
-          //   break;
-          // case 204:
-          //   setErrorMsg("No Content (204).");
-          //   break;
-          case 400:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.errorMessage,
-            }));
-            break;
-          case 401:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: "User is not Unauthorized ",
-            }));
-            break;
-          case 403:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response:
-                "Forbidden, You do not have permission to access this resource.",
-            }));
-
-            break;
-          case 404:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response:
-                "Not Found (404). The requested resource was not found.",
-            }));
-
-            break;
-
-          case 500:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.errorMessage,
-            }));
-            break;
-
-          //  429 Too Many Requests
-          // The user has sent too many requests in a given amount of time ("rate limiting").
-          case 429:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: " Too Many Requests , Please try again later.",
-            }));
-            break;
-          case 402:
-            // 402
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.message,
-            }));
-            window.scrollTo({ top: 1125.5999755859375 });
-
-            break;
-          default:
-            window.scrollTo({ top: 1125.5999755859375 });
-
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.errorMessage,
-            }));
-            // case message== error
-            break;
+    if (result?.success) {
+      // if (socket.connected) {
+      socket.emit("newMessage", data);
+      socket.emit("socketAuth", isLogin);
+      socket.emit("authorization", isLogin);
+      // socket.emit("authorization", isLogin);
+      socket.on("newMessage", (data) => {
+        try {
+          console.log("Message received:", data);
+          // Handle the message
+        } catch (error) {
+          console.error("Error handling newMessage:", error);
         }
-      } else {
-        setErrorMsg((prevErrors) => ({
-          ...prevErrors,
-          response: "An unexpected error occurred. Please try again later.",
-        }));
-      }
+      });
+      // socket.emit("newMessage", { message: "Test message" });
+      // socket.send("newMessage", values.message)
+      // console.log("new messsae",values.message)
+      // } else {
+      // console.error("Socket is not connected");
+      // }
 
-      window.scrollTo({ top: 1540 });
+      // socket.emit("newMessage", values.message);
+      // socket.connect();
+
+      setGlobalMsg("Your form has been successfully submitted.");
+      navigate(-1);
+    } else {
+      setErrorMsg((prevErrors) => ({
+        ...prevErrors,
+        response: result.error,
+      }));
+      window.scrollTo({ top: 1125.5999755859375 });
     }
-
-    // useEffect(() => {
-    // Join the chat room or handle the connection
-
-    // }, []);
+    setIsLoading(false);
   }
 
   useEffect(() => {
@@ -277,6 +157,74 @@ function Contactsupplier() {
       return;
     }
   }, [currentUserData, navigate]);
+
+  // Debugging socket connection
+  useEffect(() => {
+    if (isLogin) {
+      const connectSocket = () => {
+        console.log("Attempting to connect socket..."); // Debugging message
+        socket.connect();
+        console.log("Socket state after connect:", socket); // Debugging message
+
+        socket.on("connect", () => {
+          console.log("Connected to server");
+        });
+
+        socket.on("newMessage", (data) => {
+          try {
+            console.log("Message received:", data);
+            // Handle the message
+          } catch (error) {
+            console.error("Error handling newMessage:", error);
+          }
+        });
+
+        socket.on("authorization", (data) => {
+          console.log("New message received authorization:", data);
+        });
+
+        socket.on("connect_error", (err) => {
+          console.error("Connection error:", err);
+        });
+
+        socket.on("connect_timeout", (err) => {
+          console.error("Connection timeout:", err);
+        });
+
+        socket.on("error", (err) => {
+          console.error("General error:", err);
+        });
+
+        socket.on("reconnect_error", (err) => {
+          console.error("Reconnect error:", err);
+        });
+
+        socket.on("reconnect_failed", () => {
+          console.error("Reconnect failed");
+        });
+
+        // Cleanup on unmount
+        return () => {
+          socket.off("connect");
+          socket.off("newMessage");
+          socket.off("authorization");
+          socket.off("connect_error");
+          socket.off("connect_timeout");
+          socket.off("error");
+          socket.off("reconnect_error");
+          socket.off("reconnect_failed");
+          socket.disconnect();
+        };
+      };
+
+      connectSocket();
+
+      return () => {
+        // console.log("Disconnecting socket..."); // Debugging message
+        socket.disconnect();
+      };
+    }
+  }, [isLogin]);
 
   return (
     <>

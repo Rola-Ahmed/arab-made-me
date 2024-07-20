@@ -5,7 +5,6 @@ import { baseUrl_IMG } from "config.js";
 export default function ProductList(props) {
   let { index, item } = props;
   let navigate = useNavigate();
-  console.log("factoryitem ProductList", index, item);
 
   return (
     <div

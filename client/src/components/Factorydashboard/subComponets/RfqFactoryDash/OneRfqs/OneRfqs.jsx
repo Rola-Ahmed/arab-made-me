@@ -106,7 +106,7 @@ export default function OneRfqs() {
     if (requestedData && requestedData.status === "open") {
       UpdateData("seen");
     }
-  }, [rfqReqId, requestedData]);
+  }, [rfqReqId, isLogin]);
 
   // utils function
   let getMonthName = getDate;

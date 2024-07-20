@@ -8,7 +8,6 @@ import { getMonthName as getDate } from "utils/getMonthName";
 
 // sub Components
 // import HeaderSection from "./HeaderSection";
-import FactoryInfo from "components/Factorydashboard/Shared/FactoryInfo";
 import ImporterInfo from "components/Factorydashboard/Shared/ImporterInfo";
 import ContactBtn from "components/Factorydashboard/Shared/ContactBtn";
 
@@ -58,7 +57,6 @@ export default function EtcQuote(props) {
         <div className="container gap-container">
           <div className="row">
             <div className="col-12  container-2-gap  p-0">
-              <FactoryInfo />
               <ImporterInfo importerData={requestedData?.importer} />
 
               <div className="container-profile-input w-100">

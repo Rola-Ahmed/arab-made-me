@@ -4,10 +4,18 @@ import { handleImageError } from "utils/ImgNotFound";
 import { useNavigate } from "react-router-dom";
 import { getTimeDifference as getTimeDiff } from "utils/getTimeDifference";
 import { getMonthName as getDate } from "utils/getMonthName";
-export default function PrivateLabelNotificationList(props) {
-  let { isLoading, notifcationData, page, handleDisplayPrevData, totalPage } =
-    props;
+import usePrivateLabelNotific from "./usePrivateLabelNotific";
 
+export default function PrivateLabelNotificationList() {
+  let {
+    notificationData,
+    apiLoadingData,
+    handleDisplayPrevData,
+    page,
+    totalPage,
+  } = usePrivateLabelNotific();
+
+  // console.log("notificationData",notificationData)
   let currentScroller = useRef(null);
 
   let navigate = useNavigate();
@@ -45,7 +53,7 @@ export default function PrivateLabelNotificationList(props) {
         <h4 className="fw-bolder dropdown-item text ">Notifcations</h4>
       </div>
 
-      {notifcationData?.map((item) => (
+      {notificationData?.map((item) => (
         <div
           className={`dropdown-item  cont-notif  ${
             item?.status === "open" && "active-Notifi"
@@ -67,7 +75,7 @@ export default function PrivateLabelNotificationList(props) {
                   {item?.importer?.name} sent you a request
                 </small>
                 <small className="notifi-date text-muted  lh-base">
-                  <i class="fa-regular fa-clock"></i>
+                  <i class="fa-regular fa-clock me-1"></i>
                   <span className="pe-1">
                     {getTimeDifference(item?.createdAt)}
                   </span>
@@ -79,7 +87,6 @@ export default function PrivateLabelNotificationList(props) {
                 onClick={() => {
                   navigate(
                     `/factorydashboard/PrivateLabelReq/moreDetails?privateLabelId=${item?.id}`
-                    // &factoryName=${item?.factory?.name}
                   );
                 }}
               >
@@ -90,7 +97,7 @@ export default function PrivateLabelNotificationList(props) {
         </div>
       ))}
 
-      {isLoading && (
+      {apiLoadingData && (
         <div className="dropdown-item  cont-notif text-center  ">
           <>
             <i className="fas fa-spinner fa-spin"></i>

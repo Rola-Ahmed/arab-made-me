@@ -3,7 +3,7 @@ import Factorydash from "containers/Factorydashboard/FactorydashContainer";
 
 // private Label Data
 import PrivateLabeLReq from "components/Factorydashboard/subComponets/PrivateLabelRequest/Index/IndexContainer";
-import EtcPrivateLabelReq from "containers/Factorydashboard/subComponets/PrivateLabeFactDash/EtcPrivateLabelReqContainer";
+import EtcPrivateLabelReq from "components/Factorydashboard/subComponets/PrivateLabelRequest/MoreDetails/OnePrivateLabelReq";
 
 import FactoryProfile from "components/Factorydashboard/subComponets/FactoryProfile/FactoryProfile";
 import Orders from "components/Factorydashboard/subComponets/Orders/Orders";
@@ -57,14 +57,9 @@ const factoryDashboardRoutes = [
       { path: "RfqRequests", element: <RfqFactoryDash /> },
       { path: "RFQReq/moreDetails", element: <RfqRequestFacEtc /> },
 
-
-
       // private label req
       { path: "PrivateLabel", element: <PrivateLabeLReq /> },
-      {
-        path: "PrivateLabelReq/moreDetails",
-        element: <EtcPrivateLabelReq />,
-      },
+      { path: "PrivateLabelReq/moreDetails", element: <EtcPrivateLabelReq /> },
 
       { path: "quotations", element: <ViewQuotations /> },
       // { path: "editQuote/:quoteId", element: <EditQuote /> },

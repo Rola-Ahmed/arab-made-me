@@ -15,7 +15,7 @@ function Sectors() {
   // console.log("errormsg", errormsg);
 
   const [allsSectors, setAllSectors] = useState([]);
-  console.log("allsSectors", allsSectors, allSectors);
+
   const navigate = useNavigate();
 
   useEffect(() => {

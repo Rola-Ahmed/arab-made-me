@@ -3,7 +3,7 @@ import ProductList from "./ProductList";
 
 export default function ProductCarousel(props) {
   let { factoryitem } = props;
-  console.log("factoryitem ProductCarousel", factoryitem);
+
   return (
     <Carousel
       cols={5}
@@ -60,7 +60,7 @@ export default function ProductCarousel(props) {
     >
       {factoryitem?.productData?.map((item, index) => (
         <Carousel.Item>
-          <ProductList  index={index} item={item} />
+          <ProductList index={index} item={item} />
         </Carousel.Item>
       ))}
     </Carousel>

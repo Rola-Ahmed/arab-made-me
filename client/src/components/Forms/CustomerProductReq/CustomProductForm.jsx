@@ -23,8 +23,6 @@ function CustomProductForm(props) {
     setErrorMsg,
   } = props;
 
-  console.log("formvaliation", formValidation.errors);
-  console.log("formvaliation", formValidation.values);
 
   return (
     <form

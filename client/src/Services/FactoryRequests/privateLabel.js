@@ -8,6 +8,11 @@ export const getPrivateLables = async (param, header) => {
   );
 };
 
+export const updatePrivateLabel= async (id, header, data) => {
+  return await putRequest(`/privateLabelings/factory/${id}`, header, data);
+};
+
+
 // export const getOnePrivateLable = async (param, header, data) => {
 //   return await getRequestDataHeader(`/rfqs?${param}`, header, data);
 // };

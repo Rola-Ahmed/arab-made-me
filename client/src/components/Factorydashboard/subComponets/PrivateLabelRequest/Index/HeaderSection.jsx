@@ -1,4 +1,4 @@
-import PrivateLabelNotification from "containers/Factorydashboard/Notifcations/PrivateLabelNotification";
+import PrivateLabelNotification from "components/Factorydashboard/subComponets/PrivateLabelRequest/Index/PrivateLabelNotificationList";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 
 export default function HeaderSection(props) {
