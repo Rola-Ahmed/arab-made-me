@@ -236,6 +236,7 @@ export default function AllSpmf() {
                           className="w-100 h-100"
                           src={`${baseUrl_IMG}/${poItem?.importer?.image}`}
                           onError={handleImageError}
+                          alt={`${baseUrl_IMG}/${poItem?.importer?.image}`}
                         />
                       </div>
                       <div>

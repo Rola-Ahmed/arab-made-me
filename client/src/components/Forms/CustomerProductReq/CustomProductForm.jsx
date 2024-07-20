@@ -11,7 +11,7 @@ import { shippingConditionsArr } from "constants/shippingConditionsArr";
 import { ShippingTypeSizeArr } from "constants/ShippingTypeSizeArr";
 import { qualityConditionsArr } from "constants/qualityConditionsArr";
 import SpecialChar from "../Shared/SpecialChar/SpecialChar";
-import RadioInput from "../Shared/RadioInput";
+// import RadioInput from "../Shared/RadioInput";
 import DateTimeInput from "../Shared/DateTimeInput";
 function CustomProductForm(props) {
   let {
