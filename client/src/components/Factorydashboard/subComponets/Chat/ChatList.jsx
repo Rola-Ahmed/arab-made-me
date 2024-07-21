@@ -2,35 +2,19 @@ import { useEffect, useState, useContext } from "react";
 import { handleImageError } from "utils/ImgNotFound";
 // shared components
 import PaginationDash from "components/Shared/Dashboards/PaginationDash";
-import axios from "axios";
-import { baseUrl, baseUrl_IMG } from "config.js";
+import { baseUrl_IMG } from "config.js";
 
 import { UserToken } from "Context/userToken";
 import { useNavigate } from "react-router-dom";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 import { getTimeDifference as getTimeDiff } from "utils/getTimeDifference";
-import { socket } from "config.js";
+import useAllUserChats from "./useAllUserChats";
+import StatusMessage from "components/Shared/Dashboards/StatusMessage";
 
 export default function ChatList() {
   let { isLogin } = useContext(UserToken);
   let navigate = useNavigate();
   let getTimeDifference = getTimeDiff;
-
-  const [allPosData, setAllPosData] = useState([]);
-  const [errorsMsg, setErrorsMsg] = useState();
-
-  const [apiLoadingData, setapiLoadingData] = useState(true);
-  const [pagination, setPagination] = useState(() => ({
-    // i want to display 3 pdoructs in the 1st page
-    displayProductSize: 8,
-    currentPage: 1,
-    totalPage: 1,
-    // will be called by api
-    // totalPage: Math.ceil((allProductsData?.length) /pagination.displayProductSize), // Use 30 as the default display size
-  }));
-  const [uniqueFactoryIDofProducts, setUniqueFactoryIDofProducts] = useState(
-    []
-  );
 
   const [filter, setFilter] = useState({
     formsFilter: "",
@@ -47,180 +31,9 @@ export default function ChatList() {
       ...(name && { sort_name: name }),
     }));
   }
+  let { reqData, pagination, apiLoadingData, errorsMsg, setPagination } =
+    useAllUserChats(isLogin, filter);
 
-  async function fetchFactoriesData() {
-    setapiLoadingData(true);
-
-    try {
-      let config = {
-        method: "get",
-        url: `${baseUrl}/chats/user/chats?size=${pagination?.displayProductSize}&page=${pagination?.currentPage}&formsFilter=${filter?.formsFilter}&sort=${filter?.sort}`,
-        headers: {
-          authorization: isLogin,
-        },
-      };
-
-      const response = await axios.request(config);
-      console.log('response',response)
-
-      if (response?.data?.message == "done") {
-        setAllPosData(response.data.chats);
-
-        const uniqueIds = [
-          ...new Set(
-            response.data.chats.map(
-              (obj) => obj.userTwoId // Extract all factoryIds
-            ) // Filter out null values
-          ),
-        ];
-
-        setUniqueFactoryIDofProducts(uniqueIds);
-      } else {
-        setErrorsMsg(response?.data?.message);
-      }
-      setapiLoadingData(false);
-    } catch (error) {
-      setapiLoadingData(false);
-     
-    }
-  }
-
-  useEffect(() => {
-    if (isLogin) {
-      const connectSocket = () => {
-        console.log("Attempting to connect socket..."); // Debugging message
-        socket.connect();
-        console.log("Socket state after connect:", socket); // Debugging message
-
-        socket.on("connect", () => {
-          console.log("Connected to server");
-        });
-
-        socket.on("socketAuth", (data) => {
-          console.log("New message received:", data);
-          // fetchFactoriesData();
-          // Optionally handle the received message (e.g., update state or UI)
-          // setGlobalMsg(`New message: ${data}`);
-        });
-
-       
-        socket.on("newMessage", (data) => {
-          // fetchFactoriesData();
-          console.log("New message received:", data);
-          // setAllPosData((prevMessages) => [...prevMessages, data]); // Update state with the new message
-        });
-
-        socket.on("connect_error", (err) => {
-          console.error("Connection error:", err);
-        });
-
-        socket.on("connect_timeout", (err) => {
-          console.error("Connection timeout:", err);
-        });
-
-        socket.on("error", (err) => {
-          console.error("General error:", err);
-        });
-
-        socket.on("reconnect_error", (err) => {
-          console.error("Reconnect error:", err);
-        });
-
-        socket.on("reconnect_failed", () => {
-          console.error("Reconnect failed");
-        });
-
-        // ... other event listeners ...
-
-        // Cleanup on unmount
-        return () => {
-          socket.off("connect");
-          // socket.off("authorization"); // Ensure to remove the listener
-          socket.off("connect_error");
-          socket.off("newMessage");
-          socket.disconnect();
-          socket.off("connect_timeout");
-          socket.off("error");
-          socket.off("reconnect_error");
-          socket.off("reconnect_failed");
-          // ... other off events ...
-        };
-      };
-
-      connectSocket();
-      // fetchFactoriesData();
-
-      return () => {
-        socket.disconnect();
-      };
-    }
-  }, [isLogin,allPosData]);
-
-  useEffect(() => {
-    fetchFactoriesData();
-  }, [pagination?.currentPage, filter]);
-
-  useEffect(() => {
-    // Promise.all(
-    uniqueFactoryIDofProducts.map(async (item) => {
-      try {
-        const productResponse = await axios.get(`${baseUrl}/users/${item}`);
-
-        if (productResponse.data.message === "done") {
-          setAllPosData((prevData) =>
-            //   loop on the array
-            prevData.map((value) =>
-              value?.userTwoId === item
-                ? {
-                    ...value,
-                    userName: productResponse?.data?.users?.name?.join(" "),
-                    userEmail: productResponse?.data?.users?.email,
-                  }
-                : value
-            )
-          );
-        }
-      } catch (error) {}
-    });
-  }, [apiLoadingData]);
-
-  useEffect(() => {
-    const fetchDataLenght = async () => {
-      try {
-        const response1 = await axios.get(
-          //   `${baseUrl}/chats/user/chats?formsFilter=${filter?.formsFilter}&sort=${filter?.sort}`,
-          `${baseUrl}/chats/user/chats?formsFilter=${filter?.formsFilter}&sort=${filter?.sort}`,
-          {
-            headers: {
-              authorization: isLogin,
-            },
-          }
-        );
-
-        if (response1?.data?.message === "done") {
-          setPagination((prevValue) => ({
-            ...prevValue,
-            totalPage: Math.ceil(
-              (response1.data?.chats?.length || 0) /
-                prevValue.displayProductSize
-            ),
-          }));
-        }
-      } catch (error) {}
-    };
-
-    fetchDataLenght();
-  }, [filter]);
-
-  console.log(
-    "allPosData",
-    allPosData?.[0]?.messages?.[allPosData?.[0]?.messages?.length - 1].message
-  );
-
-  console.log(
-    "allPosData",
-    allPosData
-  );
   return (
     <div className="m-4 order-section ">
       {/* section 1 */}
@@ -275,7 +88,7 @@ export default function ChatList() {
 
             <tbody>
               {/* row1 */}
-              {allPosData.map((poItem) => (
+              {reqData?.map((poItem) => (
                 <tr className="row goToChat" onClick={() => {}}>
                   <th
                     className=" col  d-grid align-items-center gap-16 cursor  "
@@ -339,19 +152,12 @@ export default function ChatList() {
                 </tr>
               ))}
 
-              {allPosData?.length == 0 ? (
-                <tr className="row">
-                  <div className="col-12  w-100 h-100 my-5 py-5">
-                    <div className="text-center">
-                      <p className="trate-sub-title ">
-                        {errorsMsg ?? "No Record"}
-                      </p>
-                    </div>
-                  </div>
-                </tr>
-              ) : (
-                " "
-              )}
+              {/* is data is still loading or error occured */}
+              <StatusMessage
+                reqDataLength={reqData?.length}
+                apiLoadingData={apiLoadingData}
+                errorsMsg={errorsMsg}
+              />
 
               <tr className="row">
                 <div className="col-12  ReactPaginate">

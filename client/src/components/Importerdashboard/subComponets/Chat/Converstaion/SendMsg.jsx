@@ -1,22 +1,19 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import * as Yup from "yup";
-import axios from "axios";
 import { useFormik } from "formik";
-import { baseUrl } from "config.js";
 import { socket } from "config.js";
+import { addChat } from "Services/chat";
 
 export default function SendMsg(props) {
-  let [dataSent, SetDataSent] = useState(false);
-  let { recieverUserId, isLogin, SetNewMessageSuccess, setAllPosData } = props;
-  let validationSchema = Yup.object().shape({
-    message: Yup.string()
-      // .min(5, "min legnth is 5")
-      // .required("Input field is Required")
-      .max(255, "max legnth is 255"),
+  const [dataSent, setDataSent] = useState(false);
+  const { recieverUserId, isLogin, SetNewMessageSuccess, setAllPosData } =
+    props;
+
+  const validationSchema = Yup.object().shape({
+    message: Yup.string().max(255, "Max length is 255"),
   });
 
-  let initialValues = {
-    // optional
+  const initialValues = {
     reciever: recieverUserId,
     message: "",
   };
@@ -25,7 +22,7 @@ export default function SendMsg(props) {
     formValidation.setValues(initialValues);
   }, [recieverUserId]);
 
-  let formValidation = useFormik({
+  const formValidation = useFormik({
     initialValues,
     validationSchema,
     onSubmit: submitForm,
@@ -36,7 +33,7 @@ export default function SendMsg(props) {
       input: values.message,
       send: false,
     });
-    let data = {
+    const data = {
       messageObj: {
         reciever: values.reciever,
         message: values.message,
@@ -44,64 +41,49 @@ export default function SendMsg(props) {
       },
     };
 
-    try {
-      let config = {
-        method: "post",
-        url: `${baseUrl}/chats/add`,
-        headers: {
-          authorization: isLogin,
-        },
-        data: data,
-      };
+    let result = await addChat(
+      {
+        authorization: isLogin,
+      },
+      data
+    );
 
-      // socket.emit("newMessage", data);
-
-      const response = await axios.request(config);
-
-      if (response.data.message == "done") {
-        SetDataSent(!dataSent);
-        SetNewMessageSuccess({
-          input: null,
-          send: true,
-        });
-        formValidation.setValues(initialValues);
-        setAllPosData((preVal) => ({
-          ...preVal,
-          ...response.data.chat,
-        }));
-      } else {
-        // setErrorMsg((prevErrors) => ({
-        //   ...prevErrors,
-        //   response: response?.data?.message,
-        // }));
-      }
-    } catch (error) {}
-
-    // useEffect(() => {
-    // Join the chat room or handle the connection
-
-    // }, []);
+    if (result?.success) {
+      socket.emit("newMessage", data);
+      setDataSent(!dataSent);
+      SetNewMessageSuccess({
+        input: null,
+        send: true,
+      });
+      formValidation.setValues(initialValues);
+      setAllPosData((prevVal) => ({
+        ...prevVal,
+        ...result?.data?.chat,
+      }));
+    }
   }
 
   useEffect(() => {
-    // console.log("dataSent", dataSent);
     if (isLogin) {
       socket.emit("socketAuth", isLogin);
 
       const connectSocket = () => {
-        console.log("Attempting to connect socket..."); // Debugging message
+        console.log("Attempting to connect socket...");
+
         socket.connect();
-        console.log("Socket state after connect:", socket); // Debugging message
 
         socket.on("connect", () => {
           console.log("Connected to server");
         });
 
         socket.on("newMessage", (data) => {
-          console.log("New message received newMessage:", data);
+          console.log("New message received-------:", data);
+          // Update state or perform actions based on the new message
         });
+
         socket.on("socketAuth", (data) => {
-          console.log("New message received authorization:", data);
+          console.log("New message received:", data);
+          SetNewMessageSuccess((prev) => !prev);
         });
 
         socket.on("connect_error", (err) => {
@@ -124,11 +106,11 @@ export default function SendMsg(props) {
           console.error("Reconnect failed");
         });
 
-        // Cleanup on unmount
+        // Cleanup on unmount or dependency change
         return () => {
           socket.off("connect");
           socket.off("newMessage");
-          socket.off("authorization");
+          socket.off("socketAuth");
           socket.off("connect_error");
           socket.off("connect_timeout");
           socket.off("error");
@@ -138,14 +120,14 @@ export default function SendMsg(props) {
         };
       };
 
-      connectSocket();
+      const cleanup = connectSocket();
 
       return () => {
-        // console.log("Disconnecting socket..."); // Debugging message
-        socket.disconnect();
+        cleanup();
       };
     }
   }, [isLogin, dataSent]);
+
   return (
     <form
       className="text-area-2 position-relative"
@@ -154,18 +136,16 @@ export default function SendMsg(props) {
       <textarea
         className="input-text-1 p-3"
         rows="2"
-        placeholder="send message......."
+        placeholder="Send message..."
         onChange={formValidation.handleChange}
         onBlur={formValidation.handleBlur}
         value={formValidation.values.message}
         id="message"
       />
-      {formValidation.errors.message && formValidation.touched.message ? (
+      {formValidation.errors.message && formValidation.touched.message && (
         <small className="form-text text-danger d-block w-100">
           {formValidation.errors.message}
         </small>
-      ) : (
-        ""
       )}
       <button className="border-0 text-end" type="submit">
         Send

@@ -112,35 +112,14 @@ function Contactsupplier() {
     );
 
     if (result?.success) {
-      // if (socket.connected) {
-      socket.emit("newMessage", data);
       socket.emit("socketAuth", isLogin);
-      socket.emit("authorization", isLogin);
-      // socket.emit("authorization", isLogin);
-      socket.on("newMessage", (data) => {
-        try {
-          console.log("Message received:", data);
-          // Handle the message
-        } catch (error) {
-          console.error("Error handling newMessage:", error);
-        }
-      });
-      // socket.emit("newMessage", { message: "Test message" });
-      // socket.send("newMessage", values.message)
-      // console.log("new messsae",values.message)
-      // } else {
-      // console.error("Socket is not connected");
-      // }
-
-      // socket.emit("newMessage", values.message);
-      // socket.connect();
 
       setGlobalMsg("Your form has been successfully submitted.");
       navigate(-1);
     } else {
       setErrorMsg((prevErrors) => ({
         ...prevErrors,
-        response: result.error,
+        response: result?.error,
       }));
       window.scrollTo({ top: 1125.5999755859375 });
     }
@@ -162,22 +141,13 @@ function Contactsupplier() {
   useEffect(() => {
     if (isLogin) {
       const connectSocket = () => {
-        console.log("Attempting to connect socket..."); // Debugging message
         socket.connect();
-        console.log("Socket state after connect:", socket); // Debugging message
 
         socket.on("connect", () => {
           console.log("Connected to server");
         });
 
-        socket.on("newMessage", (data) => {
-          try {
-            console.log("Message received:", data);
-            // Handle the message
-          } catch (error) {
-            console.error("Error handling newMessage:", error);
-          }
-        });
+      
 
         socket.on("authorization", (data) => {
           console.log("New message received authorization:", data);
@@ -205,15 +175,15 @@ function Contactsupplier() {
 
         // Cleanup on unmount
         return () => {
-          socket.off("connect");
-          socket.off("newMessage");
-          socket.off("authorization");
-          socket.off("connect_error");
-          socket.off("connect_timeout");
-          socket.off("error");
-          socket.off("reconnect_error");
-          socket.off("reconnect_failed");
-          socket.disconnect();
+          // socket.off("connect");
+          // socket.off("newMessage");
+          // socket.off("authorization");
+          // socket.off("connect_error");
+          // socket.off("connect_timeout");
+          // socket.off("error");
+          // socket.off("reconnect_error");
+          // socket.off("reconnect_failed");
+          // socket.disconnect();
         };
       };
 
@@ -221,7 +191,7 @@ function Contactsupplier() {
 
       return () => {
         // console.log("Disconnecting socket..."); // Debugging message
-        socket.disconnect();
+        // socket.disconnect();
       };
     }
   }, [isLogin]);

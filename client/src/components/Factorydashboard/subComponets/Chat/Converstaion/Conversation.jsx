@@ -12,6 +12,7 @@ import SubPageUtility from "components/Shared/Dashboards/PageUtility";
 import { getTimeDifference as getTimeDiff } from "utils/getTimeDifference";
 import SendMsg from "./SendMsg";
 import { socket } from "config.js";
+import {  getChats } from "Services/chat";
 
 export default function Conversation() {
   let { isLogin } = useContext(UserToken);
@@ -36,73 +37,30 @@ export default function Conversation() {
     setapiLoadingData(true);
 
     try {
-      let config = {
-        method: "get",
-        url: `${baseUrl}/chats/${currentChat}`,
-        headers: {
+      let result = await getChats(
+        {},
+        {
           authorization: isLogin,
-        },
-      };
+        }
+      );
 
-      const response = await axios.request(config);
-
-      if (response?.data?.message == "done") {
+      if (result?.success) {
         setAllPosData((prevValue) => ({
           ...prevValue,
-          ...response.data.chats,
+          ...result.data.chats,
         }));
 
-        if (response.data.chats?.userTwoId != currentUserData?.userID) {
-          fetchUserTwo(response.data.chats?.userTwoId);
+        if (result.data.chats?.userTwoId != currentUserData?.userID) {
+          fetchUserTwo(result.data.chats?.userTwoId);
         } else {
-          fetchUserTwo(response.data.chats?.userOneId);
+          fetchUserTwo(result.data.chats?.userOneId);
         }
       } else {
-        setErrorsMsg(response?.data?.message);
+        setErrorsMsg(result?.data?.message);
       }
       setapiLoadingData(false);
     } catch (error) {
       setapiLoadingData(false);
-      // if (error.response && error.response.status) {
-      //   const statusCode = error.response.status;
-      //   switch (statusCode) {
-      //     case 400:
-      //       setErrorsMsg(error?.data?.errorMessage);
-      //       break;
-      //     case 401:
-      //       setErrorsMsg(error?.response?.data?.message);
-      //       break;
-      //     case 403:
-      //       setErrorsMsg(
-      //         // error?.data?.message,
-      //         error?.response?.data?.message
-      //       );
-      //       break;
-      //     case 404:
-      //       setErrorsMsg(
-      //         "Not Found (404). The requested resource was not found."
-      //       );
-      //       break;
-
-      //     case 500:
-      //       setErrorsMsg(error?.response?.data?.errorMessage);
-      //       break;
-
-      //     //  429 Too Many Requests
-      //     // The user has sent too many requests in a given amount of time ("rate limiting").
-      //     case 429:
-      //       setErrorsMsg(" Too Many Requests , Please try again later.");
-      //       break;
-      //     case 402:
-      //       // 402
-      //       setErrorsMsg(error?.response?.data?.message);
-      //       break;
-      //     default:
-      //       // case message== error
-      //       setErrorsMsg(error?.response?.data?.errorMessage);
-      //       break;
-      //   }
-      // }
     }
   }
 
@@ -110,26 +68,23 @@ export default function Conversation() {
     fetchReqData();
   }, [currentChat, currentUserData && currentUserData?.userID]);
 
+  console.log("allPosData", allPosData, errorsMsg);
   const fetchUserTwo = async (userId) => {
-    try {
-      const response = await axios.get(
-        // `${baseUrl}/users/${allPosData?.userTw oId}`
-        `${baseUrl}/users/${userId}`
-      );
+    const response = await axios.get(
+      // `${baseUrl}/users/${allPosData?.userTw oId}`
+      `${baseUrl}/users/${userId}`
+    );
 
-      if (response.data.message === "done") {
-        if (response.data.users?.importerId != null) {
-          // setAllPosData((prevValue) => ({
-          //   ...prevValue,
-          //   UserTwoFacOrImpID: response.data.users?.importerId,
-          // }));
-          fetchUserTwoImporter(response.data.users?.importerId);
-        } else {
-          fetchUserTwoFactory(response.data.users?.factoryId);
-        }
+    if (response.data.message === "done") {
+      if (response.data.users?.importerId != null) {
+        // setAllPosData((prevValue) => ({
+        //   ...prevValue,
+        //   UserTwoFacOrImpID: response.data.users?.importerId,
+        // }));
+        fetchUserTwoImporter(response.data.users?.importerId);
+      } else {
+        fetchUserTwoFactory(response.data.users?.factoryId);
       }
-    } catch (error) {
-      // console.error("Error fetching data", error);
     }
   };
   const fetchUserTwoImporter = async (id) => {
@@ -186,12 +141,11 @@ export default function Conversation() {
 
         socket.on("socketAuth", (data) => {
           console.log("New message received:", data);
-          fetchReqData();
+          // fetchFactoriesData();
           // Optionally handle the received message (e.g., update state or UI)
           // setGlobalMsg(`New message: ${data}`);
         });
 
-       
         socket.on("newMessage", (data) => {
           // fetchFactoriesData();
           console.log("New message received:", data);
@@ -242,7 +196,7 @@ export default function Conversation() {
         socket.disconnect();
       };
     }
-  }, [isLogin,newMessageSuccess]);
+  }, [isLogin, allPosData]);
 
   return (
     <div className="m-4 order-section overflow-hidden ">
