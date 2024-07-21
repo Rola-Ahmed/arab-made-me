@@ -14,7 +14,7 @@ import PageUtility from "components/Shared/Dashboards/PageUtility";
 import { getMonthName as getDate } from "utils/getMonthName";
 
 // Container Components
-import QuotationsNotification from "containers/Factorydashboard/Notifcations/QuotationsNotification";
+import QuotationsNotification from "components/Factorydashboard/subComponets/Quotations/ViewQuote/QuotationsNotification";
 
 export default function ViewQuotations() {
   let { isLogin } = useContext(UserToken);

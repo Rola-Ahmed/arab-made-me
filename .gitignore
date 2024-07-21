@@ -104,3 +104,5 @@ client/src/components/Home/TopFactories/Shared/FactoryCardParent copy.jsx
 /client/src/components/Factories/FactoryProducts copy
 client/src/components/main/Footer/Footer copy.jsx
 /client/src/components/Factorydashboard/subComponets/PrivateLabelRequest copy
+client/src/components/Factorydashboard/subComponets/ReqVisitFactDash/EtcVisitRequest/EtcVisitRequest copy.jsx
+client/src/components/main/Navbar/Navbar copy.jsx

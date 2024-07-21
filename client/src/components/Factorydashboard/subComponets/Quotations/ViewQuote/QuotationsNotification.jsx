@@ -3,7 +3,7 @@ import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { baseUrl } from "config.js";
 import { UserToken } from "Context/userToken";
-import QuotationsNotificationList from "components/Factorydashboard/Notification/QuotationsNotificationList";
+import QuotationsNotificationList from "components/Factorydashboard/subComponets/Quotations/ViewQuote/QuotationsNotificationList";
 
 export default function VisitReqNotification() {
   const { isLogin } = useContext(UserToken);
@@ -55,7 +55,9 @@ export default function VisitReqNotification() {
 
       if (getTotalPgResponse.data.message === "done") {
         setTotalPage(
-          Math.ceil((getTotalPgResponse.data.quotations?.length || 0) / dataSize)
+          Math.ceil(
+            (getTotalPgResponse.data.quotations?.length || 0) / dataSize
+          )
         );
       }
     } catch (error) {}

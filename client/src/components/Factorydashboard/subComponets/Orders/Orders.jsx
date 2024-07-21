@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 import { getMonthName as getDate } from "utils/getMonthName";
 
-import PurchasingOrdersNotification from "containers/Factorydashboard/Notifcations/PurchasingOrdersNotification";
+import PurchasingOrdersNotification from "components/Factorydashboard/subComponets/Orders/PurchasingOrdersNotification";
 export default function Orders() {
   let { isLogin } = useContext(UserToken);
   let navigate = useNavigate();

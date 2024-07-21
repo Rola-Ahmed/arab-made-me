@@ -11,6 +11,7 @@ import { useSearchParams } from "react-router-dom";
 import SubPageUtility from "components/Shared/Dashboards/PageUtility";
 import { getTimeDifference as getTimeDiff } from "utils/getTimeDifference";
 import SendMsg from "./SendMsg";
+import { socket } from "config.js";
 
 export default function Conversation() {
   let { isLogin } = useContext(UserToken);
@@ -20,12 +21,7 @@ export default function Conversation() {
   let getTimeDifference = getTimeDiff;
   const scrollChat = useRef(null);
 
-  const [allPosData, setAllPosData] = useState({
-    // UserTwoName: response.data.importers.repName,
-    // UserTwoEmail: response.data.importers.repEmail,
-    // // UserTwoImage: response.data.importers.image,
-    // UserTwoDescription: response.data.importers.description,
-  });
+  const [allPosData, setAllPosData] = useState({});
   const [errorsMsg, setErrorsMsg] = useState();
   const [newMessageSuccess, SetNewMessageSuccess] = useState({
     input: null,
@@ -67,46 +63,46 @@ export default function Conversation() {
       setapiLoadingData(false);
     } catch (error) {
       setapiLoadingData(false);
-      if (error.response && error.response.status) {
-        const statusCode = error.response.status;
-        switch (statusCode) {
-          case 400:
-            setErrorsMsg(error?.data?.errorMessage);
-            break;
-          case 401:
-            setErrorsMsg(error?.response?.data?.message);
-            break;
-          case 403:
-            setErrorsMsg(
-              // error?.data?.message,
-              error?.response?.data?.message
-            );
-            break;
-          case 404:
-            setErrorsMsg(
-              "Not Found (404). The requested resource was not found."
-            );
-            break;
+      // if (error.response && error.response.status) {
+      //   const statusCode = error.response.status;
+      //   switch (statusCode) {
+      //     case 400:
+      //       setErrorsMsg(error?.data?.errorMessage);
+      //       break;
+      //     case 401:
+      //       setErrorsMsg(error?.response?.data?.message);
+      //       break;
+      //     case 403:
+      //       setErrorsMsg(
+      //         // error?.data?.message,
+      //         error?.response?.data?.message
+      //       );
+      //       break;
+      //     case 404:
+      //       setErrorsMsg(
+      //         "Not Found (404). The requested resource was not found."
+      //       );
+      //       break;
 
-          case 500:
-            setErrorsMsg(error?.response?.data?.errorMessage);
-            break;
+      //     case 500:
+      //       setErrorsMsg(error?.response?.data?.errorMessage);
+      //       break;
 
-          //  429 Too Many Requests
-          // The user has sent too many requests in a given amount of time ("rate limiting").
-          case 429:
-            setErrorsMsg(" Too Many Requests , Please try again later.");
-            break;
-          case 402:
-            // 402
-            setErrorsMsg(error?.response?.data?.message);
-            break;
-          default:
-            // case message== error
-            setErrorsMsg(error?.response?.data?.errorMessage);
-            break;
-        }
-      }
+      //     //  429 Too Many Requests
+      //     // The user has sent too many requests in a given amount of time ("rate limiting").
+      //     case 429:
+      //       setErrorsMsg(" Too Many Requests , Please try again later.");
+      //       break;
+      //     case 402:
+      //       // 402
+      //       setErrorsMsg(error?.response?.data?.message);
+      //       break;
+      //     default:
+      //       // case message== error
+      //       setErrorsMsg(error?.response?.data?.errorMessage);
+      //       break;
+      //   }
+      // }
     }
   }
 
@@ -177,6 +173,76 @@ export default function Conversation() {
       scrollChat.current.scrollTop = scrollChat.current.scrollHeight;
     }
   }, [allPosData]);
+  useEffect(() => {
+    if (isLogin) {
+      const connectSocket = () => {
+        console.log("Attempting to connect socket..."); // Debugging message
+        socket.connect();
+        console.log("Socket state after connect:", socket); // Debugging message
+
+        socket.on("connect", () => {
+          console.log("Connected to server");
+        });
+
+        socket.on("socketAuth", (data) => {
+          console.log("New message received:", data);
+          fetchReqData();
+          // Optionally handle the received message (e.g., update state or UI)
+          // setGlobalMsg(`New message: ${data}`);
+        });
+
+       
+        socket.on("newMessage", (data) => {
+          // fetchFactoriesData();
+          console.log("New message received:", data);
+          // setAllPosData((prevMessages) => [...prevMessages, data]); // Update state with the new message
+        });
+
+        socket.on("connect_error", (err) => {
+          console.error("Connection error:", err);
+        });
+
+        socket.on("connect_timeout", (err) => {
+          console.error("Connection timeout:", err);
+        });
+
+        socket.on("error", (err) => {
+          console.error("General error:", err);
+        });
+
+        socket.on("reconnect_error", (err) => {
+          console.error("Reconnect error:", err);
+        });
+
+        socket.on("reconnect_failed", () => {
+          console.error("Reconnect failed");
+        });
+
+        // ... other event listeners ...
+
+        // Cleanup on unmount
+        return () => {
+          socket.off("connect");
+          // socket.off("authorization"); // Ensure to remove the listener
+          socket.off("connect_error");
+          socket.off("newMessage");
+          socket.disconnect();
+          socket.off("connect_timeout");
+          socket.off("error");
+          socket.off("reconnect_error");
+          socket.off("reconnect_failed");
+          // ... other off events ...
+        };
+      };
+
+      connectSocket();
+      // fetchFactoriesData();
+
+      return () => {
+        socket.disconnect();
+      };
+    }
+  }, [isLogin,newMessageSuccess]);
 
   return (
     <div className="m-4 order-section overflow-hidden ">

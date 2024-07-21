@@ -17,11 +17,11 @@ export const baseUrl_IMG =
 // console.log("socket", socket.connect);
 // console.log("socket", socket.id);
 
+// export const socket = io(baseUrl_IMG, {
+//   autoConnect: false, // Do not connect automatically
+// });
 
-
-export const socket = io(baseUrl_IMG, {
-  autoConnect: false, // Do not connect automatically
-});
+export const socket = io(baseUrl_IMG);
 
 // const io2 = new Server({
 //   cors: {

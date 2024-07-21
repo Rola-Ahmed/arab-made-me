@@ -61,6 +61,7 @@ export default function ChatList() {
       };
 
       const response = await axios.request(config);
+      console.log('response',response)
 
       if (response?.data?.message == "done") {
         setAllPosData(response.data.chats);
@@ -80,46 +81,7 @@ export default function ChatList() {
       setapiLoadingData(false);
     } catch (error) {
       setapiLoadingData(false);
-      if (error.response && error.response.status) {
-        const statusCode = error.response.status;
-        switch (statusCode) {
-          case 400:
-            setErrorsMsg(error?.data?.errorMessage);
-            break;
-          case 401:
-            setErrorsMsg(error?.response?.data?.message);
-            break;
-          case 403:
-            setErrorsMsg(
-              // error?.data?.message,
-              error?.response?.data?.message
-            );
-            break;
-          case 404:
-            setErrorsMsg(
-              "Not Found (404). The requested resource was not found."
-            );
-            break;
-
-          case 500:
-            setErrorsMsg(error?.response?.data?.errorMessage);
-            break;
-
-          //  429 Too Many Requests
-          // The user has sent too many requests in a given amount of time ("rate limiting").
-          case 429:
-            setErrorsMsg(" Too Many Requests , Please try again later.");
-            break;
-          case 402:
-            // 402
-            setErrorsMsg(error?.response?.data?.message);
-            break;
-          default:
-            // case message== error
-            setErrorsMsg(error?.response?.data?.errorMessage);
-            break;
-        }
-      }
+     
     }
   }
 
@@ -134,29 +96,16 @@ export default function ChatList() {
           console.log("Connected to server");
         });
 
-        // Listen for incoming messages
-        // socket.on("authorization", (data) => {
-        //   console.log("New message received:", data);
-        //   // Handle the received message (e.g., update state)
-        // });
-
         socket.on("socketAuth", (data) => {
           console.log("New message received:", data);
-          fetchFactoriesData();
+          // fetchFactoriesData();
           // Optionally handle the received message (e.g., update state or UI)
           // setGlobalMsg(`New message: ${data}`);
         });
 
-        socket.on("authorization", (data) => {
-          console.log("New message received:", data);
-          fetchFactoriesData();
-          // Optionally handle the received message (e.g., update state or UI)
-          // setGlobalMsg(`New message: ${data}`);
-        });
-
+       
         socket.on("newMessage", (data) => {
-          fetchFactoriesData();
-
+          // fetchFactoriesData();
           console.log("New message received:", data);
           // setAllPosData((prevMessages) => [...prevMessages, data]); // Update state with the new message
         });
@@ -205,7 +154,7 @@ export default function ChatList() {
         socket.disconnect();
       };
     }
-  }, [isLogin]);
+  }, [isLogin,allPosData]);
 
   useEffect(() => {
     fetchFactoriesData();
@@ -266,6 +215,11 @@ export default function ChatList() {
   console.log(
     "allPosData",
     allPosData?.[0]?.messages?.[allPosData?.[0]?.messages?.length - 1].message
+  );
+
+  console.log(
+    "allPosData",
+    allPosData
   );
   return (
     <div className="m-4 order-section ">

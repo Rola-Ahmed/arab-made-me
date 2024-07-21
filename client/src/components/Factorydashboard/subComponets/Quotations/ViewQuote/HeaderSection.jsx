@@ -1,7 +1,7 @@
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 
 // Container Components
-import QuotationsNotification from "containers/Factorydashboard/Notifcations/QuotationsNotification";
+import QuotationsNotification from "components/Factorydashboard/subComponets/Quotations/ViewQuote/QuotationsNotification";
 
 export default function HeaderSection(props) {
   let { requestedData } = props;

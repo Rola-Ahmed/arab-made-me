@@ -3,6 +3,8 @@ import * as Yup from "yup";
 import axios from "axios";
 import { useFormik } from "formik";
 import { baseUrl } from "config.js";
+import { socket } from "config.js";
+
 
 export default function SendMsg(props) {
   let { recieverUserId, isLogin, SetNewMessageSuccess, setAllPosData } = props;
@@ -65,6 +67,8 @@ export default function SendMsg(props) {
           ...preVal,
           ...response.data.chat,
         }));
+      socket.emit("socketAuth", isLogin);
+
       } else {
         // setErrorMsg((prevErrors) => ({
         //   ...prevErrors,

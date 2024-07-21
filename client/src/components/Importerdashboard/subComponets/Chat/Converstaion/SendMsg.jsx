@@ -5,8 +5,8 @@ import { useFormik } from "formik";
 import { baseUrl } from "config.js";
 import { socket } from "config.js";
 
-
 export default function SendMsg(props) {
+  let [dataSent, SetDataSent] = useState(false);
   let { recieverUserId, isLogin, SetNewMessageSuccess, setAllPosData } = props;
   let validationSchema = Yup.object().shape({
     message: Yup.string()
@@ -54,17 +54,12 @@ export default function SendMsg(props) {
         data: data,
       };
 
-      socket.emit("newMessage", data);
-      // socket.emit("socketAuth", isLogin);
-      // socket.emit("authorization", isLogin);
-
-      // socket.on("newMessage", data);
-      // socket.on("socketAuth", isLogin);
-      // socket.on("authorization", isLogin);
+      // socket.emit("newMessage", data);
 
       const response = await axios.request(config);
 
       if (response.data.message == "done") {
+        SetDataSent(!dataSent);
         SetNewMessageSuccess({
           input: null,
           send: true,
@@ -88,8 +83,11 @@ export default function SendMsg(props) {
     // }, []);
   }
 
-    useEffect(() => {
+  useEffect(() => {
+    // console.log("dataSent", dataSent);
     if (isLogin) {
+      socket.emit("socketAuth", isLogin);
+
       const connectSocket = () => {
         console.log("Attempting to connect socket..."); // Debugging message
         socket.connect();
@@ -100,15 +98,9 @@ export default function SendMsg(props) {
         });
 
         socket.on("newMessage", (data) => {
-          try {
-            console.log("Message received:", data);
-            // Handle the message
-          } catch (error) {
-            console.error("Error handling newMessage:", error);
-          }
+          console.log("New message received newMessage:", data);
         });
-
-        socket.on("authorization", (data) => {
+        socket.on("socketAuth", (data) => {
           console.log("New message received authorization:", data);
         });
 
@@ -153,7 +145,7 @@ export default function SendMsg(props) {
         socket.disconnect();
       };
     }
-  }, [isLogin]);
+  }, [isLogin, dataSent]);
   return (
     <form
       className="text-area-2 position-relative"
