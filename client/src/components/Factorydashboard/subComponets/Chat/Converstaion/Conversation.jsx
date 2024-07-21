@@ -68,7 +68,6 @@ export default function Conversation() {
     fetchReqData();
   }, [currentChat, currentUserData && currentUserData?.userID]);
 
-  console.log("allPosData", allPosData, errorsMsg);
   const fetchUserTwo = async (userId) => {
     const response = await axios.get(
       // `${baseUrl}/users/${allPosData?.userTw oId}`
@@ -131,16 +130,13 @@ export default function Conversation() {
   useEffect(() => {
     if (isLogin) {
       const connectSocket = () => {
-        console.log("Attempting to connect socket..."); // Debugging message
         socket.connect();
-        console.log("Socket state after connect:", socket); // Debugging message
 
         socket.on("connect", () => {
-          console.log("Connected to server");
         });
 
         socket.on("socketAuth", (data) => {
-          console.log("New message received:", data);
+         
           // fetchFactoriesData();
           // Optionally handle the received message (e.g., update state or UI)
           // setGlobalMsg(`New message: ${data}`);
@@ -148,7 +144,6 @@ export default function Conversation() {
 
         socket.on("newMessage", (data) => {
           // fetchFactoriesData();
-          console.log("New message received:", data);
           // setAllPosData((prevMessages) => [...prevMessages, data]); // Update state with the new message
         });
 

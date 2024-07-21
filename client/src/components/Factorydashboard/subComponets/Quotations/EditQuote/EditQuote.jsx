@@ -35,7 +35,6 @@ export default function EditQuote() {
       behavior: "instant",
     });
   }, [pathname]);
-  // console.log("pathname", pathname);
 
   let { isLogin } = useContext(UserToken);
   let { currentUserData } = useContext(userDetails);
@@ -235,15 +234,12 @@ export default function EditQuote() {
           // const dataFromAPI2 = response2.data;
 
           // Handle responses from both APIs
-          console.log("Data from API 1:", dataFromAPI1);
-          // console.log("Data from API 2:", dataFromAPI2);
 
           if (
             response1.data.message == "done"
             // &&
             // response2.data.message == "done"
           ) {
-            // console.log("response.data", response.data);
             setErrorMsg((previousState) => {
               const { message, ...rest } = previousState;
               return rest;
@@ -271,8 +267,6 @@ export default function EditQuote() {
       )
       .catch((error) => {
         // Handle errors
-        console.error("Error fetching data:", error);
-        console.log("error", error);
 
         setIsLoading(false);
 

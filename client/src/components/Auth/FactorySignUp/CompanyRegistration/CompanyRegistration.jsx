@@ -69,7 +69,6 @@ export default function CompanyRegistration() {
         ] = `${values.WhatsappPhoneCode}${values.WhatsappPhone}`;
 
       let result = await addFactory({ authorization: isLogin }, data);
-      // console.log("result", result);
       if (result?.success) {
         setCurrentUserData((prevUserData) => ({
           ...prevUserData,

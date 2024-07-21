@@ -21,7 +21,6 @@ export default function EtcCustomProductReq() {
   let getMonthName = getDate;
   let { isLogin, requestedData, apiLoadingData } = useSpmf();
 
-  console.log("requestedData",requestedData)
   const [showImagePop, setShowImagePop] = useState({
     display: false,
     imagePath: "",

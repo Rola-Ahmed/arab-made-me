@@ -19,7 +19,6 @@ const useVisitNotific = () => {
       { authorization: isLogin }
     );
 
-    console.log("Results", result);
     if (result?.success) {
       setNotificationData((prevData) => [...prevData, ...result.data.visits]);
       setApiLoadingData(false);

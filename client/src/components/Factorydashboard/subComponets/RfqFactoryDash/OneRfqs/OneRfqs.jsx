@@ -47,7 +47,6 @@ export default function OneRfqs() {
 
     let result = await getOneRFQ(rfqReqId, "include=importer&include=product");
 
-    console.log("result, rfq", result);
     if (result?.success) {
       setRequestedData((prevData) => ({
         ...prevData,

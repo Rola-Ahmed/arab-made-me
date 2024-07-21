@@ -1,8 +1,8 @@
 import { getRequestDataHeader, putRequest } from "../authServices";
 
-export const getPrivateLables = async (param, header) => {
+export const getPos = async (param, header) => {
   return await getRequestDataHeader(
-    `/factories/factory/privateLabelings?${param}`,
+    `/factories/factory/pos?${param}`,
     header,
     {}
   );
@@ -11,7 +11,6 @@ export const getPrivateLables = async (param, header) => {
 // export const updatePrivateLabel= async (id, header, data) => {
 //   return await putRequest(`/privateLabelings/factory/${id}`, header, data);
 // };
-
 
 // export const getOnePrivateLable = async (param, header, data) => {
 //   return await getRequestDataHeader(`/rfqs?${param}`, header, data);

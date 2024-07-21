@@ -29,7 +29,6 @@ export function useOneVisit() {
       // get private label data
       let result = await getOneVisit(visitReqId, "include=importer");
 
-      console.log("result------------------", result);
       // check if private label has quotations
 
       if (result?.success) {
@@ -58,7 +57,6 @@ export function useOneVisit() {
         { authorization: isLogin },
         { status: status }
       );
-      console.log("response", response);
       if (response?.success) {
         setRequestedData((prevVal) => ({
           ...prevVal,

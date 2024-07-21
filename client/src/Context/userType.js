@@ -85,14 +85,10 @@ export function UserTypeProvider({ children }) {
               : true,
         }));
       } else {
-        console.log(" user currentUserData", currentUserData);
         setIsLogin("");
         localStorage.clear();
       }
     } catch (error) {
-      console.log(" user error currentUserData", currentUserData);
-
-      console.log("Errorrrr", error);
       if (error?.response?.data?.message == "users not found") {
         setIsLogin("");
         localStorage.clear();
@@ -126,15 +122,10 @@ export function UserTypeProvider({ children }) {
               datacompletelyLoaded: false,
               profile: response.data.factories.coverImage,
             }));
-
-            console.log(" factories done currentUserData", currentUserData);
-          } else {
-            console.log(" factories else currentUserData", currentUserData);
           }
         })
         .catch((error) => {});
     }
-    console.log(" factories fn currentUserData", currentUserData);
   }
   async function getImporter() {
     if (currentUserData.importerId !== null) {
@@ -195,7 +186,6 @@ export function UserTypeProvider({ children }) {
     setCurrentUserData(newValue);
   };
 
-  console.log("currentUserData", currentUserData);
   return (
     <userDetails.Provider
       value={{

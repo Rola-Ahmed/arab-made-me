@@ -29,7 +29,6 @@ export function useSpmf() {
       // get private label data
       let result = await getOneSpmf(customProductId, "include=importer");
 
-      console.log("result------------------", result);
       // check if private label has quotations
       const QouteIdConfigResp = await getQuotes(
         {},
@@ -83,7 +82,6 @@ export function useSpmf() {
         { authorization: isLogin },
         { status: status }
       );
-      console.log("response",response)
       if (response?.success) {
         setRequestedData((prevVal) => ({
           ...prevVal,

@@ -19,12 +19,8 @@ const useSpmfNotific = () => {
       { authorization: isLogin }
     );
 
-    console.log("Results", result);
     if (result?.success) {
-      setNotificationData((prevData) => [
-        ...prevData,
-        ...result.data.spmfs,
-      ]);
+      setNotificationData((prevData) => [...prevData, ...result.data.spmfs]);
       setApiLoadingData(false);
     }
   }
@@ -32,18 +28,11 @@ const useSpmfNotific = () => {
   async function fetchTotalPageData() {
     setApiLoadingData(true);
 
-    const getTotalPgResponse = await getSpmfs(
-      {},
-      { authorization: isLogin }
-    );
-    console.log("Results getTotalPgResponse", getTotalPgResponse);
-
+    const getTotalPgResponse = await getSpmfs({}, { authorization: isLogin });
 
     if (getTotalPgResponse?.success) {
       setTotalPage(
-        Math.ceil(
-          (getTotalPgResponse.data.spmfs?.length || 0) / dataSize
-        )
+        Math.ceil((getTotalPgResponse.data.spmfs?.length || 0) / dataSize)
       );
     }
   }
@@ -60,7 +49,6 @@ const useSpmfNotific = () => {
   useEffect(() => {
     fetchTotalPageData();
   }, []);
-  console.log("notificationData",notificationData)
 
   return {
     notificationData,

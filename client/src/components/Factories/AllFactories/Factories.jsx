@@ -37,7 +37,7 @@ export default function TopFactories(props) {
   document.title = "Factory Gallery";
   let { allSectors } = useFetchSectors();
 
-  console.log("allFactoriesData not fetch", allFactoriesData);
+
   let location = useLocation();
   let navigate = useNavigate();
   let { isLogin } = useContext(UserToken);
@@ -49,7 +49,6 @@ export default function TopFactories(props) {
   const filterBySector = searchParams.get("filterBySector");
   const filterByCategory = searchParams.get("filterByCategory");
 
-  // console.log("allFactoriesDataallFactoriesData", allFactoriesData,apiLoadingData);
   const [modalShow, setModalShow] = useState({
     isLogin: false,
     isImporterVerified: false,

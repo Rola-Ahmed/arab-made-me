@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 export default function AllUsersDropListComp(props) {
   let { loading, currentUserData } = props;
-  // console.log("loading",loading)
   let navigate = useNavigate();
 
   if (loading) {

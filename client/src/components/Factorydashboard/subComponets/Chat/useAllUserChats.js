@@ -20,8 +20,7 @@ const useAllUserChats = (isLogin, filter) => {
   const fetchReqLeng = async () => {
     const params = `formsFilter=${filter?.formsFilter}&sort=${filter?.sort}`;
     const result = await getChatsForUser(params, { authorization: isLogin });
-    // console.log("result");
-    // console.log("result", result);
+   
     if (result?.success) {
       const totalReq = result.data?.chats?.length || 1;
       setPagination((prevValue) => ({
@@ -38,7 +37,6 @@ const useAllUserChats = (isLogin, filter) => {
     setReqData([]);
     const params = `size=${pagination.displayProductSize}&page=${pagination.currentPage}&formsFilter=${filter?.formsFilter}&sort=${filter?.sort}`;
     const result = await getChatsForUser(params, { authorization: isLogin });
-    console.log("result cajsts", result);
     if (result?.success) {
       setReqData(result?.data?.chats);
       setTimeout(() => {
@@ -104,11 +102,10 @@ const useAllUserChats = (isLogin, filter) => {
         // socket.connect();
 
         socket.on("connect", () => {
-          console.log("Connected to server");
+          // console.log("Connected to server");
         });
 
         socket.on("newMessage", (data) => {
-          console.log("datadatadatadata", data.messageObj);
           // setReqData((prevData) =>
           //   prevData.map((value) =>
           //     value?.userTwoId === data.messageObj.receiver
@@ -121,31 +118,30 @@ const useAllUserChats = (isLogin, filter) => {
           // );
           // console.log("reqDatareqDatareqData", reqData);
 
-          console.log("New message received newMessage:", data);
         });
 
         socket.on("socketAuth", (data) => {
-          console.log("New message received authorization:", data);
+          // console.log("New message received authorization:", data);
         });
 
         socket.on("connect_error", (err) => {
-          console.error("Connection error:", err);
+          // console.error("Connection error:", err);
         });
 
         socket.on("connect_timeout", (err) => {
-          console.error("Connection timeout:", err);
+          // console.error("Connection timeout:", err);
         });
 
         socket.on("error", (err) => {
-          console.error("General error:", err);
+          // console.error("General error:", err);
         });
 
         socket.on("reconnect_error", (err) => {
-          console.error("Reconnect error:", err);
+          // console.error("Reconnect error:", err);
         });
 
         socket.on("reconnect_failed", () => {
-          console.error("Reconnect failed");
+          // console.error("Reconnect failed");
         });
 
         // Cleanup on unmount
@@ -167,29 +163,12 @@ const useAllUserChats = (isLogin, filter) => {
       return () => {
         // console.log("Disconnecting socket..."); // Debugging message
         // socket.disconnect();
-        console.log("reqDatareqDatareqData", reqData);
       };
     }
   }, [isLogin]);
 
-  console.log("reqDatareqDatareqData", reqData);
 
-  // useEffect(() => {
-  // setReqData((prevData) =>
-
-  reqData.map(
-    (value) => console.log("value?.userTwoId", value?.userTwoId==2)
-    // value?.userTwoId == 2
-    //   ? {
-    //     // console.log("2",2)
-    //       // ...value,
-    //       // message: [...value.message, "2222222222222222222222222"],
-    //       yes:'yes'
-    //     }
-    //   : value
-  );
-  // );
-  // }, []);
+ 
 
   return { reqData, pagination, apiLoadingData, errorsMsg, setPagination };
 };

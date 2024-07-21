@@ -202,7 +202,6 @@ export default function WhiteLabelForm(props) {
                           Object.keys(formValidation.errors)?.[0]
                         );
 
-                        console.log("targetElement", targetElement);
                         // Scroll to the target element
                         if (targetElement) {
                           targetElement.scrollIntoView({

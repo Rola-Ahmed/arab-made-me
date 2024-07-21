@@ -34,7 +34,6 @@ export default function AnswerQuotation() {
   // });
 
   function data(data) {
-    console.log("daya", data);
     switch (data) {
       case "rfq":
         return {

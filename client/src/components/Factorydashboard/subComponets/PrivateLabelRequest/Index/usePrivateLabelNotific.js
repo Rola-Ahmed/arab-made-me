@@ -19,7 +19,6 @@ const usePrivateLabelNotific = () => {
       { authorization: isLogin }
     );
 
-    console.log("Results", result);
     if (result?.success) {
       setNotificationData((prevData) => [
         ...prevData,
@@ -36,8 +35,6 @@ const usePrivateLabelNotific = () => {
       {},
       { authorization: isLogin }
     );
-    console.log("Results getTotalPgResponse", getTotalPgResponse);
-
 
     if (getTotalPgResponse?.success) {
       setTotalPage(
@@ -60,7 +57,6 @@ const usePrivateLabelNotific = () => {
   useEffect(() => {
     fetchTotalPageData();
   }, []);
-  console.log("notificationData",notificationData)
 
   return {
     notificationData,

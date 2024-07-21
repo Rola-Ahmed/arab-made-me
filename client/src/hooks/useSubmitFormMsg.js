@@ -11,7 +11,6 @@ const useSubmitFormMsg = () => {
   const handleSubmit = useCallback(
     (message) => {
       const hasPreviousState = location.key !== "default";
-      console.log("hasPreviousState", hasPreviousState);
 
       setGlobalMsg(`Your ${message} Form has been successfully submitted`);
 

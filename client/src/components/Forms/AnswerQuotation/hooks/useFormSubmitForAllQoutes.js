@@ -125,11 +125,6 @@ const useFormSubmitForAllQoutes = (isLogin, setErrorMsg, setIsLoading) => {
       result = await addqouteForSourcingReq({ authorization: isLogin }, data);
     }
 
-    console.log("dataa quote data", data);
-
-    console.log("dataa quote", result);
-    console.log("dataa quote requestType", result);
-
     if (result?.success) {
       // display  successfully submitted message
       handleSubmitMsg("Quotation");

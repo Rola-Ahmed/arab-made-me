@@ -43,7 +43,6 @@ function RequestVisit() {
     try {
       const result = await fetchOneFactory(factoryId);
 
-      console.log("result", result);
       if (result?.success) {
         setFactoryDetails(result?.data?.factories);
       }

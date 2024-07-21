@@ -6,8 +6,6 @@ import { handleImageError } from "utils/ImgNotFound";
 import { baseUrl_IMG } from "config.js";
 
 export default function EtcProductPopUp(directTo) {
-  // const [productDetails, setProductDetails] = useState({});
-  console.log("selectedItemId", directTo?.selectedItemId);
 
   let navigate = useNavigate();
   return (

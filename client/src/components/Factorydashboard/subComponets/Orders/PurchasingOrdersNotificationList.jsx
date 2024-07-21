@@ -6,10 +6,11 @@ import { useNavigate } from "react-router-dom";
 // utils
 import { getTimeDifference as getTimeDiff } from "utils/getTimeDifference";
 import { getMonthName as getDate } from "utils/getMonthName";
+import usePoNotific from "./usePoNotific";
 
-export default function PurchasingOrdersNotificationList(props) {
-  let { isLoading, notifcationData, page, handleDisplayPrevData, totalPage } =
-    props;
+export default function PurchasingOrdersNotificationList() {
+  let { isLoading, notificationData, page, handleDisplayPrevData, totalPage } =
+    usePoNotific();
 
   let currentScroller = useRef(null);
 
@@ -48,7 +49,7 @@ export default function PurchasingOrdersNotificationList(props) {
         <h4 className="fw-bolder dropdown-item text ">Notifcations</h4>
       </div>
 
-      {notifcationData?.map((item) => (
+      {notificationData?.map((item) => (
         <div
           className={`dropdown-item  cont-notif  ${
             item?.status === "open" && "active-Notifi"

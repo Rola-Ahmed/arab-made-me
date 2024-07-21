@@ -144,13 +144,11 @@ function Contactsupplier() {
         socket.connect();
 
         socket.on("connect", () => {
-          console.log("Connected to server");
         });
 
       
 
         socket.on("authorization", (data) => {
-          console.log("New message received authorization:", data);
         });
 
         socket.on("connect_error", (err) => {

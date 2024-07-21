@@ -15,7 +15,7 @@ const useSpmfs = (isLogin, filter) => {
   const fetchReqLeng = async () => {
     const params = `formsFilter=${filter?.formsFilter}&sort=${filter?.sort}`;
     const result = await getSpmfs(params, { authorization: isLogin });
-    console.log("result",result)
+   
     if (result?.success) {
       const totalReq = result.data?.spmfs?.length || 1;
       setPagination((prevValue) => ({
@@ -32,7 +32,6 @@ const useSpmfs = (isLogin, filter) => {
     setReqData([]);
     const params = `size=${pagination.displayProductSize}&page=${pagination.currentPage}&formsFilter=${filter?.formsFilter}&sort=${filter?.sort}&include=importer`;
     const result = await getSpmfs(params, { authorization: isLogin });
-    // console.log("result private",result)
     if (result?.success) {
       setReqData(result?.data?.spmfs);
       setTimeout(() => {

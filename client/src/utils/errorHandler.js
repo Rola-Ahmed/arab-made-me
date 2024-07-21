@@ -20,8 +20,17 @@ export function errorHandler(error) {
 
       case 500:
         // media error
+
         if (error?.response?.data?.errorMessage?.includes("ENOENT")) {
           return "Our server is currently under maintenance. Please try again later.";
+        }
+
+        if (
+          error?.response?.data?.errorMessage?.includes(
+            "Association with alias"
+          )
+        ) {
+          return "Something went Wrong, Please try again later.";
         }
         return error?.response?.data?.errorMessage;
       case 502:
@@ -35,7 +44,7 @@ export function errorHandler(error) {
       default:
         return error?.response?.data?.errorMessage;
     }
-  } 
+  }
   // else if (error.message.includes("ERR_CONNECTION_REFUSED")) {
   //   return "Server Maintenance: Our server is currently under maintenance. Please try again later.";
   // } else if (error.message.includes("ERR_NAME_NOT_RESOLVED")) {
@@ -47,8 +56,7 @@ export function errorHandler(error) {
   // } else if (error.message.includes("ERR_NETWORK_CHANGED")) {
   //   return "Network Changed: The network connection was changed.";
   // }
-
-   else if (error.message === "error") {
+  else if (error.message === "error") {
     return error?.response?.data?.errorMessage;
   }
   if (error.message === "Network Error") {

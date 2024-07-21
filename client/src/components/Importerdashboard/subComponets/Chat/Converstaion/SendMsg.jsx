@@ -68,42 +68,33 @@ export default function SendMsg(props) {
       socket.emit("socketAuth", isLogin);
 
       const connectSocket = () => {
-        console.log("Attempting to connect socket...");
 
         socket.connect();
 
         socket.on("connect", () => {
-          console.log("Connected to server");
         });
 
         socket.on("newMessage", (data) => {
-          console.log("New message received-------:", data);
           // Update state or perform actions based on the new message
         });
 
         socket.on("socketAuth", (data) => {
-          console.log("New message received:", data);
           SetNewMessageSuccess((prev) => !prev);
         });
 
         socket.on("connect_error", (err) => {
-          console.error("Connection error:", err);
         });
 
         socket.on("connect_timeout", (err) => {
-          console.error("Connection timeout:", err);
         });
 
         socket.on("error", (err) => {
-          console.error("General error:", err);
         });
 
         socket.on("reconnect_error", (err) => {
-          console.error("Reconnect error:", err);
         });
 
         socket.on("reconnect_failed", () => {
-          console.error("Reconnect failed");
         });
 
         // Cleanup on unmount or dependency change

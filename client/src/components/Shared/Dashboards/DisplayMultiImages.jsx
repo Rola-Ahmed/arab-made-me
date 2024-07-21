@@ -5,7 +5,6 @@ import Carousel from "react-grid-carousel";
 
 export default function DisplayMultiImages(props) {
   let { handleImageClick, images } = props;
-  console.log("images",images)
   return (
     <>
       {" "}

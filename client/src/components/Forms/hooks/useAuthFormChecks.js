@@ -7,7 +7,6 @@ import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import LoadingForm2 from "components/Loading/LoadingForm2";
 
 function useAuthFormChecks(isLoading, headerTitle, pagePath) {
-  // console.log("pagePath", pagePath);
   let { isLogin } = useContext(UserToken);
   let { currentUserData } = useContext(userDetails);
 

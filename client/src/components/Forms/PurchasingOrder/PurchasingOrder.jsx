@@ -146,7 +146,6 @@ function PurchasingOrder(props) {
     // otherConditions: "",
   };
 
-  // console.log("factoryData",factoryData)
   useEffect(() => {
     if (factoryData?.length != 0) {
       formValidation.setValues(initialValues);
@@ -159,10 +158,7 @@ function PurchasingOrder(props) {
     validationSchema,
     onSubmit: submit,
   });
-  console.log(
-    "values.timeLine?.slice(0, 1)",
-    formValidation.values.timeLine?.slice(0, 1)
-  );
+
   function submit(values) {
     // if data is not added yet
     if (!poAdded.status) {
@@ -179,14 +175,8 @@ function PurchasingOrder(props) {
   }
 
   //Document Validation
-  const [selectedDocs, setSelectedDocs] = useState([
-    // {
-    //   pdfName: null,
-    //   pdfFile: null,
-    // },
-  ]);
+  const [selectedDocs, setSelectedDocs] = useState([]);
 
-  console.log("formik vaidation", formValidation.values);
   return (
     <>
       <Header title="Send PO " />

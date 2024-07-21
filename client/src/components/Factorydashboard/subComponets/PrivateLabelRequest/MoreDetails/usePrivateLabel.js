@@ -32,7 +32,6 @@ export function usePrivateLabel() {
         "include=importer&include=product"
       );
 
-      console.log("result------------------", result);
       // check if private label has quotations
       const QouteIdConfigResp = await getQuotes(
         {},

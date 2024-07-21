@@ -15,7 +15,6 @@ export default function PrivateLabelNotificationList() {
     totalPage,
   } = usePrivateLabelNotific();
 
-  // console.log("notificationData",notificationData)
   let currentScroller = useRef(null);
 
   let navigate = useNavigate();

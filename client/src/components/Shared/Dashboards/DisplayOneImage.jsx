@@ -4,7 +4,6 @@ import { pdfIcon } from "constants/Images";
 
 export default function DisplayOneImage(props) {
   let { handleImageClick, image } = props;
-  console.log("image",image)
   return (
     <div className="row grid-gap-col">
       <div className="col-12">

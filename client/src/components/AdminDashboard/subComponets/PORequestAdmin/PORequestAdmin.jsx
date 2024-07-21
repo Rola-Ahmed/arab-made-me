@@ -392,12 +392,7 @@ export default function PORequestAdmin() {
                             <span className="fw-bolder text-dark ">
                               Date{index + 1}
                             </span>
-                            :
-                            {getMonthName(
-                              timelineItem?.date?.split("T")?.[0] ??
-                                timelineItem?.date ??
-                                timelineItem?.time
-                            )}
+                            :{getMonthName(timelineItem?.date?.split("T")?.[0])}
                             -
                             <span className="fw-bolder text-dark ">
                               Quantity{index + 1}
@@ -405,20 +400,6 @@ export default function PORequestAdmin() {
                             :{timelineItem?.quantity}
                           </p>
                         ))}
-                      {poItem?.timeLine?.length == null ? (
-                        <p className="trate-sub-title">
-                          <span className="fw-bolder text-dark "> Date1 </span>
-                          :Jan, 20,2020 -
-                          <span className="fw-bolder text-dark ">
-                            Quantity1
-                          </span>
-                          :5000
-                        </p>
-                      ) : (
-                        // `{`Date1 :Jan, 01,2023 - Quantity1 :10`}
-                        // `
-                        ""
-                      )}
                     </div>
                   </th>
 

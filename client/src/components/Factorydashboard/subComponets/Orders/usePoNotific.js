@@ -1,8 +1,8 @@
 import { useEffect, useState, useContext } from "react";
 import { UserToken } from "Context/userToken";
-import { getSpmfs } from "Services/FactoryRequests/spmf";
+import { getPos } from "Services/FactoryRequests/pos";
 
-const useSpmfNotific = () => {
+const usePoNotific = () => {
   const { isLogin } = useContext(UserToken);
   const dataSize = 8;
 
@@ -14,17 +14,13 @@ const useSpmfNotific = () => {
   async function fetchNotifcationData() {
     setApiLoadingData(true);
 
-    const result = await getSpmfs(
+    const result = await getPos(
       `size=${dataSize}&page=${page}&include=importer&sort=date-DESC`,
       { authorization: isLogin }
     );
 
-    console.log("Results", result);
     if (result?.success) {
-      setNotificationData((prevData) => [
-        ...prevData,
-        ...result.data.spmfs,
-      ]);
+      setNotificationData((prevData) => [...prevData, ...result.data.pos]);
       setApiLoadingData(false);
     }
   }
@@ -32,18 +28,11 @@ const useSpmfNotific = () => {
   async function fetchTotalPageData() {
     setApiLoadingData(true);
 
-    const getTotalPgResponse = await getSpmfs(
-      {},
-      { authorization: isLogin }
-    );
-    console.log("Results getTotalPgResponse", getTotalPgResponse);
-
+    const getTotalPgResponse = await getPos({}, { authorization: isLogin });
 
     if (getTotalPgResponse?.success) {
       setTotalPage(
-        Math.ceil(
-          (getTotalPgResponse.data.spmfs?.length || 0) / dataSize
-        )
+        Math.ceil((getTotalPgResponse.data.pos?.length || 0) / dataSize)
       );
     }
   }
@@ -60,7 +49,6 @@ const useSpmfNotific = () => {
   useEffect(() => {
     fetchTotalPageData();
   }, []);
-  console.log("notificationData",notificationData)
 
   return {
     notificationData,
@@ -70,4 +58,4 @@ const useSpmfNotific = () => {
     totalPage,
   };
 };
-export default useSpmfNotific;
+export default usePoNotific;

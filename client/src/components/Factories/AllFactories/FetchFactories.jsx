@@ -53,7 +53,6 @@ export default function FetchFactories() {
 
       let result = await fetchFactorieswithParam(param);
 
-      //   console.log("FetchTotalLen result",result)
       if (result?.success) {
         setPagination((prevValue) => ({
           ...prevValue,
@@ -87,7 +86,6 @@ export default function FetchFactories() {
         let result = await fetchFactorieswithParam(
           `size=${pagination?.displayProductSize}&page=${pagination?.currentPage}&${param}`
         );
-        console.log("fetchFactoriesData result", result);
 
         // if there is error
         if (result && result.error) {
@@ -161,7 +159,7 @@ export default function FetchFactories() {
     }
   }, [uniqueFactoryIDofProducts]);
 
-  console.log("allFactoriesData fetch", allFactoriesData);
+  
 
   return (
     <Factories

@@ -268,7 +268,6 @@ shippingConditions: "EXW", //required,
         });
 
         setIsLoading(false);
-        console.log("done",responses.data)
       })
       // .then((data) => {
       //   const dataFromAPI1 = data[0];

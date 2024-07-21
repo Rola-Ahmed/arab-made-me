@@ -12,7 +12,6 @@ import { fetchSectorProducts } from "Services/sector";
 function Sectors() {
   let { allSectors, errormsg } = useFetchSectors();
   // let  errormsg = useFetchSectors();
-  // console.log("errormsg", errormsg);
 
   const [allsSectors, setAllSectors] = useState([]);
 

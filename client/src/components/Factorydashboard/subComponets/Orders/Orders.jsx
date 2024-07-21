@@ -1,43 +1,22 @@
-import { useEffect, useState, useContext } from "react";
-
+import { useState, useContext } from "react";
 import "./Orders.css";
 import { handleImageError } from "utils/ImgNotFound";
-
+import { baseUrl_IMG } from "config.js";
 // shared components
 import PaginationDash from "components/Shared/Dashboards/PaginationDash";
-import axios from "axios";
-import { baseUrl, baseUrl_IMG } from "config.js";
 
 import StarRating from "components/Shared/stars";
 import { UserToken } from "Context/userToken";
 import { useNavigate } from "react-router-dom";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 import { getMonthName as getDate } from "utils/getMonthName";
-
-import PurchasingOrdersNotification from "components/Factorydashboard/subComponets/Orders/PurchasingOrdersNotification";
+import useAllPos from "./useAllPos";
+import PurchasingOrdersNotification from "components/Factorydashboard/subComponets/Orders/PurchasingOrdersNotificationList";
+import StatusMessage from "components/Shared/Dashboards/StatusMessage";
+import SearchFilterByOrder from "components/Shared/Dashboards/SearchFilterByOrder"
 export default function Orders() {
   let { isLogin } = useContext(UserToken);
   let navigate = useNavigate();
-
-  const [allPosData, setAllPosData] = useState([]);
-  const [errorsMsg, setErrorsMsg] = useState();
-
-  const [apiLoadingData, setapiLoadingData] = useState(true);
-  const [pagination, setPagination] = useState(() => ({
-    // i want to display 3 pdoructs in the 1st page
-    displayProductSize: 8,
-
-    currentPage: 1,
-    totalPage: 1,
-
-    // will be called by api
-    // totalPage: Math.ceil((allProductsData?.length) /pagination.displayProductSize), // Use 30 as the default display size
-  }));
-  const [uniqueFactoryIDofProducts, setUniqueFactoryIDofProducts] = useState(
-    []
-  );
-
-  const [uniqueProductId, setUniqueProductId] = useState([]);
 
   const [filter, setFilter] = useState({
     formsFilter: "",
@@ -45,6 +24,8 @@ export default function Orders() {
     sort_name: "",
   });
 
+  let { reqData, pagination, apiLoadingData, errorsMsg, setPagination } =
+    useAllPos(isLogin, filter);
   // utils function
   let getMonthName = getDate;
 
@@ -55,150 +36,6 @@ export default function Orders() {
       ...(name && { sort_name: name }),
     }));
   }
-
-  async function fetchFactoriesData() {
-    setapiLoadingData(true);
-
-    try {
-      let config = {
-        method: "get",
-        url: `${baseUrl}/factories/factory/pos/?size=${pagination?.displayProductSize}&page=${pagination?.currentPage}&formsFilter=${filter?.formsFilter}&sort=${filter?.sort}`,
-        headers: {
-          authorization: isLogin,
-        },
-      };
-
-      const response = await axios.request(config);
-
-      if (response?.data?.message == "done") {
-        setAllPosData(
-          response.data.pos.filter((item) => item?.factoryId !== null)
-        );
-
-        const uniqueIds = [
-          ...new Set(
-            response.data.pos
-              .map((obj) => obj.importerId) // Extract all factoryIds
-              .filter((id) => id !== null) // Filter out null values
-          ),
-        ];
-
-        const uniqueProductIds = [
-          ...new Set(
-            response.data.pos
-              .map((obj) => obj.productId) // Extract all factoryIds
-              .filter((id) => id !== null) // Filter out null values
-          ),
-        ];
-
-        setUniqueFactoryIDofProducts(uniqueIds);
-        setUniqueProductId(uniqueProductIds);
-      } else {
-        setErrorsMsg(response?.data?.message);
-      }
-      setapiLoadingData(false);
-    } catch (error) {
-      setapiLoadingData(false);
-      if (error.response && error.response.status) {
-        const statusCode = error.response.status;
-        switch (statusCode) {
-          case 400:
-            setErrorsMsg(error?.data?.errorMessage);
-            break;
-          case 401:
-            setErrorsMsg(error?.response?.data?.message);
-            break;
-          case 403:
-            setErrorsMsg(
-              // error?.data?.message,
-              error?.response?.data?.message
-            );
-            break;
-          case 404:
-            setErrorsMsg(
-              "Not Found (404). The requested resource was not found."
-            );
-            break;
-
-          case 500:
-            setErrorsMsg(error?.response?.data?.errorMessage);
-            break;
-
-          //  429 Too Many Requests
-          // The user has sent too many requests in a given amount of time ("rate limiting").
-          case 429:
-            setErrorsMsg(" Too Many Requests , Please try again later.");
-            break;
-          case 402:
-            // 402
-            setErrorsMsg(error?.response?.data?.message);
-            break;
-          default:
-            // case message== error
-            setErrorsMsg(error?.response?.data?.errorMessage);
-            break;
-        }
-      }
-    }
-  }
-
-  useEffect(() => {
-    fetchFactoriesData();
-  }, [pagination?.currentPage, filter]);
-
-  useEffect(() => {
-    // Promise.all(
-    uniqueFactoryIDofProducts.map(async (importerID) => {
-      try {
-        const productResponse = await axios.get(
-          `${baseUrl}/importers/${importerID}`
-        );
-
-        if (productResponse.data.message === "done") {
-          setAllPosData((prevData) =>
-            prevData.map((value) =>
-              value?.importerId === importerID
-                ? {
-                    ...value,
-                    importerName: productResponse?.data?.importers?.name,
-                    importerRepEmail:
-                      productResponse?.data?.importers?.repEmail,
-                    importerProfileImg: productResponse?.data?.importers?.image,
-                  }
-                : value
-            )
-          );
-        }
-      } catch (error) {}
-    });
-
-    uniqueProductId.map(async (productId) => {
-      try {
-        const productResponse = await axios.get(
-          `${baseUrl}/products/${productId}`
-        );
-
-        if (productResponse.data.message === "done") {
-          setAllPosData((prevData) =>
-            prevData.map((value) =>
-              value?.productId === productId
-                ? {
-                    ...value,
-                    productName: productResponse?.data?.products?.name,
-                    productAverageRate:
-                      productResponse?.data?.products?.averageRate,
-                    productPrice: productResponse?.data?.products?.price,
-                  }
-                : value
-            )
-          );
-        }
-      } catch (error) {}
-    });
-    // );
-
-    //  let x allPosData.map((data))
-  }, [apiLoadingData]);
 
   const downloadCsv = () => {
     const attributesToFilter = [
@@ -214,7 +51,7 @@ export default function Orders() {
       // "importerRepEmail",
     ];
 
-    const newArray = filterAttributes(allPosData, attributesToFilter);
+    const newArray = filterAttributes(reqData, attributesToFilter);
     const csvData = convertToCsv(newArray);
 
     const blob = new Blob([csvData], { type: "text/csv" });
@@ -266,33 +103,6 @@ export default function Orders() {
     });
   };
 
-  useEffect(() => {
-    const fetchDataLenght = async () => {
-      try {
-        // const response1 = await axios.get(`${baseUrl}/pos`);
-        const response1 = await axios.get(
-          `${baseUrl}/factories/factory/pos?formsFilter=${filter?.formsFilter}&sort=${filter?.sort}`,
-          {
-            headers: {
-              authorization: isLogin,
-            },
-          }
-        );
-
-        if (response1?.data?.message === "done") {
-          setPagination((prevValue) => ({
-            ...prevValue,
-            totalPage: Math.ceil(
-              (response1.data?.pos?.length || 0) / prevValue.displayProductSize
-            ),
-          }));
-        }
-      } catch (error) {}
-    };
-
-    fetchDataLenght();
-  }, [filter]);
-
   return (
     <div className="m-4 order-section ">
       {/* section 1 */}
@@ -315,21 +125,20 @@ export default function Orders() {
               <button
                 className="order-btn-1"
                 onClick={downloadCsv}
-                disabled={!allPosData.length}
+                disabled={!reqData.length}
               >
                 <i className="fa-solid fa-cloud-arrow-down"></i>
                 <p className="cursor">Download CSV</p>
               </button>
 
-              {/* <button className="order-btn-2">
-                <i className="fa-solid fa-plus"></i>
-                <p>Add</p>
-              </button> */}
+              
             </div>
           </div>
         </div>
 
         {/* search filter section */}
+        <SearchFilterByOrder filtterData={filtterData} filter={filter}/>
+
         <div className=" search-container d-flex justify-content-between align-items-center p-3">
           <div className="input-group width-size">
             <div
@@ -437,7 +246,7 @@ export default function Orders() {
 
             <tbody>
               {/* row1 */}
-              {allPosData.map((poItem) => (
+              {reqData?.map((poItem) => (
                 <tr className="row">
                   <th className=" col-2 ">
                     <div className=" th-1st-title-gap d-flex justify-content-start align-items-center">
@@ -460,7 +269,6 @@ export default function Orders() {
                             ) : (
                               "0 rating"
                             )}
-                            {/* {getRandomNumber(3, 5, 2)} */}
                           </p>
                         </div>
                       </td>
@@ -514,12 +322,7 @@ export default function Orders() {
                             <span className="fw-bolder text-dark ">
                               Date{index + 1}
                             </span>
-                            :
-                            {getMonthName(
-                              timelineItem?.date?.split("T")?.[0] ??
-                                timelineItem?.date ??
-                                timelineItem?.time
-                            )}
+                            :{getMonthName(timelineItem?.date?.split("T")?.[0])}
                             -
                             <span className="fw-bolder text-dark ">
                               Quantity{index + 1}
@@ -527,20 +330,6 @@ export default function Orders() {
                             :{timelineItem?.quantity}
                           </p>
                         ))}
-                      {poItem?.timeLine?.length == null ? (
-                        <p className="trate-sub-title">
-                          <span className="fw-bolder text-dark "> Date1 </span>
-                          :Jan, 20,2020 -
-                          <span className="fw-bolder text-dark ">
-                            Quantity1
-                          </span>
-                          :5000
-                        </p>
-                      ) : (
-                        // `{`Date1 :Jan, 01,2023 - Quantity1 :10`}
-                        // `
-                        ""
-                      )}
                     </div>
                   </th>
 
@@ -586,19 +375,12 @@ export default function Orders() {
                 </tr>
               ))}
 
-              {allPosData?.length == 0 ? (
-                <tr className="row">
-                  <div className="col-12  w-100 h-100 my-5 py-5">
-                    <div className="text-center">
-                      <p className="trate-sub-title ">
-                        {errorsMsg ?? "No Record"}
-                      </p>
-                    </div>
-                  </div>
-                </tr>
-              ) : (
-                " "
-              )}
+              {/* is data is still loading or error occured */}
+              <StatusMessage
+                reqDataLength={reqData?.length}
+                apiLoadingData={apiLoadingData}
+                errorsMsg={errorsMsg}
+              />
 
               <tr className="row">
                 <div className="col-12  ReactPaginate">

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { getSpmfs } from "Services/FactoryRequests/spmf";
+import { getPos } from "Services/FactoryRequests/pos";
 
-const useSpmfs = (isLogin, filter) => {
+const useAllPos = (isLogin, filter) => {
   const [pagination, setPagination] = useState({
     currentPage: 1,
     displayProductSize: 8,
@@ -14,10 +14,9 @@ const useSpmfs = (isLogin, filter) => {
 
   const fetchReqLeng = async () => {
     const params = `formsFilter=${filter?.formsFilter}&sort=${filter?.sort}`;
-    const result = await getSpmfs(params, { authorization: isLogin });
-    console.log("result",result)
+    const result = await getPos(params, { authorization: isLogin });
     if (result?.success) {
-      const totalReq = result.data?.spmfs?.length || 1;
+      const totalReq = result.data?.pos?.length || 1;
       setPagination((prevValue) => ({
         ...prevValue,
         totalPage: Math.ceil(totalReq / prevValue.displayProductSize),
@@ -30,13 +29,12 @@ const useSpmfs = (isLogin, filter) => {
     // bec sometime it returns the same data
     setApiLoadingData(true);
     setReqData([]);
-    const params = `size=${pagination.displayProductSize}&page=${pagination.currentPage}&formsFilter=${filter?.formsFilter}&sort=${filter?.sort}&include=importer`;
-    const result = await getSpmfs(params, { authorization: isLogin });
-    // console.log("result private",result)
+    const params = `size=${pagination.displayProductSize}&page=${pagination.currentPage}&formsFilter=${filter?.formsFilter}&sort=${filter?.sort}&include=importer&include=product`;
+    const result = await getPos(params, { authorization: isLogin });
     if (result?.success) {
-      setReqData(result?.data?.spmfs);
+      setReqData(result?.data?.pos);
       setTimeout(() => {
-        setReqData(result?.data?.spmfs);
+        setReqData(result?.data?.pos);
       }, 50);
     } else {
       setErrorsMsg(result?.error);
@@ -64,4 +62,4 @@ const useSpmfs = (isLogin, filter) => {
   return { reqData, pagination, apiLoadingData, errorsMsg, setPagination };
 };
 
-export default useSpmfs;
+export default useAllPos;

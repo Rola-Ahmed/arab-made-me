@@ -12,7 +12,6 @@ export default function ProductMultiSelector(props) {
 
   // const handleCheckboxProductNameChange = (name, isChecked, id) => {
   const handleRadioProductNameChange = (name, id) => {
-    console.log("name, isChecked, id", name, id);
     // let productNameArr = formValidation?.values?.productName;
 
     // let updatedProductNames;
@@ -59,7 +58,6 @@ export default function ProductMultiSelector(props) {
                     // }}
 
                     onChange={(e) => {
-                      // console.log("onChange event:", e.target.checked);
                       handleRadioProductNameChange(item?.name, item?.id);
                       formValidation.handleChange(e);
                     }}

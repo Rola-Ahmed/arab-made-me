@@ -68,13 +68,11 @@ function Products(title) {
   }
 
   function handleButtonClick(loginPath) {
-    console.log("loginPath", loginPath);
     if (
       currentUserData?.importerId !== null &&
       (currentUserData?.importerVerified === "0" ||
         !currentUserData?.importerEmailActivated)
     ) {
-      console.log("loginPath 77");
 
       setModalShow((prevVal) => ({
         ...prevVal,

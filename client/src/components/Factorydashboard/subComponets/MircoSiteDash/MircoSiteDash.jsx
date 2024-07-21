@@ -756,7 +756,6 @@ export default function MircoSiteDash() {
     }
   }, [factoryProfile]);
 
-  console.log("teamValidation", teamValidation);
   const [activeMenu] = useOutletContext();
 
   useEffect(() => {

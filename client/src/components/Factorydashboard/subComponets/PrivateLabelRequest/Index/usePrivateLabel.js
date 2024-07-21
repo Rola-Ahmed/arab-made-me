@@ -32,7 +32,6 @@ const usePrivateLabel = (isLogin, filter) => {
     setReqData([]);
     const params = `size=${pagination.displayProductSize}&page=${pagination.currentPage}&formsFilter=${filter?.formsFilter}&sort=${filter?.sort}&include=importer&include=product`;
     const result = await getPrivateLables(params, { authorization: isLogin });
-    // console.log("result private",result)
     if (result?.success) {
       setReqData(result?.data?.privateLabelings);
       setTimeout(() => {   setReqData(result?.data?.privateLabelings); }, 50);

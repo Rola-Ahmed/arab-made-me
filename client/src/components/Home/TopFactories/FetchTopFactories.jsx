@@ -85,6 +85,5 @@ export default function FetchTopFactories() {
     }
   }, [uniqueFactoryIDofProducts]);
 
-  // console.log("allFactoriesData", allFactoriesData);
   return <TopFactories allFactoriesData={allFactoriesData} />;
 }

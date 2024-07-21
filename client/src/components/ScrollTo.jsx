@@ -9,7 +9,6 @@ const ScrollToTop = ({ id }) => {
     if (id) {
       let element = document.getElementById(id);
 
-      console.log("element", element);
       if (element) {
         // Scroll to the top of the element
         element.scrollTo({

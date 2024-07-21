@@ -39,14 +39,9 @@ const handleResponse = (response) => {
 // Handle API errors
 const handleError = (error) => {
   let errorMsg = "";
-  // if (error.code === "ECONNABORTED") {
-  //   errorMsg = "Request timed out";
-  // } else if (error.code === "ERR_NETWORK") {
-  //   errorMsg = "Network Error";
-  // } else {
+ 
   errorMsg = errorHandler(error);
-  console.log("errorerrorerrorerror",error)
-  // }
+  
   return { data: null, loadingStatus: true, error: errorMsg, success: false };
 };
 
@@ -56,7 +51,7 @@ export const getRequest = async (url) => {
     const response = await axios.get(url);
     return handleResponse(response);
   } catch (error) {
-    console.log("Request error: get", error);
+    // console.log("Request error: get", error);
     return handleError(error);
   }
 };
@@ -67,7 +62,7 @@ export const getRequestDataHeader = async (url, headers, data) => {
     const response = await axios.request(config);
     return handleResponse(response);
   } catch (error) {
-    console.log("Request error: get", error);
+    // console.log("Request error: get", error);
     return handleError(error);
   }
 };
@@ -79,7 +74,7 @@ export const postRequest = async (url, headers, data) => {
     const response = await axios.request(config);
     return handleResponse(response);
   } catch (error) {
-    console.log("Request error: post", error);
+    // console.log("Request error: post", error);
     return handleError(error);
   }
 };
@@ -91,7 +86,7 @@ export const putRequest = async (url, headers, data) => {
     const response = await axios.request(config);
     return handleResponse(response);
   } catch (error) {
-    console.log("Request error: put", error);
+    // console.log("Request error: put", error);
     return handleError(error);
   }
 };
