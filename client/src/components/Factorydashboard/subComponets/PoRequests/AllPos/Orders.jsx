@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 import { getMonthName as getDate } from "utils/getMonthName";
 import useAllPos from "./useAllPos";
-import PurchasingOrdersNotification from "components/Factorydashboard/subComponets/Orders/AllPos/PosNotificationList";
+import PurchasingOrdersNotification from "components/Factorydashboard/subComponets/PoRequests/AllPos/PosNotificationList";
 import StatusMessage from "components/Shared/Dashboards/StatusMessage";
 import SearchFilterByOrder from "components/Shared/Dashboards/SearchFilterByOrder";
 export default function Orders() {
