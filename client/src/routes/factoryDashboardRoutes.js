@@ -26,7 +26,7 @@ import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/Facto
 
 import VisitRequestFacEtc from "components/Factorydashboard/subComponets/ReqVisitFactDash/EtcVisitRequest/EtcVisitRequest";
 
-import PurchasingOrdersFacEtc from "components/ViewMoreDetailsFormDash/PurchasingOrderEtc/PurchasingOrdersFacEtc";
+import PurchasingOrdersFacEtc from "components/Factorydashboard/subComponets/Orders/PurchasingOrderEtc/PurchasingOrdersFacEtc";
 
 import CustomProductReqFacEtc from "components/Factorydashboard/subComponets/CusProductReq/EtcCustomProductReq/EtcCustomProductReq";
 import RfqRequestFacEtc from "components/Factorydashboard/subComponets/RfqFactoryDash/OneRfqs/OneRfqs";

@@ -332,7 +332,8 @@ export default function TopFactories(props) {
                 <div className="row gap  w-100 me-0">
                   {allFactoriesData?.length === 0 ? (
                     <>
-                      <span></span> <p className="h3 "> No record </p>
+                      <span></span>{" "}
+                      <p className="h3 text-center"> No records Found </p>
                       <span></span>
                     </>
                   ) : (
@@ -340,7 +341,7 @@ export default function TopFactories(props) {
                       {allFactoriesData?.map((factoryitem, factoryindex) => (
                         <div
                           className="  
-                        col-xxl-4 col-xl-4  col-lg-6 col-12 pe-0 bg-info"
+                        col-xxl-4 col-xl-4  col-lg-6 col-12 pe-0 "
                         >
                           <FactoryCardParent
                             factoryitem={factoryitem}

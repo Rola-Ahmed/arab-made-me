@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Factories from "./Factories";
+import { useSearchParams } from "react-router-dom";
 
 import {
   fetchFactorieswithParam,
@@ -7,6 +8,9 @@ import {
 } from "Services/factory";
 
 export default function FetchFactories() {
+  const [searchParams] = useSearchParams();
+  const filterSearch = searchParams.get("filterSearch");
+
   const numOfProductsFetch = 20;
   const [pagination, setPagination] = useState(() => ({
     // i want to display 3 pdoructs in the 1st page
@@ -20,7 +24,7 @@ export default function FetchFactories() {
   );
 
   const [filter, setFilter] = useState({
-    filterSearch: "",
+    filterSearch: filterSearch || "",
     filterByCountry: "",
     filterBySector: [],
     // filterBySector: filterBySector?.split(",")?.map(String) ?? [],

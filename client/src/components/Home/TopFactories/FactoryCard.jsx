@@ -20,7 +20,7 @@ export default function FactoryCard(props) {
           <h2 className=" fac-title text-truncate cursor">
             {factoryitem?.name}
           </h2>
-          <p className="cursor bg-success">
+          <p className="cursor ">
             {/* city, country */}
             {factoryitem?.city && factoryitem?.city + ", "}
             {factoryitem?.country ?? ""}

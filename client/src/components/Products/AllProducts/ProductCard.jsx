@@ -268,18 +268,20 @@ export default function ProductCard(props) {
                     <button
                       className="text-container "
                       onClick={() => {
-                        handleUserClickValidLogin(
-                          `contactsupplier?userId=${productItem?.factory?.userId}&factoryName=${productItem?.factory?.name}`
+                        handleUserClickValidation1(
+                          `whiteLabelings/form?factoryId=${productItem?.factoryId}&factoryName=${productItem?.factory?.name}&productId=${productItem?.id}&productName=${productItem?.name}`
                         );
                       }}
                     >
-                      <p className="cursor">Contact Supplier</p>
+                      <p className="cursor">White Label</p>
                     </button>
                     <button
                       className="fa-solid fa-circle-question cursor bg-white border-0 p-0"
-                      title={BtnDescription.contactSupplier}
+                      title={BtnDescription.whiteLabelRequest}
                       onClick={() => {
-                        handleQuestionMarkClick(BtnDescription.contactSupplier);
+                        handleQuestionMarkClick(
+                          BtnDescription.whiteLabelRequest
+                        );
                       }}
                     ></button>
                   </div>
