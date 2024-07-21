@@ -11,9 +11,9 @@ import { useNavigate } from "react-router-dom";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 import { getMonthName as getDate } from "utils/getMonthName";
 import useAllPos from "./useAllPos";
-import PurchasingOrdersNotification from "components/Factorydashboard/subComponets/Orders/PurchasingOrdersNotificationList";
+import PurchasingOrdersNotification from "components/Factorydashboard/subComponets/Orders/AllPos/PosNotificationList";
 import StatusMessage from "components/Shared/Dashboards/StatusMessage";
-import SearchFilterByOrder from "components/Shared/Dashboards/SearchFilterByOrder"
+import SearchFilterByOrder from "components/Shared/Dashboards/SearchFilterByOrder";
 export default function Orders() {
   let { isLogin } = useContext(UserToken);
   let navigate = useNavigate();
@@ -24,8 +24,13 @@ export default function Orders() {
     sort_name: "",
   });
 
-  let { reqData, pagination, apiLoadingData, errorsMsg, setPagination } =
-    useAllPos(isLogin, filter);
+  let {
+    reqData,
+    pagination,
+    apiLoadingData,
+    errorsMsg,
+    setPagination,
+  } = useAllPos(isLogin, filter);
   // utils function
   let getMonthName = getDate;
 
@@ -130,85 +135,13 @@ export default function Orders() {
                 <i className="fa-solid fa-cloud-arrow-down"></i>
                 <p className="cursor">Download CSV</p>
               </button>
-
-              
             </div>
           </div>
         </div>
 
         {/* search filter section */}
-        <SearchFilterByOrder filtterData={filtterData} filter={filter}/>
+        <SearchFilterByOrder filtterData={filtterData} filter={filter} />
 
-        <div className=" search-container d-flex justify-content-between align-items-center p-3">
-          <div className="input-group width-size">
-            <div
-              className="input-group-prepend  cursor"
-              onClick={(e) => {
-                let value = document.getElementById("formsFilter").value;
-                filtterData(value, "formsFilter");
-              }}
-            >
-              <span className="input-group-text bg-white icon-search-container pe-0 cursor">
-                <i className="fa-solid fa-magnifying-glass icon-search"></i>
-              </span>
-            </div>
-            <input
-              type="text"
-              className="form-control input-search "
-              placeholder="Search by product name"
-              id="formsFilter"
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  filtterData(e.target.value, "formsFilter");
-                }
-              }}
-            />
-          </div>
-
-          <div className=" btn-container d-flex justify-content-between align-items-center">
-            <div class="dropdown">
-              <button
-                className=" dropdown-toggle order-toggle d-flex justify-content-center align-items-center"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                <i className="fa-solid fa-filter"></i>
-                <p>
-                  {filter?.sort_name !== "" ? filter?.sort_name : "Sort By"}
-                </p>
-              </button>
-
-              <ul class="dropdown-menu">
-                <li
-                  onClick={(e) => {
-                    filtterData("date-DESC", "sort", "Sort By");
-                  }}
-                  className=" cursor text-start"
-                >
-                  <p className="dropdown-item">Sort By</p>
-                </li>
-
-                <li
-                  onClick={(e) => {
-                    filtterData("date-ASC", "sort", "Oldest");
-                  }}
-                  className=" cursor  text-start"
-                >
-                  <p className="dropdown-item">Oldest</p>
-                </li>
-                <li
-                  onClick={(e) => {
-                    filtterData("date-DESC", "sort", "Newest");
-                  }}
-                  className=" cursor  text-start"
-                >
-                  <p className="dropdown-item">Newest</p>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
         {/* data section */}
 
         <div className=" data-container w-100 p-3">
@@ -260,11 +193,11 @@ export default function Orders() {
                       </div>
                       <td className="">
                         <div className="title-text-handler">
-                          <p className="trate-title">{poItem?.productName}</p>
+                          <p className="trate-title">{poItem?.product?.name}</p>
                           <p className="trate-sub-title d-flex">
-                            {poItem?.productAverageRate ? (
+                            {poItem?.product?.avarage ? (
                               <StarRating
-                                averageRating={poItem?.productAverageRate}
+                                averageRating={poItem?.product?.avarage}
                               />
                             ) : (
                               "0 rating"
@@ -276,40 +209,35 @@ export default function Orders() {
                   </th>
 
                   <th className=" col-1 d-flex align-items-center ">
-                    <p className="trate-sub-title">${poItem?.productPrice}</p>
+                    <p className="trate-sub-title">${poItem?.product?.price}</p>
                   </th>
 
                   <th className=" col-1 d-flex align-items-center  ">
                     <div>
-                      {
-                        // allAnsRfqData.map((item) =>
-                        poItem?.docs != null
-                          ? poItem?.docs?.map((i, index) =>
-                              i !== null ? (
-                                <>
-                                  <a
-                                    className="text-decoration-none"
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    href={`${baseUrl_IMG}/${i}`}
-                                    download
-                                  >
-                                    <p className="trate-sub-title doc-download-color cursor">
-                                      Doc{index}.
-                                      {
-                                        i?.split(".")?.[
-                                          i.split(".")?.length - 1
-                                        ]
-                                      }
-                                    </p>
-                                  </a>
-                                </>
-                              ) : (
-                                ""
-                              )
+                      {// allAnsRfqData.map((item) =>
+                      poItem?.docs != null
+                        ? poItem?.docs?.map((i, index) =>
+                            i !== null ? (
+                              <>
+                                <a
+                                  className="text-decoration-none"
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  href={`${baseUrl_IMG}/${i}`}
+                                  download
+                                >
+                                  <p className="trate-sub-title doc-download-color cursor">
+                                    Doc{index}.
+                                    {i?.split(".")?.[i.split(".")?.length - 1]}
+                                  </p>
+                                </a>
+                              </>
+                            ) : (
+                              ""
                             )
-                          : ""
-                        // )
+                          )
+                        : ""
+                      // )
                       }
                     </div>
                   </th>
@@ -345,14 +273,15 @@ export default function Orders() {
                       <div className="profile-img">
                         <img
                           className="w-100 h-100"
-                          src={`${baseUrl_IMG}/${poItem?.importerProfileImg}`}
+                          src={`${baseUrl_IMG}/${poItem?.importer?.image}`}
                           onError={handleImageError}
+                          alt={`${baseUrl_IMG}/${poItem?.importer?.image}`}
                         />
                       </div>
                       <div>
-                        <p className=" name-text">{poItem?.importerName}</p>
+                        <p className=" name-text">{poItem?.importer?.name}</p>
                         <p className=" email-text">
-                          {poItem?.importerRepEmail}
+                          {poItem?.importer?.repEmail}
                         </p>
                       </div>
                     </div>

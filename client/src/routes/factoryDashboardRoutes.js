@@ -6,7 +6,7 @@ import PrivateLabeLReq from "components/Factorydashboard/subComponets/PrivateLab
 import EtcPrivateLabelReq from "components/Factorydashboard/subComponets/PrivateLabelRequest/MoreDetails/OnePrivateLabelReq";
 
 import FactoryProfile from "components/Factorydashboard/subComponets/FactoryProfile/FactoryProfile";
-import Orders from "components/Factorydashboard/subComponets/Orders/Orders";
+import Orders from "components/Factorydashboard/subComponets/Orders/AllPos/Orders";
 import DashBoard from "components/Factorydashboard/subComponets/DashBoard/DashBoard";
 import RfqFactoryDash from "components/Factorydashboard/subComponets/RfqFactoryDash/AllFRQs/AllRfqs";
 
@@ -26,7 +26,7 @@ import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/Facto
 
 import VisitRequestFacEtc from "components/Factorydashboard/subComponets/ReqVisitFactDash/EtcVisitRequest/EtcVisitRequest";
 
-import PurchasingOrdersFacEtc from "components/Factorydashboard/subComponets/Orders/PurchasingOrderEtc/PurchasingOrdersFacEtc";
+import PurchasingOrdersFacEtc from "components/Factorydashboard/subComponets/Orders/OnePo/OnePo";
 
 import CustomProductReqFacEtc from "components/Factorydashboard/subComponets/CusProductReq/EtcCustomProductReq/EtcCustomProductReq";
 import RfqRequestFacEtc from "components/Factorydashboard/subComponets/RfqFactoryDash/OneRfqs/OneRfqs";

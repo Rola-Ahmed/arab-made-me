@@ -7,7 +7,7 @@ import { pdfIcon } from "constants/Images";
 
 import { handleImageError } from "utils/ImgNotFound";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
+// import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
 import Carousel from "react-grid-carousel";
 // utils function

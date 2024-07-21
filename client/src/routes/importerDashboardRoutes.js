@@ -16,7 +16,7 @@ import ImporterPofile from "components/Importerdashboard/subComponets/ImporterPr
 import VisitRequestEtc from "components/Importerdashboard/subComponets/ReqVisitImporter/VisitRequestEtc/VisitRequestEtc";
 // import VisitRequestFacEtc from "components/ViewMoreDetailsFormDash/VisitRequestEtc/VisitRequestFacEtc";
 
-import PurchasingOrdersEtc from "components/Factorydashboard/subComponets/Orders/PurchasingOrderEtc/PurchasingOrderEtc";
+import PurchasingOrdersEtc from "components/Importerdashboard/subComponets/PurchasingOrdersImp/PurchasingOrderEtc";
 // import PurchasingOrdersFacEtc from "components/ViewMoreDetailsFormDash/PurchasingOrderEtc/PurchasingOrdersFacEtc";
 
 import PrivateLabelReqEtc from "components/Importerdashboard/subComponets/PrivateLabelImp/PrivateLabelReqEtc/PrivateLabelReqEtc";

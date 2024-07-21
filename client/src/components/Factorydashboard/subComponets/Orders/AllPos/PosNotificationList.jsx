@@ -8,7 +8,7 @@ import { getTimeDifference as getTimeDiff } from "utils/getTimeDifference";
 import { getMonthName as getDate } from "utils/getMonthName";
 import usePoNotific from "./usePoNotific";
 
-export default function PurchasingOrdersNotificationList() {
+export default function PosNotificationList() {
   let { isLoading, notificationData, page, handleDisplayPrevData, totalPage } =
     usePoNotific();
 

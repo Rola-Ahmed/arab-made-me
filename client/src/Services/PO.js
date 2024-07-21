@@ -18,10 +18,14 @@ export const addPOMedia = async (id, header, data) => {
   return await putRequest(`/pos/uploadMedia/${id}`, header, data);
 };
 
-export const getOnePO = async (id) => {
-  return await getRequestDataHeader(
-    `/pos/${id}?include=product&include=factory&include=sourcingOffer`,
-    {},
-    {}
-  );
+// export const getOnePO = async (id) => {
+//   return await getRequestDataHeader(
+//     `/pos/${id}?include=product&include=factory&include=sourcingOffer`,
+//     {},
+//     {}
+//   );
+// };
+
+export const getOnePO = async (id, param) => {
+  return await getRequestDataHeader(`/pos/${id}?${param}`, {},{});
 };
