@@ -14,6 +14,7 @@ import useAllPos from "./useAllPos";
 import PurchasingOrdersNotification from "components/Factorydashboard/subComponets/PoRequests/AllPos/PosNotificationList";
 import StatusMessage from "components/Shared/Dashboards/StatusMessage";
 import SearchFilterByOrder from "components/Shared/Dashboards/SearchFilterByOrder";
+import ProfileCell from "components/Shared/Dashboards/ProfileCell";
 export default function Orders() {
   let { isLogin } = useContext(UserToken);
   let navigate = useNavigate();
@@ -269,22 +270,11 @@ export default function Orders() {
                   </th>
 
                   <th className=" col-3  d-flex align-items-center ps-4">
-                    <div className="profile-container justify-content-start align-items-center d-flex">
-                      <div className="profile-img">
-                        <img
-                          className="w-100 h-100"
-                          src={`${baseUrl_IMG}/${poItem?.importer?.image}`}
-                          onError={handleImageError}
-                          alt={`${baseUrl_IMG}/${poItem?.importer?.image}`}
-                        />
-                      </div>
-                      <div>
-                        <p className=" name-text">{poItem?.importer?.name}</p>
-                        <p className=" email-text">
-                          {poItem?.importer?.repEmail}
-                        </p>
-                      </div>
-                    </div>
+                    <ProfileCell
+                      profile={poItem?.importer?.image}
+                      repEmail={poItem?.importer?.repEmail}
+                      name={poItem?.importer?.name}
+                    />
                   </th>
 
                   <th className=" col-1 d-flex align-items-center justify-content-center gap-icon-table">
