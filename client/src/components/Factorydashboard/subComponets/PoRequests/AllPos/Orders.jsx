@@ -1,6 +1,5 @@
 import { useState, useContext } from "react";
 import "./Orders.css";
-import { handleImageError } from "utils/ImgNotFound";
 import { baseUrl_IMG } from "config.js";
 // shared components
 import PaginationDash from "components/Shared/Dashboards/PaginationDash";
@@ -158,7 +157,6 @@ export default function Orders() {
                         className="form-check-input"
                         type="checkbox"
                         value=""
-                        id="flexCheckDefault"
                       />
                     </div>
                     Product Name
@@ -189,7 +187,6 @@ export default function Orders() {
                           className="form-check-input"
                           type="checkbox"
                           value=""
-                          id="flexCheckDefault"
                         />
                       </div>
                       <td className="">

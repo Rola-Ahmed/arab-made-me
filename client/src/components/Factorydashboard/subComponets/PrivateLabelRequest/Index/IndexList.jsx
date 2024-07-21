@@ -84,7 +84,6 @@ export default function IndexList(props) {
                           className="form-check-input"
                           type="checkbox"
                           value=""
-                          // id="flexCheckDefault"
                         />
                       </div>
                       <td className="">

@@ -21,6 +21,9 @@ export function errorHandler(error) {
       case 500:
         // media error
 
+        if (error?.response?.data?.errorMessage?.includes("jwt malformed")) {
+          return "Something went Wrong, Please try again later.";
+        }
         if (error?.response?.data?.errorMessage?.includes("ENOENT")) {
           return "Our server is currently under maintenance. Please try again later.";
         }
