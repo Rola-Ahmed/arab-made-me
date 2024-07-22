@@ -5,7 +5,7 @@ import Importerdash from "components/Importerdashboard/Importerdash";
 import RfqImporter from "components/Importerdashboard/subComponets/RfqImporter/RfqImporter";
 import ReqVisitImporter from "components/Importerdashboard/subComponets/ReqVisitImporter/ReqVisitImporter";
 import PurchasingOrdersImp from "components/Importerdashboard/subComponets/PurchasingOrdersImp/PurchasingOrdersImp";
-import PrivateLabelImp from "components/Importerdashboard/subComponets/PrivateLabelImp/PrivateLabelImp";
+import PrivateLabelImp from "components/Importerdashboard/subComponets/PrivateLabelImp/AllReq/PrivateLabelImp";
 import DashBoardImporter from "components/Importerdashboard/subComponets/DashBoard/DashBoard";
 import CusProductReqImp from "components/Importerdashboard/subComponets/CusProductReqImp/CusProductReqImp";
 import GetSourcingReq from "components/Importerdashboard/subComponets/GetSourcingRequest/GetSourcingRequest";

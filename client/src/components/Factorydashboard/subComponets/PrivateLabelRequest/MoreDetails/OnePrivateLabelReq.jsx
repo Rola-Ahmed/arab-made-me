@@ -5,16 +5,17 @@ import Loading from "components/Loading/Loading";
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
 import ProductDetails from "components/Forms/Shared/SelectedProductDetails";
 
-import { getMonthName as getDate } from "utils/getMonthName";
+// import { getMonthName as getDate } from "utils/getMonthName";
 
 // sub Components
 import HeaderSection from "./HeaderSection";
 import ImporterInfo from "components/Factorydashboard/Shared/ImporterInfo";
 import ContactBtn from "components/Factorydashboard/Shared/ContactBtn";
 import { usePrivateLabel } from "./usePrivateLabel";
-import ReadOnly from "components/Forms/Shared/ReadOnly";
-import DisplayOneImage from "components/Shared/Dashboards/DisplayOneImage";
-import DisplayMultiImages from "components/Shared/Dashboards/DisplayMultiImages";
+import PrivateLabelInfo from "components/Shared/Dashboards/Forms/PrivateLabelInfo";
+// import ReadOnly from "components/Forms/Shared/ReadOnly";
+// import DisplayOneImage from "components/Shared/Dashboards/DisplayOneImage";
+// import DisplayMultiImages from "components/Shared/Dashboards/DisplayMultiImages";
 
 // utils function
 export default function EtcPrivateLabelReq() {
@@ -22,7 +23,7 @@ export default function EtcPrivateLabelReq() {
   let navigate = useNavigate();
 
   // utils function
-  let getMonthName = getDate;
+  // let getMonthName = getDate;
 
   // popup image( used to see a bigger verison of the requested media )
   const [showImagePop, setShowImagePop] = useState({
@@ -61,7 +62,12 @@ export default function EtcPrivateLabelReq() {
                 <>
                   <ImporterInfo importerData={requestedData?.importer} />
 
-                  <div className="container-profile-input w-100">
+                  <PrivateLabelInfo
+                    requestedData={requestedData}
+                    handleImageClick={handleImageClick}
+                  />
+
+                  {/* <div className="container-profile-input w-100">
                     <div className="title-contianer-input w-100">
                       <p> Private Label Details</p>
                       <div className="w-100 ">
@@ -153,13 +159,6 @@ export default function EtcPrivateLabelReq() {
                     </div>
                   </div>
 
-                  {requestedData?.productId && (
-                    <div className="container-profile-input w-100">
-                      <ProductDetails productDetails={requestedData?.product} />
-                    </div>
-                  )}
-
-                  {/* {requestedData?.docs?.length > 0 ? ( */}
                   <div className="container-profile-input w-100">
                     <div className="title-contianer-input w-100">
                       <p> Documents</p>
@@ -179,7 +178,13 @@ export default function EtcPrivateLabelReq() {
                         image={requestedData?.tradeMark}
                       />
                     </div>
-                  </div>
+                  </div> */}
+
+                  {requestedData?.productId && (
+                    <div className="container-profile-input w-100">
+                      <ProductDetails productDetails={requestedData?.product} />
+                    </div>
+                  )}
                 </>
               )}
               <div className="col-12 d-flex justify-content-start btn-modal-gap ">
