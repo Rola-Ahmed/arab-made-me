@@ -10,7 +10,7 @@ const ErrorToast = (msg) => {
     closeOnClick: true,
     draggable: true,
     theme: "colored",
-    type: "success",
+    type: "error",
   });
 };
 

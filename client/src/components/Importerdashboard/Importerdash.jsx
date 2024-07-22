@@ -3,16 +3,23 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
-import { useLocation, useNavigate, Link, Outlet } from "react-router-dom";
+import {
+  useLocation,
+  useNavigate,
+  Link,
+  Outlet,
+  Navigate,
+} from "react-router-dom";
 import DashLogo from "components/Shared/Dashboards/DashLogo";
 import DashNavBtn from "components/Shared/Dashboards/DashNavBtn";
 import BottomDashMenu from "components/Shared/Dashboards/BottomDashMenu";
 import DashListsDropDown from "components/Shared/Dashboards/DashListsDropDown";
 import useGlobalMessage from "hooks/useGlobalMessage";
+import ErrorToast from "components/ErrorToast";
 
 function Importerdash() {
   document.title = "Importer Dashboard";
-  let { setIsLogin } = useContext(UserToken);
+  let { setIsLogin, isLogin } = useContext(UserToken);
   let { currentUserData } = useContext(userDetails);
 
   // global message appearing "used pop up message"
@@ -21,7 +28,10 @@ function Importerdash() {
   let navigate = useNavigate();
   const { pathname } = useLocation();
   // Determine current active page for navigation highlight
-  const currentNavPage = pathname.split("/").pop().toLowerCase();
+  const currentNavPage = pathname
+    .split("/")
+    .pop()
+    .toLowerCase();
   const [activeMenu, setActiveMenu] = useState("");
 
   useEffect(() => {
@@ -42,9 +52,31 @@ function Importerdash() {
     navigate("/");
   };
 
+  // if user is not loged in
+  if (!isLogin) {
+    // return {
+    // navigate("/");
+    ErrorToast(
+      "You are not authorized to access this page. Please sign in first."
+    );
+    return <Navigate to="/signIn" />;
+    // };
+  }
+  if (!currentUserData?.importerId) {
+    if (currentUserData?.factoryId) {
+      ErrorToast("sign In Please to access");
+      return <Navigate to="/factorydashboard/403?refresh" />;
+    } else if (currentUserData?.userRole == "admin") {
+      return <Navigate to="/adminDashboard/403?refresh" />;
+    } else if (currentUserData?.userRole == "user"){
+      return <Navigate to="/403" />;
+    }
+  }
+
   return (
     <section id="scrollTo" className="factory-dashboard vh-100 overflow-hidden">
       {/* <ScrollToTop id="scrollTo" />; */}
+
       <ToastContainer />
       <div className="row h-100 w-100 remove-x">
         <div className="col-2 left-nav-fac-dashboard h-100 d-grid">

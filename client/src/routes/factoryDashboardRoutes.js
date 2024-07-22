@@ -45,6 +45,7 @@ import QuotationsFacEtc from "containers/Factorydashboard/subComponets/Quotation
 import ChatList from "components/Factorydashboard/subComponets/Chat/ChatList";
 import Conversation from "components/Factorydashboard/subComponets/Chat/Converstaion/Conversation";
 import NewConversation from "components/Factorydashboard/subComponets/Chat/NewConverstaion/NewConversation";
+import UnAuthPage from "components/UnAuthPage";
 
 const factoryDashboardRoutes = [
   {
@@ -132,6 +133,10 @@ const factoryDashboardRoutes = [
       {
         path: "NewConversation",
         element: <NewConversation />,
+      },
+      {
+        path: "403",
+        element: <UnAuthPage />,
       },
     ],
   },

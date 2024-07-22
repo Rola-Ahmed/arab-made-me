@@ -265,6 +265,10 @@ p, button, div, textarea, input {
   border-radius: 6px !important;
 }
 
+.opps-icon{
+  font-size: 28vh;
+  color: var(--light-gray);
+  }
 
 
 

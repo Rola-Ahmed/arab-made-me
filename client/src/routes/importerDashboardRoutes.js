@@ -37,10 +37,12 @@ import SourcingReqEtc from "components/ViewMoreDetailsFormDash/SourcingReqEtc/So
 import ChatList from "components/Importerdashboard/subComponets/Chat/ChatList";
 import Conversation from "components/Importerdashboard/subComponets/Chat/Converstaion/Conversation";
 import NewConversation from "components/Importerdashboard/subComponets/Chat/Converstaion/NewConverstaion/NewConversation";
+import UnAuthPage from "components/UnAuthPage";
+import IssuePage from "components/IssuePage";
 
 const importerDashboardRoutes = [
   {
-    path: "/importerdashboard/",
+    path: "/importerdashboard",
     element: <Importerdash />,
     children: [
       { path: "", element: <DashBoardImporter /> },
@@ -128,6 +130,10 @@ const importerDashboardRoutes = [
       {
         path: "NewConversation",
         element: <NewConversation />,
+      },
+      {
+        path: "403",
+        element: <IssuePage />,
       },
     ],
   },
