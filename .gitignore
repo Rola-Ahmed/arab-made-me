@@ -106,5 +106,5 @@ client/src/components/main/Footer/Footer copy.jsx
 /client/src/components/Factorydashboard/subComponets/PrivateLabelRequest copy
 client/src/components/Factorydashboard/subComponets/ReqVisitFactDash/EtcVisitRequest/EtcVisitRequest copy.jsx
 client/src/components/main/Navbar/Navbar copy.jsx
-client/build.rar
-/client/build
+# client/build.rar
+# /client/build
