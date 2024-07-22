@@ -143,7 +143,7 @@ export default function Conversation() {
         });
 
         socket.on("newMessage", (data) => {
-          // fetchFactoriesData();
+          fetchReqData();
           // setAllPosData((prevMessages) => [...prevMessages, data]); // Update state with the new message
         });
 

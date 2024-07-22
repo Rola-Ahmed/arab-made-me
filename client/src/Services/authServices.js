@@ -3,7 +3,8 @@ import { baseUrl } from "config.js";
 import { errorHandler } from "utils/errorHandler";
 
 // Set default configurations for axios
-axios.defaults.baseURL = baseUrl;
+axios.defaults.baseURL = `/api/v1`;
+// axios.defaults.baseURL = {baseUrl`/api/v1`};
 axios.defaults.timeout = 5000;
 
 // Utility function to create request config

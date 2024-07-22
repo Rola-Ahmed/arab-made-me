@@ -5,7 +5,6 @@ import { useFormik } from "formik";
 import { baseUrl } from "config.js";
 import { socket } from "config.js";
 
-
 export default function SendMsg(props) {
   let { recieverUserId, isLogin, SetNewMessageSuccess, setAllPosData } = props;
   let validationSchema = Yup.object().shape({
@@ -67,8 +66,8 @@ export default function SendMsg(props) {
           ...preVal,
           ...response.data.chat,
         }));
-      socket.emit("socketAuth", isLogin);
-
+        socket.emit("socketAuth", isLogin);
+        socket.emit("newMessage", isLogin);
       } else {
         // setErrorMsg((prevErrors) => ({
         //   ...prevErrors,

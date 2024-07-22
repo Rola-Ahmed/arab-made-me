@@ -98,11 +98,7 @@ export default function AddProduct() {
       .min(6, "Minimum  length is 6")
       .max(15, "Maximum 15  is legnth"),
 
-    //   SKU (Stock Keeping Unit)
-    sku: Yup.string()
-      .required("Input Field is Required")
-      .min(6, "Minimum  length is 6")
-      .max(15, "Maximum 15  is legnth"),
+ 
 
     // guarantee\\\" is not allowed to be em
 
@@ -155,7 +151,6 @@ export default function AddProduct() {
 
     price: "",
     hsnCode: "",
-    sku: "",
     guarantee: "",
     minOrderQuantity: "",
     maxOrderQuantity: "",
@@ -240,7 +235,6 @@ export default function AddProduct() {
           description: values.description,
           price: values.price,
           hsnCode: values.hsnCode,
-          sku: values.sku,
           minOrderQuantity: values.minOrderQuantity,
 
           specialCharacteristics: {},
@@ -821,27 +815,7 @@ export default function AddProduct() {
                 </div>
               </div>
 
-              <div className="col-4">
-                <div className="form-group">
-                  <label>
-                    Sku <span className="text-danger">*</span>
-                  </label>
-                  <input
-                    className="form-control"
-                    id="sku"
-                    onChange={formValidation.handleChange}
-                    onBlur={formValidation.handleBlur}
-                    value={formValidation.values.sku}
-                  />
-                  {formValidation.errors.sku && formValidation.touched.sku ? (
-                    <small className="text-danger">
-                      {formValidation.errors.sku}
-                    </small>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              </div>
+            
 
               <div className="col-4">
                 <div className="form-group">

@@ -49,6 +49,7 @@ export default function SendMsg(props) {
     );
 
     if (result?.success) {
+      socket.emit("socketAuth", isLogin);
       socket.emit("newMessage", data);
       setDataSent(!dataSent);
       SetNewMessageSuccess({

@@ -7,7 +7,7 @@ import ReqVisitImporter from "components/Importerdashboard/subComponets/ReqVisit
 import PurchasingOrdersImp from "components/Importerdashboard/subComponets/PurchasingOrdersImp/PurchasingOrdersImp";
 import PrivateLabelImp from "components/Importerdashboard/subComponets/PrivateLabelImp/AllReq/PrivateLabelImp";
 import DashBoardImporter from "components/Importerdashboard/subComponets/DashBoard/DashBoard";
-import CusProductReqImp from "components/Importerdashboard/subComponets/CusProductReqImp/CusProductReqImp";
+import CusProductReqImp from "components/Importerdashboard/subComponets/CusProductReqImp/AllSpmfs/CusProductReqImp";
 import GetSourcingReq from "components/Importerdashboard/subComponets/GetSourcingRequest/GetSourcingRequest";
 import GetQuotationImp from "components/Importerdashboard/subComponets/GetQuotationImp/GetQuotationImp";
 import ImporterPofile from "components/Importerdashboard/subComponets/ImporterProfile/ImporterProfile";

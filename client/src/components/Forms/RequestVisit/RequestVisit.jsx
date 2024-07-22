@@ -119,7 +119,8 @@ function RequestVisit() {
                 <h5>Visit Details</h5>
               </div>
               <div className="row row-container w-100 ">
-                <div className="col-12">
+                {/* will use it in the future */}
+                {/* <div className="col-12">
                   <div className="d-flex justify-content-between align-items-center">
                     <div class="form-check w-100 d-blcok ">
                       <RadioInput
@@ -140,7 +141,7 @@ function RequestVisit() {
                       />
                     </div>
                   </div>
-                </div>
+                </div> */}
 
                 <div className="col-md-6 col-sm-12">
                   <DateTimeInput

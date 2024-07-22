@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 import { getTimeDifference as getTimeDiff } from "utils/getTimeDifference";
+import { socket } from "config.js";
 
 export default function ChatList() {
   let { isLogin } = useContext(UserToken);
@@ -170,6 +171,70 @@ export default function ChatList() {
 
     fetchDataLenght();
   }, [filter]);
+
+  useEffect(() => {
+    if (isLogin) {
+      const connectSocket = () => {
+        socket.connect();
+
+        socket.on("connect", () => {});
+
+        socket.on("socketAuth", (data) => {
+          // fetchFactoriesData();
+          // Optionally handle the received message (e.g., update state or UI)
+          // setGlobalMsg(`New message: ${data}`);
+        });
+
+        socket.on("newMessage", (data) => {
+          fetchFactoriesData();
+          // setAllPosData((prevMessages) => [...prevMessages, data]); // Update state with the new message
+        });
+
+        socket.on("connect_error", (err) => {
+          console.error("Connection error:", err);
+        });
+
+        socket.on("connect_timeout", (err) => {
+          console.error("Connection timeout:", err);
+        });
+
+        socket.on("error", (err) => {
+          console.error("General error:", err);
+        });
+
+        socket.on("reconnect_error", (err) => {
+          console.error("Reconnect error:", err);
+        });
+
+        socket.on("reconnect_failed", () => {
+          console.error("Reconnect failed");
+        });
+
+        // ... other event listeners ...
+
+        // Cleanup on unmount
+        return () => {
+          socket.off("connect");
+          // socket.off("authorization"); // Ensure to remove the listener
+          socket.off("connect_error");
+          socket.off("newMessage");
+          socket.disconnect();
+          socket.off("connect_timeout");
+          socket.off("error");
+          socket.off("reconnect_error");
+          socket.off("reconnect_failed");
+          // ... other off events ...
+        };
+      };
+
+      connectSocket();
+      // fetchFactoriesData();
+
+      return () => {
+        socket.disconnect();
+      };
+    }
+  }, [isLogin, allPosData]);
 
   return (
     <div className="m-4 order-section ">

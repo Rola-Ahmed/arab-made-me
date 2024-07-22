@@ -77,11 +77,21 @@ function AllProducts(props) {
               <div className="col-xxl-9 col-xl-9 col-lg-7 col-md-7 col-sm-7 col-12 col-100 ">
                 <SearchSortFilter setFilter={setFilter} filter={filter} />
 
-                {apiLoadingData === false ? (
-                  <Loading />
+                {apiLoadingData?.loadingPage ? (
+                  <>
+                    {apiLoadingData?.errorCausedMsg ? (
+                      <div className="col-12 w-100">
+                        {apiLoadingData?.errorCausedMsg}
+                      </div>
+                    ) : (
+                      <div className="col-12 w-100">
+                        <Loading />
+                      </div>
+                    )}
+                  </>
                 ) : (
                   <div className="row products-gap">
-                    {allProductsData.length === 0 && (
+                    {allProductsData?.length === 0 && (
                       <>
                         <span></span>
                         <p className="h3 py-5 text-center ">No records</p>

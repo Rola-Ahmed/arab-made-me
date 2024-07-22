@@ -20,7 +20,7 @@ const useAllUserChats = (isLogin, filter) => {
   const fetchReqLeng = async () => {
     const params = `formsFilter=${filter?.formsFilter}&sort=${filter?.sort}`;
     const result = await getChatsForUser(params, { authorization: isLogin });
-   
+
     if (result?.success) {
       const totalReq = result.data?.chats?.length || 1;
       setPagination((prevValue) => ({
@@ -106,6 +106,7 @@ const useAllUserChats = (isLogin, filter) => {
         });
 
         socket.on("newMessage", (data) => {
+          fetchReqData();
           // setReqData((prevData) =>
           //   prevData.map((value) =>
           //     value?.userTwoId === data.messageObj.receiver
@@ -117,32 +118,19 @@ const useAllUserChats = (isLogin, filter) => {
           //   )
           // );
           // console.log("reqDatareqDatareqData", reqData);
-
         });
 
-        socket.on("socketAuth", (data) => {
-          // console.log("New message received authorization:", data);
-        });
+        socket.on("socketAuth", (data) => {});
 
-        socket.on("connect_error", (err) => {
-          // console.error("Connection error:", err);
-        });
+        socket.on("connect_error", (err) => {});
 
-        socket.on("connect_timeout", (err) => {
-          // console.error("Connection timeout:", err);
-        });
+        socket.on("connect_timeout", (err) => {});
 
-        socket.on("error", (err) => {
-          // console.error("General error:", err);
-        });
+        socket.on("error", (err) => {});
 
-        socket.on("reconnect_error", (err) => {
-          // console.error("Reconnect error:", err);
-        });
+        socket.on("reconnect_error", (err) => {});
 
-        socket.on("reconnect_failed", () => {
-          // console.error("Reconnect failed");
-        });
+        socket.on("reconnect_failed", () => {});
 
         // Cleanup on unmount
         return () => {
@@ -166,9 +154,6 @@ const useAllUserChats = (isLogin, filter) => {
       };
     }
   }, [isLogin]);
-
-
- 
 
   return { reqData, pagination, apiLoadingData, errorsMsg, setPagination };
 };

@@ -500,8 +500,7 @@ export default function GetProducts() {
                 <th className=" col-1 ">Available</th>
                 <th className=" col-1 ">Order Quantity</th>
 
-                <th className=" col-1 pe-1 ">Post Date</th>
-                <th className=" col-1 ">sku</th>
+                <th className=" col-2 pe-1 ">Post Date</th>
                 <th className=" col-2 ">hsn Code</th>
 
                 <th className=" col-2 ps-4">guarantee</th>
@@ -561,15 +560,13 @@ export default function GetProducts() {
                       }`}
                     </p>
                   </th>
-                  <th className=" col-1  d-flex align-items-center  pe-1 ">
+                  <th className=" col-2  d-flex align-items-center  pe-1 ">
                     <p className="trate-sub-title">
                       {getMonthName(poItem?.createdAt?.split("T")?.[0])}
                     </p>
                   </th>
 
-                  <th className=" col-1  d-flex align-items-center ">
-                    <p>{poItem?.sku ?? ""} </p>
-                  </th>
+                  
 
                   <th className=" col-2  d-flex align-items-center ">
                     <p>{poItem?.hsnCode ?? ""} </p>

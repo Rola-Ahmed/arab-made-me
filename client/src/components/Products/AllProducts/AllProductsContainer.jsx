@@ -6,6 +6,7 @@ import { baseUrl } from "config.js";
 
 import AllProducts from "components/Products/AllProducts/AllProducts";
 import { useParams, useLocation } from "react-router-dom";
+import { getAllProducts } from "Services/products";
 export default function AllProductsContainer() {
   // variables
   let { sectorID } = useParams();
@@ -13,7 +14,10 @@ export default function AllProductsContainer() {
   let location = useLocation();
 
   const [allProductsData, setAllProductsData] = useState();
-  const [apiLoadingData, setapiLoadingData] = useState(false);
+  const [apiLoadingData, setapiLoadingData] = useState({
+    loadingPage: true,
+    errorCausedMsg: true,
+  });
   const [pagination, setPagination] = useState(() => ({
     // i want to display 3 pdoructs in the 1st page
     displayProductSize: 9,
@@ -41,7 +45,6 @@ export default function AllProductsContainer() {
 
   useEffect(() => {
     const fetchData = async () => {
-      setapiLoadingData(false);
       try {
         let url1 = `${baseUrl}/products?`;
         let url2 = `${baseUrl}/products?size=${pagination?.displayProductSize}&page=${pagination?.currentPage}&include=factory`;
@@ -61,13 +64,14 @@ export default function AllProductsContainer() {
           url1 += `&sort=${filter?.filterBySort}`;
         }
 
-        const response1 = await axios.get(url1, {
-          data: {
-            sectors: filter?.filterBySector,
-          },
-        });
+        // const response1 = await axios.get(url1, {
+        //   data: {
+        //     sectors: filter?.filterBySector,
+        //   },
+        // });
+        const response1 = await getAllProducts(url1);
 
-        if (response1.data.message === "done") {
+        if (response1?.success) {
           setPagination((prevValue) => ({
             ...prevValue,
             totalPage: Math.ceil(
@@ -76,6 +80,11 @@ export default function AllProductsContainer() {
             ),
           }));
         }
+
+        setapiLoadingData({
+          loadingPage: response1?.loadingStatus,
+          errorCausedMsg: response1?.error,
+        });
 
         // i display this page form two diffrent places either from secors of all products
         // let response2 = "";
@@ -91,13 +100,8 @@ export default function AllProductsContainer() {
           setAllProductsData(
             response2.data.products.filter((item) => item?.factoryId !== null)
           );
-
-          setapiLoadingData(true);
         }
-
-      } catch (error) {
-        setapiLoadingData(false);
-      }
+      } catch (error) {}
     };
 
     fetchData();

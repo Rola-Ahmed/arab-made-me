@@ -332,7 +332,7 @@ export default function TopFactories(props) {
                   {allFactoriesData?.length === 0 ? (
                     <>
                       <span></span>{" "}
-                      <p className="h3 text-center"> No records Found </p>
+                      <p className="h3 text-center m-auto"> No records Found </p>
                       <span></span>
                     </>
                   ) : (
