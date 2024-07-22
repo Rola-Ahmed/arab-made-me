@@ -5,6 +5,6 @@
     "module": "commonjs",
     "target": "es6"
   },
-  "include": ["src", "src/i18n.js", "src/routes/FormRoutes.js"],
+  "include": ["src", "src/i18n.js", "src/routes/FormRoutes.js", "../EtcVisitRequest copy.jsx"],
   "exclude": ["node_modules", "build", "dist"]
 }

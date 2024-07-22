@@ -90,7 +90,8 @@ export function UserTypeProvider({ children }) {
       }
     } catch (error) {
       // console.log("error",error.message=='timeout of 5000ms exceeded')
-      if (error?.response?.data?.message == "users not found"  || error.message=='timeout of 5000ms exceeded') {
+      // if (error?.response?.data?.message == "users not found"  || error.message=='timeout of 5000ms exceeded') {
+      if (error?.response?.data?.message == "users not found") {
         setIsLogin("");
         localStorage.clear();
 
