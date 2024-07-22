@@ -13,6 +13,7 @@ import { useSpmf } from "./useSpmf";
 import ReadOnly from "components/Forms/Shared/ReadOnly";
 import DisplayMultiImages from "components/Shared/Dashboards/DisplayMultiImages";
 import DisplayOneImage from "components/Shared/Dashboards/DisplayOneImage";
+import CustomProductInfo from "components/Shared/Dashboards/Forms/CustomProductInfo";
 
 export default function EtcCustomProductReq() {
   let navigate = useNavigate();
@@ -206,6 +207,11 @@ export default function EtcCustomProductReq() {
                     />
                   </div>
                 </div>
+
+                <CustomProductInfo
+                  requestedData={requestedData}
+                  handleImageClick={handleImageClick}
+                />
 
                 <div className="col-12 d-flex justify-content-start btn-modal-gap">
                   {requestedData && requestedData?.quoteId == null ? (

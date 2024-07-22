@@ -73,7 +73,7 @@ const useFormSubmission = (isLogin, setIsLoading, setErrorMsg) => {
       quantity,
       supplyLocation: SupplyLocation,
       deadline,
-      timeline: timeLine,
+      timeLine,
 
       specialCharacteristics: {},
 

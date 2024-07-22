@@ -29,6 +29,7 @@ function PurchasingOrderForm(props) {
     setErrorMsg,
   } = props;
 
+  console.log("formValidation", formValidation);
   return (
     <form
       id="view"

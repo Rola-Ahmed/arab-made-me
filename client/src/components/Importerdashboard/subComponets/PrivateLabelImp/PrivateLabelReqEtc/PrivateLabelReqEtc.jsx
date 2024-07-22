@@ -121,6 +121,7 @@ export default function PrivateLabelReqEtc() {
         <div className="container gap-container">
           <div className="row">
             <div className="col-12  container-2-gap  p-0">
+              
               <div className="container-profile-input w-100">
                 <div className="title-contianer-input w-100">
                   <FactoryInfo productDetails={requestedData?.factory} />

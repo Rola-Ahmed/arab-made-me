@@ -119,7 +119,7 @@ const useFormSubmission = (
 
       ...(timeManufacturingDelay && {
         timeOfManufacturingDelay: `${timeManufacturingDelay} ${timeManufacturingDelayDuration}`,
-        timeLine: timeLine,
+        timeLine,
       }),
 
       shippingTypeAndSize:

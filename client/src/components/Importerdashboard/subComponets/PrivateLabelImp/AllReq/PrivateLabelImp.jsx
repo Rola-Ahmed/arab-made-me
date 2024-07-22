@@ -9,7 +9,6 @@ import ProfileCell from "components/Shared/Dashboards/ProfileCell";
 import PaginationDash from "components/Shared/Dashboards/PaginationDash";
 import usePrivateLabel from "./usePrivateLabel";
 import StatusMessage from "components/Shared/Dashboards/StatusMessage";
-import PrivateLabelNotificationList from "./PrivateLabelNotificationList";
 
 export default function PrivateLabelImp() {
   let { isLogin } = useContext(UserToken);
@@ -128,16 +127,6 @@ export default function PrivateLabelImp() {
             <h2>Private Labels</h2>
 
             <div className="btn-container">
-              <div>
-                <button
-                  className="notific-btn dropdown-toggle fa-solid fa-bell btn-container bg-white"
-                  type="button"
-                  data-bs-toggle="dropdown"
-                ></button>
-
-                <PrivateLabelNotificationList />
-              </div>
-
               <button
                 className="order-btn-1"
                 onClick={downloadCsv}
@@ -174,7 +163,7 @@ export default function PrivateLabelImp() {
                   </div>
                 </th>
 
-                <th className=" col-4">Specifications (Keyword,description)</th>
+                <th className=" col-4">Extra Details</th>
 
                 <th className=" col-1 ">Sent Date</th>
 
