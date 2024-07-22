@@ -186,7 +186,7 @@ export default function ReqVisitFactDash() {
 
             <tbody>
               {/* row1 */}
-              {reqData.map((poItem) => (
+              {reqData?.map((poItem) => (
                 <tr className="row">
                   <th className=" col-1  ">
                     <div className=" th-1st-title-gap d-flex justify-content-start align-items-center">

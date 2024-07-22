@@ -9,7 +9,6 @@ import FactoryInfo from "../Shared/FactoryInfo";
 import CurrentAcccountInfo from "../Shared/CurrentAcccountInfo";
 import CustomProductForm from "./CustomProductForm";
 import {
-  
   requiredStringValidate,
   otherTextAreaValidate,
   reqQualityValidate,
@@ -31,11 +30,12 @@ function CustomerProductReq(props) {
     // },
   ]);
 
-  const { submitForm, poAdded, submitDocs } = useFormSubmission(
-    isLogin,
-    setIsLoading,
-    setErrorMsg
-  );
+  const {
+    submitForm,
+    poAdded,
+    submitDocs,
+    handleSubmitMsg,
+  } = useFormSubmission(isLogin, setIsLoading, setErrorMsg);
 
   //-------------------------Start api helper function
   function setLoadingState(loadingStatus) {
@@ -161,6 +161,8 @@ function CustomerProductReq(props) {
     else if (selectedDocs?.length > 0) {
       setLoadingState(true);
       submitDocs(poAdded.id, selectedDocs);
+    } else {
+      handleSubmitMsg("Custom product Request");
     }
   }
   return (

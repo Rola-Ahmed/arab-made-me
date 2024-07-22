@@ -13,6 +13,7 @@ import ContactBtn from "components/Importerdashboard/Shared/ContactBtn";
 import SubPageUtility from "components/Shared/Dashboards/SubPageUtility";
 import { getMonthName as getDate } from "utils/getMonthName";
 import { formattedTime as getFornattedTime } from "utils/formattedTime";
+import FactoryInfo from "components/Forms/Shared/FactoryInfo";
 
 // import FactoryUnVerified from "components/ActionMessages/FactoryUnVerifiedDash/FactoryUnVerifiedDash";
 export default function VisitRequestEtc() {
@@ -175,151 +176,13 @@ export default function VisitRequestEtc() {
         <div className="container gap-container">
           <div className="row">
             <div className="col-12  container-2-gap  p-0">
-              <div className="container-profile-input w-100">
-                <div className="title-contianer-input w-100">
-                  <div className="d-flex justify-content-between">
-                    <p>Buyer Information</p>
+            
 
-                    <button
-                      className="edit-profile"
-                      onClick={() => {
-                        navigate(
-                          "/importerdashboard/importerProfile#profileImage"
-                        );
-                      }}
-                    >
-                      Edit
-                    </button>
-                  </div>
-                  <div className="w-100 ">
-                    <div className="row  row-gap">
-                      <div className="col-6">
-                        <div className="grid-gap-col">
-                          <div className="form-group">
-                            <label>Representative Name</label>
-                            <input
-                              type="text"
-                              className="form-control text-dark"
-                              value={`${
-                                factoryDetails?.repName == null
-                                  ? " "
-                                  : `${factoryDetails?.repName}`
-                              }`}
-                              readOnly
-                            />
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="col-6">
-                        <div className="grid-gap-col">
-                          <div className="form-group">
-                            <label>Role</label>
-                            <input
-                              type="text"
-                              className="form-control text-dark"
-                              value="Buyer"
-                              readOnly
-                            />
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="col-6">
-                        <div className="grid-gap-col">
-                          <div className="form-group">
-                            <label> Representative email</label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              value={factoryDetails?.repEmail || ""}
-                              readOnly
-                            />
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="col-6">
-                        <div className="grid-gap-col">
-                          <div className="form-group">
-                            <label>Representative phone number</label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              value={factoryDetails?.repPhone || ""}
-                              readOnly
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+             
 
               <div className="container-profile-input w-100">
                 <div className="title-contianer-input w-100">
-                  <p>Factory Information</p>
-
-                  <div className="w-100 ">
-                    <div className="row  row-gap">
-                      <div className="col-6">
-                        <div className="grid-gap-col">
-                          <div className="form-group">
-                            <label>Factory Name</label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              value={PosData?.factory?.name || ""}
-                              readOnly
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-6">
-                        <div className="grid-gap-col">
-                          <div className="form-group">
-                            <label>Representative phone number</label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              value={PosData?.factory?.repPhone || ""}
-                              readOnly
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-6">
-                        <div className="grid-gap-col">
-                          <div className="form-group">
-                            <label>Representative Name</label>
-                            <input
-                              className="form-control text-dark"
-                              value={`${
-                                PosData?.factory?.repName == null
-                                  ? " "
-                                  : `${PosData?.factory?.repName?.[0]}  ${PosData?.factory?.repName?.[1]}`
-                              }`}
-                              readOnly
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-6">
-                        <div className="grid-gap-col">
-                          <div className="form-group">
-                            <label> Representative email</label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              value={PosData?.factory?.repEmail || ""}
-                              readOnly
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <FactoryInfo productDetails={PosData?.factory} />
                 </div>
               </div>
 
