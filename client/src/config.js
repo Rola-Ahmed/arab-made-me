@@ -16,9 +16,9 @@ import io from "socket.io-client";
 // // });
 
 
-export const baseUrl = "http://localhost:5000/api/v1";
+export const baseUrl = "https://13.60.166.80/api/v1";
 
-export const baseUrl_IMG = "http://localhost:5000";
+export const baseUrl_IMG = "https://13.60.166.80";
 
 
 
