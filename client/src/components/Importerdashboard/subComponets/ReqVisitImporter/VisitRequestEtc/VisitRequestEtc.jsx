@@ -7,18 +7,15 @@ import ContactBtn from "components/Importerdashboard/Shared/ContactBtn";
 
 // utils function
 import SubPageUtility from "components/Shared/Dashboards/SubPageUtility";
-import { getMonthName as getDate } from "utils/getMonthName";
-import { formattedTime as getFornattedTime } from "utils/formattedTime";
 import FactoryInfo from "components/Forms/Shared/FactoryInfo";
 import { useOneVisit } from "./useOneVisit";
 import Loading from "components/Loading/Loading";
+import VisitRequestInfo from "components/Shared/Dashboards/Forms/VisitRequestInfo";
 
-// import FactoryUnVerified from "components/ActionMessages/FactoryUnVerifiedDash/FactoryUnVerifiedDash";
 export default function VisitRequestEtc() {
   let navigate = useNavigate();
 
   let { isLogin, requestedData, apiLoadingData } = useOneVisit();
-  let formattedTime = getFornattedTime;
 
   const [modalShow, setModalShow] = useState({
     isLogin: false,
@@ -28,7 +25,6 @@ export default function VisitRequestEtc() {
   const [isLoggedReDirect, setisLoggedReDirect] = useState([]);
 
   // utils function
-  let getMonthName = getDate;
 
   function handleIsLoggedInBtn(loginPath, storgaeName) {
     if (!isLogin) {
@@ -112,69 +108,7 @@ export default function VisitRequestEtc() {
                   </div>
                 </div>
 
-                <div className="container-profile-input w-100">
-                  <div className="title-contianer-input w-100">
-                    <p> Factory Visit Details</p>
-                    <div className="w-100 ">
-                      <div className="row  row-gap">
-                        <div className="col-6">
-                          <div className="grid-gap-col">
-                            <div className="form-group">
-                              <label>status</label>
-                              <input
-                                className="form-control"
-                                value={requestedData?.status || ""}
-                                readOnly
-                              />
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="col-6">
-                          <div className="grid-gap-col">
-                            <div className="form-group">
-                              <label>Visit Date </label>
-                              <input
-                                className="form-control"
-                                value={` ${formattedTime(requestedData?.date)}`}
-                                readOnly
-                              />
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="col-6">
-                          <div className="grid-gap-col">
-                            <div className="form-group">
-                              <label>Created At </label>
-                              <input
-                                className="form-control"
-                                value={
-                                  `${getMonthName(
-                                    requestedData?.createdAt?.split("T")?.[0]
-                                  )}` || ""
-                                }
-                                readOnly
-                              />
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="col-12">
-                          <div className="form-group">
-                            <label>purpose</label>
-                            <textarea
-                              className="form-control"
-                              rows="3"
-                              value={requestedData?.purpose || ""}
-                              readOnly
-                            ></textarea>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <VisitRequestInfo requestedData={requestedData} />
 
                 <div className="col-12 d-flex justify-content-start btn-modal-gap mb-4">
                   <ContactBtn

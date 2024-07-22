@@ -8,15 +8,11 @@ import Loading from "components/Loading/Loading";
 import SubPageUtility from "components/Shared/Dashboards/SubPageUtility";
 import { useOneVisit } from "./useOneVisit";
 // shared function
-import { getMonthName as getDate } from "utils/getMonthName";
-import { formattedTime as getFornattedTime } from "utils/formattedTime";
 import ContactBtn from "components/Factorydashboard/Shared/ContactBtn";
-import ReadOnly from "components/Forms/Shared/ReadOnly";
+import VisitRequestInfo from "components/Shared/Dashboards/Forms/VisitRequestInfo";
 
 export default function EtcVisitRequest() {
   let navigate = useNavigate();
-  let getMonthName = getDate;
-  let formattedTime = getFornattedTime;
 
   // auth validation
   let { isLogin, requestedData, apiLoadingData } = useOneVisit();
@@ -72,44 +68,7 @@ export default function EtcVisitRequest() {
               <div className="col-12  container-2-gap  p-0">
                 <ImporterInfo importerData={requestedData?.importer} />
 
-                <div className="container-profile-input w-100">
-                  <div className="title-contianer-input w-100">
-                    <p> Factory Visit Details</p>
-                    <div className="w-100 ">
-                      <div className="row  row-gap">
-                        <div className="col-6">
-                          <ReadOnly
-                            title="status"
-                            value={requestedData?.status}
-                          />
-                        </div>
-
-                        <div className="col-6">
-                          <ReadOnly
-                            title="Visit Date "
-                            value={` ${formattedTime(requestedData?.date)}`}
-                          />
-                        </div>
-
-                        <div className="col-6">
-                          <ReadOnly
-                            title="Created At"
-                            value={getMonthName(
-                              requestedData?.createdAt?.split("T")?.[0]
-                            )}
-                          />
-                        </div>
-
-                        <div className="col-12">
-                          <ReadOnly
-                            title="purpose "
-                            value={requestedData?.purpose || ""}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <VisitRequestInfo requestedData={requestedData} />
 
                 <div className="col-12 d-flex justify-content-start btn-modal-gap">
                   <button
