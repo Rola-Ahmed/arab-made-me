@@ -1,8 +1,9 @@
-import SourcingRequest from "components/Importerdashboard/subComponets/SourcingRequest/SourcingRequest";
+import RfqBuyer from "components/Importerdashboard/subComponets/RFQBuyer/AllRfq/AllRfq";
+import OneRfqReq from "components/Importerdashboard/subComponets/RFQBuyer/OneRfq/OneRfq";
 
 // Importer Dashboard pages
+import SourcingRequest from "components/Importerdashboard/subComponets/SourcingRequest/SourcingRequest";
 import Importerdash from "components/Importerdashboard/Importerdash";
-import RfqImporter from "components/Importerdashboard/subComponets/RFQBuyer/AllRfq/AllRfq";
 import ReqVisitImporter from "components/Importerdashboard/subComponets/ReqVisitImporter/ReqVisitImporter";
 import PurchasingOrdersImp from "components/Importerdashboard/subComponets/PurchasingOrdersImp/PurchasingOrdersImp";
 import PrivateLabelImp from "components/Importerdashboard/subComponets/PrivateLabelImp/AllReq/PrivateLabelImp";
@@ -21,8 +22,6 @@ import PrivateLabelReqEtc from "components/Importerdashboard/subComponets/Privat
 
 import CustomProductReqEtc from "components/Importerdashboard/subComponets/CusProductReqImp/CustomProductReqEtc/CustomProductReqEtc";
 
-import RfqRequestEtc from "components/Importerdashboard/subComponets/RFQBuyer/OneRfq/OneRfq";
-
 import QuotationsEtc from "components/Importerdashboard/subComponets/GetQuotationImp/QuotationsEtc/QuotationsEtc";
 
 import SourcingReqEtc from "components/ViewMoreDetailsFormDash/SourcingReqEtc/SourcingReqEtc";
@@ -39,7 +38,8 @@ const importerDashboardRoutes = [
     element: <Importerdash />,
     children: [
       // done
-      { path: "Rfqs", element: <RfqImporter /> },
+      { path: "Rfqs", element: <RfqBuyer /> },
+      { path: "RFQReq/moreDetails", element: <OneRfqReq /> },
 
       // --------------------------------------------------
       { path: "", element: <DashBoardImporter /> },
@@ -97,11 +97,7 @@ const importerDashboardRoutes = [
 
         element: <CustomProductReqEtc />,
       },
-      {
-        path: "RFQReq/moreDetails",
 
-        element: <RfqRequestEtc />,
-      },
       {
         path: "quotations/moreDetails",
 
