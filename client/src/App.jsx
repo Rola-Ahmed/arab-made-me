@@ -114,19 +114,19 @@ const router = createBrowserRouter([
 
       // formssssssssssssssssssssssssssssssss
 
-      // -------------------------
-      {
-        path: "mettingRoom",
-        element: <MeetingRoom />,
-      },
+      // ------will use it again-------------------
       // {
-      //   path: "inviation/:id",
+      //   path: "mettingRoom",
       //   element: <MeetingRoom />,
       // },
-      {
-        path: "vpaas-magic-cookie-8f03c02025c64a96b9130e33703c5b35/SampleAppUsedSeparationsRetreatFundamentally",
-        element: <Invitaion />,
-      },
+      // // {
+      // //   path: "inviation/:id",
+      // //   element: <MeetingRoom />,
+      // // },
+      // {
+      //   path: "vpaas-magic-cookie-8f03c02025c64a96b9130e33703c5b35/SampleAppUsedSeparationsRetreatFundamentally",
+      //   element: <Invitaion />,
+      // },
       // ---------------------------------
 
       ...authRoutes,

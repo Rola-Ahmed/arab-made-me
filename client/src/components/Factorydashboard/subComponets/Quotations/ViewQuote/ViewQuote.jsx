@@ -7,8 +7,6 @@ import StarRating from "components/Shared/stars";
 
 import { baseUrl_IMG } from "config.js";
 
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 
 import { getMonthName as getDate } from "utils/getMonthName";
@@ -37,8 +35,6 @@ export default function ViewQuote(props) {
 
   return (
     <div className="m-4 order-section ">
-      <ToastContainer />
-
       {/* header Section */}
       <div className="header w-100 ">
         <HeaderSection requestedData={requestedData} />
