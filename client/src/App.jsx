@@ -38,7 +38,7 @@ import AllProducts from "components/Products/AllProducts/AllProductsContainer";
 import AllSourcingOffers from "components/Sourcinghub/AllSourcingOffers/AllSourcingOffers";
 
 // sub routes
-import adminDashboardRoutes from "routes/adminDashboardRoutes";
+// import adminDashboardRoutes from "routes/adminDashboardRoutes";
 import importerDashboardRoutes from "routes/importerDashboardRoutes";
 import factoryDashboardRoutes from "routes/factoryDashboardRoutes";
 import authRoutes from "routes/authRoutes";
@@ -168,7 +168,7 @@ const router = createBrowserRouter([
     element: <UnAuthPage />,
   },
 
-  ...adminDashboardRoutes,
+  // ...adminDashboardRoutes,
   ...importerDashboardRoutes,
   ...factoryDashboardRoutes,
 ]);
