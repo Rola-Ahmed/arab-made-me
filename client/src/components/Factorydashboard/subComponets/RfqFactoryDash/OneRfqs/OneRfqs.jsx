@@ -16,7 +16,7 @@ import { getOneRFQ } from "Services/rfq";
 import { getQuotes } from "Services/FactoryRequests/quotations";
 import { updateRFQ } from "Services/FactoryRequests/rfq";
 
-import RFQ from "components/Shared/Dashboards/Forms/RFQ";
+import RFQinfo from "components/Shared/Dashboards/Forms/RFQinfo";
 
 export default function OneRfqs() {
   let navigate = useNavigate();
@@ -140,7 +140,7 @@ export default function OneRfqs() {
             <div className="col-12  container-2-gap  p-0">
               <ImporterInfo importerData={requestedData?.importer} />
 
-              <RFQ
+              <RFQinfo
                 requestedData={requestedData}
                 handleImageClick={handleImageClick}
               />

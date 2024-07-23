@@ -39,9 +39,10 @@ const importerDashboardRoutes = [
     element: <Importerdash />,
     children: [
       // done
-
-      { path: "", element: <DashBoardImporter /> },
       { path: "Rfqs", element: <RfqImporter /> },
+
+      // --------------------------------------------------
+      { path: "", element: <DashBoardImporter /> },
       { path: "RequestVisit", element: <ReqVisitImporter /> },
       { path: "purchasingOrders", element: <PurchasingOrdersImp /> },
       { path: "PrivateLabel", element: <PrivateLabelImp /> },

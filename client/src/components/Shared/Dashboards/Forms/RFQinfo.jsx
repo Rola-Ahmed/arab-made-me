@@ -2,7 +2,7 @@ import ProductDetails from "components/Forms/Shared/SelectedProductDetails";
 import { getMonthName as getDate } from "utils/getMonthName";
 import DisplayMultiImages from "components/Shared/Dashboards/DisplayMultiImages";
 
-export default function RFQ({ requestedData, handleImageClick }) {
+export default function RFQinfo({ requestedData, handleImageClick }) {
   let getMonthName = getDate;
 
   return (

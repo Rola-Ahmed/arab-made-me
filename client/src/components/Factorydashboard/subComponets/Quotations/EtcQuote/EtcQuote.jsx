@@ -10,7 +10,7 @@ import ImporterInfo from "components/Shared/ImporterInfo";
 import ContactBtn from "components/Factorydashboard/Shared/ContactBtn";
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
 
-import RFQ from "components/Shared/Dashboards/Forms/RFQ";
+import RFQinfo from "components/Shared/Dashboards/Forms/RFQinfo";
 import Quote from "components/Shared/Dashboards/Forms/Quote";
 import { useOneQuote } from "./useOneQuote";
 import CustomProductInfo from "components/Shared/Dashboards/Forms/CustomProductInfo";
@@ -68,7 +68,7 @@ export default function EtcQuote() {
               <Quote requestedData={requestedData} />
 
               {requestedData?.qouteOnType == "rfq" && (
-                <RFQ
+                <RFQinfo
                   requestedData={qouteOn}
                   handleImageClick={handleImageClick}
                 />

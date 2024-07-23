@@ -14,6 +14,7 @@ import FactoryInfo from "components/Forms/Shared/FactoryInfo";
 import PrivateLabelInfo from "components/Shared/Dashboards/Forms/PrivateLabelInfo";
 import { usePrivateLabel } from "./usePrivateLabel";
 import Loading from "components/Loading/Loading";
+import StatusMessagetwo from "components/Shared/Dashboards/StatusMessagetwo";
 export default function PrivateLabelReqEtc() {
   let navigate = useNavigate();
 
@@ -92,27 +93,7 @@ export default function PrivateLabelReqEtc() {
       {/* error or loading section */}
 
       {apiLoadingData?.reqData && (
-        <>
-          <div className="section factory-profile m-5 ">
-            <div className="container gap-container">
-              <div className="row">
-                <div className="col-12  container-2-gap  p-0">
-                  <div className="d-flex justify-content-center w-100">
-                    {apiLoadingData?.errorWhileLoading ? (
-                      <div className="border-3 border-row py-5">
-                        <p className="text-muted fw-semibold text-center my-5 py-5">
-                          {apiLoadingData?.errorWhileLoading}
-                        </p>
-                      </div>
-                    ) : (
-                      <Loading />
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </>
+        <StatusMessagetwo errorMsg={apiLoadingData?.errorWhileLoading} />
       )}
 
       {/* show data section */}
@@ -121,7 +102,6 @@ export default function PrivateLabelReqEtc() {
         <div className="container gap-container">
           <div className="row">
             <div className="col-12  container-2-gap  p-0">
-              
               <div className="container-profile-input w-100">
                 <div className="title-contianer-input w-100">
                   <FactoryInfo productDetails={requestedData?.factory} />
