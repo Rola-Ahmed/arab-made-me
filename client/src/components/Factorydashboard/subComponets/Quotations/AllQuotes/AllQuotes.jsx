@@ -19,7 +19,7 @@ import ProfileCell from "components/Shared/Dashboards/ProfileCell";
 import SearchFilterByOrderPrice from "components/Shared/Dashboards/SearchFilterByOrderPrice";
 import useAllQuotes from "./useAllQuotes";
 
-export default function ViewQuote() {
+export default function AllQuotes() {
   const [filter, setFilter] = useState({
     formsFilter: "",
     sort: "date-DESC",
