@@ -45,31 +45,28 @@ export function useOneQuote() {
         let qouteOnId = "";
         let qouteOnType = "";
         // let productId = "";
-        console.log(
-          "quotations.quotationRequestId",
-          quotations.quotationRequestId
-        );
-        if (quotations.quotationRequestId) {
+       
+        if (quotations?.quotationRequestId) {
           qouteOnId = quotations.quotationRequestId;
           qouteOnType = "rfq";
           // productId = quotations.productId;
         }
-        if (quotations.sourcingRequestId) {
+        if (quotations?.sourcingRequestId) {
           qouteOnId = quotations.sourcingRequestId;
           qouteOnType = "offer";
           // productId = quotations.productId;
         }
-        if (quotations.specialManufacturingRequestId) {
+        if (quotations?.specialManufacturingRequestId) {
           qouteOnId = quotations.specialManufacturingRequestId;
           qouteOnType = "spmf";
         }
-        if (quotations.privateLabelingId) {
+        if (quotations?.privateLabelingId) {
           qouteOnId = quotations.privateLabelingId;
           qouteOnType = "privateLabeling";
           // productId = quotations.productId;
         }
 
-        if (quotations.whiteLabelingId) {
+        if (quotations?.whiteLabelingId) {
           qouteOnId = quotations.whiteLabelingId;
           qouteOnType = "whiteLabeling";
           // productId = quotations.productId;
@@ -81,6 +78,8 @@ export function useOneQuote() {
           qouteOnType: qouteOnType,
           // productId: productId,
         }));
+
+       
 
         // QOUTION ON ON OF THESE
         // "quotationRequestId": null,
@@ -104,24 +103,31 @@ export function useOneQuote() {
       }
       if (requestedData?.qouteOnType == "rfq") {
         result = await getOneRFQ(requestedData.qouteOnId, "include=product");
+
+        console.log("resultssss", result);
       }
 
       if (requestedData?.qouteOnType == "spmf") {
         result = await getOneSpmf(requestedData.qouteOnId, {});
+
+        console.log("resultssss", result);
       }
       if (requestedData?.qouteOnType == "whiteLabeling") {
         result = await getOneWhiteLabel(
           requestedData.qouteOnId,
           "include=product"
         );
+
+        console.log("resultssss", result);
       }
       if (requestedData?.qouteOnType == "privateLabeling") {
         result = await getOnePrivateLabel(
           requestedData.qouteOnId,
           "include=product"
         );
+
+        console.log("resultssss", result);
       }
-      console.log("resultssss", result);
 
       if (result?.success) {
         if (requestedData?.qouteOnType == "offer") {

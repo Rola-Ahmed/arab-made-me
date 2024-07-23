@@ -13,12 +13,13 @@ import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
 import RFQ from "components/Shared/Dashboards/Forms/RFQ";
 import Quote from "components/Shared/Dashboards/Forms/Quote";
 import { useOneQuote } from "./useOneQuote";
+import CustomProductInfo from "components/Shared/Dashboards/Forms/CustomProductInfo";
 
 export default function EtcQuote() {
   let navigate = useNavigate();
 
   let { isLogin, requestedData, apiLoadingData, qouteOn } = useOneQuote();
-  console.log("requestedData", qouteOn);
+  console.log("qouteOn", qouteOn, qouteOn?.product);
   // console.log(" requestedData qouteOn", requestedData?.qouteOnId);
   // console.log("requestedData qoutetype", requestedData?.qouteOnType);
 
@@ -65,10 +66,19 @@ export default function EtcQuote() {
 
               <Quote requestedData={requestedData} />
 
-              <RFQ
-                requestedData={requestedData}
-                handleImageClick={handleImageClick}
-              />
+              {requestedData?.qouteOnType == "rfq" && (
+                <RFQ
+                  requestedData={qouteOn}
+                  handleImageClick={handleImageClick}
+                />
+              )}
+
+              {requestedData?.qouteOnType == "spmf" && (
+                <CustomProductInfo
+                  requestedData={qouteOn}
+                  handleImageClick={handleImageClick}
+                />
+              )}
 
               <div className="col-12 d-flex justify-content-start btn-modal-gap ">
                 <button
