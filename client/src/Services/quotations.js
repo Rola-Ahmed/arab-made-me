@@ -20,3 +20,9 @@ export const addqouteForWhiteLabel = async (header, data) => {
 export const addqouteForSpmf = async (header, data) => {
   return await postRequest(`/quotations/add/spmf`, header, data);
 };
+
+
+
+export const getOneQuote = async (id, param) => {
+  return await getRequestDataHeader(`/quotations/${id}?${param}`, {}, {});
+};

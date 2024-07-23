@@ -34,15 +34,7 @@ export default function EtcCustomProductReq() {
 
   return (
     <>
-      {/* <IsLoggedIn
-        show={modalShow.isLogin}
-        onHide={() =>
-          setModalShow((prevVal) => ({
-            ...prevVal,
-            isLogin: false,
-          }))
-        }
-      /> */}
+     
 
       <HeaderSection />
 
@@ -73,6 +65,7 @@ export default function EtcCustomProductReq() {
               <div className="col-12  container-2-gap  p-0">
                 {/* contains its own fetch i just called it */}
                 <ImporterInfo importerData={requestedData?.importer} />
+                
                 <div className="container-profile-input w-100">
                   <div className="title-contianer-input w-100">
                     <p> Custom Product Details</p>

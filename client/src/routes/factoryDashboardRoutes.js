@@ -37,7 +37,7 @@ import OffersFacEtc from "components/ViewMoreDetailsFormDash/OffersFacEtc/Offers
 
 // Quote data Container
 import ViewQuotations from "components/Factorydashboard/subComponets/Quotations/AllQuotes/AllQuotes";
-import QuotationsFacEtc from "containers/Factorydashboard/subComponets/Quotations/EtcQuoteContainer";
+import QuotationsFacEtc from "components/Factorydashboard/subComponets/Quotations/EtcQuote/EtcQuote";
 
 // Correct
 
