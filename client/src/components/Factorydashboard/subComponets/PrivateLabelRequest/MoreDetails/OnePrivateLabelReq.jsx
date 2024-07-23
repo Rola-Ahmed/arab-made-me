@@ -9,7 +9,7 @@ import ProductDetails from "components/Forms/Shared/SelectedProductDetails";
 
 // sub Components
 import HeaderSection from "./HeaderSection";
-import ImporterInfo from "components/Factorydashboard/Shared/ImporterInfo";
+import ImporterInfo from "components/Shared/ImporterInfo";
 import ContactBtn from "components/Factorydashboard/Shared/ContactBtn";
 import { usePrivateLabel } from "./usePrivateLabel";
 import PrivateLabelInfo from "components/Shared/Dashboards/Forms/PrivateLabelInfo";

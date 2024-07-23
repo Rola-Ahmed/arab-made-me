@@ -10,7 +10,7 @@ import { useOnePo } from "./useOnePo";
 // utils function
 import SubPageUtility from "components/Shared/Dashboards/SubPageUtility";
 import { getMonthName as getDate } from "utils/getMonthName";
-import ImporterInfo from "components/Factorydashboard/Shared/ImporterInfo";
+import ImporterInfo from "components/Shared/ImporterInfo";
 import ReadOnly from "components/Forms/Shared/ReadOnly";
 import DisplayMultiImages from "components/Shared/Dashboards/DisplayMultiImages";
 import DisplayOneImage from "components/Shared/Dashboards/DisplayOneImage";

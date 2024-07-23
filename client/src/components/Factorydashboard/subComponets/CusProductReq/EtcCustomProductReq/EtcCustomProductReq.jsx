@@ -5,7 +5,7 @@ import Loading from "components/Loading/Loading";
 
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
 
-import ImporterInfo from "components/Factorydashboard/Shared/ImporterInfo";
+import ImporterInfo from "components/Shared/ImporterInfo";
 import HeaderSection from "./HeaderSection";
 import { getMonthName as getDate } from "utils/getMonthName";
 import ContactBtn from "components/Factorydashboard/Shared/ContactBtn";

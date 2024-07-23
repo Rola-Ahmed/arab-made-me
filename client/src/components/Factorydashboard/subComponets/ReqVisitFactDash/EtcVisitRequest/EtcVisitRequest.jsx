@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import ImporterInfo from "components/Factorydashboard/Shared/ImporterInfo";
+import ImporterInfo from "components/Shared/ImporterInfo";
 import Loading from "components/Loading/Loading";
 
 // modals

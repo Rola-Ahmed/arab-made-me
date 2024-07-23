@@ -8,7 +8,7 @@ import { getMonthName as getDate } from "utils/getMonthName";
 
 // sub Components
 // import HeaderSection from "./HeaderSection";
-import ImporterInfo from "components/Factorydashboard/Shared/ImporterInfo";
+import ImporterInfo from "components/Shared/ImporterInfo";
 import ContactBtn from "components/Factorydashboard/Shared/ContactBtn";
 
 export default function EtcQuote(props) {

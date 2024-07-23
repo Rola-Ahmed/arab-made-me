@@ -14,7 +14,7 @@ import Carousel from "react-grid-carousel";
 import SubPageUtility from "components/Shared/Dashboards/SubPageUtility";
 import { getMonthName as getDate } from "utils/getMonthName";
 
-import ImporterInfo from "components/Factorydashboard/Shared/ImporterInfo";
+import ImporterInfo from "components/Shared/ImporterInfo";
 import ContactBtn from "components/Factorydashboard/Shared/ContactBtn";
 
 import { getOneRFQ } from "Services/rfq";
@@ -323,7 +323,7 @@ export default function OneRfqs() {
 
               {/* <Link>View Quotation on FRQ</Link> */}
 
-              <div className="col-12 d-flex justify-content-start btn-modal-gap"> 
+              <div className="col-12 d-flex justify-content-start btn-modal-gap">
                 {requestedData && requestedData?.quoteId == null ? (
                   <button
                     className="btn-edit "
