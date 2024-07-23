@@ -1,0 +1,60 @@
+{
+  "welcome_message": "Welcome to our application",
+
+  "Home": "Home",
+  "aboutUs": "About Us",
+  "sourcingHub": "Sourcing Hub",
+  "contactUs": "Contact Us",
+  "LogOut": "Log out",
+  "logIn": "Log In",
+  "register": "Register",
+  "becomeAFactory": "Become A factory",
+  "BecomeABuyer": "Become A buyer",
+  "send": "Send",
+  "selectYourRole": "Select Your Role",
+  "companyMicrositeDetails": "Company Microsite Details",
+  "representiveInformation": "Representive Information",
+  "country": "Country",
+  "city": "City",
+  "sector": "Sector",
+  "email": "Email",
+  "forgotPassword": "Forgot password",
+  "don'tHaveAnAccount?": "Don't have an account?",
+  "createNew": "Create New",
+  "buyer": "buyer",
+  "factory": "Factory",
+  "product": "product",
+  "moreDetails": "More Details",
+  "search": "Search",
+  "alreadyHaveanAccount": "Already have an account?",
+  "submit": "Submit",
+  "countinue": "Countinue",
+  "certificates": "Certificates",
+  "exit": "Exit",
+  "empty": "Empty",
+  "requestDetails": "Request details",
+  "documents": "Documents",
+
+  "titles": [
+    {
+      "hero": {
+        "title": "Powerful, self-serve product and growth analytics to help launch you product, and retain more buyers.",
+        "subTitle": "Arab B2B platform for Private Label services"
+      },
+
+      "factoryOffers": "Factory Offers",
+      "Sourcing Hub": "Sourcing Hub",
+      "buyerRequests": "Buyer Requests",
+      "manufacturingSectors": "Manufacturing Sectors",
+      "address": "Address"
+    }
+  ],
+  "texts": [
+    {
+      "UserDescription": "Welcome to Egyption fastest-growing B2B platform, connecting buyers and suppliers in the consumer goods industry. Please choose your preferred account type to get started.",
+      "Enter your email and we'll send you a link to reset your password": "Enter your email and we'll send you a link to reset your password.",
+      "BackToLogin": "Back to Login",
+      "Only pdf, png, jpeg, and jpg are allowed. A maximum of 3 pictures is permitted.": "Only pdf, png, jpeg, and jpg are allowed. A maximum of 3 pictures is permitted."
+    }
+  ]
+}
