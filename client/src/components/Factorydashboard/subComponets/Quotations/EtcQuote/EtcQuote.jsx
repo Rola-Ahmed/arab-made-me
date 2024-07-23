@@ -14,6 +14,7 @@ import RFQ from "components/Shared/Dashboards/Forms/RFQ";
 import Quote from "components/Shared/Dashboards/Forms/Quote";
 import { useOneQuote } from "./useOneQuote";
 import CustomProductInfo from "components/Shared/Dashboards/Forms/CustomProductInfo";
+import PrivateLabelInfo from "components/Shared/Dashboards/Forms/PrivateLabelInfo";
 
 export default function EtcQuote() {
   let navigate = useNavigate();
@@ -79,6 +80,20 @@ export default function EtcQuote() {
                   handleImageClick={handleImageClick}
                 />
               )}
+
+              {requestedData?.qouteOnType == "privateLabeling" && (
+                <PrivateLabelInfo
+                  requestedData={qouteOn}
+                  handleImageClick={handleImageClick}
+                />
+              )}
+
+              {/* {requestedData?.qouteOnType == "whiteLabeling" && (
+                <CustomProductInfo
+                  requestedData={qouteOn}
+                  handleImageClick={handleImageClick}
+                />
+              )} */}
 
               <div className="col-12 d-flex justify-content-start btn-modal-gap ">
                 <button

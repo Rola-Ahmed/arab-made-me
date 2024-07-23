@@ -1,0 +1,4 @@
+{
+  "featureFlag": true,
+  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
+}
