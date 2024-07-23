@@ -95,6 +95,9 @@
   cursor: pointer;
 }
 
+.cursor-wait {
+  cursor: wait;
+}
 
 .Toastify__toast-theme--colored.Toastify__toast--success {
   background: green !important;
@@ -265,10 +268,10 @@ p, button, div, textarea, input {
   border-radius: 6px !important;
 }
 
-.opps-icon{
+.opps-icon {
   font-size: 28vh;
   color: var(--light-gray);
-  }
+}
 
 
 

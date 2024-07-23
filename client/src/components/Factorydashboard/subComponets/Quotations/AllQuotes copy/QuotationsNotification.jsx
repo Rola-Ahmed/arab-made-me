@@ -3,7 +3,7 @@ import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { baseUrl } from "config.js";
 import { UserToken } from "Context/userToken";
-import QuotationsNotificationList from "components/Factorydashboard/subComponets/Quotations/ViewQuote/QuotationsNotificationList";
+import QuotationsNotificationList from "components/Factorydashboard/subComponets/Quotations/AllQuotes/QuotationsNotificationList";
 
 export default function VisitReqNotification() {
   const { isLogin } = useContext(UserToken);

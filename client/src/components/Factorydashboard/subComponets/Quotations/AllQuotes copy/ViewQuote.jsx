@@ -1,11 +1,8 @@
 //
-import { handleImageError } from "utils/ImgNotFound";
-
+import useState from "react";
 // shared components
 import PaginationDash from "components/Shared/Dashboards/PaginationDash";
 import StarRating from "components/Shared/stars";
-
-import { baseUrl_IMG } from "config.js";
 
 import { useNavigate } from "react-router-dom";
 
@@ -15,20 +12,35 @@ import { getMonthName as getDate } from "utils/getMonthName";
 
 // Sub Components
 import HeaderSection from "./HeaderSection";
-import SearchFilterSection from "./SearchFilterSection";
-import DataStatus from "./DataStatus";
 
-export default function ViewQuote(props) {
+import StatusMessage from "components/Shared/Dashboards/StatusMessage";
+import ProfileCell from "components/Shared/Dashboards/ProfileCell";
+import SearchFilterByOrderPrice from "components/Shared/Dashboards/SearchFilterByOrderPrice";
+import useAllQuotes from "./useAllQuotes";
+
+export default function ViewQuote() {
+  const [filter, setFilter] = useState({
+    formsFilter: "",
+    sort: "date-DESC",
+    sort_name: "",
+  });
+  function filtterData(value, keyword, name) {
+    setFilter((prevValue) => ({
+      ...prevValue,
+      [keyword]: value,
+      ...(name && { sort_name: name }),
+    }));
+  }
+
   let {
-    errorsMsg,
-    apiLoadingData,
-    requestedData,
-    setFilterDataFromChild,
-    setPagination,
+    reqData,
     pagination,
+    apiLoadingData,
+    errorsMsg,
+    setPagination,
     deleteData,
-  } = props;
-
+    isLogin,
+  } = useAllQuotes(filter);
   let navigate = useNavigate();
   // utils function
   let getMonthName = getDate;
@@ -37,10 +49,10 @@ export default function ViewQuote(props) {
     <div className="m-4 order-section ">
       {/* header Section */}
       <div className="header w-100 ">
-        <HeaderSection requestedData={requestedData} />
+        <HeaderSection requestedData={reqData} />
 
         {/* search filter section */}
-        <SearchFilterSection setFilterData={setFilterDataFromChild} />
+        <SearchFilterByOrderPrice filtterData={filtterData} filter={filter} />
 
         {/* data section */}
         <div className=" data-container w-100 p-3">
@@ -85,7 +97,7 @@ export default function ViewQuote(props) {
 
             <tbody>
               {/* row1 */}
-              {requestedData?.map((poItem) => (
+              {reqData?.map((poItem) => (
                 <tr className="row">
                   <th className=" col-3">
                     <div className=" th-1st-title-gap d-flex justify-content-start align-items-center">
@@ -149,22 +161,11 @@ export default function ViewQuote(props) {
                   </th>
 
                   <th className=" col-3  d-flex align-items-center  justify-content-center ">
-                    <div className="profile-container justify-content-start align-items-center d-flex ">
-                      <div className="profile-img">
-                        <img
-                          className="w-100 h-100"
-                          src={`${baseUrl_IMG}/${poItem?.importer?.image}`}
-                          onError={handleImageError}
-                          alt="importer "
-                        />
-                      </div>
-                      <div>
-                        <p className=" name-text">{poItem?.importer?.name}</p>
-                        <p className=" email-text">
-                          {poItem?.importer?.repEmail}
-                        </p>
-                      </div>
-                    </div>
+                    <ProfileCell
+                      profile={poItem?.importer?.image}
+                      repEmail={poItem?.importer?.repEmail}
+                      name={poItem?.importer?.name}
+                    />
                   </th>
 
                   {/* view more details or delete data*/}
@@ -199,7 +200,9 @@ export default function ViewQuote(props) {
               ))}
 
               {/* displayed if requested data is empty || loading || error */}
-              <DataStatus
+
+              <StatusMessage
+                reqDataLength={reqData?.length}
                 apiLoadingData={apiLoadingData}
                 errorsMsg={errorsMsg}
               />

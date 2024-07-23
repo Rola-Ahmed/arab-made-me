@@ -1,4 +1,4 @@
-import { getRequestDataHeader } from "../authServices";
+import { getRequestDataHeader ,deleteRequest} from "../authServices";
 
 export const getQuotes = async (param, header) => {
   return await getRequestDataHeader(`/factories/factory/quotations?${param}`, header, {});
@@ -6,6 +6,14 @@ export const getQuotes = async (param, header) => {
 
 export const getOneRFQ = async (param, header,data) => {
     return await getRequestDataHeader(`/rfqs?${param}`, header, data);
+  };
+
+
+
+
+
+  export const deleteQuote = async (id, header) => {
+    return await deleteRequest(`/quotations/${id}`, header, {});
   };
   
 

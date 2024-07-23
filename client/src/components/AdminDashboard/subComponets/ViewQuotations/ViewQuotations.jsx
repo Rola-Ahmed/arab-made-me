@@ -14,7 +14,7 @@ import PageUtility from "components/Shared/Dashboards/PageUtility";
 import { getMonthName as getDate } from "utils/getMonthName";
 
 // Container Components
-import QuotationsNotification from "components/Factorydashboard/subComponets/Quotations/ViewQuote/QuotationsNotification";
+import QuotationsNotification from "components/Factorydashboard/subComponets/Quotations/AllQuotes/QuotationsNotification";
 
 export default function ViewQuotations() {
   let { isLogin } = useContext(UserToken);
@@ -488,29 +488,24 @@ export default function ViewQuotations() {
 
                   <th className=" col-1 d-flex align-items-center  ">
                     <div>
-                      {
-                        // allAnsRfqData.map((item) =>
-                        poItem?.docs != null
-                          ? poItem?.docs?.map((i, index) =>
-                              i !== null ? (
-                                <>
-                                  <a
-                                    className="text-decoration-none"
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    href={`${baseUrl_IMG}/${i}`}
-                                    download
-                                  >
-                                    <p className="trate-sub-title doc-download-color cursor">
-                                      Doc{index}.
-                                      {
-                                        i?.split(".")?.[
-                                          i.split(".")?.length - 1
-                                        ]
-                                      }
-                                    </p>
-                                  </a>
-                                  {/* <div>
+                      {// allAnsRfqData.map((item) =>
+                      poItem?.docs != null
+                        ? poItem?.docs?.map((i, index) =>
+                            i !== null ? (
+                              <>
+                                <a
+                                  className="text-decoration-none"
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  href={`${baseUrl_IMG}/${i}`}
+                                  download
+                                >
+                                  <p className="trate-sub-title doc-download-color cursor">
+                                    Doc{index}.
+                                    {i?.split(".")?.[i.split(".")?.length - 1]}
+                                  </p>
+                                </a>
+                                {/* <div>
                                     <p
                                       className="trate-sub-title doc-download-color cursor"
                                       onClick={() =>
@@ -533,13 +528,13 @@ export default function ViewQuotations() {
                                       }
                                     </p>
                                   </div> */}
-                                </>
-                              ) : (
-                                ""
-                              )
+                              </>
+                            ) : (
+                              ""
                             )
-                          : ""
-                        // )
+                          )
+                        : ""
+                      // )
                       }
                     </div>
                   </th>
