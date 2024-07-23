@@ -37,7 +37,6 @@ export default function TopFactories(props) {
   document.title = "Factory Gallery";
   let { allSectors } = useFetchSectors();
 
-
   let location = useLocation();
   let navigate = useNavigate();
   let { isLogin } = useContext(UserToken);
@@ -332,11 +331,256 @@ export default function TopFactories(props) {
                   {allFactoriesData?.length === 0 ? (
                     <>
                       <span></span>{" "}
-                      <p className="h3 text-center m-auto"> No records Found </p>
+                      <p className="h3 text-center m-auto">
+                        {" "}
+                        No records Found{" "}
+                      </p>
                       <span></span>
                     </>
                   ) : (
                     <>
+                      {allFactoriesData?.map((factoryitem, factoryindex) => (
+                        <div
+                          className="  
+                        col-xxl-4 col-xl-4  col-lg-6 col-12 pe-0 "
+                        >
+                          <FactoryCardParent
+                            factoryitem={factoryitem}
+                            currentUserData={currentUserData}
+                            handleUserClickValidation1={
+                              handleUserClickValidation1
+                            }
+                            handleUserClickValidLogin={
+                              handleUserClickValidLogin
+                            }
+                            handleQuestionMarkClick={handleQuestionMarkClick}
+                            handleBtnCheckIfProductExisit={
+                              handleBtnCheckIfProductExisit
+                            }
+                          />
+                        </div>
+                      ))}
+
+                      {allFactoriesData?.map((factoryitem, factoryindex) => (
+                        <div
+                          className="  
+                        col-xxl-4 col-xl-4  col-lg-6 col-12 pe-0 "
+                        >
+                          <FactoryCardParent
+                            factoryitem={factoryitem}
+                            currentUserData={currentUserData}
+                            handleUserClickValidation1={
+                              handleUserClickValidation1
+                            }
+                            handleUserClickValidLogin={
+                              handleUserClickValidLogin
+                            }
+                            handleQuestionMarkClick={handleQuestionMarkClick}
+                            handleBtnCheckIfProductExisit={
+                              handleBtnCheckIfProductExisit
+                            }
+                          />
+                        </div>
+                      ))}
+
+                      {allFactoriesData?.map((factoryitem, factoryindex) => (
+                        <div
+                          className="  
+                        col-xxl-4 col-xl-4  col-lg-6 col-12 pe-0 "
+                        >
+                          <FactoryCardParent
+                            factoryitem={factoryitem}
+                            currentUserData={currentUserData}
+                            handleUserClickValidation1={
+                              handleUserClickValidation1
+                            }
+                            handleUserClickValidLogin={
+                              handleUserClickValidLogin
+                            }
+                            handleQuestionMarkClick={handleQuestionMarkClick}
+                            handleBtnCheckIfProductExisit={
+                              handleBtnCheckIfProductExisit
+                            }
+                          />
+                        </div>
+                      ))}
+
+                      {allFactoriesData?.map((factoryitem, factoryindex) => (
+                        <div
+                          className="  
+                        col-xxl-4 col-xl-4  col-lg-6 col-12 pe-0 "
+                        >
+                          <FactoryCardParent
+                            factoryitem={factoryitem}
+                            currentUserData={currentUserData}
+                            handleUserClickValidation1={
+                              handleUserClickValidation1
+                            }
+                            handleUserClickValidLogin={
+                              handleUserClickValidLogin
+                            }
+                            handleQuestionMarkClick={handleQuestionMarkClick}
+                            handleBtnCheckIfProductExisit={
+                              handleBtnCheckIfProductExisit
+                            }
+                          />
+                        </div>
+                      ))}
+
+                      {allFactoriesData?.map((factoryitem, factoryindex) => (
+                        <div
+                          className="  
+                        col-xxl-4 col-xl-4  col-lg-6 col-12 pe-0 "
+                        >
+                          <FactoryCardParent
+                            factoryitem={factoryitem}
+                            currentUserData={currentUserData}
+                            handleUserClickValidation1={
+                              handleUserClickValidation1
+                            }
+                            handleUserClickValidLogin={
+                              handleUserClickValidLogin
+                            }
+                            handleQuestionMarkClick={handleQuestionMarkClick}
+                            handleBtnCheckIfProductExisit={
+                              handleBtnCheckIfProductExisit
+                            }
+                          />
+                        </div>
+                      ))}
+
+                      {allFactoriesData?.map((factoryitem, factoryindex) => (
+                        <div
+                          className="  
+                        col-xxl-4 col-xl-4  col-lg-6 col-12 pe-0 "
+                        >
+                          <FactoryCardParent
+                            factoryitem={factoryitem}
+                            currentUserData={currentUserData}
+                            handleUserClickValidation1={
+                              handleUserClickValidation1
+                            }
+                            handleUserClickValidLogin={
+                              handleUserClickValidLogin
+                            }
+                            handleQuestionMarkClick={handleQuestionMarkClick}
+                            handleBtnCheckIfProductExisit={
+                              handleBtnCheckIfProductExisit
+                            }
+                          />
+                        </div>
+                      ))}
+
+                      {allFactoriesData?.map((factoryitem, factoryindex) => (
+                        <div
+                          className="  
+                        col-xxl-4 col-xl-4  col-lg-6 col-12 pe-0 "
+                        >
+                          <FactoryCardParent
+                            factoryitem={factoryitem}
+                            currentUserData={currentUserData}
+                            handleUserClickValidation1={
+                              handleUserClickValidation1
+                            }
+                            handleUserClickValidLogin={
+                              handleUserClickValidLogin
+                            }
+                            handleQuestionMarkClick={handleQuestionMarkClick}
+                            handleBtnCheckIfProductExisit={
+                              handleBtnCheckIfProductExisit
+                            }
+                          />
+                        </div>
+                      ))}
+
+                      {allFactoriesData?.map((factoryitem, factoryindex) => (
+                        <div
+                          className="  
+                        col-xxl-4 col-xl-4  col-lg-6 col-12 pe-0 "
+                        >
+                          <FactoryCardParent
+                            factoryitem={factoryitem}
+                            currentUserData={currentUserData}
+                            handleUserClickValidation1={
+                              handleUserClickValidation1
+                            }
+                            handleUserClickValidLogin={
+                              handleUserClickValidLogin
+                            }
+                            handleQuestionMarkClick={handleQuestionMarkClick}
+                            handleBtnCheckIfProductExisit={
+                              handleBtnCheckIfProductExisit
+                            }
+                          />
+                        </div>
+                      ))}
+
+                      {allFactoriesData?.map((factoryitem, factoryindex) => (
+                        <div
+                          className="  
+                        col-xxl-4 col-xl-4  col-lg-6 col-12 pe-0 "
+                        >
+                          <FactoryCardParent
+                            factoryitem={factoryitem}
+                            currentUserData={currentUserData}
+                            handleUserClickValidation1={
+                              handleUserClickValidation1
+                            }
+                            handleUserClickValidLogin={
+                              handleUserClickValidLogin
+                            }
+                            handleQuestionMarkClick={handleQuestionMarkClick}
+                            handleBtnCheckIfProductExisit={
+                              handleBtnCheckIfProductExisit
+                            }
+                          />
+                        </div>
+                      ))}
+
+                      {allFactoriesData?.map((factoryitem, factoryindex) => (
+                        <div
+                          className="  
+                        col-xxl-4 col-xl-4  col-lg-6 col-12 pe-0 "
+                        >
+                          <FactoryCardParent
+                            factoryitem={factoryitem}
+                            currentUserData={currentUserData}
+                            handleUserClickValidation1={
+                              handleUserClickValidation1
+                            }
+                            handleUserClickValidLogin={
+                              handleUserClickValidLogin
+                            }
+                            handleQuestionMarkClick={handleQuestionMarkClick}
+                            handleBtnCheckIfProductExisit={
+                              handleBtnCheckIfProductExisit
+                            }
+                          />
+                        </div>
+                      ))}
+
+                      {allFactoriesData?.map((factoryitem, factoryindex) => (
+                        <div
+                          className="  
+                        col-xxl-4 col-xl-4  col-lg-6 col-12 pe-0 "
+                        >
+                          <FactoryCardParent
+                            factoryitem={factoryitem}
+                            currentUserData={currentUserData}
+                            handleUserClickValidation1={
+                              handleUserClickValidation1
+                            }
+                            handleUserClickValidLogin={
+                              handleUserClickValidLogin
+                            }
+                            handleQuestionMarkClick={handleQuestionMarkClick}
+                            handleBtnCheckIfProductExisit={
+                              handleBtnCheckIfProductExisit
+                            }
+                          />
+                        </div>
+                      ))}
+
                       {allFactoriesData?.map((factoryitem, factoryindex) => (
                         <div
                           className="  

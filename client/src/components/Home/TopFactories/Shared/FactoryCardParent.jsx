@@ -24,12 +24,14 @@ export default function FactoryCardParent(props) {
   return (
     <div className="card " key={factoryitem?.id}>
       {factoryitem?.images?.length > 0 ? (
-        <Link
-          className="cursor"
-          to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
-        >
-          <BannerSlider factoryitem={factoryitem} />
-        </Link>
+        <div className="container p-0 m-0">
+          <Link
+            className="cursor"
+            to={`/factoryPage/${factoryitem.id}-${factoryitem.name}`}
+          >
+            <BannerSlider factoryitem={factoryitem} />
+          </Link>
+        </div>
       ) : (
         <Link
           className="cursor "
