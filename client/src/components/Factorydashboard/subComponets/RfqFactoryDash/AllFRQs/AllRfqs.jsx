@@ -10,13 +10,15 @@ import { UserToken } from "Context/userToken";
 import { useNavigate } from "react-router-dom";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 import { getMonthName as getDate } from "utils/getMonthName";
-import { handleImageError } from "utils/ImgNotFound";
+
 
 import useRFQData from "./useRfq";
 // Container Components
 // stand alone component
 import RfqNotification from "components/Factorydashboard/subComponets/RfqFactoryDash/AllFRQs/RfqNotificationList";
 import SearchFilterByOrder from "components/Shared/Dashboards/SearchFilterByOrder";
+import ProfileCell from "components/Shared/Dashboards/ProfileCell";
+import StatusMessage from "components/Shared/Dashboards/StatusMessage";
 
 export default function AllRfqs() {
   const { isLogin } = useContext(UserToken);
@@ -37,8 +39,13 @@ export default function AllRfqs() {
     }));
   }
 
-  let { allAnsRfqData, pagination, apiLoadingData, errorsMsg, setPagination } =
-    useRFQData(isLogin, filter);
+  let {
+    allAnsRfqData,
+    pagination,
+    apiLoadingData,
+    errorsMsg,
+    setPagination,
+  } = useRFQData(isLogin, filter);
 
   const downloadCsv = () => {
     const attributesToFilter = [
@@ -201,35 +208,30 @@ export default function AllRfqs() {
 
                   <th className=" col-1 d-flex align-items-center  ">
                     <div>
-                      {
-                        // allAnsRfqData.map((item) =>
-                        poItem?.docs != null
-                          ? poItem?.docs?.map((i, index) =>
-                              i !== null ? (
-                                <>
-                                  <a
-                                    className="text-decoration-none"
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    href={`${baseUrl_IMG}/${i}`}
-                                    download
-                                  >
-                                    <p className="trate-sub-title doc-download-color cursor">
-                                      Doc{index}.
-                                      {
-                                        i?.split(".")?.[
-                                          i.split(".")?.length - 1
-                                        ]
-                                      }
-                                    </p>
-                                  </a>
-                                </>
-                              ) : (
-                                ""
-                              )
+                      {// allAnsRfqData.map((item) =>
+                      poItem?.docs != null
+                        ? poItem?.docs?.map((i, index) =>
+                            i !== null ? (
+                              <>
+                                <a
+                                  className="text-decoration-none"
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  href={`${baseUrl_IMG}/${i}`}
+                                  download
+                                >
+                                  <p className="trate-sub-title doc-download-color cursor">
+                                    Doc{index}.
+                                    {i?.split(".")?.[i.split(".")?.length - 1]}
+                                  </p>
+                                </a>
+                              </>
+                            ) : (
+                              ""
                             )
-                          : ""
-                        // )
+                          )
+                        : ""
+                      // )
                       }
                     </div>
                   </th>
@@ -249,7 +251,6 @@ export default function AllRfqs() {
                   </th>
 
                   <th className=" col-1  d-flex align-items-center ">
-                    {/* <div className="status-continaer py-1 px-2 mx-3"> */}
                     <div className="status-continaer py-1 px-2 ">
                       <i className={`fa-solid fa-circle ${poItem?.status}`}></i>
                       <p>{poItem?.status}</p>
@@ -257,21 +258,11 @@ export default function AllRfqs() {
                   </th>
 
                   <th className=" col-3  d-flex align-items-center  justify-content-center ">
-                    <div className="profile-container justify-content-start align-items-center d-flex ">
-                      <div className="profile-img">
-                        <img
-                          className="w-100 h-100"
-                          src={`${baseUrl_IMG}/${poItem?.importer?.image}`}
-                          onError={handleImageError}
-                        />
-                      </div>
-                      <div>
-                        <p className=" name-text">{poItem?.importer?.name}</p>
-                        <p className=" email-text">
-                          {poItem?.importer?.repEmail}
-                        </p>
-                      </div>
-                    </div>
+                    <ProfileCell
+                      profile={poItem?.importer?.image}
+                      repEmail={poItem?.importer?.repEmail}
+                      name={poItem?.importer?.name}
+                    />
                   </th>
 
                   <th
@@ -294,29 +285,12 @@ export default function AllRfqs() {
                 </tr>
               ))}
 
-              {allAnsRfqData?.length == 0 ? (
-                <tr className="row">
-                  <div className="col-12  w-100 h-100 my-5 py-5">
-                    <div className="text-center">
-                      <p className="trate-sub-title ">
-                        {apiLoadingData ? (
-                          <div
-                            class="spinner-border spinner-border-sm"
-                            role="status"
-                          >
-                            <span class="sr-only">Loading...</span>
-                          </div>
-                        ) : (
-                          errorsMsg || "No Records Found"
-                          // errorsMsg!=''?errorsMsg : "No Records"
-                        )}
-                      </p>
-                    </div>
-                  </div>
-                </tr>
-              ) : (
-                " "
-              )}
+              <StatusMessage
+                reqDataLength={allAnsRfqData?.length}
+                apiLoadingData={apiLoadingData}
+                errorsMsg={errorsMsg}
+              />
+            
 
               <tr className="row">
                 <div className="col-12  ReactPaginate">

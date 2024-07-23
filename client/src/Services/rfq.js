@@ -1,4 +1,4 @@
-import { postRequest, putRequest, getRequestDataHeader } from "./authServices";
+import { postRequest, putRequest, getRequestDataHeader,deleteRequest } from "./authServices";
 
 // get spesific product Value
 export const addRfqLabel = async (header, data) => {
@@ -12,4 +12,8 @@ export const addRfqMedia = async (id, header, data) => {
 
 export const getOneRFQ = async (id, param) => {
   return await getRequestDataHeader(`/rfqs/${id}?${param}`, {},{});
+};
+
+export const deleteRfqFromUser = async (id, header) => {
+  return await deleteRequest(`/rfqs/${id}`, header, {});
 };

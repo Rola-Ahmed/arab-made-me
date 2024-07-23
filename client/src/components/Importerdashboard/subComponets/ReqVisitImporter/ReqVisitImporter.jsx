@@ -330,32 +330,6 @@ export default function ReqVisitImporter() {
         </div>
 
         {/* search filter section */}
-        {/* <div className=" search-container d-flex justify-content-between align-items-center p-3">
-          <div className="input-group width-size">
-            <div className="input-group-prepend ">
-              <span
-                className="input-group-text bg-white icon-search-container pe-0"
-                id="inputGroup-sizing-default"
-              >
-                <i className="fa-solid fa-magnifying-glass icon-search"></i>
-              </span>
-            </div>
-            <input
-              type="text"
-              className="form-control input-search "
-              placeholder="search"
-              aria-label="Default"
-              aria-describedby="inputGroup-sizing-default"
-            />
-          </div>
-
-          <div className=" btn-container d-flex justify-content-between align-items-center">
-            <button className=" dropdown-toggle order-toggle d-flex justify-content-center align-items-center">
-              <i className="fa-solid fa-filter"></i>
-              <p>Filter</p>
-            </button>
-          </div>
-        </div> */}
 
         <div className=" search-container d-flex justify-content-between align-items-center p-3">
           <div className="input-group width-size">

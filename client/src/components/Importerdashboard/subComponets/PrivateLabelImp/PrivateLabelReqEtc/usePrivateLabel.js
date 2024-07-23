@@ -30,7 +30,7 @@ export function usePrivateLabel() {
         "include=factory&include=product"
       );
 
-      console.log("result",result)
+      
       // check if private label has quotations
 
       if (result?.success) {

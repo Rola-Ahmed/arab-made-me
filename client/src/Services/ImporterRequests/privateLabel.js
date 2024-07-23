@@ -1,7 +1,6 @@
 import {
   getRequestDataHeader,
   deleteRequest,
-  putRequest,
 } from "../authServices";
 
 export const getPrivateLables = async (param, header) => {
