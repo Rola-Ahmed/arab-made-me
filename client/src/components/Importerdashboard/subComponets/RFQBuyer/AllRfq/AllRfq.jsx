@@ -12,7 +12,7 @@ import StatusMessage from "components/Shared/Dashboards/StatusMessage";
 import PaginationDash from "components/Shared/Dashboards/PaginationDash";
 import useAllRfq from "./useAllRfq";
 
-export default function RfqImporterDash() {
+export default function AllRfq() {
   let { isLogin } = useContext(UserToken);
   let navigate = useNavigate();
   let getMonthName = getDate;

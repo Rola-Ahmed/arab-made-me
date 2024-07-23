@@ -25,7 +25,7 @@ import { getMonthName as getDate } from "utils/getMonthName";
 
 import ContactBtn from "components/Importerdashboard/Shared/ContactBtn";
 
-export default function RfqRequestEtc() {
+export default function OneRfq() {
   let navigate = useNavigate();
   // utils function
   let getMonthName = getDate;

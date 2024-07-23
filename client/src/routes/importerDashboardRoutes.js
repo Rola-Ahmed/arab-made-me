@@ -2,7 +2,7 @@ import SourcingRequest from "components/Importerdashboard/subComponets/SourcingR
 
 // Importer Dashboard pages
 import Importerdash from "components/Importerdashboard/Importerdash";
-import RfqImporter from "components/Importerdashboard/subComponets/RfqImporter/RfqImporter";
+import RfqImporter from "components/Importerdashboard/subComponets/RFQBuyer/AllRfq/AllRfq";
 import ReqVisitImporter from "components/Importerdashboard/subComponets/ReqVisitImporter/ReqVisitImporter";
 import PurchasingOrdersImp from "components/Importerdashboard/subComponets/PurchasingOrdersImp/PurchasingOrdersImp";
 import PrivateLabelImp from "components/Importerdashboard/subComponets/PrivateLabelImp/AllReq/PrivateLabelImp";
@@ -14,22 +14,16 @@ import ImporterPofile from "components/Importerdashboard/subComponets/ImporterPr
 
 // View more details shared (factory & importer)
 import VisitRequestEtc from "components/Importerdashboard/subComponets/ReqVisitImporter/VisitRequestEtc/VisitRequestEtc";
-// import VisitRequestFacEtc from "components/ViewMoreDetailsFormDash/VisitRequestEtc/VisitRequestFacEtc";
 
 import PurchasingOrdersEtc from "components/Importerdashboard/subComponets/PurchasingOrdersImp/PurchasingOrderEtc";
-// import PurchasingOrdersFacEtc from "components/ViewMoreDetailsFormDash/PurchasingOrderEtc/PurchasingOrdersFacEtc";
 
 import PrivateLabelReqEtc from "components/Importerdashboard/subComponets/PrivateLabelImp/PrivateLabelReqEtc/PrivateLabelReqEtc";
-// import PrivateLabelReqFacEtc from "components/Factorydashboard/subComponets/PrivateLabeFactDash/PrivateLabelReqMoreDetails";
 
 import CustomProductReqEtc from "components/Importerdashboard/subComponets/CusProductReqImp/CustomProductReqEtc/CustomProductReqEtc";
-// import CustomProductReqFacEtc from "components/ViewMoreDetailsFormDash/CustomProductReqEtc/CustomProductReqFacEtc";
 
-import RfqRequestEtc from "components/Importerdashboard/subComponets/RfqImporter/RfqRequestEtc/RfqRequestEtc";
-// import RfqRequestFacEtc from "components/ViewMoreDetailsFormDash/RfqRequestEtc/RfqRequestFacEtc";
+import RfqRequestEtc from "components/Importerdashboard/subComponets/RFQBuyer/OneRfq/OneRfq";
 
 import QuotationsEtc from "components/Importerdashboard/subComponets/GetQuotationImp/QuotationsEtc/QuotationsEtc";
-// import QuotationsFacEtc from "components/ViewMoreDetailsFormDash/QuotationsEtc/QuotationsFacEtc";
 
 import SourcingReqEtc from "components/ViewMoreDetailsFormDash/SourcingReqEtc/SourcingReqEtc";
 
@@ -44,20 +38,7 @@ const importerDashboardRoutes = [
     path: "/importerdashboard",
     element: <Importerdash />,
     children: [
-
-
       // done
-
-
-
-
-
-
-
-
-
-
-
 
       { path: "", element: <DashBoardImporter /> },
       { path: "Rfqs", element: <RfqImporter /> },
