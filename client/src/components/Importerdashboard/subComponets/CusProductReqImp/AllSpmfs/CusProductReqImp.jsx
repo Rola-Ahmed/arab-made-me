@@ -39,77 +39,6 @@ export default function CusProductReqImp() {
   // utils function
   let getMonthName = getDate;
 
-  const downloadCsv = () => {
-    const attributesToFilter = [
-      "productId",
-      "factoryId",
-      "importerId",
-      "updatedAt",
-      "docs",
-      "factoryProfileImg",
-    ];
-    // ,"contactData"
-    const newArray = filterAttributes(reqData, attributesToFilter);
-
-    const csvData = convertToCsv(newArray);
-
-    const blob = new Blob([csvData], { type: "text/csv" });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "privateLabel.csv";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  };
-
-  const convertToCsv = (data) => {
-    // Assuming data is an array of objects with similar structure
-    const header = Object.keys(data[0]).join(",");
-    const rows = data.map((obj) => Object.values(obj).join(",")).join("\n");
-    return `${header}\n${rows}`;
-  };
-
-  const filterAttributes = (dataArray, attributesToFilter) => {
-    return dataArray.map((originalObject) => {
-      const filteredObject = Object.keys(originalObject)
-        .filter((key) => !attributesToFilter.includes(key))
-        .reduce((acc, key) => {
-          if (
-            key === "specialCharacteristics" &&
-            typeof originalObject[key] === "object" &&
-            Object.keys(originalObject[key])?.length !== 0
-          ) {
-            let index = 1;
-            for (const keyLoop in originalObject[key]) {
-              if (originalObject[key].hasOwnProperty(keyLoop)) {
-                const value = originalObject[key][keyLoop];
-
-                acc[`KeyWord${index}`] = keyLoop;
-                acc[`description${index}`] = value;
-              }
-              index++;
-            }
-
-            while (index <= 5) {
-              acc[`KeyWord${index}`] = "";
-              acc[`description${index}`] = "";
-
-              index++;
-            }
-          } else {
-            acc[key] = originalObject[key];
-          }
-
-          return acc;
-        }, {});
-
-      return filteredObject;
-    });
-  };
-
-
   return (
     <div className="m-4 order-section ">
       {/* section 1 */}
@@ -120,11 +49,11 @@ export default function CusProductReqImp() {
             <h2>Custom Product Requests</h2>
 
             <div className="btn-container">
-           
               <button
                 className="order-btn-1"
-                onClick={downloadCsv}
-                disabled={!reqData.length}
+                // onClick={downloadCsv}
+                // disabled={!reqData.length}
+                disabled
               >
                 <i className="fa-solid fa-cloud-arrow-down"></i>
                 <p className="cursor">Download CSV</p>
@@ -238,7 +167,6 @@ export default function CusProductReqImp() {
                         );
                       }}
                     >
-                      {/* view */}
                       <i className="fa-solid fa-up-right-from-square"></i>
                     </p>
                     <p
@@ -248,7 +176,6 @@ export default function CusProductReqImp() {
                         deleteData(poItem?.id);
                       }}
                     >
-                      {/* view */}
                       <i className="fa-regular fa-trash-can"></i>
                     </p>
                   </th>

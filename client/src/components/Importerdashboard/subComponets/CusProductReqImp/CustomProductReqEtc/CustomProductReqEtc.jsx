@@ -12,6 +12,7 @@ import CustomProductInfo from "components/Shared/Dashboards/Forms/CustomProductI
 import SubPageUtility from "components/Shared/Dashboards/SubPageUtility";
 import FactoryInfo from "components/Forms/Shared/FactoryInfo";
 import { useOneSpmf } from "./useOneSpmf";
+import StatusMessagetwo from "components/Shared/Dashboards/StatusMessagetwo";
 export default function CustomProductReqEtc() {
   let navigate = useNavigate();
 
@@ -88,44 +89,40 @@ export default function CustomProductReqEtc() {
         </div>
       </div>
 
-      <div className="section factory-profile m-5">
-        <div className="container gap-container">
-          <div className="row">
-            <div className="col-12  container-2-gap  p-0">
-              <div className="container-profile-input w-100">
-                <div className="title-contianer-input w-100">
-                  <FactoryInfo productDetails={requestedData?.factory} />
+      {/* error or slow loading */}
+      {apiLoadingData?.reqData && (
+        <StatusMessagetwo errorMsg={apiLoadingData?.errorWhileLoading} />
+      )}
+
+      {!apiLoadingData?.reqData && (
+        <div className="section factory-profile m-5">
+          <div className="container gap-container">
+            <div className="row">
+              <div className="col-12  container-2-gap  p-0">
+                <div className="container-profile-input w-100">
+                  <div className="title-contianer-input w-100">
+                    <FactoryInfo productDetails={requestedData?.factory} />
+                  </div>
                 </div>
-              </div>
 
-              <CustomProductInfo
-                requestedData={requestedData}
-                handleImageClick={handleImageClick}
-              />
-
-              <div className="col-12 d-flex justify-content-start btn-modal-gap mb-4">
-                {/* <button
-                  className="btn-edit  "
-                  type="button"
-                  onClick={() => {
-                    handleIsLoggedInBtn(
-                      `contactsupplier?userId=${requestedData?.factory?.userId}&factoryName=${requestedData?.factory?.name}`
-                    );
-                  }}
-                >
-                  <p className="cursor">Contact Supplier</p>
-                </button> */}
-                <ContactBtn
-                  isLogin={isLogin}
-                  handleIsLoggedInBtn={handleIsLoggedInBtn}
-                  recieverUserId={requestedData?.factory?.userId}
-                  baseUrl={baseUrl}
+                <CustomProductInfo
+                  requestedData={requestedData}
+                  handleImageClick={handleImageClick}
                 />
+
+                <div className="col-12 d-flex justify-content-start btn-modal-gap mb-4">
+                  <ContactBtn
+                    isLogin={isLogin}
+                    handleIsLoggedInBtn={handleIsLoggedInBtn}
+                    recieverUserId={requestedData?.factory?.userId}
+                    baseUrl={baseUrl}
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
 
       <MediaPopUp
         show={showImagePop.display}

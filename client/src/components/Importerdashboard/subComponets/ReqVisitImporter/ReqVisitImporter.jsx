@@ -1,35 +1,20 @@
-import { useEffect, useState, useContext } from "react";
+import {  useState, useContext } from "react";
 
-import { handleImageError } from "utils/ImgNotFound";
 
-import ReactPaginate from "react-paginate";
-import axios from "axios";
-import { baseUrl, baseUrl_IMG } from "config.js";
 
 import { UserToken } from "Context/userToken";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 import { getMonthName as getDate } from "utils/getMonthName";
+import useAllVisitReq from "./useAllVisitReq";
+import ProfileCell from "components/Shared/Dashboards/ProfileCell";
+import PaginationDash from "components/Shared/Dashboards/PaginationDash";
+import StatusMessage from "components/Shared/Dashboards/StatusMessage";
 
 export default function ReqVisitImporter() {
   let { isLogin } = useContext(UserToken);
   let navigate = useNavigate();
-
-  const [allprivateLabelData, setAllprivateLabelData] = useState([]);
-  const [apiLoadingData, setapiLoadingData] = useState(true);
-  const [uniqueFactoryId, setUniqueFactoryId] = useState([]);
-  const [errorsMsg, setErrorsMsg] = useState();
-  const [pagination, setPagination] = useState(() => ({
-    // i want to display 3 pdoructs in the 1st page
-    displayProductSize: 8,
-    currentPage: 1,
-    totalPage: 1,
-
-    // will be called by api
-    // totalPage: Math.ceil((allProductsData?.length) /pagination.displayProductSize), // Use 30 as the default display size
-  }));
+  
 
   const [filter, setFilter] = useState({
     formsFilter: "",
@@ -44,271 +29,20 @@ export default function ReqVisitImporter() {
       ...(name && { sort_name: name }),
     }));
   }
-
-  async function fetchFactoriesData() {
-    setapiLoadingData(true);
-
-    try {
-      let config = {
-        method: "get",
-        url: `${baseUrl}/importers/importer/visits?size=${pagination?.displayProductSize}&page=${pagination?.currentPage}&formsFilter=${filter?.formsFilter}&sort=${filter?.sort}`,
-        headers: {
-          authorization: isLogin,
-        },
-      };
-
-      const response = await axios.request(config);
-      if (response?.data?.message == "done") {
-        setAllprivateLabelData(
-          response.data.visits.filter((item) => item?.factoryId !== null)
-        );
-
-        const uniqueIds = [
-          ...new Set(
-            response.data.visits
-              .map((obj) => obj.factoryId) // Extract all factoryIds
-              .filter((id) => id !== null) // Filter out null values
-          ),
-        ];
-
-        setUniqueFactoryId(uniqueIds);
-      } else {
-        setErrorsMsg(response?.data?.message);
-      }
-
-      setapiLoadingData(false);
-    } catch (error) {
-      setapiLoadingData(false);
-
-      if (error.response && error.response.status) {
-        const statusCode = error.response.status;
-        switch (statusCode) {
-          case 400:
-            setErrorsMsg(error?.data?.errorMessage);
-            break;
-          case 401:
-            setErrorsMsg(error?.response?.data?.message);
-            break;
-          case 403:
-            setErrorsMsg(
-              // error?.data?.message,
-              error?.response?.data?.message
-            );
-            break;
-          case 404:
-            setErrorsMsg(
-              "Not Found (404). The requested resource was not found."
-            );
-            break;
-
-          case 500:
-            setErrorsMsg(error?.response?.data?.errorMessage);
-            break;
-
-          case 402:
-            // 402
-            setErrorsMsg(error?.response?.data?.message);
-            break;
-          default:
-            // case message== error
-            setErrorsMsg(error?.response?.data?.errorMessage);
-            break;
-        }
-      } else {
-        setErrorsMsg("An unexpected error occurred. Please try again later.");
-      }
-    }
-  }
-
-  useEffect(() => {
-    fetchFactoriesData();
-  }, [pagination?.currentPage, filter]);
+  let {
+    reqData,
+    pagination,
+    apiLoadingData,
+    errorsMsg,
+    setPagination,
+    deleteData,
+  } = useAllVisitReq(isLogin,filter);
 
   // utils function
   let getMonthName = getDate;
 
-  useEffect(() => {
-    // Promise.all(
-    uniqueFactoryId.map(async (factoryID) => {
-      try {
-        const productResponse = await axios.get(
-          `${baseUrl}/factories/${factoryID}`
-        );
-
-        if (productResponse.data.message === "done") {
-          setAllprivateLabelData((prevData) =>
-            prevData.map((value) =>
-              value?.factoryId === factoryID
-                ? {
-                    ...value,
-                    factoryName: productResponse?.data?.factories?.name,
-                    factoryRepEmail: productResponse?.data?.factories?.repEmail,
-                    factoryProfileImg:
-                      productResponse?.data?.factories?.coverImage,
-                  }
-                : value
-            )
-          );
-        }
-      } catch (error) {}
-    });
-
-    // );
-
-    //  let x allprivateLabelData.map((data))
-  }, [apiLoadingData]);
-
-  const downloadCsv = () => {
-    const attributesToFilter = [
-      "productId",
-      "factoryId",
-      "importerId",
-      "updatedAt",
-      "docs",
-      "factoryProfileImg",
-    ];
-    // ,"contactData"
-    const newArray = filterAttributes(allprivateLabelData, attributesToFilter);
-
-    // const csvData = convertToCsv(allprivateLabelData);
-
-    const csvData = convertToCsv(newArray);
-
-    const blob = new Blob([csvData], { type: "text/csv" });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "privateLabel.csv";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  };
-
-  const convertToCsv = (data) => {
-    // Assuming data is an array of objects with similar structure
-    const header = Object.keys(data[0]).join(",");
-    const rows = data.map((obj) => Object.values(obj).join(",")).join("\n");
-    return `${header}\n${rows}`;
-  };
-
-  const filterAttributes = (dataArray, attributesToFilter) => {
-    return dataArray.map((originalObject) => {
-      const filteredObject = Object.keys(originalObject)
-        .filter((key) => !attributesToFilter.includes(key))
-        .reduce((acc, key) => {
-          if (
-            key === "specialCharacteristics" &&
-            typeof originalObject[key] === "object" &&
-            Object.keys(originalObject[key])?.length !== 0
-          ) {
-            // originalObject[key].forEach((item, index) => {
-            //   acc[`KeyWord${index}`] = Object.values([item]);
-            //   acc[`description${index}`] = item;
-            // });
-
-            let index = 1;
-            for (const keyLoop in originalObject[key]) {
-              if (originalObject[key].hasOwnProperty(keyLoop)) {
-                const value = originalObject[key][keyLoop];
-
-                acc[`KeyWord${index}`] = keyLoop;
-                acc[`description${index}`] = value;
-              }
-              index++;
-            }
-
-            while (index <= 5) {
-              acc[`KeyWord${index}`] = "";
-              acc[`description${index}`] = "";
-
-              index++;
-            }
-          } else {
-            acc[key] = originalObject[key];
-          }
-
-          return acc;
-        }, {});
-
-      return filteredObject;
-    });
-  };
-
-  useEffect(() => {
-    const fetchDataLenght = async () => {
-      try {
-        const response1 = await axios.get(
-          `${baseUrl}/importers/importer/visits?formsFilter=${filter?.formsFilter}&sort=${filter?.sort}`,
-          {
-            headers: {
-              authorization: isLogin,
-            },
-          }
-        );
-
-        if (response1?.data?.message === "done") {
-          setPagination((prevValue) => ({
-            ...prevValue,
-            totalPage: Math.ceil(
-              (response1.data?.visits?.length || 0) /
-                prevValue.displayProductSize
-            ),
-          }));
-        }
-      } catch (error) {}
-    };
-
-    fetchDataLenght();
-  }, [filter]);
-
-  const handlePageClick = (currentPage) => {
-    // why plus 1 bec react pagination library reads the 1st page with index 0 but in api  is read with index 1
-    setPagination((prevValue) => ({
-      ...prevValue,
-      currentPage: currentPage.selected + 1,
-    }));
-  };
-
-  const deleteData = async (itemId) => {
-    try {
-      let config = {
-        method: "delete",
-        url: `${baseUrl}/visits/${itemId}`,
-        headers: {
-          authorization: isLogin,
-        },
-      };
-
-      const response = await axios.request(config);
-
-      toast("Data Deleted Successfully", {
-        position: "top-center",
-        autoClose: 5000,
-        closeOnClick: true,
-        draggable: true,
-        theme: "colored",
-        type: "success",
-      });
-
-      setAllprivateLabelData((prevValue) =>
-        prevValue.filter((item) => item.id !== itemId)
-      );
-    } catch (error) {
-      toast("Something went wrong, please try again", {
-        position: "top-center",
-        autoClose: 5000,
-        closeOnClick: true,
-        draggable: true,
-        theme: "colored",
-        type: "error",
-      });
-    }
-    // }
-  };
   return (
     <div className="m-4 order-section ">
-      <ToastContainer />
       {/* section 1 */}
       <div className="header w-100">
         <PageUtility currentPage="Visit Requests" />
@@ -319,8 +53,9 @@ export default function ReqVisitImporter() {
             <div className="btn-container">
               <button
                 className="order-btn-1"
-                onClick={downloadCsv}
-                disabled={!allprivateLabelData?.length}
+                // onClick={downloadCsv}
+                // disabled={!allprivateLabelData?.length}
+                disabled
               >
                 <i className="fa-solid fa-cloud-arrow-down"></i>
                 <p className="cursor">Download CSV</p>
@@ -468,7 +203,7 @@ export default function ReqVisitImporter() {
 
             <tbody>
               {/* row1 */}
-              {allprivateLabelData.map((poItem) => (
+              {reqData?.map((poItem) => (
                 <tr className="row">
                   <th className=" col-1  ">
                     <div className=" th-1st-title-gap d-flex justify-content-start align-items-center">
@@ -508,19 +243,11 @@ export default function ReqVisitImporter() {
                   </th>
 
                   <th className=" col-3  d-flex align-items-center justify-content- ">
-                    <div className="profile-container justify-content-start align-items-center d-flex">
-                      <div className="profile-img">
-                        <img
-                          className="w-100 h-100"
-                          src={`${baseUrl_IMG}/${poItem?.factoryProfileImg}`}
-                          onError={handleImageError}
-                        />
-                      </div>
-                      <div>
-                        <p className=" name-text">{poItem?.factoryName}</p>
-                        <p className=" email-text">{poItem?.factoryRepEmail}</p>
-                      </div>
-                    </div>
+                  <ProfileCell
+                        profile={poItem?.factory?.coverImage}
+                        repEmail={poItem?.factory?.repEmail}
+                        name={poItem?.factory?.name}
+                      />
                   </th>
 
                   <th className=" col-1 d-flex align-items-center justify-content-center  gap-icon-table">
@@ -550,62 +277,18 @@ export default function ReqVisitImporter() {
                 </tr>
               ))}
 
-              {allprivateLabelData?.length == 0 ? (
-                <tr className="row">
-                  <div className="col-12  w-100 h-100 my-5 py-5">
-                    <div className="text-center">
-                      <p className="trate-sub-title ">
-                        {apiLoadingData ? (
-                          <div
-                            class="spinner-border spinner-border-sm"
-                            role="status"
-                          >
-                            <span class="sr-only">Loading...</span>
-                          </div>
-                        ) : errorsMsg ? (
-                          errorsMsg
-                        ) : (
-                          "No Records Found"
-                        )}
-                      </p>
-                    </div>
-                  </div>
-                </tr>
-              ) : (
-                " "
-              )}
+              {/* is data is still loading or error occured */}
+              <StatusMessage
+                reqDataLength={reqData?.length}
+                apiLoadingData={apiLoadingData}
+                errorsMsg={errorsMsg}
+              />
 
               <tr className="row">
                 <div className="col-12  ReactPaginate">
-                  <ReactPaginate
-                    previousLabel={
-                      <p>
-                        <i className="fa-solid fa-arrow-left pe-2 text-dark "></i>
-                        previous
-                      </p>
-                    }
-                    nextLabel={
-                      <p>
-                        next
-                        <i className="fa-solid fa-arrow-right ps-2 text-dark "></i>
-                      </p>
-                    }
-                    pageCount={pagination?.totalPage || 1} // total number to pages
-                    forcePage={0} // to set a page to start with, defult middle page
-                    pageRangeDisplayed={3}
-                    onPageChange={handlePageClick}
-                    marginPagesDisplayed={1}
-                    containerClassName="pagination align-items-center justify-content-center"
-                    pageClassName="page-item"
-                    pageLinkClassName="page-link"
-                    activeClassName="active"
-                    breakClassName="page-item"
-                    breakLinkClassName="page-link"
-                    previousClassName="page-item-prev  me-3"
-                    previousLinkClassName="page-link text-dark margin-prev"
-                    nextClassName="page-item-next ms-3"
-                    nextLinkClassName="page-link text-dark margin-next"
-                    navClassName="pagination-custom"
+                  <PaginationDash
+                    pagination={pagination}
+                    setPagination={setPagination}
                   />
                 </div>
               </tr>
