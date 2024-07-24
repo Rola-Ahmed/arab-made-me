@@ -1,11 +1,11 @@
 import io from "socket.io-client";
-export const baseUrl = "https://arab-backend.up.railway.app/api/v1/users/api/v1";
+export const baseUrl = "https://arab-backend.up.railway.app/api/v1";
 // process.env.REACT_APP_NODE_ENV == "production"
 // ?
 // process.env.REACT_APP_BASE_URL;
 // : process.env.REACT_APP_DEV_BASE_URL;
 
-export const baseUrl_IMG = "https://arab-backend.up.railway.app/api/v1/users";
+export const baseUrl_IMG = "https://arab-backend.up.railway.app";
 // process.env.REACT_APP_NODE_ENV == "production"
 // ?
 // process.env.REACT_APP_IMAGE_URL;
