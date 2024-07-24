@@ -10,7 +10,11 @@ import {
 export default function FetchFactories() {
   const [searchParams] = useSearchParams();
   const filterSearch = searchParams.get("filterSearch");
+  // const filterByCountry = searchParams.get("filterByCountry");
+  // const filterBySector = searchParams.get("filterBySector");
+  // const filterByCategory = searchParams.get("filterByCategory");
 
+  console.log("filterSearch", filterSearch);
   const numOfProductsFetch = 20;
   const [pagination, setPagination] = useState(() => ({
     // i want to display 3 pdoructs in the 1st page
@@ -29,27 +33,35 @@ export default function FetchFactories() {
     filterBySector: [],
     // filterBySector: filterBySector?.split(",")?.map(String) ?? [],
   });
+  console.log("filterfilterfilter", filter);
 
   const [apiLoadingData, setApiLoadingData] = useState({
     loadingPage: true,
     errorCausedMsg: true,
   });
 
-  function getcurrentFilter(location, search, sector) {
+  function getcurrentFilter(location='', search='', sector) {
+    // console.log("location, search",location, search)
     let param = "";
 
-    if (filter?.filterSearch) {
-      param = `param` + `&filter=${location}`;
+    if (search) {
+      param.concat(`&filter=${search}`);
     }
-    if (filter?.filterByCountry) {
-      param = `param` + `&location=${search}`;
+    if (location) {
+      // param = param + `&location=${search}`;
+      param.concat(`&location=${location}`);
     }
-    return param;
+    
+    // let param = `&location=${search}&filter=${location}`;
+
+
+    return `&location=${location}&filter=${search}`;
   }
 
   async function FetchTotalLen() {
     try {
       let param = getcurrentFilter(filter?.location, filter?.filterSearch, "");
+      console.log("param", param);
 
       let result = await fetchFactorieswithParam(param);
 
@@ -77,12 +89,11 @@ export default function FetchFactories() {
 
   useEffect(() => {
     const fetchFactoriesData = async () => {
+      let param = "";
+      if (filter?.location) {
+        param = getcurrentFilter(filter?.location, filter?.filterSearch, "");
+      }
       try {
-        let param = getcurrentFilter(
-          filter?.location,
-          filter?.filterSearch,
-          ""
-        );
         let result = await fetchFactorieswithParam(
           `size=${pagination?.displayProductSize}&page=${pagination?.currentPage}&${param}`
         );
@@ -158,8 +169,6 @@ export default function FetchFactories() {
       ));
     }
   }, [uniqueFactoryIDofProducts]);
-
-  
 
   return (
     <Factories

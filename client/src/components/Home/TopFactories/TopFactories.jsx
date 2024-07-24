@@ -1,10 +1,15 @@
-import { useState, useContext, useRef } from "react";
+import { useState, useContext } from "react";
 import "./TopFactories.css";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
 
 import HandleUsersBtnAccess, {
   handleIsLoggedInBtn,
@@ -26,8 +31,6 @@ import FactoryCardParent from "./Shared/FactoryCardParent";
 export default function TopFactories(props) {
   let { allFactoriesData } = props;
 
-  const sliderRef = useRef();
-
   let { isLogin } = useContext(UserToken);
   let { currentUserData } = useContext(userDetails);
 
@@ -46,50 +49,6 @@ export default function TopFactories(props) {
     status: false,
     location: "",
   });
-
-  const settingsMain = {
-    // dots: false,
-    // fade: true,
-    infinite: true,
-    vertical: false,
-    // verticalSwiping: true,
-    rows: 1,
-    slidesToShow: 4,
-    // slidesToShow: allFactoriesData?.length > 4 ? 4 : allFactoriesData?.length,
-    slidesToScroll: 4,
-    // slidesToScroll: allFactoriesData?.length > 4 ? 4 : allFactoriesData?.length,
-    responsive: [
-      {
-        breakpoint: 1398,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-        },
-      },
-
-      {
-        breakpoint: 989,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-        },
-      },
-      {
-        breakpoint: 767,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 539,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
-  };
 
   const handleBtnCheckIfProductExisit = (
     loginPath,
@@ -175,10 +134,7 @@ export default function TopFactories(props) {
               </p>
             </div>
             <div className="d-flex arrow-container">
-              <div
-                className={`arrow-btn   `}
-                onClick={() => sliderRef.current.slickPrev()}
-              >
+              <div className={`arrow-btn  prev-btn-swiper `}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="18"
@@ -199,8 +155,7 @@ export default function TopFactories(props) {
 
               <div
                 // disabled
-                className={`arrow-btn  `}
-                onClick={() => sliderRef.current.slickNext()}
+                className={`arrow-btn next-btn-swiper  `}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -222,24 +177,57 @@ export default function TopFactories(props) {
           </div>
 
           <div className="factoryCard  container m-0 p-0 overflow-hidden ">
-            <Slider {...settingsMain} ref={sliderRef}>
+            {/* <Slider {...settingsMain} ref={sliderRef}> */}
+
+            <Swiper
+              // modules={[Navigation]}
+              modules={[Navigation]}
+              navigation={{
+                nextEl: ".next-btn-swiper",
+                prevEl: ".prev-btn-swiper ",
+              }}
+              spaceBetween={0}
+              slidesPerView={1}
+              onSlideChange={() => console.log("slide change")}
+              onSwiper={(swiper) => console.log(swiper)}
+              breakpoints={{
+                687: {
+                  slidesPerView: 1,
+                  // slidesPerGroup: 4,
+                },
+                765: {
+                  slidesPerView: 2,
+                  // slidesPerGroup: 4,
+                },
+                994: {
+                  slidesPerView: 3,
+                  // slidesPerGroup: 4,
+                },
+
+                1253: {
+                  slidesPerView: 4,
+                  // slidesPerGroup: 4,
+                },
+              }}
+            >
               {allFactoriesData.map((factoryitem, factoryindex) => (
                 // <div className="col-sm-12 col-xl-4 col-xxl-3  col-lg-4  col-md-6 m-0  px-1"
                 <>
-                  <FactoryCardParent
-                    factoryitem={factoryitem}
-                    
-                    currentUserData={currentUserData}
-                    handleUserClickValidation1={handleUserClickValidation1}
-                    handleUserClickValidLogin={handleUserClickValidLogin}
-                    handleQuestionMarkClick={handleQuestionMarkClick}
-                    handleBtnCheckIfProductExisit={
-                      handleBtnCheckIfProductExisit
-                    }
-                  />
+                  <SwiperSlide>
+                    <FactoryCardParent
+                      factoryitem={factoryitem}
+                      currentUserData={currentUserData}
+                      handleUserClickValidation1={handleUserClickValidation1}
+                      handleUserClickValidLogin={handleUserClickValidLogin}
+                      handleQuestionMarkClick={handleQuestionMarkClick}
+                      handleBtnCheckIfProductExisit={
+                        handleBtnCheckIfProductExisit
+                      }
+                    />
+                  </SwiperSlide>
                 </>
               ))}
-            </Slider>
+            </Swiper>
           </div>
 
           <div className="btn-container-all cursor">
