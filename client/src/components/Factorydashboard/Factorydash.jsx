@@ -7,8 +7,8 @@ import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
 
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+// import { ToastContainer } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 import DashLogo from "components/Shared/Dashboards/DashLogo";
 import BottomDashMenu from "components/Shared/Dashboards/BottomDashMenu";
 import DashNavBtn from "components/Shared/Dashboards/DashNavBtn";
@@ -55,7 +55,7 @@ function Factorydash(props) {
 
   return (
     <section className="factory-dashboard vh-100 overflow-hidden  vw-100">
-      <ToastContainer />
+      {/* <ToastContainer /> */}
 
       <div className="row h-100 w-100 remove-x">
         <div className="col-2 left-nav-fac-dashboard h-100 d-grid">

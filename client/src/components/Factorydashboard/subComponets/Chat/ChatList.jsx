@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { handleImageError } from "utils/ImgNotFound";
 // shared components
 import PaginationDash from "components/Shared/Dashboards/PaginationDash";
@@ -31,8 +31,13 @@ export default function ChatList() {
       ...(name && { sort_name: name }),
     }));
   }
-  let { reqData, pagination, apiLoadingData, errorsMsg, setPagination } =
-    useAllUserChats(isLogin, filter);
+  let {
+    reqData,
+    pagination,
+    apiLoadingData,
+    errorsMsg,
+    setPagination,
+  } = useAllUserChats(isLogin, filter);
 
   return (
     <div className="m-4 order-section ">
@@ -105,16 +110,16 @@ export default function ChatList() {
                         <div className="profile-img-2">
                           <img
                             className="w-100 h-100"
-                            src={`${baseUrl_IMG}/${poItem?.importerProfileImg}`}
+                            src={`${baseUrl_IMG}/${poItem?.UserTwoImage}`}
                             onError={handleImageError}
                           />
                         </div>
                         <div className="d-grid gap-1 h-fit-content">
                           <p className="  trate-title lh-normal">
-                            {poItem?.userName}
+                            {poItem?.UserTwoName}
                           </p>
                           <p className=" email-text-2 lh-normal">
-                            {poItem?.userEmail}
+                            {poItem?.UserTwoEmail}
                           </p>
                         </div>
                       </div>

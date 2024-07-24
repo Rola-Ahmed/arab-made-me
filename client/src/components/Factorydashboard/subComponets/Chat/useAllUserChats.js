@@ -1,9 +1,14 @@
+import { useContext } from "react";
 import { useEffect, useState } from "react";
 import { getChatsForUser } from "Services/chat";
 import { getUser } from "Services/UserAuth";
 import { socket } from "config.js";
+import { userDetails } from "Context/userType";
+import { fetchOneFactory } from "Services/factory";
+import { fetchOneImporter } from "Services/importer";
 
 const useAllUserChats = (isLogin, filter) => {
+  let { currentUserData } = useContext(userDetails);
   const [pagination, setPagination] = useState({
     currentPage: 1,
     displayProductSize: 8,
@@ -17,6 +22,9 @@ const useAllUserChats = (isLogin, filter) => {
     []
   );
 
+  // -------------------------------------------
+  // Get chat Length
+  // -------------------------------------------
   const fetchReqLeng = async () => {
     const params = `formsFilter=${filter?.formsFilter}&sort=${filter?.sort}`;
     const result = await getChatsForUser(params, { authorization: isLogin });
@@ -30,6 +38,9 @@ const useAllUserChats = (isLogin, filter) => {
     }
   };
 
+  // -------------------------------------------
+  // Get chat Data Phase 1
+  // -------------------------------------------
   const fetchReqData = async () => {
     // why added SetTimeOut? inorder for the user to see that the data has changes when using filtter or seach
     // bec sometime it returns the same data
@@ -37,17 +48,24 @@ const useAllUserChats = (isLogin, filter) => {
     setReqData([]);
     const params = `size=${pagination.displayProductSize}&page=${pagination.currentPage}&formsFilter=${filter?.formsFilter}&sort=${filter?.sort}`;
     const result = await getChatsForUser(params, { authorization: isLogin });
+
     if (result?.success) {
       setReqData(result?.data?.chats);
       setTimeout(() => {
         setReqData(result?.data?.chats);
       }, 50);
 
+      // extract other side user ids
+      // inorder to get their names and & emails
       const uniqueIds = [
         ...new Set(
-          result?.data?.chats.map(
-            (obj) => obj.userTwoId // Extract all factoryIds
-          ) // Filter out null values
+          result?.data?.chats
+            .map((obj) =>
+              currentUserData?.userID != obj?.userTwoId
+                ? obj?.userTwoId
+                : obj?.userOneId
+            )
+            .filter(Boolean) // Remove any null or undefined values
         ),
       ];
 
@@ -55,8 +73,6 @@ const useAllUserChats = (isLogin, filter) => {
     } else {
       setErrorsMsg(result?.error);
     }
-    // setApiLoadingData(false);
-
     setTimeout(() => {
       setApiLoadingData(false);
     }, 50);
@@ -68,41 +84,82 @@ const useAllUserChats = (isLogin, filter) => {
 
   useEffect(() => {
     fetchReqData();
-
-    // pagination?.currentPage,
-    // pagination?.totalPage,
-    // dataFilterFromChild,
-    // isLogin,
   }, [pagination.currentPage, pagination?.totalPage, filter, isLogin]);
 
   useEffect(() => {
     // Promise.all(
     uniqueFactoryIDofProducts.map(async (item) => {
       const result = await getUser(item);
+      console.log("result");
       if (result?.success) {
-        setReqData((prevData) =>
-          //   loop on the array
-          prevData.map((value) =>
-            value?.userTwoId === item
-              ? {
-                  ...value,
-                  userName: result?.data?.users?.name?.join(" "),
-                  userEmail: result?.data?.users?.email,
-                }
-              : value
-          )
-        );
+        // check user role inorder to call the exra data from the factory/impoter endpoint
+        if (result.data.users?.importerId) {
+          fetchImporter(result.data.users?.importerId, item);
+        } else {
+          fetchFactory(result.data.users?.factoryId, item);
+        }
       }
     });
   }, [apiLoadingData]);
 
+  const fetchImporter = async (id, userId) => {
+    const response = await fetchOneImporter(id);
+
+    if (response?.success) {
+      setReqData((prevState) =>
+        prevState.map((value, index) => {
+          console.log(
+            "value?.importerrrrrr------",
+            value?.userTwoId,
+            value?.userOneId,
+            userId
+          );
+          // Return the updated value if condition is met, otherwise return the original value
+          return value?.userTwoId == userId || value?.userOneId == userId
+            ? {
+                ...value,
+                UserTwoName: response.data.importers.repName,
+                UserTwoEmail: response.data.importers.repEmail,
+                UserTwoImage: response.data.importers.image,
+                UserTwoDescription: response.data.importers.description,
+              }
+            : value;
+        })
+      );
+    }
+  };
+
+  const fetchFactory = async (id, userId) => {
+    const response = await fetchOneFactory(id);
+
+    if (response?.success) {
+      setReqData((prevState) =>
+        prevState.map((value, index) => {
+          console.log("value?.factory------", value?.userTwoId, id, userId);
+
+          // Return the updated value if condition is met, otherwise return the original value
+          return value?.userTwoId == userId || value?.userOneId == userId
+            ? {
+                ...value,
+                UserTwoName: response.data.factories.repName,
+                UserTwoEmail: response.data.factories.repEmail,
+                UserTwoImage: response.data.factories.coverImage,
+                UserTwoDescription: response.data.factories.description,
+              }
+            : value;
+        })
+      );
+    }
+  };
+
+  console.log("reqData", reqData);
   useEffect(() => {
     if (isLogin) {
       const connectSocket = () => {
         // socket.connect();
 
         socket.on("connect", () => {
-          // console.log("Connected to server");
+          console.log("Connected to server");
         });
 
         socket.on("newMessage", (data) => {
@@ -117,20 +174,30 @@ const useAllUserChats = (isLogin, filter) => {
           //       : value
           //   )
           // );
-          // console.log("reqDatareqDatareqData", reqData);
+          console.log("newMessage", reqData);
         });
 
         socket.on("socketAuth", (data) => {});
 
-        socket.on("connect_error", (err) => {});
+        socket.on("connect_error", (err) => {
+          console.log("Error", err);
+        });
 
-        socket.on("connect_timeout", (err) => {});
+        socket.on("connect_timeout", (err) => {
+          console.log("Error", err);
+        });
 
-        socket.on("error", (err) => {});
+        socket.on("error", (err) => {
+          console.log("Error", err);
+        });
 
-        socket.on("reconnect_error", (err) => {});
+        socket.on("reconnect_error", (err) => {
+          console.log("Error", err);
+        });
 
-        socket.on("reconnect_failed", () => {});
+        socket.on("reconnect_failed", () => {
+          console.log("connectionfails");
+        });
 
         // Cleanup on unmount
         return () => {
