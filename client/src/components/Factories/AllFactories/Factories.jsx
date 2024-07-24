@@ -37,13 +37,10 @@ export default function TopFactories(props) {
   document.title = "Factory Gallery";
   let { allSectors } = useFetchSectors();
 
-
   let location = useLocation();
   let navigate = useNavigate();
   let { isLogin } = useContext(UserToken);
   let { currentUserData } = useContext(userDetails);
-
-
 
   const [modalShow, setModalShow] = useState({
     isLogin: false,
@@ -314,7 +311,9 @@ export default function TopFactories(props) {
                 <>
                   {apiLoadingData?.errorCausedMsg ? (
                     <div className="col-12 w-100">
-                      {apiLoadingData?.errorCausedMsg}
+                      <p className="fs-5 text-muted fw-bolder text-5 mt-5 pt-5">
+                        {apiLoadingData?.errorCausedMsg}
+                      </p>
                     </div>
                   ) : (
                     <div className="col-12 w-100">
@@ -328,7 +327,10 @@ export default function TopFactories(props) {
                   {allFactoriesData?.length === 0 ? (
                     <>
                       <span></span>{" "}
-                      <p className="h3 text-center m-auto"> No records Found </p>
+                      <p className="h3 text-center m-auto">
+                        {" "}
+                        No records Found{" "}
+                      </p>
                       <span></span>
                     </>
                   ) : (
