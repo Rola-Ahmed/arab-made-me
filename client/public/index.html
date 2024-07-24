@@ -5,6 +5,38 @@
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
+    <!-- <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' https://trusted.com; style-src 'self' 'unsafe-inline' https://trusted-styles.com; img-src 'self' data: https://trusted-images.com; font-src 'self' https://trusted-fonts.com;"
+    /> -->
+    <!-- <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' https://trusted.com; style-src 'self' 'unsafe-inline' https://trusted-styles.com;"
+    /> -->
+    <!-- <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' https://trusted.com;"
+    /> -->
+
+    <!-- <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' https://trusted.com;"
+    /> -->
+    <!-- <meta
+      http-equiv="Content-Security-Policy"
+      content="
+    default-src 'self';
+    script-src 'self' https://trusted.com;
+    style-src 'self' 'unsafe-inline' https://trusted-styles.com;
+    img-src 'self' data: https://trusted-images.com;
+    font-src 'self' https://trusted-fonts.com;
+    connect-src 'self' https://api.trusted.com;
+    object-src 'none';
+    frame-ancestors 'self';
+    base-uri 'self';
+  "
+    /> -->
+
     <!-- <meta name="description" content="Your page description"> -->
 
     <!-- <meta name="arab-made" content="arab-made">
@@ -45,7 +77,7 @@
     -->
     <title>Arab-Made</title>
 
-    <!-- <script>
+    <script>
       if (window.location.protocol !== "https:") {
         window.location.replace(
           `https://${window.location.hostname}${window.location.pathname}${window.location.search}`
@@ -59,8 +91,7 @@
 
       AIDBASE_CHATBOT_ID = "Ug7MtEeBWGd69-VCJk3bL";
       let chatbot = document.getElementById("my-chatbot");
-
-    </script> -->
+    </script>
     <script
       async
       type="text/javascript"
