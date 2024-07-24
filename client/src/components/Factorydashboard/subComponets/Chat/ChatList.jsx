@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import {  useContext } from "react";
 import { handleImageError } from "utils/ImgNotFound";
 // shared components
 import PaginationDash from "components/Shared/Dashboards/PaginationDash";
@@ -8,7 +8,7 @@ import { UserToken } from "Context/userToken";
 import { useNavigate } from "react-router-dom";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 import { getTimeDifference as getTimeDiff } from "utils/getTimeDifference";
-import useAllUserChats from "./useAllUserChats";
+import useAllUserChats from "hooks/useAllUserChats";
 import StatusMessage from "components/Shared/Dashboards/StatusMessage";
 
 export default function ChatList() {
@@ -16,28 +16,14 @@ export default function ChatList() {
   let navigate = useNavigate();
   let getTimeDifference = getTimeDiff;
 
-  const [filter, setFilter] = useState({
-    formsFilter: "",
-    sort: "date-DESC",
-    sort_name: "",
-  });
 
-  // utils function
-
-  function filtterData(value, keyword, name) {
-    setFilter((prevValue) => ({
-      ...prevValue,
-      [keyword]: value,
-      ...(name && { sort_name: name }),
-    }));
-  }
   let {
     reqData,
     pagination,
     apiLoadingData,
     errorsMsg,
     setPagination,
-  } = useAllUserChats(isLogin, filter);
+  } = useAllUserChats(isLogin);
 
   return (
     <div className="m-4 order-section ">
@@ -57,14 +43,14 @@ export default function ChatList() {
         </div>
 
         {/* search filter section */}
-        {/* <div className=" search-container d-flex justify-content-between align-items-center p-3"> */}
+        
         <div className="input-group ">
           <div
             className="input-group-prepend  cursor"
-            onClick={(e) => {
-              let value = document.getElementById("formsFilter").value;
-              filtterData(value, "formsFilter");
-            }}
+            // onClick={(e) => {
+            //   let value = document.getElementById("formsFilter").value;
+            //   filtterData(value, "formsFilter");
+            // }}
           >
             <span className="input-group-text bg-white icon-search-container pe-0 cursor">
               <i className="fa-solid fa-magnifying-glass icon-search"></i>
@@ -75,21 +61,17 @@ export default function ChatList() {
             className="form-control input-search "
             placeholder="Search by product name"
             id="formsFilter"
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                filtterData(e.target.value, "formsFilter");
-              }
-            }}
+            // onKeyDown={(e) => {
+            //   if (e.key === "Enter") {
+            //     filtterData(e.target.value, "formsFilter");
+            //   }
+            // }}
           />
         </div>
-        {/* </div> */}
-        {/* data section */}
 
         <div className=" data-container w-100 p-3">
           <table className="table mb-0">
             {/* headers */}
-
-            {/* <thead className="d-none"></thead> */}
 
             <tbody>
               {/* row1 */}

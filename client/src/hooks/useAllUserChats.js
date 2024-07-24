@@ -7,7 +7,7 @@ import { userDetails } from "Context/userType";
 import { fetchOneFactory } from "Services/factory";
 import { fetchOneImporter } from "Services/importer";
 
-const useAllUserChats = (isLogin, filter) => {
+const useAllUserChats = (isLogin) => {
   let { currentUserData } = useContext(userDetails);
   const [pagination, setPagination] = useState({
     currentPage: 1,
@@ -26,8 +26,7 @@ const useAllUserChats = (isLogin, filter) => {
   // Get chat Length
   // -------------------------------------------
   const fetchReqLeng = async () => {
-    const params = `formsFilter=${filter?.formsFilter}&sort=${filter?.sort}`;
-    const result = await getChatsForUser(params, { authorization: isLogin });
+    const result = await getChatsForUser({}, { authorization: isLogin });
 
     if (result?.success) {
       const totalReq = result.data?.chats?.length || 1;
@@ -46,8 +45,7 @@ const useAllUserChats = (isLogin, filter) => {
     // bec sometime it returns the same data
     setApiLoadingData(true);
     setReqData([]);
-    const params = `size=${pagination.displayProductSize}&page=${pagination.currentPage}&formsFilter=${filter?.formsFilter}&sort=${filter?.sort}`;
-    const result = await getChatsForUser(params, { authorization: isLogin });
+    const result = await getChatsForUser({}, { authorization: isLogin });
 
     if (result?.success) {
       setReqData(result?.data?.chats);
@@ -80,11 +78,11 @@ const useAllUserChats = (isLogin, filter) => {
 
   useEffect(() => {
     fetchReqLeng();
-  }, [filter, isLogin]);
+  }, [ isLogin]);
 
   useEffect(() => {
     fetchReqData();
-  }, [pagination.currentPage, pagination?.totalPage, filter, isLogin]);
+  }, [pagination.currentPage, pagination?.totalPage,  isLogin]);
 
   useEffect(() => {
     // Promise.all(
@@ -108,12 +106,6 @@ const useAllUserChats = (isLogin, filter) => {
     if (response?.success) {
       setReqData((prevState) =>
         prevState.map((value, index) => {
-          console.log(
-            "value?.importerrrrrr------",
-            value?.userTwoId,
-            value?.userOneId,
-            userId
-          );
           // Return the updated value if condition is met, otherwise return the original value
           return value?.userTwoId == userId || value?.userOneId == userId
             ? {
@@ -135,8 +127,6 @@ const useAllUserChats = (isLogin, filter) => {
     if (response?.success) {
       setReqData((prevState) =>
         prevState.map((value, index) => {
-          console.log("value?.factory------", value?.userTwoId, id, userId);
-
           // Return the updated value if condition is met, otherwise return the original value
           return value?.userTwoId == userId || value?.userOneId == userId
             ? {
@@ -145,6 +135,7 @@ const useAllUserChats = (isLogin, filter) => {
                 UserTwoEmail: response.data.factories.repEmail,
                 UserTwoImage: response.data.factories.coverImage,
                 UserTwoDescription: response.data.factories.description,
+                UserTwoFactoryName: response.data.factories.name,
               }
             : value;
         })
@@ -152,7 +143,6 @@ const useAllUserChats = (isLogin, filter) => {
     }
   };
 
-  console.log("reqData", reqData);
   useEffect(() => {
     if (isLogin) {
       const connectSocket = () => {
@@ -164,40 +154,19 @@ const useAllUserChats = (isLogin, filter) => {
 
         socket.on("newMessage", (data) => {
           fetchReqData();
-          // setReqData((prevData) =>
-          //   prevData.map((value) =>
-          //     value?.userTwoId === data.messageObj.receiver
-          //       ? {
-          //           ...value,
-          //           message: [...value.message, data.messageObj],
-          //         }
-          //       : value
-          //   )
-          // );
-          console.log("newMessage", reqData);
         });
 
         socket.on("socketAuth", (data) => {});
 
-        socket.on("connect_error", (err) => {
-          console.log("Error", err);
-        });
+        socket.on("connect_error", (err) => {});
 
-        socket.on("connect_timeout", (err) => {
-          console.log("Error", err);
-        });
+        socket.on("connect_timeout", (err) => {});
 
-        socket.on("error", (err) => {
-          console.log("Error", err);
-        });
+        socket.on("error", (err) => {});
 
-        socket.on("reconnect_error", (err) => {
-          console.log("Error", err);
-        });
+        socket.on("reconnect_error", (err) => {});
 
-        socket.on("reconnect_failed", () => {
-          console.log("connectionfails");
-        });
+        socket.on("reconnect_failed", () => {});
 
         // Cleanup on unmount
         return () => {
