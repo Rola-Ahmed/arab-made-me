@@ -1,14 +1,19 @@
 import RfqBuyer from "components/Importerdashboard/subComponets/RFQBuyer/AllRfq/AllRfq";
 import OneRfqReq from "components/Importerdashboard/subComponets/RFQBuyer/OneRfq/OneRfq";
 
+import PrivateLabelBuyer from "components/Importerdashboard/subComponets/PrivateLabelImp/AllReq/PrivateLabelImp";
+import OnePrivateLabel from "components/Importerdashboard/subComponets/PrivateLabelImp/PrivateLabelReqEtc/PrivateLabelReqEtc";
+
+import CusProductReq from "components/Importerdashboard/subComponets/CusProductReqImp/AllSpmfs/CusProductReqImp";
+
+
 // Importer Dashboard pages
 import SourcingRequest from "components/Importerdashboard/subComponets/SourcingRequest/SourcingRequest";
 import Importerdash from "components/Importerdashboard/Importerdash";
 import ReqVisitImporter from "components/Importerdashboard/subComponets/ReqVisitImporter/ReqVisitImporter";
 import PurchasingOrdersImp from "components/Importerdashboard/subComponets/PurchasingOrdersImp/PurchasingOrdersImp";
-import PrivateLabelImp from "components/Importerdashboard/subComponets/PrivateLabelImp/AllReq/PrivateLabelImp";
+
 import DashBoardImporter from "components/Importerdashboard/subComponets/DashBoard/DashBoard";
-import CusProductReqImp from "components/Importerdashboard/subComponets/CusProductReqImp/AllSpmfs/CusProductReqImp";
 import GetSourcingReq from "components/Importerdashboard/subComponets/GetSourcingRequest/GetSourcingRequest";
 import GetQuotationImp from "components/Importerdashboard/subComponets/GetQuotationImp/GetQuotationImp";
 import ImporterPofile from "components/Importerdashboard/subComponets/ImporterProfile/ImporterProfile";
@@ -18,7 +23,6 @@ import VisitRequestEtc from "components/Importerdashboard/subComponets/ReqVisitI
 
 import PurchasingOrdersEtc from "components/Importerdashboard/subComponets/PurchasingOrdersImp/PurchasingOrderEtc";
 
-import PrivateLabelReqEtc from "components/Importerdashboard/subComponets/PrivateLabelImp/PrivateLabelReqEtc/PrivateLabelReqEtc";
 
 import CustomProductReqEtc from "components/Importerdashboard/subComponets/CusProductReqImp/CustomProductReqEtc/CustomProductReqEtc";
 
@@ -37,16 +41,26 @@ const importerDashboardRoutes = [
     path: "/importerdashboard",
     element: <Importerdash />,
     children: [
+      { path: "", element: <DashBoardImporter /> },
+      
       // done
       { path: "Rfqs", element: <RfqBuyer /> },
       { path: "RFQReq/moreDetails", element: <OneRfqReq /> },
 
+      { path: "PrivateLabel", element: <PrivateLabelBuyer /> },
+      { path: "PrivateLabelReq/moreDetails", element: <OnePrivateLabel /> },
+
+
+      { path: "CustomerProductRequest", element: <CusProductReq /> },
+      { path: "customProductReq/moreDetails", element: <CustomProductReqEtc />,
+      },
+
       // --------------------------------------------------
-      { path: "", element: <DashBoardImporter /> },
+   
       { path: "RequestVisit", element: <ReqVisitImporter /> },
       { path: "purchasingOrders", element: <PurchasingOrdersImp /> },
-      { path: "PrivateLabel", element: <PrivateLabelImp /> },
-      { path: "CustomerProductRequest", element: <CusProductReqImp /> },
+
+    
       {
         path: "add/sourcingRequest",
 
@@ -87,16 +101,7 @@ const importerDashboardRoutes = [
         element: <PurchasingOrdersEtc />,
       },
 
-      {
-        path: "PrivateLabelReq/moreDetails",
-
-        element: <PrivateLabelReqEtc />,
-      },
-      {
-        path: "customProductReq/moreDetails",
-
-        element: <CustomProductReqEtc />,
-      },
+  
 
       {
         path: "quotations/moreDetails",
