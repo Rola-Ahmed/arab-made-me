@@ -20,5 +20,8 @@
     "update": "^0.7.4",
     "webpack-dev-middleware": "^7.3.0",
     "ws": "^8.18.0"
+  },
+  "scripts": {
+    "start": "node index.js"
   }
 }
