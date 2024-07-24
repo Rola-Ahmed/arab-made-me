@@ -1,4 +1,4 @@
-import {  useContext } from "react";
+import { useContext } from "react";
 import { handleImageError } from "utils/ImgNotFound";
 // shared components
 import PaginationDash from "components/Shared/Dashboards/PaginationDash";
@@ -15,7 +15,6 @@ export default function ChatList() {
   let { isLogin } = useContext(UserToken);
   let navigate = useNavigate();
   let getTimeDifference = getTimeDiff;
-
 
   let {
     reqData,
@@ -43,7 +42,7 @@ export default function ChatList() {
         </div>
 
         {/* search filter section */}
-        
+
         <div className="input-group ">
           <div
             className="input-group-prepend  cursor"
@@ -86,13 +85,14 @@ export default function ChatList() {
                       )
                     }
                   >
-                    <div className=" col  d-flex align-items-center mt-2 ">
+                    <div className=" col  d-flex align-items-center mt-2  ">
                       <div className="active-circule me-2"></div>
                       <div className="gap-16 justify-content-start align-items-start d-flex">
                         <div className="profile-img-2">
                           <img
                             className="w-100 h-100"
-                            src={`${baseUrl_IMG}/${poItem?.UserTwoImage}`}
+                            src={`${baseUrl_IMG}/${poItem.UserTwoImage}`}
+                            alt={`${baseUrl_IMG}/${poItem.UserTwoImage}`}
                             onError={handleImageError}
                           />
                         </div>

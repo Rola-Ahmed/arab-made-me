@@ -8,11 +8,8 @@ export default function BottomDashMenu(props) {
       <div className="profile-img">
         <img
           className="w-100 h-100"
-          //  src={profile}
-          // alt="profile "
-
           src={`${baseUrl_IMG}/${profile}`}
-          alt="importer logo"
+          alt={`${baseUrl_IMG}/${profile}`}
           onError={handleImageError}
         />
       </div>

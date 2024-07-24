@@ -1,8 +1,7 @@
 import { useEffect, useState, useContext, useRef } from "react";
 import { handleImageError } from "utils/ImgNotFound";
 // shared components
-import axios from "axios";
-import { baseUrl, baseUrl_IMG } from "config.js";
+import { baseUrl_IMG } from "config.js";
 
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
@@ -12,7 +11,11 @@ import SubPageUtility from "components/Shared/Dashboards/PageUtility";
 import { getTimeDifference as getTimeDiff } from "utils/getTimeDifference";
 import SendMsg from "./SendMsg";
 import { socket } from "config.js";
-import {  getChats } from "Services/chat";
+import { getChatBetweenTwo } from "Services/chat";
+
+import { getUser } from "Services/UserAuth";
+import { fetchOneFactory } from "Services/factory";
+import { fetchOneImporter } from "Services/importer";
 
 export default function Conversation() {
   let { isLogin } = useContext(UserToken);
@@ -37,7 +40,8 @@ export default function Conversation() {
     setapiLoadingData(true);
 
     try {
-      let result = await getChats(
+      let result = await getChatBetweenTwo(
+        currentChat,
         {},
         {
           authorization: isLogin,
@@ -69,17 +73,11 @@ export default function Conversation() {
   }, [currentChat, currentUserData && currentUserData?.userID]);
 
   const fetchUserTwo = async (userId) => {
-    const response = await axios.get(
-      // `${baseUrl}/users/${allPosData?.userTw oId}`
-      `${baseUrl}/users/${userId}`
-    );
+    const response = await getUser(userId);
+    // console.log("importerId",response.data.users?.importerId,response.data.users?.factoryId,response.data.users?.id,userId)
 
-    if (response.data.message === "done") {
-      if (response.data.users?.importerId != null) {
-        // setAllPosData((prevValue) => ({
-        //   ...prevValue,
-        //   UserTwoFacOrImpID: response.data.users?.importerId,
-        // }));
+    if (response?.success) {
+      if (response.data.users?.importerId) {
         fetchUserTwoImporter(response.data.users?.importerId);
       } else {
         fetchUserTwoFactory(response.data.users?.factoryId);
@@ -87,38 +85,30 @@ export default function Conversation() {
     }
   };
   const fetchUserTwoImporter = async (id) => {
-    try {
-      const response = await axios.get(`${baseUrl}/importers/${id}`);
-
-      if (response.data.message === "done") {
-        setAllPosData((prevValue) => ({
-          ...prevValue,
-          UserTwoName: response.data.importers.repName,
-          UserTwoEmail: response.data.importers.repEmail,
-          UserTwoImage: response.data.importers.image,
-          UserTwoDescription: response.data.importers.description,
-        }));
-      }
-    } catch (error) {
-      // console.error("Error fetching data", error);
+    const response = await fetchOneImporter(id);
+    // console.log();
+    if (response?.success) {
+      setAllPosData((prevValue) => ({
+        ...prevValue,
+        UserTwoName: response.data.importers.repName,
+        UserTwoEmail: response.data.importers.repEmail,
+        UserTwoImage: response.data.importers.image,
+        UserTwoDescription: response.data.importers.description,
+      }));
     }
   };
 
   const fetchUserTwoFactory = async (id) => {
-    try {
-      const response = await axios.get(`${baseUrl}/factories/${id}`);
+    const response = await fetchOneFactory(id);
 
-      if (response.data.message === "done") {
-        setAllPosData((prevValue) => ({
-          ...prevValue,
-          UserTwoName: response.data.factories.repName,
-          UserTwoEmail: response.data.factories.repEmail,
-          UserTwoImage: response.data.factories.coverImage,
-          UserTwoDescription: response.data.factories.description,
-        }));
-      }
-    } catch (error) {
-      // console.error("Error fetching data", error);
+    if (response?.success) {
+      setAllPosData((prevValue) => ({
+        ...prevValue,
+        UserTwoName: response.data.factories.repName,
+        UserTwoEmail: response.data.factories.repEmail,
+        UserTwoImage: response.data.factories.coverImage,
+        UserTwoDescription: response.data.factories.description,
+      }));
     }
   };
 
@@ -127,24 +117,18 @@ export default function Conversation() {
       scrollChat.current.scrollTop = scrollChat.current.scrollHeight;
     }
   }, [allPosData]);
+
   useEffect(() => {
     if (isLogin) {
       const connectSocket = () => {
         socket.connect();
 
-        socket.on("connect", () => {
-        });
+        socket.on("connect", () => {});
 
-        socket.on("socketAuth", (data) => {
-         
-          // fetchFactoriesData();
-          // Optionally handle the received message (e.g., update state or UI)
-          // setGlobalMsg(`New message: ${data}`);
-        });
+        socket.on("socketAuth", (data) => {});
 
         socket.on("newMessage", (data) => {
           fetchReqData();
-          // setAllPosData((prevMessages) => [...prevMessages, data]); // Update state with the new message
         });
 
         socket.on("connect_error", (err) => {
@@ -203,11 +187,12 @@ export default function Conversation() {
         <div>
           <div className=" d-flex justify-content-between align-items-center border-bottom ">
             <div className="gap-8 justify-content-start align-items-start d-flex">
-              <div className="conv-img-2">
+              <div className="conv-img-2 ">
                 <img
                   className="w-100 h-100"
-                  src={`${baseUrl_IMG}/${allPosData?.UserTwoImage}`}
                   onError={handleImageError}
+                  src={`${baseUrl_IMG}/${allPosData.UserTwoImage}`}
+                  alt={`${baseUrl_IMG}/${allPosData.UserTwoImage}`}
                 />
               </div>
               <div className="d-grid gap-1 h-fit-content">
@@ -252,7 +237,7 @@ export default function Conversation() {
                         <div className="profile-img-3 ">
                           <img
                             className="w-100 h-100"
-                            src={`${baseUrl_IMG}/`}
+                            src={`${baseUrl_IMG}/${allPosData.UserTwoImage}`}
                             onError={handleImageError}
                           />
                         </div>
@@ -302,7 +287,7 @@ export default function Conversation() {
                     <div className="img-cont-chat">
                       <img
                         className="w-100 h-100"
-                        src={`${baseUrl_IMG}/${allPosData?.UserTwoImage}`}
+                        src={`${baseUrl_IMG}/${allPosData.UserTwoImage}`}
                         onError={handleImageError}
                         alt="profile"
                       />
@@ -323,9 +308,6 @@ export default function Conversation() {
             </div>
           </div>
         </div>
-        {/* <div className=" data-container w-100 p-3">
-          <div></div>
-        </div> */}
 
         <SendMsg
           setAllPosData={setAllPosData}

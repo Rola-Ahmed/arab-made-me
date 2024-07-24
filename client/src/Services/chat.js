@@ -5,11 +5,12 @@ export const addChat = async (header, data) => {
   return await postRequest(`/chats/add`, header, data);
 };
 
-export const getChats = async (param, header) => {
-  return await getRequestDataHeader(`/chats?${param}`, header, {});
+// get chat between 2 users
+export const getChatBetweenTwo = async (id, param, header) => {
+  return await getRequestDataHeader(`/chats/${id}?${param}`, header, {});
 };
 
-
+// chat list
 export const getChatsForUser = async (param, header) => {
   return await getRequestDataHeader(`/chats/user/chats?${param}`, header, {});
 };

@@ -78,17 +78,16 @@ const useAllUserChats = (isLogin) => {
 
   useEffect(() => {
     fetchReqLeng();
-  }, [ isLogin]);
+  }, [isLogin]);
 
   useEffect(() => {
     fetchReqData();
-  }, [pagination.currentPage, pagination?.totalPage,  isLogin]);
+  }, [pagination.currentPage, pagination?.totalPage, isLogin]);
 
   useEffect(() => {
     // Promise.all(
     uniqueFactoryIDofProducts.map(async (item) => {
       const result = await getUser(item);
-      console.log("result");
       if (result?.success) {
         // check user role inorder to call the exra data from the factory/impoter endpoint
         if (result.data.users?.importerId) {
