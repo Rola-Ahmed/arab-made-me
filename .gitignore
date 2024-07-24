@@ -112,3 +112,5 @@ EtcVisitRequest copy.jsx
 client/public/index.html
 client/public/index.html
 /server/src/modules
+
+.vercel
