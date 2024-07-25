@@ -4,7 +4,7 @@ import { errorHandler } from "utils/errorHandler";
 
 // Set default configurations for axios
 axios.defaults.baseURL = baseUrl;
-axios.defaults.timeout = 5000;
+axios.defaults.timeout = 50000;
 
 // Utility function to create request config
 const createRequestConfig = (method, url, headers, data) => ({
