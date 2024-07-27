@@ -6,8 +6,9 @@ import { useNavigate } from "react-router-dom";
 let getMonthName = getDate;
 export default function SourcingRequestCard(props) {
   let { item, currentUserData, setModalShow } = props;
+  let navigate = useNavigate();
 
-  const accessForm = (id, productName, importerId) => {
+  const accessForm = (directto) => {
     if (currentUserData?.importerId !== null) {
       setModalShow((prevVal) => ({
         ...prevVal,
@@ -41,12 +42,10 @@ export default function SourcingRequestCard(props) {
 
       return;
     } else {
-      navigate(
-        `/answerQuotation/SourcingReq?id=${id}&productName=${productName}&userId=${importerId}`
-      );
+      navigate(directto);
     }
   };
-  let navigate = useNavigate();
+
   return (
     <div className="parentsourc  pe-0 ">
       <div className="row w-100">
@@ -109,7 +108,9 @@ export default function SourcingRequestCard(props) {
               <button
                 className="req-btn btn-color me-2 req-btn cursor"
                 onClick={() => {
-                  accessForm(item?.id, item?.productName, item?.importerId);
+                  accessForm(
+                    `/answerQuotation/SourcingReq?id=${item?.id}&productName=${item?.productName}&userId=${item?.importerId}`
+                  );
                 }}
               >
                 Send Quote
@@ -120,7 +121,9 @@ export default function SourcingRequestCard(props) {
               className="req-btn cursor "
               type="button"
               onClick={() => {
-                accessForm(item?.id, item?.productName, item?.importerId);
+                accessForm(
+                  `/SourcingRequest?sourcingRequestId=${item?.id}&productName=${item?.productName}`
+                );
               }}
             >
               More Details

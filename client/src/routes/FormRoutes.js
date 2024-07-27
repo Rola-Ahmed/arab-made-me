@@ -10,6 +10,11 @@ import RequestVisit from "components/Forms/RequestVisit/RequestVisit";
 
 import AnswerQuotation from "components/Forms/AnswerQuotation/AnswerQuotation";
 
+
+
+
+import OneSourcingReq from "components/Sourcinghub/SourcingRequest/OneReq/OneSourcingReq";
+
 const formRoutess = [
   {
     // ?factoryId=9&factoryName=Nora%20Dyer
@@ -46,6 +51,12 @@ const formRoutess = [
     element: <AnswerQuotation />,
 
     // /answerQuotation/rfq?id=${requestedData?.id}&productName=${requestedData?.productName}&userId=${requestedData?.importerId}&productId=${requestedData?.productId}
+  },
+
+  {
+    // path: "/sourcingBuyerRequest/:buyerReuestId",
+    path: "/sourcingRequest",
+    element: <OneSourcingReq />,
   },
 ];
 

@@ -17,6 +17,8 @@
   border: 1px solid var(--light-gray);
 }
 
+
+
 /* TITLE TEXT */
 .send-rfq .title-text,
 .req-visit .title-text, .send-po .title-text {
@@ -136,8 +138,9 @@
   border-top-right-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
 }
-.send-po .input-group-text:focus-visible{
-  outline-color : var(--Gray-300);
+
+.send-po .input-group-text:focus-visible {
+  outline-color: var(--Gray-300);
   /* 1px solid var(--Gray-300) */
 }
 
@@ -306,6 +309,12 @@ progress {
   margin-top: 6px;
 }
 
+
+.send-rfq .container-rfq .readOnly,
+.req-visit .container-req .readOnly, .send-po .container-po .readOnly {
+
+  background-color: #eaeaea;
+}
 
 
 @media (max-width: 992px) {

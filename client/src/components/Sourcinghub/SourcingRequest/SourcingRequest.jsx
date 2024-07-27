@@ -2,9 +2,7 @@ import { useEffect, useState, useContext } from "react";
 
 import Header from "components/main/Header/Header";
 import { userDetails } from "Context/userType";
-
 import "../source.css";
-
 import { UserToken } from "Context/userToken";
 import { useNavigate } from "react-router-dom";
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
@@ -155,17 +153,17 @@ function Sourcinghub() {
 
         {reqData?.length == 0 ? (
           <>
-            <div className="col-12 w-100 ">
-              {apiLoadingData?.errorMsg ? (
-                <p className="fs-5 text-muted fw-bolder text-5 mt-5 pt-5 mx-auto">
-                  {apiLoadingData?.errorMsg || "No records Found"}
-                </p>
-              ) : (
-                <div className="d-flex justify-content-center">
-                  <Loading />
-                </div>
-              )}
-            </div>
+            {/* <div className="col-12 w-100 "> */}
+            {apiLoadingData?.errorMsg ? (
+              <p className="fs-5 text-muted fw-bolder text-5 mt-5 pt-5 mx-auto">
+                {apiLoadingData?.errorMsg || "No records Found"}
+              </p>
+            ) : (
+              <div className="d-flex justify-content-center">
+                <Loading />
+              </div>
+            )}
+            {/* </div> */}
           </>
         ) : (
           <div className="row  row-sourcing pt-5">
