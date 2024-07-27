@@ -1,8 +1,8 @@
 import { getRequestDataHeader } from "./authServices";
 
-// export const getSourcingReuqests = async (param) => {
-//   return await getRequestDataHeader(`sourcingRequests?${param}`, {}, {});
-// };
+export const getSourcingOffers = async (param) => {
+  return await getRequestDataHeader(`sourcingOffers?${param}`, {}, {});
+};
 
 // export const getOneSourcingReq = async (id, param) => {
 //   return await getRequestDataHeader(`sourcingRequests/${id}?${param}`, {}, {});

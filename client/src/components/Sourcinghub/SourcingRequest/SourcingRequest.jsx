@@ -153,7 +153,6 @@ function Sourcinghub() {
 
         {reqData?.length == 0 ? (
           <>
-            {/* <div className="col-12 w-100 "> */}
             {apiLoadingData?.errorMsg ? (
               <p className="fs-5 text-muted fw-bolder text-5 mt-5 pt-5 mx-auto">
                 {apiLoadingData?.errorMsg || "No records Found"}
@@ -163,7 +162,6 @@ function Sourcinghub() {
                 <Loading />
               </div>
             )}
-            {/* </div> */}
           </>
         ) : (
           <div className="row  row-sourcing pt-5">

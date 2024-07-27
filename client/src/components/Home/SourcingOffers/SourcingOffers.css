@@ -130,3 +130,8 @@
 .table tbody tr:last-child th, .table tbody tr:last-child td {
     border-bottom: none !important;
 }
+
+
+.error-float {
+    top: 25%;
+}
