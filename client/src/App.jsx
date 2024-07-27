@@ -25,7 +25,6 @@ import Contactsupplier from "components/Forms/Contactsupplier/Contactsupplier";
 
 
 // more details form
-import SourcingOfferExtraDetails from "components/SourcingOfferExtraDetails/SourcingOfferExtraDetails";
 
 import Factorypage from "components/Factories/FactoryPage/Factorypage";
 import FactoryProducts from "components/Factories/FactoryProducts/FactoryProductsContainer";
@@ -144,10 +143,7 @@ const router = createBrowserRouter([
  
 
   // view More Details Home page
-  {
-    path: "/sourcingOffer/:offerId",
-    element: <SourcingOfferExtraDetails />,
-  },
+ 
  
 
   {

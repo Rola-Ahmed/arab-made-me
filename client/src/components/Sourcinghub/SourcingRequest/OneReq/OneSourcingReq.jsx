@@ -209,7 +209,7 @@ function OneSourcingReq() {
                   <div className=" col-xxl-6 col-xl-6   col-lg-6 col-md-6 col-sm-12  ">
                     <ReadOnly
                       title="Preferred Countries"
-                      value={PosData?.preferredCountries?.join(", ") || "Empty"}
+                      value={PosData?.preferredCountries?.join(", ") || "All"}
                     />
                   </div>
 

@@ -9,9 +9,7 @@ import FetchPurchasingOrder from "components/Forms/PurchasingOrder/FetchPurchasi
 import RequestVisit from "components/Forms/RequestVisit/RequestVisit";
 
 import AnswerQuotation from "components/Forms/AnswerQuotation/AnswerQuotation";
-
-
-
+import SourcingOfferExtraDetails from "components/SourcingOfferExtraDetails/SourcingOfferExtraDetails";
 
 import OneSourcingReq from "components/Sourcinghub/SourcingRequest/OneReq/OneSourcingReq";
 
@@ -57,6 +55,10 @@ const formRoutess = [
     // path: "/sourcingBuyerRequest/:buyerReuestId",
     path: "/sourcingRequest",
     element: <OneSourcingReq />,
+  },
+  {
+    path: "/sourcingOffer/:offerId",
+    element: <SourcingOfferExtraDetails />,
   },
 ];
 

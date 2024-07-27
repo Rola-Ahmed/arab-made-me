@@ -8,16 +8,16 @@ import { userDetails } from "Context/userType";
 
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-import Footer from "components/main/Footer/Footer";
 import Header from "components/main/Header/Header";
-import Navbar from "components/main/Navbar/Navbar";
-import LoadingForm from "components/Loading/LoadingForm";
+import ReadOnly from "components/Forms/Shared/ReadOnly";
 
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/ImporterUnVerifiedPopUpMsg";
 import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
 
 import { getMonthName as getDate } from "utils/getMonthName";
+import Loading from "components/Loading/Loading";
+import FactoryInfo from "components/Forms/Shared/FactoryInfo";
 
 function SourcingOfferExtraDetails() {
   let navigate = useNavigate();
@@ -189,88 +189,27 @@ function SourcingOfferExtraDetails() {
         userType="Buyer"
       />
 
-      {isLoading?.pageLoading && <LoadingForm title="Send PO " />}
+      <Header title="Sourcing Request " />
+      {isLoading?.loading && (
+        <>
+          {isLoading?.errorMsg ? (
+            <p className="fs-5 text-muted fw-bolder text-5 my-5 py-5 mx-auto">
+              {isLoading?.errorMsg || "No records Found"}
+            </p>
+          ) : (
+            <div className=" d-flex justify-content-center py-5">
+              <Loading title="Sourcing Request Details" />
+            </div>
+          )}
+        </>
+      )}
 
       {!isLoading?.pageLoading && (
         <>
-          <Navbar />
-          <Header title="Send PO " />
           <section id="view" className="send-po">
             {/* Factory description */}
             <div className="container container-po ">
-              <div className="input-content ">
-                <div className="title-text w-100 ">
-                  <h5>Factory Details</h5>
-                </div>
-
-                <div className="row row-container w-100 ">
-                  <div className="col-md-6 col-sm-12">
-                    <div className="form-group">
-                      <label>Factory Name</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={factoryDetails?.name || ""}
-                        readOnly
-                      />
-                    </div>
-                  </div>
-
-                  <div className="col-md-6 col-sm-12">
-                    <div className="form-group">
-                      <label>Representative Name</label>
-                      <input
-                        type="text"
-                        className="form-control text-dark"
-                        id="repName"
-                        name="repName"
-                        value={factoryDetails?.repName || ""}
-                        readOnly
-                      />
-                    </div>
-                  </div>
-
-                  <div className="col-md-6 col-sm-12">
-                    <div className="form-group">
-                      <label>Representative Email</label>
-                      <input
-                        type="text"
-                        className="form-control text-dark"
-                        id="repEmail"
-                        name="repEmail"
-                        value={factoryDetails?.repEmail}
-                        readOnly
-                      />
-                    </div>
-                  </div>
-
-                  <div className="col-md-6 col-sm-12">
-                    <div className="form-group">
-                      <label>Representative phone number</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="repPhone"
-                        name="repPhone"
-                        value={factoryDetails?.repPhone}
-                        readOnly
-                      />
-                    </div>
-                  </div>
-
-                  <div className="col-12">
-                    <div className="form-group">
-                      <label>description</label>
-                      <textarea
-                        type="text"
-                        className="form-control"
-                        value={factoryDetails?.description || ""}
-                        readOnly
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <FactoryInfo productDetails={factoryDetails} />
             </div>
 
             {/* Grid  */}
@@ -282,178 +221,81 @@ function SourcingOfferExtraDetails() {
                 <div className="row row-container w-100 ">
                   {/* <div className="row  row-gap"> */}
                   <div className="col-md-6 col-sm-12">
-                    <div className="grid-gap-col">
-                      <div className="form-group">
-                        <label>Product Name</label>
-                        <input
-                          className="form-control"
-                          value={PosData?.productName || "Empty"}
-                          readOnly
-                        />
-                      </div>
-                    </div>
+                    <ReadOnly
+                      title="Product Name"
+                      value={PosData?.productName}
+                    />
                   </div>
 
                   <div className="col-md-6 col-sm-12">
-                    <div className="grid-gap-col">
-                      <div className="form-group">
-                        <label>sku</label>
-                        <input
-                          className="form-control"
-                          value={PosData?.sku || "Empty"}
-                          readOnly
-                        />
-                      </div>
-                    </div>
+                    <ReadOnly title="Quantity" value={PosData?.quantity} />
                   </div>
 
                   <div className="col-md-6 col-sm-12">
-                    <div className="grid-gap-col">
-                      <div className="form-group">
-                        <label>hsnCode</label>
-                        <input
-                          className="form-control"
-                          value={PosData?.productHSNCode || "Empty"}
-                          readOnly
-                        />
-                      </div>
-                    </div>
+                    <ReadOnly title="sku" value={PosData?.sku} />
                   </div>
 
                   <div className="col-md-6 col-sm-12">
-                    <div className="grid-gap-col">
-                      <div className="form-group">
-                        <label>Price</label>
-                        <input
-                          className="form-control"
-                          value={PosData?.price || "Empty"}
-                          readOnly
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-md-6 col-sm-12">
-                    <div className="grid-gap-col">
-                      <div className="form-group">
-                        <label>packing Conditions</label>
-                        <input
-                          className="form-control"
-                          value={PosData?.packingConditions || "Empty"}
-                          readOnly
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-md-6 col-sm-12">
-                    <div className="grid-gap-col">
-                      <div className="form-group">
-                        <label>Quality Conditions</label>
-                        <input
-                          className="form-control"
-                          value={PosData?.qualityConditions || "Empty"}
-                          readOnly
-                        />
-                      </div>
-                    </div>
+                    <ReadOnly title="hsnCode" value={PosData?.productHSNCode} />
                   </div>
 
                   <div className="col-md-6 col-sm-12">
-                    <div className="grid-gap-col">
-                      <div className="form-group">
-                        <label>Shipping Conditions</label>
-                        <input
-                          className="form-control"
-                          value={PosData?.shippingConditions || "Empty"}
-                          readOnly
-                        />
-                      </div>
-                    </div>
+                    <ReadOnly title="Price" value={PosData?.price} />
+                  </div>
+                  <div className="col-md-6 col-sm-12">
+                    <ReadOnly
+                      title="packing Conditions"
+                      value={PosData?.packingConditions}
+                    />
+                  </div>
+                  <div className="col-md-6 col-sm-12">
+                    <ReadOnly
+                      title="Quality Conditions"
+                      value={PosData?.qualityConditions}
+                    />
                   </div>
 
                   <div className="col-md-6 col-sm-12">
-                    <div className="grid-gap-col">
-                      <div className="form-group">
-                        <label>Delivery Terms</label>
-                        <input
-                          className="form-control"
-                          value={PosData?.deliveryTerms || "Empty"}
-                          readOnly
-                        />
-                      </div>
-                    </div>
+                    <ReadOnly
+                      title="shipping Conditions"
+                      value={PosData?.shippingConditions}
+                    />
                   </div>
 
                   <div className="col-md-6 col-sm-12">
-                    <div className="grid-gap-col">
-                      <div className="form-group">
-                        <label>payment Terms</label>
-                        <input
-                          className="form-control"
-                          value={PosData?.paymentTerms || "Empty"}
-                          readOnly
-                        />
-                      </div>
-                    </div>
+                    <ReadOnly
+                      title="Delivery Terms"
+                      value={PosData?.deliveryTerms}
+                    />
                   </div>
 
                   <div className="col-md-6 col-sm-12">
-                    <div className="grid-gap-col">
-                      <div className="form-group">
-                        <label>available</label>
-                        <input
-                          className="form-control"
-                          value={
-                            PosData?.available ? "In Stock" : "Out Of Stock"
-                          }
-                          readOnly
-                        />
-                      </div>
-                    </div>
+                    <ReadOnly
+                      title="payment Terms"
+                      value={PosData?.paymentTerms}
+                    />
                   </div>
 
                   <div className="col-md-6 col-sm-12">
-                    <div className="grid-gap-col">
-                      <div className="form-group">
-                        <label>Delivery Terms</label>
-                        <input
-                          className="form-control"
-                          value={
-                            PosData?.preferredCountries?.join(", ") || "Empty"
-                          }
-                          readOnly
-                        />
-                      </div>
-                    </div>
+                    <ReadOnly
+                      title="available"
+                      value={PosData?.available ? "In Stock" : "Out Of Stock"}
+                    />
                   </div>
 
                   <div className="col-md-6 col-sm-12">
-                    <div className="grid-gap-col">
-                      <div className="form-group">
-                        <label>Quantity</label>
-                        <input
-                          className="form-control"
-                          value={PosData?.quantity || "Empty"}
-                          readOnly
-                        />
-                      </div>
-                    </div>
+                    <ReadOnly
+                      title="preferred Countries"
+                      value={`${PosData?.preferredCountries?.join(", ") ||
+                        "All"}  `}
+                    />
                   </div>
 
                   <div className="col-md-6 col-sm-12">
-                    <div className="grid-gap-col">
-                      <div className="form-group">
-                        <label>Created At </label>
-                        <input
-                          className="form-control"
-                          value={
-                            `${getMonthName(
-                              PosData?.createdAt?.split("T")?.[0]
-                            )}` || "Empty"
-                          }
-                          readOnly
-                        />
-                      </div>
-                    </div>
+                    <ReadOnly
+                      title="Created At"
+                      value={getMonthName(PosData?.createdAt?.split("T")?.[0])}
+                    />
                   </div>
 
                   {/* ---------------------------- */}
@@ -462,28 +304,17 @@ function SourcingOfferExtraDetails() {
                     Object?.keys(PosData?.specialCharacteristics)?.length >
                       0 && (
                       <div className="col-12 ">
-                        <div className="grid-gap-col">
-                          <div className="form-group">
-                            <label>Product Characteristics</label>
-                          </div>
-                        </div>
+                        <label className="fw-600 mb-1">
+                          Product Characteristics
+                        </label>
 
                         <div className="form-group form-control p-4 ">
-                          <div className="row row-gap">
+                          <div className="row row-gap ">
                             {Object?.entries(
                               PosData?.specialCharacteristics
                             )?.map(([key, value], index) => (
-                              <div className="col-md-6 col-sm-12">
-                                <div className="grid-gap-col">
-                                  <div className="form-group">
-                                    <label>{key} </label>
-                                    <input
-                                      className="form-control"
-                                      value={value || "Empty"}
-                                      readOnly
-                                    />
-                                  </div>
-                                </div>
+                              <div className="col-6">
+                                <ReadOnly title={key} value={value} />
                               </div>
                             ))}
                           </div>
@@ -493,15 +324,10 @@ function SourcingOfferExtraDetails() {
                   {/* ----------------------------------------- */}
 
                   <div className="col-12">
-                    <div className="form-group">
-                      <label> Product Description</label>
-                      <textarea
-                        className="form-control"
-                        rows="3"
-                        value={PosData?.productDescription || "Empty"}
-                        readOnly
-                      ></textarea>
-                    </div>
+                    <ReadOnly
+                      title="Product Description"
+                      value={PosData?.productDescription}
+                    />
                   </div>
                 </div>
                 {/* </div> */}
@@ -517,13 +343,6 @@ function SourcingOfferExtraDetails() {
                           }&productName=${PosData?.productName}`
                         );
                       }}
-                      // onClick={() => {
-                      //   navigate(
-                      //     `/purchasingOrder?sourcingOfferId=${factoryOffersId}&factoryId=${factoryId}&factoryName=${factoryName}${
-                      //       productId !== null ? `&productId=${productId}` : ""
-                      //     }&productName=${PosData?.productName}`
-                      //   );
-                      // }}
                     >
                       Send PO
                     </button>
@@ -532,8 +351,6 @@ function SourcingOfferExtraDetails() {
               </div>
             </div>
           </section>
-
-          <Footer />
         </>
       )}
     </>

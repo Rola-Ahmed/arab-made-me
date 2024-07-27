@@ -29,7 +29,6 @@ function PurchasingOrderForm(props) {
     setErrorMsg,
   } = props;
 
-  console.log("formValidation", formValidation);
   return (
     <form
       id="view"
@@ -248,14 +247,6 @@ function PurchasingOrderForm(props) {
             />
           </div>
 
-          {/* <div className="col-12">
-            <TextareaInput
-              vlaidationName="otherConditions"
-              formValidation={formValidation}
-              isRequired={true}
-              title="other Conditions"
-            />
-          </div> */}
 
           <UploadDocument
             selectedDocs={selectedDocs}
