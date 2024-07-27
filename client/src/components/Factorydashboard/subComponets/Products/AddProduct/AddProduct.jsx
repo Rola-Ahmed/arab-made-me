@@ -4,21 +4,23 @@ import * as Yup from "yup";
 import axios from "axios";
 import { baseUrl } from "config.js";
 import { GlobalMsgContext } from "Context/globalMessage";
-import useCategories from 'hooks/useCategory';
+import useCategories from "hooks/useCategory";
 import "./AddProduct.css";
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
 import LoadingProccess from "components/Shared/Dashboards/LoadingProccess";
 
-
 import { useNavigate } from "react-router-dom";
 import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/FactoryUnVerifiedDash";
+import UploadDocument from "components/Forms/Shared/UploadDocument";
+import TextareaInput from "components/Forms/Shared/TextareaInput";
+import SpecialChar from "components/Forms/Shared/SpecialChar/SpecialChar";
 
 export default function AddProduct() {
   let { isLogin } = useContext(UserToken);
   let { currentUserData } = useContext(userDetails);
   let { setGlobalMsg } = useContext(GlobalMsgContext);
-  let categories =useCategories()
+  let categories = useCategories();
 
   let navigate = useNavigate();
 
@@ -33,8 +35,6 @@ export default function AddProduct() {
   const [selectedDocs, setSelectedDocs] = useState([]);
 
   // get sectors and categrories
-
-
 
   async function fetchFactoryData() {
     try {
@@ -72,12 +72,9 @@ export default function AddProduct() {
       .min(6, "Minimum  length is 6")
       .max(15, "Maximum 15  is legnth"),
 
- 
-
     // guarantee\\\" is not allowed to be em
 
-    guarantee: Yup.string()
-    .max(255, "max 255 is legnth"),
+    guarantee: Yup.string().max(255, "max 255 is legnth"),
     minOrderQuantity: Yup.string()
       .matches(/^[0-9]+$/, "Input Field should contain numbers only")
       .required("Input Field is Required")
@@ -93,31 +90,12 @@ export default function AddProduct() {
 
       .max(255, "max legnth is 255"),
 
-    specialCharKeyWord: Yup.string()
-      // .required("Input field is Required")
-
-      .max(50, "max legnth is 50"),
-
-    specialCharDesc: Yup.string().when("specialCharKeyWord", {
-      is: (schema) => !!schema,
-      then: (schema) =>
-        schema.required("Input field is Required").max(50, "max length is 50"),
-      otherwise: (schema) => schema.nullable(),
-    }),
-
-    ...specialCharacteristicsArr?.reduce((acc, _, index) => {
-      acc[`specialCharKeyWord${index}`] = Yup.string()
-        .required("Input field is Required")
-
-        .max(50, "max legnth is 50");
-
-      acc[`specialCharDesc${index}`] = Yup.string()
-        .required("Input field is Required")
-
-        .max(50, "max legnth is 50");
-
-      return acc;
-    }, {}),
+    productCharacteristic: Yup.array().of(
+      Yup.object().shape({
+        keyword: Yup.string().max(50, "max legnth is  50"),
+        value: Yup.string().max(50, "max legnth is  50"),
+      })
+    ),
   });
 
   let initialValues = {
@@ -130,26 +108,17 @@ export default function AddProduct() {
     maxOrderQuantity: "",
     description: "",
 
-    //   coverImage: null,
-    //   images: null,
-
-    // country: "",
-    // city: "",
     categoryId: "",
     sectorId: "",
     city: factoryDetails?.city || "",
     country: factoryDetails?.country || "",
 
-    specialCharKeyWord: "",
-    specialCharDesc: "",
-
-    ...specialCharacteristicsArr?.reduce((acc, _, index) => {
-      acc[`specialCharKeyWord${index}`] = "";
-
-      acc[`specialCharDesc${index}`] = "";
-
-      return acc;
-    }, {}),
+    productCharacteristic: [
+      {
+        keyword: "",
+        value: "",
+      },
+    ],
   };
 
   let formValidation = useFormik({
@@ -224,17 +193,12 @@ export default function AddProduct() {
           data.maxOrderQuantity = values.maxOrderQuantity;
         }
 
-        if (values.specialCharKeyWord !== "") {
-          data.specialCharacteristics[values.specialCharKeyWord] =
-            values.specialCharDesc;
-        }
-
-        if (specialCharacteristicsArr?.length > 0) {
-          specialCharacteristicsArr.forEach((index) => {
-            const key = values[`specialCharKeyWord${index}`];
-            const desc = values[`specialCharDesc${index}`];
-            data.specialCharacteristics[key] = desc;
-          });
+        if (Object.keys(values.productCharacteristic).length != 0) {
+          // create an object with the keyword property as the key and the value property as the value.
+          const obj = Object.fromEntries(
+            values.productCharacteristic.map((obj) => [obj.keyword, obj.value])
+          );
+          data.specialCharacteristics = obj;
         }
 
         let config = {
@@ -267,15 +231,13 @@ export default function AddProduct() {
           }));
           setIsLoading(false);
           const targetElement = document.getElementById("view");
-          if(targetElement)
-            {  
-               targetElement.scrollIntoView({
+          if (targetElement) {
+            targetElement.scrollIntoView({
               behavior: "smooth",
               block: "start",
             });
-      
-            }
-    
+          }
+
           return;
         }
       } catch (error) {
@@ -396,15 +358,12 @@ export default function AddProduct() {
             response: response?.data?.message,
           }));
           const targetElement = document.getElementById("view");
-          if(targetElement)
-            {  
-               targetElement.scrollIntoView({
+          if (targetElement) {
+            targetElement.scrollIntoView({
               behavior: "smooth",
               block: "start",
             });
-      
-            }
-    
+          }
         }
       })
 
@@ -489,8 +448,6 @@ export default function AddProduct() {
       });
   }
 
-  
-
   useEffect(() => {
     if (factoryDetails && factoryDetails.length !== 0) {
       formValidation.setValues((prevValues) => ({
@@ -519,125 +476,14 @@ export default function AddProduct() {
     });
   }
 
-  function removeSelectedDoc(docId, keyWordDoc) {
-    // when removing
-    setSelectedDocs((prevValue) =>
-      prevValue?.filter(
-        (doc) => !(doc?.pdfFile?.name === docId && doc?.keyWord === keyWordDoc)
-      )
-    );
-  }
+  // if (
+  //   currentUserData?.factoryVerified == "0" ||
+  //   currentUserData?.factoryEmailActivated == false
+  // ) {
+  //   return <FactoryUnVerified />;
+  // }
 
-  if (
-    currentUserData?.factoryVerified == "0" ||
-    currentUserData?.factoryEmailActivated == false
-  ) {
-    return <FactoryUnVerified />;
-  }
-
-  function handleMultiMediaValidation(e, keyWordDoc) {
-    const count = selectedDocs?.filter(
-      (item) => item?.keyWord === "docs"
-    )?.length;
-
-    if (count >= 3) {
-      setErrorMsg((prevErrors) => ({
-        ...prevErrors,
-        [keyWordDoc]: `Max length is 3`,
-      }));
-      return;
-    }
-    // clear error message
-    setErrorMsg((prevErrors) => {
-      const newErrors = { ...prevErrors };
-      delete newErrors[keyWordDoc];
-      return newErrors;
-    });
-    const acceptedExtensions = ["png", "jpeg", "jpg"];
-    const fileType = e.type;
-
-    const isAcceptedType = acceptedExtensions?.some((extension) =>
-      fileType?.toLowerCase()?.includes(extension?.toLowerCase())
-    );
-
-    if (!isAcceptedType) {
-      setErrorMsg((prevErrors) => ({
-        ...prevErrors,
-        [keyWordDoc]:
-          // "Invalid file format. Only pdf, png, jpeg, jpg, mp4 allowed"
-          `Invalid file format. Only ${acceptedExtensions.join(
-            ", "
-          )} are allowed`,
-      }));
-      return;
-    }
-
-    const mediaNameExists = selectedDocs?.some(
-      (item) => item?.pdfFile?.name === e?.name && item?.keyWord === keyWordDoc
-    );
-
-    // if image aleady exisit
-    if (mediaNameExists) {
-      setErrorMsg((prevErrors) => ({
-        ...prevErrors,
-        [keyWordDoc]: "Media already exists",
-      }));
-      return;
-    } else {
-    }
-
-    let updatedDocs = [...selectedDocs];
-
-    // Image loaded successfully
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      updatedDocs.push({
-        keyWord: keyWordDoc,
-        pdfFile: e,
-        imageReaderURL: reader.result,
-        onprogress: 100,
-      });
-
-      setSelectedDocs(updatedDocs);
-      const coverImgInput = document?.getElementById("coverimginput");
-      if (coverImgInput) {
-        coverImgInput.value = "";
-      }
-    };
-
-    reader.onprogress = (event) => {
-      // Calculate and show the loading percentage
-      if (event.lengthComputable) {
-        const percentage = (event.loaded / event.total) * 100;
-
-        // if (updatedDocs.length > 0) {
-        //   // Adding a new attribute to the last object
-        //   // updatedDocs[updatedDocs.length - 1].onprogress = percentage?.toFixed(0);
-        //   // setSelectedDocs([...updatedDocs]);
-
-        //   // setSelectedDocs((prevDocs) => {
-        //   //   const updatedDocs = [...prevDocs];
-        //   //   if (updatedDocs.length > 0) {
-        //   //     updatedDocs[updatedDocs.length - 1].onprogress = percentage?.toFixed(0);
-        //   //   }
-        //   //   return updatedDocs;
-        //   // });
-        // }
-        // setimgloadin(percentage);
-      }
-    };
-
-    reader.onerror = () => {
-      setErrorMsg((prevErrors) => ({
-        ...prevErrors,
-        [keyWordDoc]: "Error loading image",
-      }));
-    };
-
-    reader.readAsDataURL(e);
-  }
-
-  console.log("formValidation",formValidation,setErrorMsg);
+  console.log("formValidation", formValidation, setErrorMsg);
   console.log("console trals");
   return (
     <>
@@ -783,8 +629,6 @@ export default function AddProduct() {
                 </div>
               </div>
 
-            
-
               <div className="col-4">
                 <div className="form-group">
                   <label>guarantee </label>
@@ -851,438 +695,47 @@ export default function AddProduct() {
               </div>
 
               {/* ---------------------------- */}
-
-              <div className="col-12 ">
-                {/* <div className="form-group form-control "> */}
-                <div className="form-group form-control ">
-                  <div className="form-group timeline-container ">
-                    {/* <label> Timeline</label> */}
-
-                    <label forhtml="">Product Characteristics </label>
-                    {/* 1 */}
-                    <div className=" timeline form-control checked d-flex justify-content-between align-content-center">
-                      <div className="form-group w-50">
-                        <label forhtml="specialCharKeyWord">Keyword </label>
-                        <input
-                          type="text"
-                          id="specialCharKeyWord"
-                          name="specialCharKeyWord"
-                          className="form-control"
-                          placeholder="Color"
-                          onChange={formValidation.handleChange}
-                          onBlur={formValidation.handleBlur}
-                          value={formValidation.values.specialCharKeyWord}
-                        />
-
-                        {formValidation.errors.specialCharKeyWord &&
-                        formValidation.touched.specialCharKeyWord ? (
-                          <small className="form-text text-danger">
-                            {formValidation.errors.specialCharKeyWord}
-                          </small>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-
-                      <div className="form-group w-50">
-                        <label forhtml="specialCharDesc">description </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="specialCharDesc"
-                          name="specialCharDesc"
-                          placeholder="Red"
-                          onChange={formValidation.handleChange}
-                          onBlur={formValidation.handleBlur}
-                          value={formValidation.values.specialCharDesc}
-                        />
-
-                        {formValidation.errors.specialCharDesc &&
-                        formValidation.touched.specialCharDesc ? (
-                          <small className="form-text text-danger">
-                            {formValidation.errors.specialCharDesc}
-                          </small>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                    </div>
-
-                    {specialCharacteristicsArr?.map((dateSection, index) => (
-                      <>
-                        <div className="  timeline form-control checked d-flex justify-content-between align-content-center ">
-                          <div className="row w-100 ">
-                            <div className="form-group  col-6 col-6-50  ">
-                              <label forhtml="specialCharKeyWord">
-                                Keyword {index + 2}*
-                              </label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                id={`specialCharKeyWord${index}`}
-                                // placeholder={`${formValidation.values.specialCharKeyWord}${index} --`}
-                                onChange={formValidation.handleChange}
-                                onBlur={formValidation.handleBlur}
-                                // value={`${formValidation.values.specialCharKeyWord0} ----`}
-                                value={
-                                  formValidation.values[
-                                    `specialCharKeyWord${index}`
-                                  ]
-                                }
-                              />
-                              {formValidation.errors[
-                                `specialCharKeyWord${index}`
-                              ] &&
-                              formValidation.touched[
-                                `specialCharKeyWord${index}`
-                              ] ? (
-                                <small className="form-text text-danger">
-                                  {
-                                    formValidation.errors[
-                                      `specialCharKeyWord${index}`
-                                    ]
-                                  }
-                                </small>
-                              ) : (
-                                ""
-                              )}
-                            </div>
-                            <div
-                              className={`form-group    ${
-                                specialCharacteristicsArr?.length - 1 === index
-                                  ? "col-5"
-                                  : " col-6 col-6-50 "
-                              }`}
-                            >
-                              <label forhtml="specialCharDesc">
-                                description {index + 2}*
-                              </label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                id={`specialCharDesc${index}`}
-                                placeholder="Enter Quantity"
-                                onChange={formValidation.handleChange}
-                                onBlur={formValidation.handleBlur}
-                                value={
-                                  formValidation.values[
-                                    `specialCharDesc${index}`
-                                  ]
-                                }
-                              />
-                              {formValidation.errors[
-                                `specialCharDesc${index}`
-                              ] &&
-                              formValidation.touched[
-                                `specialCharDesc${index}`
-                              ] ? (
-                                <small className="form-text text-danger">
-                                  {
-                                    formValidation.errors[
-                                      `specialCharDesc${index}`
-                                    ]
-                                  }
-                                </small>
-                              ) : (
-                                ""
-                              )}
-                            </div>
-                            {specialCharacteristicsArr?.length - 1 === index ? (
-                              <div className=" col-1 h-100 justify-content-center align-items-center d-flex   pt-4">
-                                <i
-                                  class=" cursor fa-solid fa-minus text-white px-3 py-2"
-                                  onClick={() => removenewSepcialChar()}
-                                ></i>
-                                {/* {dateSection} */}
-                              </div>
-                            ) : (
-                              ""
-                            )}
-                          </div>
-                        </div>
-                      </>
-                    ))}
-
-                    {specialCharacteristicsArr.length < 4 ? (
-                      <div className="action ">
-                        <div
-                          className="cursor"
-                          onClick={() => addnewSepcialChar()}
-                        >
-                          <button className="action-btn btn-1 " type="button">
-                            add
-                          </button>
-                        </div>
-                      </div>
-                    ) : (
-                      ""
-                    )}
+              <div className="col-12 ms-3 ">
+                <div className="border-row row">
+                  <div>
+                    <label className="pb-2">Product Characteristics</label>
                   </div>
+
+                  <SpecialChar formValidation={formValidation} />
                 </div>
               </div>
+
               {/* ----------------------------------------- */}
-              <div className="col-12">
-                <div className="form-group gap">
-                  <label className="form-title">Upload Images </label>
-                  <label
-                    className="mb-0 drop-drag-area  p-5 text-center cursor w-100 "
-                    htmlFor="imagesInput"
-                    onDrop={(e) => {
-                      e.preventDefault();
-                      const files = e?.dataTransfer?.files;
-                      if (files && files.length > 0) {
-                        handleMultiMediaValidation(files?.[0], "images");
-                      }
 
-                      e.target.classList.remove("highlight");
-                    }}
-                    onDragOver={(e) => {
-                      e.target.classList.add("highlight");
+              <UploadDocument
+                selectedDocs={selectedDocs}
+                errorMsg={errorMsg}
+                setSelectedDocs={setSelectedDocs}
+                MediaName="images"
+                mediaMaxLen="3"
+                meidaAcceptedExtensions={["pdf", "png", "jpeg", "jpg"]}
+                setErrorMsg={setErrorMsg}
+                title="Upload Images *"
+              />
 
-                      e.preventDefault();
-                    }}
-                    onDragLeave={(e) => {
-                      e.preventDefault();
-                      e.target.classList.remove("highlight");
-                    }}
-                    onChange={(e) => {
-                      const files = e.target.files;
+              <UploadDocument
+                selectedDocs={selectedDocs}
+                errorMsg={errorMsg}
+                setSelectedDocs={setSelectedDocs}
+                MediaName="coverImage"
+                mediaMaxLen="3"
+                meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
+                setErrorMsg={setErrorMsg}
+                title="Upload coverImage *"
+              />
 
-                      if (files && files?.length > 0) {
-                        handleMultiMediaValidation(files?.[0], "images");
-                      }
-                    }}
-                  >
-                    Drag and drop files here or click to select files
-                    <input
-                      type="file"
-                      id="imagesInput"
-                      // className="d-none"
-                      hidden
-                      onChange={(e) => {
-                        const files = e.target.files;
+              <TextareaInput
+                vlaidationName="description"
+                formValidation={formValidation}
+                isRequired={true}
+                title="description"
+              />
 
-                        if (files && files?.length > 0) {
-                          handleMultiMediaValidation(files?.[0], "images");
-                        }
-                      }}
-                      multiple
-                    />
-                  </label>
-                  <small className="form-text small-note">
-                    Only pdf, png, jpeg, and jpg are allowed. A maximum of 3
-                    pictures is permitted.
-                  </small>
-
-                  <small className="text-danger">{errorMsg?.images}</small>
-
-                  {/* <div className=" row w-100 "> */}
-                  {selectedDocs.map(
-                    (item, index) =>
-                      // <div className="col-12">
-                      item.keyWord === "images" && (
-                        <div key={index} className="col-12 img-uploaded">
-                          <div className="d-flex justify-content-between align-items-center  img-cont-file">
-                            {/* <div> */}
-
-                            <div className="d-flex justify-content-start align-items-center ">
-                              <img
-                                // src={item.imageReaderURL}
-                                src={item.imageReaderURL}
-                                className="image-upload-file me-3"
-                              />
-                            </div>
-
-                            <div className="w-100">
-                              <div className="d-flex justify-content-between align-items-center">
-                                <div>
-                                  <p>{item?.pdfFile?.name}</p>
-                                  <p className="">
-                                    {(item?.pdfFile?.size / 1024)?.toFixed(2)}
-                                    KB
-                                  </p>
-                                  {/* {imgloadin} */}
-                                </div>
-
-                                <div
-                                  onClick={() =>
-                                    removeSelectedDoc(
-                                      item?.pdfFile?.name,
-                                      "images",
-                                      index
-                                    )
-                                  }
-                                  className="cursor"
-                                >
-                                  <i className="fa-solid fa-trash-can"></i>
-                                </div>
-                              </div>
-
-                              <div className="d-flex  align-items-center">
-                                <progress
-                                  className="w-100"
-                                  id="progressBar"
-                                  max="100"
-                                  value={item?.onprogress || 0}
-                                  // value="30"
-                                  imgloadin
-                                ></progress>
-                                {item?.onprogress}%
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      )
-                    // </div>
-                  )}
-                </div>
-              </div>
-
-              {/* ------------------------------------------ */}
-
-              <div className="col-12">
-                <div className="form-group gap">
-                  <label className="form-title">
-                    Upload coverImage <span className="text-danger">*</span>
-                  </label>
-                  <label
-                    className="mb-0 drop-drag-area  p-5 text-center cursor w-100 "
-                    htmlFor="coverImageInput"
-                    onDrop={(e) => {
-                      e.preventDefault();
-                      const files = e?.dataTransfer?.files;
-                      if (files && files.length > 0) {
-                        handleMultiMediaValidation(files?.[0], "coverImage");
-                      }
-
-                      e.target.classList.remove("highlight");
-                    }}
-                    onDragOver={(e) => {
-                      e.target.classList.add("highlight");
-
-                      e.preventDefault();
-                    }}
-                    onDragLeave={(e) => {
-                      e.preventDefault();
-                      e.target.classList.remove("highlight");
-                    }}
-                    onChange={(e) => {
-                      const files = e.target.files;
-
-                      if (files && files?.length > 0) {
-                        handleMultiMediaValidation(files?.[0], "coverImage");
-                      }
-                    }}
-                  >
-                    Drag and drop files here or click to select files
-                    <input
-                      type="file"
-                      id="coverImageInput"
-                      // className="d-none"
-                      hidden
-                      onChange={(e) => {
-                        const files = e.target.files;
-
-                        if (files && files?.length > 0) {
-                          handleMultiMediaValidation(files?.[0], "coverImage");
-                        }
-                      }}
-                      multiple
-                    />
-                  </label>
-                  <small className="form-text small-note">
-                    Only pdf, png, jpeg, and jpg are allowed. A maximum of 3
-                    pictures is permitted.
-                  </small>
-
-                  <small className="text-danger">{errorMsg?.coverImage}</small>
-
-                  {/* <div className=" row w-100 "> */}
-                  {selectedDocs.map(
-                    (item, index) =>
-                      // <div className="col-12">
-                      item.keyWord === "coverImage" && (
-                        <div key={index} className="col-12 img-uploaded">
-                          <div className="d-flex justify-content-between align-items-center  img-cont-file">
-                            {/* <div> */}
-
-                            <div className="d-flex justify-content-start align-items-center ">
-                              <img
-                                // src={item.imageReaderURL}
-                                src={item.imageReaderURL}
-                                className="image-upload-file me-3"
-                              />
-                            </div>
-
-                            <div className="w-100">
-                              <div className="d-flex justify-content-between align-items-center">
-                                <div>
-                                  <p>{item?.pdfFile?.name}</p>
-                                  <p className="">
-                                    {(item?.pdfFile?.size / 1024)?.toFixed(2)}
-                                    KB
-                                  </p>
-                                  {/* {imgloadin} */}
-                                </div>
-
-                                <div
-                                  onClick={() =>
-                                    removeSelectedDoc(
-                                      item?.pdfFile?.name,
-                                      "coverImage",
-                                      index
-                                    )
-                                  }
-                                  className="cursor"
-                                >
-                                  <i className="fa-solid fa-trash-can"></i>
-                                </div>
-                              </div>
-
-                              <div className="d-flex  align-items-center">
-                                <progress
-                                  className="w-100"
-                                  id="progressBar"
-                                  max="100"
-                                  value={item?.onprogress || 0}
-                                  // value="30"
-                                  imgloadin
-                                ></progress>
-                                {item?.onprogress}%
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      )
-                    // </div>
-                  )}
-                </div>
-              </div>
-              {/* ------------------------------------------ */}
-
-              <div className="col-12">
-                <div className="form-group">
-                  <label>
-                    description <span className="text-danger">*</span>
-                  </label>
-                  <textarea
-                    type="text"
-                    className="form-control"
-                    id="description"
-                    onChange={formValidation.handleChange}
-                    onBlur={formValidation.handleBlur}
-                    value={formValidation.values.description}
-                  ></textarea>
-                  {formValidation.errors.description &&
-                  formValidation.touched.description ? (
-                    <small className="text-danger">
-                      {formValidation.errors.description}
-                    </small>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              </div>
               <div className="col-12">
                 <div className="btn-container d-flex justify-content-center">
                   {isLoading ? (
@@ -1299,21 +752,20 @@ export default function AddProduct() {
                             Object.keys(formValidation.errors)?.[0]
                           );
 
-                          if(targetElement)
-                            {  
-                               targetElement.scrollIntoView({
+                          if (targetElement) {
+                            targetElement.scrollIntoView({
                               behavior: "smooth",
                               block: "start",
                             });
-                      
-                            }
-                            else {
-                              const targetElement = document.getElementById("view");
-                              targetElement.scrollIntoView({
-                                behavior: "smooth",
-                                block: "center",
-                              });
-                            }
+                          } else {
+                            const targetElement = document.getElementById(
+                              "view"
+                            );
+                            targetElement.scrollIntoView({
+                              behavior: "smooth",
+                              block: "center",
+                            });
+                          }
                         }
                       }}
                     >
