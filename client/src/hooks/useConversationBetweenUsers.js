@@ -106,6 +106,7 @@ const useConversationBetweenUsers = () => {
         });
 
         socket.on("newMessage", (data) => {
+          console.log("data",data)
           fetchReqData();
         });
 
