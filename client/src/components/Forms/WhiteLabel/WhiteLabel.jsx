@@ -40,8 +40,12 @@ export default function WhiteLabel(props) {
     setIsLoading((prev) => ({ ...prev, submitLoading: loadingStatus }));
   }
 
-  let { submitForm, privateLabelAdded, submitDocs, handleSubmitMsg } =
-    useFormSubmission(isLogin, setErrorMsg, setLoadingState);
+  let {
+    submitForm,
+    privateLabelAdded,
+    submitDocs,
+    handleSubmitMsg,
+  } = useFormSubmission(isLogin, setErrorMsg, setLoadingState);
   // ------------------------Form Validation
 
   let validationSchema = Yup.object().shape({
@@ -51,7 +55,7 @@ export default function WhiteLabel(props) {
     //     return value && value.length > 0;
     //   }),
     // // .required("Input field is Required"),
-    productId: Yup.string().required("Input field is Required"),
+    productId: Yup.string(),
     quantity: reqQualityValidate,
 
     deadline: requiredDateValidate,

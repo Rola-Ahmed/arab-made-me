@@ -5,7 +5,6 @@ import EtcProductPopUp from "../Shared/EtcProductPopUp";
 import UploadDocument from "../Shared/UploadDocument";
 
 import SelectWithTextarea from "../Shared/SelectWithTextarea";
-import FormVlaidtionError from "../Shared/FormVlaidtionError";
 
 import { shippingConditionsArr } from "constants/shippingConditionsArr";
 import { packingConditionsArr } from "constants/packingConditionsArr";
@@ -34,17 +33,17 @@ export default function WhiteLabelForm(props) {
 
   const [selectedItem, setSelectedItem] = useState(null);
 
-  const handleCheckboxProductNameChange = (item, isChecked) => {
-    let productNameArr = formValidation.values.productName;
+  // const handleCheckboxProductNameChange = (item, isChecked) => {
+  //   let productNameArr = formValidation.values.productName;
 
-    // let updatedProductNames;
-    if (isChecked) {
-      productNameArr.push(item);
-    } else {
-      productNameArr = productNameArr.filter((name) => name != item);
-    }
-    formValidation.setFieldValue("productName", productNameArr);
-  };
+  //   // let updatedProductNames;
+  //   if (isChecked) {
+  //     productNameArr.push(item);
+  //   } else {
+  //     productNameArr = productNameArr.filter((name) => name != item);
+  //   }
+  //   formValidation.setFieldValue("productName", productNameArr);
+  // };
 
   return (
     <>
@@ -52,7 +51,7 @@ export default function WhiteLabelForm(props) {
         id="view"
         className="container container-req "
         onSubmit={formValidation.handleSubmit}
-        style={{ scrollMargin: "300vh !important" }}
+        // style={{ scrollMargin: "300vh !important" }}
       >
         <div className="input-content ">
           {errorMsg?.response ? (
@@ -80,6 +79,7 @@ export default function WhiteLabelForm(props) {
                       vlaidationNameOnId="productId"
                       vliadationNameOnName="productName"
                       title={"selected product"}
+                      isRequired={false}
                     />
                   </div>
                 )}

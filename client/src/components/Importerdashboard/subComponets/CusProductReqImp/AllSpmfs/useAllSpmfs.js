@@ -18,7 +18,6 @@ const useAllSpmfs = (isLogin, filter) => {
   const fetchReqLeng = async () => {
     const params = `formsFilter=${filter?.formsFilter}&sort=${filter?.sort}`;
     const result = await getSpmfs(params, { authorization: isLogin });
-    // console.log("result",result)
 
     if (result?.success) {
       const totalReq = result.data?.spmfs?.length || 1;
@@ -36,7 +35,6 @@ const useAllSpmfs = (isLogin, filter) => {
     setReqData([]);
     const params = `size=${pagination.displayProductSize}&page=${pagination.currentPage}&formsFilter=${filter?.formsFilter}&sort=${filter?.sort}&include=factory`;
     const result = await getSpmfs(params, { authorization: isLogin });
-    // console.log("result", result);
 
     if (result?.success) {
       setReqData(result?.data?.spmfs);

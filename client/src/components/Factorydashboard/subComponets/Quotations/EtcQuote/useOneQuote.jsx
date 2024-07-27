@@ -7,6 +7,7 @@ import { getOnePrivateLabel } from "Services/privateLabel";
 import { getOneRFQ } from "Services/rfq";
 import { getOneWhiteLabel } from "Services/whiteLabel";
 import { getOneSpmf } from "Services/customProduct";
+import { getOneSourcingReq } from "Services/sourcingReuqest";
 
 export function useOneQuote() {
   const { isLogin } = useContext(UserToken);
@@ -14,7 +15,7 @@ export function useOneQuote() {
   const quotationsId = searchParams.get("quotationsId");
 
   const [apiLoadingData, setApiLoadingData] = useState({
-    reqData: true,
+    loading: true,
     errorWhileLoading: null,
     findQuotation: true,
   });
@@ -24,12 +25,6 @@ export function useOneQuote() {
 
   useEffect(() => {
     async function fetchReqData() {
-      setApiLoadingData((prevVal) => ({
-        ...prevVal,
-        reqData: true,
-        findQuotation: true,
-      }));
-
       const QouteIdConfigResp = await getOneQuote(
         quotationsId,
         "include=importer"
@@ -44,31 +39,41 @@ export function useOneQuote() {
 
         let qouteOnId = "";
         let qouteOnType = "";
+        let title = "";
+
         // let productId = "";
-       
+
         if (quotations?.quotationRequestId) {
           qouteOnId = quotations.quotationRequestId;
           qouteOnType = "rfq";
+          title = " RFQ";
           // productId = quotations.productId;
         }
         if (quotations?.sourcingRequestId) {
           qouteOnId = quotations.sourcingRequestId;
-          qouteOnType = "offer";
+          qouteOnType = "request";
+          title = " Sourcing Request";
+
           // productId = quotations.productId;
         }
         if (quotations?.specialManufacturingRequestId) {
           qouteOnId = quotations.specialManufacturingRequestId;
           qouteOnType = "spmf";
+          title = " Custom Product Request";
         }
         if (quotations?.privateLabelingId) {
           qouteOnId = quotations.privateLabelingId;
           qouteOnType = "privateLabeling";
+          title = " Private Labeling";
+
           // productId = quotations.productId;
         }
 
         if (quotations?.whiteLabelingId) {
           qouteOnId = quotations.whiteLabelingId;
           qouteOnType = "whiteLabeling";
+          title = "White Labeling";
+
           // productId = quotations.productId;
         }
         setRequestedData((prevData) => ({
@@ -76,10 +81,9 @@ export function useOneQuote() {
           ...quotations,
           qouteOnId: qouteOnId,
           qouteOnType: qouteOnType,
+          title: title,
           // productId: productId,
         }));
-
-       
 
         // QOUTION ON ON OF THESE
         // "quotationRequestId": null,
@@ -89,6 +93,12 @@ export function useOneQuote() {
         // "whiteLabelingId": null,
         // "quotationRequest": null
       }
+      setApiLoadingData((prevVal) => ({
+        ...prevVal,
+
+        loading: QouteIdConfigResp?.loadingStatus,
+        errorWhileLoading: QouteIdConfigResp?.loadierrorngStatus,
+      }));
     }
 
     fetchReqData();
@@ -98,53 +108,45 @@ export function useOneQuote() {
   useEffect(() => {
     async function fetchReqData() {
       let result = "";
-      if (requestedData?.qouteOnType == "offer") {
-        // result = await getOneQuote(requestedData.qouteOnId, "include=product");
+      if (requestedData?.qouteOnType == "request") {
+        result = await getOneSourcingReq(requestedData?.qouteOnId, {});
       }
       if (requestedData?.qouteOnType == "rfq") {
-        result = await getOneRFQ(requestedData.qouteOnId, "include=product");
-
-        console.log("resultssss", result);
+        result = await getOneRFQ(requestedData?.qouteOnId, "include=product");
       }
 
       if (requestedData?.qouteOnType == "spmf") {
-        result = await getOneSpmf(requestedData.qouteOnId, {});
-
-        console.log("resultssss", result);
+        result = await getOneSpmf(requestedData?.qouteOnId, {});
       }
       if (requestedData?.qouteOnType == "whiteLabeling") {
         result = await getOneWhiteLabel(
-          requestedData.qouteOnId,
+          requestedData?.qouteOnId,
           "include=product"
         );
-
-        console.log("resultssss", result);
       }
       if (requestedData?.qouteOnType == "privateLabeling") {
         result = await getOnePrivateLabel(
-          requestedData.qouteOnId,
+          requestedData?.qouteOnId,
           "include=product"
         );
-
-        console.log("resultssss", result);
       }
 
       if (result?.success) {
-        if (requestedData?.qouteOnType == "offer") {
-          // setQouteOn(result.data.specialmanufacturingrequests);
+        if (requestedData?.qouteOnType == "request") {
+          setQouteOn(result?.data?.sourcingrequests);
         }
         if (requestedData?.qouteOnType == "rfq") {
-          setQouteOn(result.data.quotationrequests);
+          setQouteOn(result?.data?.quotationrequests);
         }
 
         if (requestedData?.qouteOnType == "spmf") {
-          setQouteOn(result.data.specialmanufacturingrequests);
+          setQouteOn(result?.data?.specialmanufacturingrequests);
         }
         if (requestedData?.qouteOnType == "whiteLabeling") {
-          setQouteOn(result.data.whitelabelings);
+          setQouteOn(result?.data?.whitelabelings);
         }
         if (requestedData?.qouteOnType == "privateLabeling") {
-          setQouteOn(result.data.privatelabelings);
+          setQouteOn(result?.data?.privatelabelings);
         }
       }
     }

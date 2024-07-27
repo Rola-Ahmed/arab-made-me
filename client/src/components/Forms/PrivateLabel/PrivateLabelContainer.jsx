@@ -29,10 +29,8 @@ export default function PrivateLabelContainerAPI() {
         let result;
         if (productId) {
           result = await fetchProductData(productId);
-        } else if (!productId) {
-          result = await fetchFactoryProducts(factoryId);
         } else {
-          result = await fetchOneFactory(factoryId);
+          result = await fetchFactoryProducts(factoryId);
         }
 
         // if there is error
@@ -44,6 +42,7 @@ export default function PrivateLabelContainerAPI() {
             if (result?.data?.products?.length > 0) {
               setProductDetailsArr(result.data.products);
             } else {
+              result = await fetchOneFactory(factoryId);
               setFactoryDataOnly(result?.data?.factories);
             }
           }

@@ -10,8 +10,6 @@ import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
 import LoadingProccess from "components/Shared/Dashboards/LoadingProccess";
 
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 import { useNavigate } from "react-router-dom";
 import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/FactoryUnVerifiedDash";
@@ -208,10 +206,12 @@ export default function AddProduct() {
         message: "Cover image is required",
       }));
       const targetElement = document.getElementById("view");
-      targetElement.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
+      if (targetElement) {
+        targetElement.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      }
 
       return setIsLoading(false);
     }
@@ -293,10 +293,15 @@ export default function AddProduct() {
           }));
           setIsLoading(false);
           const targetElement = document.getElementById("view");
-          targetElement.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-          });
+          if(targetElement)
+            {  
+               targetElement.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+      
+            }
+    
           return;
         }
       } catch (error) {
@@ -417,10 +422,15 @@ export default function AddProduct() {
             response: response?.data?.message,
           }));
           const targetElement = document.getElementById("view");
-          targetElement.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-          });
+          if(targetElement)
+            {  
+               targetElement.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+      
+            }
+    
         }
       })
 
@@ -505,24 +515,7 @@ export default function AddProduct() {
       });
   }
 
-  // useEffect(() => {
-  //   if (allCategories && allCategories?.length !== 0) {
-  //     formValidation.setValues({
-  //       ...formValidation.values,
-  //       categoryId: allCategories?.[0]?.id || "",
-  //     });
-  //   }
-  // }, [allCategories]);
-
-  // useEffect(() => {
-  //   if (allCategories && allCategories?.length !== 0) {
-  //     formValidation.setValues((prevValues) => ({
-  //       ...prevValues,
-  //       categoryId: allCategories?.[0]?.id || "",
-  //       sectorId: allCategories?.[0]?.sectorId || "",
-  //     }));
-  //   }
-  // }, [allCategories]);
+  
 
   useEffect(() => {
     if (factoryDetails && factoryDetails.length !== 0) {
@@ -670,12 +663,13 @@ export default function AddProduct() {
     reader.readAsDataURL(e);
   }
 
+  console.log("formValidation",formValidation,setErrorMsg);
+  console.log("console trals");
   return (
     <>
       <LoadingProccess show={isLoading} />
 
       <div id="view" className="m-4 order-section  ">
-        <ToastContainer />
         {/* section 1 */}
         <form onSubmit={formValidation.handleSubmit} className="header w-100">
           {/* <form className="header w-100"> */}
@@ -1331,11 +1325,21 @@ export default function AddProduct() {
                             Object.keys(formValidation.errors)?.[0]
                           );
 
-                          // Scroll to the target element
-                          targetElement.scrollIntoView({
-                            behavior: "smooth",
-                            block: "center",
-                          });
+                          if(targetElement)
+                            {  
+                               targetElement.scrollIntoView({
+                              behavior: "smooth",
+                              block: "start",
+                            });
+                      
+                            }
+                            else {
+                              const targetElement = document.getElementById("view");
+                              targetElement.scrollIntoView({
+                                behavior: "smooth",
+                                block: "center",
+                              });
+                            }
                         }
                       }}
                     >

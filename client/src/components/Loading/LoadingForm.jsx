@@ -2,16 +2,15 @@ import "./Loading.css";
 import Footer from "components/main/Footer/Footer";
 import Header from "components/main/Header/Header";
 import Navbar from "components/main/Navbar/Navbar";
+import Loading from "./Loading";
 export default function LoadingForm(props) {
   return (
     <>
       <Navbar />
-      <Header title={props?.title}  />
+      <Header title={props?.title} />
 
-      <div className="my-3 py-2 ">
-        <div className="loading my-5 ">
-          <div className="square-3 "> </div>
-        </div>
+      <div className="d-flex justify-content-center my-5">
+        <Loading />
       </div>
 
       <Footer />

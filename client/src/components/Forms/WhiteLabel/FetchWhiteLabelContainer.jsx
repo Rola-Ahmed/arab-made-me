@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import WhiteLabel from "./WhiteLabel";
 import { useSearchParams } from "react-router-dom";
-import { fetchFactoryProducts } from "Services/factory";
+import { fetchFactoryProducts, fetchOneFactory } from "Services/factory";
 import { fetchProductData } from "Services/products";
 import useAuthFormChecks from "components/Forms/hooks/useAuthFormChecks";
 
@@ -22,6 +22,7 @@ export default function WhiteLabelContainerAPI() {
   });
   const [productDetailsArr, setProductDetailsArr] = useState([]);
   const [productDetails, setProductDetails] = useState({});
+  const [factoryDataOnly, setFactoryDataOnly] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,7 +41,12 @@ export default function WhiteLabelContainerAPI() {
             if (productId) {
               setProductDetails(result.data.products);
             } else {
-              setProductDetailsArr(result.data.products);
+              if (result?.data?.products?.length > 0) {
+                setProductDetailsArr(result.data.products);
+              } else {
+                result = await fetchOneFactory(factoryId);
+                setFactoryDataOnly(result?.data?.factories);
+              }
             }
           }
         }
@@ -93,7 +99,12 @@ export default function WhiteLabelContainerAPI() {
           setIsLoading={setIsLoading}
           productDetails={productDetailsArr}
           // new
-          factoryData={productDetailsArr?.[0]?.factory}
+          // factoryData={productDetailsArr?.[0]?.factory}
+          factoryData={
+            productDetailsArr?.length > 0
+              ? productDetailsArr?.[0]?.factory
+              : factoryDataOnly
+          }
           productName={productName}
           productId={productId}
           factoryId={factoryId}
