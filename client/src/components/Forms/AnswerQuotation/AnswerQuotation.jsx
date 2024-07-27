@@ -16,6 +16,7 @@ export default function AnswerQuotation() {
   const [searchParams] = useSearchParams();
   let { requestType } = useParams();
   const id = searchParams.get("id");
+  console.log('id',id)
   const productName = searchParams.get("productName");
   const productId = searchParams.get("productId");
   const importerId = searchParams.get("userId");
@@ -66,8 +67,12 @@ export default function AnswerQuotation() {
         };
       case "SourcingReq":
         return {
-          formTitle: "Sourcing Offer",
-          extraData: { sourcingRequestId: id || "" },
+          formTitle: "Sourcing Request",
+          extraData: {
+            sourcingRequestId: id || "",
+            importerId: importerId || "",
+            ...(productName && { productName: productName }),
+          },
         };
       case "WhiteLabel":
         return {

@@ -42,7 +42,7 @@ export default function SourcingRequestCard(props) {
       return;
     } else {
       navigate(
-        `/answerQuotation?sourcingRequestId=${id}&productName=${productName}&userId=${importerId}`
+        `/answerQuotation/SourcingReq?id=${id}&productName=${productName}&userId=${importerId}`
       );
     }
   };
