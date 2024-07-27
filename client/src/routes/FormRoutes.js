@@ -9,7 +9,7 @@ import FetchPurchasingOrder from "components/Forms/PurchasingOrder/FetchPurchasi
 import RequestVisit from "components/Forms/RequestVisit/RequestVisit";
 
 import AnswerQuotation from "components/Forms/AnswerQuotation/AnswerQuotation";
-import SourcingOfferExtraDetails from "components/SourcingOfferExtraDetails/SourcingOfferExtraDetails";
+import SourcingOfferExtraDetails from "components/Sourcinghub/SourcingOffers/OneSoursingOffer/OneSoursingOffer";
 
 import OneSourcingReq from "components/Sourcinghub/SourcingRequest/OneReq/OneSourcingReq";
 

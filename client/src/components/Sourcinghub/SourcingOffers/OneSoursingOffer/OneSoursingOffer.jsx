@@ -19,7 +19,7 @@ import { getMonthName as getDate } from "utils/getMonthName";
 import Loading from "components/Loading/Loading";
 import FactoryInfo from "components/Forms/Shared/FactoryInfo";
 
-function SourcingOfferExtraDetails() {
+function OneSoursingOffer() {
   let navigate = useNavigate();
   let { isLogin } = useContext(UserToken);
 
@@ -357,4 +357,4 @@ function SourcingOfferExtraDetails() {
   );
 }
 
-export default SourcingOfferExtraDetails;
+export default OneSoursingOffer;
