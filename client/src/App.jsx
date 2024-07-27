@@ -35,7 +35,7 @@ import Productpage from "components/Products/Productpage/ProductPageContainer";
 import AllProducts from "components/Products/AllProducts/AllProductsContainer";
 
 // Factory Dashboard pages
-import AllSourcingOffers from "components/Sourcinghub/AllSourcingOffers/AllSourcingOffers";
+import AllSourcingOffers from "components/Sourcinghub/SourcingOffers/SourcingOffers";
 
 // sub routes
 // import adminDashboardRoutes from "routes/adminDashboardRoutes";

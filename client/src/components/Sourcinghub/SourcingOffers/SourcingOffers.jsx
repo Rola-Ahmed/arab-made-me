@@ -11,7 +11,7 @@ import { baseUrl, baseUrl_IMG } from "config.js";
 import { useNavigate } from "react-router-dom";
 import PublicPaginate from "components/Shared/PublicPaginate";
 
-function AllSourcingOffers() {
+function SourcingOffers() {
   let navigate = useNavigate();
 
   document.title = "Sourcing Hub";
@@ -246,4 +246,4 @@ function AllSourcingOffers() {
   );
 }
 
-export default AllSourcingOffers;
+export default SourcingOffers;
