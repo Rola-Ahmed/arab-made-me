@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import { baseUrl } from "config.js";
 import { GlobalMsgContext } from "Context/globalMessage";
-
+import useCategories from 'hooks/useCategory';
 import "./AddProduct.css";
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
@@ -18,13 +18,13 @@ export default function AddProduct() {
   let { isLogin } = useContext(UserToken);
   let { currentUserData } = useContext(userDetails);
   let { setGlobalMsg } = useContext(GlobalMsgContext);
+  let categories =useCategories()
 
   let navigate = useNavigate();
 
   const [errorMsg, setErrorMsg] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
-  let [allCategories, setAllCategories] = useState();
   let [factoryDetails, setFactoryDetails] = useState();
   const [specialCharacteristicsArr, SetSpecialCharacteristicsArr] = useState(
     []
@@ -34,31 +34,7 @@ export default function AddProduct() {
 
   // get sectors and categrories
 
-  async function GetCategories() {
-    let config = {
-      method: "get",
 
-      url: `${baseUrl}/categories?include=sector`,
-    };
-
-    axios
-      .request(config)
-      .then((response) => {
-        if (response.data.message == "done") {
-          setAllCategories(response?.data?.categories);
-        } else {
-          //   setErrorMsg((prevErrors) => ({
-          //     ...prevErrors,
-          //     message: response.data.message,
-          //   }));
-        }
-      })
-      .catch((error) => {});
-  }
-
-  useEffect(() => {
-    GetCategories();
-  }, []);
 
   async function fetchFactoryData() {
     try {
@@ -161,8 +137,6 @@ export default function AddProduct() {
     // city: "",
     categoryId: "",
     sectorId: "",
-    // categoryId: allCategories?.[0]?.id || "",
-    // sectorId: allCategories?.[0]?.sectorId || "",
     city: factoryDetails?.city || "",
     country: factoryDetails?.country || "",
 
@@ -733,7 +707,7 @@ export default function AddProduct() {
                     value={formValidation.values.sectorId}
                     onClick={(e) => {
                       let selectedProductName = "";
-                      allCategories.find(
+                      categories?.find(
                         (item) =>
                           item.sectorId == e.target.value
                             ? (selectedProductName = item.id)
@@ -751,7 +725,7 @@ export default function AddProduct() {
                       select
                       <option value="">select</option>
                     </optgroup>
-                    {allCategories?.map((item) => (
+                    {categories?.map((item) => (
                       <optgroup label={item?.name}>
                         <option value={item?.sector?.id}>
                           {item?.sector?.name}
