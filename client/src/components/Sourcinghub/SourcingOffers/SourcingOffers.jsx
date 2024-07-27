@@ -25,15 +25,12 @@ function SourcingOffers() {
   const [pagination, setPagination] = useState(() => ({
     // i want to display 3 pdoructs in the 1st page
     displayProductSize: 600,
-
     currentPage: 1,
-    // totalPage: Math.ceil((allProductsData?.length) /pagination.displayProductSize), // Use 30 as the default display size
+    totalPage: 1,
   }));
 
   async function fetchSourcingReqData() {
     setapiLoadingData(true);
-
-    
 
     try {
       let config = {

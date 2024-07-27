@@ -20,6 +20,7 @@ import BecomomeAFactory from "components/ActionMessages/BecomeAFactory/BecomeAFa
 import { getOneSourcingReq } from "Services/sourcingReuqest";
 import Loading from "components/Loading/Loading";
 import ReadOnly from "components/Forms/Shared/ReadOnly";
+import ImporterInfo from "components/Shared/ImporterInfo";
 
 function OneSourcingReq() {
   let navigate = useNavigate();
@@ -134,6 +135,9 @@ function OneSourcingReq() {
       {!isLoading?.loading && (
         <>
           <section id="view" className="send-po">
+            <div className="container container-po ">
+              <ImporterInfo importerData={PosData?.importer} />
+            </div>
             {/* Grid  */}
             <div className="container container-po ">
               <div className="input-content ">

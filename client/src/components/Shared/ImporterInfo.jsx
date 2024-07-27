@@ -5,13 +5,13 @@ export default function ImporterInfo(props) {
     <div className="container-profile-input w-100">
       <div className="title-contianer-input w-100">
         <div className="d-flex justify-content-between">
-          <p>Buyer Information</p>
+          <p className="h5 fw-bolder title-header">Buyer Information</p>
         </div>
         <div className="w-100 ">
           <div className="row  row-gap">
             <div className="col-6">
               <ReadOnly
-                title="Product Name"
+                title="User Name"
                 value={`${
                   importerData?.repName == null
                     ? " "
@@ -31,6 +31,13 @@ export default function ImporterInfo(props) {
               <ReadOnly
                 title="Representative phone number"
                 value={importerData?.repPhone}
+              />
+            </div>
+
+            <div className="col-6">
+              <ReadOnly
+                title="Representative Whatsapp Number"
+                value={importerData?.socialMedia?.whatsapp}
               />
             </div>
           </div>

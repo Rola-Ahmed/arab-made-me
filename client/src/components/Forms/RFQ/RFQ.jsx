@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+ import { useState, useEffect, useContext } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { UserToken } from "Context/userToken";
@@ -137,9 +137,9 @@ function SendRfq(props) {
           <FactoryInfo productDetails={factoryData} />
         </div>
 
-        <div className="container container-rfq ">
+        {/* <div className="container container-rfq ">
           <CurrentAcccountInfo />
-        </div>
+        </div> */}
 
         {/* Product Decription */}
 

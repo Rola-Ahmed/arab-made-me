@@ -309,6 +309,7 @@ progress {
   margin-top: 6px;
 }
 
+/* ----------------------------------------------------- */
 
 .send-rfq .container-rfq .readOnly,
 .req-visit .container-req .readOnly, .send-po .container-po .readOnly {
@@ -316,6 +317,13 @@ progress {
   background-color: #eaeaea;
 }
 
+.send-rfq .title-header,
+.req-visit .title-header, .send-po .title-header {
+
+  margin-bottom: 24px !important;
+}
+
+/* ----------------------------------------------- */
 
 @media (max-width: 992px) {
   .send-rfq .container-rfq, .req-visit .container-req, .send-po .container-po {
