@@ -58,7 +58,7 @@ export default function SourcingRequestCard(props) {
             </p>
             <p className="mb-1">
               <span className="fw-bold">Requested by</span>
-              {item?.importerName}
+              {item?.importer?.name}
             </p>
             {/* <div className="mb-1 d-flex"> */}
             <p className="mb-1 me-3">

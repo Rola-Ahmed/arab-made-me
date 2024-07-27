@@ -5,8 +5,6 @@ import { userDetails } from "Context/userType";
 
 import "../source.css";
 
-import axios from "axios";
-import { baseUrl } from "config.js";
 import { UserToken } from "Context/userToken";
 import { useNavigate } from "react-router-dom";
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
@@ -15,79 +13,16 @@ import UserNotAuthorized from "components/ActionMessages/FormAccessControl/Popup
 import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/FactoryUnVerifiedPopUpMsg";
 import SourcingRequestCard from "./SourcingRequestCard";
 import PublicPaginate from "components/Shared/PublicPaginate";
+import { getSourcingReuqests } from "Services/sourcingReuqest";
+import Loading from "components/Loading/Loading";
 function Sourcinghub() {
   document.title = "Sourcing Hub";
   let { currentUserData } = useContext(userDetails);
   let { isLogin } = useContext(UserToken);
   let navigate = useNavigate();
 
-  const [allSourcingReqData, setAllSourcingReqData] = useState([]);
-  // const [isLoggedReDirect, setisLoggedReDirect] = useState("");
+  const [reqData, setReqData] = useState([]);
 
-  const [uniqueFactoryIDofProducts, setUniqueFactoryIDofProducts] = useState(
-    []
-  );
-  const [apiLoadingData, setapiLoadingData] = useState(true);
-
-  const [pagination, setPagination] = useState(() => ({
-    // i want to display 3 pdoructs in the 1st page
-    displayProductSize: 8,
-    currentPage: 1,
-    totalPage: 1,
-  }));
-
-  async function fetchSourcingReqData() {
-    setapiLoadingData(true);
-
-    try {
-      let config = {
-        method: "get",
-        url: `${baseUrl}/sourcingRequests/?size=${pagination?.displayProductSize}&page=${pagination?.currentPage}`,
-      };
-
-      const response = await axios.request(config);
-      setAllSourcingReqData(response.data?.sourcingrequests);
-      const uniqueIds = [
-        ...new Set(
-          response.data?.sourcingrequests
-            .map((obj) => obj.importerId) // Extract all factoryIds
-            .filter((id) => id !== null) // Filter out null values
-        ),
-      ];
-
-      setUniqueFactoryIDofProducts(uniqueIds);
-      setapiLoadingData(false);
-    } catch (error) {
-      setapiLoadingData(true);
-    }
-  }
-
-  useEffect(() => {
-    fetchSourcingReqData();
-  }, [pagination?.currentPage]);
-  useEffect(() => {
-    const fetchDataLenght = async () => {
-      try {
-        const response1 = await axios.get(
-          // `${baseUrl}/sourcingRequests?filter=${filter}`
-          `${baseUrl}/sourcingRequests`
-        );
-
-        if (response1.data.message === "done") {
-          setPagination((prevValue) => ({
-            ...prevValue,
-            totalPage: Math.ceil(
-              (response1.data.sourcingrequests?.length || 0) /
-                prevValue.displayProductSize
-            ),
-          }));
-        }
-      } catch (error) {}
-    };
-
-    fetchDataLenght();
-    // }, [filter]);
-  }, [pagination?.currentPage]);
   const [modalShow, setModalShow] = useState({
     isFactoryVerified: false,
     isLogin: false,
@@ -95,35 +30,43 @@ function Sourcinghub() {
     BecomeAfactory: false,
   });
 
-  useEffect(() => {
-    // Promise.all(
-    uniqueFactoryIDofProducts.map(async (importerID) => {
-      try {
-        const productResponse = await axios.get(
-          `${baseUrl}/importers/${importerID}`
-        );
+  const [apiLoadingData, setapiLoadingData] = useState({
+    laoding: true,
+    errorMsg: "",
+  });
 
-        if (productResponse.data.message === "done") {
-          setAllSourcingReqData((prevData) =>
-            prevData.map((value) =>
-              value?.importerId === importerID
-                ? {
-                    ...value,
-                    importerName: productResponse?.data?.importers?.name,
-                    importerRepEmail:
-                      productResponse?.data?.importers?.repEmail,
-                    importerProfileImg:
-                      productResponse?.data?.importers?.importerProfileImg,
-                  }
-                : value
-            )
-          );
-        }
-      } catch (error) {}
+  const [pagination, setPagination] = useState(() => ({
+    displayProductSize: 8,
+    currentPage: 1,
+    totalPage: 1,
+  }));
+
+  async function fetchSourcingReqData() {
+    let result = await getSourcingReuqests(
+      `size=${pagination?.displayProductSize}&page=${pagination?.currentPage}&include=importer`
+    );
+
+    if (result?.success) {
+      setReqData(result.data?.sourcingrequests);
+
+      setPagination((prevValue) => ({
+        ...prevValue,
+        totalPage: Math.ceil(
+          (result.data.sourcingrequests?.length || 1) /
+            prevValue.displayProductSize
+        ),
+      }));
+    }
+
+    setapiLoadingData({
+      laoding: result?.loadingStatus,
+      errorMsg: result?.error,
     });
-  }, [apiLoadingData]);
+  }
 
-  // utils function
+  useEffect(() => {
+    fetchSourcingReqData();
+  }, [pagination?.currentPage]);
 
   return (
     <>
@@ -210,17 +153,25 @@ function Sourcinghub() {
           </li>
         </ul>
 
-        {apiLoadingData ? (
-          <div className="my-3 py-2 ">
-            <div className="loading my-5 ">
-              <div className="square-3 "> </div>
+        {reqData?.length == 0 ? (
+          <>
+            <div className="col-12 w-100 ">
+              {apiLoadingData?.errorMsg ? (
+                <p className="fs-5 text-muted fw-bolder text-5 mt-5 pt-5 mx-auto">
+                  {apiLoadingData?.errorMsg || "No records Found"}
+                </p>
+              ) : (
+                <div className="d-flex justify-content-center">
+                  <Loading />
+                </div>
+              )}
             </div>
-          </div>
+          </>
         ) : (
           <div className="row  row-sourcing pt-5">
             <div class="tab-content" id="pills-tabContent">
               <div class=" row">
-                {allSourcingReqData?.map((item) => (
+                {reqData?.map((item) => (
                   <div className="col-lg-4 sour-card">
                     <SourcingRequestCard
                       item={item}

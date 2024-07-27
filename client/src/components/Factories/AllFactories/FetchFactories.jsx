@@ -37,7 +37,7 @@ export default function FetchFactories() {
 
   const [apiLoadingData, setApiLoadingData] = useState({
     loadingPage: true,
-    errorCausedMsg: true,
+    errorCausedMsg: '',
   });
 
   function getcurrentFilter(location='', search='', sector) {

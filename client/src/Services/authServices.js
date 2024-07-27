@@ -18,7 +18,6 @@ const createRequestConfig = (method, url, headers, data) => ({
 
 // Handle API response
 const handleResponse = (response) => {
-
   // delay(500)
   if (response.data.message === "done" || response.data.message == "updated") {
     return {
@@ -39,9 +38,9 @@ const handleResponse = (response) => {
 // Handle API errors
 const handleError = (error) => {
   let errorMsg = "";
- 
+
   errorMsg = errorHandler(error);
-  
+
   return { data: null, loadingStatus: true, error: errorMsg, success: false };
 };
 
@@ -91,7 +90,6 @@ export const putRequest = async (url, headers, data) => {
   }
 };
 
-
 export const deleteRequest = async (url, headers, data) => {
   try {
     const config = createRequestConfig("delete", url, headers, data);
@@ -102,4 +100,3 @@ export const deleteRequest = async (url, headers, data) => {
     return handleError(error);
   }
 };
-

@@ -309,17 +309,15 @@ export default function TopFactories(props) {
             >
               {apiLoadingData?.loadingPage ? (
                 <>
-                  {apiLoadingData?.errorCausedMsg ? (
-                    <div className="col-12 w-100">
+                  <div className="col-12 w-100">
+                    {apiLoadingData?.errorCausedMsg ? (
                       <p className="fs-5 text-muted fw-bolder text-5 mt-5 pt-5">
                         {apiLoadingData?.errorCausedMsg}
                       </p>
-                    </div>
-                  ) : (
-                    <div className="col-12 w-100">
+                    ) : (
                       <Loading />
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </>
               ) : (
                 // <div className="factoryCard ">
