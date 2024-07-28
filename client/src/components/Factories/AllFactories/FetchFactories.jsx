@@ -14,7 +14,6 @@ export default function FetchFactories() {
   // const filterBySector = searchParams.get("filterBySector");
   // const filterByCategory = searchParams.get("filterByCategory");
 
-  console.log("filterSearch", filterSearch);
   const numOfProductsFetch = 20;
   const [pagination, setPagination] = useState(() => ({
     // i want to display 3 pdoructs in the 1st page
@@ -33,38 +32,22 @@ export default function FetchFactories() {
     filterBySector: [],
     // filterBySector: filterBySector?.split(",")?.map(String) ?? [],
   });
+  console.log("filterSearch", filterSearch);
   console.log("filterfilterfilter", filter);
 
   const [apiLoadingData, setApiLoadingData] = useState({
     loadingPage: true,
-    errorCausedMsg: '',
+    errorCausedMsg: "",
   });
-
-  function getcurrentFilter(location='', search='', sector) {
-    // console.log("location, search",location, search)
-    let param = "";
-
-    if (search) {
-      param.concat(`&filter=${search}`);
-    }
-    if (location) {
-      // param = param + `&location=${search}`;
-      param.concat(`&location=${location}`);
-    }
-    
-    // let param = `&location=${search}&filter=${location}`;
-
-
-    return `&location=${location}&filter=${search}`;
-  }
 
   async function FetchTotalLen() {
     try {
-      let param = getcurrentFilter(filter?.location, filter?.filterSearch, "");
-      console.log("param", param);
+      let params = `location=${filter?.filterByCountry}&filter=${filter?.filterSearch}`;
 
-      let result = await fetchFactorieswithParam(param);
+      let result = await fetchFactorieswithParam(params);
 
+      // console.log("result FetchTotalLen", result);
+      // console.log("result FetchTotalLen params", params);
       if (result?.success) {
         setPagination((prevValue) => ({
           ...prevValue,
@@ -89,31 +72,28 @@ export default function FetchFactories() {
 
   useEffect(() => {
     const fetchFactoriesData = async () => {
-      let param = "";
-      if (filter?.location) {
-        param = getcurrentFilter(filter?.location, filter?.filterSearch, "");
+      let params = `location=${filter?.filterByCountry}&filter=${filter?.filterSearch}`;
+
+      let result = await fetchFactorieswithParam(
+        `size=${pagination?.displayProductSize}&page=${pagination?.currentPage}&${params}`
+      );
+      console.log("result FetchTotalLen", result);
+      console.log("result FetchTotalLen params", params);
+
+      // if there is error
+
+      if (result?.success) {
+        setAllFactoriesData(result.data.factories);
+        const uniqueIds = [
+          ...new Set(
+            result.data.factories
+              .map((obj) => obj.id) // Extract all factoryIds
+              .filter((id) => id !== null) // Filter out null values
+          ),
+        ];
+
+        setUniqueFactoryIDofProducts(uniqueIds);
       }
-      try {
-        let result = await fetchFactorieswithParam(
-          `size=${pagination?.displayProductSize}&page=${pagination?.currentPage}&${param}`
-        );
-
-        // if there is error
-        if (result && result.error) {
-        }
-        if (result?.success) {
-          setAllFactoriesData(result.data.factories);
-          const uniqueIds = [
-            ...new Set(
-              result.data.factories
-                .map((obj) => obj.id) // Extract all factoryIds
-                .filter((id) => id !== null) // Filter out null values
-            ),
-          ];
-
-          setUniqueFactoryIDofProducts(uniqueIds);
-        }
-      } catch (error) {}
     };
 
     fetchFactoriesData();

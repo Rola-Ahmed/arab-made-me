@@ -11,7 +11,7 @@ import HandleUsersBtnAccess, {
 } from "utils/actionBtns/HandleUsersBtnAccess";
 
 import Header from "components/main/Header/Header";
-import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/ImporterUnVerifiedPopUpMsg";
@@ -152,6 +152,29 @@ export default function TopFactories(props) {
     });
   };
 
+  const updateUrl = (filterSeacrh = "") => {
+    console.log("updateUrl", filterSeacrh);
+    const queryParams = new URLSearchParams();
+    const oldUrl = `${window.location.pathname}`;
+
+    if (filterSeacrh != "") {
+      queryParams.set("filterSearch", filterSeacrh);
+    } else {
+      window.history.replaceState(null, "", oldUrl);
+    }
+
+    // if (filters?.filterBypartner != "") {
+    //   queryParams.set("filter", filters.filterBypartner);
+    // }
+
+    // console.log("queryParams.toString()", queryParams.toString());
+    const queryString = queryParams.toString();
+    const newUrl = `${window.location.pathname}?${queryString}`;
+    // Replace the current state in the history without triggering a navigation
+
+    window.history.replaceState(null, "", newUrl);
+  };
+
   return (
     <>
       <IsLoggedIn
@@ -197,11 +220,14 @@ export default function TopFactories(props) {
                 className="in w-100"
                 placeholder="Search here"
                 // value={searchTermSecotr}
+                defaultValue={filter?.filterSearch}
                 id="searchTermSecotr"
                 name="searchTermSecotr"
                 onKeyDown={(e) => {
+                  console.log("enter");
                   if (e.key === "Enter") {
                     SelectedfFlters(e.target.value, "filterSearch");
+                    updateUrl(e.target.value);
                   }
                 }}
               />
@@ -212,9 +238,17 @@ export default function TopFactories(props) {
                 className="filt-btn allproducts text-white w-100"
                 // onClick={() => clearFilters()}
                 onClick={(e) => {
-                  if (e.key === "Enter") {
-                    SelectedfFlters(e.target.value, "filterSearch");
-                  }
+                  // console.log("enter");
+                  // if (e.key === "Enter") {
+
+                  let value = document?.getElementById("searchTermSecotr")
+                    ?.value;
+                  // console.log("enter vaue", value);
+
+                  SelectedfFlters(value, "filterSearch");
+                  updateUrl(value);
+                  //
+                  // }
                 }}
               >
                 Search
