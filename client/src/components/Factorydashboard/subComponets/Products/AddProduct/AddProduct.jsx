@@ -15,12 +15,20 @@ import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/Facto
 import UploadDocument from "components/Forms/Shared/UploadDocument";
 import TextareaInput from "components/Forms/Shared/TextareaInput";
 import SpecialChar from "components/Forms/Shared/SpecialChar/SpecialChar";
-
+import {
+  requiredStringMax255,
+  reqQualityValidate,
+  textAreaValidate,
+} from "utils/validationUtils";
+import { fetchOneFactory } from "Services/factory";
 export default function AddProduct() {
   let { isLogin } = useContext(UserToken);
   let { currentUserData } = useContext(userDetails);
   let { setGlobalMsg } = useContext(GlobalMsgContext);
   let categories = useCategories();
+
+  let [productAdded, setProductAdded] = useState(false);
+  let [productID, setProductID] = useState();
 
   let navigate = useNavigate();
 
@@ -28,67 +36,39 @@ export default function AddProduct() {
   const [isLoading, setIsLoading] = useState(false);
 
   let [factoryDetails, setFactoryDetails] = useState();
-  const [specialCharacteristicsArr, SetSpecialCharacteristicsArr] = useState(
-    []
-  );
 
   const [selectedDocs, setSelectedDocs] = useState([]);
 
   // get sectors and categrories
 
   async function fetchFactoryData() {
-    try {
-      let config = {
-        method: "get",
-        url: `${baseUrl}/factories/${currentUserData.factoryId}`,
-      };
-
-      const response = await axios.request(config);
-
-      if (response.data.message == "done") {
-        setFactoryDetails(response.data.factories);
-      }
-    } catch (error) {}
+    let result = await fetchOneFactory(currentUserData.factoryId);
+    if (result?.success) {
+      setFactoryDetails(result?.data?.factories);
+    }
   }
   useEffect(() => {
     if (currentUserData.factoryId !== undefined) {
       fetchFactoryData();
     }
   }, [currentUserData?.factoryId]);
+
   let validationSchema = Yup.object().shape({
-    name: Yup.string()
-      .required("Input Field is Required")
+    name: requiredStringMax255,
 
-      .max(255, "max 255 legnth"),
+    price: reqQualityValidate,
 
-    price: Yup.string()
-      .matches(/^[0-9]+$/, "Input Field should contain numbers only")
-      .required("Price is required")
-      .min(1, "Minimum price length must  be greater than 1"),
-
-    //   HSN (Harmonized System of Nomenclature) code field i
     hsnCode: Yup.string()
       .required("Input Field is Required")
       .min(6, "Minimum  length is 6")
       .max(15, "Maximum 15  is legnth"),
-
-    // guarantee\\\" is not allowed to be em
-
-    guarantee: Yup.string().max(255, "max 255 is legnth"),
-    minOrderQuantity: Yup.string()
-      .matches(/^[0-9]+$/, "Input Field should contain numbers only")
-      .required("Input Field is Required")
-      .min(1, "Minimum  length is 1"),
-    maxOrderQuantity: Yup.string()
-      .matches(/^[0-9]+$/, "Input Field should contain numbers only")
-      .min(1, "Maximum  length is 1"),
+    guarantee: textAreaValidate(),
+    minOrderQuantity: reqQualityValidate,
+    maxOrderQuantity: reqQualityValidate,
     categoryId: Yup.string().required("Input Field is Required"),
-    sectorId: Yup.string().required("Input Field is Required"),
+    // sectorId: Yup.string().required("Input Field is Required"),
 
-    description: Yup.string()
-      .required(" Description is Requried")
-
-      .max(255, "max legnth is 255"),
+    description: requiredStringMax255,
 
     productCharacteristic: Yup.array().of(
       Yup.object().shape({
@@ -128,9 +108,6 @@ export default function AddProduct() {
     // validate,
     onSubmit: submitForm,
   });
-
-  let [productAdded, setProductAdded] = useState(false);
-  let [productID, setProductID] = useState();
 
   async function submitForm(values) {
     setIsLoading(true);
@@ -457,24 +434,6 @@ export default function AddProduct() {
       }));
     }
   }, [factoryDetails]);
-
-  function addnewSepcialChar() {
-    SetSpecialCharacteristicsArr((prevSections) => {
-      // Ensure prevSections is an array
-      const sectionsArray = Array.isArray(prevSections) ? prevSections : [];
-
-      // Return the updated array with the new section
-      return [...sectionsArray, specialCharacteristicsArr?.length];
-    });
-  }
-
-  function removenewSepcialChar() {
-    SetSpecialCharacteristicsArr((prevSections) => {
-      const updatedSections = [...prevSections];
-      updatedSections.pop(); // Remove the last item
-      return updatedSections;
-    });
-  }
 
   // if (
   //   currentUserData?.factoryVerified == "0" ||
