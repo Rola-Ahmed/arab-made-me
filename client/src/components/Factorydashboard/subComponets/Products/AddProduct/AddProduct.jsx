@@ -1,17 +1,14 @@
 import { useEffect, useState, useContext } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
-import { baseUrl } from "config.js";
-import { GlobalMsgContext } from "Context/globalMessage";
 import useCategories from "hooks/useCategory";
 import "./AddProduct.css";
-import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
 import LoadingProccess from "components/Shared/Dashboards/LoadingProccess";
 
 import { useNavigate } from "react-router-dom";
-import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/FactoryUnVerifiedDash";
+import useFormSubmission from "./useFormSubmission";
+
 import UploadDocument from "components/Forms/Shared/UploadDocument";
 import TextareaInput from "components/Forms/Shared/TextareaInput";
 import SpecialChar from "components/Forms/Shared/SpecialChar/SpecialChar";
@@ -21,23 +18,27 @@ import {
   textAreaValidate,
 } from "utils/validationUtils";
 import { fetchOneFactory } from "Services/factory";
+import InputField from "components/Forms/Shared/InputField";
+import FormVlaidtionError from "components/Forms/Shared/FormVlaidtionError";
 export default function AddProduct() {
-  let { isLogin } = useContext(UserToken);
   let { currentUserData } = useContext(userDetails);
-  let { setGlobalMsg } = useContext(GlobalMsgContext);
   let categories = useCategories();
-
-  let [productAdded, setProductAdded] = useState(false);
-  let [productID, setProductID] = useState();
 
   let navigate = useNavigate();
 
   const [errorMsg, setErrorMsg] = useState();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState({
+    submitLoading: false,
+    // pageLoading: true,
+    // errorPageLoading: true,
+  });
 
   let [factoryDetails, setFactoryDetails] = useState();
-
   const [selectedDocs, setSelectedDocs] = useState([]);
+  let { submitForm, productAdded, submitDocs } = useFormSubmission(
+    setErrorMsg,
+    setIsLoading
+  );
 
   // get sectors and categrories
 
@@ -106,323 +107,21 @@ export default function AddProduct() {
 
     validationSchema,
     // validate,
-    onSubmit: submitForm,
+    onSubmit: submit,
   });
-
-  async function submitForm(values) {
-    setIsLoading(true);
-
-    const existingImageIndex = selectedDocs?.some(
-      (item) => item?.keyWord === "coverImage"
-    );
-
-    // The "coverImage" does not exist in the selectedDocs array
-    if (!existingImageIndex) {
-      setIsLoading(false);
-
-      // The "coverImage" exists in the selectedDocs array
-      setErrorMsg((prevErrors) => ({
-        ...prevErrors,
-        message: "Cover image is required",
-      }));
-      const targetElement = document.getElementById("view");
-      if (targetElement) {
-        targetElement.scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-        });
-      }
-
-      return setIsLoading(false);
+  function submit(values) {
+    // if data is not added yet
+    if (!productAdded?.status) {
+      submitForm(values, selectedDocs);
     }
-
-    // clear error message
-    setErrorMsg((prevErrors) => {
-      const { response, ...restErrors } = prevErrors || {};
-      return restErrors;
-    });
-
-    // check if the product already is added or no
-    if (!productAdded) {
-      try {
-        let data = {
-          country: values.country,
-          name: values.name,
-
-          categoryId: values.categoryId,
-          sectorId: values.sectorId,
-
-          description: values.description,
-          price: values.price,
-          hsnCode: values.hsnCode,
-          minOrderQuantity: values.minOrderQuantity,
-
-          specialCharacteristics: {},
-
-          ...(values.city && { city: values.city }),
-        };
-
-        if (values.guarantee !== "") {
-          data.guarantee = values.guarantee;
-        }
-
-        if (values.maxOrderQuantity !== "") {
-          data.maxOrderQuantity = values.maxOrderQuantity;
-        }
-
-        if (Object.keys(values.productCharacteristic).length != 0) {
-          // create an object with the keyword property as the key and the value property as the value.
-          const obj = Object.fromEntries(
-            values.productCharacteristic.map((obj) => [obj.keyword, obj.value])
-          );
-          data.specialCharacteristics = obj;
-        }
-
-        let config = {
-          method: "post",
-          maxBodyLength: Infinity,
-          url: `${baseUrl}/products/add`,
-
-          headers: {
-            authorization: isLogin,
-          },
-          data: data,
-        };
-
-        const response = await axios.request(config);
-
-        if (response.data.message == "done") {
-          setErrorMsg((previousState) => {
-            const { message, ...rest } = previousState;
-            return rest;
-          });
-          setProductID(response.data.product.id);
-          setProductAdded(true);
-          setIsLoading(true);
-
-          updateCoverImage(response.data.product.id);
-        } else {
-          setErrorMsg((prevErrors) => ({
-            ...prevErrors,
-            message: response.data.message,
-          }));
-          setIsLoading(false);
-          const targetElement = document.getElementById("view");
-          if (targetElement) {
-            targetElement.scrollIntoView({
-              behavior: "smooth",
-              block: "start",
-            });
-          }
-
-          return;
-        }
-      } catch (error) {
-        setIsLoading(false);
-
-        if (error.response && error.response.status) {
-          const statusCode = error.response.status;
-          switch (statusCode) {
-            case 400:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message: error?.response?.data?.errorMessage,
-              }));
-              break;
-            case 401:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message: "User is not Unauthorized ",
-              }));
-              break;
-            case 403:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message:
-                  // "Forbidden, You do not have permission to access this resource.",
-                  // error?.response?.data?.message,
-                  "factory is not verified Yet or factory representive Email is not activated",
-              }));
-              break;
-            case 404:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message:
-                  "Not Found (404). The requested resource was not found.",
-              }));
-              break;
-
-            case 500:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message: error?.response?.data?.errorMessage,
-              }));
-              break;
-
-            //  429 Too Many Requests
-            // The user has sent too many requests in a given amount of time ("rate limiting").
-            case 429:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message: " Too Many Requests , Please try again later.",
-              }));
-              break;
-            case 402:
-              // 402
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message: error?.response?.data?.message,
-              }));
-              break;
-            default:
-              // case message== error
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message: error?.response?.data?.errorMessage,
-              }));
-              break;
-          }
-        } else {
-          setErrorMsg((prevErrors) => ({
-            ...prevErrors,
-            message: "An unexpected error occurred. Please try again later.",
-          }));
-        }
-
-        // setErrorMsg((prevErrors) => ({
-        //   ...prevErrors,
-        //   message: error.response.data.errorMessage,
-        // }));
-        // return;
-      }
+    // if textApi is added and selectedDocs is greater that 0
+    // call media
+    // this case means that error ouccured in meidaApi so i need only to call media api
+    // else
+    // if (privateLabelAdded.status && selectedDocs?.length > 0) {
+    else if (selectedDocs?.length > 0) {
+      submitDocs(productAdded?.id, selectedDocs);
     }
-
-    if (productAdded && selectedDocs?.length > 0) {
-      setIsLoading(true);
-      updateCoverImage(productID);
-    }
-  }
-
-  function updateCoverImage(productId) {
-    // e.preventDefault();
-
-    const data = new FormData();
-
-    selectedDocs?.map((item) => data.append(item.keyWord, item.pdfFile));
-
-    const config = {
-      method: "put",
-      url: `${baseUrl}/products/uploadMedia/${productId}`,
-      headers: {
-        Authorization: isLogin,
-      },
-      data: data,
-    };
-
-    axios
-      .request(config)
-      .then((response) => {
-        if (response?.data?.message == "done") {
-          setIsLoading(true);
-
-          setGlobalMsg("Product added Successfully");
-
-          navigate("/factorydashboard/AllFactoryProducts");
-        } else {
-          setIsLoading(false);
-          setErrorMsg((prevErrors) => ({
-            ...prevErrors,
-            response: response?.data?.message,
-          }));
-          const targetElement = document.getElementById("view");
-          if (targetElement) {
-            targetElement.scrollIntoView({
-              behavior: "smooth",
-              block: "start",
-            });
-          }
-        }
-      })
-
-      .catch((error) => {
-        // toast("Image Not Saved, please try again", {
-        //   position: "top-center",
-        //   autoClose: 5000,
-        //   hideProgressBar: false,
-        //   closeOnClick: true,
-        //   draggable: true,
-        //   theme: "colored",
-        //   type: "error",
-        // });
-        setIsLoading(false);
-
-        if (error.response && error.response.status) {
-          const statusCode = error.response.status;
-          switch (statusCode) {
-            case 400:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message: error?.response?.data?.errorMessage,
-              }));
-              break;
-            case 401:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message: "User is not Unauthorized ",
-              }));
-              break;
-            case 403:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message:
-                  "Forbidden, You do not have permission to access this resource.",
-              }));
-              break;
-            case 404:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message:
-                  "Not Found (404). The requested resource was not found.",
-              }));
-              break;
-
-            case 500:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message: error?.response?.data?.errorMessage,
-              }));
-              break;
-
-            //  429 Too Many Requests
-            // The user has sent too many requests in a given amount of time ("rate limiting").
-            case 429:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message: " Too Many Requests , Please try again later.",
-              }));
-              break;
-            case 402:
-              // 402
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message: error?.response?.data?.message,
-              }));
-              break;
-            default:
-              // case message== error
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message: error?.response?.data?.errorMessage,
-              }));
-              break;
-          }
-        } else {
-          setErrorMsg((prevErrors) => ({
-            ...prevErrors,
-            message: "An unexpected error occurred. Please try again later.",
-          }));
-        }
-      });
   }
 
   useEffect(() => {
@@ -435,18 +134,9 @@ export default function AddProduct() {
     }
   }, [factoryDetails]);
 
-  // if (
-  //   currentUserData?.factoryVerified == "0" ||
-  //   currentUserData?.factoryEmailActivated == false
-  // ) {
-  //   return <FactoryUnVerified />;
-  // }
-
-  console.log("formValidation", formValidation, setErrorMsg);
-  console.log("console trals");
   return (
     <>
-      <LoadingProccess show={isLoading} />
+      <LoadingProccess show={isLoading?.submitLoading} />
 
       <div id="view" className="m-4 order-section  ">
         {/* section 1 */}
@@ -473,36 +163,23 @@ export default function AddProduct() {
           {/* ------------ */}
           <div className="container  add-product-dash">
             <div className="row row-container w-100 ">
-              {errorMsg?.message && (
+              {errorMsg?.response && (
                 <div className="alert mt-3 p-2 alert-danger form-control text-dark">
-                  {errorMsg.message}
+                  {errorMsg.response}
                 </div>
               )}
               <div className="col-4">
-                <div className="form-group">
-                  <label>
-                    Product Name <span className="text-danger">*</span>
-                  </label>
-                  <input
-                    className="form-control"
-                    id="name"
-                    onChange={formValidation.handleChange}
-                    onBlur={formValidation.handleBlur}
-                    value={formValidation.values.name}
-                  />
-                  {formValidation.errors.name && formValidation.touched.name ? (
-                    <small className="text-danger">
-                      {formValidation.errors.name}
-                    </small>
-                  ) : (
-                    ""
-                  )}
-                </div>
+                <InputField
+                  isRequired={true}
+                  title={"Product Name"}
+                  formValidation={formValidation}
+                  vlaidationName={"name"}
+                />
               </div>
 
               <div className="col-4">
                 <div className="form-group">
-                  <label>Sector</label>
+                  <label>Sector *</label>
 
                   <select
                     className="form-select form-control py-2"
@@ -526,10 +203,7 @@ export default function AddProduct() {
                       ); // Assuming 'productName' is the field name for product name
                     }}
                   >
-                    <optgroup value="">
-                      select
-                      <option value="">select</option>
-                    </optgroup>
+                    <option value="">select</option>
                     {categories?.map((item) => (
                       <optgroup label={item?.name}>
                         <option value={item?.sector?.id}>
@@ -538,119 +212,57 @@ export default function AddProduct() {
                       </optgroup>
                     ))}
                   </select>
+
+                  <FormVlaidtionError
+                    formValidation={formValidation}
+                    vlaidationName={"categoryId"}
+                  />
                 </div>
               </div>
 
               <div className="col-4">
-                <div className="form-group">
-                  <label>
-                    Price <span className="text-danger">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control text-dark"
-                    id="price"
-                    onChange={formValidation.handleChange}
-                    onBlur={formValidation.handleBlur}
-                    value={formValidation.values.price}
-                  />
-                  {formValidation.errors.price &&
-                  formValidation.touched.price ? (
-                    <small className="text-danger">
-                      {formValidation.errors.price}
-                    </small>
-                  ) : (
-                    ""
-                  )}
-                </div>
+                <InputField
+                  isRequired={true}
+                  title={"Price"}
+                  formValidation={formValidation}
+                  vlaidationName={"price"}
+                />
               </div>
 
               <div className="col-4">
-                <div className="form-group">
-                  <label>
-                    hsn Code <span className="text-danger">*</span>
-                  </label>
-                  <input
-                    className="form-control"
-                    id="hsnCode"
-                    onChange={formValidation.handleChange}
-                    onBlur={formValidation.handleBlur}
-                    value={formValidation.values.hsnCode}
-                  />
-                  {formValidation.errors.hsnCode &&
-                  formValidation.touched.hsnCode ? (
-                    <small className="text-danger">
-                      {formValidation.errors.hsnCode}
-                    </small>
-                  ) : (
-                    ""
-                  )}
-                </div>
+                <InputField
+                  isRequired={true}
+                  title={"hsn Code"}
+                  formValidation={formValidation}
+                  vlaidationName={"hsnCode"}
+                />
               </div>
 
               <div className="col-4">
-                <div className="form-group">
-                  <label>guarantee </label>
-                  <input
-                    className="form-control"
-                    id="guarantee"
-                    onChange={formValidation.handleChange}
-                    onBlur={formValidation.handleBlur}
-                    value={formValidation.values.guarantee}
-                  />
-                  {formValidation.errors.guarantee &&
-                  formValidation.touched.guarantee ? (
-                    <small className="text-danger">
-                      {formValidation.errors.guarantee}
-                    </small>
-                  ) : (
-                    ""
-                  )}
-                </div>
+                <InputField
+                  isRequired={true}
+                  title={"guarantee"}
+                  formValidation={formValidation}
+                  vlaidationName={"guarantee"}
+                />
               </div>
 
               <div className="col-4">
-                <div className="form-group">
-                  <label>
-                    min Order Quantity <span className="text-danger">*</span>
-                  </label>
-                  <input
-                    className="form-control"
-                    id="minOrderQuantity"
-                    onChange={formValidation.handleChange}
-                    onBlur={formValidation.handleBlur}
-                    value={formValidation.values.minOrderQuantity}
-                  />
-                  {formValidation.errors.minOrderQuantity &&
-                  formValidation.touched.minOrderQuantity ? (
-                    <small className="text-danger">
-                      {formValidation.errors.minOrderQuantity}
-                    </small>
-                  ) : (
-                    ""
-                  )}
-                </div>
+                <InputField
+                  isRequired={true}
+                  title={"min Order Quantity "}
+                  formValidation={formValidation}
+                  vlaidationName={"minOrderQuantity"}
+                />
               </div>
 
               <div className="col-4">
-                <div className="form-group">
-                  <label>Max Order Quantity </label>
-                  <input
-                    className="form-control"
-                    id="maxOrderQuantity"
-                    onChange={formValidation.handleChange}
-                    onBlur={formValidation.handleBlur}
-                    value={formValidation.values.maxOrderQuantity}
-                  />
-                  {formValidation.errors.maxOrderQuantity &&
-                  formValidation.touched.maxOrderQuantity ? (
-                    <small className="text-danger">
-                      {formValidation.errors.maxOrderQuantity}
-                    </small>
-                  ) : (
-                    ""
-                  )}
-                </div>
+                <InputField
+                  isRequired={true}
+                  title={"Max Order Quantity "}
+                  formValidation={formValidation}
+                  vlaidationName={"maxOrderQuantity"}
+                />
               </div>
 
               {/* ---------------------------- */}
@@ -697,7 +309,7 @@ export default function AddProduct() {
 
               <div className="col-12">
                 <div className="btn-container d-flex justify-content-center">
-                  {isLoading ? (
+                  {isLoading?.submitLoading ? (
                     <button type="button" className="order-btn-2 px-5 ">
                       <i className="fas fa-spinner fa-spin px-2"></i>
                     </button>
