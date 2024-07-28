@@ -5,6 +5,9 @@ import Factorydash from "containers/Factorydashboard/FactorydashContainer";
 import PrivateLabeLReq from "components/Factorydashboard/subComponets/PrivateLabelRequest/Index/IndexContainer";
 import EtcPrivateLabelReq from "components/Factorydashboard/subComponets/PrivateLabelRequest/MoreDetails/OnePrivateLabelReq";
 
+import WhiteLabeLReq from "components/Factorydashboard/subComponets/WhiteLabel/Index/IndexContainer";
+// import EtcWhiteLabelReq from "components/Factorydashboard/subComponets/WhiteLabel/MoreDetails/OneWhiteLabelReq";
+
 import FactoryProfile from "components/Factorydashboard/subComponets/FactoryProfile/FactoryProfile";
 import Orders from "components/Factorydashboard/subComponets/PoRequests/AllPos/Orders";
 import DashBoard from "components/Factorydashboard/subComponets/DashBoard/DashBoard";
@@ -61,6 +64,10 @@ const factoryDashboardRoutes = [
       // private label req
       { path: "PrivateLabel", element: <PrivateLabeLReq /> },
       { path: "PrivateLabelReq/moreDetails", element: <EtcPrivateLabelReq /> },
+
+      // white label req
+      { path: "whiteLabel", element: <WhiteLabeLReq /> },
+      // { path: "whiteLabel/moreDetails", element: <EtcWhiteLabelReq /> },
 
       { path: "quotations", element: <ViewQuotations /> },
       // { path: "editQuote/:quoteId", element: <EditQuote /> },

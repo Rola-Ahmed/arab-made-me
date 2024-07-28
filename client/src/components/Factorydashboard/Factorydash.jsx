@@ -45,7 +45,10 @@ function Factorydash(props) {
 
   // used this to highlight the current tap
   // Determine current active page for navigation highlight
-  const currentNavPage = pathname.split("/").pop().toLowerCase();
+  const currentNavPage = pathname
+    .split("/")
+    .pop()
+    .toLowerCase();
 
   // Toast on global message change
   // global message appearing "used pop up message"
@@ -53,7 +56,6 @@ function Factorydash(props) {
 
   return (
     <section className="factory-dashboard vh-100 overflow-hidden  vw-100">
-
       <div className="row h-100 w-100 remove-x">
         <div className="col-2 left-nav-fac-dashboard h-100 d-grid">
           <div className="static-navbar">
@@ -288,6 +290,14 @@ function Factorydash(props) {
                   notification={notification?.spmfsNotif}
                 />
 
+                <DashNavBtn
+                  icon="fa-solid fa-tag"
+                  currentNavPage={currentNavPage}
+                  activePageName="whitelabel"
+                  navigateToPage="whiteLabel"
+                  title="White Label Requests"
+                  // notification={notification?.PrivateLabelingsNotif}
+                />
                 <DashNavBtn
                   icon="fa-solid fa-industry"
                   currentNavPage={currentNavPage}
