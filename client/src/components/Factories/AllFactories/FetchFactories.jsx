@@ -42,7 +42,9 @@ export default function FetchFactories() {
 
   async function FetchTotalLen() {
     try {
-      let params = `location=${filter?.filterByCountry}&filter=${filter?.filterSearch}`;
+      let params = `location=${filter?.filterByCountry}&filter=${
+        filter?.filterSearch
+      }&sectors=${filter?.filterBySector.join(",")}`;
 
       let result = await fetchFactorieswithParam(params);
 
@@ -72,7 +74,9 @@ export default function FetchFactories() {
 
   useEffect(() => {
     const fetchFactoriesData = async () => {
-      let params = `location=${filter?.filterByCountry}&filter=${filter?.filterSearch}`;
+      let params = `location=${filter?.filterByCountry}&filter=${
+        filter?.filterSearch
+      }&sectors=${filter?.filterBySector.join(",")}`;
 
       let result = await fetchFactorieswithParam(
         `size=${pagination?.displayProductSize}&page=${pagination?.currentPage}&${params}`
