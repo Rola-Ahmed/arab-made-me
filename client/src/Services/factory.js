@@ -1,13 +1,21 @@
-import { getRequest, putRequest,postRequest } from "./authServices";
+import { getRequest, putRequest, postRequest } from "./authServices";
 
 // Service for fetching all products of a specific factory
 //------------------------------------- factory products------------------------------------------
+
+// remove this later
 export const fetchFactoryProducts = async (factoryId) => {
   return await getRequest(`/factories/products/${factoryId}?include=factory`);
 };
 
+// remove this later
 export const fetchFactoryProductsSize = async (factoryId, size) => {
   return await getRequest(`/factories/products/${factoryId}?size=${size}`);
+};
+
+// and will keep this one
+export const fetchFactoryProducts2 = async (factoryId, params) => {
+  return await getRequest(`/factories/products/${factoryId}?${params}`);
 };
 
 //------------------------------------- factory data------------------------------------------
@@ -24,8 +32,6 @@ export const addFactoryMedia = async (header, data) => {
   return await putRequest(`/factories/media`, header, data);
 };
 
-
-
 // factories
 export const addFactory = async (header, data) => {
   return await postRequest(`/factories/add`, header, data);
@@ -33,4 +39,3 @@ export const addFactory = async (header, data) => {
 export const updateFactoryFromUser = async (header, data) => {
   return await putRequest(`/factories/update/fromUser`, header, data);
 };
-

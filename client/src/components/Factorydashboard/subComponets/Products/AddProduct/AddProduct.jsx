@@ -284,9 +284,9 @@ export default function AddProduct() {
                 setSelectedDocs={setSelectedDocs}
                 MediaName="images"
                 mediaMaxLen="3"
-                meidaAcceptedExtensions={["pdf", "png", "jpeg", "jpg"]}
+                meidaAcceptedExtensions={[ "png", "jpeg", "jpg"]}
                 setErrorMsg={setErrorMsg}
-                title="Upload Images *"
+                title="Upload Images "
               />
 
               <UploadDocument

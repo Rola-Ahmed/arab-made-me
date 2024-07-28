@@ -67,10 +67,6 @@ const useFormSubmission = (setErrorMsg, setIsLoading) => {
       paymentType,
       paymentTypeOther,
 
-      //
-      deliveryTerms,
-      deliveryTermsOther,
-      //
       qualityConditions,
       qualityConditionsOther,
       //
@@ -101,9 +97,7 @@ const useFormSubmission = (setErrorMsg, setIsLoading) => {
           ? qualityConditionsOther
           : qualityConditions,
 
-      paymentTerms: paymentType == "other" ? paymentTypeOther : paymentType,
-      deliveryTerms:
-        deliveryTerms == "other" ? deliveryTermsOther : deliveryTerms,
+      
     };
 
     let result = await addSourcingOffer({ authorization: isLogin }, data);
