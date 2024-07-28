@@ -7,8 +7,6 @@ import { baseUrl, baseUrl_IMG } from "config.js";
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
 import { countriesMiddleEast } from "constants/countries";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/FactoryUnVerifiedDash";
 
 import { GlobalMsgContext } from "Context/globalMessage";
@@ -380,17 +378,7 @@ export default function AddSourcingOffer() {
       .request(config)
       .then((response) => {
         if (response?.data?.message == "done") {
-          // toast("Product added Successfully", {
-          //   position: "top-center",
-          //   autoClose: 5000,
-          //   hideProgressBar: false,
-          //   closeOnClick: true,
-          //   //pauseOnHover: true,
-          //   draggable: true,
-          //   theme: "colored",
-          //   type: "success",
-          // });
-
+          
           // localStorage("")
           setGlobalMsg(
             "Your sourcing offer Form has been successfully submitted"
@@ -628,7 +616,6 @@ export default function AddSourcingOffer() {
         (!currentUserData.factoryEmailActivated && <FactoryUnVerified />)}
 
       <div className="m-4 order-section" id="view">
-        <ToastContainer />
         {/* section 1 */}
         <form onSubmit={formValidation.handleSubmit} className="header w-100">
           {/* <form className="header w-100"> */}
