@@ -1,25 +1,23 @@
 import { useEffect, useState } from "react";
 
-import axios from "axios";
-
-import { baseUrl } from "config.js";
-
 import AllProducts from "components/Products/AllProducts/AllProducts";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getAllProducts } from "Services/products";
+import { useSearchParams } from "react-router-dom";
+
 export default function AllProductsContainer() {
   // variables
   let { sectorID } = useParams();
 
-  let location = useLocation();
+  const [searchParams] = useSearchParams();
+  const filterSearch = searchParams.get("filterSearch");
 
   const [allProductsData, setAllProductsData] = useState();
   const [apiLoadingData, setapiLoadingData] = useState({
     loadingPage: true,
-    errorCausedMsg: true,
+    errorCausedMsg: null,
   });
   const [pagination, setPagination] = useState(() => ({
-    // i want to display 3 pdoructs in the 1st page
     displayProductSize: 9,
     currentPage: 1,
     totalPage: 1,
@@ -33,7 +31,7 @@ export default function AllProductsContainer() {
         ? [sectorID?.slice("-")?.[0]]
         : [],
 
-    filterBySearch: location?.state?.filterBy ?? "",
+    filterBySearch: filterSearch ?? "",
   });
 
   const [modalShow, setModalShow] = useState({
@@ -41,37 +39,39 @@ export default function AllProductsContainer() {
     isImporterVerified: false,
     isFactoryVerified: false,
   });
+
   const [isLoggedReDirect, setisLoggedReDirect] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        let url1 = `${baseUrl}/products?`;
-        let url2 = `${baseUrl}/products?size=${pagination?.displayProductSize}&page=${pagination?.currentPage}&include=factory`;
+      setapiLoadingData({
+        loadingPage: true,
+        errorCausedMsg: null,
+      });
+      setAllProductsData([]);
 
-        if (filter?.filterBySearch !== "") {
-          url2 += `&filter=${filter?.filterBySearch}`;
-          url1 += `&filter=${filter?.filterBySearch}`;
-        }
+      let url1 = ``;
+      let url2 = `?size=${pagination?.displayProductSize}&page=${pagination?.currentPage}&include=factory`;
 
-        if (filter?.filterByCountry !== "") {
-          url2 += `&location=${filter?.filterByCountry}`;
-          url1 += `&location=${filter?.filterByCountry}`;
-        }
+      if (filter?.filterBySearch !== "") {
+        url2 += `&filter=${filter?.filterBySearch}`;
+        url1 += `&filter=${filter?.filterBySearch}`;
+      }
 
-        if (filter?.filterBySort !== "") {
-          url2 += `&sort=${filter?.filterBySort}`;
-          url1 += `&sort=${filter?.filterBySort}`;
-        }
+      if (filter?.filterByCountry !== "") {
+        url2 += `&location=${filter?.filterByCountry}`;
+        url1 += `&location=${filter?.filterByCountry}`;
+      }
 
-        // const response1 = await axios.get(url1, {
-        //   data: {
-        //     sectors: filter?.filterBySector,
-        //   },
-        // });
-        const response1 = await getAllProducts(url1);
+      if (filter?.filterBySort !== "") {
+        url2 += `&sort=${filter?.filterBySort}`;
+        url1 += `&sort=${filter?.filterBySort}`;
+      }
 
-        if (response1?.success) {
+      const response1 = await getAllProducts(url1);
+
+      if (response1?.success) {
+        setTimeout(() => {
           setPagination((prevValue) => ({
             ...prevValue,
             totalPage: Math.ceil(
@@ -79,32 +79,51 @@ export default function AllProductsContainer() {
                 prevValue.displayProductSize
             ),
           }));
-        }
+        }, 50);
+      }
 
+      setTimeout(() => {
         setapiLoadingData({
           loadingPage: response1?.loadingStatus,
           errorCausedMsg: response1?.error,
         });
+      }, 50);
 
-        // i display this page form two diffrent places either from secors of all products
-        // let response2 = "";
-        // display the products for specific sector
-        // if (sectorID !== null || sectorID !== undefined) {
-        let response2 = await axios.get(url2, {
-          data: {
-            sectors: filter?.filterBySector,
-          },
-        });
+      // i display this page form two diffrent places either from secors of all products
+      // let response2 = "";
+      // display the products for specific sector
+      // if (sectorID !== null || sectorID !== undefined) {
+      const response2 = await getAllProducts(url2);
 
-        if (response2?.data?.message === "done") {
-          setAllProductsData(
-            response2.data.products.filter((item) => item?.factoryId !== null)
-          );
-        }
-      } catch (error) {}
+      if (response2?.data?.message === "done") {
+        setAllProductsData(response2?.data?.products);
+      }
     };
 
     fetchData();
+
+    const updateUrl = (filterSeacrh = "") => {
+      const queryParams = new URLSearchParams();
+      const oldUrl = `${window.location.pathname}`;
+
+      if (filterSeacrh != "") {
+        queryParams.set("filterSearch", filterSeacrh);
+      } else {
+        window.history.replaceState(null, "", oldUrl);
+      }
+
+      // if (filters?.filterBypartner != "") {
+      //   queryParams.set("filter", filters.filterBypartner);
+      // }
+
+      const queryString = queryParams.toString();
+      const newUrl = `${window.location.pathname}?${queryString}`;
+      // Replace the current state in the history without triggering a navigation
+
+      window.history.replaceState(null, "", newUrl);
+    };
+
+    updateUrl(filter?.filterBySearch);
   }, [pagination?.currentPage, filter]);
 
   return (

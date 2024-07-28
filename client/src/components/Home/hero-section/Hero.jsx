@@ -15,11 +15,7 @@ function Hero() {
     }
 
     if (dropdownValue.toLowerCase() == "product") {
-      navigate(`productMarketPlace/`, {
-        state: {
-          filterBy: value,
-        },
-      });
+      navigate(`productMarketPlace?filterSearch=${value}`);
     } else {
       navigate(`factoryGallery?filterSearch=${value}`, {
         state: {

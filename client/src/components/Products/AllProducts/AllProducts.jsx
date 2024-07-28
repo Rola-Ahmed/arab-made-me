@@ -84,14 +84,14 @@ function AllProducts(props) {
                         {apiLoadingData?.errorCausedMsg}
                       </div>
                     ) : (
-                      <div className="col-12 w-100">
+                      <div className="col-12 w-100 d-flex justify-content-center">
                         <Loading />
                       </div>
                     )}
                   </>
                 ) : (
                   <div className="row products-gap">
-                    {allProductsData?.length === 0 && (
+                    {allProductsData?.length == 0 && (
                       <>
                         <span></span>
                         <p className="h3 py-5 text-center ">No records</p>

@@ -153,7 +153,6 @@ export default function TopFactories(props) {
   };
 
   const updateUrl = (filterSeacrh = "") => {
-    console.log("updateUrl", filterSeacrh);
     const queryParams = new URLSearchParams();
     const oldUrl = `${window.location.pathname}`;
 
@@ -167,7 +166,6 @@ export default function TopFactories(props) {
     //   queryParams.set("filter", filters.filterBypartner);
     // }
 
-    // console.log("queryParams.toString()", queryParams.toString());
     const queryString = queryParams.toString();
     const newUrl = `${window.location.pathname}?${queryString}`;
     // Replace the current state in the history without triggering a navigation
@@ -224,7 +222,6 @@ export default function TopFactories(props) {
                 id="searchTermSecotr"
                 name="searchTermSecotr"
                 onKeyDown={(e) => {
-                  console.log("enter");
                   if (e.key === "Enter") {
                     SelectedfFlters(e.target.value, "filterSearch");
                     updateUrl(e.target.value);
@@ -238,12 +235,10 @@ export default function TopFactories(props) {
                 className="filt-btn allproducts text-white w-100"
                 // onClick={() => clearFilters()}
                 onClick={(e) => {
-                  // console.log("enter");
                   // if (e.key === "Enter") {
 
                   let value = document?.getElementById("searchTermSecotr")
                     ?.value;
-                  // console.log("enter vaue", value);
 
                   SelectedfFlters(value, "filterSearch");
                   updateUrl(value);
@@ -284,7 +279,7 @@ export default function TopFactories(props) {
                       <label className="form-check-label w-100">{`All`}</label>
                     </div>
 
-                    {countriesMiddleEast.map((item) => (
+                    {countriesMiddleEast?.map((item) => (
                       <div className="form-check">
                         <input
                           onClick={(e) =>

@@ -32,8 +32,7 @@ export default function FetchFactories() {
     filterBySector: [],
     // filterBySector: filterBySector?.split(",")?.map(String) ?? [],
   });
-  console.log("filterSearch", filterSearch);
-  console.log("filterfilterfilter", filter);
+
 
   const [apiLoadingData, setApiLoadingData] = useState({
     loadingPage: true,
@@ -48,8 +47,6 @@ export default function FetchFactories() {
 
       let result = await fetchFactorieswithParam(params);
 
-      // console.log("result FetchTotalLen", result);
-      // console.log("result FetchTotalLen params", params);
       if (result?.success) {
         setPagination((prevValue) => ({
           ...prevValue,
@@ -81,8 +78,6 @@ export default function FetchFactories() {
       let result = await fetchFactorieswithParam(
         `size=${pagination?.displayProductSize}&page=${pagination?.currentPage}&${params}`
       );
-      console.log("result FetchTotalLen", result);
-      console.log("result FetchTotalLen params", params);
 
       // if there is error
 

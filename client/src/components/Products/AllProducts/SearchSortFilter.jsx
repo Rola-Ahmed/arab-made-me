@@ -27,6 +27,7 @@ export default function SearchSortFilter(props) {
             className="form-control rounded-0 border-left-0"
             placeholder="Search"
             id="searchTermSecotr"
+            defaultValue={filter?.filterBySearch}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 filterSearchIcon(e.target.value);
@@ -38,7 +39,7 @@ export default function SearchSortFilter(props) {
               className="input-group-text h-100 bg-white border-radius"
               onClick={(e) => {
                 filterSearchIcon(
-                  document.getElementById("searchTermSecotr").value
+                  document?.getElementById("searchTermSecotr")?.value
                 );
               }}
             >
