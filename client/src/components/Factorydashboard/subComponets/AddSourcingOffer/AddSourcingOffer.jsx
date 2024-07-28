@@ -2,67 +2,50 @@ import { useEffect, useState, useContext } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import { baseUrl, baseUrl_IMG } from "config.js";
+import { baseUrl } from "config.js";
 
-import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
 import { countriesMiddleEast } from "constants/countries";
 import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/FactoryUnVerifiedDash";
 
-import { GlobalMsgContext } from "Context/globalMessage";
+import useFormSubmission from "./useFormSubmission";
+import SuccessToast from "components/SuccessToast";
 
 import { useNavigate } from "react-router-dom";
 import { shippingConditionsArr } from "constants/shippingConditionsArr";
 import { packingConditionsArr } from "constants/packingConditionsArr";
 import { qualityConditionsArr } from "constants/qualityConditionsArr";
+import useCategories from "hooks/useCategory";
+
+import {
+  requiredStringMax255,
+  reqQualityValidate,
+  otherTextAreaValidate,
+} from "utils/validationUtils";
 
 export default function AddSourcingOffer() {
-  let { isLogin } = useContext(UserToken);
   let { currentUserData } = useContext(userDetails);
-  let [productAdded, setProductAdded] = useState({ status: false, id: "" });
-  let { setGlobalMsg } = useContext(GlobalMsgContext);
+  let categories = useCategories();
 
   let navigate = useNavigate();
 
   const [errorMsg, setErrorMsg] = useState();
-  let [allCategories, setAllCategories] = useState();
   let [allFactoryProducts, setFactoryProducts] = useState();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState({
+    submitLoading: false,
+    // pageLoading: true,
+    // errorPageLoading: true,
+  });
 
-  //   get  and categrories
-  useEffect(() => {
-    GetCategories();
-  }, []);
+  let { submitForm, sourcingOfferAdded, submitDocs } = useFormSubmission(
+    setErrorMsg,
+    setIsLoading
+  );
 
   useEffect(() => {
     getFactoryProduct();
   }, [currentUserData?.factoryId]);
 
-  async function GetCategories() {
-    let config = {
-      method: "get",
-
-      url: `${baseUrl}/categories`,
-
-      headers: {
-        authorization: isLogin,
-      },
-    };
-
-    axios
-      .request(config)
-      .then((response) => {
-        if (response.data.message == "done") {
-          setAllCategories(response?.data?.categories);
-        } else {
-          //   setErrorMsg((prevErrors) => ({
-          //     ...prevErrors,
-          //     message: response.data.message,
-          //   }));
-        }
-      })
-      .catch((error) => {});
-  }
   const getFactoryProduct = async () => {
     try {
       const response = await axios.get(
@@ -74,24 +57,13 @@ export default function AddSourcingOffer() {
   };
 
   let validationSchema = Yup.object().shape({
-    productName: Yup.string()
-      .required("Input Field is Required")
-      .min(3, "min 3 legnth")
-      .max(255, "max 255 legnth"),
+    productName: requiredStringMax255,
     // country: Yup.array().of(Yup.string()).nullable(),
-    country: Yup.array().of(Yup.string()).nullable(),
+    country: Yup.array()
+      .of(Yup.string())
+      .nullable(),
 
-    price: Yup.number("Input Field  must contain numbers only")
-      .typeError("Price must be a number")
-      .required("Input Field  is required")
-      .integer("Input Field  must contain numbers only")
-      .positive("Input Field  must contain positive numbers")
-      .min(1, "Minimum price length must  be greater than 1")
-      .test(
-        "is-number",
-        "Input Field must contain numbers only",
-        (value) => !isNaN(value)
-      ),
+    price: reqQualityValidate,
 
     //   HSN (Harmonized System of Nomenclature) code field i
     productHSNCode: Yup.string()
@@ -99,59 +71,21 @@ export default function AddSourcingOffer() {
       .min(6, "Minimum  length is 6")
       .max(15, "Maximum 15  is legnth"),
 
-    quantity: Yup.string()
-      .matches(/^[0-9]+$/, "Input Field should contain numbers only")
-      .required("Input Field is Required")
-      .min(1, "Minimum  length is 1"),
+    quantity: reqQualityValidate,
 
-    productDescription: Yup.string()
-      .required(" productDescription is Requried")
-
-      .max(255, "max legnth is 255"),
+    productDescription: requiredStringMax255,
 
     qualityConditions: Yup.string(),
-    qualityConditionsOther: Yup.string().when("qualityConditions", {
-      is: "other",
-      then: (schema) =>
-        schema
-
-          .max(255, "max legnth is 255")
-          .required("Input field is Required"),
-      otherwise: (schema) => schema.nullable(),
-    }),
+    qualityConditionsOther: otherTextAreaValidate("qualityConditions", "other"),
 
     packingConditions: Yup.string(),
-    packingConditionsOther: Yup.string().when("packingConditions", {
-      is: "other",
-      then: (schema) =>
-        schema
-
-          .max(255, "max legnth is 255")
-          .required("Input field is Required"),
-      otherwise: (schema) => schema.nullable(),
-    }),
+    packingConditionsOther: otherTextAreaValidate("packingConditions", "other"),
 
     paymentType: Yup.string(),
-    paymentTypeOther: Yup.string().when("paymentType", {
-      is: "other",
-      then: (schema) =>
-        schema
-
-          .max(255, "max legnth is 255")
-          .required("Input field is Required"),
-      otherwise: (schema) => schema.nullable(),
-    }),
+    paymentTypeOther: otherTextAreaValidate("paymentType", "other"),
 
     deliveryTerms: Yup.string(),
-    deliveryTermsOther: Yup.string().when("deliveryTerms", {
-      is: "other",
-      then: (schema) =>
-        schema
-
-          .max(255, "max legnth is 255")
-          .required("Input field is Required"),
-      otherwise: (schema) => schema.nullable(),
-    }),
+    deliveryTermsOther: otherTextAreaValidate("deliveryTerms", "other"),
   });
 
   let formValidation = useFormik({
@@ -175,314 +109,35 @@ export default function AddSourcingOffer() {
 
     validationSchema,
     // validate,
-    onSubmit: submitForm,
+    onSubmit: submit,
   });
 
-  async function submitForm(values) {
-    setIsLoading(true);
-
-    // clear error message
-    setErrorMsg((prevErrors) => {
-      const { response, ...restErrors } = prevErrors || {};
-      return restErrors;
-    });
-
-    // check if the product already is added or no
-    if (!productAdded.status) {
-      try {
-        let data = {
-          price: values.price,
-          productName: values.productName,
-          productDescription: values.productDescription,
-          quantity: values.quantity,
-          categoryId: values.categoryId,
-        };
-
-        if (values.productHSNCode !== "") {
-          data.productHSNCode = values.productHSNCode;
-        }
-        if (values.country.length !== 0) {
-          data.preferredCountries = values.country;
-        }
-        if (values.productId !== "") {
-          data.productId = values.productId;
-        }
-        if (values.shippingConditions !== "") {
-          data.shippingConditions = values.shippingConditions;
-        }
-        if (values.paymentType !== "") {
-          data.paymentTerms =
-            values.paymentType == "other"
-              ? values.paymentTypeOther
-              : values.paymentType;
-        }
-
-        if (values.packingConditions !== "") {
-          data.packingConditions =
-            values.packingConditions === "other"
-              ? values.packingConditionsOther
-              : values.packingConditions;
-        }
-
-        if (values.deliveryTerms !== "") {
-          data.deliveryTerms =
-            values.deliveryTerms === "other"
-              ? values.deliveryTermsOther
-              : values.deliveryTerms;
-        }
-        if (values.qualityConditions !== "") {
-          data.qualityConditions =
-            values.qualityConditions === "other"
-              ? values.qualityConditionsOther
-              : values.qualityConditions;
-        }
-
-        let config = {
-          method: "post",
-          maxBodyLength: Infinity,
-          url: `${baseUrl}/sourcingOffers/add`,
-
-          headers: {
-            authorization: isLogin,
-          },
-          data: data,
-        };
-
-        const response = await axios.request(config);
-
-        if (response.data.message == "done") {
-          setIsLoading(true);
-
-          setProductAdded({
-            status: true,
-            id: response.data.sourcingOffer.id,
-          });
-
-          // setProductID(response.data.sourcingOffer.id);
-
-          setErrorMsg((previousState) => {
-            const { message, ...rest } = previousState;
-            return rest;
-          });
-
-          if (selectedDocs?.length > 0) {
-            await SubmitDocs(response.data.sourcingOffer.id);
-          } else {
-            setGlobalMsg(
-              "Your sourcing offer Form has been successfully submitted"
-            );
-            navigate("/factorydashboard/AllFactoryOffers");
-          }
-        } else {
-          setIsLoading(false);
-
-          setErrorMsg((prevErrors) => ({
-            ...prevErrors,
-            message: response.data.message,
-          }));
-          return;
-        }
-      } catch (error) {
-        setIsLoading(false);
-
-        if (error.response && error.response.status) {
-          const statusCode = error.response.status;
-          switch (statusCode) {
-            case 400:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message: error?.response?.data?.errorMessage,
-              }));
-              break;
-            case 401:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message: "User is not Unauthorized ",
-              }));
-              break;
-            case 403:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message:
-                  "Forbidden, You do not have permission to access this resource.",
-              }));
-              break;
-            case 404:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message:
-                  "Not Found (404). The requested resource was not found.",
-              }));
-              break;
-
-            case 500:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message: error?.response?.data?.errorMessage,
-              }));
-              break;
-
-            //  429 Too Many Requests
-            // The user has sent too many requests in a given amount of time ("rate limiting").
-            case 429:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message: " Too Many Requests , Please try again later.",
-              }));
-              break;
-            case 402:
-              // 402
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message: error?.response?.data?.message,
-              }));
-              break;
-            default:
-              // case message== error
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message: error?.response?.data?.errorMessage,
-              }));
-              break;
-          }
-        }
-      }
+  function submit(values) {
+    // if data is not added yet
+    if (!sourcingOfferAdded.status) {
+      submitForm(values, selectedDocs);
     }
-
-    if (productAdded.status && selectedDocs?.length > 0) {
-      SubmitDocs(productAdded.id);
-      // updateCoverImage(productID);
+    // if textApi is added and selectedDocs is greater that 0
+    // call media
+    // this case means that error ouccured in meidaApi so i need only to call media api
+    // else
+    // if (privateLabelAdded.status && selectedDocs?.length > 0) {
+    else if (selectedDocs?.length > 0) {
+      submitDocs(sourcingOfferAdded.id, selectedDocs);
     } else {
-      setGlobalMsg("Your sourcing offer Form has been successfully submitted");
+      SuccessToast("Your sourcing offer Form has been successfully submitted");
+
       navigate("/factorydashboard/AllFactoryOffers");
     }
   }
-
-  function SubmitDocs(productId) {
-    setIsLoading(true);
-
-    const data = new FormData();
-
-    selectedDocs?.map((item) => data.append(item.keyWord, item.pdfFile));
-
-    const config = {
-      method: "put",
-      url: `${baseUrl}/sourcingOffers/uploadMedia/${productId}`,
-      headers: {
-        Authorization: isLogin,
-      },
-      data: data,
-    };
-
-    axios
-      .request(config)
-      .then((response) => {
-        if (response?.data?.message == "done") {
-          
-          // localStorage("")
-          setGlobalMsg(
-            "Your sourcing offer Form has been successfully submitted"
-          );
-          navigate("/factorydashboard/AllFactoryOffers");
-        } else {
-          setIsLoading(false);
-
-          setIsLoading(false);
-          setErrorMsg((prevErrors) => ({
-            ...prevErrors,
-            message: response?.data?.message,
-          }));
-          const targetElement = document.getElementById("view");
-          if (targetElement) {
-            targetElement.scrollIntoView({
-              behavior: "smooth",
-              block: "start",
-            });
-          }
-        }
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        const targetElement = document.getElementById("view");
-        if (targetElement) {
-          targetElement.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-          });
-        }
-
-        if (error.response) {
-          const statusCode = error.response.status;
-          switch (statusCode) {
-            case 400:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message: error?.response?.data?.errorMessage,
-              }));
-              break;
-            case 401:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message: "User is not Unauthorized ",
-              }));
-              break;
-            case 403:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message:
-                  "Forbidden, You do not have permission to access this resource.",
-              }));
-              break;
-            case 404:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message:
-                  "Not Found (404). The requested resource was not found.",
-              }));
-              break;
-
-            case 500:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message: error?.response?.data?.errorMessage,
-              }));
-              break;
-
-            //  429 Too Many Requests
-            // The user has sent too many requests in a given amount of time ("rate limiting").
-            case 429:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message: " Too Many Requests , Please try again later.",
-              }));
-              break;
-            case 402:
-              // 402
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message: error?.response?.data?.message,
-              }));
-              break;
-            default:
-              // case message== error
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message: error?.response?.data?.errorMessage,
-              }));
-              break;
-          }
-        }
-      });
-  }
-
   useEffect(() => {
-    if (allCategories?.length !== 0) {
+    if (categories?.length !== 0) {
       formValidation.setValues({
         ...formValidation.values,
-        categoryId: allCategories?.[0]?.id || "",
+        categoryId: categories?.[0]?.id || "",
       });
     }
-  }, [allCategories]);
+  }, [categories]);
 
   // ----------  add imegs----------------------
   const [selectedDocs, setSelectedDocs] = useState([
@@ -503,9 +158,8 @@ export default function AddSourcingOffer() {
 
   //
   function handleMultiMediaValidation(e, keyWordDoc) {
-    const count = selectedDocs?.filter(
-      (item) => item?.keyWord === "docs"
-    )?.length;
+    const count = selectedDocs?.filter((item) => item?.keyWord === "docs")
+      ?.length;
 
     if (count >= 3) {
       setErrorMsg((prevErrors) => ({
@@ -638,9 +292,9 @@ export default function AddSourcingOffer() {
           {/* ------------ */}
           <div className="container  add-product-dash">
             <div className="row row-container w-100 ">
-              {errorMsg?.message && (
+              {errorMsg?.response && (
                 <div className="alert mt-3 p-2 alert-danger form-control text-dark">
-                  {errorMsg.message}
+                  {errorMsg.response}
                 </div>
               )}
               <div className="col-4">
@@ -748,7 +402,7 @@ export default function AddSourcingOffer() {
                     onBlur={formValidation.handleBlur}
                     value={formValidation.values.categoryId}
                   >
-                    {allCategories?.map((item) => (
+                    {categories?.map((item) => (
                       <option value={item?.id}>{item?.name}</option>
                     ))}
                   </select>
@@ -1161,7 +815,7 @@ export default function AddSourcingOffer() {
               </div>
               <div className="col-12">
                 <div className="btn-container d-flex justify-content-center">
-                  {isLoading ? (
+                  {isLoading?.submitLoading ? (
                     <button type="button" className="order-btn-2 px-5 ">
                       <i className="fas fa-spinner fa-spin px-2"></i>
                     </button>
@@ -1176,10 +830,20 @@ export default function AddSourcingOffer() {
                           );
 
                           // Scroll to the target element
-                          targetElement.scrollIntoView({
-                            behavior: "smooth",
-                            block: "center",
-                          });
+                          if (targetElement) {
+                            targetElement.scrollIntoView({
+                              behavior: "smooth",
+                              block: "start",
+                            });
+                          } else {
+                            const targetElement = document.getElementById(
+                              "view"
+                            );
+                            targetElement.scrollIntoView({
+                              behavior: "smooth",
+                              block: "center",
+                            });
+                          }
                         }
                       }}
                     >
