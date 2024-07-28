@@ -84,7 +84,7 @@ export default function WhiteLabelNotificationList() {
                 className="order-btn-1 btn-2 w-100"
                 onClick={() => {
                   navigate(
-                    `/factorydashboard/PrivateLabelReq/moreDetails?privateLabelId=${item?.id}`
+                    `/factorydashboard/whiteLabel/moreDetails?whiteLabelId=${item?.id}`
                   );
                 }}
               >

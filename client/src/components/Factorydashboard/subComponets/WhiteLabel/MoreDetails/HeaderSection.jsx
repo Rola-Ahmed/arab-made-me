@@ -8,21 +8,21 @@ export default function HeaderSection() {
     <div id="view" className="m-4 order-section ">
       <SubPageUtility
         currentPage="More Details"
-        PrevPage="Private Label Details"
+        PrevPage="White Label Details"
       />
       <div>
         <div className=" d-flex justify-content-between align-items-center w-100 ">
-          <h2>Private Label Details</h2>
+          <h2>White Label Details</h2>
 
           <div className="btn-container">
             <button
               type="button"
               className="order-btn-1"
               onClick={() => {
-                navigate("/factorydashboard/PrivateLabel");
+                navigate("/factorydashboard/whiteLabel");
               }}
             >
-              <p className="cursor">Private Label Requests</p>
+              <p className="cursor">White Label Requests</p>
             </button>
           </div>
         </div>

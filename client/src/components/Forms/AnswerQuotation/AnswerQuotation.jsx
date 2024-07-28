@@ -16,7 +16,6 @@ export default function AnswerQuotation() {
   const [searchParams] = useSearchParams();
   let { requestType } = useParams();
   const id = searchParams.get("id");
-  console.log('id',id)
   const productName = searchParams.get("productName");
   const productId = searchParams.get("productId");
   const importerId = searchParams.get("userId");
@@ -33,6 +32,7 @@ export default function AnswerQuotation() {
   //   formTitle:'',
   //   initalData:
   // });
+  console.log("formInfo",formInfo)
 
   function data(data) {
     switch (data) {
@@ -77,7 +77,12 @@ export default function AnswerQuotation() {
       case "WhiteLabel":
         return {
           formTitle: "White Label",
-          extraData: { whiteLabelId: id || "" },
+
+          extraData: {
+            whiteLabelId: id || "",
+            importerId: importerId || "",
+            ...(productName && { productName: productName }),
+          },
         };
 
       default:
@@ -100,25 +105,11 @@ export default function AnswerQuotation() {
     submitForm(
       values,
       formInfo?.extraData,
-      // {
-      //   quotationRequestId: id || "",
-      //   productName: productName || "",
-      //   productId: productId || "",
-      //   importerId: importerId || "",
-      // },
-      // "rfq"
+
       requestType
     );
   }
-  let formValidation = useQuotationFormValidation(
-    // {
-    //   quotationRequestId: id || "",
-    //   productName: productName || "",
-    //   importerId: importerId || "",
-    // },
-    formInfo?.extraData,
-    submit
-  );
+  let formValidation = useQuotationFormValidation(formInfo?.extraData, submit);
 
   return (
     <>

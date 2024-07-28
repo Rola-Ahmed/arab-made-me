@@ -6,7 +6,7 @@ import PrivateLabeLReq from "components/Factorydashboard/subComponets/PrivateLab
 import EtcPrivateLabelReq from "components/Factorydashboard/subComponets/PrivateLabelRequest/MoreDetails/OnePrivateLabelReq";
 
 import WhiteLabeLReq from "components/Factorydashboard/subComponets/WhiteLabel/Index/IndexContainer";
-// import EtcWhiteLabelReq from "components/Factorydashboard/subComponets/WhiteLabel/MoreDetails/OneWhiteLabelReq";
+import EtcWhiteLabelReq from "components/Factorydashboard/subComponets/WhiteLabel/MoreDetails/OneWhiteLabelReq";
 
 import FactoryProfile from "components/Factorydashboard/subComponets/FactoryProfile/FactoryProfile";
 import Orders from "components/Factorydashboard/subComponets/PoRequests/AllPos/Orders";
@@ -67,7 +67,7 @@ const factoryDashboardRoutes = [
 
       // white label req
       { path: "whiteLabel", element: <WhiteLabeLReq /> },
-      // { path: "whiteLabel/moreDetails", element: <EtcWhiteLabelReq /> },
+      { path: "whiteLabel/moreDetails", element: <EtcWhiteLabelReq /> },
 
       { path: "quotations", element: <ViewQuotations /> },
       // { path: "editQuote/:quoteId", element: <EditQuote /> },

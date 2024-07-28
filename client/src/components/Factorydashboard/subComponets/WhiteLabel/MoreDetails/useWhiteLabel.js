@@ -1,14 +1,14 @@
 import { useEffect, useState, useContext } from "react";
 import { useSearchParams } from "react-router-dom";
 import { UserToken } from "Context/userToken";
-import { getOnePrivateLabel } from "Services/privateLabel";
-import { updatePrivateLabel } from "Services/FactoryRequests/privateLabel";
+import { getOneWhiteLabel } from "Services/whiteLabel";
+import { updateWhiteLabel } from "Services/FactoryRequests/whiteLabel";
 import { getQuotes } from "Services/FactoryRequests/quotations";
 
-export function usePrivateLabel() {
+export function useWhiteLabel() {
   const { isLogin } = useContext(UserToken);
   const [searchParams] = useSearchParams();
-  const privateLabelId = searchParams.get("privateLabelId");
+  const whiteLabelId = searchParams.get("whiteLabelId");
 
   const [apiLoadingData, setApiLoadingData] = useState({
     reqData: true,
@@ -27,11 +27,12 @@ export function usePrivateLabel() {
       }));
 
       // get private label data
-      let result = await getOnePrivateLabel(
-        privateLabelId,
+      let result = await getOneWhiteLabel(
+        whiteLabelId,
         "include=importer&include=product"
       );
 
+      console.log("result getOneWhiteLabel", result);
       // check if private label has quotations
       const QouteIdConfigResp = await getQuotes(
         {},
@@ -43,7 +44,7 @@ export function usePrivateLabel() {
       if (result?.success) {
         setRequestedData((prevData) => ({
           ...prevData,
-          ...result.data.privatelabelings,
+          ...result.data.whitelabelings,
         }));
         setApiLoadingData((prevVal) => ({
           ...prevVal,
@@ -62,8 +63,8 @@ export function usePrivateLabel() {
         const { quotations } = QouteIdConfigResp.data;
 
         quotations.forEach((item) => {
-          if (item.privateLabelingId == privateLabelId) {
-            // Use item.id to match with privateLabelId
+          if (item.whiteLabelingId == whiteLabelId) {
+            // Use item.id to match with whiteLabelingId
             setRequestedData((prevData) => ({
               ...prevData,
               quoteId: item.id, // Use item.id directly
@@ -80,8 +81,8 @@ export function usePrivateLabel() {
     async function UpdateData(status) {
       setApiLoadingData(true);
 
-      let response = await updatePrivateLabel(
-        privateLabelId,
+      let response = await updateWhiteLabel(
+        whiteLabelId,
         { authorization: isLogin },
         { status: status }
       );
@@ -98,7 +99,7 @@ export function usePrivateLabel() {
     if (requestedData && requestedData.status === "open") {
       UpdateData("seen");
     }
-  }, [privateLabelId, isLogin]);
+  }, [whiteLabelId, isLogin]);
 
   return {
     isLogin,

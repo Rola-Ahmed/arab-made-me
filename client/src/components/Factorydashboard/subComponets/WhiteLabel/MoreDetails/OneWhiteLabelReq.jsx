@@ -5,21 +5,16 @@ import Loading from "components/Loading/Loading";
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
 import ProductDetails from "components/Forms/Shared/SelectedProductDetails";
 
-// import { getMonthName as getDate } from "utils/getMonthName";
-
 // sub Components
 import HeaderSection from "./HeaderSection";
 import ImporterInfo from "components/Shared/ImporterInfo";
 import ContactBtn from "components/Factorydashboard/Shared/ContactBtn";
-import { usePrivateLabel } from "./usePrivateLabel";
-import PrivateLabelInfo from "components/Shared/Dashboards/Forms/PrivateLabelInfo";
-// import ReadOnly from "components/Forms/Shared/ReadOnly";
-// import DisplayOneImage from "components/Shared/Dashboards/DisplayOneImage";
-// import DisplayMultiImages from "components/Shared/Dashboards/DisplayMultiImages";
+import { useWhiteLabel } from "./useWhiteLabel";
+import WhiteLabelInfo from "components/Shared/Dashboards/Forms/WhiteLabelInfo";
 
 // utils function
-export default function EtcPrivateLabelReq() {
-  let { isLogin, requestedData, apiLoadingData } = usePrivateLabel();
+export default function OneWhiteLabelReq() {
+  let { isLogin, requestedData, apiLoadingData } = useWhiteLabel();
   let navigate = useNavigate();
 
   // utils function
@@ -62,7 +57,7 @@ export default function EtcPrivateLabelReq() {
                 <>
                   <ImporterInfo importerData={requestedData?.importer} />
 
-                  <PrivateLabelInfo
+                  <WhiteLabelInfo
                     requestedData={requestedData}
                     handleImageClick={handleImageClick}
                   />
@@ -81,7 +76,7 @@ export default function EtcPrivateLabelReq() {
                     type="button"
                     onClick={() => {
                       navigate(
-                        `/answerQuotation/PrivateLabel?id=${requestedData?.id}&productName=${requestedData?.productName}&userId=${requestedData?.importerId}`
+                        `/answerQuotation/WhiteLabel?id=${requestedData?.id}&productName=${requestedData?.productName}&userId=${requestedData?.importerId}`
                       );
                     }}
                   >

@@ -147,7 +147,7 @@ export default function IndexList(props) {
                       title="view more details"
                       onClick={() => {
                         navigate(
-                          `/factorydashboard/PrivateLabelReq/moreDetails?privateLabelId=${poItem?.id}&factoryName=${poItem?.factoryName}`
+                          `/factorydashboard/whiteLabel/moreDetails?whiteLabelId=${poItem?.id}&factoryName=${poItem?.factoryName}`
                         );
                       }}
                     >

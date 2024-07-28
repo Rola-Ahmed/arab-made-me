@@ -15,6 +15,7 @@ import Quote from "components/Shared/Dashboards/Forms/Quote";
 import { useOneQuote } from "./useOneQuote";
 import CustomProductInfo from "components/Shared/Dashboards/Forms/CustomProductInfo";
 import PrivateLabelInfo from "components/Shared/Dashboards/Forms/PrivateLabelInfo";
+import WhiteLabelInfo from "components/Shared/Dashboards/Forms/WhiteLabelInfo";
 import SourcingRequestInfo from "components/Shared/Dashboards/Forms/SourcingRequestInfo";
 import Loading from "components/Loading/Loading";
 
@@ -96,6 +97,13 @@ export default function EtcQuote() {
 
                 {requestedData?.qouteOnType == "privateLabeling" && (
                   <PrivateLabelInfo
+                    requestedData={qouteOn}
+                    handleImageClick={handleImageClick}
+                  />
+                )}
+
+                {requestedData?.qouteOnType == "whiteLabeling" && (
+                  <WhiteLabelInfo
                     requestedData={qouteOn}
                     handleImageClick={handleImageClick}
                   />
