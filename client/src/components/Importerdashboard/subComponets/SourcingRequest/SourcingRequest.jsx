@@ -14,6 +14,7 @@ import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
 import { GlobalMsgContext } from "Context/globalMessage";
 import { qualityConditionsArr } from "constants/qualityConditionsArr";
+import TextareaInput from "components/Forms/Shared/TextareaInput";
 
 import { packingConditionsArr } from "constants/packingConditionsArr";
 
@@ -24,6 +25,10 @@ import { countriesMiddleEast } from "constants/countries";
 import "./SourcingRequest.css";
 import { shippingConditionsArr } from "constants/shippingConditionsArr";
 import SpecialChar from "components/Forms/Shared/SpecialChar/SpecialChar";
+import InputField from "components/Forms/Shared/InputField";
+import SelectWithTextarea from "components/Forms/Shared/SelectWithTextarea";
+import DateTimeInput from "components/Forms/Shared/DateTimeInput";
+import { paymentTypeArr } from "constants/paymentTypeArr";
 
 // import "./PurchasingOrder.css";
 function SourcingRequest() {
@@ -35,12 +40,17 @@ function SourcingRequest() {
   const [errorMsg, setErrorMsg] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
-
   // ------------------------Form Validation
   let validationSchema = Yup.object().shape({
     productName: requiredStringMax255,
 
     quantity: reqQualityValidate,
+
+    shippingConditions: Yup.string(),
+    shippingConditionsOther: otherTextAreaValidate(
+      "shippingConditions",
+      "other"
+    ),
 
     packingConditions: Yup.string(),
     packingConditionsOther: otherTextAreaValidate("packingConditions", "other"),
@@ -72,10 +82,19 @@ function SourcingRequest() {
   let initialValues = {
     quantity: "", //requried
     productName: "", //requried
+
     shippingConditions: "", //optional,
+    shippingConditionsOther: "",
+
     packingConditions: "", //optional
+    packingConditionsOther: "",
+
     paymentType: "", //optional
+    paymentTypeOther: "",
+
     qualityConditions: "", //optional
+    qualityConditionsOther: "",
+
     deadline: "", //optional
     country: "", //
 
@@ -268,37 +287,200 @@ function SourcingRequest() {
     }
   }
 
-
-
-
   if (
     currentUserData?.importerVerified == "0" ||
     currentUserData?.importerEmailActivated == false
   ) {
     return <ImporterUnVerified />;
   }
-  console.log("formvalidation",formValidation)
+  console.log("formvalidation", formValidation);
   return (
-    <>
-      <div id="view" className="m-4 order-section  ">
-        {/* <ToastContainer /> */}
-        <form onSubmit={formValidation.handleSubmit} className="header w-100">
-          <div>
-            <div className=" d-flex justify-content-between align-items-center ">
-              <h2>Add New Sourcing Request</h2>
+    <div id="view" className="m-4 order-section  ">
+      {/* <ToastContainer /> */}
+      <form onSubmit={formValidation.handleSubmit} className="header w-100">
+        <div>
+          <div className=" d-flex justify-content-between align-items-center ">
+            <h2>Add New Sourcing Request</h2>
 
-              <div className="btn-container">
+            <div className="btn-container">
+              <button
+                type="button"
+                className="order-btn-1"
+                onClick={() =>
+                  navigate("/importerdashboard/AllSourcingRequests")
+                }
+              >
+                <p className="cursor">All Requests</p>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* <section className="req-visit pt-0 pb-0 m-5 border-0"> */}
+        {/* Grid  */}
+        <div className="container add-product-dash">
+          <div className="row row-container w-100 ">
+            {errorMsg?.response ? (
+              <div className="alert mt-3 p-2 alert-danger form-control text-dark">
+                {errorMsg?.response}
+              </div>
+            ) : (
+              ""
+            )}
+
+            {/* <div className="title-text w-100 ">
+                  <h5>Sourcing Request Details</h5>
+                </div> */}
+
+            {/* <div className="row row-container w-100 "> */}
+            <div className="col-4">
+              <InputField
+                isRequired={true}
+                title={"Product Name"}
+                formValidation={formValidation}
+                vlaidationName={"productName"}
+              />
+            </div>
+            <div className="col-4">
+              <InputField
+                isRequired={true}
+                title={"Quantity "}
+                formValidation={formValidation}
+                vlaidationName={"quantity"}
+              />
+            </div>
+
+            <div className="col-4">
+              <SelectWithTextarea
+                formValidation={formValidation}
+                vlaidationName={"shippingConditions"}
+                textAreaOther={"shippingConditionsOther"}
+                isRequired={false}
+                title={"shipping conditions"}
+                array={shippingConditionsArr}
+              />
+            </div>
+
+            <div className="col-4">
+              <SelectWithTextarea
+                formValidation={formValidation}
+                vlaidationName={"packingConditions"}
+                textAreaOther={"packingConditionsOther"}
+                isRequired={false}
+                title={"Packing conditions"}
+                array={packingConditionsArr}
+              />
+            </div>
+
+            <div className="col-4">
+              <SelectWithTextarea
+                formValidation={formValidation}
+                vlaidationName={"paymentType"}
+                textAreaOther={"paymentTypeOther"}
+                isRequired={false}
+                title={"payment Term"}
+                array={paymentTypeArr}
+              />
+            </div>
+
+            <div className="col-4">
+              <SelectWithTextarea
+                formValidation={formValidation}
+                vlaidationName={"qualityConditions"}
+                textAreaOther={"qualityConditionsOther"}
+                isRequired={false}
+                title={"Quality Conditions"}
+                array={qualityConditionsArr}
+              />
+            </div>
+
+            {/*  */}
+            <div className="col-4">
+              <DateTimeInput
+                isRequired={false}
+                title={"Form Deadline"}
+                formValidation={formValidation}
+                vlaidationName={"deadline"}
+              />
+            </div>
+            {/*  */}
+
+            <div className="col-4">
+              <div className="form-group">
+                <label forhtml="country">Select Countries</label>
+
+                {/*  */}
                 <button
+                  className="btn form-control dropdown-toggle w-100 text-center countries-drop d-flex "
                   type="button"
-                  className="order-btn-1"
-                  onClick={() =>
-                    navigate("/importerdashboard/AllSourcingRequests")
-                  }
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
                 >
-                  <p className="cursor">All Requests</p>
+                  <p> Select Countries</p>
+                  <i className="fa-solid fa-chevron-down text-end my-auto"></i>
+                  {/* {Dropdown} */}
                 </button>
+                <ul className="dropdown-menu col-3 scroller">
+                  {countriesMiddleEast.map((item) => (
+                    <li>
+                      <div className=" dropdown-item d-flex justify-content-start align-items-center width-drop">
+                        <input
+                          //   onClick={(e) => SelectedCountry(e)}
+                          onChange={formValidation.handleChange}
+                          className="form-check-input cursor me-3 "
+                          type="checkbox"
+                          name="country"
+                          id="country"
+                          value={item.code}
+                        />
+                        <label
+                          className="form-check-label p-0 m-0"
+                          htmlFor="country"
+                        >
+                          {item.name}
+                        </label>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
 
-                {/* {isLoading ? (
+                {/*  */}
+              </div>
+            </div>
+
+            {/* ---------------------------- */}
+            <div className="col-12 ms-3 ">
+              <div className="border-row row">
+                <div>
+                  <label className="pb-2">Product Characteristics</label>
+                </div>
+
+                <SpecialChar
+                  formValidation={formValidation}
+                  vlaidationName="productCharacteristic"
+                />
+              </div>
+            </div>
+
+            {/* ----------------------------------------- */}
+
+            <TextareaInput
+              vlaidationName="productDescription"
+              formValidation={formValidation}
+              isRequired={true}
+              title="product Description"
+            />
+
+            <TextareaInput
+              vlaidationName="otherInfoRequest"
+              formValidation={formValidation}
+              isRequired={false}
+              title="Other Information"
+            />
+
+            <div className="col-12">
+              <div className="btn-container d-flex justify-content-center">
+                {isLoading ? (
                   <button type="button" className="order-btn-2 px-5 ">
                     <i className="fas fa-spinner fa-spin px-2"></i>
                   </button>
@@ -312,418 +494,27 @@ function SourcingRequest() {
                           Object.keys(formValidation.errors)?.[0]
                         );
 
-                        // Scroll to the target element
-                        targetElement.scrollIntoView({
-                          behavior: "smooth",
-                          block: "center", 
-                        });
-                      }
-                    }}
-                  >
-                    <i className="fa-solid fa-plus"></i>
-                    <p className="cursor">Add Sourcing Request</p>
-                  </button>
-                )} */}
-              </div>
-            </div>
-          </div>
-
-          {/* <section className="req-visit pt-0 pb-0 m-5 border-0"> */}
-          {/* Grid  */}
-          <div className="container add-product-dash">
-            <div className="row row-container w-100 ">
-              {errorMsg?.response ? (
-                <div className="alert mt-3 p-2 alert-danger form-control text-dark">
-                  {errorMsg?.response}
-                </div>
-              ) : (
-                ""
-              )}
-
-              {/* <div className="title-text w-100 ">
-                  <h5>Sourcing Request Details</h5>
-                </div> */}
-
-              {/* <div className="row row-container w-100 "> */}
-              <div className="col-4">
-                <div className="form-group">
-                  <label forhtml="productName">product Name*</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="productName"
-                    name="productName"
-                    placeholder="Enter productName"
-                    onChange={formValidation.handleChange}
-                    onBlur={formValidation.handleBlur}
-                    value={formValidation.values.productName}
-                  />
-                  {formValidation.errors.productName &&
-                  formValidation.touched.productName ? (
-                    <small className="form-text text-danger">
-                      {formValidation.errors.productName}
-                    </small>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              </div>
-
-              <div className="col-4">
-                <div className="form-group">
-                  <label forhtml="quantity">Quantity*</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="quantity"
-                    name="quantity"
-                    placeholder="Enter QUANTITY"
-                    onChange={formValidation.handleChange}
-                    onBlur={formValidation.handleBlur}
-                    value={formValidation.values.quantity}
-                  />
-                  {formValidation.errors.quantity &&
-                  formValidation.touched.quantity ? (
-                    <small className="form-text text-danger">
-                      {formValidation.errors.quantity}
-                    </small>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              </div>
-
-              <div className="col-4">
-                <div className="form-group">
-                  <label htmlFor="shippingConditions">
-                    shipping conditions
-                  </label>
-                  <select
-                    id="shippingConditions"
-                    name="shippingConditions"
-                    className="form-select form-control"
-                    onChange={formValidation.handleChange}
-                    onBlur={formValidation.handleBlur}
-                    value={formValidation.values.shippingConditions}
-                  >
-                    {shippingConditionsArr.map((item) => (
-                      <option value={item?.value}>{item?.name}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              <div className="col-4">
-                <div className="form-group">
-                  <label htmlFor="packingConditions">Packing condition</label>
-                  <select
-                    id="packingConditions"
-                    name="packingConditions"
-                    className="form-select form-control"
-                    onChange={formValidation.handleChange}
-                    onBlur={formValidation.handleBlur}
-                    value={formValidation.values.packingConditions}
-                  >
-                    <option value="">Select Packing condition</option>
-                    {packingConditionsArr.map((item) => (
-                      <option value={item?.value}>{item?.name}</option>
-                    ))}
-                  </select>
-
-                  {formValidation.values.packingConditions == "other" ? (
-                    <textarea
-                      className="form-control w-100 "
-                      onChange={formValidation.handleChange}
-                      onBlur={formValidation.handleBlur}
-                      value={formValidation.values.packingConditionsOther}
-                      id="packingConditionsOther"
-                      name="packingConditionsOther"
-                      rows="3"
-                      placeholder="enter more details"
-                    ></textarea>
-                  ) : (
-                    ""
-                  )}
-
-                  {formValidation.errors.packingConditionsOther &&
-                  formValidation.touched.packingConditionsOther ? (
-                    <small className="form-text text-danger">
-                      {formValidation.errors.packingConditionsOther}
-                    </small>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              </div>
-
-              <div className="col-4">
-                <div className="form-group">
-                  <label htmlFor="paymentType">payment Term</label>
-
-                  <select
-                    className="form-select form-control"
-                    id="paymentType"
-                    name="paymentType"
-                    onChange={formValidation.handleChange}
-                    onBlur={formValidation.handleBlur}
-                    value={formValidation.values.paymentType}
-                  >
-                    <option value="">Select Payment Term</option>
-                    <option value="advancePayment">
-                      Advance payment on order
-                    </option>
-                    <option value="immediateCreditCardCharge">
-                      The credit card will be charged immediately after the
-                      order
-                    </option>
-                    <option value="immediateInvoicePayment">
-                      Payable immediately upon issuance of the invoice
-                    </option>
-                    <option value="payableWithin14Days">
-                      Payable within 14 days
-                    </option>
-
-                    <option value="other">Other Payment Terms</option>
-                  </select>
-                  {formValidation.values.paymentType == "other" ? (
-                    <textarea
-                      className="form-control w-100 "
-                      onChange={formValidation.handleChange}
-                      onBlur={formValidation.handleBlur}
-                      value={formValidation.values.paymentTypeOther}
-                      id="paymentTypeOther"
-                      name="paymentTypeOther"
-                      rows="3"
-                      placeholder="enter more details"
-                    ></textarea>
-                  ) : (
-                    ""
-                  )}
-
-                  {formValidation.errors.paymentTypeOther &&
-                  formValidation.touched.paymentTypeOther ? (
-                    <small className="form-text text-danger">
-                      {formValidation.errors.paymentTypeOther}
-                    </small>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              </div>
-
-              <div className="col-4">
-                <div className="form-group">
-                  <label htmlFor="qualityConditions">Quality Condition</label>
-
-                  <select
-                    className="form-select form-control"
-                    id="qualityConditions"
-                    name="qualityConditions"
-                    onChange={formValidation.handleChange}
-                    onBlur={formValidation.handleBlur}
-                    value={formValidation.values.qualityConditions}
-                  >
-                    {qualityConditionsArr.map((item) => (
-                      <option value={item?.value}>{item?.name}</option>
-                    ))}
-                  </select>
-
-                  {formValidation.values.qualityConditions == "other" ? (
-                    <textarea
-                      className="form-control w-100 "
-                      onChange={formValidation.handleChange}
-                      onBlur={formValidation.handleBlur}
-                      value={formValidation.values.qualityConditionsOther}
-                      id="qualityConditionsOther"
-                      name="qualityConditionsOther"
-                      rows="3"
-                      placeholder="enter more details"
-                    ></textarea>
-                  ) : (
-                    ""
-                  )}
-
-                  {formValidation.errors.qualityConditionsOther &&
-                  formValidation.touched.qualityConditionsOther ? (
-                    <small className="form-text text-danger">
-                      {formValidation.errors.qualityConditionsOther}
-                    </small>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              </div>
-
-              {/*  */}
-              <div className="col-4">
-                <div className="form-group">
-                  <label forhtml="deadline">deadline</label>
-                  <input
-                    type="datetime-local"
-                    className="form-control"
-                    id="deadline"
-                    name="deadline"
-                    onChange={formValidation.handleChange}
-                    onBlur={formValidation.handleBlur}
-                    value={formValidation.values.deadline}
-                  />
-                  {formValidation.errors.deadline &&
-                  formValidation.touched.deadline ? (
-                    <small className="form-text text-danger">
-                      {formValidation.errors.deadline}
-                    </small>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              </div>
-              {/*  */}
-
-              <div className="col-4">
-                <div className="form-group">
-                  <label forhtml="country">Select Countries</label>
-
-                  {/*  */}
-                  <button
-                    className="btn form-control dropdown-toggle w-100 text-center countries-drop d-flex "
-                    type="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    <p> Select Countries</p>
-                    <i className="fa-solid fa-chevron-down text-end my-auto"></i>
-                    {/* {Dropdown} */}
-                  </button>
-                  <ul className="dropdown-menu col-3 scroller">
-                    {countriesMiddleEast.map((item) => (
-                      <li>
-                        <div className=" dropdown-item d-flex justify-content-start align-items-center width-drop">
-                          <input
-                            //   onClick={(e) => SelectedCountry(e)}
-                            onChange={formValidation.handleChange}
-                            className="form-check-input cursor me-3 "
-                            type="checkbox"
-                            name="country"
-                            id="country"
-                            value={item.code}
-                          />
-                          <label
-                            className="form-check-label p-0 m-0"
-                            htmlFor="country"
-                          >
-                            {item.name}
-                          </label>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-
-                  {/*  */}
-                </div>
-              </div>
-
-              {/* ---------------------------- */}
-              <div className="col-12 ms-3 ">
-                <div className="border-row row">
-                  <div>
-                    <label className="pb-2">Product Characteristics</label>
-                  </div>
-
-                  <SpecialChar
-                    formValidation={formValidation}
-                    vlaidationName="productCharacteristic"
-                  />
-                </div>
-              </div>
-
-              {/* ----------------------------------------- */}
-
-              <div className="col-12">
-                <div className="form-group">
-                  <label forhtml="productDescription">
-                    product Description *
-                  </label>
-                  <textarea
-                    type="email"
-                    className="form-control"
-                    id="productDescription"
-                    name="productDescription"
-                    placeholder="enter Legal stamp"
-                    onChange={formValidation.handleChange}
-                    onBlur={formValidation.handleBlur}
-                    value={formValidation.values.productDescription}
-                  />
-
-                  {formValidation.errors.productDescription &&
-                  formValidation.touched.productDescription ? (
-                    <small className="form-text text-danger">
-                      {formValidation.errors.productDescription}
-                    </small>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              </div>
-
-              <div className="col-12">
-                <div className="form-group">
-                  <label forhtml="otherInfoRequest">Other Information</label>
-                  <textarea
-                    type="email"
-                    className="form-control"
-                    id="otherInfoRequest"
-                    name="otherInfoRequest"
-                    placeholder="Conditions of delay"
-                    onChange={formValidation.handleChange}
-                    onBlur={formValidation.handleBlur}
-                    value={formValidation.values.otherInfoRequest}
-                  />
-                  {formValidation.errors.otherInfoRequest &&
-                  formValidation.touched.otherInfoRequest ? (
-                    <small className="form-text text-danger">
-                      {formValidation.errors.otherInfoRequest}
-                    </small>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              </div>
-
-              <div className="col-12">
-                <div className="btn-container d-flex justify-content-center">
-                  {isLoading ? (
-                    <button type="button" className="order-btn-2 px-5 ">
-                      <i className="fas fa-spinner fa-spin px-2"></i>
-                    </button>
-                  ) : (
-                    <button
-                      className="order-btn-2"
-                      type="submit"
-                      onClick={() => {
-                        if (formValidation.isValid == false) {
-                          const targetElement = document.getElementById(
-                            Object.keys(formValidation.errors)?.[0]
-                          );
-
-                          // Scroll to the target element
+                        if (targetElement) {
                           targetElement.scrollIntoView({
                             behavior: "smooth",
                             block: "center",
                           });
                         }
-                      }}
-                    >
-                      <i className="fa-solid fa-plus"></i>
-                      <p className="cursor">Add </p>
-                    </button>
-                  )}
-                </div>
+
+                        // Scroll to the target element
+                      }
+                    }}
+                  >
+                    <i className="fa-solid fa-plus"></i>
+                    <p className="cursor">Add </p>
+                  </button>
+                )}
               </div>
             </div>
           </div>
-        </form>
-      </div>
-    </>
+        </div>
+      </form>
+    </div>
   );
 }
 
