@@ -206,35 +206,6 @@ export default function GetSourcingRequest() {
               <button
                 className="order-btn-2 cursor"
                 onClick={() => {
-                  // if (
-                  //   currentUserData?.importerId !== null &&
-                  //   currentUserData?.importerId !== undefined
-                  // ) {
-                  //   localStorage.setItem("ToHomePage", "Page Not Found");
-                  //   navigate("/");
-                  //   return;
-                  // }
-                  // if (
-                  //   currentUserData?.factoryId !== null &&
-                  //   (currentUserData?.factoryVerified === "0" ||
-                  //     !currentUserData?.factoryEmailActivated)
-                  // ) {
-                  //   setModalShow((prevVal) => ({
-                  //     ...prevVal,
-                  //     isFactoryVerified: true,
-                  //   }));
-
-                  //   return;
-                  // } else if (!isLogin) {
-                  //   setModalShow((prevVal) => ({
-                  //     ...prevVal,
-                  //     isLogin: true,
-                  //   }));
-
-                  //   setisLoggedReDirect(`signIn/factoryDashboard/addProduct`);
-                  //   return;
-                  // }
-
                   navigate(`/importerdashboard/add/sourcingRequest`);
                 }}
               >

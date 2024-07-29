@@ -272,7 +272,10 @@ export default function AddProduct() {
                     <label className="pb-2">Product Characteristics</label>
                   </div>
 
-                  <SpecialChar formValidation={formValidation} />
+                  <SpecialChar
+                    formValidation={formValidation}
+                    vlaidationName="productCharacteristic"
+                  />
                 </div>
               </div>
 
@@ -284,7 +287,7 @@ export default function AddProduct() {
                 setSelectedDocs={setSelectedDocs}
                 MediaName="images"
                 mediaMaxLen="3"
-                meidaAcceptedExtensions={[ "png", "jpeg", "jpg"]}
+                meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
                 setErrorMsg={setErrorMsg}
                 title="Upload Images "
               />

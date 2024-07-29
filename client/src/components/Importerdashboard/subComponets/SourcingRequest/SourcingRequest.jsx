@@ -3,7 +3,13 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { baseUrl } from "config.js";
-
+import {
+  requiredStringMax255,
+  reqQualityValidate,
+  otherTextAreaValidate,
+  requiredDateValidate,
+  textAreaValidate,
+} from "utils/validationUtils";
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
 import { GlobalMsgContext } from "Context/globalMessage";
@@ -17,6 +23,7 @@ import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/Imp
 import { countriesMiddleEast } from "constants/countries";
 import "./SourcingRequest.css";
 import { shippingConditionsArr } from "constants/shippingConditionsArr";
+import SpecialChar from "components/Forms/Shared/SpecialChar/SpecialChar";
 
 // import "./PurchasingOrder.css";
 function SourcingRequest() {
@@ -27,97 +34,39 @@ function SourcingRequest() {
 
   const [errorMsg, setErrorMsg] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  const [specialCharacteristicsArr, SetSpecialCharacteristicsArr] = useState(
-    []
-  );
 
-  const now = new Date();
-  const tomorrow = new Date(now.getTime() + 24 * 60 * 60 * 1000);
-  const year = tomorrow.getFullYear();
-  const month = (tomorrow.getMonth() + 1).toString().padStart(2, "0");
-  const day = tomorrow.getDate().toString().padStart(2, "0");
-  const hours = tomorrow.getHours().toString().padStart(2, "0");
-  const minutes = tomorrow.getMinutes().toString().padStart(2, "0");
 
-  // Format the date as per the 'datetime-local' input type
-  const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}`;
   // ------------------------Form Validation
   let validationSchema = Yup.object().shape({
-    productName: Yup.string()
-      .required("Input Field is Required")
-      .max(25, "max length is 25"),
+    productName: requiredStringMax255,
 
-    quantity: Yup.string()
-      .required("Input field is Required")
-      .matches(/^[0-9]+$/, "Input field must be numbers only")
-      .min(1, "min 1 legnth"),
+    quantity: reqQualityValidate,
 
     packingConditions: Yup.string(),
-    packingConditionsOther: Yup.string().when("packingConditions", {
-      is: "other",
-      then: (schema) =>
-        schema
-
-          .max(255, "max legnth is 255")
-          .required("Input field is Required"),
-      otherwise: (schema) => schema.nullable(),
-    }),
+    packingConditionsOther: otherTextAreaValidate("packingConditions", "other"),
 
     paymentType: Yup.string(),
-    paymentTypeOther: Yup.string().when("paymentType", {
-      is: "other",
-      then: (schema) =>
-        schema
-
-          .max(255, "max legnth is 255")
-          .required("Input field is Required"),
-      otherwise: (schema) => schema.nullable(),
-    }),
+    paymentTypeOther: otherTextAreaValidate("paymentType", "other"),
 
     qualityConditions: Yup.string(),
-    qualityConditionsOther: Yup.string().when("qualityConditions", {
-      is: "other",
-      then: (schema) =>
-        schema
+    qualityConditionsOther: otherTextAreaValidate("qualityConditions", "other"),
 
-          .max(255, "max legnth is 255")
-          .required("Input field is Required"),
-      otherwise: (schema) => schema.nullable(),
-    }),
+    deadline: requiredDateValidate,
 
-    deadline: Yup.date().min(formattedDate, "Invalid Date"),
+    otherInfoRequest: textAreaValidate(),
 
-    otherInfoRequest: Yup.string().max(255, "max legnth is 255"),
+    productDescription: requiredStringMax255,
 
-    productDescription: Yup.string()
-      .required("Input field is Required")
+    country: Yup.array()
+      .of(Yup.string())
+      .nullable(),
 
-      .max(255, "max legnth is 255"),
-
-    country: Yup.array().of(Yup.string()).nullable(),
-
-    specialCharKeyWord: Yup.string()
-      // .required("Input field is Required")
-
-      .max(50, "max legnth is 50"),
-    specialCharDesc: Yup.string()
-      // .required("Input field is Required")
-
-      .max(50, "max legnth is 50"),
-
-    ...specialCharacteristicsArr?.reduce((acc, _, index) => {
-      acc[`specialCharKeyWord${index}`] = Yup.string()
-        //   .required("Input field is Required")
-
-        .max(50, "max legnth is 50");
-
-      acc[`specialCharDesc${index}`] = Yup.string()
-        //   .required("Input field is Required")
-
-        .max(50, "max legnth is 50");
-
-      return acc;
-    }, {}),
+    productCharacteristic: Yup.array().of(
+      Yup.object().shape({
+        keyword: Yup.string().max(50, "max legnth is  50"),
+        value: Yup.string().max(50, "max legnth is  50"),
+      })
+    ),
   });
 
   let initialValues = {
@@ -134,16 +83,12 @@ function SourcingRequest() {
 
     otherInfoRequest: "", //optional
 
-    specialCharKeyWord: "",
-    specialCharDesc: "",
-
-    ...specialCharacteristicsArr?.reduce((acc, _, index) => {
-      acc[`specialCharKeyWord${index}`] = "";
-
-      acc[`specialCharDesc${index}`] = "";
-
-      return acc;
-    }, {}),
+    productCharacteristic: [
+      {
+        keyword: "",
+        value: "",
+      },
+    ],
   };
 
   let formValidation = useFormik({
@@ -166,22 +111,6 @@ function SourcingRequest() {
 
       productDescription: values.productDescription,
 
-      //   specialCharacteristics: {
-      //     if(values.specialCharKeyWord!==""){
-
-      //         [values.specialCharKeyWord]: values.specialCharDesc,
-      //     }
-
-      //     ...(specialCharacteristicsArr?.length > 0
-      //       ? Object.assign(
-      //           {},
-      //           ...specialCharacteristicsArr?.map((index) => ({
-      //             [values[`specialCharKeyWord${index}`]]:
-      //               values[`specialCharDesc${index}`],
-      //           }))
-      //         )
-      //       : {}),
-      //   },
       specialCharacteristics: {},
     };
 
@@ -223,17 +152,12 @@ function SourcingRequest() {
       data.otherInfoRequest = values.otherInfoRequest;
     }
 
-    if (values.specialCharKeyWord !== "") {
-      data.specialCharacteristics[values.specialCharKeyWord] =
-        values.specialCharDesc;
-    }
-
-    if (specialCharacteristicsArr?.length > 0) {
-      specialCharacteristicsArr.forEach((index) => {
-        const key = values[`specialCharKeyWord${index}`];
-        const desc = values[`specialCharDesc${index}`];
-        data.specialCharacteristics[key] = desc;
-      });
+    if (Object.keys(values.productCharacteristic).length != 0) {
+      // create an object with the keyword property as the key and the value property as the value.
+      const obj = Object.fromEntries(
+        values.productCharacteristic.map((obj) => [obj.keyword, obj.value])
+      );
+      data.specialCharacteristics = obj;
     }
 
     try {
@@ -344,23 +268,8 @@ function SourcingRequest() {
     }
   }
 
-  function addnewSepcialChar() {
-    SetSpecialCharacteristicsArr((prevSections) => {
-      // Ensure prevSections is an array
-      const sectionsArray = Array.isArray(prevSections) ? prevSections : [];
 
-      // Return the updated array with the new section
-      return [...sectionsArray, specialCharacteristicsArr?.length];
-    });
-  }
 
-  function removenewSepcialChar() {
-    SetSpecialCharacteristicsArr((prevSections) => {
-      const updatedSections = [...prevSections];
-      updatedSections.pop(); // Remove the last item
-      return updatedSections;
-    });
-  }
 
   if (
     currentUserData?.importerVerified == "0" ||
@@ -368,6 +277,7 @@ function SourcingRequest() {
   ) {
     return <ImporterUnVerified />;
   }
+  console.log("formvalidation",formValidation)
   return (
     <>
       <div id="view" className="m-4 order-section  ">
@@ -713,175 +623,20 @@ function SourcingRequest() {
               </div>
 
               {/* ---------------------------- */}
-              <div className="col-12 ">
-                {/* <div className="form-group form-control "> */}
-                <div className="form-group form-control ">
-                  <div className="form-group timeline-container ">
-                    {/* <label> Timeline</label> */}
-                    <label forhtml="">Product Characteristics </label>
-
-                    {/* 1 */}
-                    <div className=" timeline form-control checked d-flex justify-content-between align-content-center">
-                      <div className="form-group w-50">
-                        <label forhtml="specialCharKeyWord">Keyword </label>
-                        <input
-                          type="text"
-                          id="specialCharKeyWord"
-                          name="specialCharKeyWord"
-                          className="form-control"
-                          placeholder="Color"
-                          onChange={formValidation.handleChange}
-                          onBlur={formValidation.handleBlur}
-                          value={formValidation.values.specialCharKeyWord}
-                        />
-
-                        {formValidation.errors.specialCharKeyWord &&
-                        formValidation.touched.specialCharKeyWord ? (
-                          <small className="form-text text-danger">
-                            {formValidation.errors.specialCharKeyWord}
-                          </small>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-
-                      <div className="form-group w-50">
-                        <label forhtml="specialCharDesc">description </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="specialCharDesc"
-                          name="specialCharDesc"
-                          placeholder="Red"
-                          onChange={formValidation.handleChange}
-                          onBlur={formValidation.handleBlur}
-                          value={formValidation.values.specialCharDesc}
-                        />
-
-                        {formValidation.errors.specialCharDesc &&
-                        formValidation.touched.specialCharDesc ? (
-                          <small className="form-text text-danger">
-                            {formValidation.errors.specialCharDesc}
-                          </small>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                    </div>
-
-                    {specialCharacteristicsArr?.map((dateSection, index) => (
-                      <>
-                        <div className="  timeline form-control checked d-flex justify-content-between align-content-center ">
-                          <div className="row w-100 ">
-                            <div className="form-group  col-6 col-6-50  ">
-                              <label forhtml="specialCharKeyWord">
-                                Keyword {index + 2}*
-                              </label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                id={`specialCharKeyWord${index}`}
-                                // placeholder={`${formValidation.values.specialCharKeyWord}${index} --`}
-                                onChange={formValidation.handleChange}
-                                onBlur={formValidation.handleBlur}
-                                // value={`${formValidation.values.specialCharKeyWord0} ----`}
-                                value={
-                                  formValidation.values[
-                                    `specialCharKeyWord${index}`
-                                  ]
-                                }
-                              />
-                              {formValidation.errors[
-                                `specialCharKeyWord${index}`
-                              ] &&
-                              formValidation.touched[
-                                `specialCharKeyWord${index}`
-                              ] ? (
-                                <small className="form-text text-danger">
-                                  {
-                                    formValidation.errors[
-                                      `specialCharKeyWord${index}`
-                                    ]
-                                  }
-                                </small>
-                              ) : (
-                                ""
-                              )}
-                            </div>
-                            <div
-                              className={`form-group    ${
-                                specialCharacteristicsArr?.length - 1 === index
-                                  ? "col-5"
-                                  : " col-6 col-6-50 "
-                              }`}
-                            >
-                              <label forhtml="specialCharDesc">
-                                description {index + 2}*
-                              </label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                id={`specialCharDesc${index}`}
-                                placeholder="Enter Quantity"
-                                onChange={formValidation.handleChange}
-                                onBlur={formValidation.handleBlur}
-                                value={
-                                  formValidation.values[
-                                    `specialCharDesc${index}`
-                                  ]
-                                }
-                              />
-                              {formValidation.errors[
-                                `specialCharDesc${index}`
-                              ] &&
-                              formValidation.touched[
-                                `specialCharDesc${index}`
-                              ] ? (
-                                <small className="form-text text-danger">
-                                  {
-                                    formValidation.errors[
-                                      `specialCharDesc${index}`
-                                    ]
-                                  }
-                                </small>
-                              ) : (
-                                ""
-                              )}
-                            </div>
-                            {specialCharacteristicsArr?.length - 1 === index ? (
-                              <div className=" col-1 h-100 justify-content-center align-items-center d-flex   pt-4">
-                                <i
-                                  class=" cursor fa-solid fa-minus text-white px-3 py-2"
-                                  onClick={() => removenewSepcialChar()}
-                                ></i>
-                                {/* {dateSection} */}
-                              </div>
-                            ) : (
-                              ""
-                            )}
-                          </div>
-                        </div>
-                      </>
-                    ))}
-
-                    {specialCharacteristicsArr.length < 4 ? (
-                      <div className="action ">
-                        <div
-                          className="cursor"
-                          onClick={() => addnewSepcialChar()}
-                        >
-                          <button className="action-btn btn-1 " type="button">
-                            add
-                          </button>
-                        </div>
-                      </div>
-                    ) : (
-                      ""
-                    )}
+              <div className="col-12 ms-3 ">
+                <div className="border-row row">
+                  <div>
+                    <label className="pb-2">Product Characteristics</label>
                   </div>
+
+                  <SpecialChar
+                    formValidation={formValidation}
+                    vlaidationName="productCharacteristic"
+                  />
                 </div>
               </div>
-              {/* ------------------------------- */}
+
+              {/* ----------------------------------------- */}
 
               <div className="col-12">
                 <div className="form-group">
