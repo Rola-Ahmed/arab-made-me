@@ -155,12 +155,7 @@ export default function AddSourcingOffer() {
   }, [categories]);
 
   // ----------  add imegs----------------------
-  const [selectedDocs, setSelectedDocs] = useState([
-    // {
-    //   pdfName: null,
-    //   pdfFile: null,
-    // },
-  ]);
+  const [selectedDocs, setSelectedDocs] = useState([]);
 
   // will use again
   // if (

@@ -15,6 +15,7 @@ import { userDetails } from "Context/userType";
 import { GlobalMsgContext } from "Context/globalMessage";
 import { qualityConditionsArr } from "constants/qualityConditionsArr";
 import TextareaInput from "components/Forms/Shared/TextareaInput";
+import UploadDocument from "components/Forms/Shared/UploadDocument";
 
 import { packingConditionsArr } from "constants/packingConditionsArr";
 
@@ -39,6 +40,7 @@ function SourcingRequest() {
 
   const [errorMsg, setErrorMsg] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedDocs, setSelectedDocs] = useState([]);
 
   // ------------------------Form Validation
   let validationSchema = Yup.object().shape({
@@ -476,6 +478,17 @@ function SourcingRequest() {
               formValidation={formValidation}
               isRequired={false}
               title="Other Information"
+            />
+
+            <UploadDocument
+              selectedDocs={selectedDocs}
+              errorMsg={errorMsg}
+              setSelectedDocs={setSelectedDocs}
+              MediaName="docs"
+              mediaMaxLen="3"
+              meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
+              setErrorMsg={setErrorMsg}
+              title="Upload Document "
             />
 
             <div className="col-12">
