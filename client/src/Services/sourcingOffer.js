@@ -15,5 +15,5 @@ export const addSourcingOffer = async (header, data) => {
 };
 
 export const addaddSourcingOfferMedia = async (id, header, data) => {
-  return await putRequest(`/products/uploadMedia/${id}`, header, data);
+  return await putRequest(`/sourcingOffers/uploadMedia/${id}`, header, data);
 };

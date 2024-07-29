@@ -1,8 +1,6 @@
 import { useState, useContext } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
-import { baseUrl } from "config.js";
 import {
   requiredStringMax255,
   reqQualityValidate,
@@ -10,9 +8,7 @@ import {
   requiredDateValidate,
   textAreaValidate,
 } from "utils/validationUtils";
-import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
-import { GlobalMsgContext } from "Context/globalMessage";
 import { qualityConditionsArr } from "constants/qualityConditionsArr";
 import TextareaInput from "components/Forms/Shared/TextareaInput";
 import UploadDocument from "components/Forms/Shared/UploadDocument";
@@ -29,18 +25,21 @@ import SpecialChar from "components/Forms/Shared/SpecialChar/SpecialChar";
 import InputField from "components/Forms/Shared/InputField";
 import SelectWithTextarea from "components/Forms/Shared/SelectWithTextarea";
 import DateTimeInput from "components/Forms/Shared/DateTimeInput";
-import { paymentTypeArr } from "constants/paymentTypeArr";
+import useFormSubmission from "./hooks/useFormSubmission";
 
 // import "./PurchasingOrder.css";
 function SourcingRequest() {
   let navigate = useNavigate();
-  let { isLogin } = useContext(UserToken);
   let { currentUserData } = useContext(userDetails);
-  let { setGlobalMsg } = useContext(GlobalMsgContext);
-
   const [errorMsg, setErrorMsg] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [selectedDocs, setSelectedDocs] = useState([]);
+  let {
+    submitForm,
+    sourcingOfferAdded,
+    submitDocs,
+    dataSaved,
+  } = useFormSubmission(setErrorMsg, setIsLoading);
 
   // ------------------------Form Validation
   let validationSchema = Yup.object().shape({
@@ -56,9 +55,6 @@ function SourcingRequest() {
 
     packingConditions: Yup.string(),
     packingConditionsOther: otherTextAreaValidate("packingConditions", "other"),
-
-    paymentType: Yup.string(),
-    paymentTypeOther: otherTextAreaValidate("paymentType", "other"),
 
     qualityConditions: Yup.string(),
     qualityConditionsOther: otherTextAreaValidate("qualityConditions", "other"),
@@ -91,9 +87,6 @@ function SourcingRequest() {
     packingConditions: "", //optional
     packingConditionsOther: "",
 
-    paymentType: "", //optional
-    paymentTypeOther: "",
-
     qualityConditions: "", //optional
     qualityConditionsOther: "",
 
@@ -116,176 +109,23 @@ function SourcingRequest() {
     initialValues,
 
     validationSchema,
-    onSubmit: submitForm,
+    onSubmit: submit,
   });
 
-  async function submitForm(values) {
-    setErrorMsg((prevErrors) => {
-      const { response, ...restErrors } = prevErrors || {};
-      return restErrors;
-    });
-
-    let data = {
-      productName: values.productName,
-
-      quantity: values.quantity,
-
-      productDescription: values.productDescription,
-
-      specialCharacteristics: {},
-    };
-
-    if (values.shippingConditions !== "") {
-      data.shippingConditions = values.shippingConditions;
+  function submit(values) {
+    // if data is not added yet
+    if (!sourcingOfferAdded.status) {
+      submitForm(values, selectedDocs);
     }
-    if (values.packingConditions !== "") {
-      data.packingConditions =
-        values.packingConditions === "other"
-          ? values.packingConditionsOther
-          : values.packingConditions;
-    }
-    if (values.paymentType !== "") {
-      data.paymentTerms =
-        values.paymentType == "other"
-          ? values.paymentTypeOther
-          : values.paymentType;
-    }
-
-    if (values.qualityConditions !== "") {
-      data.qualityConditions =
-        values.qualityConditions == "other"
-          ? values.qualityConditionsOther
-          : values.qualityConditions;
-    }
-    if (values.deadline !== "") {
-      data.deadline = values.deadline;
-    }
-
-    if (values.country.length !== 0) {
-      data.preferredCountries = values.country;
-    }
-
-    if (values.productDescription !== "") {
-      data.productDescription = values.productDescription;
-    }
-
-    if (values.otherInfoRequest !== "") {
-      data.otherInfoRequest = values.otherInfoRequest;
-    }
-
-    if (Object.keys(values.productCharacteristic).length != 0) {
-      // create an object with the keyword property as the key and the value property as the value.
-      const obj = Object.fromEntries(
-        values.productCharacteristic.map((obj) => [obj.keyword, obj.value])
-      );
-      data.specialCharacteristics = obj;
-    }
-
-    try {
-      setIsLoading(true);
-      let config = {
-        method: "post",
-        url: `${baseUrl}/sourcingRequests/add`,
-        headers: {
-          authorization: isLogin,
-        },
-        data: data,
-      };
-
-      const response = await axios.request(config);
-
-      if (response.data.message == "done") {
-        setGlobalMsg("Your Sourcing Request has been successfully submitted");
-        navigate(-1);
-      } else {
-        setErrorMsg((prevErrors) => ({
-          ...prevErrors,
-          response: response?.data?.message,
-        }));
-        window.scrollTo({ top: 390 });
-      }
-      setIsLoading(false);
-    } catch (error) {
-      if (error.response && error.response.status) {
-        const statusCode = error.response.status;
-        switch (statusCode) {
-          // case 200:
-          //   setErrorMsg("Success (200).");
-          //   break;
-          // case 204:
-          //   setErrorMsg("No Content (204).");
-          //   break;
-          case 400:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.errorMessage,
-            }));
-            break;
-          case 401:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: "User is not Unauthorized ",
-            }));
-            break;
-          case 403:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response:
-                "Forbidden, You do not have permission to access this resource.",
-            }));
-
-            break;
-          case 404:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response:
-                "Not Found (404). The requested resource was not found.",
-            }));
-
-            break;
-
-          case 500:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.errorMessage,
-            }));
-            break;
-
-          //  429 Too Many Requests
-          // The user has sent too many requests in a given amount of time ("rate limiting").
-          case 429:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: " Too Many Requests , Please try again later.",
-            }));
-            break;
-          case 402:
-            // 402
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.message,
-            }));
-            window.scrollTo({ top: 390 });
-
-            break;
-          default:
-            window.scrollTo({ top: 390 });
-
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.errorMessage,
-            }));
-            // case message== error
-            break;
-        }
-      } else {
-        setErrorMsg((prevErrors) => ({
-          ...prevErrors,
-          response: "An unexpected error occurred. Please try again later.",
-        }));
-      }
-      setIsLoading(false);
-      window.scrollTo({ top: 390 });
+    // if textApi is added and selectedDocs is greater that 0
+    // call media
+    // this case means that error ouccured in meidaApi so i need only to call media api
+    // else
+    // if (privateLabelAdded.status && selectedDocs?.length > 0) {
+    else if (selectedDocs?.length > 0) {
+      submitDocs(sourcingOfferAdded.id, selectedDocs);
+    } else {
+      dataSaved();
     }
   }
 
@@ -330,11 +170,6 @@ function SourcingRequest() {
               ""
             )}
 
-            {/* <div className="title-text w-100 ">
-                  <h5>Sourcing Request Details</h5>
-                </div> */}
-
-            {/* <div className="row row-container w-100 "> */}
             <div className="col-4">
               <InputField
                 isRequired={true}
@@ -377,17 +212,6 @@ function SourcingRequest() {
             <div className="col-4">
               <SelectWithTextarea
                 formValidation={formValidation}
-                vlaidationName={"paymentType"}
-                textAreaOther={"paymentTypeOther"}
-                isRequired={false}
-                title={"payment Term"}
-                array={paymentTypeArr}
-              />
-            </div>
-
-            <div className="col-4">
-              <SelectWithTextarea
-                formValidation={formValidation}
                 vlaidationName={"qualityConditions"}
                 textAreaOther={"qualityConditionsOther"}
                 isRequired={false}
@@ -396,7 +220,6 @@ function SourcingRequest() {
               />
             </div>
 
-            {/*  */}
             <div className="col-4">
               <DateTimeInput
                 isRequired={false}
@@ -405,13 +228,11 @@ function SourcingRequest() {
                 vlaidationName={"deadline"}
               />
             </div>
-            {/*  */}
 
             <div className="col-4">
               <div className="form-group">
                 <label forhtml="country">Select Countries</label>
 
-                {/*  */}
                 <button
                   className="btn form-control dropdown-toggle w-100 text-center countries-drop d-flex "
                   type="button"
@@ -427,7 +248,6 @@ function SourcingRequest() {
                     <li>
                       <div className=" dropdown-item d-flex justify-content-start align-items-center width-drop">
                         <input
-                          //   onClick={(e) => SelectedCountry(e)}
                           onChange={formValidation.handleChange}
                           className="form-check-input cursor me-3 "
                           type="checkbox"
@@ -493,7 +313,7 @@ function SourcingRequest() {
 
             <div className="col-12">
               <div className="btn-container d-flex justify-content-center">
-                {isLoading ? (
+                {isLoading?.submitLoading ? (
                   <button type="button" className="order-btn-2 px-5 ">
                     <i className="fas fa-spinner fa-spin px-2"></i>
                   </button>
