@@ -196,74 +196,6 @@ export default function PurchasingOrdersImp() {
     //  let x allPosData.map((data))
   }, [apiLoadingData]);
 
-  const downloadCsv = () => {
-    const attributesToFilter = [
-      "productId",
-      "factoryId",
-      "importerId",
-      "quotationId",
-      "sourcingOfferId",
-      "updatedAt",
-      "docs",
-      "factoryProfileImg",
-    ];
-    // ,"contactData"
-    const newArray = filterAttributes(allPosData, attributesToFilter);
-
-    // const csvData = convertToCsv(allPosData);
-
-    const csvData = convertToCsv(newArray);
-
-    const blob = new Blob([csvData], { type: "text/csv" });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "purchasingOrders.csv";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  };
-
-  const convertToCsv = (data) => {
-    // Assuming data is an array of objects with similar structure
-    const header = Object.keys(data[0]).join(",");
-    const rows = data.map((obj) => Object.values(obj).join(",")).join("\n");
-    return `${header}\n${rows}`;
-  };
-
-  const filterAttributes = (dataArray, attributesToFilter) => {
-    return dataArray.map((originalObject) => {
-      const filteredObject = Object.keys(originalObject)
-        .filter((key) => !attributesToFilter.includes(key))
-        .reduce((acc, key) => {
-          if (key === "contactData") {
-            acc["RepresentiveEmail"] = originalObject[key]?.email;
-            acc["RepresentivePhone"] = originalObject[key]?.phone;
-          } else if (
-            key === "timeLine" &&
-            Array.isArray(originalObject[key]) &&
-            originalObject[key].length > 0
-          ) {
-            acc["TimeLineData"] = originalObject[key]
-              .map((item, index) => (
-                <p className="trate-sub-title">
-                  `date${index + 1}:${item?.date} - quantity${index + 1}:$
-                  {item?.quantity}`
-                </p>
-              ))
-              .join(", ");
-          } else {
-            acc[key] = originalObject[key];
-          }
-
-          return acc;
-        }, {});
-
-      return filteredObject;
-    });
-  };
-
   useEffect(() => {
     const fetchDataLenght = async () => {
       try {
@@ -348,8 +280,8 @@ export default function PurchasingOrdersImp() {
             <div className="btn-container">
               <button
                 className="order-btn-1"
-                onClick={downloadCsv}
-                disabled={!allPosData.length}
+                // onClick={downloadCsv}
+                disabled={true}
               >
                 <i className="fa-solid fa-cloud-arrow-down"></i>
                 <p className="cursor">Download CSV</p>
@@ -530,35 +462,30 @@ export default function PurchasingOrdersImp() {
 
                   <th className=" col-1 d-flex align-items-center  ">
                     <div>
-                      {
-                        // allAnsRfqData.map((item) =>
-                        poItem?.docs != null
-                          ? poItem?.docs?.map((i, index) =>
-                              i !== null ? (
-                                <>
-                                  <a
-                                    className="text-decoration-none"
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    href={`${baseUrl_IMG}/${i}`}
-                                    download
-                                  >
-                                    <p className="trate-sub-title doc-download-color cursor">
-                                      Doc{index}.
-                                      {
-                                        i?.split(".")?.[
-                                          i.split(".")?.length - 1
-                                        ]
-                                      }
-                                    </p>
-                                  </a>
-                                </>
-                              ) : (
-                                ""
-                              )
+                      {// allAnsRfqData.map((item) =>
+                      poItem?.docs != null
+                        ? poItem?.docs?.map((i, index) =>
+                            i !== null ? (
+                              <>
+                                <a
+                                  className="text-decoration-none"
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  href={`${baseUrl_IMG}/${i}`}
+                                  download
+                                >
+                                  <p className="trate-sub-title doc-download-color cursor">
+                                    Doc{index}.
+                                    {i?.split(".")?.[i.split(".")?.length - 1]}
+                                  </p>
+                                </a>
+                              </>
+                            ) : (
+                              ""
                             )
-                          : ""
-                        // )
+                          )
+                        : ""
+                      // )
                       }
                     </div>
                   </th>

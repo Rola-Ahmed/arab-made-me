@@ -111,83 +111,6 @@ export default function GetSourcingRequest() {
   // utils function
   let getMonthName = getDate;
 
-  const downloadCsv = () => {
-    const attributesToFilter = [
-      "productId",
-      "factoryId",
-      "importerId",
-      "updatedAt",
-      "docs",
-      "factoryProfileImg",
-    ];
-    // ,"contactData"
-    const newArray = filterAttributes(allSpmfsData, attributesToFilter);
-
-    // const csvData = convertToCsv(allSpmfsData);
-
-    const csvData = convertToCsv(newArray);
-
-    const blob = new Blob([csvData], { type: "text/csv" });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "privateLabel.csv";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  };
-
-  const convertToCsv = (data) => {
-    // Assuming data is an array of objects with similar structure
-    const header = Object.keys(data[0]).join(",");
-    const rows = data.map((obj) => Object.values(obj).join(",")).join("\n");
-    return `${header}\n${rows}`;
-  };
-
-  const filterAttributes = (dataArray, attributesToFilter) => {
-    return dataArray.map((originalObject) => {
-      const filteredObject = Object.keys(originalObject)
-        .filter((key) => !attributesToFilter.includes(key))
-        .reduce((acc, key) => {
-          if (
-            key === "specialCharacteristics" &&
-            typeof originalObject[key] === "object" &&
-            Object.keys(originalObject[key])?.length !== 0
-          ) {
-            // originalObject[key].forEach((item, index) => {
-            //   acc[`KeyWord${index}`] = Object.values([item]);
-            //   acc[`description${index}`] = item;
-            // });
-
-            let index = 1;
-            for (const keyLoop in originalObject[key]) {
-              if (originalObject[key].hasOwnProperty(keyLoop)) {
-                const value = originalObject[key][keyLoop];
-
-                acc[`KeyWord${index}`] = keyLoop;
-                acc[`description${index}`] = value;
-              }
-              index++;
-            }
-
-            while (index <= 5) {
-              acc[`KeyWord${index}`] = "";
-              acc[`description${index}`] = "";
-
-              index++;
-            }
-          } else {
-            acc[key] = originalObject[key];
-          }
-
-          return acc;
-        }, {});
-
-      return filteredObject;
-    });
-  };
-
   useEffect(() => {
     const fetchDataLenght = async () => {
       try {
@@ -273,8 +196,8 @@ export default function GetSourcingRequest() {
             <div className="btn-container">
               <button
                 className="order-btn-1"
-                onClick={downloadCsv}
-                disabled={!allSpmfsData.length}
+                // onClick={downloadCsv}
+                disabled={true}
               >
                 <i className="fa-solid fa-cloud-arrow-down"></i>
                 <p className="cursor">Download CSV</p>

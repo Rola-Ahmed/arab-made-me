@@ -113,57 +113,9 @@ export default function GetQuotationImp() {
   // utils function
   let getMonthName = getDate;
 
-  const downloadCsv = () => {
-    const attributesToFilter = [
-      "productId",
-      "importerId",
-      "factoryId",
 
-      "sourcingOfferId",
-      "updatedAt",
-      "docs",
-      "factoryProfileImg",
 
-      // "productName": "Samsung Galaxy S9+",
-    ];
-    // ,"contactData"
-    const newArray = filterAttributes(allAnsRfqData, attributesToFilter);
-
-    // const csvData = convertToCsv(allAnsRfqData);
-
-    const csvData = convertToCsv(newArray);
-
-    const blob = new Blob([csvData], { type: "text/csv" });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "Quotation.csv";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  };
-
-  const convertToCsv = (data) => {
-    // Assuming data is an array of objects with similar structure
-    const header = Object.keys(data[0]).join(",");
-    const rows = data.map((obj) => Object.values(obj).join(",")).join("\n");
-    return `${header}\n${rows}`;
-  };
-
-  const filterAttributes = (dataArray, attributesToFilter) => {
-    return dataArray.map((originalObject) => {
-      const filteredObject = Object.keys(originalObject)
-        .filter((key) => !attributesToFilter.includes(key))
-        .reduce((acc, key) => {
-          acc[key] = originalObject[key];
-
-          return acc;
-        }, {});
-
-      return filteredObject;
-    });
-  };
+ 
 
   useEffect(() => {
     const fetchDataLenght = async () => {
@@ -252,8 +204,8 @@ export default function GetQuotationImp() {
             <div className="btn-container">
               <button
                 className="order-btn-1"
-                onClick={downloadCsv}
-                disabled={!allAnsRfqData?.length}
+                // onClick={downloadCsv}
+                disabled={true}
               >
                 <i className="fa-solid fa-cloud-arrow-down"></i>
                 <p className="cursor">Download CSV</p>
