@@ -15,8 +15,9 @@ import { userDetails } from "Context/userType";
 import "./FactoryProfile.css";
 import { handleImageError } from "utils/ImgNotFound";
 import { countriesMiddleEast } from "constants/countries";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import SuccessToast from "components/SuccessToast";
+import ErrorToast from "components/ErrorToast";
+
 import { useOutletContext } from "react-router-dom";
 
 import Password from "./subComponents/Password/Password";
@@ -67,9 +68,8 @@ export default function FactoryProfile() {
   ]);
 
   function handleMultiMediaValidation(e, keyWordDoc, inputValue) {
-    const count = selectedDocs?.filter(
-      (item) => item?.keyWord === keyWordDoc
-    )?.length;
+    const count = selectedDocs?.filter((item) => item?.keyWord === keyWordDoc)
+      ?.length;
 
     if (count >= 3) {
       setErrorMsg((prevErrors) => ({
@@ -224,55 +224,24 @@ export default function FactoryProfile() {
         if (response?.data?.message == "done") {
           ModalClose();
 
-          // setShow((prevVal) => ({
-          //   ...prevVal,
-          //   prevVal: false,
-          // }));
-          toast("Image Saved Successfully", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            //pauseOnHover: true,
-            draggable: true,
-            theme: "colored",
-            type: "success",
-          });
+          SuccessToast("Image Saved Successfully");
+
           dispatch({
             type: "update_image",
             value: response?.data?.factory?.legalDocs,
           });
-          //
           setSelectedDocs([]);
           setIsLoading(false);
         } else {
           setIsLoading(false);
 
-          toast("Image Not Saved, please try again", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            draggable: true,
-            // progress: undefined,
-            theme: "colored",
-            type: "error",
-          });
+          ErrorToast("Image Not Saved, please try again");
         }
       })
       .catch((error) => {
         setIsLoading(false);
 
-        toast("Image Not Saved, please try again", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          draggable: true,
-          // progress: undefined,
-          theme: "colored",
-          type: "error",
-        });
+        ErrorToast("Image Not Saved, please try again");
       });
   }
 
@@ -385,18 +354,8 @@ export default function FactoryProfile() {
 
       if (response.data.message == "done") {
         ModalClose();
-        toast("Data added Successfully", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          //pauseOnHover: true,
-          draggable: true,
-          // progress: undefined,
-          theme: "colored",
-          type: "success",
-        });
-
+        SuccessToast("Image Not Saved, please try again");
+        
         dispatch({
           type: "fetched_update_data",
           value: data,
@@ -472,7 +431,6 @@ export default function FactoryProfile() {
 
   return (
     <>
-      <ToastContainer />
       <div className="section factory-profile me-5 ms-5 mb-5 mt-2 ">
         <PageUtility currentPage="Factory Profile " />
 
@@ -580,7 +538,7 @@ export default function FactoryProfile() {
                             type="text"
                             className="form-control"
                             id="repFirstName"
-                            name="RepFirstName"
+                            name="repFirstName"
                             placeholder="Enter first Name"
                             onChange={AccountInfoValidation.handleChange}
                             onBlur={AccountInfoValidation.handleBlur}
@@ -744,7 +702,7 @@ export default function FactoryProfile() {
             <div className="title-contianer-input w-100">
               <Modal.Header closeButton>
                 <Modal.Title>
-                  <p>Legal Documents</p>
+                  <p class='bg-info'>Legal Documents</p>
                 </Modal.Title>
               </Modal.Header>
               {errorMsg?.response ? (
@@ -759,6 +717,7 @@ export default function FactoryProfile() {
                   onSubmit={(e) => updateMedia(e, "legalDocs")}
                   encType="multipart/form-data"
                 >
+                  {/* legalDocs */}
                   <div className="row  row-gap">
                     <div className="col-12">
                       <div className="grid-gap-col">

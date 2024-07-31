@@ -1,14 +1,13 @@
 export default function FormVlaidtionError(props) {
   let { formValidation, vlaidationName } = props;
+
+  let { errors, touched } = formValidation;
   return (
     <>
-      {formValidation.errors[vlaidationName] &&
-      formValidation.touched[vlaidationName] ? (
+      {errors[vlaidationName] && touched[vlaidationName] && (
         <small className="form-text text-danger">
-          {formValidation.errors[vlaidationName]}
+          {errors[vlaidationName]}
         </small>
-      ) : (
-        ""
       )}
     </>
   );
