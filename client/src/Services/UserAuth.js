@@ -13,3 +13,8 @@ export const updateFromUser = async (header, data) => {
 export const getUser = async (id, header) => {
   return await getRequestDataHeader(`/users/${id}`, header, {});
 };
+
+
+export const forgotPassword = async (data) => {
+  return await postRequest(`/users/forgetPassword`, {}, data);
+};

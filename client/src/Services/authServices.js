@@ -19,7 +19,7 @@ const createRequestConfig = (method, url, headers, data) => ({
 // Handle API response
 const handleResponse = (response) => {
   // delay(500)
-  if (response.data.message === "done" || response.data.message == "updated") {
+  if (response.data.message === "done" || response.data.message == "updated" || response?.data?.message === "check your email") {
     return {
       data: response.data,
       loadingStatus: false,
