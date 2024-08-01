@@ -5,7 +5,7 @@ import TextareaInput from "components/Forms/Shared/TextareaInput";
 import { awaitImg, currentsubPoint, subPoint } from "constants/Images";
 import { useNavigate } from "react-router-dom";
 import { useFormValidation } from "./useFormValidation";
-import { useFetchSectors } from "components/Home/sectors/useFetchSectors";
+import { useFetchSectors } from "hooks/useFetchSectors";
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
 import { countriesMiddleEast } from "constants/countries";

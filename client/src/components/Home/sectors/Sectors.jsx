@@ -6,7 +6,7 @@ import { baseUrl_IMG } from "config.js";
 import Loading from "components/Loading/Loading";
 import { handleImageError } from "utils/ImgNotFound";
 import { useNavigate } from "react-router-dom";
-import { useFetchSectors } from "components/Home/sectors/useFetchSectors";
+import { useFetchSectors } from "hooks/useFetchSectors";
 import { fetchSectorProducts } from "Services/sector";
 
 function Sectors() {

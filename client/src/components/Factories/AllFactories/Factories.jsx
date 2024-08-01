@@ -4,7 +4,7 @@ import { countriesMiddleEast } from "constants/countries";
 import Loading from "components/Loading/Loading";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { useFetchSectors } from "components/Home/sectors/useFetchSectors";
+import { useFetchSectors } from "hooks/useFetchSectors";
 import HandleUsersBtnAccess, {
   handleIsLoggedInBtn,
   // handleButtonClick
