@@ -6,7 +6,7 @@ height: 11rem;
 
 /* flex-shrink: 0; */
  background: url("../../../assets/images/hero/bg-img.webp") center/cover no-repeat;
- border-top: 0.48px solid white;
+ /* border-top: 0.48px solid white; */
 
 }
 

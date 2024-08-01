@@ -9,7 +9,7 @@ export default function CurrectAccountDropList(props) {
   return (
     <div className="input-group drop-account position-relative justify-content-center">
       <button
-        className="btn dropdown-toggle text-white"
+        className="btn dropdown-toggle text-white my-0"
         type="button"
         data-bs-toggle="dropdown"
       >

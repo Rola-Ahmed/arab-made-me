@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 
-const ErrorToast = (msg) => {
+const SuccessToast = (msg) => {
   toast.success(msg, {
     position: "top-center",
     autoClose: 5000,
@@ -22,4 +22,4 @@ const ErrorToast = (msg) => {
 //   });
 };
 
-export default ErrorToast;
+export default SuccessToast;

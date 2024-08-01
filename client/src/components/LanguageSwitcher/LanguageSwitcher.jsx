@@ -4,11 +4,11 @@ import { useTranslation } from "react-i18next";
 const LanguageSwitcher = () => {
   const { i18n } = useTranslation();
   const languageNames = {
-    en: " English -En",
+    en: " English",
     "en-us": "English (US)",
     "en-gb": "English (UK)",
     "en-gb": "English (UK)",
-    ar: " العربيه -Ar",
+    ar: " العربيه",
   };
 
   const currentLanguageCode = i18n.language;
@@ -23,7 +23,7 @@ const LanguageSwitcher = () => {
     <div className="Lang-cont">
       <div className="dropdown">
         <button
-          className="btn btn-secondary dropdown-toggle bg-light text-black fs-12"
+          className="show-lang btn btn-secondary dropdown-toggle  text-black fs-12 bg-transparent border-0"
           type="button"
           id="langMenuBtn"
           //   data-toggle="dropdown"
@@ -33,6 +33,7 @@ const LanguageSwitcher = () => {
           aria-expanded="false"
           data-bs-toggle="dropdown"
         >
+          <i class="fa-solid fa-globe color-white me-2"></i>{" "}
           {currentLanguageName}
         </button>
         <div
