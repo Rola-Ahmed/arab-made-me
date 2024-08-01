@@ -28,11 +28,11 @@ function Navbar(props) {
     <>
       <ScrollToTop />
       <div className=" nav-sticky position-sticky top-0">
-        <div className="lang-parent d-flex align-items-center justify-content-between border-bottom border-1 border-muted position-sticky top-0">
+        <div className="lang-parent d-md-flex align-items-center justify-content-between border-bottom border-1 border-muted position-sticky top-0">
           {/* btn to change lanuages */}
           <LanguageSwitcher />
 
-          <div className="btns   m-0 p-0 ">
+          <div className="btns p-0  w-fit-content  mx-md-0 mx-auto">
             {!isLogin ? (
               <>
                 <div

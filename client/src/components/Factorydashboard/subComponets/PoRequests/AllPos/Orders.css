@@ -527,11 +527,11 @@ th {
   top: 0;
 }
 
-.border-bottom {
+/* .border-bottom {
   border-bottom: 1px solid var(--Gray-500) !important;
   padding-bottom: 48px;
 
-}
+} */
 
 .single-msg {
   border: solid 1px var(--Gray-300);

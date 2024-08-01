@@ -21,7 +21,7 @@ const LanguageSwitcher = () => {
 
   return (
     <div className="Lang-cont">
-      <div className="dropdown">
+      <div className="dropdown w-fit-content mx-auto">
         <button
           className="show-lang btn btn-secondary dropdown-toggle  text-black fs-12 bg-transparent border-0"
           type="button"
