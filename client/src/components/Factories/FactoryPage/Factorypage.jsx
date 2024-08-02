@@ -4,6 +4,8 @@ import Modal from "react-bootstrap/Modal";
 import "./Factorypage.css";
 import { BtnDescription } from "constants/BtnDescription";
 import { useNavigate, useParams } from "react-router-dom";
+import SuccessToast from "components/SuccessToast";
+import ErrorToast from "components/ErrorToast";
 
 import { vid1 } from "constants/Images";
 import Carousel from "react-grid-carousel";
@@ -31,8 +33,6 @@ import {
   Geographies,
   Geography,
 } from "react-simple-maps";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import ActionBtnsOnFactory from "./ActionBtnsOnFactory";
 import ActionBtnsOnProduct from "./ActionBtnsOnProduct";
 import DescritionPopUp from "components/Helpers/DescritionPopUp";
@@ -105,39 +105,12 @@ function Factorypage() {
       const response = await axios.request(config);
 
       if (response.data.message == "done") {
-        toast("Endorsement added successfully", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          //pauseOnHover: true,
-          draggable: true,
-          theme: "colored",
-          type: "success",
-        });
+        SuccessToast("Endorsement added successfully");
       } else if (response.data.message == "404 Not Found") {
-        toast("Something Went Wrong try again later", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          //pauseOnHover: true,
-          draggable: true,
-          theme: "colored",
-          type: "error",
-        });
+        ErrorToast("Something Went Wrong try again later");
       }
     } catch (error) {
-      toast("Something Went Wrong try again later", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        //pauseOnHover: true,
-        draggable: true,
-        theme: "colored",
-        type: "error",
-      });
+      ErrorToast("Something Went Wrong try again later");
     }
   }
 
@@ -353,8 +326,6 @@ function Factorypage() {
   }
   return (
     <>
-      <ToastContainer />
-
       <IsLoggedIn
         show={modalShow.isLogin}
         onHide={() =>
@@ -880,16 +851,10 @@ function Factorypage() {
                   <div className="col-lg-4">
                     <div className="card ">
                       <div>
-                        {/* <img
-                          src={yourBrand}
-                          className="card-img-top object-fit-contain d-none"
-                          alt="Product"
-                          onError={handleImageError}
-                        /> */}
                         <h1 className="Img-txt-title  text-center my-auto card-img-top">
-                          <span className="d-block">Branding</span>
-                          <span className="d-block And">And</span>
-                          <span className="d-block">Marketing</span>
+                          <span className="d-block py-5 my-1">
+                            Create Your Own Brand
+                          </span>
                         </h1>
                       </div>
                       <div className="card-body ">
@@ -956,10 +921,7 @@ function Factorypage() {
                               );
                             }}
                           >
-                            <i
-                              class="fa-regular fa-comments fa-2x"
-                              // style={{ fontSize: "1.5rem" }}
-                            ></i>
+                            <i class="fa-regular fa-comments fa-2x"></i>
                           </div>
                         </div>
 
@@ -1008,7 +970,6 @@ function Factorypage() {
                             ))
                           : ""}
                       </Carousel>
-                      {/* </div> */}
                     </div>
                   </div>
                 </div>

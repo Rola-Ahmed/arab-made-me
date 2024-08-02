@@ -3,7 +3,6 @@ import "./TopFactories.css";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
-// Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 
