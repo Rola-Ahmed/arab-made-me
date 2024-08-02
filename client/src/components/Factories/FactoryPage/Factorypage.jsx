@@ -10,9 +10,6 @@ import { useFetchSectors } from "hooks/useFetchSectors";
 
 import { vid1 } from "constants/Images";
 import Carousel from "react-grid-carousel";
-import CustomSlider from "react-slick";
-import "slick-carousel/slick/slick-theme.css";
-import "slick-carousel/slick/slick.css";
 import { handleImageError } from "utils/ImgNotFound";
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
@@ -43,6 +40,11 @@ import {
   getEndorse,
   getFactoryTeam,
 } from "Services/factory";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import { Pagination } from "swiper/modules";
 
 function Factorypage() {
   let { currentUserData } = useContext(userDetails);
@@ -76,8 +78,6 @@ function Factorypage() {
   let [factoryHasProduct, setFactoryHasProduct] = useState(false);
 
   async function fetchFactoryPage() {
-    // const response = await axios.request(config);
-
     let result = await fetchOneFactory(factoryIdName?.split("-")?.[0]);
 
     if (result?.success) {
@@ -91,26 +91,22 @@ function Factorypage() {
   }
   async function EndorseSubmit(e) {
     e.preventDefault();
-    try {
-      let config = {
-        method: "post",
-        url: `${baseUrl}/endorsements/add`,
-        data: {
-          factoryId: factoryDetails?.id,
-        },
-        headers: {
-          authorization: isLogin,
-        },
-      };
+    let config = {
+      method: "post",
+      url: `${baseUrl}/endorsements/add`,
+      data: {
+        factoryId: factoryDetails?.id,
+      },
+      headers: {
+        authorization: isLogin,
+      },
+    };
 
-      const response = await axios.request(config);
+    const response = await axios.request(config);
 
-      if (response.data.message == "done") {
-        SuccessToast("Endorsement added successfully");
-      } else if (response.data.message == "404 Not Found") {
-        ErrorToast("Something Went Wrong try again later");
-      }
-    } catch (error) {
+    if (response.data.message == "done") {
+      SuccessToast("Endorsement added successfully");
+    } else if (response.data.message == "404 Not Found") {
       ErrorToast("Something Went Wrong try again later");
     }
   }
@@ -161,35 +157,6 @@ function Factorypage() {
       fetchFactoryPage();
     }
   }, [factoryIdName]);
-
-  const settings = {
-    dots: true,
-    dotsClass: "slick-dots slick-thumb",
-    infinite: true,
-    speed: 500,
-    arrows: false,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    fade: true,
-
-    appendDots: (dots) => (
-      <div
-        style={{
-          height: "1rem",
-          bottom: "1.5rem",
-          display: "flex",
-          justifyContent: "center",
-          position: "absolute",
-          // top: "100px",
-          zIndex: 1,
-        }}
-      >
-        {dots}
-      </div>
-    ),
-
-    focusOnSelect: true,
-  };
 
   const [activeMenu, setActiveMenu] = useState("about");
 
@@ -292,38 +259,42 @@ function Factorypage() {
       />
 
       <section className="fact-sec1 container margin-sm-screen">
-        <CustomSlider {...settings}>
-          {factoryDetails?.coverVideo?.length > 0 ? (
-            <video
-              src={`${baseUrl_IMG}/${factoryDetails?.coverVideo}`}
-              autoPlay
-              muted
-              loop
-              // controls
-              onError={handlevedioError}
-              className="HeroSlider"
-            ></video>
-          ) : (
-            <video
-              src={vid1}
-              autoPlay
-              muted
-              loop
-              // controls
-              onError={handlevedioError}
-              className="HeroSlider"
-            ></video>
-          )}
+        <Swiper pagination={{ clickable: true }} modules={[Pagination]}>
+          <SwiperSlide>
+            {factoryDetails?.coverVideo?.length > 0 ? (
+              <video
+                src={`${baseUrl_IMG}/${factoryDetails?.coverVideo}`}
+                autoPlay
+                muted
+                loop
+                // controls
+                onError={handlevedioError}
+                className="HeroSlider"
+              ></video>
+            ) : (
+              <video
+                src={vid1}
+                autoPlay
+                muted
+                loop
+                // controls
+                onError={handlevedioError}
+                className="HeroSlider"
+              ></video>
+            )}
+          </SwiperSlide>
 
           {factoryDetails?.images?.map((item, index) => (
-            <img
-              src={`${baseUrl_IMG}/${item}`}
-              alt={`img ${index + 1}`}
-              onError={handleImageError}
-              className="HeroSlider img"
-            />
+            <SwiperSlide>
+              <img
+                src={`${baseUrl_IMG}/${item}`}
+                alt={`img ${index + 1}`}
+                onError={handleImageError}
+                className="HeroSlider img"
+              />
+            </SwiperSlide>
           ))}
-        </CustomSlider>
+        </Swiper>
       </section>
       <section className="fact-logo container margin-sm-screen">
         <div className="logo-text">
@@ -361,7 +332,6 @@ function Factorypage() {
                   smooth={true}
                   duration={200}
                   hashSpy={true}
-                  // offset={-175}
                   offset={-175}
                   isDynamic={true}
                   to="about"
@@ -377,7 +347,6 @@ function Factorypage() {
 
                 <LinkScroll
                   onSetActive={handleSetActive}
-                  // activeClass={`btn-warning`}
                   activeClass={activeMenu === "products" ? "btn-warning" : ""}
                   spy={true}
                   smooth={true}
@@ -394,13 +363,9 @@ function Factorypage() {
                     activeClass={
                       activeMenu === "certifications" ? "btn-warning" : ""
                     }
-                    // activeClass={`btn-warning`}
                     spy={true}
                     smooth={true}
                     duration={500}
-                    // offset={-147}
-                    // offset={-175}
-                    // offset={-145}
                     offset={-146}
                     isDynamic={true}
                     to="certifications"
@@ -413,7 +378,6 @@ function Factorypage() {
                   </button>
                 )}
 
-                {/* {factoryDetails?.team?.length !== 0 ? ( */}
                 {factoryDetails?.teamMembers?.length > 0 ? (
                   <LinkScroll
                     onSetActive={handleSetActive}
@@ -422,7 +386,6 @@ function Factorypage() {
                     smooth={true}
                     duration={500}
                     hashSpy={true}
-                    // offset={-177}
                     offset={-175}
                     isDynamic={true}
                     to="ourPeople"
@@ -443,8 +406,6 @@ function Factorypage() {
                     smooth={true}
                     duration={200}
                     hashSpy={true}
-                    // offset={-177}
-                    // offset={-180}
                     offset={-175}
                     isDynamic={true}
                     to="exportedCountries"
@@ -465,7 +426,6 @@ function Factorypage() {
                   duration={200}
                   hashSpy={true}
                   offset={-177}
-                  // offset={-180}
                   isDynamic={true}
                   to="Endorsements"
                 >
@@ -475,7 +435,6 @@ function Factorypage() {
                 <button
                   onSetActive={handleSetActive}
                   className="btn contact"
-                  // to="Endorsements"
                   onClick={() => {
                     handleIsLoggedInBtn(
                       `contactCompany?factoryId=${factoryDetails?.id}&factoryName=${factoryDetails?.name}`,
@@ -643,18 +602,14 @@ function Factorypage() {
                       hideArrow={false}
                       responsiveLayout={[
                         {
-                          // breakpoint: 1132,
-                          // breakpoint: 1176,
                           breakpoint: 1189,
 
                           cols: 2,
-                          // gap: 58,
                         },
 
                         {
                           breakpoint: 997,
                           cols: 1,
-                          // gap: 58,
                         },
                       ]}
                       mobileBreakpoint={539}

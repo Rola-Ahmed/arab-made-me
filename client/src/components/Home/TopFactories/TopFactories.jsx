@@ -187,8 +187,6 @@ export default function TopFactories(props) {
               }}
               spaceBetween={0}
               slidesPerView={1}
-              onSlideChange={() => console.log("slide change")}
-              onSwiper={(swiper) => console.log(swiper)}
               breakpoints={{
                 687: {
                   slidesPerView: 1,
