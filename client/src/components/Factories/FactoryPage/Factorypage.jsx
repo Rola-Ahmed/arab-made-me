@@ -37,6 +37,12 @@ import {
 import ActionBtnsOnFactory from "./ActionBtnsOnFactory";
 import ActionBtnsOnProduct from "./ActionBtnsOnProduct";
 import DescritionPopUp from "components/Helpers/DescritionPopUp";
+import {
+  fetchFactoryProducts2,
+  fetchOneFactory,
+  getEndorse,
+  getFactoryTeam,
+} from "Services/factory";
 
 function Factorypage() {
   let { currentUserData } = useContext(userDetails);
@@ -70,17 +76,14 @@ function Factorypage() {
   let [factoryHasProduct, setFactoryHasProduct] = useState(false);
 
   async function fetchFactoryPage() {
-    let config = {
-      method: "get",
-      url: `${baseUrl}/factories/${factoryIdName?.split("-")?.[0]}`,
-    };
+    // const response = await axios.request(config);
 
-    const response = await axios.request(config);
+    let result = await fetchOneFactory(factoryIdName?.split("-")?.[0]);
 
-    if (response.data.message == "done") {
+    if (result?.success) {
       setFactoryDetails((prevVal) => ({
         ...prevVal,
-        ...response.data.factories,
+        ...result?.data?.factories,
       }));
 
       FactoryTotalProductLen();
@@ -113,79 +116,50 @@ function Factorypage() {
   }
 
   async function FactoryTotalProductLen() {
-    try {
-      let config = {
-        method: "get",
-        url: `${baseUrl}/factories/products/${factoryIdName?.split("-")?.[0]}`,
-      };
+    let reuslt = await fetchFactoryProducts2(
+      factoryIdName?.split("-")?.[0],
+      {}
+    );
 
-      const response = await axios.request(config);
+    if (reuslt?.success) {
+      const first25Products = reuslt?.data?.products?.slice(0, 25);
+      setFactoryProduct(first25Products);
+      setFactoryDetails((prevValues) => ({
+        ...prevValues,
+        totalProducts: reuslt?.data?.products?.length,
+      }));
 
-      if (response.data.message == "done") {
-        const first25Products = response?.data?.products.slice(0, 25);
-        setFactoryProduct(first25Products);
-
-        setFactoryDetails((prevValues) => ({
-          ...prevValues,
-          totalProducts: response?.data?.products?.length,
-        }));
-
-        fetchTeamData(response?.data?.products?.length);
-      } else if (response.data.message == "404 Not Found") {
-        // errorsMsg("404");
-      }
-    } catch (error) {}
+      fetchTeamData();
+    }
   }
 
   async function fetchTeamData() {
-    try {
-      let config = {
-        method: "get",
-        url: `${baseUrl}/teams/factory/${factoryIdName?.split("-")?.[0]}`,
-      };
+    let result = await getFactoryTeam(factoryIdName?.split("-")?.[0], {});
 
-      const response = await axios.request(config);
-
-      if (response.data.message == "done") {
-        setFactoryDetails((prevValues) => ({
-          ...prevValues,
-          teamMembers: response.data.teamMembers,
-        }));
-        factoryEndorse();
-      } else if (response.data.message == "404 Not Found") {
-        // errorMsg("404");
-      }
-    } catch (error) {}
+    if (result?.success) {
+      setFactoryDetails((prevValues) => ({
+        ...prevValues,
+        teamMembers: result?.data?.teamMembers,
+      }));
+      factoryEndorse();
+    }
   }
 
   async function factoryEndorse() {
-    try {
-      let config = {
-        method: "get",
-        url: `${baseUrl}/endorsements/factory/${
-          factoryIdName?.split("-")?.[0]
-        }`,
-      };
+    let result = await getEndorse(factoryIdName?.split("-")?.[0], {});
 
-      const response = await axios.request(config);
-
-      if (response.data.message == "done") {
-        setFactoryDetails((prevValues) => ({
-          ...prevValues,
-          endorsements: response.data.endorsements?.length,
-        }));
-      } else if (response.data.message == "404 Not Found") {
-        // errorMsg("404");
-      }
-    } catch (error) {}
+    if (result?.success) {
+      setFactoryDetails((prevValues) => ({
+        ...prevValues,
+        endorsements: result?.data?.endorsements?.length,
+      }));
+    }
   }
 
   useEffect(() => {
     if (factoryIdName && factoryIdName?.split("-")?.[0] !== undefined) {
       fetchFactoryPage();
     }
-
-    // return () => {};
   }, [factoryIdName]);
 
   const settings = {

@@ -39,3 +39,14 @@ export const addFactory = async (header, data) => {
 export const updateFactoryFromUser = async (header, data) => {
   return await putRequest(`/factories/update/fromUser`, header, data);
 };
+
+
+
+export const getFactoryTeam = async (factoryId, params) => {
+  return await getRequest(`/teams/factory/${factoryId}?${params}`);
+};
+
+
+export const getEndorse = async (factoryId, params) => {
+  return await getRequest(`/endorsements/factory/${factoryId}?${params}`);
+};
