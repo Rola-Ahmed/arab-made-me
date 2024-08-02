@@ -1,5 +1,3 @@
-import React from "react";
-
 import { nextImg, currentsubPoint } from "constants/Images";
 
 export default function LastPointStatus({ title, isCurrentPoint }) {

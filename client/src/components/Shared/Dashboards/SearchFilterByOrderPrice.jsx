@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function SearchFilterByOrderPrice(props) {
   let { filtterData, filter } = props;
   return (

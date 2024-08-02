@@ -1,4 +1,3 @@
-import React from "react";
 import Errorpage from "./Errorpage";
 
 export default function UnAuthPage() {

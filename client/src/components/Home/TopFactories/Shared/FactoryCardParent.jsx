@@ -1,4 +1,3 @@
-import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import BannerSlider from "../BannerSlider/BannerSlider";
 import { handleImageError } from "utils/ImgNotFound";

@@ -117,3 +117,4 @@ client/public/index.html
 client/src/components/Factorydashboard/subComponets/Products/AddProduct/AddProduct copy.jsx
 client/src/components/Factorydashboard/subComponets/FactoryProfile/FactoryProfile copy.jsx
 client/src/components/Forms/Shared/FormVlaidtionError copy.jsx
+/client/src/components/Factories/FactoryPage copy

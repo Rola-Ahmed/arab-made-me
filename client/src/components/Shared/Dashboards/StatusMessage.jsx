@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function StatusMessage(props) {
   let { reqDataLength, apiLoadingData, errorsMsg } = props;
   return (

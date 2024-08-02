@@ -100,13 +100,18 @@ function AllProducts(props) {
                     )}
 
                     {allProductsData?.map((productItem, productIndex) => (
-                      <ProductCard
-                        productItem={productItem}
-                        productIndex={productIndex}
-                        setisLoggedReDirect={setisLoggedReDirect}
-                        setModalShow={setModalShow}
-                        modalShow={modalShow}
-                      />
+                      <div
+                        key={productIndex}
+                        className="col-xxl-4 col-xl-4  col-lg-6  col-12  "
+                      >
+                        <ProductCard
+                          productItem={productItem}
+                          productIndex={productIndex}
+                          setisLoggedReDirect={setisLoggedReDirect}
+                          setModalShow={setModalShow}
+                          modalShow={modalShow}
+                        />
+                      </div>
                     ))}
                   </div>
                 )}
