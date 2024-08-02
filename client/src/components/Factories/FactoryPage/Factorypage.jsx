@@ -6,7 +6,6 @@ import { BtnDescription } from "constants/BtnDescription";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { vid1 } from "constants/Images";
-import yourBrand from "assets/images/yourBrand-1.png";
 import Carousel from "react-grid-carousel";
 import CustomSlider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
