@@ -6,6 +6,7 @@ import { BtnDescription } from "constants/BtnDescription";
 import { useNavigate, useParams } from "react-router-dom";
 import SuccessToast from "components/SuccessToast";
 import ErrorToast from "components/ErrorToast";
+import { useFetchSectors } from "hooks/useFetchSectors";
 
 import { vid1 } from "constants/Images";
 import Carousel from "react-grid-carousel";
@@ -40,6 +41,7 @@ import DescritionPopUp from "components/Helpers/DescritionPopUp";
 function Factorypage() {
   let { currentUserData } = useContext(userDetails);
   document.title = "Factory Page";
+  let { allSectors } = useFetchSectors();
 
   let { factoryIdName } = useParams();
 
@@ -65,28 +67,24 @@ function Factorypage() {
     teamMembers: [],
   });
   const [factoryProduct, setFactoryProduct] = useState([]);
-  let [allSectors, setAllSectors] = useState();
   let [factoryHasProduct, setFactoryHasProduct] = useState(false);
 
   async function fetchFactoryPage() {
-    try {
-      let config = {
-        method: "get",
-        url: `${baseUrl}/factories/${factoryIdName?.split("-")?.[0]}`,
-      };
+    let config = {
+      method: "get",
+      url: `${baseUrl}/factories/${factoryIdName?.split("-")?.[0]}`,
+    };
 
-      const response = await axios.request(config);
+    const response = await axios.request(config);
 
-      if (response.data.message == "done") {
-        setFactoryDetails((prevVal) => ({
-          ...prevVal,
-          ...response.data.factories,
-        }));
+    if (response.data.message == "done") {
+      setFactoryDetails((prevVal) => ({
+        ...prevVal,
+        ...response.data.factories,
+      }));
 
-        FactoryTotalProductLen();
-      } else if (response.data.message == "404 Not Found") {
-      }
-    } catch (error) {}
+      FactoryTotalProductLen();
+    }
   }
   async function EndorseSubmit(e) {
     e.preventDefault();
@@ -114,47 +112,6 @@ function Factorypage() {
     }
   }
 
-  async function GetSectors() {
-    let config = {
-      method: "get",
-
-      url: `${baseUrl}/sectors`,
-    };
-
-    axios
-      .request(config)
-      .then((response) => {
-        if (response.data.message == "done") {
-          setAllSectors(response?.data?.sectors);
-        } else {
-        }
-      })
-      .catch((error) => {});
-  }
-
-  useEffect(() => {
-    GetSectors();
-  }, []);
-
-  async function fetchFactoryProduct() {
-    try {
-      let config = {
-        method: "get",
-        url: `${baseUrl}/factories/products/${
-          factoryIdName?.split("-")?.[0]
-        }?size=25`,
-      };
-
-      const response = await axios.request(config);
-
-      if (response.data.message == "done") {
-        setFactoryProduct(response.data.products);
-      } else if (response.data.message == "404 Not Found") {
-        // errorsMsg("404");
-      }
-    } catch (error) {}
-  }
-
   async function FactoryTotalProductLen() {
     try {
       let config = {
@@ -165,6 +122,9 @@ function Factorypage() {
       const response = await axios.request(config);
 
       if (response.data.message == "done") {
+        const first25Products = response?.data?.products.slice(0, 25);
+        setFactoryProduct(first25Products);
+
         setFactoryDetails((prevValues) => ({
           ...prevValues,
           totalProducts: response?.data?.products?.length,
@@ -223,7 +183,6 @@ function Factorypage() {
   useEffect(() => {
     if (factoryIdName && factoryIdName?.split("-")?.[0] !== undefined) {
       fetchFactoryPage();
-      fetchFactoryProduct();
     }
 
     // return () => {};
