@@ -79,20 +79,12 @@
   font-style: normal;
   font-weight: 600;
   line-height: 17.5px;
-
-
-  /* sticky position */
   position: sticky;
-  /* top: 114px; */
-  top: 121px;
-
+  top: 193px;
+  left: initial;
   background: white;
   z-index: 4;
   padding-top: 6px;
-
-
-
-
   width: 100%;
   overflow-x: auto;
   display: flex;

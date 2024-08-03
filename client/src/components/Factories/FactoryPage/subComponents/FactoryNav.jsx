@@ -1,4 +1,3 @@
-import { Link as LinkScroll } from "react-scroll";
 import { useState } from "react";
 
 export default function FactoryNav({ factoryDetails, handleIsLoggedInBtn }) {
@@ -10,106 +9,94 @@ export default function FactoryNav({ factoryDetails, handleIsLoggedInBtn }) {
     }
     setActiveMenu(to);
   };
+
+  function scrollToView(elementId) {
+    handleSetActive(elementId);
+    const targetElement = document.getElementById(elementId);
+    if (targetElement) {
+      const elementPosition =
+        targetElement.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - 78 - 103 - 50;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+  }
   return (
     <>
-      <LinkScroll
-        onSetActive={handleSetActive}
-        activeClass={`btn-warning`}
-        spy={true}
-        smooth={true}
-        duration={200}
-        hashSpy={true}
-        offset={-175}
-        isDynamic={true}
-        to="about"
+      <button
+        onClick={() => {
+          scrollToView("about");
+        }}
+        className={`btn ${activeMenu === "about" ? "btn-warning" : ""}`}
       >
-        <button
-          className={`btn ${activeMenu === "about" ? "btn-warning" : ""}`}
-        >
-          About
-        </button>
-      </LinkScroll>
+        About
+      </button>
 
-      <LinkScroll
-        onSetActive={handleSetActive}
-        activeClass={activeMenu === "products" ? "btn-warning" : ""}
-        spy={true}
-        smooth={true}
-        duration={200}
-        offset={-147}
-        to="products"
+      <button
+        className={`btn ${activeMenu === "products" ? "btn-warning" : ""}`}
+        onClick={() => {
+          scrollToView("products");
+        }}
       >
-        <button className="btn">Products</button>
-      </LinkScroll>
+        Products
+      </button>
 
       {factoryDetails?.qualityCertificates ? (
-        <LinkScroll
-          onSetActive={handleSetActive}
-          activeClass={activeMenu === "certifications" ? "btn-warning" : ""}
-          spy={true}
-          smooth={true}
-          duration={500}
-          offset={-146}
-          isDynamic={true}
-          to="certifications"
+        <button
+          className={`btn ${
+            activeMenu === "certifications" ? "btn-warning" : ""
+          }`}
+          onClick={() => {
+            scrollToView("certifications");
+          }}
         >
-          <button className="btn">Certifications</button>
-        </LinkScroll>
+          Certifications
+        </button>
       ) : (
         <button className=" btn text-muted not-allowed">Certifications</button>
       )}
 
       {factoryDetails?.teamMembers?.length > 0 ? (
-        <LinkScroll
-          onSetActive={handleSetActive}
-          activeClass={`btn-warning`}
-          spy={true}
-          smooth={true}
-          duration={500}
-          hashSpy={true}
-          offset={-175}
-          isDynamic={true}
-          to="ourPeople"
+        <button
+          className={`btn ${activeMenu === "ourPeople" ? "btn-warning" : ""}`}
+          onClick={() => {
+            scrollToView("ourPeople");
+          }}
         >
-          <button className="btn">Our People</button>
-        </LinkScroll>
+          Our People
+        </button>
       ) : (
         <button className="btn text-muted not-allowed">Our People</button>
       )}
 
       {factoryDetails?.importingCountries ? (
-        <LinkScroll
-          onSetActive={handleSetActive}
-          activeClass={`btn-warning`}
-          spy={true}
-          smooth={true}
-          duration={200}
-          hashSpy={true}
-          offset={-175}
-          isDynamic={true}
-          to="exportedCountries"
+        <button
+          className={`btn ${
+            activeMenu === "exportedCountries" ? "btn-warning" : ""
+          }`}
+          onClick={() => {
+            scrollToView("exportedCountries");
+          }}
         >
-          <button className="btn">Exported Countries</button>
-        </LinkScroll>
+          Exported Countries
+        </button>
       ) : (
         <button className="btn text-muted not-allowed">
           Exported Countries
         </button>
       )}
 
-      <LinkScroll
-        onSetActive={handleSetActive}
-        activeClass={`btn-warning`}
-        spy={true}
-        smooth={true}
-        duration={200}
-        hashSpy={true}
-        offset={-177}
-        isDynamic={true}
-        to="Endorsements"
+      <button
+        className={`btn ${activeMenu === "Endorsements" ? "btn-warning" : ""}`}
+        onClick={() => {
+          scrollToView("Endorsements");
+        }}
       >
-        <button className="btn">Endorsements</button>
-      </LinkScroll>
+        Endorsements
+      </button>
 
       <button
         onSetActive={handleSetActive}
