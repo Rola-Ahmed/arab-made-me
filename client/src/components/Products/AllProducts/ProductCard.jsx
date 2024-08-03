@@ -63,7 +63,7 @@ export default function ProductCard(props) {
         key={productIndex}
         className="col-xxl-4 col-xl-4  col-lg-6  col-12  "
       > */}
-      <button className="card  w-100">
+      <button className="card  w-100 p-0 ">
         <img
           className="card-img-top"
           src={`${baseUrl_IMG}/${productItem?.coverImage}`}
@@ -149,7 +149,7 @@ export default function ProductCard(props) {
         </div>
 
         <div className=" d-flex justify-content-between align-items-center   w-100 px-3">
-          <div className="call-btns justify-content-between  align-items-center w-100 pe-2 ">
+          <div className="call-btns d-flex justify-content-between  align-items-center w-100 pe-2 ">
             <button
               className="btn-call-1"
               onClick={() => {

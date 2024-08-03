@@ -150,7 +150,7 @@ function Productpage(props) {
         userType="Buyer"
       />
 
-      <Header title="Product Page "  />
+      <Header title="Product Page " />
       <section className="product-page-section1">
         <div className="container">
           <div className="row product-parent">
@@ -197,23 +197,25 @@ function Productpage(props) {
                   }
                 >
                   {productData?.productSlider?.map((item, index) => (
-                    <Carousel.Item>
-                      <div
-                        className={`dots-slider-img ${
-                          currentSliderIndex === index ? "active-dot" : " "
-                        }`}
-                      >
-                        <img
-                          className="w-100 h-100 "
-                          onClick={() => next(index)}
-                          id={index}
-                          src={`${baseUrl_IMG}/${item}`}
-                          alt="Img"
-                          onError={handleImageError}
-                        />
-                      </div>
-                      {/* {index} */}
-                    </Carousel.Item>
+                    <>
+                      <Carousel.Item>
+                        <div
+                          className={`dots-slider-img ${
+                            currentSliderIndex === index ? "active-dot" : " "
+                          }`}
+                        >
+                          <img
+                            className="w-100 h-100 "
+                            onClick={() => next(index)}
+                            id={index}
+                            src={`${baseUrl_IMG}/${item}`}
+                            alt="Img"
+                            onError={handleImageError}
+                          />
+                        </div>
+                        {/* {index} */}
+                      </Carousel.Item>
+                    </>
                   ))}
                 </Carousel>
               </div>
@@ -222,12 +224,10 @@ function Productpage(props) {
               <div className=" ">
                 <div className="rating">
                   <div className="stars">
-                    {productData?.productAverageRate ? (
+                    {productData?.productAverageRate && (
                       <StarRating
                         averageRating={productData?.productAverageRate}
                       />
-                    ) : (
-                      ""
                     )}
                   </div>
                   <div className="text-product-1">

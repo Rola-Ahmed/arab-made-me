@@ -187,6 +187,7 @@ export function UserTypeProvider({ children }) {
   const setAndStoreData = (newValue) => {
     setCurrentUserData(newValue);
   };
+  // console.log("currentUserData", currentUserData);
 
   return (
     <userDetails.Provider
