@@ -300,6 +300,29 @@ p, button, div, textarea, input {
   background-color: var(--secondary-color) !important;
 }
 
+.swiper-button-prev, .swiper-button-next {
+  height: 35px !important;
+  width: 35px !important;
+  background: #fff;
+  color: black !important;
+  border-radius: 50%;
+  box-shadow: 0 0 5px 0 #0009;
+  opacity: 0.6;
+  -webkit-transition: opacity 0.25s;
+  transition: opacity 0.25s;
+
+}
+
+.swiper-button-prev:hover, .swiper-button-next:hover {
+  opacity: 1;
+}
+
+.swiper-button-prev::after, .swiper-button-next::after {
+  font-size: 18px !important;
+  font-weight: 900;
+  /* Adjust the font size as needed */
+}
+
 @media (max-width:539px) {
   .margin-sm-screen {
     padding-left: 20px !important;

@@ -14,25 +14,15 @@ import { handleImageError } from "utils/ImgNotFound";
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
 
-import { Link as LinkScroll } from "react-scroll";
-import axios from "axios";
-import { baseUrl, baseUrl_IMG } from "config.js";
+import { baseUrl_IMG } from "config.js";
 
 import { countriesMiddleEast } from "constants/countries";
-import your_geography_data from "constants/json/features.json";
 
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/ImporterUnVerifiedPopUpMsg";
 import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
 
-import {
-  ComposableMap,
-  Annotation,
-  Geographies,
-  Geography,
-} from "react-simple-maps";
 import ActionBtnsOnFactory from "./ActionBtnsOnFactory";
-import ActionBtnsOnProduct from "./ActionBtnsOnProduct";
 import DescritionPopUp from "components/Helpers/DescritionPopUp";
 import {
   fetchFactoryProducts2,
@@ -44,7 +34,12 @@ import {
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
-import { Pagination } from "swiper/modules";
+import "swiper/css/navigation";
+import { Pagination, Navigation } from "swiper/modules";
+import ProductCard from "components/Products/AllProducts/ProductCard";
+import ExportedCountries from "./subComponents/ExportedCountries";
+import { addEndorsement } from "Services/endorsements";
+import FactoryNav from "./subComponents/FactoryNav";
 
 function Factorypage() {
   let { currentUserData } = useContext(userDetails);
@@ -90,24 +85,22 @@ function Factorypage() {
     }
   }
   async function EndorseSubmit(e) {
+    if (currentUserData?.userRole != "importer") {
+      ErrorToast("To add an endorsement, the user must be a buyer.");
+      return;
+    }
     e.preventDefault();
-    let config = {
-      method: "post",
-      url: `${baseUrl}/endorsements/add`,
-      data: {
-        factoryId: factoryDetails?.id,
-      },
-      headers: {
-        authorization: isLogin,
-      },
+
+    let data = {
+      factoryId: factoryDetails?.id,
     };
 
-    const response = await axios.request(config);
+    let result = await addEndorsement({ authorization: isLogin }, data);
 
-    if (response.data.message == "done") {
+    if (result?.success) {
       SuccessToast("Endorsement added successfully");
-    } else if (response.data.message == "404 Not Found") {
-      ErrorToast("Something Went Wrong try again later");
+    } else {
+      ErrorToast(result?.error);
     }
   }
 
@@ -157,15 +150,6 @@ function Factorypage() {
       fetchFactoryPage();
     }
   }, [factoryIdName]);
-
-  const [activeMenu, setActiveMenu] = useState("about");
-
-  const handleSetActive = (to) => {
-    if (to == null || to == "") {
-      setActiveMenu("about");
-    }
-    setActiveMenu(to);
-  };
 
   //
   //
@@ -325,127 +309,10 @@ function Factorypage() {
           <div className="row">
             <div className="col-lg-10 col-md-8  ">
               <div className="call-fac-page scroll">
-                <LinkScroll
-                  onSetActive={handleSetActive}
-                  activeClass={`btn-warning`}
-                  spy={true}
-                  smooth={true}
-                  duration={200}
-                  hashSpy={true}
-                  offset={-175}
-                  isDynamic={true}
-                  to="about"
-                >
-                  <button
-                    className={`btn ${
-                      activeMenu === "about" ? "btn-warning" : ""
-                    }`}
-                  >
-                    About
-                  </button>
-                </LinkScroll>
-
-                <LinkScroll
-                  onSetActive={handleSetActive}
-                  activeClass={activeMenu === "products" ? "btn-warning" : ""}
-                  spy={true}
-                  smooth={true}
-                  duration={200}
-                  offset={-147}
-                  to="products"
-                >
-                  <button className="btn">Products</button>
-                </LinkScroll>
-
-                {factoryDetails?.qualityCertificates ? (
-                  <LinkScroll
-                    onSetActive={handleSetActive}
-                    activeClass={
-                      activeMenu === "certifications" ? "btn-warning" : ""
-                    }
-                    spy={true}
-                    smooth={true}
-                    duration={500}
-                    offset={-146}
-                    isDynamic={true}
-                    to="certifications"
-                  >
-                    <button className="btn">Certifications</button>
-                  </LinkScroll>
-                ) : (
-                  <button className=" btn text-muted not-allowed">
-                    Certifications
-                  </button>
-                )}
-
-                {factoryDetails?.teamMembers?.length > 0 ? (
-                  <LinkScroll
-                    onSetActive={handleSetActive}
-                    activeClass={`btn-warning`}
-                    spy={true}
-                    smooth={true}
-                    duration={500}
-                    hashSpy={true}
-                    offset={-175}
-                    isDynamic={true}
-                    to="ourPeople"
-                  >
-                    <button className="btn">Our People</button>
-                  </LinkScroll>
-                ) : (
-                  <button className="btn text-muted not-allowed">
-                    Our People
-                  </button>
-                )}
-
-                {factoryDetails?.importingCountries ? (
-                  <LinkScroll
-                    onSetActive={handleSetActive}
-                    activeClass={`btn-warning`}
-                    spy={true}
-                    smooth={true}
-                    duration={200}
-                    hashSpy={true}
-                    offset={-175}
-                    isDynamic={true}
-                    to="exportedCountries"
-                  >
-                    <button className="btn">Exported Countries</button>
-                  </LinkScroll>
-                ) : (
-                  <button className="btn text-muted not-allowed">
-                    Exported Countries
-                  </button>
-                )}
-
-                <LinkScroll
-                  onSetActive={handleSetActive}
-                  activeClass={`btn-warning`}
-                  spy={true}
-                  smooth={true}
-                  duration={200}
-                  hashSpy={true}
-                  offset={-177}
-                  isDynamic={true}
-                  to="Endorsements"
-                >
-                  <button className="btn">Endorsements</button>
-                </LinkScroll>
-
-                <button
-                  onSetActive={handleSetActive}
-                  className="btn contact"
-                  onClick={() => {
-                    handleIsLoggedInBtn(
-                      `contactCompany?factoryId=${factoryDetails?.id}&factoryName=${factoryDetails?.name}`,
-                      "ToContact"
-                    );
-                  }}
-                >
-                  Contact Supplier
-                </button>
-
-                <hr />
+                <FactoryNav
+                  factoryDetails={factoryDetails}
+                  handleIsLoggedInBtn={handleIsLoggedInBtn}
+                />
               </div>
 
               <div id="about" className="pehat">
@@ -614,114 +481,20 @@ function Factorypage() {
                       ]}
                       mobileBreakpoint={539}
                     >
-                      {factoryProduct.map((productItem) => (
+                      {factoryProduct?.map((productItem, productIndex) => (
                         <Carousel.Item>
-                          <div className="card ">
-                            <div
-                              className="cursor"
-                              onClick={() => {
-                                navigate(
-                                  `/productpage/${productItem.id}-${factoryDetails.name}-${productItem.name}`
-                                );
-                              }}
-                            >
-                              <img
-                                src={`${baseUrl_IMG}/${productItem?.coverImage}`}
-                                className="card-img-top"
-                                alt="Product"
-                                onError={handleImageError}
-                              />
-                            </div>
-                            <div
-                              className="card-body cursor"
-                              onClick={() => {
-                                navigate(
-                                  `/productpage/${productItem.id}-${factoryDetails.name}-${productItem.name}`
-                                );
-                              }}
-                            >
-                              <h5 className="card-title product-card-text1 title-text-handler">
-                                {productItem?.name}
-                              </h5>
-                              <div>
-                                <p className="card-text product-card-text2 ">
-                                  {productItem?.description}
-                                </p>
-                              </div>
-                              <div className="maden">
-                                <div className="card-svg">
-                                  <img
-                                    src={`https://flagcdn.com/16x12/${
-                                      countriesMiddleEast.some(
-                                        (item) =>
-                                          item.code === factoryDetails?.country
-                                      )
-                                        ? countriesMiddleEast.find(
-                                            (item) =>
-                                              item.code ===
-                                              factoryDetails?.country
-                                          )?.id
-                                        : ""
-                                    }.png`}
-                                    alt="country pic"
-                                  />
-                                </div>
-                                <div className="card-svg-text">
-                                  <p>
-                                    {`${
-                                      factoryDetails?.city
-                                        ? factoryDetails?.city + ", "
-                                        : ""
-                                    }`}
-                                    {factoryDetails?.country ?? ""}
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="d-flex justify-content-between align-items-center dots-pad ">
-                              <div className="call-btns d-flex justify-content-between  align-items-center w-100  pe-2">
-                                <button
-                                  className="btn-call-1  cursor "
-                                  onClick={() => {
-                                    handleButtonClick(
-                                      `privatelabel?factoryId=${factoryDetails?.id}&factoryName=${factoryDetails?.name}&productId=${productItem?.id}&productName=${productItem?.name} `
-                                    );
-                                  }}
-                                >
-                                  <div className="btn-text text-decoration-none cursor text-white">
-                                    Send Private Label Request
-                                  </div>
-                                </button>
-
-                                <div
-                                  className=" btn-call-2 padd text-dark text-decoration-none cursor"
-                                  onClick={() => {
-                                    handleIsLoggedInBtn(
-                                      `contactsupplier?userId=${factoryDetails?.userId}&factoryName=${factoryDetails?.name}`
-                                    );
-                                  }}
-                                >
-                                  <i
-                                    class="fa-regular fa-comments fa-2x"
-                                    // style={{ fontSize: "1.5rem" }}
-                                  ></i>
-                                </div>
-                              </div>
-
-                              <ActionBtnsOnProduct
-                                factoryDetails={factoryDetails}
-                                factoryProduct={factoryProduct}
-                                setFactoryHasProduct={setFactoryHasProduct}
-                                handleButtonClick={handleButtonClick}
-                                handleIsLoggedInBtn={handleIsLoggedInBtn}
-                                productItem={productItem}
-                              />
-                            </div>
-                          </div>
+                          <ProductCard
+                            productItem={productItem}
+                            productIndex={productIndex}
+                            setisLoggedReDirect={setisLoggedReDirect}
+                            setModalShow={setModalShow}
+                            modalShow={modalShow}
+                          />
                         </Carousel.Item>
                       ))}
                     </Carousel>
+
+                    {/* btn */}
                     <div className="btn-container-all">
                       <div
                         className="get-all-btn text-decoration-none text-white card-cursors cursor"
@@ -776,12 +549,8 @@ function Factorypage() {
                           </div>
                           <div className="card-svg-text">
                             <p>
-                              {`${
-                                factoryDetails?.city
-                                  ? factoryDetails?.city + ", "
-                                  : ""
-                              }`}
-                              {factoryDetails?.country ?? ""}
+                              factoryDetails?.city && `${factoryDetails.city}, `
+                              {factoryDetails?.country}
                             </p>
                           </div>
                         </div>
@@ -827,42 +596,36 @@ function Factorypage() {
                 )}
               </div>
 
-              {factoryDetails?.qualityCertificates ? (
+              {factoryDetails?.qualityCertificates && (
                 <div id="certifications" className="fac-cert">
                   <h3 className="text-fac-4">Certificates</h3>
 
                   <div className="row justify-content-between">
                     <div className="col-12">
-                      <Carousel
-                        cols={2}
-                        rows={1}
-                        gap={10}
-                        scrollSnap={true}
-                        loop
-                        showDots
-                        hideArrow={false}
+                      <Swiper
+                        modules={[Navigation, Pagination]}
+                        slidesPerView={2}
+                        spaceBetween={10}
+                        navigation={true}
+                        pagination={true}
                       >
-                        {factoryDetails?.qualityCertificates?.length !== 0
-                          ? factoryDetails?.qualityCertificates?.map((item) => (
-                              <Carousel.Item>
-                                <div className="dots-slider-img w-100">
-                                  <img
-                                    className="h-100 w-100 "
-                                    id={handleImageError}
-                                    src={`${baseUrl_IMG}/${item}`}
-                                    alt="Img"
-                                    onError={handleImageError}
-                                  />
-                                </div>
-                              </Carousel.Item>
-                            ))
-                          : ""}
-                      </Carousel>
+                        {factoryDetails?.qualityCertificates?.map((item) => (
+                          <SwiperSlide>
+                            <div className="dots-slider-img w-100">
+                              <img
+                                className="h-100 w-100 "
+                                id={handleImageError}
+                                src={`${baseUrl_IMG}/${item}`}
+                                alt="Img"
+                                onError={handleImageError}
+                              />
+                            </div>
+                          </SwiperSlide>
+                        ))}
+                      </Swiper>
                     </div>
                   </div>
                 </div>
-              ) : (
-                ""
               )}
 
               {factoryDetails?.teamMembers?.length > 0 && (
@@ -925,123 +688,10 @@ function Factorypage() {
               )}
 
               {factoryDetails?.importingCountries?.length > 0 && (
-                <div id="exportedCountries" className="fac-cert">
-                  <h3 className="text-fac-4">exported Countries</h3>
-                  <div className="">
-                    <ComposableMap
-                      className="md-d-none"
-                      viewBox="30 60 900 480" // Adjust the viewBox to fit your needs
-                    >
-                      <Geographies geography={your_geography_data}>
-                        {({ geographies }) =>
-                          geographies.map((geo) => (
-                            <>
-                              <Geography
-                                key={geo.rsmKey}
-                                geography={geo}
-                                // onMouseEnter={(event) => handleMouseEnter(geo, event)}
-                                // onMouseLeave={handleMouseLeave}
-                                style={{
-                                  default: {
-                                    // fill: {...geo?.properties?.name =="Egypt" ?"red" :"blue"},
-                                    fill: "#ECEFF1",
-                                    stroke: "#607D8B",
-                                    strokeWidth: 0.75,
-                                    outline: "none",
-                                  },
-                                  hover: {
-                                    fill: "#ECEFF1",
-                                    stroke: "#607D8B",
-                                    strokeWidth: 0.75,
-                                    outline: "none",
-                                  },
-                                  active: {
-                                    fill: "#ECEFF1",
-                                    stroke: "#607D8B",
-                                    strokeWidth: 0.75,
-                                    outline: "none",
-                                  },
-                                  pressed: {
-                                    fill: "#ECEFF1",
-                                    stroke: "#607D8B",
-                                    strokeWidth: 0.75,
-                                    outline: "none",
-                                  },
-                                }}
-                              />
-                            </>
-                          ))
-                        }
-                      </Geographies>
-
-                      {factoryDetails?.importingCountries?.map(
-                        (item, index) => {
-                          const country = countriesMiddleEast.find(
-                            (item1) => item1.code === item
-                          );
-                          const coordinates = country?.coordinates || [0, 0]; // Default coordinates if not found
-
-                          return (
-                            <Annotation
-                              // subject={[30,30]}
-                              subject={coordinates}
-                              dx={2}
-                              dy={0}
-                              connectorProps={{
-                                stroke: "#FF5533",
-                                strokeWidth: 2,
-                                strokeLinecap: "round",
-                              }}
-                            >
-                              <line
-                                x1={0}
-                                y1={0}
-                                // Adjust the y2 value to set the height of the line
-                                stroke="#FF5533"
-                                strokeWidth={3}
-                                strokeLinecap="round"
-                              />
-                              <text
-                                className="fw-bolder country-annot"
-                                x="-1"
-                                textAnchor="end"
-                                alignmentBaseline="middle"
-                                fill="black"
-                              >
-                                {
-                                  countriesMiddleEast.find(
-                                    (item1) => item1.code === item
-                                  )?.id
-                                }
-                              </text>
-                            </Annotation>
-                          );
-                        }
-                      )}
-                    </ComposableMap>
-
-                    <div className="row mx-1  ">
-                      {factoryDetails?.importingCountries?.map(
-                        (item, index) => (
-                          <div className="col-6 country-border py-2">
-                            <div className="d-flex align-items-center">
-                              <img
-                                className="flag-img me-2"
-                                // src={`https://flagcdn.com/w80/eg.png`}
-                                src={`https://flagcdn.com/w80/${
-                                  countriesMiddleEast.find(
-                                    (item1) => item1.code === item
-                                  )?.id
-                                }.png`}
-                              />
-                              <p>{item} </p>
-                            </div>
-                          </div>
-                        )
-                      )}
-                    </div>
-                  </div>
-                </div>
+                <ExportedCountries
+                  importingCountries={factoryDetails?.importingCountries}
+                  countriesMiddleEast={countriesMiddleEast}
+                />
               )}
 
               <div id="Endorsements" className="">
@@ -1065,26 +715,6 @@ function Factorypage() {
                         <button
                           className="btn-endorse cursor"
                           onClick={(e) => {
-                            if (
-                              currentUserData?.importerId !== null &&
-                              (currentUserData?.importerVerified === "0" ||
-                                !currentUserData?.importerEmailActivated)
-                            ) {
-                              setModalShow((prevVal) => ({
-                                ...prevVal,
-                                isImporterVerified: true,
-                              }));
-                              return;
-                            }
-
-                            if (currentUserData?.factoryId !== null) {
-                              setModalShow((prevVal) => ({
-                                ...prevVal,
-                                isFactoryVerified: true,
-                              }));
-                              return;
-                            }
-
                             if (!isLogin) {
                               setModalShow((prevVal) => ({
                                 ...prevVal,
@@ -1094,6 +724,14 @@ function Factorypage() {
                               setisLoggedReDirect(
                                 `/signIn/factoryPage/${factoryIdName}`
                               );
+                              return;
+                            }
+
+                            if (currentUserData?.userRole != "importer") {
+                              setModalShow((prevVal) => ({
+                                ...prevVal,
+                                isFactoryVerified: true,
+                              }));
                               return;
                             }
 
