@@ -1,13 +1,20 @@
-import { useEffect, useState, useRef, useContext } from "react";
+import { useState, useContext } from "react";
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
+import { FreeMode, Navigation, Thumbs } from "swiper/modules";
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/free-mode";
+import "swiper/css/navigation";
+import "swiper/css/thumbs";
+
 import { useNavigate } from "react-router-dom";
 
 import { baseUrl_IMG } from "config.js";
 
 import Header from "components/main/Header/Header";
 import "./product.css";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick-theme.css";
-import "slick-carousel/slick/slick.css";
+
 import Products from "components/Home/Products/Products";
 import { handleImageError } from "utils/ImgNotFound";
 import StarRating from "components/Shared/stars";
@@ -23,8 +30,6 @@ import HandleUsersBtnAccess, {
   handleIsLoggedInBtn,
 } from "utils/actionBtns/HandleUsersBtnAccess"; // handleIsLoggedInBtn,
 
-import Carousel from "react-grid-carousel";
-
 function Productpage(props) {
   let {
     productData,
@@ -33,65 +38,14 @@ function Productpage(props) {
     setModalShow,
     isLoggedReDirect,
   } = props;
+  const [thumbsSwiper, setThumbsSwiper] = useState(null);
   let { currentUserData } = useContext(userDetails);
   let { isLogin } = useContext(UserToken);
   let navigate = useNavigate();
 
-  let [sliceDots, setSliceDots] = useState({ start: 0, end: 4 });
-  let [currentSliderIndex, setCurrentSliderIndex] = useState(2);
   const [description, setDescription] = useState("");
 
   // slider configrations
-  const sliderRef = useRef(null);
-  const settings = {
-    dots: false,
-    dotsClass: "slick-dots slick-thumb",
-    infinite: true,
-    speed: 500,
-    arrows: false,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    fade: true,
-  };
-
-  const next = (index) => {
-    sliderRef.current.slickGoTo(index);
-    setCurrentSliderIndex(index);
-  };
-  // used for slider  inorder to highlit and update the current slider btn next
-  function getMiddleItemsNext() {
-    const array = Array.from(
-      { length: productData?.productSlider?.length },
-      (_, index) => index + 0
-    );
-
-    let middleItems = array.slice(sliceDots.start + 4, sliceDots.end + 4);
-    const middleIndex = Math.floor(middleItems.length / 2);
-
-    setSliceDots({ start: sliceDots.start + 4, end: sliceDots.end + 4 });
-
-    sliderRef.current.slickGoTo(middleItems[middleIndex]);
-    setCurrentSliderIndex(middleItems[middleIndex]);
-  }
-
-  // used for slider  inorder to highlit and update the current slider btn prev
-
-  function getMiddleItemsPrev() {
-    const array = Array.from(
-      { length: productData?.productSlider?.length },
-      (_, index) => index + 0
-    );
-
-    let middleItems = array.slice(sliceDots.start - 4, sliceDots.end - 4);
-    const middleIndex = Math.floor(middleItems.length / 2);
-
-    setSliceDots({ start: sliceDots.start - 4, end: sliceDots.end - 4 });
-
-    sliderRef.current.slickGoTo(middleItems[middleIndex]);
-    setCurrentSliderIndex(middleItems[middleIndex]);
-  }
-
-  // -------------------------------btn actions--------------------------------
 
   const handleUserClickValidation1 = (loginPath) => {
     HandleUsersBtnAccess({
@@ -155,70 +109,50 @@ function Productpage(props) {
         <div className="container">
           <div className="row product-parent">
             <div className="col-lg-5 product-images">
-              <Slider ref={sliderRef} {...settings}>
+              <Swiper
+                navigation={{
+                  nextEl: ".main-slider-next",
+                  prevEl: ".main-slider-prev ",
+                }}
+                spaceBetween={10}
+                thumbs={{ swiper: thumbsSwiper }}
+                modules={[FreeMode, Navigation, Thumbs]}
+                className="main-Swiper w-100 "
+              >
                 {productData?.productSlider?.map((item, index) => (
-                  <div className="product-slide-img">
+                  <SwiperSlide>
                     <img
                       src={`${baseUrl_IMG}/${item}`}
                       alt="Img"
-                      // style={{ height:"20px" }}
                       onError={handleImageError}
                     />
-                    {/* {index} */}
-                  </div>
+                  </SwiperSlide>
                 ))}
-              </Slider>
+              </Swiper>
+              <Swiper
+                onSwiper={setThumbsSwiper}
+                spaceBetween={10}
+                slidesPerView={4}
+                freeMode={true}
+                watchSlidesProgress={true}
+                modules={[FreeMode, Navigation, Thumbs]}
+                className="sub-swiper cursor position-relative"
+              >
+                {productData?.productSlider?.map((item, index) => (
+                  <SwiperSlide>
+                    <img
+                      className="w-100 h-100 "
+                      id={index}
+                      src={`${baseUrl_IMG}/${item}`}
+                      alt="Img"
+                      onError={handleImageError}
+                    />
+                  </SwiperSlide>
+                ))}
 
-              <div style={{ width: "35vw" }}>
-                <Carousel
-                  cols={4}
-                  rows={1}
-                  gap={10}
-                  // loop
-                  scrollSnap={true}
-                  // hideArrow={false}
-                  // className={`d-grid`}
-                  // style={{ width: "88vw" }}
-                  arrowLeft={
-                    <div
-                      className="arrow-btn   "
-                      onClick={() => getMiddleItemsPrev()}
-                    >
-                      <i className="fa-solid fa-chevron-left"></i>
-                    </div>
-                  }
-                  arrowRight={
-                    <div
-                      className="arrow-btn "
-                      onClick={() => getMiddleItemsNext()}
-                    >
-                      <i className="fa-solid fa-chevron-right"></i>
-                    </div>
-                  }
-                >
-                  {productData?.productSlider?.map((item, index) => (
-                    <>
-                      <Carousel.Item>
-                        <div
-                          className={`dots-slider-img ${
-                            currentSliderIndex === index ? "active-dot" : " "
-                          }`}
-                        >
-                          <img
-                            className="w-100 h-100 "
-                            onClick={() => next(index)}
-                            id={index}
-                            src={`${baseUrl_IMG}/${item}`}
-                            alt="Img"
-                            onError={handleImageError}
-                          />
-                        </div>
-                        {/* {index} */}
-                      </Carousel.Item>
-                    </>
-                  ))}
-                </Carousel>
-              </div>
+                <i class="fa-solid fa-chevron-left main-slider-prev rounded-4"></i>
+                <i class="fa-solid fa-chevron-right main-slider-next  rounded-4"></i>
+              </Swiper>
             </div>
             <div className="col-lg-4 parent2  text-truncate">
               <div className=" ">
@@ -297,10 +231,8 @@ function Productpage(props) {
                   <p className="text-product-5">${productData?.price} </p>
                 </div>
 
-                {productData?.discount ? (
+                {productData?.discount && (
                   <div className="sale">{productData?.discount} OFF</div>
-                ) : (
-                  ""
                 )}
               </div>
             </div>
