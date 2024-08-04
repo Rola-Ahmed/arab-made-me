@@ -1,26 +1,17 @@
 import { useState, useContext, useEffect } from "react";
-import { baseUrl_IMG } from "config.js";
-
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
-
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { getMonthName as getDate } from "utils/getMonthName";
-
 import Header from "components/main/Header/Header";
-
-import Carousel from "react-grid-carousel";
-import { handleImageError } from "utils/ImgNotFound";
-import { pdfIcon } from "constants/Images";
 import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
 import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/FactoryUnVerifiedPopUpMsg";
-
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import BecomomeAFactory from "components/ActionMessages/BecomeAFactory/BecomeAFactory";
 import { getOneSourcingReq } from "Services/sourcingReuqest";
 import Loading from "components/Loading/Loading";
-import ReadOnly from "components/Forms/Shared/ReadOnly";
 import ImporterInfo from "components/Shared/ImporterInfo";
+import SourcingRequestInfo from "components/Shared/Dashboards/Forms/SourcingRequestInfo";
+import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
 
 function OneSourcingReq() {
   let navigate = useNavigate();
@@ -31,6 +22,16 @@ function OneSourcingReq() {
     loading: true,
     errorMsg: "",
   });
+  const [showImagePop, setShowImagePop] = useState({
+    display: false,
+    imagePath: "",
+  });
+  const handleImageClick = (imagePath) => {
+    setShowImagePop({
+      display: true,
+      imagePath,
+    });
+  };
 
   const [searchParams] = useSearchParams();
   const productName = searchParams.get("productName");
@@ -62,9 +63,6 @@ function OneSourcingReq() {
   useEffect(() => {
     fetchReqData();
   }, [sourcingRequestId]);
-
-  // utils function
-  let getMonthName = getDate;
 
   return (
     <>
@@ -139,231 +137,80 @@ function OneSourcingReq() {
               <ImporterInfo importerData={PosData?.importer} />
             </div>
             {/* Grid  */}
+            {/* col-xxl-6 col-xl-6   col-lg-6 col-md-6 col-sm-12  */}
             <div className="container container-po ">
-              <div className="input-content ">
-                <div className="title-text w-100 ">
-                  <h5>Request details</h5>
-                </div>
-                <div className="row row-container w-100 ">
-                  {/* <div className="row  row-gap"> */}
-                  <div className=" col-xxl-6 col-xl-6   col-lg-6 col-md-6 col-sm-12  ">
-                    <ReadOnly
-                      title="Product Name"
-                      value={PosData?.productName}
-                    />
-                  </div>
+              <SourcingRequestInfo
+                requestedData={PosData}
+                handleImageClick={handleImageClick}
+              />
 
-                  <div className=" col-xxl-6 col-xl-6   col-lg-6 col-md-6 col-sm-12  ">
-                    <ReadOnly title="Quantity" value={PosData?.quantity} />
-                  </div>
+              <div className="action row">
+                <div className="col-12">
+                  <button
+                    className="action-btn btn-1 w-100 submitButton"
+                    onClick={() => {
+                      if (currentUserData?.importerId !== null) {
+                        setModalShow((prevVal) => ({
+                          ...prevVal,
+                          isImporterVerified: true,
+                        }));
 
-                  <div className=" col-xxl-6 col-xl-6   col-lg-6 col-md-6 col-sm-12  ">
-                    <ReadOnly
-                      title="packing Conditions"
-                      value={PosData?.packingConditions}
-                    />
-                  </div>
+                        return;
+                      }
 
-                  <div className=" col-xxl-6 col-xl-6   col-lg-6 col-md-6 col-sm-12  ">
-                    <ReadOnly
-                      title="Quality Conditions"
-                      value={PosData?.qualityConditions}
-                    />
-                  </div>
+                      if (
+                        currentUserData?.factoryId !== null &&
+                        (currentUserData?.factoryVerified === "0" ||
+                          !currentUserData?.factoryEmailActivated)
+                      ) {
+                        setModalShow((prevVal) => ({
+                          ...prevVal,
+                          isFactoryVerified: true,
+                        }));
 
-                  <div className=" col-xxl-6 col-xl-6   col-lg-6 col-md-6 col-sm-12  ">
-                    <ReadOnly
-                      title="shipping Conditions"
-                      value={PosData?.shippingConditions}
-                    />
-                  </div>
+                        return;
+                      } else if (!isLogin) {
+                        setModalShow((prevVal) => ({
+                          ...prevVal,
+                          isLogin: true,
+                        }));
 
-                  <div className=" col-xxl-6 col-xl-6   col-lg-6 col-md-6 col-sm-12  ">
-                    <ReadOnly
-                      title="payment Terms"
-                      value={PosData?.paymentTerms}
-                    />
-                  </div>
+                        setisLoggedReDirect(`/signIn/${sendQuote}`);
+                        return;
+                      }
 
-                  <div className=" col-xxl-6 col-xl-6   col-lg-6 col-md-6 col-sm-12  ">
-                    <ReadOnly
-                      title="available"
-                      value={PosData?.available ? "In Stock" : "Out Of Stock"}
-                    />
-                  </div>
+                      if (
+                        currentUserData?.importerId == null &&
+                        currentUserData?.factoryId == null
+                      ) {
+                        setModalShow((prevVal) => ({
+                          ...prevVal,
+                          BecomeAfactory: true,
+                        }));
 
-                  <div className=" col-xxl-6 col-xl-6   col-lg-6 col-md-6 col-sm-12  ">
-                    <ReadOnly
-                      title="Created At"
-                      value={getMonthName(PosData?.createdAt?.split("T")?.[0])}
-                    />
-                  </div>
-
-                  <div className=" col-xxl-6 col-xl-6   col-lg-6 col-md-6 col-sm-12  ">
-                    <ReadOnly
-                      title="Deadline "
-                      value={getMonthName(PosData?.deadline?.split("T")?.[0])}
-                    />
-                  </div>
-
-                  <div className=" col-xxl-6 col-xl-6   col-lg-6 col-md-6 col-sm-12  ">
-                    <ReadOnly
-                      title="Preferred Countries"
-                      value={PosData?.preferredCountries?.join(", ") || "All"}
-                    />
-                  </div>
-
-                  {/* ---------------------------- */}
-
-                  {PosData?.specialCharacteristics &&
-                    Object?.keys(PosData?.specialCharacteristics)?.length >
-                      0 && (
-                      <div className="col-12 ">
-                        <label className="fw-600 mb-1">
-                          Product Characteristics
-                        </label>
-
-                        <div className="form-control p-4 p-0 ">
-                          <div className="row row-gap ">
-                            {Object?.entries(
-                              PosData?.specialCharacteristics
-                            )?.map(([key, value], index) => (
-                              <div className="col-6">
-                                <ReadOnly title={key} value={value} />
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  {/* ----------------------------------------- */}
-
-                  <div className="col-12">
-                    <ReadOnly
-                      title="Product Description"
-                      value={PosData?.productDescription}
-                    />
-                  </div>
-
-                  <div className="col-12">
-                    <ReadOnly
-                      title="Other Information"
-                      value={PosData?.otherInfoRequest}
-                    />
-                  </div>
-
-                  <div className="col-12">
-                    <div className="form-group">
-                      {/* <img
-                        className="h-100 w-100 "
-                        id={handleImageError}
-                        src={"fvrfbtbyhg.phg"}
-                        onError={handleImageError}
-                      /> */}
-                      <label>Documents</label>
-                      {PosData?.docs ? (
-                        <Carousel
-                          cols={2}
-                          rows={1}
-                          gap={10}
-                          scrollSnap={true}
-                          loop
-                          showDots
-                          hideArrow={false}
-                        >
-                          {PosData?.docs?.map((item) => (
-                            <Carousel.Item>
-                              <div
-                                className="dots-slider-img w-100  cursor"
-                                onClick={() => {
-                                  // setShowImagePop({
-                                  //   display: true,
-                                  //   imagePath: `${baseUrl_IMG}/${item}`,
-                                  // });
-                                }}
-                              >
-                                <img
-                                  className="h-100 w-100 "
-                                  id={handleImageError}
-                                  src={
-                                    item?.includes("pdf")
-                                      ? pdfIcon
-                                      : `${baseUrl_IMG}/${item}`
-                                  }
-                                  alt={item?.pdfFile?.name?.includes("pdf")}
-                                  onError={handleImageError}
-                                />
-                              </div>
-                            </Carousel.Item>
-                          ))}
-                        </Carousel>
-                      ) : (
-                        <h5 className="text-muted text-center py-3 text-center w-100">
-                          Empty
-                        </h5>
-                      )}
-                    </div>
-                  </div>
-                </div>
-                {/* </div> */}
-
-                <div className="action row">
-                  <div className="col-12">
-                    <button
-                      className="action-btn btn-1 w-100 submitButton"
-                      onClick={() => {
-                        if (currentUserData?.importerId !== null) {
-                          setModalShow((prevVal) => ({
-                            ...prevVal,
-                            isImporterVerified: true,
-                          }));
-
-                          return;
-                        }
-
-                        if (
-                          currentUserData?.factoryId !== null &&
-                          (currentUserData?.factoryVerified === "0" ||
-                            !currentUserData?.factoryEmailActivated)
-                        ) {
-                          setModalShow((prevVal) => ({
-                            ...prevVal,
-                            isFactoryVerified: true,
-                          }));
-
-                          return;
-                        } else if (!isLogin) {
-                          setModalShow((prevVal) => ({
-                            ...prevVal,
-                            isLogin: true,
-                          }));
-
-                          setisLoggedReDirect(`/signIn/${sendQuote}`);
-                          return;
-                        }
-
-                        if (
-                          currentUserData?.importerId == null &&
-                          currentUserData?.factoryId == null
-                        ) {
-                          setModalShow((prevVal) => ({
-                            ...prevVal,
-                            BecomeAfactory: true,
-                          }));
-
-                          return;
-                        } else {
-                          navigate(`/${sendQuote}`);
-                        }
-                      }}
-                    >
-                      Send Quotation
-                    </button>
-                  </div>
+                        return;
+                      } else {
+                        navigate(`/${sendQuote}`);
+                      }
+                    }}
+                  >
+                    Send Quotation
+                  </button>
                 </div>
               </div>
             </div>
           </section>
+
+          <MediaPopUp
+            show={showImagePop.display}
+            onHide={() =>
+              setShowImagePop({
+                display: false,
+                imagePath: "",
+              })
+            }
+            showImagePop={showImagePop.imagePath}
+          />
         </>
       )}
     </>

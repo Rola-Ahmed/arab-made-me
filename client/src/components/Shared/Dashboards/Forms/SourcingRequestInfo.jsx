@@ -11,7 +11,8 @@ export default function SourcingRequestInfo({
     <>
       <div className="container-profile-input w-100">
         <div className="title-contianer-input w-100">
-          <p> Sourcing Request Details</p>
+          <p className="h5 fw-bolder title-header"> Sourcing Request Details</p>
+
           <div className="w-100 ">
             <div className="row  row-gap">
               <div className=" col-xxl-6 col-xl-6   col-lg-6 col-md-6 col-sm-12  ">
