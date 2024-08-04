@@ -32,7 +32,7 @@
   gap: 32px;
 }
 
-.login .title-text {
+.login .title-text, .signup .title-text {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -40,38 +40,37 @@
   align-self: stretch;
 }
 
-.login .title-text p {
-
+.login .title-text p, .signup .title-text p {
   color: var(--Gray-900);
-  font-weight: 400;
   font-family: "Inter-reg";
-
-  font-size: 13px;
-  line-height: 20px;
-  width: 100%;
-  text-align: center;
-  margin-bottom: 12px;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 38px;
+  align-self: stretch;
 }
 
 
-.login .input-content {
+.login .input-content, .signup .input-content {
   border-radius: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 24px;
+  /* gap: 32px; */
+
   align-self: stretch;
 }
 
 
-.login .input-content .form-1 {
+.login .input-content .form-1, .signup .input-content .form-1 {
   flex-direction: column;
   align-items: flex-start;
   gap: 20px;
   align-self: stretch;
 }
 
-.login .form-group {
+.login .form-group, .signup .form-group {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -81,9 +80,9 @@
 
 
 
-.login .form-group input {
+.login .form-group input, .signup .form-group input {
   display: flex;
-  padding: 8.5px 14px;
+  padding: 5.5px 14px;
   align-items: center;
   gap: 8px;
   align-self: stretch;
@@ -93,19 +92,21 @@
   box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
 }
 
-.login .remove-left-border {
+.login .remove-left-border, .signup .remove-left-border {
   border-right: none !important;
 }
 
 
-.login .action {
+.login .action, .signup .action {
   display: flex;
   align-items: flex-start;
+  flex-direction: column;
+
   gap: 16px;
   align-self: stretch;
 }
 
-.login .action .action-btn {
+.login .action .action-btn, .signup .action .action-btn {
   display: flex;
   padding: 10px 16px;
   justify-content: center;
@@ -115,19 +116,17 @@
   border-radius: 8px;
   border: none;
   background: var(--primary-color);
-
-
   box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
 }
 
-.login .action .action-btn.btn-1 {
+.login .action .action-btn.btn-1, .signup .action .action-btn.btn-1 {
   border: none;
   background: var(--primary-color);
   color: white;
 
 }
 
-.login .action .action-btn.btn-2 {
+.login .action .action-btn.btn-2, .signup .action .action-btn.btn-2 {
   border-radius: 8px;
   border: 1px solid var(--Gray-300);
   background: var(--white);
@@ -138,28 +137,39 @@
 
 
 /*signup container  */
-.signUp-container {
+.signUp-container, .signUp-container {
   display: flex;
   justify-content: center;
   gap: 4px;
 }
 
-.login .signUp-container p {
+.login .signUp-container p, .signup .signUp-container p, .login .signUp-container button, .signup .signUp-container button {
+  font-family: "Inter-reg";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+
+}
+
+.login .signUp-container p, .signup .signUp-container p {
   color: var(--Gray-600, #475467);
 
 }
 
 
-/* text font-size:: */
-.login .signUp-container button, .login .signUp-container p {
-  font-family: "Inter-reg";
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 20px;
+.login .signUp-container button, .signup .signUp-container button {
+  border: none;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  color: var(--secondary-color);
+  cursor: pointer;
 }
 
-.login .form-group label {
+.login .form-group label, .signup .form-group label {
   color: var(--Gray-700);
   font-family: "Inter-reg";
   font-size: 14px;
@@ -167,26 +177,62 @@
   font-weight: 500;
 }
 
-/* ------------------ */
-.login .signUp-container button {
-  border: none;
-  background-color: transparent;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 6px;
-
-  color: var(--secondary-color);
-  cursor: pointer;
-}
 
 
-.login .icon-eye-passowrd {
+.login .icon-eye-passowrd, .signup .icon-eye-passowrd {
   padding: 10px 14px !important;
   border-left: none !important;
   border-top-left-radius: 0 !important;
   border-bottom-left-radius: 0 !important;
+}
 
 
+/*sign up calsses not shared */
 
+.signup {
+  padding: 130px 0;
+  padding-left: 168px;
+}
+
+.signup .row-container-padding {
+  gap: 40px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.signup .img-contianer {
+  border-radius: 20px;
+  overflow: hidden;
+  width: 560px;
+
+  height: 693px;
+
+}
+
+.signup .img-contianer img {
+
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.signup .form-group small {
+  color: var(--Gray-600, #475467);
+  font-family: "Inter-reg";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.signup .input-group-text {
+  padding: 10px 14px !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  background-color: white !important;
+}
+
+
+.signup .phone-border {
+  border-left: 0 !important;
 }

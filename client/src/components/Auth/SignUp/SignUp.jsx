@@ -6,7 +6,6 @@ import Header from "components/main/Header/Header";
 import { useNavigate } from "react-router-dom";
 import { UserToken } from "Context/userToken";
 import { addUser } from "Services/UserAuth.js";
-import "./SignUp.css";
 export default function SignUp() {
   let { setIsLogin } = useContext(UserToken);
 
