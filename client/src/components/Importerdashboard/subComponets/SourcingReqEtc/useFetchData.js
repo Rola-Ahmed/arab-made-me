@@ -1,17 +1,14 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { UserToken } from "Context/userToken";
-import { getOnePrivateLabel } from "Services/privateLabel";
+import { getOneSourcingReq } from "Services/sourcingReuqest";
 
-export function usePrivateLabel() {
-  const { isLogin } = useContext(UserToken);
+export function useFetchData() {
   const [searchParams] = useSearchParams();
-  const privateLabelId = searchParams.get("privateLabelId");
+  const sourcingReqId = searchParams.get("sourcingReqId");
 
   const [apiLoadingData, setApiLoadingData] = useState({
     reqData: true,
     errorWhileLoading: null,
-    findQuotation: true,
   });
 
   const [requestedData, setRequestedData] = useState();
@@ -25,19 +22,12 @@ export function usePrivateLabel() {
       }));
 
       // get private label data
-      let result = await getOnePrivateLabel(
-        privateLabelId,
-        "include=factory&include=product"
-      );
+      let result = await getOneSourcingReq(sourcingReqId);
 
-      
       // check if private label has quotations
 
       if (result?.success) {
-        setRequestedData((prevData) => ({
-          ...prevData,
-          ...result.data.privatelabelings,
-        }));
+        setRequestedData(result?.data?.sourcingrequests);
         setApiLoadingData((prevVal) => ({
           ...prevVal,
           reqData: false,
@@ -45,17 +35,17 @@ export function usePrivateLabel() {
       } else {
         setApiLoadingData((prevVal) => ({
           ...prevVal,
-          reqData: true,
+          reqData: result?.loadingStatus,
           errorWhileLoading: result?.error,
         }));
       }
     }
 
     fetchReqData();
-  }, [privateLabelId, isLogin]);
+  }, [sourcingReqId]);
+  console.log("result", requestedData);
 
   return {
-    isLogin,
     requestedData,
     apiLoadingData,
   };

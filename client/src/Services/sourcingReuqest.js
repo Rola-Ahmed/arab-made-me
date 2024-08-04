@@ -8,10 +8,10 @@ export const getOneSourcingReq = async (id, param) => {
   return await getRequestDataHeader(`sourcingRequests/${id}?${param}`, {}, {});
 };
 
-export const addSourcingOffer = async (header, data) => {
+export const addSourcingRequest = async (header, data) => {
   return await postRequest(`/sourcingRequests/add`, header, data);
 };
 
-export const addaddSourcingOfferMedia = async (id, header, data) => {
+export const addSourcingRequestrMedia = async (id, header, data) => {
   return await putRequest(`/sourcingRequests/uploadMedia/${id}`, header, data);
 };

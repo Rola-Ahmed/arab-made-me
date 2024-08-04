@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { UserToken } from "Context/userToken";
 
 import {
-  addaddSourcingOfferMedia,
-  addSourcingOffer,
+  addSourcingRequest,
+  addSourcingRequestrMedia,
 } from "Services/sourcingReuqest";
 
 const useFormSubmission = (setErrorMsg, setIsLoading) => {
@@ -103,7 +103,7 @@ const useFormSubmission = (setErrorMsg, setIsLoading) => {
       data.specialCharacteristics = obj;
     }
 
-    let result = await addSourcingOffer({ authorization: isLogin }, data);
+    let result = await addSourcingRequest({ authorization: isLogin }, data);
 
     console.log("result addSourcingOffer", result);
     if (result?.success) {
@@ -133,7 +133,7 @@ const useFormSubmission = (setErrorMsg, setIsLoading) => {
     selectedDocs?.forEach((item) => data.append(item.keyWord, item.pdfFile));
 
     try {
-      let result = await addaddSourcingOfferMedia(
+      let result = await addSourcingRequestrMedia(
         qoute_id,
         { authorization: isLogin },
         data

@@ -1,70 +1,20 @@
-import { useEffect, useState, useContext } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import axios from "axios";
-
-import { baseUrl } from "config.js";
-
-import { UserToken } from "Context/userToken";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
 
 import SourcingRequestInfo from "components/Shared/Dashboards/Forms/SourcingRequestInfo";
-
-import FactoryInfo from "components/Forms/Shared/FactoryInfo";
+import { useFetchData } from "./useFetchData";
+import StatusMessagetwo from "components/Shared/Dashboards/StatusMessagetwo";
 
 export default function SourcingReqEtc() {
   let navigate = useNavigate();
+  let { requestedData, apiLoadingData } = useFetchData();
 
-  let { isLogin } = useContext(UserToken);
-
-  const [searchParams] = useSearchParams();
-  const sourcingReqId = searchParams.get("sourcingReqId");
-
-  const [apiLoadingData, setapiLoadingData] = useState(true);
-
-  const [PosData, setPosData] = useState();
   const [showImagePop, setShowImagePop] = useState({
     display: false,
     imagePath: "",
   });
-
-  async function fetchFactoriesData() {
-    setapiLoadingData(true);
-
-    try {
-      let config = {
-        method: "get",
-        url: `${baseUrl}/importers/importer/sourcingRequests?include=factory`,
-        headers: {
-          authorization: isLogin,
-        },
-      };
-
-      const response = await axios.request(config);
-
-      if (response?.data?.message == "done") {
-        const matchedObject = response.data.sourcingRequests.find(
-          (obj) => obj.id == sourcingReqId
-        );
-
-        if (matchedObject) {
-          setPosData(matchedObject);
-        }
-
-        setapiLoadingData(false);
-      } else {
-        setapiLoadingData(true);
-      }
-    } catch (error) {
-      setapiLoadingData(true);
-    }
-  }
-
-  useEffect(() => {
-    fetchFactoriesData();
-  }, [sourcingReqId]);
-
-  // utils function
 
   const handleImageClick = (imagePath) => {
     setShowImagePop({
@@ -95,25 +45,25 @@ export default function SourcingReqEtc() {
         </div>
       </div>
 
-      <div className="section factory-profile m-5">
-        <div className="container gap-container">
-          <div className="row">
-            <div className="col-12  container-2-gap  p-0">
-              {/* factory info */}
-              <div className="container-profile-input w-100">
-                <div className="title-contianer-input w-100">
-                  <FactoryInfo productDetails={PosData?.factory} />
-                </div>
-              </div>
+      {/* error or loading */}
+      {apiLoadingData?.reqData && (
+        <StatusMessagetwo errorMsg={apiLoadingData?.errorWhileLoading} />
+      )}
 
-              <SourcingRequestInfo
-                requestedData={PosData}
-                handleImageClick={handleImageClick}
-              />
+      {!apiLoadingData?.reqData && (
+        <div className="section factory-profile m-5">
+          <div className="container gap-container">
+            <div className="row">
+              <div className="col-12  container-2-gap  p-0">
+                <SourcingRequestInfo
+                  requestedData={requestedData}
+                  handleImageClick={handleImageClick}
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
 
       <MediaPopUp
         show={showImagePop.display}

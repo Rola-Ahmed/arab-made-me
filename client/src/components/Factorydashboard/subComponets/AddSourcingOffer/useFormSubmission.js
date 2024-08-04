@@ -5,7 +5,7 @@ import { UserToken } from "Context/userToken";
 
 import {
   addSourcingOffer,
-  addaddSourcingOfferMedia,
+  addSourcingOfferMedia,
 } from "Services/sourcingOffer";
 
 const useFormSubmission = (setErrorMsg, setIsLoading) => {
@@ -96,8 +96,6 @@ const useFormSubmission = (setErrorMsg, setIsLoading) => {
         qualityConditions == "other"
           ? qualityConditionsOther
           : qualityConditions,
-
-      
     };
 
     let result = await addSourcingOffer({ authorization: isLogin }, data);
@@ -133,7 +131,7 @@ const useFormSubmission = (setErrorMsg, setIsLoading) => {
     selectedDocs?.forEach((item) => data.append(item.keyWord, item.pdfFile));
 
     try {
-      let result = await addaddSourcingOfferMedia(
+      let result = await addSourcingOfferMedia(
         qoute_id,
         { authorization: isLogin },
         data

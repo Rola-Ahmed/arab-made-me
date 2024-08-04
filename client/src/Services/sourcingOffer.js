@@ -14,6 +14,6 @@ export const addSourcingOffer = async (header, data) => {
   return await postRequest(`/SourcingOffers/add`, header, data);
 };
 
-export const addaddSourcingOfferMedia = async (id, header, data) => {
+export const addSourcingOfferMedia = async (id, header, data) => {
   return await putRequest(`/sourcingOffers/uploadMedia/${id}`, header, data);
 };
