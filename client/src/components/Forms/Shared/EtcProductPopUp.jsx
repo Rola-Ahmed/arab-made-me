@@ -73,14 +73,14 @@ export default function EtcProductPopUp(directTo) {
                 >
                   Close
                 </Button>
-                {/* will use agaib */}
-                <button
-                  className="btn-edit submitButton d"
+                {/* will use again */}
+                {/* <button
+                  className="btn-edit submitButton d-none"
                   // type="submit"
                   onClick={() => navigate(directTo?.distination)}
                 >
                   <p className="cursor"> More Details</p>
-                </button>
+                </button> */}
               </div>
             </div>
           </div>
