@@ -1,9 +1,8 @@
- import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { UserToken } from "Context/userToken";
 import "./RFQ.css";
-import CurrentAcccountInfo from "../Shared/CurrentAcccountInfo";
 import FactoryInfo from "../Shared/FactoryInfo";
 import ProductDetails from "../Shared/SelectedProductDetails";
 import RfqForm from "./RfqForm";
@@ -36,7 +35,7 @@ function SendRfq(props) {
     setErrorMsg,
     setIsLoading
   );
-  //Document Validation 
+  //Document Validation
   // array f objects
   const [selectedDocs, setSelectedDocs] = useState([]);
 
@@ -136,10 +135,6 @@ function SendRfq(props) {
         <div className="container container-rfq ">
           <FactoryInfo productDetails={factoryData} />
         </div>
-
-        {/* <div className="container container-rfq ">
-          <CurrentAcccountInfo />
-        </div> */}
 
         {/* Product Decription */}
 

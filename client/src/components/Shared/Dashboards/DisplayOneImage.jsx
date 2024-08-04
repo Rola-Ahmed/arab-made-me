@@ -15,7 +15,7 @@ export default function DisplayOneImage(props) {
             }}
           >
             <img
-              className="h-100 w-100 "
+              className="h-100 w-100 h-100 object-fit-contain w-100 "
               id={handleImageError}
               src={image?.includes("pdf") ? pdfIcon : `${baseUrl_IMG}/${image}`}
               alt={image?.pdfFile?.name?.includes("pdf")}

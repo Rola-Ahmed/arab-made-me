@@ -6,7 +6,7 @@ import { UserToken } from "Context/userToken";
 import useFormSubmission from "./hooks/useFormSubmission";
 
 import FactoryInfo from "../Shared/FactoryInfo";
-import CurrentAcccountInfo from "../Shared/CurrentAcccountInfo";
+// import CurrentAcccountInfo from "../Shared/CurrentAcccountInfo";
 import CustomProductForm from "./CustomProductForm";
 import {
   requiredStringValidate,
@@ -173,9 +173,9 @@ function CustomerProductReq(props) {
         <FactoryInfo productDetails={factoryDetails} />
       </div>
 
-      <div className="container container-req ">
+      {/* <div className="container container-req ">
         <CurrentAcccountInfo />
-      </div>
+      </div> */}
 
       <CustomProductForm
         isLoading={isLoading}

@@ -5,7 +5,7 @@ import Header from "components/main/Header/Header";
 
 import FactoryInfo from "../Shared/FactoryInfo";
 
-import CurrentAcccountInfo from "../Shared/CurrentAcccountInfo";
+// import CurrentAcccountInfo from "../Shared/CurrentAcccountInfo";
 
 import {
   textAreaValidate,
@@ -194,9 +194,9 @@ function PurchasingOrder(props) {
           </div>
         )}
 
-        <div className="container container-po  d-none">
+        {/* <div className="container container-po  d-none">
           <CurrentAcccountInfo />
-        </div>
+        </div> */}
 
         {/* Grid  */}
         <PurchasingOrderForm
