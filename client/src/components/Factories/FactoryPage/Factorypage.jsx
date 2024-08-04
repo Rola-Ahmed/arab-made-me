@@ -41,6 +41,10 @@ import ExportedCountries from "./subComponents/ExportedCountries";
 import { addEndorsement } from "Services/endorsements";
 import FactoryNav from "./subComponents/FactoryNav";
 import FactoryABout from "./subComponents/FactoryABout";
+import Endorsement from "./subComponents/Endorsement";
+import HandleUsersBtnAccess, {
+  handleIsLoggedInBtn,
+} from "utils/actionBtns/HandleUsersBtnAccess";
 
 function Factorypage() {
   let { currentUserData } = useContext(userDetails);
@@ -162,20 +166,28 @@ function Factorypage() {
   });
   const [isLoggedReDirect, setisLoggedReDirect] = useState("");
 
-  function handleButtonClick(loginPath, storgaeName) {
-    if (
-      currentUserData?.importerId !== null &&
-      (currentUserData?.importerVerified === "0" ||
-        !currentUserData?.importerEmailActivated)
-    ) {
+  const handleUserClickValidLogin = (loginPath) => {
+    handleIsLoggedInBtn({
+      isLogin,
+      navigate,
+      setModalShow,
+      setisLoggedReDirect,
+      loginPath,
+    });
+  };
+
+  function addEndorse(){
+    if (!isLogin) {
       setModalShow((prevVal) => ({
         ...prevVal,
-        isImporterVerified: true,
+        isLogin: true,
       }));
+
+      setisLoggedReDirect(`/signIn/factoryPage/${factoryIdName}`);
       return;
     }
 
-    if (currentUserData?.factoryId !== null) {
+    if (currentUserData?.userRole != "importer") {
       setModalShow((prevVal) => ({
         ...prevVal,
         isFactoryVerified: true,
@@ -183,32 +195,25 @@ function Factorypage() {
       return;
     }
 
-    if (!isLogin) {
-      setModalShow((prevVal) => ({
-        ...prevVal,
-        isLogin: true,
-      }));
-
-      setisLoggedReDirect(`/signIn/${loginPath}`);
-      return;
-    }
-
-    navigate(`/${loginPath}`);
+    EndorseSubmit();
   }
 
-  function handleIsLoggedInBtn(loginPath, storgaeName) {
-    if (!isLogin) {
-      setModalShow((prevVal) => ({
-        ...prevVal,
-        isLogin: true,
-      }));
+  // handleButtonClick
+  const handleUserClickValidation = (loginPath) => {
+    HandleUsersBtnAccess({
+      currentUserData,
+      isLogin,
+      navigate,
+      setModalShow,
+      setisLoggedReDirect,
+      loginPath,
+    });
+  };
+  
 
-      setisLoggedReDirect(`/signIn/${loginPath}`);
-      return;
-    }
+  
+ 
 
-    navigate(`/${loginPath}`);
-  }
   return (
     <>
       <IsLoggedIn
@@ -313,7 +318,7 @@ function Factorypage() {
               <div className="call-fac-page scroll">
                 <FactoryNav
                   factoryDetails={factoryDetails}
-                  handleIsLoggedInBtn={handleIsLoggedInBtn}
+                  handleIsLoggedInBtn={handleUserClickValidLogin}
                 />
               </div>
 
@@ -431,7 +436,7 @@ function Factorypage() {
                           <button
                             className="btn-call-1  cursor me-3 "
                             onClick={() => {
-                              handleButtonClick(
+                              handleUserClickValidation(
                                 `CustomerProductReq?factoryId=${factoryDetails?.id}&factoryName=${factoryDetails?.name}&productName=CreateYourOwnBrand `
                               );
                             }}
@@ -443,7 +448,7 @@ function Factorypage() {
                           <div
                             className=" btn-call-2 padd text-dark text-decoration-none cursor"
                             onClick={() => {
-                              handleIsLoggedInBtn(
+                              handleUserClickValidLogin(
                                 `contactsupplier?userId=${factoryDetails?.userId}&factoryName=${factoryDetails?.name}`
                               );
                             }}
@@ -457,8 +462,8 @@ function Factorypage() {
                           factoryDetails={factoryDetails}
                           factoryProduct={factoryProduct}
                           setFactoryHasProduct={setFactoryHasProduct}
-                          handleButtonClick={handleButtonClick}
-                          handleIsLoggedInBtn={handleIsLoggedInBtn}
+                          handleButtonClick={handleUserClickValidation}
+                          handleIsLoggedInBtn={handleUserClickValidLogin}
                         />
                       </div>
                     </div>
@@ -565,59 +570,11 @@ function Factorypage() {
               )}
 
               <div id="Endorsements" className="">
-                <h3 className="text-fac-4">Endorsements</h3>
-                <div className=" row">
-                  <div className="col-12 ">
-                    <p>
-                      Encourage {factoryDetails?.name} Company to share positive
-                      experiences and to show that they are trustworthy and
-                      cooperative.
-                    </p>
-                  </div>
-                  <div className="col-6">
-                    <div className="d-flex justify-content-start align-items-center padding-text-endors">
-                      <p> Endorsements: {factoryDetails?.endorsements || 0}</p>
-                    </div>
-                  </div>
-                  <div className="col-6 ">
-                    <div className="d-flex justify-content-end align-items-center">
-                      {!currentUserData?.datacompletelyLoaded ? (
-                        <button
-                          className="btn-endorse cursor"
-                          onClick={(e) => {
-                            if (!isLogin) {
-                              setModalShow((prevVal) => ({
-                                ...prevVal,
-                                isLogin: true,
-                              }));
-
-                              setisLoggedReDirect(
-                                `/signIn/factoryPage/${factoryIdName}`
-                              );
-                              return;
-                            }
-
-                            if (currentUserData?.userRole != "importer") {
-                              setModalShow((prevVal) => ({
-                                ...prevVal,
-                                isFactoryVerified: true,
-                              }));
-                              return;
-                            }
-
-                            EndorseSubmit(e);
-                          }}
-                        >
-                          <p className="text-end cursor">Endorse</p>
-                        </button>
-                      ) : (
-                        <button type="button" className="btn-endorse px-4">
-                          <i className="fas fa-spinner fa-spin"></i>
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                </div>
+                <Endorsement
+                  factoryDetails={factoryDetails}
+                  addEndorse={addEndorse}
+                  currentUserData={currentUserData}
+                />
               </div>
             </div>
 
@@ -627,7 +584,7 @@ function Factorypage() {
                   <div
                     className={`text-container `}
                     onClick={() => {
-                      handleButtonClick(
+                      handleUserClickValidation(
                         `privatelabel?factoryId=${factoryDetails?.id}&factoryName=${factoryDetails?.name}`
                       );
                     }}
@@ -649,7 +606,7 @@ function Factorypage() {
                   <div
                     className="text-container"
                     onClick={() => {
-                      handleButtonClick(
+                      handleUserClickValidation(
                         `CustomerProductReq?factoryId=${factoryDetails?.id}&factoryName=${factoryDetails?.name}`
                       );
                     }}
@@ -671,7 +628,7 @@ function Factorypage() {
                   <div
                     className={`text-container `}
                     onClick={() => {
-                      handleButtonClick(
+                      handleUserClickValidation(
                         `whiteLabelings/form?factoryId=${factoryDetails?.id}&factoryName=${factoryDetails?.name}`
                       );
                     }}
@@ -695,7 +652,7 @@ function Factorypage() {
                         setFactoryHasProduct(true);
                         return;
                       }
-                      handleButtonClick(
+                      handleUserClickValidation(
                         `sendrfq?factoryId=${factoryDetails?.id}&factoryName=${factoryDetails?.name}`
                       );
                     }}
@@ -719,7 +676,7 @@ function Factorypage() {
                         setFactoryHasProduct(true);
                         return;
                       }
-                      handleButtonClick(
+                      handleUserClickValidation(
                         `purchasingOrder/fromfactory?factoryId=${factoryDetails?.id}&factoryName=${factoryDetails?.name}`
                       );
                     }}
@@ -739,7 +696,7 @@ function Factorypage() {
                   <button
                     className="text-container"
                     onClick={() => {
-                      handleIsLoggedInBtn(
+                      handleUserClickValidLogin(
                         `contactsupplier?userId=${factoryDetails?.userId}&factoryName=${factoryDetails?.name}`
                       );
                     }}
@@ -760,7 +717,7 @@ function Factorypage() {
                   <div
                     className="text-container"
                     onClick={() => {
-                      handleButtonClick(
+                      handleUserClickValidation(
                         `requestVisit?factoryId=${factoryDetails?.id}&factoryName=${factoryDetails?.name}`
                       );
                     }}
@@ -789,8 +746,8 @@ function Factorypage() {
             factoryDetails={factoryDetails}
             factoryProduct={factoryProduct}
             setFactoryHasProduct={setFactoryHasProduct}
-            handleButtonClick={handleButtonClick}
-            handleIsLoggedInBtn={handleIsLoggedInBtn}
+            handleButtonClick={handleUserClickValidation}
+            handleIsLoggedInBtn={handleUserClickValidLogin}
           />
         </i>
       </section>
@@ -821,7 +778,7 @@ function Factorypage() {
                 <Button
                   className="btn-edit "
                   onClick={() => {
-                    handleButtonClick(
+                    handleUserClickValidation(
                       `CustomerProductReq?factoryId=${factoryDetails?.id}&factoryName=${factoryDetails?.name}&productName=CreateYourOwnBrand `
                     );
 
@@ -833,7 +790,7 @@ function Factorypage() {
                 <button
                   className="btn-edit border bg-white "
                   onClick={() => {
-                    handleButtonClick(
+                    handleUserClickValidation(
                       `privatelabel?factoryId=${factoryDetails?.id}&factoryName=${factoryDetails?.name} `
                     );
 
