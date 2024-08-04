@@ -176,7 +176,7 @@ function Factorypage() {
     });
   };
 
-  function addEndorse(){
+  function addEndorse() {
     if (!isLogin) {
       setModalShow((prevVal) => ({
         ...prevVal,
@@ -209,10 +209,6 @@ function Factorypage() {
       loginPath,
     });
   };
-  
-
-  
- 
 
   return (
     <>
@@ -507,32 +503,27 @@ function Factorypage() {
                 <div id="ourPeople" className="fac-team">
                   <h3 className="text-fac-4">Our People</h3>
 
-                  <div className="row  ">
+                  <div className="row  mx-2 mx-md-0">
                     <div className="col-12">
-                      <Carousel
-                        cols={4}
-                        rows={1}
-                        // gap={10}
-                        scrollSnap={true}
-                        loop
-                        showDots
-                        hideArrow={false}
-                        responsiveLayout={[
-                          {
-                            breakpoint: 1148,
-
-                            cols: 3,
+                      <Swiper
+                        modules={[Navigation]}
+                        navigation={true}
+                        slidesPerView={1.3}
+                        spaceBetween={10}
+                        breakpoints={{
+                          541: {
+                            slidesPerView: 2,
                           },
-                          {
-                            breakpoint: 983,
-
-                            cols: 2,
+                          995: {
+                            slidesPerView: 3,
                           },
-                        ]}
-                        mobileBreakpoint={539}
+                          1212: {
+                            slidesPerView: 4,
+                          },
+                        }}
                       >
                         {factoryDetails?.teamMembers?.map((item, index) => (
-                          <Carousel.Item>
+                          <SwiperSlide>
                             <div className="parent-team w-100">
                               <div className=" member-cont  d-grid justify-content-center  ">
                                 <div className="w-100 justify-content-center d-flex ">
@@ -554,9 +545,9 @@ function Factorypage() {
                               </div>
                             </div>
                             {/* </div> */}
-                          </Carousel.Item>
+                          </SwiperSlide>
                         ))}
-                      </Carousel>
+                      </Swiper>
                     </div>
                   </div>
                 </div>
