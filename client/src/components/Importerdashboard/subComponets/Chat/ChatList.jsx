@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { handleImageError } from "utils/ImgNotFound";
 import PaginationDash from "components/Shared/Dashboards/PaginationDash";
 import { baseUrl_IMG } from "config.js";
@@ -14,14 +14,8 @@ export default function ChatList() {
   let navigate = useNavigate();
   let getTimeDifference = getTimeDiff;
 
-  let {
-    reqData,
-    pagination,
-    apiLoadingData,
-    errorsMsg,
-    setPagination,
-  } = useAllUserChats(isLogin);
-  // console.log("reqData", reqData);
+  let { reqData, pagination, apiLoadingData, errorsMsg, setPagination } =
+    useAllUserChats(isLogin);
 
   return (
     <div className="m-4 order-section ">
@@ -86,7 +80,9 @@ export default function ChatList() {
                             onError={handleImageError}
                           />
                         </div>
-                        <div className="d-grid gap-1 h-fit-content">
+
+                        {/* bg-info */}
+                        <div className="d-grid gap-1 h-fit-content ">
                           <p className="  trate-title lh-normal">
                             {poItem?.UserTwoName}
                             <small className="fw-light ms-2 ">

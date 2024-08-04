@@ -43,7 +43,6 @@ export function useFetchData() {
 
     fetchReqData();
   }, [sourcingReqId]);
-  console.log("result", requestedData);
 
   return {
     requestedData,
