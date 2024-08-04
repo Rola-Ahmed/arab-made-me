@@ -25,6 +25,7 @@ import FactoryInforamtion from "./subComponents/FactoryInforamtion";
 import Team from "./subComponents/Team";
 import SocialAccounts from "./subComponents/SocialAccounts";
 import FactoryLogo from "./subComponents/FactoryLogo";
+import {fetchOneFactory,getFactoryTeam} from 'Services/factory'
 
 export default function MircoSiteDash() {
   document.title = "Factory Profile";
@@ -104,44 +105,30 @@ export default function MircoSiteDash() {
 
   // api
   async function fetchFactoryPage() {
-    try {
-      let config = {
-        method: "get",
-        url: `${baseUrl}/factories/${currentUserData.factoryId}`,
-      };
+    
+let result = await fetchOneFactory(currentUserData?.factoryId)
 
-      const response = await axios.request(config);
-
-      if (response.data.message == "done") {
+      if (result?.success) {
         dispatch({
           type: "fetched_update_data",
-          value: response.data.factories,
+          value: result?.data?.factories,
         });
         fetchTeamData();
-      } else if (response.data.message == "404 Not Found") {
-        // errorMsg("404");
+      }else{
+
       }
-    } catch (error) {}
   }
 
   async function fetchTeamData() {
-    try {
-      let config = {
-        method: "get",
-        url: `${baseUrl}/teams/factory/${currentUserData.factoryId}`,
-      };
+     
+     let result= await getFactoryTeam(currentUserData?.factoryId)
 
-      const response = await axios.request(config);
-
-      if (response.data.message == "done") {
+      if (result?.success) {
         dispatch({
           type: "fetch_team_data",
-          value: response.data.teamMembers,
+          value: result?.data?.teamMembers,
         });
-      } else if (response.data.message == "404 Not Found") {
-        // errorMsg("404");
-      }
-    } catch (error) {}
+      } 
   }
 
   // Cover IMage Profile -----------------------------------------------------
@@ -426,11 +413,7 @@ export default function MircoSiteDash() {
       } catch (error) {
         setIsLoading(false);
 
-        // if (error.code === 'ECONNABORTED' || error.message.includes('Network Error')|| error.code === 'net::ERR_CONNECTION_RESET' || error.message.includes('net::ERR_CONNECTION_RESET')) {
-        //   // Handle network-related error
-        //   console.error('Network error:', error);
-        //   // Display a user-friendly message or take appropriate action
-        // }
+        
         setErrorMsg((prevErrors) => ({
           ...prevErrors,
           response: errorHandler(error),
