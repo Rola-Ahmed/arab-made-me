@@ -45,6 +45,7 @@ import Endorsement from "./subComponents/Endorsement";
 import HandleUsersBtnAccess, {
   handleIsLoggedInBtn,
 } from "utils/actionBtns/HandleUsersBtnAccess";
+import FactoryTeam from "./subComponents/FactoryTeam";
 
 function Factorypage() {
   let { currentUserData } = useContext(userDetails);
@@ -500,56 +501,12 @@ function Factorypage() {
               )}
 
               {factoryDetails?.teamMembers?.length > 0 && (
-                <div id="ourPeople" className="fac-team">
-                  <h3 className="text-fac-4">Our People</h3>
-
-                  <div className="row  mx-2 mx-md-0">
-                    <div className="col-12">
-                      <Swiper
-                        modules={[Navigation]}
-                        navigation={true}
-                        slidesPerView={1.3}
-                        spaceBetween={10}
-                        breakpoints={{
-                          541: {
-                            slidesPerView: 2,
-                          },
-                          995: {
-                            slidesPerView: 3,
-                          },
-                          1212: {
-                            slidesPerView: 4,
-                          },
-                        }}
-                      >
-                        {factoryDetails?.teamMembers?.map((item, index) => (
-                          <SwiperSlide>
-                            <div className="parent-team w-100">
-                              <div className=" member-cont  d-grid justify-content-center  ">
-                                <div className="w-100 justify-content-center d-flex ">
-                                  <img
-                                    className="team-img"
-                                    alt="team img"
-                                    src={`${baseUrl_IMG}/${item?.image}`}
-                                    onError={handleImageError}
-                                  />
-                                </div>
-                                <div>
-                                  <p className="w-100 text-center team-name fw-bolder">
-                                    {item.name}
-                                  </p>
-                                  <p className="w-100 text-center team-name">
-                                    {item.role}
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
-                            {/* </div> */}
-                          </SwiperSlide>
-                        ))}
-                      </Swiper>
-                    </div>
-                  </div>
+                <div id="ourPeople" className="fac-cert ">
+                  <FactoryTeam
+                    teamMembers={factoryDetails?.teamMembers}
+                    handleImageError={handleImageError}
+                    baseUrl_IMG={baseUrl_IMG}
+                  />
                 </div>
               )}
 
@@ -569,7 +526,8 @@ function Factorypage() {
               </div>
             </div>
 
-            <div className="col-lg-2 col-md-4 md-d-none ">
+            {/* md-d-none  */}
+            <div className="col-lg-2 col-md-4 col-12  mx-auto w-fit-content">
               <div className="parent-buttons-container  d-table-cell ">
                 <div className="d-flex align-items-center">
                   <div
@@ -730,17 +688,6 @@ function Factorypage() {
             </div>
           </div>
         </div>
-
-        {/* <i class="fa-solid fa-ellipsis-vertical floating-btn "> */}
-        <i class=" floating-btn ">
-          <ActionBtnsOnFactory
-            factoryDetails={factoryDetails}
-            factoryProduct={factoryProduct}
-            setFactoryHasProduct={setFactoryHasProduct}
-            handleButtonClick={handleUserClickValidation}
-            handleIsLoggedInBtn={handleUserClickValidLogin}
-          />
-        </i>
       </section>
 
       <Modal
