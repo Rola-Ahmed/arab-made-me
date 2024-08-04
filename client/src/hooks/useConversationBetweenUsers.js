@@ -51,7 +51,6 @@ const useConversationBetweenUsers = () => {
 
   const fetchUserTwo = async (userId) => {
     const response = await getUser(userId);
-    // console.log("importerId",response.data.users?.importerId,response.data.users?.factoryId,response.data.users?.id,userId)
 
     if (response?.success) {
       if (response.data.users?.importerId) {
@@ -63,7 +62,6 @@ const useConversationBetweenUsers = () => {
   };
   const fetchUserTwoImporter = async (id) => {
     const response = await fetchOneImporter(id);
-    // console.log();
     if (response?.success) {
       setReqData((prevValue) => ({
         ...prevValue,
@@ -102,11 +100,11 @@ const useConversationBetweenUsers = () => {
         // socket.connect();
 
         socket.on("connect", () => {
-          console.log("Connected to server");
+          // console.log("Connected to server");
         });
 
         socket.on("newMessage", (data) => {
-          console.log("data",data)
+          // console.log("Connected to server",data)
           fetchReqData();
         });
 
@@ -124,23 +122,22 @@ const useConversationBetweenUsers = () => {
 
         // Cleanup on unmount
         return () => {
-          // socket.off("connect");
-          // socket.off("newMessage");
-          // socket.off("authorization");
-          // socket.off("connect_error");
-          // socket.off("connect_timeout");
-          // socket.off("error");
-          // socket.off("reconnect_error");
-          // socket.off("reconnect_failed");
-          // socket.disconnect();
+          socket.off("connect");
+          socket.off("newMessage");
+          socket.off("authorization");
+          socket.off("connect_error");
+          socket.off("connect_timeout");
+          socket.off("error");
+          socket.off("reconnect_error");
+          socket.off("reconnect_failed");
+          socket.disconnect();
         };
       };
 
       connectSocket();
 
       return () => {
-        // console.log("Disconnecting socket..."); // Debugging message
-        // socket.disconnect();
+        socket.disconnect();
       };
     }
   }, [isLogin]);

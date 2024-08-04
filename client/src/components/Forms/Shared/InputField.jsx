@@ -9,11 +9,11 @@ export default function InputField({
   return (
     <div className="form-group">
       {/* <label class={"form-title"}> */}
-      <label>
-        {title} {isRequired && "*"}
+      <label class="form-title">
+        {title} {isRequired && <span className="text-danger">*</span>}
       </label>
       <input
-        className="form-control "
+        className="form-control input-style"
         id={vlaidationName}
         onChange={formValidation.handleChange}
         onBlur={formValidation.handleBlur}

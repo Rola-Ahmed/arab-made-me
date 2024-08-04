@@ -6,7 +6,7 @@ import { baseUrl } from "config.js";
 import { socket } from "config.js";
 
 export default function SendMsg(props) {
-  let { recieverUserId, isLogin, SetNewMessageSuccess, setAllPosData } = props;
+  let { recieverUserId, isLogin, SetNewMessageSuccess, setreqData } = props;
   let validationSchema = Yup.object().shape({
     message: Yup.string()
       // .min(5, "min legnth is 5")
@@ -62,7 +62,7 @@ export default function SendMsg(props) {
         });
 
         formValidation.setValues(initialValues);
-        setAllPosData((preVal) => ({
+        setreqData((preVal) => ({
           ...preVal,
           ...response.data.chat,
         }));
@@ -102,8 +102,8 @@ export default function SendMsg(props) {
       ) : (
         ""
       )}
-      <button className="border-0 text-end" type="submit">
-        Send
+      <button className="border-0 text-end " type="submit">
+        Send -------
       </button>
     </form>
   );

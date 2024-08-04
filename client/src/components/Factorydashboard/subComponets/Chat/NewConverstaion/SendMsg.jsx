@@ -62,7 +62,7 @@ export default function SendMsg(props) {
           send: true,
         });
         navigate(
-          `/importerdashboard/conversation?currentChat=${response?.data?.chat?.id}`
+          `/factorydashboard/conversation?currentChat=${response?.data?.chat?.id}`
         );
         formValidation.setValues(initialValues);
       } else {

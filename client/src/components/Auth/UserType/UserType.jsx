@@ -1,7 +1,5 @@
 import { useNavigate } from "react-router-dom";
 
-
-
 // const
 import {
   awaitImg,
@@ -84,9 +82,11 @@ export default function UserType() {
                 <label className="text-title m-auto">Email Activated</label>
 
                 <p className="text-sub m-auto">
-                  Welcome to Arab Countries fastest-growing B2B platform, connecting
-                  Buyers and Arab Factory in the consumer goods industry. Please
-                  choose your preferred account type to get started.
+                  {/*  */}
+                  Welcome to the Arab Countries' fastest-growing B2B platform,
+                  connecting buyers and Arab factories in the consumer goods
+                  industry. Please choose your preferred account type to get
+                  started.
                 </p>
 
                 <div className="row gap-row">
