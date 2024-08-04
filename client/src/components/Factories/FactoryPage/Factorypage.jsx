@@ -526,7 +526,6 @@ function Factorypage() {
               </div>
             </div>
 
-            {/* md-d-none  */}
             <div className="col-lg-2 col-md-4 col-12  mx-auto w-fit-content">
               <div className="parent-buttons-container  d-table-cell ">
                 <div className="d-flex align-items-center">
