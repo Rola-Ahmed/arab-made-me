@@ -290,11 +290,11 @@ function Factorypage() {
                           <div className="card-svg">
                             <img
                               src={`https://flagcdn.com/16x12/${
-                                countriesMiddleEast.some(
+                                countriesMiddleEast?.some(
                                   (item) =>
                                     item.code === factoryDetails?.country
                                 )
-                                  ? countriesMiddleEast.find(
+                                  ? countriesMiddleEast?.find(
                                       (item) =>
                                         item.code === factoryDetails?.country
                                     )?.id

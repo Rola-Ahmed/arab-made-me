@@ -12,7 +12,7 @@ export default function HeaderSlider({
   factoryDetails,
 }) {
   let { coverVideo, images, country, city, name, coverImage } = factoryDetails;
-  console.log("factoryDetails", factoryDetails);
+//   console.log("factoryDetails", factoryDetails);
   return (
     <>
       <section className="fact-sec1 container margin-sm-screen">
