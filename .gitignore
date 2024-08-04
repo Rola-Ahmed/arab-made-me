@@ -118,3 +118,6 @@ client/src/components/Factorydashboard/subComponets/Products/AddProduct/AddProdu
 client/src/components/Factorydashboard/subComponets/FactoryProfile/FactoryProfile copy.jsx
 client/src/components/Forms/Shared/FormVlaidtionError copy.jsx
 /client/src/components/Factories/FactoryPage copy
+client/.env copy
+client/src/config copy 2.js
+client/src/config copy.js
