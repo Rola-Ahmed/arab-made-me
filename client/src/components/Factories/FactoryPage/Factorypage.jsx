@@ -7,17 +7,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import SuccessToast from "components/SuccessToast";
 import ErrorToast from "components/ErrorToast";
 import { useFetchSectors } from "hooks/useFetchSectors";
-
 import { vid1 } from "constants/Images";
-import Carousel from "react-grid-carousel";
 import { handleImageError } from "utils/ImgNotFound";
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
-
 import { baseUrl_IMG } from "config.js";
-
 import { countriesMiddleEast } from "constants/countries";
-
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/ImporterUnVerifiedPopUpMsg";
 import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
@@ -296,8 +291,8 @@ function Factorypage() {
             <h2 className="text-fac-1">{factoryDetails?.name}</h2>
             <p className="text-fac-2">
               {/* city, country */}
-              {`${factoryDetails?.city ? factoryDetails?.city + ", " : ""}`}
-              {factoryDetails?.country ?? ""}
+              {factoryDetails?.city && `${factoryDetails?.city},`}
+              {factoryDetails?.country}
             </p>
             <p className="text-fac-3">
               {/* 50 Followers */}
@@ -326,35 +321,29 @@ function Factorypage() {
                 />
               </div>
 
-              <div id="products" className="fac-cert">
+              <div id="products" className="fac-cert ">
                 <h3 className="text-fac-4">Products</h3>
 
                 {factoryProduct?.length !== 0 ? (
                   <>
-                    <Carousel
-                      cols={3}
-                      rows={1}
-                      // gap={10}
-                      scrollSnap={true}
-                      loop
-                      showDots
-                      hideArrow={false}
-                      responsiveLayout={[
-                        {
-                          breakpoint: 1189,
-
-                          cols: 2,
+                    <Swiper
+                      className="mx-3 h-100"
+                      modules={[Navigation, Pagination]}
+                      navigation={true}
+                      Pagination={true}
+                      slidesPerView={1.3}
+                      spaceBetween={10}
+                      breakpoints={{
+                        1004: {
+                          slidesPerView: 2,
                         },
-
-                        {
-                          breakpoint: 997,
-                          cols: 1,
+                        1207: {
+                          slidesPerView: 3,
                         },
-                      ]}
-                      mobileBreakpoint={539}
+                      }}
                     >
                       {factoryProduct?.map((productItem, productIndex) => (
-                        <Carousel.Item>
+                        <SwiperSlide>
                           <ProductCard
                             productItem={productItem}
                             productIndex={productIndex}
@@ -362,9 +351,9 @@ function Factorypage() {
                             setModalShow={setModalShow}
                             modalShow={modalShow}
                           />
-                        </Carousel.Item>
+                        </SwiperSlide>
                       ))}
-                    </Carousel>
+                    </Swiper>
 
                     {/* btn */}
                     <div className="btn-container-all">
