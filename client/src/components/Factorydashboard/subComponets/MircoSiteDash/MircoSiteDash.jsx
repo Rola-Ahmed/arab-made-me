@@ -8,7 +8,10 @@ import * as Yup from "yup";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
-import Carousel from "react-grid-carousel";
+import DisplayMultiImages from "components/Shared/Dashboards/DisplayMultiImages";
+import DisplayOneImage from "components/Shared/Dashboards/DisplayOneImage";
+import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
+
 
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
@@ -82,15 +85,17 @@ export default function MircoSiteDash() {
     display: false,
     imagePath: "",
   });
+  const handleImageClick = (imagePath) => {
+    setShowImagePop({
+      display: true,
+      imagePath,
+    });
+  };
 
   // slider setting
 
   const [selectedDocs, setSelectedDocs] = useState([
-    // {
-    //   keyWord: null,
-    //   pdfFile: null,
-    // blob:
-    // },
+   
   ]);
 
   function handleMultiMediaValidation(e, keyWordDoc, inputValue) {
@@ -861,130 +866,29 @@ export default function MircoSiteDash() {
               <div id="factoryimages"></div>
               <div className="container-profile-input w-100">
                 <div className="title-contianer-input w-100">
-                  <p>Factory Banners</p>
-                  <div className="w-100 h-100  ">
-                    {/* ----------------------- */}
-                    <div className="row  ">
-                      <div className="col-12">
-                        {factoryProfile?.images !== null ? (
-                          <Carousel
-                            className
-                            cols={4}
-                            rows={1}
-                            gap={10}
-                            scrollSnap={true}
-                            loop
-                            showDots
-                            hideArrow={false}
-                          >
-                            {factoryProfile?.images?.map((item) => (
-                              <Carousel.Item>
-                                <div
-                                  className="dots-slider-img-2 w-100 cursor"
-                                  onClick={() =>
-                                    setShowImagePop({
-                                      display: true,
-                                      imagePath: `${baseUrl_IMG}/${item}`,
-                                    })
-                                  }
-                                >
-                                  <img
-                                    className="h-100 w-100 "
-                                    id={handleImageError}
-                                    src={`${baseUrl_IMG}/${item}`}
-                                    alt="Img"
-                                    onError={handleImageError}
-                                  />
-                                </div>
-                              </Carousel.Item>
-                            ))}
-                          </Carousel>
-                        ) : (
-                          <h5 className="text-muted text-center py-3">Empty</h5>
-                        )}
-                      </div>
-
-                      <div className="col-12">
-                        <Button
-                          className="btn-edit"
-                          variant="primary"
-                          onClick={() => handleShow("imagesReadOnly")}
-                        >
-                          <p className="cursor">Upload </p>
-                        </Button>
-                      </div>
-                    </div>
-                    {/* </form> */}
-                    {/* ----------------------- */}
-                  </div>
+                  <p> Factory Banners</p>
+                  <DisplayMultiImages
+                    handleImageClick={handleImageClick}
+                    images={factoryProfile?.images}
+                  />
                 </div>
               </div>
 
-              {/*Certificats  */}
-              <div id="certificates"></div>
+
+  {/*Certificats  */}
+  <div id="certificates"></div>
               <div className="container-profile-input w-100">
                 <div className="title-contianer-input w-100">
-                  <p>Certificates</p>
-                  <div className="w-100 ">
-                    {/* ----------------------- */}
-                    <div className="row grid-gap-col">
-                      <div className="col-12">
-                        {factoryProfile?.qualityCertificates ? (
-                          <Carousel
-                            cols={2}
-                            rows={1}
-                            gap={10}
-                            scrollSnap={true}
-                            loop
-                            showDots
-                            hideArrow={false}
-                          >
-                            {factoryProfile?.qualityCertificates?.map(
-                              (item) => (
-                                <Carousel.Item>
-                                  <div
-                                    className="dots-slider-img w-100 cursor"
-                                    onClick={() =>
-                                      setShowImagePop({
-                                        display: true,
-                                        imagePath: `${baseUrl_IMG}/${item}`,
-                                      })
-                                    }
-                                  >
-                                    <img
-                                      className="h-100 w-100  "
-                                      id={handleImageError}
-                                      src={`${baseUrl_IMG}/${item}`}
-                                      alt="Img"
-                                      onError={handleImageError}
-                                    />
-                                  </div>
-                                </Carousel.Item>
-                              )
-                            )}
-                          </Carousel>
-                        ) : (
-                          <h5 className="text-muted text-center py-3">Empty</h5>
-                        )}
-                      </div>
-
-                      <div className="col-12">
-                        <Button
-                          className="btn-edit"
-                          variant="primary"
-                          onClick={() =>
-                            handleShow("qualityCertificatesReadOnly")
-                          }
-                        >
-                          <p className="cursor">Upload </p>
-                        </Button>
-                      </div>
-                    </div>
-                    {/* </form> */}
-                    {/* ----------------------- */}
-                  </div>
+                  <p> Certificates</p>
+                  <DisplayMultiImages
+                    handleImageClick={handleImageClick}
+                    images={factoryProfile?.qualityCertificates}
+                  />
                 </div>
               </div>
+             
+
+          
 
               {/* Cover Video  */}
               <div id="CoverVideo"></div>
@@ -1027,14 +931,12 @@ export default function MircoSiteDash() {
               {/* end new */}
 
               {/*  FACTORY iNFO*/}
-
               <FactoryInforamtion
                 handleShow={Button}
                 Button={Button}
                 factoryProfile={factoryProfile}
               />
 
-              {/* Teammmmm */}
 
               <Team
                 handleShow={handleShow}
@@ -2633,42 +2535,17 @@ export default function MircoSiteDash() {
         </Modal.Body>
       </Modal>
 
-      <Modal
+      <MediaPopUp
         show={showImagePop.display}
-        // show={/true}
         onHide={() =>
           setShowImagePop({
             display: false,
             imagePath: "",
           })
         }
-        size="lg"
-        aria-labelledby="example-custom-modal-styling-title"
-        centered
-        className="factory-profile"
-        dialogClassName="modal-90w"
-      >
-        <Modal.Body closeButton>
-          {/* Account Info container 1 */}
-
-          <div closeButton className="container-profile-input w-100">
-            <div className="title-contianer-input w-100">
-              {/* <p>Account Inforamtions</p> */}
-              <Modal.Header closeButton></Modal.Header>
-
-              <div className="w-100 ">
-                <div className="row row-gap">
-                  <img
-                    src={showImagePop.imagePath}
-                    alt={showImagePop.imagePath}
-                    onError={handleImageError}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </Modal.Body>
-      </Modal>
+        showImagePop={showImagePop.imagePath}
+      />
+ 
     </>
   );
 }

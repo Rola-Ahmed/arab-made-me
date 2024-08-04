@@ -3,7 +3,7 @@ import { handleImageError } from "utils/ImgNotFound";
 import { pdfIcon } from "constants/Images";
 import Carousel from "react-grid-carousel";
 
-export default function DisplayMultiImages(props) {
+export default function  DisplayMultiImages(props) {
   let { handleImageClick, images } = props;
   return (
     <>
