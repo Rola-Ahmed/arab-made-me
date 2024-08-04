@@ -17,8 +17,9 @@ import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/ImporterUnVerifiedPopUpMsg";
 import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
 
-import ActionBtnsOnFactory from "./ActionBtnsOnFactory";
 import DescritionPopUp from "components/Helpers/DescritionPopUp";
+import DropdownActionBtnsFactory from "components/Shared/DropdownActionBtns/FactoryBtns/DropdownActionBtnsFactory";
+
 import {
   fetchFactoryProducts2,
   fetchOneFactory,
@@ -37,6 +38,7 @@ import { addEndorsement } from "Services/endorsements";
 import FactoryNav from "./subComponents/FactoryNav";
 import FactoryABout from "./subComponents/FactoryABout";
 import Endorsement from "./subComponents/Endorsement";
+import FactoryCetificate from "./subComponents/FactoryCetificate";
 import HandleUsersBtnAccess, {
   handleIsLoggedInBtn,
 } from "utils/actionBtns/HandleUsersBtnAccess";
@@ -194,6 +196,22 @@ function Factorypage() {
     EndorseSubmit();
   }
 
+  const handleBtnCheckIfProductExisit = (
+    loginPath,
+    productLength,
+    id,
+    name
+  ) => {
+    if (productLength == 0) {
+      setFactoryHasProduct({
+        status: true,
+        location: `factoryId=${id}&factoryName=${name}`,
+      });
+      return;
+    }
+    handleUserClickValidation(loginPath);
+  };
+
   // handleButtonClick
   const handleUserClickValidation = (loginPath) => {
     HandleUsersBtnAccess({
@@ -278,6 +296,7 @@ function Factorypage() {
           ))}
         </Swiper>
       </section>
+      {/* header section */}
       <section className="fact-logo container margin-sm-screen">
         <div className="logo-text">
           <div className="factory-logo-container">
@@ -291,7 +310,8 @@ function Factorypage() {
             <h2 className="text-fac-1">{factoryDetails?.name}</h2>
             <p className="text-fac-2">
               {/* city, country */}
-              {factoryDetails?.city && `${factoryDetails?.city},`}
+              {factoryDetails?.city && `${factoryDetails.city},`}
+
               {factoryDetails?.country}
             </p>
             <p className="text-fac-3">
@@ -355,7 +375,6 @@ function Factorypage() {
                       ))}
                     </Swiper>
 
-                    {/* btn */}
                     <div className="btn-container-all">
                       <div
                         className="get-all-btn text-decoration-none text-white card-cursors cursor"
@@ -410,14 +429,16 @@ function Factorypage() {
                           </div>
                           <div className="card-svg-text">
                             <p>
-                              factoryDetails?.city && `${factoryDetails.city}, `
+                              {factoryDetails?.city &&
+                                `${factoryDetails.city},`}
+
                               {factoryDetails?.country}
                             </p>
                           </div>
                         </div>
                       </div>
 
-                      <div className="d-flex justify-content-between align-items-center dots-pad ">
+                      <div className="d-flex justify-content-between align-items-center dots-pad  brant-cont">
                         <div className="call-btns padding d-flex justify-content-between align-items-center w-100  pe-2 ">
                           <button
                             className="btn-call-1  cursor me-3 "
@@ -443,13 +464,17 @@ function Factorypage() {
                           </div>
                         </div>
 
-                        {/* Your brand btns */}
-                        <ActionBtnsOnFactory
-                          factoryDetails={factoryDetails}
-                          factoryProduct={factoryProduct}
-                          setFactoryHasProduct={setFactoryHasProduct}
-                          handleButtonClick={handleUserClickValidation}
-                          handleIsLoggedInBtn={handleUserClickValidLogin}
+                        {/* pop up btn */}
+                        <DropdownActionBtnsFactory
+                          currentUserData={currentUserData}
+                          factoryitem={factoryDetails}
+                          BtnDescription={BtnDescription}
+                          handleBtnCheckIfProductExisit={
+                            handleBtnCheckIfProductExisit
+                          }
+                          handleUserClickValidation1={handleUserClickValidation}
+                          handleQuestionMarkClick={handleQuestionMarkClick}
+                          handleUserClickValidLogin={handleUserClickValidLogin}
                         />
                       </div>
                     </div>
@@ -459,33 +484,11 @@ function Factorypage() {
 
               {factoryDetails?.qualityCertificates && (
                 <div id="certifications" className="fac-cert">
-                  <h3 className="text-fac-4">Certificates</h3>
-
-                  <div className="row justify-content-between">
-                    <div className="col-12">
-                      <Swiper
-                        modules={[Navigation, Pagination]}
-                        slidesPerView={2}
-                        spaceBetween={10}
-                        navigation={true}
-                        pagination={true}
-                      >
-                        {factoryDetails?.qualityCertificates?.map((item) => (
-                          <SwiperSlide>
-                            <div className="dots-slider-img w-100">
-                              <img
-                                className="h-100 w-100 "
-                                id={handleImageError}
-                                src={`${baseUrl_IMG}/${item}`}
-                                alt="Img"
-                                onError={handleImageError}
-                              />
-                            </div>
-                          </SwiperSlide>
-                        ))}
-                      </Swiper>
-                    </div>
-                  </div>
+               <FactoryCetificate 
+                 qualityCertificates={factoryDetails?.qualityCertificate}
+                 handleImageError={handleImageError}
+                 baseUrl_IMG={baseUrl_IMG}
+                  />
                 </div>
               )}
 
@@ -731,7 +734,6 @@ function Factorypage() {
         </Modal.Body>
       </Modal>
 
-      {/* more detials */}
       <DescritionPopUp
         show={description != ""}
         description={description}

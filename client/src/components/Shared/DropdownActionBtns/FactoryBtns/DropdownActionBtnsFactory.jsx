@@ -111,25 +111,3 @@ DropdownActionBtnsFactory.defaultProps = {
 };
 
 export default DropdownActionBtnsFactory;
-
-// export default function DropdownActionBtnsFactory({
-//   currentUserData,
-//   factoryitem,
-//   BtnDescription,
-//   handleQuestionMarkClick,
-//   handleBtnCheckIfProductExisit,
-//   handleUserClickValidation1,
-//   handleUserClickValidLogin,
-// }) {
-//   console.log(
-//     "EDededede",
-//     currentUserData,
-//     factoryitem,
-//     BtnDescription,
-//     handleQuestionMarkClick,
-//     handleBtnCheckIfProductExisit,
-//     handleUserClickValidation1,
-//     handleUserClickValidLogin
-//   );
-//   return <div>DropdownActionBtnsFactory</div>;
-// }

@@ -318,6 +318,8 @@
   display: none;
   position: absolute;
   top: 103px;
+  /* top: 143px; */
+
   right: 0;
   border: 1px solid var(--Gray-300);
   background: white;
@@ -326,18 +328,25 @@
 
 }
 
+.brant-cont .dropdown-menu-top {
+  top: 143px;
+}
+
 .ellipsis:hover+.dropdown-menu-top, .dropdown-menu-top:hover, .ellipsis:active+.dropdown-menu-top, .dropdown-menu-top:active {
   display: block;
 }
+
 .btn-edit.border {
   border: 1px solid var(--gray-200)
 }
+
 .btn.contact:hover {
   background-color: var(--secondary-color);
   border-color: transparent;
   padding: 0.375rem 0.75rem;
   border-radius: 6px;
 }
+
 .fac-cert .btn-call-1 {
   display: flex;
   padding: 10px 14px;
@@ -428,6 +437,7 @@
     width: 1280px;
     max-height: 32vh;
   }
+
   .HeroSlider.img {
     object-fit: fill;
   }
