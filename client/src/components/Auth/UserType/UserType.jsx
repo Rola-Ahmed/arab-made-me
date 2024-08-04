@@ -84,8 +84,8 @@ export default function UserType() {
                 <label className="text-title m-auto">Email Activated</label>
 
                 <p className="text-sub m-auto">
-                  Welcome to Egyption fastest-growing B2B platform, connecting
-                  buyers and suppliers in the consumer goods industry. Please
+                  Welcome to Arab Countries fastest-growing B2B platform, connecting
+                  Buyers and Arab Factory in the consumer goods industry. Please
                   choose your preferred account type to get started.
                 </p>
 
