@@ -1,14 +1,13 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import "./Factorypage.css";
 import { BtnDescription } from "constants/BtnDescription";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import SuccessToast from "components/SuccessToast";
 import ErrorToast from "components/ErrorToast";
 import { useFetchSectors } from "hooks/useFetchSectors";
-import { vid1 } from "constants/Images";
-import { handleImageError } from "utils/ImgNotFound";
+import { handleImageError, handleVedioError } from "utils/ImgNotFound";
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
 import { baseUrl_IMG } from "config.js";
@@ -19,13 +18,6 @@ import UserNotAuthorized from "components/ActionMessages/FormAccessControl/Popup
 
 import DescritionPopUp from "components/Helpers/DescritionPopUp";
 import DropdownActionBtnsFactory from "components/Shared/DropdownActionBtns/FactoryBtns/DropdownActionBtnsFactory";
-
-import {
-  fetchFactoryProducts2,
-  fetchOneFactory,
-  getEndorse,
-  getFactoryTeam,
-} from "Services/factory";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -43,13 +35,13 @@ import HandleUsersBtnAccess, {
   handleIsLoggedInBtn,
 } from "utils/actionBtns/HandleUsersBtnAccess";
 import FactoryTeam from "./subComponents/FactoryTeam";
+import { useFetchData } from "./useFetchData";
+import HeaderSlider from "./subComponents/HeaderSlider";
 
 function Factorypage() {
   let { currentUserData } = useContext(userDetails);
   document.title = "Factory Page";
   let { allSectors } = useFetchSectors();
-
-  let { factoryIdName } = useParams();
 
   const [description, setDescription] = useState("");
 
@@ -61,38 +53,16 @@ function Factorypage() {
     }));
   };
 
-  const handlevedioError = (event) => {
-    event.target.src = vid1;
-  };
-
   let navigate = useNavigate();
   let { isLogin } = useContext(UserToken);
 
-  const [factoryDetails, setFactoryDetails] = useState({
-    totalProducts: 0,
-    teamMembers: [],
-  });
-  const [factoryProduct, setFactoryProduct] = useState([]);
   let [factoryHasProduct, setFactoryHasProduct] = useState(false);
 
-  async function fetchFactoryPage() {
-    let result = await fetchOneFactory(factoryIdName?.split("-")?.[0]);
-
-    if (result?.success) {
-      setFactoryDetails((prevVal) => ({
-        ...prevVal,
-        ...result?.data?.factories,
-      }));
-
-      FactoryTotalProductLen();
-    }
-  }
-  async function EndorseSubmit(e) {
+  async function EndorseSubmit() {
     if (currentUserData?.userRole != "importer") {
       ErrorToast("To add an endorsement, the user must be a buyer.");
       return;
     }
-    e.preventDefault();
 
     let data = {
       factoryId: factoryDetails?.id,
@@ -107,61 +77,13 @@ function Factorypage() {
     }
   }
 
-  async function FactoryTotalProductLen() {
-    let reuslt = await fetchFactoryProducts2(
-      factoryIdName?.split("-")?.[0],
-      {}
-    );
-
-    if (reuslt?.success) {
-      const first25Products = reuslt?.data?.products?.slice(0, 25);
-      setFactoryProduct(first25Products);
-      setFactoryDetails((prevValues) => ({
-        ...prevValues,
-        totalProducts: reuslt?.data?.products?.length,
-      }));
-
-      fetchTeamData();
-    }
-  }
-
-  async function fetchTeamData() {
-    let result = await getFactoryTeam(factoryIdName?.split("-")?.[0], {});
-
-    if (result?.success) {
-      setFactoryDetails((prevValues) => ({
-        ...prevValues,
-        teamMembers: result?.data?.teamMembers,
-      }));
-      factoryEndorse();
-    }
-  }
-
-  async function factoryEndorse() {
-    let result = await getEndorse(factoryIdName?.split("-")?.[0], {});
-
-    if (result?.success) {
-      setFactoryDetails((prevValues) => ({
-        ...prevValues,
-        endorsements: result?.data?.endorsements?.length,
-      }));
-    }
-  }
-
-  useEffect(() => {
-    if (factoryIdName && factoryIdName?.split("-")?.[0] !== undefined) {
-      fetchFactoryPage();
-    }
-  }, [factoryIdName]);
-
-  //
-  //
   const [modalShow, setModalShow] = useState({
     isLogin: false,
     isImporterVerified: false,
     isFactoryVerified: false,
     displayDescr: false,
   });
+  let { factoryDetails, factoryProduct, factoryIdName } = useFetchData();
   const [isLoggedReDirect, setisLoggedReDirect] = useState("");
 
   const handleUserClickValidLogin = (loginPath) => {
@@ -258,69 +180,23 @@ function Factorypage() {
         userType="Buyer"
       />
 
-      <section className="fact-sec1 container margin-sm-screen">
-        <Swiper pagination={{ clickable: true }} modules={[Pagination]}>
-          <SwiperSlide>
-            {factoryDetails?.coverVideo?.length > 0 ? (
-              <video
-                src={`${baseUrl_IMG}/${factoryDetails?.coverVideo}`}
-                autoPlay
-                muted
-                loop
-                // controls
-                onError={handlevedioError}
-                className="HeroSlider"
-              ></video>
-            ) : (
-              <video
-                src={vid1}
-                autoPlay
-                muted
-                loop
-                // controls
-                onError={handlevedioError}
-                className="HeroSlider"
-              ></video>
-            )}
-          </SwiperSlide>
-
-          {factoryDetails?.images?.map((item, index) => (
-            <SwiperSlide>
-              <img
-                src={`${baseUrl_IMG}/${item}`}
-                alt={`img ${index + 1}`}
-                onError={handleImageError}
-                className="HeroSlider img"
-              />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </section>
       {/* header section */}
-      <section className="fact-logo container margin-sm-screen">
-        <div className="logo-text">
-          <div className="factory-logo-container">
-            <img
-              src={`${baseUrl_IMG}/${factoryDetails?.coverImage}`}
-              alt="Factory Logo"
-              onError={handleImageError}
-            />
-          </div>
-          <div>
-            <h2 className="text-fac-1">{factoryDetails?.name}</h2>
-            <p className="text-fac-2">
-              {/* city, country */}
-              {factoryDetails?.city && `${factoryDetails.city},`}
+      <HeaderSlider
+        handleImageError={handleImageError}
+        handleVedioError={handleVedioError}
+        baseUrl_IMG={baseUrl_IMG}
+        factoryDetails={{
+          coverVideo: factoryDetails?.coverVideo,
+          images: factoryDetails?.images,
+          name: factoryDetails?.name,
+          city: factoryDetails?.city,
+          totalProducts: factoryDetails?.totalProducts,
+          country: factoryDetails?.country,
+        }}
+      />
 
-              {factoryDetails?.country}
-            </p>
-            <p className="text-fac-3">
-              {/* 50 Followers */}
-              {factoryDetails?.totalProducts} Products
-            </p>
-          </div>
-        </div>
-      </section>
+    
+     
 
       <section className="det-fact margin-sm-screen">
         <div className="container">
@@ -484,10 +360,10 @@ function Factorypage() {
 
               {factoryDetails?.qualityCertificates && (
                 <div id="certifications" className="fac-cert">
-               <FactoryCetificate 
-                 qualityCertificates={factoryDetails?.qualityCertificate}
-                 handleImageError={handleImageError}
-                 baseUrl_IMG={baseUrl_IMG}
+                  <FactoryCetificate
+                    qualityCertificates={factoryDetails?.qualityCertificate}
+                    handleImageError={handleImageError}
+                    baseUrl_IMG={baseUrl_IMG}
                   />
                 </div>
               )}
