@@ -79,14 +79,7 @@
   align-self: stretch;
 }
 
-.login .form-group label {
-  color: var(--Gray-700);
 
-  font-family: "Inter-reg";
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-}
 
 .login .form-group input {
   display: flex;
@@ -154,14 +147,27 @@
 .login .signUp-container p {
   color: var(--Gray-600, #475467);
 
-  font-family: "Inter-reg";
+}
 
+
+/* text font-size:: */
+.login .signUp-container button, .login .signUp-container p {
+  font-family: "Inter-reg";
   font-size: 14px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 600;
   line-height: 20px;
 }
 
+.login .form-group label {
+  color: var(--Gray-700);
+  font-family: "Inter-reg";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+}
+
+/* ------------------ */
 .login .signUp-container button {
   border: none;
   background-color: transparent;
@@ -171,12 +177,6 @@
   gap: 6px;
 
   color: var(--secondary-color);
-  font-family: "Inter-reg";
-
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 20px;
   cursor: pointer;
 }
 

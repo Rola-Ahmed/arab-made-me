@@ -286,7 +286,17 @@ p, button, div, textarea, input {
   display: flex;
 }
 
+/*------------------------ fonts------------------------ */
+.text-fac-3 {
+  color: #5C6066;
+  font-family: "Inter-med";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 17.5px;
+}
 
+/* --------------------------------------------------------- */
 /* pagination */
 .swiper-pagination-bullet {
   background-color: white !important;
