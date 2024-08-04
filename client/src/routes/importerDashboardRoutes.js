@@ -28,7 +28,7 @@ import CustomProductReqEtc from "components/Importerdashboard/subComponets/CusPr
 
 import QuotationsEtc from "components/Importerdashboard/subComponets/GetQuotationImp/QuotationsEtc/QuotationsEtc";
 
-import SourcingReqEtc from "components/ViewMoreDetailsFormDash/SourcingReqEtc/SourcingReqEtc";
+import SourcingReqEtc from "components/Importerdashboard/subComponets/SourcingReqEtc/SourcingReqEtc";
 
 // chats
 import ChatList from "components/Importerdashboard/subComponets/Chat/ChatList";
