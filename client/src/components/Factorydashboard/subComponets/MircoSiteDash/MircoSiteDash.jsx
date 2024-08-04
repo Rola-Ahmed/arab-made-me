@@ -2,6 +2,7 @@ import { useEffect, useState, useContext, useReducer } from "react";
 import axios from "axios";
 import { baseUrl, baseUrl_IMG } from "config.js";
 import { errorHandler } from "utils/errorHandler";
+import UploadDocument ,{UploadVedio} from "components/Forms/Shared/UploadDocument";
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -9,7 +10,6 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
 import DisplayMultiImages from "components/Shared/Dashboards/DisplayMultiImages";
-import DisplayOneImage from "components/Shared/Dashboards/DisplayOneImage";
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
 
 
@@ -98,144 +98,9 @@ export default function MircoSiteDash() {
    
   ]);
 
-  function handleMultiMediaValidation(e, keyWordDoc, inputValue) {
-    const count = selectedDocs?.filter(
-      (item) => item?.keyWord === keyWordDoc
-    )?.length;
+ 
 
-    if (count == 1 && (keyWordDoc == "coverImage" || keyWordDoc == "image")) {
-      setErrorMsg((prevErrors) => ({
-        ...prevErrors,
-        [keyWordDoc]: `Max length is 1`,
-      }));
-      return;
-    }
 
-    if (count >= 3 && keyWordDoc == "qualityCertificates") {
-      setErrorMsg((prevErrors) => ({
-        ...prevErrors,
-        [keyWordDoc]: `Max length is 3`,
-      }));
-      return;
-    }
-
-    if (count >= 3 && keyWordDoc == "images") {
-      setErrorMsg((prevErrors) => ({
-        ...prevErrors,
-        [keyWordDoc]: `Max length is 8`,
-      }));
-      return;
-    }
-    // clear error message
-    setErrorMsg((prevErrors) => {
-      const newErrors = { ...prevErrors };
-      delete newErrors[keyWordDoc];
-      return newErrors;
-    });
-    let acceptedExtensions = [];
-
-    if (keyWordDoc == "qualityCertificates") {
-      acceptedExtensions = ["png", "jpeg", "jpg"];
-    } else if (
-      keyWordDoc == "images" ||
-      keyWordDoc == "coverImage" ||
-      keyWordDoc == "image"
-    ) {
-      acceptedExtensions = ["png", "jpeg", "jpg"];
-    } else if (keyWordDoc == "coverVideo") {
-      acceptedExtensions = ["mp4", "mkv"];
-    }
-    const fileType = e.type;
-
-    const isAcceptedType = acceptedExtensions?.some((extension) =>
-      fileType?.toLowerCase()?.includes(extension?.toLowerCase())
-    );
-
-    if (!isAcceptedType) {
-      setErrorMsg((prevErrors) => ({
-        ...prevErrors,
-        [keyWordDoc]:
-          // "Invalid file format. Only pdf, png, jpeg, jpg, mp4 allowed"
-          `Invalid file format. Only ${acceptedExtensions.join(
-            ", "
-          )} are allowed`,
-      }));
-      return;
-    }
-
-    const mediaNameExists = selectedDocs?.some(
-      (item) => item?.pdfFile?.name === e?.name && item?.keyWord === keyWordDoc
-    );
-
-    // if image aleady exisit
-    if (mediaNameExists) {
-      setErrorMsg((prevErrors) => ({
-        ...prevErrors,
-        [keyWordDoc]: "Media already exists",
-      }));
-      return;
-    } else {
-    }
-
-    let updatedDocs = [...selectedDocs];
-
-    // Image loaded successfully
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      updatedDocs.push({
-        keyWord: keyWordDoc,
-        pdfFile: e,
-        imageReaderURL: reader.result,
-        onprogress: 100,
-      });
-
-      setSelectedDocs(updatedDocs);
-      const coverImgInput = document?.getElementById(inputValue);
-      if (coverImgInput) {
-        coverImgInput.value = "";
-      }
-    };
-
-    reader.onprogress = (event) => {
-      // Calculate and show the loading percentage
-      if (event.lengthComputable) {
-        const percentage = (event.loaded / event.total) * 100;
-
-        // if (updatedDocs.length > 0) {
-        //   // Adding a new attribute to the last object
-        //   // updatedDocs[updatedDocs.length - 1].onprogress = percentage?.toFixed(0);
-        //   // setSelectedDocs([...updatedDocs]);
-
-        //   // setSelectedDocs((prevDocs) => {
-        //   //   const updatedDocs = [...prevDocs];
-        //   //   if (updatedDocs.length > 0) {
-        //   //     updatedDocs[updatedDocs.length - 1].onprogress = percentage?.toFixed(0);
-        //   //   }
-        //   //   return updatedDocs;
-        //   // });
-        // }
-        // setimgloadin(percentage);
-      }
-    };
-
-    reader.onerror = () => {
-      setErrorMsg((prevErrors) => ({
-        ...prevErrors,
-        [keyWordDoc]: "Error loading image",
-      }));
-    };
-
-    reader.readAsDataURL(e);
-  }
-
-  function removeSelectedDoc(docId, keyWordDoc) {
-    // when removing
-    setSelectedDocs((prevValue) =>
-      prevValue.filter(
-        (doc) => !(doc.pdfFile?.name === docId && doc.keyWord === keyWordDoc)
-      )
-    );
-  }
 
   // api
   async function fetchFactoryPage() {
@@ -871,6 +736,15 @@ export default function MircoSiteDash() {
                     handleImageClick={handleImageClick}
                     images={factoryProfile?.images}
                   />
+                     {/* <div className="col-12"> */}
+                        <Button
+                          className="btn-edit w-fit-content"
+                          variant="primary"
+                          onClick={() => handleShow("imagesReadOnly")}
+                        >
+                          <p className="cursor">Upload </p>
+                        </Button>
+                      {/* </div> */}
                 </div>
               </div>
 
@@ -884,6 +758,15 @@ export default function MircoSiteDash() {
                     handleImageClick={handleImageClick}
                     images={factoryProfile?.qualityCertificates}
                   />
+                   <Button
+                          className="btn-edit w-fit-content"
+                          variant="primary"
+                          onClick={() =>
+                            handleShow("qualityCertificatesReadOnly")
+                          }
+                        >
+                          <p className="cursor">Upload </p>
+                        </Button>
                 </div>
               </div>
              
@@ -1587,131 +1470,17 @@ export default function MircoSiteDash() {
                 >
                   <div className="row  row-gap">
                     <div className="col-12">
-                      <div className="grid-gap-col">
-                        <div className="form-group">
-                          {/*  */}
+                    <UploadDocument
+                    selectedDocs={selectedDocs}
+                    errorMsg={errorMsg}
+                    setSelectedDocs={setSelectedDocs}
+                    MediaName="images"
+                    mediaMaxLen="8"
+                    meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
+                    setErrorMsg={setErrorMsg}
+                    // title="Factory Banners"
+                  />
 
-                          {/*  */}
-
-                          <label
-                            className="mb-0 drop-drag-area  p-5 text-center cursor "
-                            htmlFor="fileInput"
-                            onDrop={(e) => {
-                              e.preventDefault();
-                              const files = e?.dataTransfer?.files;
-                              if (files && files.length > 0) {
-                                handleMultiMediaValidation(
-                                  files?.[0],
-                                  "images"
-                                );
-                              }
-
-                              e.target.classList.remove("highlight");
-                            }}
-                            onDragOver={(e) => {
-                              e.target.classList.add("highlight");
-
-                              e.preventDefault();
-                            }}
-                            onDragLeave={(e) => {
-                              e.preventDefault();
-                              e.target.classList.remove("highlight");
-                            }}
-                            onChange={(e) => {
-                              const files = e.target.files;
-
-                              if (files && files?.length > 0) {
-                                handleMultiMediaValidation(
-                                  files?.[0],
-                                  "images",
-                                  e?.target?.id
-                                );
-                              }
-                            }}
-                          >
-                            Drag and drop files here or click to select files
-                            <input
-                              type="file"
-                              id="fileInput"
-                              className="d-none"
-                              multiple
-                            />
-                          </label>
-                          <small className="form-text small-note">
-                            Only png, jpeg, and jpg are allowed. A maximum of 8
-                            pictures is permitted.
-                          </small>
-
-                          <small className="text-danger">
-                            {errorMsg?.images}
-                          </small>
-
-                          {selectedDocs.map(
-                            (item, index) =>
-                              // <div className="col-12">
-                              item.keyWord === "images" && (
-                                <div
-                                  key={index}
-                                  className="col-12 img-uploaded"
-                                >
-                                  <div className="d-flex justify-content-between align-items-center  img-cont-file">
-                                    {/* <div> */}
-
-                                    <div className="d-flex justify-content-start align-items-center ">
-                                      <img
-                                        src={item.imageReaderURL}
-                                        className="image-upload-file me-3"
-                                      />
-                                    </div>
-
-                                    <div className="w-100">
-                                      <div className="d-flex justify-content-between align-items-center">
-                                        <div>
-                                          <p className="img-name text-tarute">
-                                            {item?.pdfFile?.name}
-                                          </p>
-                                          <p className="img-name">
-                                            {(
-                                              item?.pdfFile?.size / 1024
-                                            )?.toFixed(2)}
-                                            KB
-                                          </p>
-                                          {/* {imgloadin} */}
-                                        </div>
-
-                                        <div
-                                          onClick={() =>
-                                            removeSelectedDoc(
-                                              item?.pdfFile?.name,
-                                              "images",
-                                              index
-                                            )
-                                          }
-                                          className="cursor"
-                                        >
-                                          <i className="fa-solid fa-trash-can"></i>
-                                        </div>
-                                      </div>
-
-                                      <div className="d-flex  align-items-center">
-                                        <progress
-                                          className="w-100"
-                                          id="progressBar"
-                                          max="100"
-                                          value={item?.onprogress || 0}
-                                          // value="30"
-                                          imgloadin
-                                        ></progress>
-                                        {item?.onprogress}%
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              )
-                            // </div>
-                          )}
-                        </div>
-                      </div>
                     </div>
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
@@ -1776,133 +1545,17 @@ export default function MircoSiteDash() {
                   encType="multipart/form-data"
                 >
                   <div className="row  row-gap">
-                    <div className="col-12">
-                      <div className="grid-gap-col">
-                        <div className="form-group">
-                          {/*  */}
 
-                          {/*  */}
-
-                          <label
-                            className="mb-0 drop-drag-area  p-5 text-center cursor "
-                            htmlFor="coverImageInput"
-                            onDrop={(e) => {
-                              e.preventDefault();
-                              const files = e?.dataTransfer?.files;
-                              if (files && files.length > 0) {
-                                handleMultiMediaValidation(
-                                  files?.[0],
-                                  "coverImage",
-                                  e?.target?.id
-                                );
-                              }
-
-                              e.target.classList.remove("highlight");
-                            }}
-                            onDragOver={(e) => {
-                              e.target.classList.add("highlight");
-
-                              e.preventDefault();
-                            }}
-                            onDragLeave={(e) => {
-                              e.preventDefault();
-                              e.target.classList.remove("highlight");
-                            }}
-                            onChange={(e) => {
-                              const files = e.target.files;
-
-                              if (files && files?.length > 0) {
-                                handleMultiMediaValidation(
-                                  files?.[0],
-                                  "coverImage",
-                                  e?.target?.id
-                                );
-                              }
-                            }}
-                          >
-                            Drag and drop files here or click to select files
-                            <input
-                              type="file"
-                              id="coverImageInput"
-                              className="d-none"
-                              multiple
-                            />
-                          </label>
-                          <small className="form-text small-note">
-                            Only png, jpeg, and jpg are allowed. A maximum of 1
-                            pictures is permitted.
-                          </small>
-
-                          <small className="text-danger">
-                            {errorMsg?.coverImage}
-                          </small>
-                          {selectedDocs.map(
-                            (item, index) =>
-                              // <div className="col-12">
-                              item.keyWord === "coverImage" && (
-                                <div
-                                  key={index}
-                                  className="col-12 img-uploaded"
-                                >
-                                  <div className="d-flex justify-content-between align-items-center  img-cont-file">
-                                    {/* <div> */}
-
-                                    <div className="d-flex justify-content-start align-items-center ">
-                                      <img
-                                        src={item.imageReaderURL}
-                                        className="image-upload-file me-3"
-                                      />
-                                    </div>
-
-                                    <div className="w-100">
-                                      <div className="d-flex justify-content-between align-items-center">
-                                        <div>
-                                          <p className="img-name text-tarute">
-                                            {item?.pdfFile?.name}
-                                          </p>
-                                          <p className="img-name">
-                                            {(
-                                              item?.pdfFile?.size / 1024
-                                            )?.toFixed(2)}
-                                            KB
-                                          </p>
-                                          {/* {imgloadin} */}
-                                        </div>
-
-                                        <div
-                                          onClick={() =>
-                                            removeSelectedDoc(
-                                              item?.pdfFile?.name,
-                                              "coverImage",
-                                              index
-                                            )
-                                          }
-                                          className="cursor"
-                                        >
-                                          <i className="fa-solid fa-trash-can"></i>
-                                        </div>
-                                      </div>
-
-                                      <div className="d-flex  align-items-center">
-                                        <progress
-                                          className="w-100"
-                                          id="progressBar"
-                                          max="100"
-                                          value={item?.onprogress || 0}
-                                          // value="30"
-                                          imgloadin
-                                        ></progress>
-                                        {item?.onprogress}%
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              )
-                            // </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
+                  <UploadDocument
+                    selectedDocs={selectedDocs}
+                    errorMsg={errorMsg}
+                    setSelectedDocs={setSelectedDocs}
+                    MediaName="coverImage"
+                    mediaMaxLen="1"
+                    meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
+                    setErrorMsg={setErrorMsg}
+                    // title="Factory Banners"
+                  />
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
                       <Button
@@ -1967,128 +1620,17 @@ export default function MircoSiteDash() {
                   encType="multipart/form-data"
                 >
                   <div className="row  row-gap">
-                    <div className="col-12">
-                      <div className="grid-gap-col">
-                        <div className="form-group">
-                          <label
-                            className="mb-0 drop-drag-area  p-5 text-center cursor "
-                            htmlFor="qualityCertificates"
-                            onDrop={(e) => {
-                              e.preventDefault();
-                              const files = e?.dataTransfer?.files;
-                              if (files && files.length > 0) {
-                                handleMultiMediaValidation(
-                                  files?.[0],
-                                  "qualityCertificates",
-                                  e?.target?.id
-                                );
-                              }
-
-                              e.target.classList.remove("highlight");
-                            }}
-                            onDragOver={(e) => {
-                              e.target.classList.add("highlight");
-
-                              e.preventDefault();
-                            }}
-                            onDragLeave={(e) => {
-                              e.preventDefault();
-                              e.target.classList.remove("highlight");
-                            }}
-                            onChange={(e) => {
-                              const files = e.target.files;
-
-                              if (files && files?.length > 0) {
-                                handleMultiMediaValidation(
-                                  files?.[0],
-                                  "qualityCertificates",
-                                  e?.target?.id
-                                );
-                              }
-                            }}
-                          >
-                            Drag and drop files here or click to select files
-                            <input
-                              type="file"
-                              id="qualityCertificates"
-                              className="d-none"
-                              multiple
-                            />
-                          </label>
-                          <small className="form-text small-note">
-                            Only png, jpeg, and jpg are allowed. A maximum of 3
-                            pictures is permitted.
-                          </small>
-
-                          <small className="text-danger">
-                            {errorMsg?.qualityCertificates}
-                          </small>
-                          {selectedDocs.map(
-                            (item, index) =>
-                              // <div className="col-12">
-                              item.keyWord === "qualityCertificates" && (
-                                <div
-                                  key={index}
-                                  className="col-12 img-uploaded"
-                                >
-                                  <div className="d-flex justify-content-between align-items-center  img-cont-file">
-                                    <div className="d-flex justify-content-start align-items-center ">
-                                      <img
-                                        src={item.imageReaderURL}
-                                        className="image-upload-file me-3"
-                                      />
-                                    </div>
-
-                                    <div className="w-100">
-                                      <div className="d-flex justify-content-between align-items-center">
-                                        <div>
-                                          <p className="img-name text-tarute">
-                                            {item?.pdfFile?.name}
-                                          </p>
-                                          <p className="img-name">
-                                            {(
-                                              item?.pdfFile?.size / 1024
-                                            )?.toFixed(2)}
-                                            KB
-                                          </p>
-                                          {/* {imgloadin} */}
-                                        </div>
-
-                                        <div
-                                          onClick={() =>
-                                            removeSelectedDoc(
-                                              item?.pdfFile?.name,
-                                              "qualityCertificates",
-                                              index
-                                            )
-                                          }
-                                          className="cursor"
-                                        >
-                                          <i className="fa-solid fa-trash-can"></i>
-                                        </div>
-                                      </div>
-
-                                      <div className="d-flex  align-items-center">
-                                        <progress
-                                          className="w-100"
-                                          id="progressBar"
-                                          max="100"
-                                          value={item?.onprogress || 0}
-                                          // value="30"
-                                          imgloadin
-                                        ></progress>
-                                        {item?.onprogress}%
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              )
-                            // </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-
+                  <UploadDocument
+                    selectedDocs={selectedDocs}
+                    errorMsg={errorMsg}
+                    setSelectedDocs={setSelectedDocs}
+                    MediaName="qualityCertificates"
+                    mediaMaxLen="3"
+                    meidaAcceptedExtensions={["pdf", "png", "jpeg", "jpg"]}
+                    setErrorMsg={setErrorMsg}
+                    // title="Certificates"
+                  />
+                   
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
                       <Button
                         variant="secondary"
@@ -2154,130 +1696,18 @@ export default function MircoSiteDash() {
                   encType="multipart/form-data"
                 >
                   <div className="row  row-gap">
-                    <div className="col-12">
-                      <div className="grid-gap-col">
-                        <div className="form-group">
-                          <label
-                            className="mb-0 drop-drag-area  p-5 text-center cursor "
-                            htmlFor="coverVideo"
-                            onDrop={(e) => {
-                              e.preventDefault();
-                              const files = e?.dataTransfer?.files;
-                              if (files && files.length > 0) {
-                                handleMultiMediaValidation(
-                                  files?.[0],
-                                  "coverVideo",
-                                  e?.target?.id
-                                );
-                              }
+                    <UploadVedio
+                    selectedDocs={selectedDocs}
+                    errorMsg={errorMsg}
+                    setSelectedDocs={setSelectedDocs}
+                    MediaName="coverVideo"
+                    mediaMaxLen="1"
+                    meidaAcceptedExtensions={["mp4", "mkv"]}
+                    setErrorMsg={setErrorMsg}
+                    // title="Certificates"
+                  />
 
-                              e.target.classList.remove("highlight");
-                            }}
-                            onDragOver={(e) => {
-                              e.target.classList.add("highlight");
-
-                              e.preventDefault();
-                            }}
-                            onDragLeave={(e) => {
-                              e.preventDefault();
-                              e.target.classList.remove("highlight");
-                            }}
-                            onChange={(e) => {
-                              const files = e.target.files;
-
-                              if (files && files?.length > 0) {
-                                handleMultiMediaValidation(
-                                  files?.[0],
-                                  "coverVideo",
-                                  e?.target?.id
-                                );
-                              }
-                            }}
-                          >
-                            Drag and drop files here or click to select files
-                            <input
-                              type="file"
-                              id="coverVideo"
-                              className="d-none"
-                              multiple
-                            />
-                          </label>
-                          <small className="form-text small-note">
-                            Only MP4 and MKV formats are allowed, with a maximum
-                            of 1 video permitted.
-                          </small>
-
-                          <small className="text-danger">
-                            {errorMsg?.coverVideo}
-                          </small>
-                          {selectedDocs.map(
-                            (item, index) =>
-                              item.keyWord === "coverVideo" && (
-                                <div
-                                  key={index}
-                                  className="col-12 img-uploaded"
-                                >
-                                  <div className="  ">
-                                    <div className="d-flex justify-content-start align-items-center ">
-                                      <video
-                                        // className="w-100 h-100"
-                                        src={item.imageReaderURL}
-                                        controls="controls"
-                                        autoPlay={false}
-                                        muted={true}
-                                        className="w-100"
-                                      />
-                                    </div>
-
-                                    <div className="w-100">
-                                      <div className="d-flex justify-content-between align-items-center">
-                                        <div>
-                                          <p className="img-name text-tarute">
-                                            {item?.pdfFile?.name}
-                                          </p>
-                                          <p className="img-name">
-                                            {(
-                                              item?.pdfFile?.size / 1024
-                                            )?.toFixed(2)}
-                                            KB
-                                          </p>
-                                          {/* {imgloadin} */}
-                                        </div>
-
-                                        <div
-                                          onClick={() =>
-                                            removeSelectedDoc(
-                                              item?.pdfFile?.name,
-                                              "coverVideo",
-                                              index
-                                            )
-                                          }
-                                          className="cursor"
-                                        >
-                                          <i className="fa-solid fa-trash-can"></i>
-                                        </div>
-                                      </div>
-
-                                      <div className="d-flex  align-items-center">
-                                        <progress
-                                          className="w-100"
-                                          id="progressBar"
-                                          max="100"
-                                          value={item?.onprogress || 0}
-                                          // value="30"
-                                          imgloadin
-                                        ></progress>
-                                        {item?.onprogress}%
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              )
-                            // </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
+                     
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
                       <Button
@@ -2383,127 +1813,19 @@ export default function MircoSiteDash() {
                       </div>
                     </div>
 
-                    <div className="col-12">
-                      <div className="grid-gap-col">
-                        <div className="form-group">
-                          <label
-                            className="mb-0 drop-drag-area  p-5 text-center cursor "
-                            htmlFor="image"
-                            onDrop={(e) => {
-                              e.preventDefault();
-                              const files = e?.dataTransfer?.files;
-                              if (files && files.length > 0) {
-                                handleMultiMediaValidation(
-                                  files?.[0],
-                                  "image",
-                                  e?.target?.id
-                                );
-                              }
 
-                              e.target.classList.remove("highlight");
-                            }}
-                            onDragOver={(e) => {
-                              e.target.classList.add("highlight");
+                    <UploadDocument
+                    selectedDocs={selectedDocs}
+                    errorMsg={errorMsg}
+                    setSelectedDocs={setSelectedDocs}
+                    MediaName="image"
+                    mediaMaxLen="1"
+                    meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
+                    setErrorMsg={setErrorMsg}
+                    // title="Company Banners"
+                  />
 
-                              e.preventDefault();
-                            }}
-                            onDragLeave={(e) => {
-                              e.preventDefault();
-                              e.target.classList.remove("highlight");
-                            }}
-                            onChange={(e) => {
-                              const files = e.target.files;
-
-                              if (files && files?.length > 0) {
-                                handleMultiMediaValidation(
-                                  files?.[0],
-                                  "image",
-                                  e?.target?.id
-                                );
-                              }
-                            }}
-                          >
-                            Drag and drop files here or click to select files
-                            <input
-                              type="file"
-                              id="image"
-                              className="d-none"
-                              multiple
-                            />
-                          </label>
-                          <small className="form-text small-note">
-                            Only png, jpeg, and jpg are allowed. A maximum of 1
-                            pictures is permitted.
-                          </small>
-
-                          <small className="text-danger">
-                            {errorMsg?.image}
-                          </small>
-                          {selectedDocs.map(
-                            (item, index) =>
-                              // <div className="col-12">
-                              item.keyWord === "image" && (
-                                <div
-                                  key={index}
-                                  className="col-12 img-uploaded"
-                                >
-                                  <div className="d-flex justify-content-between align-items-center  img-cont-file">
-                                    <div className="d-flex justify-content-start align-items-center ">
-                                      <img
-                                        src={item.imageReaderURL}
-                                        className="image-upload-file me-3"
-                                      />
-                                    </div>
-
-                                    <div className="w-100">
-                                      <div className="d-flex justify-content-between align-items-center">
-                                        <div>
-                                          <p className="img-name text-tarute">
-                                            {item?.pdfFile?.name}
-                                          </p>
-                                          <p className="img-name">
-                                            {(
-                                              item?.pdfFile?.size / 1024
-                                            )?.toFixed(2)}
-                                            KB
-                                          </p>
-                                          {/* {imgloadin} */}
-                                        </div>
-
-                                        <div
-                                          onClick={() =>
-                                            removeSelectedDoc(
-                                              item?.pdfFile?.name,
-                                              "image",
-                                              index
-                                            )
-                                          }
-                                          className="cursor"
-                                        >
-                                          <i className="fa-solid fa-trash-can"></i>
-                                        </div>
-                                      </div>
-
-                                      <div className="d-flex  align-items-center">
-                                        <progress
-                                          className="w-100"
-                                          id="progressBar"
-                                          max="100"
-                                          value={item?.onprogress || 0}
-                                          // value="30"
-                                          imgloadin
-                                        ></progress>
-                                        {item?.onprogress}%
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              )
-                            // </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
+                   
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
                       <Button
