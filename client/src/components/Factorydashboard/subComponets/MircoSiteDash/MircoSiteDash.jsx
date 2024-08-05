@@ -1,6 +1,5 @@
 import { useEffect, useState, useContext, useReducer } from "react";
-import axios from "axios";
-import { baseUrl, baseUrl_IMG } from "config.js";
+import {  baseUrl_IMG } from "config.js";
 import { errorHandler } from "utils/errorHandler";
 import UploadDocument ,{UploadVedio} from "components/Forms/Shared/UploadDocument";
 
@@ -18,15 +17,21 @@ import { userDetails } from "Context/userType";
 
 import { handleImageError } from "utils/ImgNotFound";
 import { countriesMiddleEast } from "constants/countries";
-import { toast } from "react-toastify";
+import SuccessToast from "components/SuccessToast";
+import ErrorToast from "components/ErrorToast";
+
 import { useOutletContext } from "react-router-dom";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 import FactoryInforamtion from "./subComponents/FactoryInforamtion";
 import Team from "./subComponents/Team";
 import SocialAccounts from "./subComponents/SocialAccounts";
 import FactoryLogo from "./subComponents/FactoryLogo";
-import {fetchOneFactory,getFactoryTeam,addFactoryMedia} from 'Services/factory'
+import {fetchOneFactory,getFactoryTeam,addFactoryMedia,updateFactoryFromUser} from 'Services/factory'
+import {deleteTeam as deleteMember,addTeam,addTeamMedia} from 'Services/team'
 
+function successMsg(){
+  SuccessToast("Changes updated successfully");
+}
 export default function MircoSiteDash() {
   document.title = "Factory Profile";
 
@@ -145,16 +150,8 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
     let result = await addFactoryMedia({Authorization: isLogin},data)
         if (result?.success) {
           ModalClose();
-          toast("Media Saved Successfully", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            //pauseOnHover: true,
-            draggable: true,
-            theme: "colored",
-            type: "success",
-          });
+          successMsg()
+      
           dispatch({
             type: "fetched_update_data",
             value: result?.data?.factory,
@@ -167,16 +164,11 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
             id: "",
           });
         } else {
-          toast("Image Not Saved, please try again", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            draggable: true,
-            // progress: undefined,
-            theme: "colored",
-            type: "error",
-          });
+          setErrorMsg((prevErrors) => ({
+            ...prevErrors,
+            response: result?.error,
+          }));
+       
         }
         setIsLoading(false);
 
@@ -188,46 +180,15 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
   }, [currentUserData?.factoryId]);
 
   const deleteData = async (itemId, indexArr) => {
-    try {
-      let config = {
-        method: "delete",
-        url: `${baseUrl}/teams/${itemId}`,
-
-        headers: {
-          authorization: isLogin,
-        },
-      };
-
-      const response = await axios.request(config);
-
+      let result = await deleteMember(itemId,{
+        authorization: isLogin
+      })
+     if(result?.success){
       deleteTeam(indexArr);
-      toast("Data Deleted Successfully", {
-        position: "top-center",
-        autoClose: 5000,
-        // hideProgressBar: false,
-        closeOnClick: true,
-        //pauseOnHover: true,
-        draggable: true,
-        // progress: undefined,
-        theme: "colored",
-        type: "success",
-      });
-    } catch (error) {
-      // setapiLoadingData(true);
-
-      toast("Something went wrong, please try again later", {
-        position: "top-center",
-        autoClose: 5000,
-        // hideProgressBar: false,
-        closeOnClick: true,
-        //pauseOnHover: true,
-        draggable: true,
-        // progress: undefined,
-        theme: "colored",
-        type: "error",
-      });
-    }
-    // }
+      successMsg()
+     }else{
+      ErrorToast(result?.error)
+     }
   };
 
   // update data
@@ -359,7 +320,7 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
   });
 
   async function submitTeam(values) {
-    //
+  
     setErrorMsg((prevErrors) => {
       const { response, ...restErrors } = prevErrors || {};
       return restErrors;
@@ -368,32 +329,26 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
       name: values.teamName,
       role: values.teamRole,
     };
-
+    let reuslt= await addTeam({
+      authorization: isLogin
+    },
+    data);
     if (!teamIsAdded.status) {
-      try {
         setIsLoading(true);
-        let config = {
-          method: "post",
-          url: `${baseUrl}/teams/add`,
-          headers: {
-            authorization: isLogin,
-          },
-          data: data,
-        };
+       
+       
 
-        const response = await axios.request(config);
-        setIsLoading(false);
 
-        if (response.data.message == "done") {
+        if (reuslt?.success) {
           // check if the inputs contain meida then call media api & pass the member team id
           // else inputs doesnt contain meida so display successs message
           if (selectedDocs.length > 0) {
             setTeamIsAdded({
               status: true,
-              id: response.data.teamMember.id,
+              id: reuslt?.data?.teamMember?.id,
             });
 
-            await SubmitDocs(response.data.teamMember.id);
+            await SubmitDocs(reuslt?.data?.teamMember?.id);
           } else {
             setIsLoading(false);
             setTeamIsAdded({
@@ -405,37 +360,19 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
               values: initialTeamValues,
             });
 
-            toast("Data added Successfully", {
-              position: "top-center",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              //pauseOnHover: true,
-              draggable: true,
-              // progress: undefined,
-              theme: "colored",
-              type: "success",
-            });
+            successMsg()
 
             ModalClose();
-            dispatch({ type: "add_Team", value: response.data.teamMember });
+            dispatch({ type: "add_Team", value: reuslt?.data?.teamMember });
           }
         } else {
           setIsLoading(false);
           setErrorMsg((prevErrors) => ({
             ...prevErrors,
-            response: response?.data?.message,
+            response: reuslt?.error,
           }));
         }
-      } catch (error) {
-        setIsLoading(false);
-
-        
-        setErrorMsg((prevErrors) => ({
-          ...prevErrors,
-          response: errorHandler(error),
-        }));
-      }
+      
     }
 
     if (teamIsAdded.status && selectedDocs?.length > 0) {
@@ -447,7 +384,7 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
     }
   }
 
-  function SubmitDocs(productId) {
+ async function SubmitDocs(id) {
     // e.preventDefault();
     setIsLoading(true);
 
@@ -455,20 +392,13 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
 
     selectedDocs?.map((item) => data.append("image", item.pdfFile));
 
-    const config = {
-      method: "patch",
-      url: `${baseUrl}/teams/uploadMedia/${productId}`,
-      headers: {
-        Authorization: isLogin,
-        // "Content-Type": "multipart/form-data",
-      },
-      data: data,
-    };
+ 
+    let rueslt = await addTeamMedia(id,{
+      Authorization: isLogin
+    },data)
 
-    axios
-      .request(config)
-      .then((response) => {
-        if (response?.data?.message == "done") {
+     
+        if (rueslt?.success) {
           teamValidation.resetForm({
             values: initialTeamValues,
           });
@@ -476,19 +406,9 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
             status: false,
             id: "",
           });
-          toast("Data added Successfully", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            //pauseOnHover: true,
-            draggable: true,
-            // progress: undefined,
-            theme: "colored",
-            type: "success",
-          });
+          successMsg()
 
-          dispatch({ type: "add_Team", value: response.data.teamMember });
+          dispatch({ type: "add_Team", value: rueslt?.data?.teamMember });
 
           setIsLoading(false);
           setSelectedDocs([]);
@@ -498,25 +418,12 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
 
           setErrorMsg((prevErrors) => ({
             ...prevErrors,
-            response: response?.data?.message,
+            response: rueslt?.error,
           }));
-          // const targetElement = document.getElementById("view");
-          // targetElement.scrollIntoView({
-          //   behavior: "smooth",
-          //   block: "start",
-          // });
+       
         }
-      })
+      
 
-      .catch((error) => {
-        setIsLoading(false);
-        setErrorMsg((prevErrors) => ({
-          ...prevErrors,
-          response: errorHandler(error),
-        }));
-
-        window.scrollTo({ top: 920 });
-      });
   }
 
   async function submitForm(values) {
@@ -569,52 +476,26 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
       data.socialLinks["instagram"] = values.instagramLink;
     }
 
-    try {
       setIsLoading(true);
-      let config = {
-        method: "put",
-        url: `${baseUrl}/factories/update/fromUser`,
-        headers: {
-          authorization: isLogin,
-        },
-        data: data,
-      };
+      let response= await updateFactoryFromUser({
+        authorization: isLogin,
+      },data)
 
-      const response = await axios.request(config);
-
-      if (response.data.message == "done") {
+      if (response?.success) {
         ModalClose();
-        toast("Data added Successfully", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          //pauseOnHover: true,
-          draggable: true,
-          // progress: undefined,
-          theme: "colored",
-          type: "success",
-        });
+        successMsg()
 
         dispatch({
           type: "fetched_update_data",
           value: data,
         });
-        setIsLoading(false);
       } else {
-        setIsLoading(false);
         setErrorMsg((prevErrors) => ({
           ...prevErrors,
-          response: response?.data?.message,
+          response: response?.error
         }));
       }
-    } catch (error) {
-      setIsLoading(false);
-      setErrorMsg((prevErrors) => ({
-        ...prevErrors,
-        response: errorHandler(error),
-      }));
-    }
+ 
     setIsLoading(false);
   }
 
@@ -1627,7 +1508,7 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
                     setSelectedDocs={setSelectedDocs}
                     MediaName="qualityCertificates"
                     mediaMaxLen="3"
-                    meidaAcceptedExtensions={["pdf", "png", "jpeg", "jpg","psd"]}
+                    meidaAcceptedExtensions={["pdf", "png", "jpeg", "jpg","psd",'webp']}
                     setErrorMsg={setErrorMsg}
                     // title="Certificates"
                   />

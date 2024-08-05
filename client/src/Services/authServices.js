@@ -65,7 +65,7 @@ export const getRequestDataHeader = async (url, headers, data) => {
     const response = await axios.request(config);
     return handleResponse(response);
   } catch (error) {
-    console.log("Request error: get", error);
+    // console.log("Request error: get", error);
     return handleError(error);
   }
 };
@@ -77,7 +77,7 @@ export const postRequest = async (url, headers, data) => {
     const response = await axios.request(config);
     return handleResponse(response);
   } catch (error) {
-    console.log("Request error: post", error);
+    // console.log("Request error: post", error);
     return handleError(error);
   }
 };
@@ -89,7 +89,7 @@ export const putRequest = async (url, headers, data) => {
     const response = await axios.request(config);
     return handleResponse(response);
   } catch (error) {
-    console.log("Request error: put", error);
+    // console.log("Request error: put", error);
     return handleError(error);
   }
 };
@@ -100,7 +100,19 @@ export const deleteRequest = async (url, headers, data) => {
     const response = await axios.request(config);
     return handleResponse(response);
   } catch (error) {
-    console.log("Request error: deleteRequest", error);
+    // console.log("Request error: deleteRequest", error);
+    return handleError(error);
+  }
+};
+
+
+export const patchRequest = async (url, headers, data) => {
+  try {
+    const config = createRequestConfig("patch", url, headers, data);
+    const response = await axios.request(config);
+    return handleResponse(response);
+  } catch (error) {
+    // console.log("Request error: post", error);
     return handleError(error);
   }
 };
