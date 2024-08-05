@@ -25,7 +25,7 @@ import FactoryInforamtion from "./subComponents/FactoryInforamtion";
 import Team from "./subComponents/Team";
 import SocialAccounts from "./subComponents/SocialAccounts";
 import FactoryLogo from "./subComponents/FactoryLogo";
-import {fetchOneFactory,getFactoryTeam} from 'Services/factory'
+import {fetchOneFactory,getFactoryTeam,addFactoryMedia} from 'Services/factory'
 
 export default function MircoSiteDash() {
   document.title = "Factory Profile";
@@ -133,7 +133,7 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
 
   // Cover IMage Profile -----------------------------------------------------
 
-  function updateMedia(e) {
+  async function updateMedia(e) {
     setIsLoading(true);
 
     e.preventDefault();
@@ -142,19 +142,8 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
 
     selectedDocs?.map((item) => data.append(item.keyWord, item.pdfFile));
 
-    const config = {
-      method: "put",
-      url: `${baseUrl}/factories/media`,
-      headers: {
-        Authorization: isLogin,
-      },
-      data: data,
-    };
-
-    axios
-      .request(config)
-      .then((response) => {
-        if (response?.data?.message == "done") {
+    let result = await addFactoryMedia({Authorization: isLogin},data)
+        if (result?.success) {
           ModalClose();
           toast("Media Saved Successfully", {
             position: "top-center",
@@ -168,19 +157,16 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
           });
           dispatch({
             type: "fetched_update_data",
-            value: response.data.factory,
+            value: result?.data?.factory,
           });
 
           //
           setSelectedDocs([]);
-          setIsLoading(false);
           setTeamIsAdded({
             status: false,
             id: "",
           });
         } else {
-          setIsLoading(false);
-
           toast("Image Not Saved, please try again", {
             position: "top-center",
             autoClose: 5000,
@@ -192,21 +178,9 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
             type: "error",
           });
         }
-      })
-      .catch((error) => {
         setIsLoading(false);
 
-        toast("Image Not Saved, please try again", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          draggable: true,
-          // progress: undefined,
-          theme: "colored",
-          type: "error",
-        });
-      });
+    
   }
 
   useEffect(() => {
@@ -726,10 +700,6 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
       return newState; // Return the updated state
     });
 
-    //  setTeamIsAdded({
-    //           status: false,
-    //           id: "",
-    //         });
   }
 
   return (
@@ -1657,7 +1627,7 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
                     setSelectedDocs={setSelectedDocs}
                     MediaName="qualityCertificates"
                     mediaMaxLen="3"
-                    meidaAcceptedExtensions={["pdf", "png", "jpeg", "jpg"]}
+                    meidaAcceptedExtensions={["pdf", "png", "jpeg", "jpg","psd"]}
                     setErrorMsg={setErrorMsg}
                     // title="Certificates"
                   />
