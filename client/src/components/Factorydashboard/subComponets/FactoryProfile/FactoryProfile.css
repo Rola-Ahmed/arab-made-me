@@ -188,9 +188,9 @@
 
 
 
-.factory-profile .form-group {
+/* .factory-profile .form-group {
     display: grid;
-}
+} */
 
 .factory-profile .form-group input {
     padding-top: 11px;
@@ -314,14 +314,13 @@
     align-items: center;
 
     padding: 2.5px 2.5px;
+    box-shadow: 10px 10px 46px -9px rgb(0 0 0 / 59%);
 
 }
 
 .factory-profile .edit-icon-profile-btn i {
-    color: var(--Light-Background-Paper, #FFF);
-
+    color: #e4dcdc;
     padding: 2px 2px;
-
 }
 
 
@@ -359,7 +358,7 @@
 }
 
 /* subscription plan */
-.factory-profile  .border-bottom {
+.factory-profile .border-bottom {
     padding-bottom: 3px;
     border-bottom: 3px solid;
     width: 100%;

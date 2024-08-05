@@ -281,6 +281,7 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
     instagramLink: factoryProfile?.socialLinks?.instagram || "",
     facebookLink: factoryProfile?.socialLinks?.facebook || "",
     website: factoryProfile?.website || "",
+    whatsapp: factoryProfile?.whatsapp || "",
   };
   let SocialAccountValidation = useFormik({
     initialValues: initialSocialAccount,
@@ -582,11 +583,27 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
                 baseUrl_IMG={baseUrl_IMG}
                 handleImageError={handleImageError}
                 handleShow={handleShow}
-                factoryProfile={factoryProfile}
+                coverImage={factoryProfile?.coverImage}
+              show={show}
+              errorMsg={errorMsg}
+              setErrorMsg={setErrorMsg}
+              updateMedia={updateMedia}
+              setSelectedDocs={setSelectedDocs}
+              isLoading={isLoading}
+
+
               />
 
               {/*Social Accounts container 2 */}
-              <SocialAccounts handleShow={handleShow} Button={Button} />
+              <SocialAccounts 
+              handleShow={handleShow} 
+                  show={show}
+                  errorMsg={errorMsg}
+                  handleClose={handleClose}
+                  isLoading={isLoading}
+                  SocialAccountValidation={SocialAccountValidation}
+                  socialLinks={factoryProfile?.socialLinks}
+                  />
 
               {/* Factory Banners */}
 
@@ -676,14 +693,21 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
               {/* end new */}
 
               {/*  FACTORY iNFO*/}
+              {/* read and update data */}
               <FactoryInforamtion
                 Button={Button}
                 factoryProfile={factoryProfile}
-                handleShow={handleShow}
-
+                handleShow={handleShow}  show={show}
+                errorMsg={errorMsg}
+                factoryInfoValidation={factoryInfoValidation}
+                handleClose={handleClose}
+                isLoading={isLoading}
+             
               />
 
 
+               {/*  team iNFO*/}
+              {/* read and update data */}
               <Team
                 handleShow={handleShow}
                 teamMembers={factoryProfile?.teamMembers}
@@ -702,608 +726,10 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
         </div>
       </div>
 
-      {/* -------------------------------------------------------------------------------------------------- */}
-      {/* Factory Info Modal update form */}
-      <form onSubmit={factoryInfoValidation.handleSubmit}>
-        <Modal
-          show={show.factoryInfoChangeReadOnly}
-          onHide={() => handleClose("factoryInfoChangeReadOnly")}
-          size="lg"
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-          className="factory-profile"
-        >
-          <Modal.Body closeButton>
-            {/* Account Info container 1 */}
+      
 
-            <div className="container-profile-input w-100">
-              <div className="title-contianer-input w-100">
-                <Modal.Header closeButton>
-                  <Modal.Title>
-                    <p>Factory Inforamtion</p>
-                  </Modal.Title>
-                </Modal.Header>
-                {errorMsg?.response ? (
-                  <div className="alert mt-3 p-2 alert-danger form-control text-dark">
-                    {errorMsg?.response}
-                  </div>
-                ) : (
-                  ""
-                )}
-                <div className="w-100 ">
-                  <form>
-                    <div className="row  row-gap">
-                      <div className="col-6">
-                        <div className="grid-gap-col">
-                          <div className="form-group">
-                            <label>Factory Name</label>
 
-                            <input
-                              type="text"
-                              className="form-control"
-                              placeholder="Enter Factory Name"
-                              id="factoryName"
-                              onChange={factoryInfoValidation.handleChange}
-                              onBlur={factoryInfoValidation.handleBlur}
-                              value={factoryInfoValidation.values.factoryName}
-                            />
-                            {factoryInfoValidation.errors.factoryName &&
-                            factoryInfoValidation.touched.factoryName ? (
-                              <small className="text-danger">
-                                {factoryInfoValidation.errors.factoryName}
-                              </small>
-                            ) : (
-                              ""
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-6">
-                        <div className="form-group">
-                          <label>Year Of Establishment</label>
-                          <input
-                            // type="text"
-                            placeholder="Enter Year Of Establishment"
-                            className="form-control"
-                            id="yearOfEstablishmint"
-                            onChange={factoryInfoValidation.handleChange}
-                            onBlur={factoryInfoValidation.handleBlur}
-                            value={
-                              factoryInfoValidation.values.yearOfEstablishmint
-                            }
-                          />
-                          {factoryInfoValidation.errors.yearOfEstablishmint &&
-                          factoryInfoValidation.touched.yearOfEstablishmint ? (
-                            <small className="text-danger">
-                              {factoryInfoValidation.errors.yearOfEstablishmint}
-                            </small>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                      </div>
-                      <div className="col-6">
-                        <div className="form-group">
-                          <label>Country</label>
-                          <select
-                            className="form-select form-control"
-                            onChange={factoryInfoValidation.handleChange}
-                            id="country"
-                            onBlur={factoryInfoValidation.handleBlur}
-                            value={factoryInfoValidation.values.country}
-                            // defaultValue={factoryProfile?.country}
-                          >
-                            {/* <option value={"sa"}>
-                              {factoryProfile?.country}
-                            </option> */}
 
-                            {countriesMiddleEast.map((countryItem) => (
-                              <option value={countryItem.code}>
-                                {countryItem.name}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                      </div>
-
-                      <div className="col-6">
-                        <div className="form-group">
-                          <label>City</label>
-                          <input
-                            // type="text"
-                            placeholder="Enter Year Of Establishment"
-                            className="form-control"
-                            id="city"
-                            onChange={factoryInfoValidation.handleChange}
-                            onBlur={factoryInfoValidation.handleBlur}
-                            value={factoryInfoValidation.values.city}
-                          />
-                          {factoryInfoValidation.errors.city &&
-                          factoryInfoValidation.touched.city ? (
-                            <small className="text-danger">
-                              {factoryInfoValidation.errors.city}
-                            </small>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="col-6">
-                        <div className="form-group">
-                          <label>Yearly Sales Income</label>
-                          <select
-                            className="form-select form-control"
-                            onChange={factoryInfoValidation.handleChange}
-                            id="yearlySalesIncome"
-                            onBlur={factoryInfoValidation.handleBlur}
-                            value={
-                              factoryInfoValidation.values.yearlySalesIncome
-                            }
-                          >
-                            <option value=" ">
-                              Select Yearly Sales Income
-                            </option>
-                            <option value="less than USD 1M ">
-                              Less Than USD 1M
-                            </option>
-                            <option value="USD 1M-5M">USD 1M-5M</option>
-                            <option value="USD 5M-10M">USD 5M-10M</option>
-                            <option value="USD 10M-50M">USD 10M-50M</option>
-                            <option value="USD 50M-100M">USD 50M-100M</option>
-                            <option value="USD 100M-500M">USD 100M-500M</option>
-                            <option value="USD 500M-1B">USD 500M-1B</option>
-                            <option value="More than 1B USD">
-                              More Than 1M USD
-                            </option>
-                          </select>
-                        </div>
-                      </div>
-
-                      <div className="col-6">
-                        <div className="form-group">
-                          <label>Number of employees</label>
-
-                          <select
-                            className="form-select form-control"
-                            onChange={factoryInfoValidation.handleChange}
-                            id="numberOfEmployees"
-                            onBlur={factoryInfoValidation.handleBlur}
-                            value={
-                              factoryInfoValidation.values.numberOfEmployees
-                            }
-                          >
-                            <option value="">Select Number of employees</option>
-
-                            <option value="1-10">1-10 Employess</option>
-                            <option value="11-50 ">11-50 Employess</option>
-                            <option value="51 - 100">51 - 100 Employess</option>
-                            <option value="101 - 500">
-                              101 - 500 Employess
-                            </option>
-                            <option value="501-1000">501-1000 Employess</option>
-                            <option value="More than 1000">
-                              More than 1000 Employess
-                            </option>
-                          </select>
-                        </div>
-                      </div>
-
-                      <div className="col-6">
-                        <div className="form-group">
-                          <label>Business Registration Number</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="taxRegisterationNumber"
-                            onChange={factoryInfoValidation.handleChange}
-                            onBlur={factoryInfoValidation.handleBlur}
-                            value={
-                              factoryInfoValidation.values
-                                .taxRegisterationNumber
-                            }
-                          />
-                          {factoryInfoValidation.errors
-                            .taxRegisterationNumber &&
-                          factoryInfoValidation.touched
-                            .taxRegisterationNumber ? (
-                            <small className="text-danger">
-                              {
-                                factoryInfoValidation.errors
-                                  .taxRegisterationNumber
-                              }
-                            </small>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="col-6">
-                        <div className="form-group">
-                          <label>commercial Registeration Number</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="commercialRegisterationNumber"
-                            onChange={factoryInfoValidation.handleChange}
-                            onBlur={factoryInfoValidation.handleBlur}
-                            value={
-                              factoryInfoValidation.values
-                                .commercialRegisterationNumber
-                            }
-                          />
-                          {factoryInfoValidation.errors
-                            .commercialRegisterationNumber &&
-                          factoryInfoValidation.touched
-                            .commercialRegisterationNumber ? (
-                            <small className="text-danger">
-                              {
-                                factoryInfoValidation.errors
-                                  .commercialRegisterationNumber
-                              }
-                            </small>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="col-6">
-                        <div className="grid-gap-col">
-                          <div className="form-group">
-                            <label>Facatory Phone Number</label>
-                            <div className="input-group  h-100">
-                              <div className="input-group-prepend">
-                                <select
-                                  className="input-group-text h-100 p-2 m-0 phone-borders"
-                                  id="factoryPhoneCode"
-                                  name="factoryPhoneCode"
-                                  placeholder="1113534343"
-                                  onChange={factoryInfoValidation.handleChange}
-                                  value={
-                                    factoryInfoValidation.values
-                                      .factoryPhoneCode
-                                  }
-                                  onBlur={factoryInfoValidation.handleBlur}
-                                >
-                                  {/* <select className="input-group-text h-100  m-0" name="" id=""> */}
-
-                                  {countriesMiddleEast.map((phoneItem) => (
-                                    <option value={phoneItem.phoneCode}>
-                                      {phoneItem.phoneCode}
-                                    </option>
-                                  ))}
-                                </select>
-                              </div>
-                              <input
-                                type="text"
-                                className="form-control phone-border"
-                                id="factoryPhone"
-                                name="factoryPhone"
-                                placeholder="1113534343"
-                                onChange={factoryInfoValidation.handleChange}
-                                value={
-                                  factoryInfoValidation.values.factoryPhone
-                                }
-                                onBlur={factoryInfoValidation.handleBlur}
-                              />
-                            </div>
-                            {factoryInfoValidation.errors.factoryPhone &&
-                            factoryInfoValidation.touched.factoryPhone ? (
-                              <small className="form-text text-danger">
-                                {factoryInfoValidation.errors.factoryPhone}
-                              </small>
-                            ) : (
-                              ""
-                            )}
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="col-6">
-                        <div className="form-group">
-                          <label>Factory Location</label>
-                          <input
-                            className="form-control"
-                            id="address"
-                            onChange={factoryInfoValidation.handleChange}
-                            onBlur={factoryInfoValidation.handleBlur}
-                            value={factoryInfoValidation.values.address}
-                          />
-                          {factoryInfoValidation.errors.address &&
-                          factoryInfoValidation.touched.address ? (
-                            <small className="text-danger">
-                              {factoryInfoValidation.errors.address}
-                            </small>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="col-6">
-                        <div className="form-group">
-                          <label>exporting Countries</label>
-
-                          {/*  */}
-                          <button
-                            className="btn d-flex justify-content-between  dropdown-toggle w-100 text-start select-countries"
-                            type="button"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                          >
-                            Select Countries
-                            {/* {Dropdown} */}
-                          </button>
-                          <ul className="dropdown-menu col-5 scroller">
-                            {countriesMiddleEast.map((item) => (
-                              <li>
-                                <div className=" dropdown-item d-flex justify-content-start align-items-center width-drop">
-                                  <input
-                                    onChange={
-                                      factoryInfoValidation.handleChange
-                                    }
-                                    className="form-check-input cursor me-3 "
-                                    type="checkbox"
-                                    name="importingCountries"
-                                    id="importingCountries"
-                                    value={item.code}
-                                    defaultChecked={factoryProfile?.importingCountries?.some(
-                                      (type) =>
-                                        item.code
-                                          .toLowerCase()
-                                          .includes(type.toLowerCase())
-                                    )}
-                                  />
-                                  <label
-                                    className="form-check-label p-0 m-0"
-                                    htmlFor="importingCountries"
-                                  >
-                                    {item.name}
-                                  </label>
-                                </div>
-                              </li>
-                            ))}
-                          </ul>
-
-                          {/*  */}
-                        </div>
-                      </div>
-
-                      <div className="col-12">
-                        <div className="form-group">
-                          <label>Factory description</label>
-                          <textarea
-                            className="form-control"
-                            rows="3"
-                            id="description"
-                            onChange={factoryInfoValidation.handleChange}
-                            onBlur={factoryInfoValidation.handleBlur}
-                            value={factoryInfoValidation.values.description}
-                          ></textarea>
-                          {factoryInfoValidation.errors.description &&
-                          factoryInfoValidation.touched.description ? (
-                            <small className="text-danger">
-                              {factoryInfoValidation.errors.description}
-                            </small>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                      </div>
-                      <div className="col-12">
-                        <div className="form-group">
-                          <label>Why Us</label>
-                          <textarea
-                            className="form-control"
-                            rows="3"
-                            id="whyUs"
-                            onChange={factoryInfoValidation.handleChange}
-                            onBlur={factoryInfoValidation.handleBlur}
-                            value={factoryInfoValidation.values.whyUs}
-                          ></textarea>
-                          {factoryInfoValidation.errors.whyUs &&
-                          factoryInfoValidation.touched.whyUs ? (
-                            <small className="text-danger">
-                              {factoryInfoValidation.errors.whyUs}
-                            </small>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                        <Button
-                          variant="secondary"
-                          type="button"
-                          onClick={() =>
-                            handleClose("factoryInfoChangeReadOnly")
-                          }
-                        >
-                          Close
-                        </Button>
-                        {isLoading ? (
-                          <button type="button" className="btn-edit">
-                            <i className="fas fa-spinner fa-spin text-white px-5"></i>
-                          </button>
-                        ) : (
-                          <button
-                            className="btn-edit submitButton"
-                            type="submit"
-                          >
-                            <p className="cursor">save changes</p>
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </Modal.Body>
-        </Modal>
-      </form>
-
-      {/* Social Links update form */}
-      <form onSubmit={SocialAccountValidation.handleSubmit}>
-        <Modal
-          show={show.socialAccountsReadOnly}
-          onHide={() => handleClose("socialAccountsReadOnly")}
-          size="lg"
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-          className="factory-profile"
-        >
-          <Modal.Body closeButton>
-            {/* Account Info container 1 */}
-
-            <div className="container-profile-input w-100">
-              <div className="title-contianer-input w-100">
-                <Modal.Header closeButton>
-                  <Modal.Title>
-                    <p>Factory Inforamtion</p>
-                  </Modal.Title>
-                </Modal.Header>
-                {errorMsg?.response ? (
-                  <div className="alert mt-3 p-2 alert-danger form-control text-dark">
-                    {errorMsg?.response}
-                  </div>
-                ) : (
-                  ""
-                )}
-                <div className="w-100 ">
-                  <form>
-                    <div className="row  row-gap">
-                      <div className="row grid-gap-col">
-                        <div className="col-12  ">
-                          <div className="d-flex justify-content-between align-items-center form-control">
-                            <div
-                              className="social-accounts-icon-conainer facebook"
-                              title="attach facebook link to the website"
-                            >
-                              <i className="fab fa-facebook-f fa-2x"></i>
-                            </div>
-
-                            {/*  */}
-
-                            <div className="form-group">
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="attach link"
-                                id="facebookLink"
-                                onChange={SocialAccountValidation.handleChange}
-                                onBlur={SocialAccountValidation.handleBlur}
-                                value={
-                                  SocialAccountValidation.values.facebookLink
-                                }
-                              />
-                              {SocialAccountValidation.errors.facebookLink &&
-                              SocialAccountValidation.touched.facebookLink ? (
-                                <small className="text-danger">
-                                  {SocialAccountValidation.errors.facebookLink}
-                                </small>
-                              ) : (
-                                ""
-                              )}
-                            </div>
-                            {/*  */}
-                          </div>
-                        </div>
-                        <div className="col-12">
-                          <div className="d-flex justify-content-between align-items-center form-control">
-                            <div
-                              className="social-accounts-icon-conainer instagram"
-                              title="attach instagram link to the websitek"
-                            >
-                              <i className="fab fa-instagram fa-2x"></i>
-                            </div>
-                            <div className="form-group">
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="attach link"
-                                id="instagramLink"
-                                onChange={SocialAccountValidation.handleChange}
-                                onBlur={SocialAccountValidation.handleBlur}
-                                value={
-                                  SocialAccountValidation.values.instagramLink
-                                }
-                              />
-                              {SocialAccountValidation.errors.instagramLink &&
-                              SocialAccountValidation.touched.instagramLink ? (
-                                <small className="text-danger">
-                                  {SocialAccountValidation.errors.instagramLink}
-                                </small>
-                              ) : (
-                                ""
-                              )}
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="col-12">
-                          <div className="d-flex justify-content-between align-items-center form-control">
-                            <div
-                              className="social-accounts-icon-conainer "
-                              title="attach website link to the websitek"
-                            >
-                              <i className="fa-solid fa-link fa-2x"></i>
-                            </div>
-                            <div className="form-group">
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="attach link"
-                                id="website"
-                                onChange={SocialAccountValidation.handleChange}
-                                onBlur={SocialAccountValidation.handleBlur}
-                                value={SocialAccountValidation.values.website}
-                              />
-                              {SocialAccountValidation.errors.website &&
-                              SocialAccountValidation.touched.website ? (
-                                <small className="text-danger">
-                                  {SocialAccountValidation.errors.website}
-                                </small>
-                              ) : (
-                                ""
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                        <Button
-                          variant="secondary"
-                          type="button"
-                          onClick={() => handleClose("socialAccountsReadOnly")}
-                        >
-                          Close
-                        </Button>
-                        {isLoading ? (
-                          <button type="button" className="btn-edit">
-                            <i className="fas fa-spinner fa-spin text-white px-5"></i>
-                          </button>
-                        ) : (
-                          <button
-                            className="btn-edit submitButton"
-                            type="submit"
-                          >
-                            <p className="cursor">save changes</p>
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </Modal.Body>
-        </Modal>
-      </form>
 
       {/* Factory Banners */}
       <Modal
@@ -1324,12 +750,10 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
                   <p>Factory Banners</p>
                 </Modal.Title>
               </Modal.Header>
-              {errorMsg?.response ? (
+              {errorMsg?.response && (
                 <div className="alert mt-3 p-2 alert-danger form-control text-dark">
                   {errorMsg?.response}
                 </div>
-              ) : (
-                ""
               )}
               <div className="w-100 ">
                 <form

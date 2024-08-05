@@ -7,7 +7,7 @@ export default function InputField({
   title,
 }) {
   return (
-    <div className="form-group">
+    <div className="form-group ">
       {/* <label class={"form-title"}> */}
       <label class="form-title">
         {title} {isRequired && <span className="text-danger">*</span>}

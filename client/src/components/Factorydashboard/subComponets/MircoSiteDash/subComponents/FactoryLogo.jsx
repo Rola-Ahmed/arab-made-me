@@ -1,5 +1,9 @@
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+import UploadDocument from "components/Forms/Shared/UploadDocument";
+
 export default function FactoryLogo(props) {
-  let { baseUrl_IMG, handleImageError, handleShow, factoryProfile } = props;
+  let { baseUrl_IMG, handleImageError, handleShow, show,coverImage,handleClose,updateMedia,setSelectedDocs,errorMsg,selectedDocs,setErrorMsg,isLoading } = props;
   return (
     <>
       <div id="factorylogo"></div>
@@ -10,10 +14,10 @@ export default function FactoryLogo(props) {
             <div className="row  row-gap">
               <div className="col-12">
                 <div className="grid-gap-col position-relative ">
-                  <div className="factory-logo  edit-img ">
+                  <div className="factory-logo  edit-img border  ">
                     <img
                       className="w-100 h-100 "
-                      src={`${baseUrl_IMG}/${factoryProfile?.coverImage}`}
+                      src={`${baseUrl_IMG}/${coverImage}`}
                       alt="factory image coverImage"
                       onError={handleImageError}
                     />
@@ -34,6 +38,86 @@ export default function FactoryLogo(props) {
           </div>
         </div>
       </div>
+
+
+
+
+
+
+ {/* Factory Banners */}
+ <Modal
+        show={show.coverImgReadOnly}
+        onHide={() => handleClose("coverImgReadOnly")}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        className="factory-profile"
+      >
+        <Modal.Body closeButton>
+          {/* Account Info container 1 */}
+
+          <div className="container-profile-input w-100">
+            <div className="title-contianer-input w-100">
+              <Modal.Header closeButton>
+                <Modal.Title>
+                  <p>Factory Logo</p>
+                </Modal.Title>
+              </Modal.Header>
+              {errorMsg?.response && (
+                <div className="alert mt-3 p-2 alert-danger form-control text-dark">
+                  {errorMsg?.response}
+                </div>
+              ) }
+              <div className="w-100 ">
+                <form
+                  onSubmit={(e) => updateMedia(e)}
+                  encType="multipart/form-data"
+                >
+                  <div className="row  row-gap">
+
+                  <UploadDocument
+                    selectedDocs={selectedDocs}
+                    errorMsg={errorMsg}
+                    setSelectedDocs={setSelectedDocs}
+                    MediaName="coverImage"
+                    mediaMaxLen="1"
+                    meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
+                    setErrorMsg={setErrorMsg}
+                    // title="Factory Banners"
+                  />
+
+                    <div className="col-12 d-flex justify-content-start btn-modal-gap">
+                      <Button
+                        variant="secondary"
+                        type="button"
+                        onClick={() => handleClose("coverImgReadOnly")}
+                      >
+                        Close
+                      </Button>
+                      {isLoading ? (
+                        <button type="button" className="btn-edit">
+                          <i className="fas fa-spinner fa-spin text-white px-5"></i>
+                        </button>
+                      ) : (
+                        <button
+                          className="btn-edit submitButton"
+                          type="submit"
+                          disabled={!(selectedDocs?.length > 0)}
+                        >
+                          <p className="cursor">Submit</p>
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
+
+
+      
     </>
   );
 }
