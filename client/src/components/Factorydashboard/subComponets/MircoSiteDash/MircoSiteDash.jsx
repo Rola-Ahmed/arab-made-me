@@ -213,6 +213,49 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
     fetchFactoryPage();
   }, [currentUserData?.factoryId]);
 
+  const deleteData = async (itemId, indexArr) => {
+    try {
+      let config = {
+        method: "delete",
+        url: `${baseUrl}/teams/${itemId}`,
+
+        headers: {
+          authorization: isLogin,
+        },
+      };
+
+      const response = await axios.request(config);
+
+      deleteTeam(indexArr);
+      toast("Data Deleted Successfully", {
+        position: "top-center",
+        autoClose: 5000,
+        // hideProgressBar: false,
+        closeOnClick: true,
+        //pauseOnHover: true,
+        draggable: true,
+        // progress: undefined,
+        theme: "colored",
+        type: "success",
+      });
+    } catch (error) {
+      // setapiLoadingData(true);
+
+      toast("Something went wrong, please try again later", {
+        position: "top-center",
+        autoClose: 5000,
+        // hideProgressBar: false,
+        closeOnClick: true,
+        //pauseOnHover: true,
+        draggable: true,
+        // progress: undefined,
+        theme: "colored",
+        type: "error",
+      });
+    }
+    // }
+  };
+
   // update data
 
   let nameValidation = Yup.string()
@@ -806,11 +849,16 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
 
               <Team
                 handleShow={handleShow}
-                Button={Button}
-                factoryProfile={factoryProfile}
-                isLogin={isLogin}
-                toast={toast}
-                deleteTeam={deleteTeam}
+                teamMembers={factoryProfile?.teamMembers}
+                deleteData={deleteData}
+                teamValidation={teamValidation}
+                handleClose={handleClose}
+                isLoading={isLoading}
+                show={show}
+                errorMsg={errorMsg}
+                setSelectedDocs={setSelectedDocs}
+                selectedDocs={selectedDocs}
+                setErrorMsg={setErrorMsg}
               />
             </div>
           </div>

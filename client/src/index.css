@@ -180,7 +180,7 @@ p, button, div, textarea, input {
 }
 
 .w-fit-content {
-  width: fit-content;
+  width: fit-content !important;
 }
 
 
