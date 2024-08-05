@@ -1,6 +1,5 @@
 import { useEffect, useState, useContext, useReducer } from "react";
-import {  baseUrl_IMG } from "config.js";
-import { errorHandler } from "utils/errorHandler";
+import {baseUrl_IMG} from "config.js";
 import UploadDocument ,{UploadVedio} from "components/Forms/Shared/UploadDocument";
 
 import { useFormik } from "formik";
@@ -471,7 +470,6 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
         website: values.website,
       };
 
-      data.website = values.website;
       data.socialLinks["facebook"] = values.facebookLink;
       data.socialLinks["instagram"] = values.instagramLink;
     }
@@ -535,31 +533,18 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
       ...preValue,
       [value]: false,
     }));
+
+    setErrorMsg((prevErrors) => {
+      const { response, ...restErrors } = prevErrors || {};
+      return restErrors;
+    });
+
     // Reset the form and clear validation errors
-    // formValidation.resetForm();
-
     // reset to initaliz the values
-    teamValidation.resetForm(initialTeamValues);
     SocialAccountValidation.resetForm({
-      values: initialSocialAccount, // Optional: Reset values to an empty object
-      errors: {}, // Optional: Reset errors to an empty object
-      touched: {}, // Optional: Reset touched to an empty object
-      status: undefined, // Optional: Reset status to undefined
-      isSubmitting: false, // Optional: Reset isSubmitting to false
-      isValidating: false, // Optional: Reset isValidating to false
-      submitCount: 0, // Optional: Reset submitCount to 0
+      values: initialSocialAccount,
     });
-
-    factoryInfoValidation.resetForm({
-      values: initialFactoryInfoValidation,
-      errors: {},
-      touched: {},
-      status: undefined,
-      isSubmitting: false,
-      isValidating: false,
-      submitCount: 0,
-    });
-
+    factoryInfoValidation.resetForm({values: initialFactoryInfoValidation});
     setSelectedDocs([]);
   }
 
@@ -692,9 +677,10 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
 
               {/*  FACTORY iNFO*/}
               <FactoryInforamtion
-                handleShow={Button}
                 Button={Button}
                 factoryProfile={factoryProfile}
+                handleShow={handleShow}
+
               />
 
 
