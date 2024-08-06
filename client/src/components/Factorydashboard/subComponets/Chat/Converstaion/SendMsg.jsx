@@ -103,7 +103,7 @@ export default function SendMsg(props) {
         ""
       )}
       <button className="border-0 text-end " type="submit">
-        Send -------
+        Send
       </button>
     </form>
   );

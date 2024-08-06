@@ -100,25 +100,25 @@ const useConversationBetweenUsers = () => {
         // socket.connect();
 
         socket.on("connect", () => {
-          // console.log("Connected to server");
+          console.log("Connected to server");
         });
 
         socket.on("newMessage", (data) => {
-          // console.log("Connected to server",data)
+          console.log("Connected to newMessage",data)
           fetchReqData();
         });
 
-        socket.on("socketAuth", (data) => {});
+        // socket.on("socketAuth", (data) => {console.log("Connected to server",data)});
 
-        socket.on("connect_error", (err) => {});
+        // socket.on("connect_error", (err) => {console.log("Connected to server",err)});
 
-        socket.on("connect_timeout", (err) => {});
+        // socket.on("connect_timeout", (err) => {console.log("Connected to server",err)});
 
-        socket.on("error", (err) => {});
+        // socket.on("error", (err) => {console.log("Connected to server",err)});
 
-        socket.on("reconnect_error", (err) => {});
+        // socket.on("reconnect_error", (err) =>  {console.log("Connected to server",err)});
 
-        socket.on("reconnect_failed", () => {});
+        // socket.on("reconnect_failed", (err) =>  {console.log("Connected to server",err)});
 
         // Cleanup on unmount
         return () => {
