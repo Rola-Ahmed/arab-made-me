@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 // utils function
 import SubPageUtility from "components/Shared/Dashboards/SubPageUtility";
+import DescritionPopUp from "components/Helpers/DescritionPopUp";
 
 // sub Components
 import ImporterInfo from "components/Shared/ImporterInfo";
@@ -28,6 +29,8 @@ export default function EtcQuote() {
     display: false,
     imagePath: "",
   });
+  const [description, setDescription] = useState("");
+
   const handleImageClick = (imagePath) => {
     setShowImagePop({
       display: true,
@@ -42,9 +45,15 @@ export default function EtcQuote() {
 
         <div>
           <div className=" d-flex justify-content-between align-items-center w-100 ">
-            <h2>Quotations Details on {requestedData?.title}</h2>
+            <h2>Quotations Details on {requestedData?.title}
+              
+            </h2>
+          
+          
 
             <div className="btn-container">
+          <button className="fs-10 d-block cursor border-0 bg-main text-white" type="button" onClick={()=>{setDescription(true)}} > <p className="cursor">Quote brief</p></button>
+
               <button
                 type="button"
                 className="order-btn-1"
@@ -53,6 +62,7 @@ export default function EtcQuote() {
                 }}
               >
                 <p className="cursor">Quotations</p>
+               
               </button>
             </div>
           </div>
@@ -166,6 +176,35 @@ export default function EtcQuote() {
         }
         showImagePop={showImagePop.imagePath}
       />
+
+
+ <DescritionPopUp
+        show={description}
+        description={<>
+        <div className="row gap-3">
+          <div className="col-12 border-bottom">
+            <p className="fs-14  fw-normal border-bottom mb-2"><span className="fw-bold me-1">buyer name:</span>{requestedData?.importer?.repName}</p>
+          
+            <p className="fs-14  fw-normal border-bottom mb-2"><span className="fw-bold me-1">buyer email:</span>{requestedData?.importer?.repEmail}</p>
+         
+            <p className="fs-14  fw-normal border-bottom mb-2"><span className="fw-bold me-1">Quotation</span>{requestedData?.title}</p>
+            <p className="fs-14  fw-normal border-bottom mb-2"><span className="fw-bold me-1">Quotation Status</span>{requestedData?.status}</p>
+          
+            <p className="fs-14  fw-normal border-bottom mb-2"><span className="fw-bold me-1">product name</span>{requestedData?.productName}</p>
+            <p className="fs-14  fw-normal border-bottom mb-2"><span className="fw-bold me-1">Total Quantity</span>{requestedData?.minQuantity}</p>
+
+            <p className="fs-14  fw-normal border-bottom mb-2"><span className="fw-bold me-1">Form Deadline</span>{requestedData?.deadline?.split("T")?.[0]}</p>
+         
+            <p className="fs-14  fw-normal border-bottom mb-2"><span className="fw-bold me-1">Price</span>{requestedData?.price}</p>
+            <p className="fs-14  fw-normal border-bottom mb-2"><span className="fw-bold me-1">Location</span>{requestedData?.supplyLocation}</p>
+          </div>
+          
+        
+        </div>
+        </>}
+        onClose={()=>{setDescription(false)}}
+  />
     </>
+
   );
 }
