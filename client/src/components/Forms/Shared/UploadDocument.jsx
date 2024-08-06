@@ -193,10 +193,11 @@ export function UploadVedio(props) {
 
   return (
     <div className="col-12">
-      <div className="grid-gap-col">
+      {/* <div className="grid-gap-col"> */}
         <div className="form-group">
+        <label className="form-title">{title}</label>
           <label
-            className="mb-0 drop-drag-area p-5 text-center cursor"
+            className="mb-0 drop-drag-area p-5 text-center cursor d-block"
             htmlFor={MediaName}
             onDrop={e => handleDrop(e, selectedDocs, setSelectedDocs, MediaName, mediaMaxLen, meidaAcceptedExtensions, setErrorMsg)}
             onDragOver={handleDragOver}
@@ -247,7 +248,7 @@ export function UploadVedio(props) {
               )
           )}
         </div>
-      </div>
+      {/* </div> */}
     </div>
   );
 }

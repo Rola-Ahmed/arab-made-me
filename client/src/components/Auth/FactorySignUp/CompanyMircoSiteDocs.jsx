@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from "react";
-import UploadDocument from "components/Forms/Shared/UploadDocument";
+import UploadDocument,{UploadVedio} from "components/Forms/Shared/UploadDocument";
 
 import { awaitImg, currentsubPoint } from "constants/Images";
 import { addFactoryMedia } from "Services/factory";
@@ -164,7 +164,7 @@ function CompanyMircoSiteDocs() {
                     title="Certificates"
                   />
 
-                  <UploadDocument
+                  <UploadVedio
                     selectedDocs={selectedDocs}
                     errorMsg={errorMsg}
                     setSelectedDocs={setSelectedDocs}
@@ -172,7 +172,7 @@ function CompanyMircoSiteDocs() {
                     mediaMaxLen="3"
                     meidaAcceptedExtensions={["mp4", "mkv"]}
                     setErrorMsg={setErrorMsg}
-                    title="Company Cover video"
+                    title="Factory Cover video"
                   />
 
                   <div className="col-12 action">
