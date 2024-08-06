@@ -104,7 +104,7 @@ export default function UserType() {
                         <div className="">
                           <p className="user-text cursor">Buyer</p>
                           <p className="text-muted user-text-sub cursor">
-                            I want to launch products with trusted suppliers and
+                            I want to buy products with trusted suppliers and
                             partners.
                           </p>
                         </div>

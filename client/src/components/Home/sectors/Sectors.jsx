@@ -45,37 +45,11 @@ function Sectors() {
           <h2 className="text-4 text-start">Manufacturing Sectors</h2>
           <p className="text-5 text-start ">
             Everything you need to know about the product and billing.
-            {allsSectors?.length}
           </p>
         </div>
         <div className="sector-container">
           <div className="sec-r-container secrotr-row">
-            {allsSectors?.map((item, index) => (
-              <div className="sec-r-item">
-                <div
-                  className="card-sector cursor"
-                  onClick={() => {
-                    navigate(`productMarketPlace/${item?.id}-${item?.name}`);
-                  }}
-                >
-                  <div className="sector-img">
-                    <img
-                      id={index}
-                      className={`m-0 p-0  borderContainer`}
-                      src={`${baseUrl_IMG}/${item?.image}`}
-                      alt={`${baseUrl_IMG}/${item?.image}`}
-                      onError={handleImageError}
-                    />
-                  </div>
-                  <div className="sector-text">
-                    <h4>{item?.name?.replace(/\bSupplies\b/gi, "")}</h4>
-
-                    <p> {item?.productQuntity} Factory</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-            {errormsg !== "" ? (
+            {errormsg != "" ? (
               <div className=" text-center m-auto w-100 rounded-3 border-2 border-row fw-bold m-auto py-5 rounded-3 text-center text-muted w-100">
                 {errormsg}
               </div>
