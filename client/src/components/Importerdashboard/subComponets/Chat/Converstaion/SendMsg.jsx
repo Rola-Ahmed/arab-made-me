@@ -77,6 +77,7 @@ export default function SendMsg(props) {
 
         socket.on("newMessage", (data) => {
           // Update state or perform actions based on the new message
+          // console.log("newMessage",data)
         });
 
         socket.on("socketAuth", (data) => {

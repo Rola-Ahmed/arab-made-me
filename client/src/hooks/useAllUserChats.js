@@ -144,6 +144,7 @@ const useAllUserChats = (isLogin) => {
 
   useEffect(() => {
     if (isLogin) {
+      console.log("isLogin",isLogin)
       const connectSocket = () => {
         // socket.connect();
 
@@ -152,44 +153,60 @@ const useAllUserChats = (isLogin) => {
         });
 
         socket.on("newMessage", (data) => {
+          console.log("data",data)
           fetchReqData();
         });
 
         socket.on("socketAuth", (data) => {});
 
-        socket.on("connect_error", (err) => {});
+        socket.on("connect_error", (err) => {
+          console.log(err);
+        });
 
-        socket.on("connect_timeout", (err) => {});
+        socket.on("connect_timeout", (err) => {
+          console.log(err);
 
-        socket.on("error", (err) => {});
+        });
 
-        socket.on("reconnect_error", (err) => {});
+        socket.on("error", (err) => {
+          console.log(err);
 
-        socket.on("reconnect_failed", () => {});
+        });
+
+        socket.on("reconnect_error", (err) => {
+          console.log(err);
+
+        });
+
+        socket.on("reconnect_failed", (err) => {
+          console.log(err);
+
+        });
 
         // Cleanup on unmount
         return () => {
-          // socket.off("connect");
-          // socket.off("newMessage");
-          // socket.off("authorization");
-          // socket.off("connect_error");
-          // socket.off("connect_timeout");
-          // socket.off("error");
-          // socket.off("reconnect_error");
-          // socket.off("reconnect_failed");
-          // socket.disconnect();
+          socket.off("connect");
+          socket.off("newMessage");
+          socket.off("authorization");
+          socket.off("connect_error");
+          socket.off("connect_timeout");
+          socket.off("error");
+          socket.off("reconnect_error");
+          socket.off("reconnect_failed");
+          socket.disconnect();
         };
       };
 
       connectSocket();
 
-      return () => {
-        // console.log("Disconnecting socket..."); // Debugging message
-        // socket.disconnect();
-      };
+      // return () => {
+      //   console.log("Disconnecting socket..."); // Debugging message
+      //   socket.disconnect();
+      // };
     }
   }, [isLogin]);
 
+  console.log("here")
   return { reqData, pagination, apiLoadingData, errorsMsg, setPagination };
 };
 

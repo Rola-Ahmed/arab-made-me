@@ -333,6 +333,25 @@ p, button, div, textarea, input {
   /* Adjust the font size as needed */
 }
 
+/* ------------------------------------------------------------------------------- */
+.tooltip-1 .tooltiptext-1 {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip-1:hover .tooltiptext-1 {
+  visibility: visible;
+}
+
+/* --------------------------------------------------------- */
 @media (max-width:539px) {
   .margin-sm-screen {
     padding-left: 20px !important;
@@ -342,7 +361,7 @@ p, button, div, textarea, input {
 
 
 /* s,all */
-@media (max-width:576px) {
+@media (max-width:576.98px) {
 
 
   .col-sm-d-none {
@@ -351,6 +370,9 @@ p, button, div, textarea, input {
 
   .w-sm-100 {
     width: 100% !important;
+  }
+  .w-sm-fit-content{
+    width: fit-content;
   }
 
 }

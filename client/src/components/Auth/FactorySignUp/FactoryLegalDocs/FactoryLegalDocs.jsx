@@ -6,7 +6,6 @@ import useFormSubmission from "./useFormSubmission";
 import {
   awaitImg,
   checkedImg,
-  pdfIcon,
   currentsubPoint,
 } from "constants/Images";
 
@@ -20,7 +19,7 @@ import * as Yup from "yup";
 
 function FactoryLegalDocs() {
   let { isLogin } = useContext(UserToken);
-  let { currentUserData, setCurrentUserData } = useContext(userDetails);
+  let { currentUserData } = useContext(userDetails);
   let navigate = useNavigate();
   let currentUrl = window.location.pathname;
   document.title = "Company Registration";
@@ -39,10 +38,6 @@ function FactoryLegalDocs() {
   const [isLoading, setIsLoading] = useState(false);
 
   const [selectedDocs, setSelectedDocs] = useState([
-    // {
-    //   keyWord: null,
-    //   pdfFile: null,
-    // },
   ]);
 
   let { submitForm, requestAddedText, submitDocs } = useFormSubmission(
@@ -277,7 +272,20 @@ function FactoryLegalDocs() {
                     mediaMaxLen="3"
                     meidaAcceptedExtensions={["pdf", "png", "jpeg", "jpg"]}
                     setErrorMsg={setErrorMsg}
-                    title="Legal Documents"
+                    // title={`Legal Documents ${<i class="fa-solid fa-circle-info"></i>}`}
+                    title={
+                      <>
+                       
+                        
+                        <div className="d-flex d-flex gap-2">
+                        Legal Documents 
+                          <div class="tooltip-1"><i className="fa-solid fa-circle-info my-auto "></i>
+  <span class="tooltiptext-1 w-50">Upload your Business Registration Number, Industrial Registration Number, Industrial License Number, and Commercial Registration Number documents.</span>
+</div>
+                         
+                        </div>
+                      </>
+                    }
                   />
 
                   <div className="col-12 action">

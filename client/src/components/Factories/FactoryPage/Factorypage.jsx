@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext ,useEffect} from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import "./Factorypage.css";
@@ -37,6 +37,7 @@ import HandleUsersBtnAccess, {
 import FactoryTeam from "./subComponents/FactoryTeam";
 import { useFetchData } from "./useFetchData";
 import HeaderSlider from "./subComponents/HeaderSlider";
+
 
 function Factorypage() {
   let { currentUserData } = useContext(userDetails);
@@ -146,6 +147,47 @@ function Factorypage() {
     });
   };
 
+
+
+  const [activeMenu, setActiveMenu] = useState("about");
+
+  const handleSetActive = (to) => {
+    if (to == null || to == "") {
+      setActiveMenu("about");
+    }
+    setActiveMenu(to);
+  };
+
+  useEffect(() => {
+
+    const targetElements = document.querySelectorAll('.fac-cert');
+    const observerCallback = (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          console.log(entry.target.id); // Set active section based on ID
+          setActiveMenu(entry.target.id)
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, {
+      root: null, // Root element, null means the browser viewport
+      rootMargin: '0px',
+      // threshold: 0.5 // Trigger the callback when 100% of the target is visible
+    });
+
+    targetElements.forEach(element => {
+      observer.observe(element);
+    });
+
+    return () => {
+      targetElements.forEach(element => {
+        observer.unobserve(element);
+      });
+    };
+  
+  }, []);
+
   return (
     <>
       <IsLoggedIn
@@ -207,17 +249,19 @@ function Factorypage() {
                 <FactoryNav
                   factoryDetails={factoryDetails}
                   handleIsLoggedInBtn={handleUserClickValidLogin}
+                  handleSetActive={handleSetActive}
+                  activeMenu={activeMenu}
                 />
               </div>
 
-              <div id="about" className="pehat">
+              <div id="about" className="pehat fac-cert">
                 <FactoryABout
                   factoryDetails={factoryDetails}
                   allSectors={allSectors}
                 />
               </div>
 
-              <div id="products" className="fac-cert ">
+              <div id="products" className="fac-cert  ">
                 <h3 className="text-fac-4">Products</h3>
 
                 {factoryProduct?.length !== 0 ? (
@@ -358,10 +402,10 @@ function Factorypage() {
                 )}
               </div>
 
-              {factoryDetails?.qualityCertificates && (
+              {factoryDetails?.qualityCertificates?.length > 0 && (
                 <div id="certifications" className="fac-cert">
                   <FactoryCetificate
-                    qualityCertificates={factoryDetails?.qualityCertificate}
+                    qualityCertificates={factoryDetails?.qualityCertificates}
                     handleImageError={handleImageError}
                     baseUrl_IMG={baseUrl_IMG}
                   />
@@ -394,7 +438,7 @@ function Factorypage() {
               </div>
             </div>
 
-            <div className="col-lg-2 col-md-4 col-12  mx-auto w-fit-content">
+            <div className="col-lg-2 col-md-4 col-12  mx-auto w-sm-fit-content">
               <div className="parent-buttons-container  d-table-cell ">
                 <div className="d-flex align-items-center">
                   <div

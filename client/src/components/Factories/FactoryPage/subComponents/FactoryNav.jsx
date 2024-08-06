@@ -1,14 +1,7 @@
 import { useState } from "react";
 
-export default function FactoryNav({ factoryDetails, handleIsLoggedInBtn }) {
-  const [activeMenu, setActiveMenu] = useState("about");
+export default function FactoryNav({ factoryDetails, handleIsLoggedInBtn,handleSetActive,activeMenu }) {
 
-  const handleSetActive = (to) => {
-    if (to == null || to == "") {
-      setActiveMenu("about");
-    }
-    setActiveMenu(to);
-  };
 
   function scrollToView(elementId) {
     handleSetActive(elementId);
