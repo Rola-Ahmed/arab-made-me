@@ -170,7 +170,7 @@ function CompanyMircoSiteDocs() {
                     setSelectedDocs={setSelectedDocs}
                     MediaName="coverVideo"
                     mediaMaxLen="3"
-                    meidaAcceptedExtensions={["mp4", "mkv"]}
+                    meidaAcceptedExtensions={["mkv","mp4",'x-matroska']}
                     setErrorMsg={setErrorMsg}
                     title="Factory Cover video"
                   />
@@ -191,7 +191,7 @@ function CompanyMircoSiteDocs() {
                   </div>
                 </div>
 
-                <div className="d-flex justify-content-center">
+                <div className="d-flex justify-content-center d-block">
                   <small
                     className="text-muted title-small cursor"
                     onClick={() => {
