@@ -188,9 +188,6 @@
 
 
 
-/* .factory-profile .form-group {
-    display: grid;
-} */
 
 .factory-profile .form-group input {
     padding-top: 11px;
@@ -203,9 +200,7 @@
     padding: 11px 10px;
 }
 
-/* .factory-profile .form-control[readonly]{
-    background-color: var(--read-only-bg) ;
-} */
+
 
 .factory-profile .form-group label {
     font-family: "Inter-semi";
@@ -386,14 +381,7 @@
 /*========================   Free plan   ========================*/
 /*  When Active*/
 .titleBg.activeFree {
-    /* background-color: var(--secondary-color) !important; */
-    /* color: white; */
-    /* color: var(--secondary-color) !important; */
     color: #cc9123;
-
-
-
-
 }
 
 
@@ -453,7 +441,6 @@
 
 /*-------------- hover--on subscritpion plan---------- */
 .form-control.hoverCss:hover {
-    /* border: solid; */
     background-color: #e7e8f5;
 }
 
@@ -494,7 +481,6 @@
 
 
 .btn-modal-gap {
-    /* sam as row gap => --bs-gutter-x: 1.5rem;*/
     gap: 1.5rem;
 }
 

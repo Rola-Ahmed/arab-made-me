@@ -994,7 +994,7 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
                     setSelectedDocs={setSelectedDocs}
                     MediaName="coverVideo"
                     mediaMaxLen="1"
-                    meidaAcceptedExtensions={["mp4", "mkv"]}
+                    meidaAcceptedExtensions={["mp4", "mkv",'x-matroska']}
                     setErrorMsg={setErrorMsg}
                     // title="Certificates"
                   />
