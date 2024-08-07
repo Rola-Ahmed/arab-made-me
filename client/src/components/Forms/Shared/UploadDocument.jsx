@@ -1,5 +1,4 @@
 import { pdfIcon } from "constants/Images";
-import { useState } from "react";
 
 function removeSelectedDoc(index, selectedDocs, setSelectedDocs) {
   let updatedDocs = [...selectedDocs];
@@ -29,6 +28,7 @@ function handleMultiMediaValidation(e, selectedDocs, setSelectedDocs, MediaName,
   const isAcceptedType = acceptedExtensions?.some(extension =>
     fileType?.toLowerCase()?.includes(extension?.toLowerCase())
   );
+
 
   if (!isAcceptedType) {
     setErrorMsg(prevErrors => ({
@@ -139,7 +139,7 @@ export default function UploadDocument(props) {
             onChange={e => handleFileChange(e, selectedDocs, setSelectedDocs, MediaName, mediaMaxLen, meidaAcceptedExtensions, setErrorMsg)}
           />
         </label>
-        <small className="form-text small-note">
+        <small className="form-text small-note d-block">
           Only {meidaAcceptedExtensions.join(" ")} are allowed. A maximum of {mediaMaxLen} pictures is permitted.
         </small>
         <small className="text-danger">{errorMsg?.[MediaName]}</small>
@@ -211,7 +211,7 @@ export function UploadVedio(props) {
               onChange={e => handleFileChange(e, selectedDocs, setSelectedDocs, MediaName, mediaMaxLen, meidaAcceptedExtensions, setErrorMsg)}
             />
           </label>
-          <small className="form-text small-note">
+          <small className="form-text small-note d-block">
             Only {meidaAcceptedExtensions.join(" ")} are allowed. A maximum of {mediaMaxLen} pictures is permitted.
           </small>
           <small className="text-danger">{errorMsg?.[MediaName]}</small>
