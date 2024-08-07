@@ -98,7 +98,9 @@ const useFormSubmission = (isLogin, setIsLoading, setErrorMsg) => {
       // paymentTerms: paymentType == "other" ? paymentTypeOther : paymentType,
     };
 
-    if (Object.keys(values.productCharacteristic).length != 0) {
+    if (values?.productCharacteristic?.[0]?.keyword !='') {
+
+      
       // create an object with the keyword property as the key and the value property as the value.
       const obj = Object.fromEntries(
         values.productCharacteristic.map((obj) => [obj.keyword, obj.value])
@@ -133,7 +135,6 @@ const useFormSubmission = (isLogin, setIsLoading, setErrorMsg) => {
 
     selectedDocs?.forEach((item) => data.append("docs", item.pdfFile));
 
-    try {
       let result = await addCustomProductlMedia(
         qoute_id,
         { authorization: isLogin },
@@ -146,7 +147,6 @@ const useFormSubmission = (isLogin, setIsLoading, setErrorMsg) => {
       } else {
         handleResponseError(result.error);
       }
-    } catch (error) {}
   };
 
   return { submitForm, poAdded, submitDocs ,handleSubmitMsg};

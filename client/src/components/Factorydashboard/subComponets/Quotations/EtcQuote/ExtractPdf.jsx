@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
   textImg: {
     textAlign: 'left',
     marginLeft: '6px',
+    fontSize:'10px'
   },
   table: {
     display: 'flex',
@@ -86,7 +87,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const MyDocument = ({ requestedData }) => (
+const MyDocument = ({ requestedData ,qouteOn}) =>{ 
+  return (
   <Document>
     <Page size="A4" style={styles.page} wrap> 
       <View style={styles.section}>
@@ -258,14 +260,20 @@ const MyDocument = ({ requestedData }) => (
   </View>
   <View style={styles.cellFlexible}>
     <View style={styles.cellFlexibleItem}>
-    {requestedData?.specialCharacteristics && 
-      Object.keys(requestedData.specialCharacteristics).length > 0 && 
-      Object.entries(requestedData.specialCharacteristics).map(([key, value], index) => (
+    {/* {qouteOn?.specialCharacteristics && 
+      Object.keys(qouteOn?.specialCharacteristics)?.length > 0 && 
+      Object.entries(qouteOn?.specialCharacteristics).map(([key, value], index) => (
           <>
           {`${key}: ${value}`}
           </>
         
-      ))}
+      ))} */}
+      <Text style={styles.defultText}>
+       {(qouteOn?.specialCharacteristics && 
+        Object.keys(qouteOn?.specialCharacteristics)?.length >0)
+        && 
+        Object.entries(qouteOn?.specialCharacteristics)?.map(([key, value]) => `${key}: ${value},  `)}
+        </Text>
       </View>
   </View>
 </View>
@@ -446,17 +454,17 @@ const MyDocument = ({ requestedData }) => (
 
 
       <View style={styles.watermark} fixed>
-    <Text style={styles.watermarkText}>https://ara-made.com</Text>
+    <Text style={styles.watermarkText}>https://arab-made.com</Text>
   </View>
 
       <View  style={{height:'5vh',marginTop:'2vh'}} fixed>
-      <Text style={{color:'white'}}>https://ara-made.com</Text>
+      <Text style={{color:'white'}}>https://arab-made.com</Text>
       </View>  
 
 
       <View  style={styles.footer} fixed>
         <Image  fixed src={logo} style={styles.logo} />
-        <Text style={styles.textImg}>https://ara-made.com</Text>
+        <Text style={styles.textImg}>https://arab-made.com</Text>
         <Text style={{ fontSize:'10px' , textAlign:'center' }} render={({ pageNumber, totalPages }) => (
         `${pageNumber} / ${totalPages}`
       )}  />
@@ -465,18 +473,18 @@ const MyDocument = ({ requestedData }) => (
     </Page>
     
   </Document>
-);
+)};
 
-const ExtractPdf = ({ requestedData }) => (
+const ExtractPdf = ({ requestedData,qouteOn })=>(
   <div>
     {/* Display PDF on the screen */}
-    <PDFViewer width="100%" height="800px">
-      <MyDocument requestedData={requestedData} />
-    </PDFViewer>
+    {/* <PDFViewer width="100%" height="800px">
+      <MyDocument requestedData={requestedData} qouteOn={qouteOn} />
+    </PDFViewer> */}
 
     {/* Provide a download link */}
     <div>
-      <PDFDownloadLink document={<MyDocument requestedData={requestedData} />} fileName="quote.pdf">
+      <PDFDownloadLink document={<MyDocument requestedData={requestedData} qouteOn={qouteOn} />} fileName="quote.pdf">
         {({ loading }) => (loading ? 'Loading document...' : 'Download PDF')}
       </PDFDownloadLink>
     </div>
