@@ -98,7 +98,7 @@ export default function Quote({requestedData}) {
             {requestedData?.timeLine &&
               Object.keys(requestedData?.timeLine)?.length > 0 && (
                 <div className="col-12 ">
-                  <label className="fw-600 mb-1">Product Characteristics</label>
+                  <label className="fw-600 mb-1">Delivery Timeline </label>
 
                   <div className="form-group form-control p-4 ">
                     <div className="row row-gap">
