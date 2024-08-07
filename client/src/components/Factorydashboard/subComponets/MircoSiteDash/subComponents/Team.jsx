@@ -16,13 +16,12 @@ export default function Team(props) {
   return (
     <>
       <div id="team"></div>
-      <div className="container-profile-input w-100 d-none">
+      <div className="container-profile-input w-100 ">
         <div className="title-contianer-input w-100">
           <p>Team</p>
-          {/* <div className="h-100  " style={{ width: "74vw" }}> */}
             {/* ----------------------- */}
-            <div className="row  w-100">
-              <div className="col-12">
+            <div className="  overflow-hidden">
+              {/* <div className="col-12"> */}
                 {teamMembers?.length > 0 ? (
                   <Swiper
                   modules={[Navigation]}
@@ -40,12 +39,13 @@ export default function Team(props) {
                       slidesPerView: 4,
                     },
                   }}
-                  className="swiper h-75"
+                  className="swiper  w-100 "
                   >
+<>
                     {teamMembers?.map((item, index) => (
-                      <SwiperSlide>
+                      <SwiperSlide className="">
                         {/* <div className="col-3 " key={index}> */}
-                        <div className="parent-team w-fit-conent">
+                        <div className="parent-team">
                           <i
                             class="fa-solid fa-trash-can d-flex justify-content-end cursor"
                             onClick={() => {
@@ -72,8 +72,10 @@ export default function Team(props) {
                           </div>
                         </div>
                         {/* </div> */}
-                      </SwiperSlide>
+                       </SwiperSlide>
                     ))}
+
+</>
                   </Swiper>
                 ) : (
                   <h5 className="text-muted text-center py-3">Empty</h5>
@@ -81,19 +83,18 @@ export default function Team(props) {
 
 
                 <Button
-                  className="btn-edit w-fit-content mt-3 "
+                  className="btn-edit w-fit-content mt-3  "
                   variant="primary"
                   onClick={() => handleShow("newTeamReadOnly")}
                 >
                   <p className="cursor">Add New Team </p>
                 </Button>
-              </div>
+              {/* </div> */}
 
               
 
              
             </div>
-          {/* </div> */}
         </div>
       </div>
 

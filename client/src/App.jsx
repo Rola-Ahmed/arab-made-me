@@ -44,8 +44,6 @@ import formRoutes from "routes/FormRoutes";
 
 
 
-import MeetingRoom from "components/MeetingRoom/MeetingRoom";
-import Invitaion from "components/MeetingRoom/Invitaion";
 import UnAuthPage from "components/UnAuthPage";
 import FetchFactories from "components/Factories/AllFactories/FetchFactories";
 
@@ -112,20 +110,7 @@ const router = createBrowserRouter([
 
       // formssssssssssssssssssssssssssssssss
 
-      // ------will use it again-------------------
-      // {
-      //   path: "mettingRoom",
-      //   element: <MeetingRoom />,
-      // },
-      // // {
-      // //   path: "inviation/:id",
-      // //   element: <MeetingRoom />,
-      // // },
-      // {
-      //   path: "vpaas-magic-cookie-8f03c02025c64a96b9130e33703c5b35/SampleAppUsedSeparationsRetreatFundamentally",
-      //   element: <Invitaion />,
-      // },
-      // ---------------------------------
+
 
       ...authRoutes,
       ...formRoutes,
