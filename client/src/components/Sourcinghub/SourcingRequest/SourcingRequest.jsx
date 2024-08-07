@@ -98,7 +98,6 @@ function Sourcinghub() {
             isFactoryVerified: false,
           }))
         }
-        // userType="Factory"
       />
 
       <BecomomeAFactory
@@ -119,7 +118,6 @@ function Sourcinghub() {
         <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
           <li class="nav-item" role="presentation">
             <button
-              // class="nav-link active"
               className={`btn-sourcing btn-warning`}
               id="pills-home-tab"
               data-bs-toggle="pill"
@@ -135,7 +133,6 @@ function Sourcinghub() {
           </li>
           <li class="nav-item" role="presentation">
             <button
-              // class="nav-link text-dark"
               id="pills-profile-tab"
               data-bs-toggle="pill"
               data-bs-target="#pills-profile"
@@ -164,11 +161,10 @@ function Sourcinghub() {
             )}
           </>
         ) : (
-          <div className="row  row-sourcing pt-5">
-            <div class="tab-content" id="pills-tabContent">
+            <div class="tab-content mt-5" id="pills-tabContent">
               <div class=" row">
                 {reqData?.map((item) => (
-                  <div className="col-lg-4 sour-card">
+                  <div className="col-lg-4 sour-card gy-4">
                     <SourcingRequestCard
                       item={item}
                       setModalShow={setModalShow}
@@ -179,7 +175,6 @@ function Sourcinghub() {
                 ))}
               </div>
             </div>
-          </div>
         )}
 
         <PublicPaginate pagination={pagination} setPagination={setPagination} />

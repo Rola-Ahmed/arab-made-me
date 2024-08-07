@@ -56,7 +56,6 @@ function SourcingOffers() {
 
   // utils function
 
-  // "setAllSourcingReqData",allSourcingReqData)
 
   return (
     <>
@@ -65,7 +64,6 @@ function SourcingOffers() {
         <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
           <li class="nav-item" role="presentation">
             <button
-              // class="nav-link active"
               className={`btn-sourcing `}
               id="pills-home-tab"
               data-bs-toggle="pill"
@@ -81,7 +79,6 @@ function SourcingOffers() {
           </li>
           <li class="nav-item" role="presentation">
             <button
-              // class="nav-link text-dark"
               id="pills-profile-tab"
               data-bs-toggle="pill"
               data-bs-target="#pills-profile"
@@ -97,8 +94,7 @@ function SourcingOffers() {
           </li>
         </ul>
 
-        <div className="row  row-sourcing pt-5">
-          <div className="row">
+          <div className="row pt-5">
             <div className="col-12">
               <div className="border-container-2">
                 <SourcingOfferTable
@@ -106,11 +102,11 @@ function SourcingOffers() {
                   apiLoadingData={apiLoadingData}
                 />
 
-                {allSourcingReqData?.length == 0 && (
+                {apiLoadingData?.laoding&& (
                   <div className="d-flex justify-content-center py-5">
                     {apiLoadingData?.errorMsg ? (
                       <p className="fs-5 text-muted fw-bolder text-5 mt-5 pt-5 mx-auto">
-                        {apiLoadingData?.errorMsg || "No records Found"}
+                        {apiLoadingData?.errorMsg }
                       </p>
                     ) : (
                       <div className="d-flex justify-content-center">
@@ -119,10 +115,21 @@ function SourcingOffers() {
                     )}
                   </div>
                 ) }
+                {
+                  (allSourcingReqData?.length == 0 && !apiLoadingData?.laoding) &&  
+                  
+                  <div className="d-flex justify-content-center py-5">
+                    <p className="fs-5 text-muted fw-bolder text-5 mb-5 pt-3 mx-auto">
+                      No Records Found
+                    </p>
+                 
+                </div>
+
+                }
               </div>
             </div>
           </div>
-        </div>
+        {/* </div> */}
 
         <PublicPaginate pagination={pagination} setPagination={setPagination} />
       </div>
