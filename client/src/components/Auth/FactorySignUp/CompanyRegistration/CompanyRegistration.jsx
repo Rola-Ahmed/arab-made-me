@@ -48,7 +48,6 @@ export default function CompanyRegistration() {
       return restErrors;
     });
 
-    try {
       let data = {
         description: values.description,
         country: values.country,
@@ -76,7 +75,6 @@ export default function CompanyRegistration() {
         }));
 
         navigate(`/CompanyDetails/step2`);
-        setIsLoading(true);
       } else {
         setIsLoading(false);
         setErrorMsg((prevErrors) => ({
@@ -92,7 +90,6 @@ export default function CompanyRegistration() {
           });
         }
       }
-    } catch (error) {}
   }
 
   return (
