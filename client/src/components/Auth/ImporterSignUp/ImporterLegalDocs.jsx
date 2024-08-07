@@ -19,6 +19,7 @@ function ImporterRepDetails() {
   const [errorMsg, setErrorMsg] = useState();
 
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedDocs, setSelectedDocs] = useState([]);
 
   // ------------------------------------------------new
   async function UploadDocs(e) {
@@ -38,11 +39,10 @@ function ImporterRepDetails() {
       data
     );
 
-    console.log("resultresult", result);
+    // console.log("resultresult", result);
 
     if (result?.success) {
       navigate(`/importerdashboard`);
-      setIsLoading(true);
     } else {
       setErrorMsg((prevErrors) => ({
         ...prevErrors,
@@ -59,12 +59,7 @@ function ImporterRepDetails() {
     setIsLoading(false);
   }
 
-  const [selectedDocs, setSelectedDocs] = useState([
-    // {
-    //   keyWord: null,
-    //   pdfFile: null,
-    // },
-  ]);
+  
 
   return (
     <>

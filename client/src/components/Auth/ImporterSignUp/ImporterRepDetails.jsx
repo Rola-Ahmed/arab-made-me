@@ -1,20 +1,22 @@
 import { useState, useContext, useEffect } from "react";
-
 import { awaitImg, nextImg, checkedImg } from "constants/Images";
-
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
-import axios from "axios";
-import { baseUrl } from "config.js";
-
 import * as Yup from "yup";
+import InputField from "components/Forms/Shared/InputField";
+
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
 import { countriesMiddleEast } from "constants/countries";
+import { useFetchSectors } from "hooks/useFetchSectors";
+import TextareaInput from "components/Forms/Shared/TextareaInput";
+import { addImporter } from "Services/importer";
+import FormVlaidtionError from "components/Forms/Shared/FormVlaidtionError";
 
 export default function ImporterRepDetails() {
   let { isLogin } = useContext(UserToken);
   let { setCurrentUserData } = useContext(userDetails);
+  let { allSectors } = useFetchSectors();
 
   document.title = "Buyer Registration";
   useEffect(() => {
@@ -29,7 +31,6 @@ export default function ImporterRepDetails() {
   const [errorMsg, setErrorMsg] = useState();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [allSectors, setAllSectors] = useState([]);
 
   let phoneValidation = Yup.string()
     .required("Input Field is Required")
@@ -41,19 +42,16 @@ export default function ImporterRepDetails() {
     // userType: Yup.string(),
 
     repName: Yup.string()
-
       .max(50, "max length is 50")
       .required("Input field is Required"),
 
     importerName: Yup.string()
-
       .max(50, "max length is 50")
       .required("Input field is Required"),
 
     repEmail: Yup.string()
       .email("Invalid email")
       .required("Input Field is Required")
-
       .max(255, "max length is 255"),
 
     repPhone: phoneValidation,
@@ -77,7 +75,6 @@ export default function ImporterRepDetails() {
 
     description: Yup.string()
       .required("Input Field is Required")
-
       .max(255, "max legnth is 255"),
   });
 
@@ -108,7 +105,7 @@ export default function ImporterRepDetails() {
     onSubmit: submitForm,
   });
   useEffect(() => {
-    if (allSectors.length !== 0) {
+    if (allSectors?.length !== 0) {
       formValidation.setValues({
         ...formValidation.values,
         sectorId: allSectors?.[0]?.id || "",
@@ -123,163 +120,71 @@ export default function ImporterRepDetails() {
       return restErrors;
     });
 
-    try {
-      // ;
-      let data = {
-        name: values.importerName,
-        repName: values.repName,
-        repPhone: `${values.repPhoneCode}${values.repPhone}`,
-        repEmail: values.repEmail,
-        description: values.description,
-        country: values.country,
-        sectorId: values.sectorId,
-        allowEmailNotification: values.allowEmailNotification,
-        socialLinks: {},
-      };
+    // ;
 
-      if (values.address !== "") {
-        data.address = [values.address];
-      }
-
-      if (values.website !== "") {
-        data.website = values.website;
-      }
-
-      if (values.commercialRegisterationNumber !== "") {
-        data.commercialRegisterationNumber =
-          values.commercialRegisterationNumber;
-      }
-
-      if (values.WhatsappPhone !== "")
-        data.socialLinks[
-          "whatsapp"
-        ] = `${values.WhatsappPhoneCode}${values.WhatsappPhone}`;
-
-      let config = {
-        method: "post",
-        url: `${baseUrl}/importers/add`,
-
-        data: data,
-        headers: {
-          authorization: isLogin,
-        },
-      };
-
-      const response = await axios.request(config);
-      //   setErrorMsg("");
-      setErrorMsg((prevErrors) => {
-        const { response, ...restErrors } = prevErrors || {};
-        return restErrors;
-      });
-
-      if (response?.data?.message === "done") {
-        navigate("/buyerRegistration/LegalDocuments");
-        setCurrentUserData((prevUserData) => ({
-          ...prevUserData,
-          importerId: response?.data?.importer?.id,
-        }));
-        setIsLoading(true);
-      } else {
-        setErrorMsg((prevErrors) => ({
-          ...prevErrors,
-          response: response?.data?.message,
-        }));
-        const targetElement = document.getElementById("view");
-        targetElement.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-        setIsLoading(false);
-      }
-    } catch (error) {
-      setIsLoading(false);
-      if (error.response) {
-        const statusCode = error.response.status;
-        switch (statusCode) {
-          case 400:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.errorMessage,
-            }));
-            break;
-          case 401:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.message,
-            }));
-            break;
-          case 403:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response:
-                "Forbidden, You do not have permission to access this resource.",
-            }));
-            break;
-          case 404:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response:
-                "Not Found (404). The requested resource was not found.",
-            }));
-            break;
-
-          case 500:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.errorMessage,
-            }));
-            break;
-
-          //  429 Too Many Requests
-          // The user has sent too many requests in a given amount of time ("rate limiting").
-          case 429:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: " Too Many Requests , Please try again later.",
-            }));
-            break;
-          case 402:
-            // 402
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.message,
-            }));
-            break;
-          default:
-            // case message== error
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.errorMessage,
-            }));
-            break;
-        }
-      } else {
-        setErrorMsg((prevErrors) => ({
-          ...prevErrors,
-          response: "An unexpected error occurred. Please try again later.",
-        }));
-      }
-
-      const targetElement = document.getElementById("view");
-      targetElement.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
-  }
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${baseUrl}/sectors?size=10`);
-
-        if (response.data.message === "done") {
-          setAllSectors(response.data.sectors);
-        }
-      } catch (error) {}
+    let {
+      importerName,
+      repName,
+      repEmail,
+      repPhoneCode,
+      repPhone,
+      description,
+      country,
+      sectorId,
+      allowEmailNotification,
+      address,
+      website,
+      commercialRegisterationNumber,
+      WhatsappPhone,
+      WhatsappPhoneCode,
+    } = values;
+    let data = {
+      name: importerName,
+      repName,
+      repPhone: `${repPhoneCode}${repPhone}`,
+      repEmail,
+      description,
+      country,
+      sectorId,
+      allowEmailNotification,
+      socialLinks: {},
+      ...(address && { address: address }),
+      ...(website && { website: website }),
+      ...(commercialRegisterationNumber && {
+        commercialRegisterationNumber: commercialRegisterationNumber,
+      }),
     };
 
-    fetchData(); // Call the asynchronous function
-  }, []);
+    if (WhatsappPhone !== "")
+      data.socialLinks["whatsapp"] = `${WhatsappPhoneCode}${WhatsappPhone}`;
+
+    let result = await addImporter(
+      {
+        authorization: isLogin,
+      },
+      data
+    );
+
+    if (result?.success) {
+      navigate("/buyerRegistration/LegalDocuments");
+      setCurrentUserData((prevUserData) => ({
+        ...prevUserData,
+        importerId: result?.data?.importer?.id,
+      }));
+    } else {
+      setErrorMsg((prevErrors) => ({
+        ...prevErrors,
+        response: result?.error,
+      }));
+      const targetElement = document.getElementById("view");
+      if(targetElement)
+      {targetElement.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });}
+      setIsLoading(false);
+    }
+  }
 
   return (
     <section id="view" className="register-msg ">
@@ -337,90 +242,43 @@ export default function ImporterRepDetails() {
 
                 <div className="row gap-row-2">
                   <div className="col-12">
-                    <div className="grid-gap-col">
+                    <InputField
+                      isRequired={true}
+                      title="Buyer Name "
+                      formValidation={formValidation}
+                      vlaidationName="importerName"
+                    />
+                  </div>
+
+                  {/* <TextareaInput
+                vlaidationName="importerName"
+                formValidation={formValidation}
+                isRequired={true}
+                title="Buyer Name "
+              /> */}
+
+                  <div className="col-12">
+                    <InputField
+                      isRequired={true}
+                      title="Representive full Name"
+                      formValidation={formValidation}
+                      vlaidationName="repName"
+                    />
+                  </div>
+
+                  <div className="col-12">
+                    <InputField
+                      isRequired={true}
+                      title="Representive Email"
+                      formValidation={formValidation}
+                      vlaidationName="repEmail"
+                    />
+                  </div>
+
+                  <div className="col-12">
                       <div className="form-group gap">
                         <label className="form-title">
-                          Buyer Name <span className="text-danger">*</span>
-                        </label>
-
-                        <input
-                          type="text"
-                          className="form-control input-style"
-                          placeholder="Enter Buyer Name"
-                          id="importerName"
-                          onChange={formValidation.handleChange}
-                          onBlur={formValidation.handleBlur}
-                          value={formValidation.values.importerName}
-                        />
-                        {formValidation.errors.importerName &&
-                        formValidation.touched.importerName ? (
-                          <small className="text-danger">
-                            {formValidation.errors.importerName}
-                          </small>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="col-12">
-                    <div className="form-group gap">
-                      <label className="form-title">
-                        Representive full Name*
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control input-style"
-                        id="repName"
-                        name="repName"
-                        placeholder="Enter full Name"
-                        onChange={formValidation.handleChange}
-                        onBlur={formValidation.handleBlur}
-                        value={formValidation.values.repName}
-                      />
-                      {formValidation.errors.repName &&
-                      formValidation.touched.repName ? (
-                        <small className="text-danger">
-                          {formValidation.errors.repName}
-                        </small>
-                      ) : (
-                        ""
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="col-12">
-                    <div className="form-group gap">
-                      <label className="form-title"> Representive Email*</label>
-                      <input
-                        type="text"
-                        className="form-control input-style"
-                        id="repEmail"
-                        name="repEmail"
-                        placeholder="enter Representive Email"
-                        onChange={formValidation.handleChange}
-                        onBlur={formValidation.handleBlur}
-                        value={formValidation.values.repEmail}
-                      />
-
-                      {formValidation.errors.repEmail &&
-                      formValidation.touched.repEmail ? (
-                        <small className="text-danger">
-                          {formValidation.errors.repEmail}
-                        </small>
-                      ) : (
-                        ""
-                      )}
-                    </div>
-                  </div>
-
-                  {/* ----------------------- */}
-                  <div className="col-12">
-                    <div className="grid-gap-col">
-                      <div className="form-group gap">
-                        <label className="form-title">
-                          Representive Phone Number*
+                          Representive Phone Number *
                         </label>
                         <div className="input-group  h-100">
                           <div className="input-group-prepend">
@@ -453,20 +311,11 @@ export default function ImporterRepDetails() {
                             onBlur={formValidation.handleBlur}
                           />
                         </div>
-                        {formValidation.errors.repPhone &&
-                        formValidation.touched.repPhone ? (
-                          <small className="form-text text-danger">
-                            {formValidation.errors.repPhone}
-                          </small>
-                        ) : (
-                          ""
-                        )}
+                        <FormVlaidtionError formValidation={formValidation}
+                        vlaidationName='repPhone'/>
                       </div>
-                    </div>
                   </div>
-                  {/* ---------------------- */}
                   <div className="col-12">
-                    <div className="grid-gap-col">
                       <div className="form-group gap">
                         <label className="form-title">
                           Whatsapp Phone Number
@@ -500,68 +349,30 @@ export default function ImporterRepDetails() {
                             onBlur={formValidation.handleBlur}
                           />
                         </div>
-                        {formValidation.errors.WhatsappPhone &&
-                        formValidation.touched.WhatsappPhone ? (
-                          <small className="form-text text-danger">
-                            {formValidation.errors.WhatsappPhone}
-                          </small>
-                        ) : (
-                          ""
-                        )}
+                      
+                        <FormVlaidtionError formValidation={formValidation}
+                        vlaidationName='WhatsappPhone'/>
                       </div>
-                    </div>
                   </div>
 
                   <div className="col-12">
-                    <div className="form-group gap">
-                      <label className="form-title">website</label>
-                      <input
-                        type="text"
-                        className="form-control input-style"
-                        id="website"
-                        placeholder="https://...."
-                        onChange={formValidation.handleChange}
-                        onBlur={formValidation.handleBlur}
-                        value={formValidation.values.website}
-                      />
-                      {formValidation.errors.website &&
-                      formValidation.touched.website ? (
-                        <small className="text-danger">
-                          {formValidation.errors.website}
-                        </small>
-                      ) : (
-                        ""
-                      )}
-                    </div>
+                    <InputField
+                      isRequired={false}
+                      title={"website"}
+                      formValidation={formValidation}
+                      vlaidationName={"website"}
+                    />
                   </div>
 
                   {/*  */}
 
                   <div className="col-12">
-                    <div className="form-group gap">
-                      <label className="form-title">
-                        commercial Registeration Number
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control input-style"
-                        placeholder="12345678"
-                        id="commercialRegisterationNumber"
-                        onChange={formValidation.handleChange}
-                        onBlur={formValidation.handleBlur}
-                        value={
-                          formValidation.values.commercialRegisterationNumber
-                        }
-                      />
-                      {formValidation.errors.commercialRegisterationNumber &&
-                      formValidation.touched.commercialRegisterationNumber ? (
-                        <small className="text-danger">
-                          {formValidation.errors.commercialRegisterationNumber}
-                        </small>
-                      ) : (
-                        ""
-                      )}
-                    </div>
+                    <InputField
+                      isRequired={false}
+                      title={"commercial Registeration Number"}
+                      formValidation={formValidation}
+                      vlaidationName={"commercialRegisterationNumber"}
+                    />
                   </div>
 
                   <div className="col-12">
@@ -584,26 +395,12 @@ export default function ImporterRepDetails() {
                   </div>
 
                   <div className="col-12">
-                    <div className="form-group gap">
-                      <label className="form-title">address</label>
-                      <input
-                        type="text"
-                        className="form-control input-style"
-                        id="address"
-                        placeholder="Enter Address"
-                        onChange={formValidation.handleChange}
-                        onBlur={formValidation.handleBlur}
-                        value={formValidation.values.address}
-                      />
-                      {formValidation.errors.address &&
-                      formValidation.touched.address ? (
-                        <small className="text-danger">
-                          {formValidation.errors.address}
-                        </small>
-                      ) : (
-                        ""
-                      )}
-                    </div>
+                    <InputField
+                      isRequired={false}
+                      title={"address"}
+                      formValidation={formValidation}
+                      vlaidationName={"address"}
+                    />
                   </div>
 
                   <div className="col-12">
@@ -611,14 +408,13 @@ export default function ImporterRepDetails() {
                       <label className="form-title">sector</label>
                       <select
                         className="form-select form-control input-style"
-                        onChange={
-                          // setCountryVal(event.target.value);
-                          formValidation.handleChange
-                        }
+                        onChange={formValidation.handleChange}
                         id="sectorId"
                         onBlur={formValidation.handleBlur}
                         value={formValidation.values.sectorId}
                       >
+                        <option value="">Select</option>
+
                         {allSectors?.map((item) => (
                           <option value={item?.id}>{item?.name}</option>
                         ))}
@@ -627,7 +423,6 @@ export default function ImporterRepDetails() {
                   </div>
 
                   <div className="col-12">
-                    {/* <div className="d-flex justify-content-between align-items-center "> */}
                     <div className="form-group gap m-0 p-0">
                       <label className="form-title">
                         Allow Email Notifications
@@ -642,32 +437,17 @@ export default function ImporterRepDetails() {
                         onBlur={formValidation.handleBlur}
                         value={formValidation.values.allowEmailNotification}
                       />
-                      {/* </div> */}
                     </div>
                   </div>
 
                   <div className="col-12">
-                    <div className="form-group gap">
-                      <label className="form-title">
-                        Buyer Description <span className="text-danger">*</span>
-                      </label>
-                      <textarea
-                        className="form-control "
-                        rows="4"
-                        id="description"
-                        onChange={formValidation.handleChange}
-                        onBlur={formValidation.handleBlur}
-                        value={formValidation.values.description}
-                      ></textarea>
-                      {formValidation.errors.description &&
-                      formValidation.touched.description ? (
-                        <small className="text-danger">
-                          {formValidation.errors.description}
-                        </small>
-                      ) : (
-                        ""
-                      )}
-                    </div>
+                  <TextareaInput
+                      vlaidationName="description"
+                      formValidation={formValidation}
+                      isRequired={true}
+                      title="Buyer Description"
+                    />
+                   
                   </div>
 
                   <div className="col-12 action">
@@ -686,10 +466,12 @@ export default function ImporterRepDetails() {
                             );
 
                             // Scroll to the target element
-                            targetElement.scrollIntoView({
-                              behavior: "smooth",
-                              block: "center",
-                            });
+                            if (targetElement) {
+                              targetElement.scrollIntoView({
+                                behavior: "smooth",
+                                block: "center",
+                              });
+                            }
                           }
                         }}
                       >
