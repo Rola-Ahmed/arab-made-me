@@ -1,9 +1,9 @@
 import { baseUrl_IMG } from "config.js";
 import { handleImageError } from "utils/ImgNotFound";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
-import { Navigation } from "swiper/modules";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import UploadDocument from "components/Forms/Shared/UploadDocument";
@@ -16,12 +16,12 @@ export default function Team(props) {
   return (
     <>
       <div id="team"></div>
-      <div className="container-profile-input w-100">
+      <div className="container-profile-input w-100 d-none">
         <div className="title-contianer-input w-100">
           <p>Team</p>
           {/* <div className="h-100  " style={{ width: "74vw" }}> */}
             {/* ----------------------- */}
-            <div className="row  ">
+            <div className="row  w-100">
               <div className="col-12">
                 {teamMembers?.length > 0 ? (
                   <Swiper
@@ -40,11 +40,12 @@ export default function Team(props) {
                       slidesPerView: 4,
                     },
                   }}
+                  className="swiper h-75"
                   >
                     {teamMembers?.map((item, index) => (
                       <SwiperSlide>
                         {/* <div className="col-3 " key={index}> */}
-                        <div className="parent-team w-100">
+                        <div className="parent-team w-fit-conent">
                           <i
                             class="fa-solid fa-trash-can d-flex justify-content-end cursor"
                             onClick={() => {
