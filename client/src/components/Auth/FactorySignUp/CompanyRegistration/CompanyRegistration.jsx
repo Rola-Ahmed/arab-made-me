@@ -173,7 +173,7 @@ export default function CompanyRegistration() {
                         </div>
                         <input
                           type="text"
-                          className="form-control input-style phone-border"
+                          className="form-control  phone-border"
                           id="factoryPhone"
                           placeholder="1113534343"
                           onChange={formValidation.handleChange}
@@ -212,7 +212,7 @@ export default function CompanyRegistration() {
                         </div>
                         <input
                           type="text"
-                          className="form-control input-style phone-border"
+                          className="form-control  phone-border"
                           id="WhatsappPhone"
                           placeholder="1113534343"
                           onChange={formValidation.handleChange}
@@ -241,7 +241,7 @@ export default function CompanyRegistration() {
                     <div className="form-group ">
                       <label className="form-title">Country</label>
                       <select
-                        className="form-select form-control input-style"
+                        className="form-select form-control "
                         onChange={formValidation.handleChange}
                         id="country"
                         onBlur={formValidation.handleBlur}
@@ -269,7 +269,7 @@ export default function CompanyRegistration() {
                     <div className="form-group gap">
                       <label className="form-title">sector *</label>
                       <select
-                        className="form-select form-control input-style"
+                        className="form-select form-control "
                         onChange={
                           // setCountryVal(event.target.value);
                           formValidation.handleChange

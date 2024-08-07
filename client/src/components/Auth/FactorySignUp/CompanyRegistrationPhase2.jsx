@@ -169,7 +169,7 @@ function CompanyRegistrationPhase2() {
                         </label>
                         <input
                           placeholder="Enter Year Of Establishment"
-                          className="form-control input-style"
+                          className="form-control "
                           id="yearOfEstablishmint"
                           onChange={formValidation.handleChange}
                           onBlur={formValidation.handleBlur}
@@ -192,7 +192,7 @@ function CompanyRegistrationPhase2() {
                           Yearly Sales Income
                         </label>
                         <select
-                          className="form-select form-control input-style"
+                          className="form-select form-control "
                           onChange={formValidation.handleChange}
                           id="yearlySalesIncome"
                           onBlur={formValidation.handleBlur}
@@ -222,7 +222,7 @@ function CompanyRegistrationPhase2() {
                         </label>
 
                         <select
-                          className="form-select form-control input-style"
+                          className="form-select form-control "
                           onChange={formValidation.handleChange}
                           id="numberOfEmployees"
                           onBlur={formValidation.handleBlur}
@@ -247,7 +247,7 @@ function CompanyRegistrationPhase2() {
                         <label className="form-title">Address</label>
                         <input
                           type="text"
-                          className="form-control input-style"
+                          className="form-control "
                           id="address"
                           placeholder="Enter Address"
                           onChange={formValidation.handleChange}
@@ -270,7 +270,7 @@ function CompanyRegistrationPhase2() {
                         <label className="form-title">Address Link</label>
                         <input
                           type="link"
-                          className="form-control input-style"
+                          className="form-control "
                           id="addressLink"
                           placeholder="Enter address Link"
                           onChange={formValidation.handleChange}

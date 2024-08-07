@@ -302,7 +302,7 @@ export default function ImporterRepDetails() {
                           </div>
                           <input
                             type="text"
-                            className="form-control input-style phone-border"
+                            className="form-control  phone-border"
                             id="repPhone"
                             name="repPhone"
                             placeholder="1113534343"
@@ -340,7 +340,7 @@ export default function ImporterRepDetails() {
                           </div>
                           <input
                             type="text"
-                            className="form-control input-style phone-border"
+                            className="form-control  phone-border"
                             id="WhatsappPhone"
                             name="WhatsappPhone"
                             placeholder="1113534343"
@@ -379,7 +379,7 @@ export default function ImporterRepDetails() {
                     <div className="form-group gap">
                       <label className="form-title">Country</label>
                       <select
-                        className="form-select form-control input-style"
+                        className="form-select form-control "
                         onChange={formValidation.handleChange}
                         id="country"
                         onBlur={formValidation.handleBlur}
@@ -407,7 +407,7 @@ export default function ImporterRepDetails() {
                     <div className="form-group gap">
                       <label className="form-title">sector</label>
                       <select
-                        className="form-select form-control input-style"
+                        className="form-select form-control "
                         onChange={formValidation.handleChange}
                         id="sectorId"
                         onBlur={formValidation.handleBlur}
@@ -430,7 +430,7 @@ export default function ImporterRepDetails() {
                     </div>
                     <div className="form-check form-switch">
                       <input
-                        className="form-check-input switch-input cursor form-select form-control input-style"
+                        className="form-check-input switch-input cursor form-select form-control "
                         type="checkbox"
                         id="allowEmailNotification"
                         onChange={formValidation.handleChange}

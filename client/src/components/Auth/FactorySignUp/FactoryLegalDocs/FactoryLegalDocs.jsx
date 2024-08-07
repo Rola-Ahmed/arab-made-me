@@ -166,7 +166,7 @@ function FactoryLegalDocs() {
                       </label>
                       <input
                         type="text"
-                        className="form-control input-style"
+                        className="form-control "
                         id="taxRegisterationNumber"
                         placeholder="12345678"
                         onChange={formValidation.handleChange}
@@ -191,7 +191,7 @@ function FactoryLegalDocs() {
                       </label>
                       <input
                         type="text"
-                        className="form-control input-style"
+                        className="form-control "
                         id="IndustrialRegistrationNumber"
                         placeholder="12345678"
                         onChange={formValidation.handleChange}
@@ -218,7 +218,7 @@ function FactoryLegalDocs() {
                       </label>
                       <input
                         type="text"
-                        className="form-control input-style"
+                        className="form-control "
                         id="IndustrialLicenseNumber"
                         placeholder="12345678"
                         onChange={formValidation.handleChange}
@@ -243,7 +243,7 @@ function FactoryLegalDocs() {
                       </label>
                       <input
                         type="text"
-                        className="form-control input-style"
+                        className="form-control "
                         placeholder="12345678"
                         id="commercialRegisterationNumber"
                         onChange={formValidation.handleChange}

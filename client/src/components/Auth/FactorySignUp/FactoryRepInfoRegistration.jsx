@@ -237,7 +237,7 @@ function FactoryRepInfoRegistration() {
                             </div>
                             <input
                               type="text"
-                              className="form-control input-style phone-border"
+                              className="form-control  phone-border"
                               id="repPhone"
                               name="repPhone"
                               placeholder="1113534343"

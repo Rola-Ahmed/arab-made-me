@@ -13,7 +13,7 @@ export default function InputField({
         {title} {isRequired && <span className="text-danger">*</span>}
       </label>
       <input
-        className="form-control input-style"
+        className="form-control "
         id={vlaidationName}
         onChange={formValidation.handleChange}
         onBlur={formValidation.handleBlur}
