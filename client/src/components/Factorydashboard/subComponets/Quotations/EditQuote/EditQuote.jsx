@@ -1,7 +1,5 @@
 import { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
@@ -354,124 +352,7 @@ export default function EditQuote() {
     return <FactoryUnVerified />;
   }
 
-  function handleMultiMediaValidation(e, keyWordDoc) {
-    const count = selectedDocs?.filter(
-      (item) => item?.keyWord === "docs"
-    )?.length;
 
-    if (count >= 3) {
-      setErrorMsg((prevErrors) => ({
-        ...prevErrors,
-        [keyWordDoc]: `Max length is 3`,
-      }));
-      return;
-    }
-    // clear error message
-    setErrorMsg((prevErrors) => {
-      const newErrors = { ...prevErrors };
-      delete newErrors[keyWordDoc];
-      return newErrors;
-    });
-    const acceptedExtensions = ["png", "jpeg", "jpg"];
-    const fileType = e.type;
-
-    const isAcceptedType = acceptedExtensions?.some((extension) =>
-      fileType?.toLowerCase()?.includes(extension?.toLowerCase())
-    );
-
-    if (!isAcceptedType) {
-      setErrorMsg((prevErrors) => ({
-        ...prevErrors,
-        [keyWordDoc]:
-          // "Invalid file format. Only pdf, png, jpeg, jpg, mp4 allowed"
-          `Invalid file format. Only ${acceptedExtensions.join(
-            ", "
-          )} are allowed`,
-      }));
-      return;
-    }
-
-    const mediaNameExists = selectedDocs?.some(
-      (item) => item?.pdfFile?.name === e?.name && item?.keyWord === keyWordDoc
-    );
-
-    // if image aleady exisit
-    if (mediaNameExists) {
-      setErrorMsg((prevErrors) => ({
-        ...prevErrors,
-        [keyWordDoc]: "Media already exists",
-      }));
-      return;
-    } else {
-    }
-
-    let updatedDocs = [...selectedDocs];
-
-    // Image loaded successfully
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      updatedDocs.push({
-        keyWord: keyWordDoc,
-        pdfFile: e,
-        imageReaderURL: reader.result,
-        onprogress: 100,
-      });
-
-      setSelectedDocs(updatedDocs);
-      const coverImgInput = document?.getElementById("coverimginput");
-      if (coverImgInput) {
-        coverImgInput.value = "";
-      }
-    };
-
-    reader.onprogress = (event) => {
-      // Calculate and show the loading percentage
-      if (event.lengthComputable) {
-        const percentage = (event.loaded / event.total) * 100;
-
-        // if (updatedDocs.length > 0) {
-        //   // Adding a new attribute to the last object
-        //   // updatedDocs[updatedDocs.length - 1].onprogress = percentage?.toFixed(0);
-        //   // setSelectedDocs([...updatedDocs]);
-
-        //   // setSelectedDocs((prevDocs) => {
-        //   //   const updatedDocs = [...prevDocs];
-        //   //   if (updatedDocs.length > 0) {
-        //   //     updatedDocs[updatedDocs.length - 1].onprogress = percentage?.toFixed(0);
-        //   //   }
-        //   //   return updatedDocs;
-        //   // });
-        // }
-        // setimgloadin(percentage);
-      }
-    };
-
-    reader.onerror = () => {
-      setErrorMsg((prevErrors) => ({
-        ...prevErrors,
-        [keyWordDoc]: "Error loading image",
-      }));
-    };
-
-    reader.readAsDataURL(e);
-  }
-
-  // Remove unwanted image
-  function removeSelectedDoc(indexToRemove) {
-    // let updatedDocs = [...selectedDocs];
-    // updatedDocs.splice(index, 1);
-
-    // return updatedDocs;
-
-    setSelectedDocs((prevSelectedDocs) => {
-      // Create a new array without the item at the specified index
-      const updatedSelectedDocs = [
-        ...prevSelectedDocs.slice(0, indexToRemove),
-        ...prevSelectedDocs.slice(indexToRemove + 1),
-      ];
-      return updatedSelectedDocs;
-    });
-  }
 
   return (
     <div id="view" className="m-4 order-section  ">
@@ -479,7 +360,6 @@ export default function EditQuote() {
         currentPage="More Details"
         PrevPage="Private Label Details"
       />
-      <ToastContainer />
       {/* section 1 */}
       <form onSubmit={formValidation.handleSubmit} className="header w-100">
         {/* <form className="header w-100"> */}
@@ -836,115 +716,7 @@ export default function EditQuote() {
               </div>
             </div>
 
-            <div className="col-12 d-none">
-              <div className="form-group gap">
-                <label className="form-title">Upload Images </label>
-                <label
-                  className="mb-0 drop-drag-area  p-5 text-center cursor w-100 "
-                  htmlFor="imagesInput"
-                  onDrop={(e) => {
-                    e.preventDefault();
-                    const files = e?.dataTransfer?.files;
-                    if (files && files.length > 0) {
-                      handleMultiMediaValidation(files?.[0], "images");
-                    }
-
-                    e.target.classList.remove("highlight");
-                  }}
-                  onDragOver={(e) => {
-                    e.target.classList.add("highlight");
-
-                    e.preventDefault();
-                  }}
-                  onDragLeave={(e) => {
-                    e.preventDefault();
-                    e.target.classList.remove("highlight");
-                  }}
-                  onChange={(e) => {
-                    const files = e.target.files;
-
-                    if (files && files?.length > 0) {
-                      handleMultiMediaValidation(files?.[0], "images");
-                    }
-                  }}
-                >
-                  Drag and drop files here or click to select files
-                  <input
-                    type="file"
-                    id="imagesInput"
-                    // className="d-none"
-                    hidden
-                    onChange={(e) => {
-                      const files = e.target.files;
-
-                      if (files && files?.length > 0) {
-                        handleMultiMediaValidation(files?.[0], "images");
-                      }
-                    }}
-                    multiple
-                  />
-                </label>
-                <small className="form-text small-note">
-                  Only pdf, png, jpeg, and jpg are allowed. A maximum of 3
-                  pictures is permitted.
-                </small>
-
-                <small className="text-danger">{errorMsg?.images}</small>
-
-                {/* <div className=" row w-100 "> */}
-                {selectedDocs.map(
-                  (item, index) =>
-                    // <div className="col-12">
-                    item.keyWord === "images" && (
-                      <div key={index} className="col-12 img-uploaded">
-                        <div className="d-flex justify-content-between align-items-center  img-cont-file">
-                          {/* <div> */}
-
-                          <div className="d-flex justify-content-start align-items-center ">
-                            <img
-                              // src={item.imageReaderURL}
-                              src={item.imageReaderURL}
-                              className="image-upload-file me-3"
-                            />
-                          </div>
-
-                          <div className="w-100">
-                            <div className="d-flex justify-content-between align-items-center">
-                              <div>
-                                <p>{item?.pdfFile?.name}</p>
-                                <p className="">
-                                  {(item?.pdfFile?.size / 1024)?.toFixed(2)} KB
-                                </p>
-                                {/* {imgloadin} */}
-                              </div>
-
-                              <div
-                                onClick={() => removeSelectedDoc(index)}
-                                className="cursor"
-                              >
-                                <i className="fa-solid fa-trash-can"></i>
-                              </div>
-                            </div>
-
-                            <div className="d-flex  align-items-center">
-                              <progress
-                                className="w-100"
-                                id="progressBar"
-                                max="100"
-                                value={item?.onprogress || 0}
-                                // value="30"
-                                imgloadin
-                              ></progress>
-                              {item?.onprogress}%
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    )
-                  // </div>
-                )}
-              </div>
-            </div>
+           
           </div>
         </div>
         {/* ------------ */}
