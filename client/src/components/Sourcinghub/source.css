@@ -26,14 +26,7 @@
 
 }
 
-.req-tit {
-    color: #14181F;
-    font-family: "Inter-med";
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 24px;
-}
+
 
 .req-btn {
     display: flex;
@@ -43,14 +36,11 @@
     border-radius: 8px;
     border: 1px solid var(--primary-color);
     color: var(--primary-color);
-    text-align: center;
     background-color: #FFF;
     font-family: "Inter-med";
     font-size: 14px;
     font-style: normal;
     font-weight: 600;
-    line-height: 24px;
-    transition: all 0.5s;
 }
 
 .btn-sourcing {
@@ -111,12 +101,6 @@
 
 
 @media (max-width:539px) {
-    /* .req-btn{
-    
-    font-size: 3.5vw;
-    
-    
-    } */
 
     p, button, div, textarea, input {
         font-size: 14px;
