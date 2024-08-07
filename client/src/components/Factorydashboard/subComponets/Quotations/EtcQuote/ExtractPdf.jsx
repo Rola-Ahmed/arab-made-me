@@ -449,7 +449,7 @@ const MyDocument = ({ requestedData }) => (
     <Text style={styles.watermarkText}>https://ara-made.com</Text>
   </View>
 
-      <View  style={{height:'5vh'}} fixed>
+      <View  style={{height:'5vh',marginTop:'2vh'}} fixed>
       <Text style={{color:'white'}}>https://ara-made.com</Text>
       </View>  
 
