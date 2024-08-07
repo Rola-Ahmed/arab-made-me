@@ -15,7 +15,7 @@ import SelectRole from "../TimeLineHeader/SelectRole";
 import NextPoint from "../TimeLineHeader/NextPoint";
 
 export default function CompanyRegistration() {
-  document.title = "Company Registration";
+  document.title = "Factory Registration";
   let currentUrl = window.location.pathname;
 
   let { isLogin } = useContext(UserToken);
@@ -124,7 +124,7 @@ export default function CompanyRegistration() {
                 </div>
                 <div className="w-100 vertical-line-after  mt-auto mb-auto"></div>
               </div>
-              <p className="text-cont text-center">Company Microsite Details</p>
+              <p className="text-cont text-center">Factory Microsite Details</p>
 
               {/*  */}
             </div>
@@ -148,7 +148,7 @@ export default function CompanyRegistration() {
                   <div className="col-12 ">
                     <InputField
                       isRequired={true}
-                      title={" Company Name"}
+                      title={" Factory Name"}
                       formValidation={formValidation}
                       vlaidationName={"factoryName"}
                     />
@@ -156,7 +156,7 @@ export default function CompanyRegistration() {
 
                   <div className="col-12">
                     <div className="form-group ">
-                      <label className="form-title">Company Phone Number</label>
+                      <label className="form-title">Factory Phone Number</label>
                       <div className="input-group  h-100">
                         <div className="input-group-prepend">
                           <select
@@ -194,7 +194,7 @@ export default function CompanyRegistration() {
                   <div className="col-12">
                     <div className="form-group ">
                       <label className="form-title">
-                        Whatsapp Phone Number
+                        WhatsApp Number Services, Exporting, and Sales Manager
                       </label>
                       <div className="input-group  h-100">
                         <div className="input-group-prepend">
@@ -270,7 +270,7 @@ export default function CompanyRegistration() {
 
                   <div className="col-12">
                     <div className="form-group gap">
-                      <label className="form-title">sector</label>
+                      <label className="form-title">sector *</label>
                       <select
                         className="form-select form-control input-style"
                         onChange={
@@ -295,7 +295,7 @@ export default function CompanyRegistration() {
                       vlaidationName="description"
                       formValidation={formValidation}
                       isRequired={true}
-                      title="Company Description"
+                      title="Factory Description"
                     />
                   </div>
 
