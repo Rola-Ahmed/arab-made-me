@@ -84,6 +84,23 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     backgroundColor: '#f8f9fa',
   },
+
+
+
+  // ----------------------------------------------------------------------------
+  watermark: {
+    position: 'absolute',
+    top: '50%',
+    left: '25%',
+    transform: 'rotate(-30deg)',
+    opacity: 0.2,
+    zIndex: -1,
+  },
+  watermarkText: {
+    fontSize: 40,
+    textAlign: 'center',
+    color: 'gray',
+  },
 });
 
 const MyDocument = ({ requestedData }) => (
@@ -213,6 +230,14 @@ const MyDocument = ({ requestedData }) => (
           </View>
         </View>
 
+        <View style={styles.row}>
+          <View style={[styles.cellFixed, styles.cellWithBg]}>
+            <Text>Form Status</Text>
+          </View>
+          <View style={styles.cellFlexible}>
+            <Text style={styles.defultText}>{requestedData?.status}</Text>
+          </View>
+        </View>
        
 
         
@@ -240,18 +265,27 @@ const MyDocument = ({ requestedData }) => (
             <Text>Total Quantity</Text>
           </View>
           <View style={styles.cellFlexible}>
-            <Text style={styles.defultText}>{requestedData?.factory?.minQuantity}</Text>
+            <Text style={styles.defultText}>{requestedData?.minQuantity}</Text>
           </View>
         </View>
 
         <View style={styles.row}>
-          <View style={[styles.cellFixed, styles.cellWithBg]}>
-            <Text>Product Characteristics</Text>
-          </View>
-          <View style={styles.cellFlexible}>
-            <Text style={styles.defultText}>{requestedData?.factory?.minQuantity}</Text>
-          </View>
-        </View>
+  <View style={[styles.cellFixed, styles.cellWithBg]}>
+    <Text>Product Characteristics</Text>
+  </View>
+  <View style={styles.cellFlexible}>
+    <View style={styles.cellFlexibleItem}>
+    {requestedData?.specialCharacteristics && 
+      Object.keys(requestedData.specialCharacteristics).length > 0 && 
+      Object.entries(requestedData.specialCharacteristics).map(([key, value], index) => (
+          <>
+          {`${key}: ${value}`}
+          </>
+        
+      ))}
+      </View>
+  </View>
+</View>
         
         <View style={styles.row}>
           <View style={[styles.cellFixed, styles.cellWithBg]}>
@@ -292,61 +326,91 @@ const MyDocument = ({ requestedData }) => (
 
       </View>  
 
-      {/* ---------------------------- */}
-      <View style={styles.table}>
-        {/* Table Header */}
-        
-        <View style={styles.row}>
-          <View style={[styles.cellFixed, styles.cellWithBg]}>
-            <Text>product Name</Text>
-          </View>
-          <View style={[styles.cellFlexible, styles.cellWithBg]}>
-            <Text style={styles.defultText}>unit price</Text>
-          </View>
-          
-          <View style={[styles.cellFlexible, styles.cellWithBg]}>
-            <Text style={styles.defultText}>Quantity</Text>
-          </View>
-          <View style={[styles.cellFlexible, styles.cellWithBg]}>
-            <Text style={styles.defultText}>Discount%</Text>
-          </View>
-          <View style={[styles.cellFlexible, styles.cellWithBg]}>
-            <Text style={styles.defultText}>total Price</Text>
-          </View>
-        </View>
-        <View style={styles.row}>
-          <View style={[styles.cellFixed]}>
-            <Text>product Name</Text>
-          </View>
-          <View style={[styles.cellFlexible]}>
-            <Text style={styles.defultText}>12</Text>
-          </View>
-          
-          <View style={[styles.cellFlexible]}>
-            <Text style={styles.defultText}>{requestedData?.minQuantity}</Text>
-          </View>
-          <View style={[styles.cellFlexible]}>
-            <Text style={styles.defultText}>{requestedData?.discounts} </Text>
-          </View>
-          <View style={[styles.cellFlexible]}>
-            <Text style={styles.defultText}>total Price</Text>
-          </View>
-        </View>
-
-        
-       
-
-       
-        
-       
-       
-      </View>  
+      
 
 
      
 
       {/* remove */}
       <View style={styles.table}>
+        
+        <View style={styles.row}>
+          <View style={[styles.cellFixed, styles.cellWithBg]}>
+            <Text>shipping Conditions</Text>
+          </View>
+          <View style={styles.cellFlexible}>
+            <Text style={styles.defultText}>{requestedData?.shippingConditions}</Text>
+          </View>
+        </View>
+
+        
+        <View style={styles.row}>
+          <View style={[styles.cellFixed, styles.cellWithBg]}>
+            <Text>shipping Type and Size</Text>
+          </View>
+          <View style={styles.cellFlexible}>
+            <Text style={styles.defultText}>{requestedData?.shippingSize}</Text>
+          </View>
+        </View>
+
+        <View style={styles.row}>
+          <View style={[styles.cellFixed, styles.cellWithBg]}>
+            <Text>supply Location</Text>
+          </View>
+          <View style={styles.cellFlexible}>
+            <Text style={styles.defultText}>{requestedData?.supplyLocation}</Text>
+          </View>
+        </View>
+
+        <View style={styles.row}>
+          <View style={[styles.cellFixed, styles.cellWithBg]}>
+            <Text>packing Conditions</Text>
+          </View>
+          <View style={styles.cellFlexible}>
+            <Text style={styles.defultText}>{requestedData?.packingConditions}</Text>
+          </View>
+        </View>
+
+
+        
+        <View style={styles.row}>
+          <View style={[styles.cellFixed, styles.cellWithBg]}>
+            <Text>quality Conditions</Text>
+          </View>
+          <View style={styles.cellFlexible}>
+            <Text style={styles.defultText}>{requestedData?.qualityConditions}</Text>
+          </View>
+        </View>
+
+
+        <View style={styles.row}>
+          <View style={[styles.cellFixed, styles.cellWithBg]}>
+            <Text>payment Terms</Text>
+          </View>
+          <View style={styles.cellFlexible}>
+            <Text style={styles.defultText}>{requestedData?.paymentTerms}</Text>
+          </View>
+        </View>
+
+
+        <View style={styles.row}>
+          <View style={[styles.cellFixed, styles.cellWithBg]}>
+            <Text>notes</Text>
+          </View>
+          <View style={styles.cellFlexible}>
+            <Text style={styles.defultText}>{requestedData?.notes}</Text>
+          </View>
+        </View>
+       
+      </View>   
+      
+
+
+
+
+
+       {/* ---------------------------- */}
+       <View style={styles.table}>
         {/* Table Header */}
         
         <View style={styles.row}>
@@ -372,7 +436,7 @@ const MyDocument = ({ requestedData }) => (
             <Text>product Name</Text>
           </View>
           <View style={[styles.cellFlexible]}>
-            <Text style={styles.defultText}>12</Text>
+            <Text style={styles.defultText}>{requestedData?.price}</Text>
           </View>
           
           <View style={[styles.cellFlexible]}>
@@ -393,106 +457,14 @@ const MyDocument = ({ requestedData }) => (
         
        
        
-      </View>  
-      <View style={styles.table}>
-        {/* Table Header */}
-        
-        <View style={styles.row}>
-          <View style={[styles.cellFixed, styles.cellWithBg]}>
-            <Text>product Name</Text>
-          </View>
-          <View style={[styles.cellFlexible, styles.cellWithBg]}>
-            <Text style={styles.defultText}>unit price</Text>
-          </View>
-          
-          <View style={[styles.cellFlexible, styles.cellWithBg]}>
-            <Text style={styles.defultText}>Quantity</Text>
-          </View>
-          <View style={[styles.cellFlexible, styles.cellWithBg]}>
-            <Text style={styles.defultText}>Discount%</Text>
-          </View>
-          <View style={[styles.cellFlexible, styles.cellWithBg]}>
-            <Text style={styles.defultText}>total Price</Text>
-          </View>
-        </View>
-        <View style={styles.row}>
-          <View style={[styles.cellFixed]}>
-            <Text>product Name</Text>
-          </View>
-          <View style={[styles.cellFlexible]}>
-            <Text style={styles.defultText}>12</Text>
-          </View>
-          
-          <View style={[styles.cellFlexible]}>
-            <Text style={styles.defultText}>{requestedData?.minQuantity}</Text>
-          </View>
-          <View style={[styles.cellFlexible]}>
-            <Text style={styles.defultText}>{requestedData?.discounts} </Text>
-          </View>
-          <View style={[styles.cellFlexible]}>
-            <Text style={styles.defultText}>total Price</Text>
-          </View>
-        </View>
-
-        
-       
-
-       
-        
-       
-       
-      </View>  
-      <View style={styles.table}>
-        {/* Table Header */}
-        
-        <View style={styles.row}>
-          <View style={[styles.cellFixed, styles.cellWithBg]}>
-            <Text>product Name</Text>
-          </View>
-          <View style={[styles.cellFlexible, styles.cellWithBg]}>
-            <Text style={styles.defultText}>unit price</Text>
-          </View>
-          
-          <View style={[styles.cellFlexible, styles.cellWithBg]}>
-            <Text style={styles.defultText}>Quantity</Text>
-          </View>
-          <View style={[styles.cellFlexible, styles.cellWithBg]}>
-            <Text style={styles.defultText}>Discount%</Text>
-          </View>
-          <View style={[styles.cellFlexible, styles.cellWithBg]}>
-            <Text style={styles.defultText}>total Price</Text>
-          </View>
-        </View>
-        <View style={styles.row}>
-          <View style={[styles.cellFixed]}>
-            <Text>product Name</Text>
-          </View>
-          <View style={[styles.cellFlexible]}>
-            <Text style={styles.defultText}>12</Text>
-          </View>
-          
-          <View style={[styles.cellFlexible]}>
-            <Text style={styles.defultText}>{requestedData?.minQuantity}</Text>
-          </View>
-          <View style={[styles.cellFlexible]}>
-            <Text style={styles.defultText}>{requestedData?.discounts} </Text>
-          </View>
-          <View style={[styles.cellFlexible]}>
-            <Text style={styles.defultText}>total Price</Text>
-          </View>
-        </View>
-
-        
-       
-
-       
-        
-       
-       
-      </View>  
+      </View> 
+   
       {/* remove */}
 
 
+      <View style={styles.watermark} fixed>
+    <Text style={styles.watermarkText}>https://ara-made.com</Text>
+  </View>
 
       <View  style={{height:'5vh'}} fixed>
       <Text style={{color:'white'}}>https://ara-made.com</Text>
