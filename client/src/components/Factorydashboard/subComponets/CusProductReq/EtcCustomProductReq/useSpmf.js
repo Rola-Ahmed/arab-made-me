@@ -42,24 +42,20 @@ export function useSpmf() {
           ...prevData,
           ...result.data.specialmanufacturingrequests,
         }));
+       
+      } 
         setApiLoadingData((prevVal) => ({
           ...prevVal,
-          reqData: false,
-        }));
-      } else {
-        setApiLoadingData((prevVal) => ({
-          ...prevVal,
-          reqData: true,
+          reqData: result?.loadingStatus,
           errorWhileLoading: result?.error,
         }));
-      }
 
       if (QouteIdConfigResp?.success) {
         // Extract the quotations array from the response
         const { quotations } = QouteIdConfigResp.data;
 
         quotations.forEach((item) => {
-          if (item.privateLabelingId == customProductId) {
+          if (item.specialManufacturingRequestId == customProductId) {
             // Use item.id to match with privateLabelId
             setRequestedData((prevData) => ({
               ...prevData,

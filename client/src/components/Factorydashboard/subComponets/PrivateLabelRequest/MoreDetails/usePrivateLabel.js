@@ -45,17 +45,18 @@ export function usePrivateLabel() {
           ...prevData,
           ...result.data.privatelabelings,
         }));
+      //   setApiLoadingData((prevVal) => ({
+      //     ...prevVal,
+      //     reqData: false,
+      //   }));
+      }
+      //  else {
         setApiLoadingData((prevVal) => ({
           ...prevVal,
-          reqData: false,
-        }));
-      } else {
-        setApiLoadingData((prevVal) => ({
-          ...prevVal,
-          reqData: true,
+          reqData: result?.loadingStatus,
           errorWhileLoading: result?.error,
         }));
-      }
+      // }
 
       if (QouteIdConfigResp?.success) {
         // Extract the quotations array from the response
