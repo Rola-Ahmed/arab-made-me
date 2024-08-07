@@ -1,4 +1,3 @@
-import React from 'react';
 import { Document, Page, Text, View, StyleSheet, PDFDownloadLink, PDFViewer, Image } from '@react-pdf/renderer';
 import { logo } from 'constants/Images';
 
@@ -12,9 +11,7 @@ const styles = StyleSheet.create({
   },
   section: {
     marginTop: 10,
-    // marginBottom:'5'
-    // padding: 10,
-    // flexGrow: 1,
+
   },
   footer: {
 
@@ -23,23 +20,14 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    fontSize: 12,
     marginTop:'5vh',
     marginBottom:'2vh',
     marginLeft:'2vh',
   },
-  header: {
-    position: 'absolute',
-    top: 10,
-    left: 0,
-    right: 0,
-    textAlign: 'center',
-    fontSize: 12,
-  },
+ 
   logo: {
     width: '20vw',
     textAlign: 'left',
-    // marginLeft: '3px',
     marginBottom: 5,
   },
   textImg: {
@@ -64,7 +52,7 @@ const styles = StyleSheet.create({
     borderRight: '1px solid #ddd',
     padding: 8,
     textAlign: 'left',
-    fontSize: 12,
+    fontSize: 11,
     fontWeight:'bolder'
   },
   cellFlexible: {
@@ -72,7 +60,7 @@ const styles = StyleSheet.create({
     borderRight: '1px solid #ddd',
     padding: 8,
     textAlign: 'left',
-    fontSize: 12,
+    fontSize: 11,
     fontWeight:100
 
   },
@@ -80,12 +68,7 @@ const styles = StyleSheet.create({
   cellWithBg: {
     backgroundColor: 'rgba(126, 184, 204, 0.203)', // Use backgroundColor here
   },
-  tableHeader: {
-    fontWeight: 'bold',
-    backgroundColor: '#f8f9fa',
-  },
-
-
+ 
 
   // ----------------------------------------------------------------------------
   watermark: {
