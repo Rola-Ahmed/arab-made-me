@@ -58,14 +58,14 @@ export default function Quote({requestedData}) {
 
             <div className="col-6">
               <ReadOnly
-                title="qualityConditions"
+                title="quality Conditions"
                 value={requestedData?.qualityConditions}
               />
             </div>
 
             <div className="col-6">
               <ReadOnly
-                title="paymentT erms"
+                title="payment Terms"
                 value={requestedData?.paymentTerms}
               />
             </div>
