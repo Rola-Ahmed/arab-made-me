@@ -9,7 +9,7 @@ export default function DateTimeInput({
   return (
     <>
       <div className="form-group">
-        <label>
+        <label className="form-title">
           {title} {isRequired && "*"}
         </label>
         <input

@@ -46,7 +46,8 @@ export default function SourcingOffers() {
           </div>
         </div>
 
-        {allSourcingReqData?.length == 0 && (
+
+        {apiLoadingData?.laoding && (
           <>
             <div className="position-absolute error-float">
               {apiLoadingData?.errorMsg ? (
@@ -61,6 +62,16 @@ export default function SourcingOffers() {
             </div>
           </>
         )}
+        {
+          allSourcingReqData?.length ==0 && !apiLoadingData?.laoding &&(
+            <div className="position-absolute error-float">
+              <p className="fs-5 text-muted fw-bolder text-5 mt-5 pt-5 mx-auto">
+                { "No records"}
+              </p>
+          </div>
+          )
+
+        }
       </div>
 
       <div className="btn-container-all cursor">

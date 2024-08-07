@@ -16,7 +16,7 @@ export default function AnswerQuotation() {
   const [searchParams] = useSearchParams();
   let { requestType } = useParams();
   const id = searchParams.get("id");
-  const productName = searchParams.get("productName");
+  const productName = searchParams.get("productName") ;
   const productId = searchParams.get("productId");
   const importerId = searchParams.get("userId");
 
@@ -62,7 +62,8 @@ export default function AnswerQuotation() {
           extraData: {
             privateLabelingId: id || "",
             importerId: importerId || "",
-            ...(productName && { productName: productName }),
+            ...((productName && productName!=='null') && { productName: productName }),
+            ...(productId && { productId: productId }),
           },
         };
       case "SourcingReq":

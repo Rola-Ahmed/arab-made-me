@@ -77,7 +77,12 @@ function Sectors() {
                       <div className="sector-text">
                         <h4>{item?.name?.replace(/\bSupplies\b/gi, "")}</h4>
 
-                        <p> {item?.productQuntity} Factory</p>
+                        <p> 
+                        {
+item?.productQuntity==0?'Comming soon': `${item?.productQuntity} Products`
+                        }
+</p>
+                        
                       </div>
                     </div>
                   </div>
