@@ -44,17 +44,13 @@ export function useOnePo() {
           ...prevData,
           ...result.data.purchasingorders,
         }));
-        setApiLoadingData((prevVal) => ({
-          ...prevVal,
-          reqData: false,
-        }));
-      } else {
+      }
+      
         setApiLoadingData((prevVal) => ({
           ...prevVal,
           reqData: true,
           errorWhileLoading: result?.error,
         }));
-      }
 
       if (QouteIdConfigResp?.success) {
         // Extract the quotations array from the response

@@ -19,12 +19,7 @@ export function useOnePo() {
 
   useEffect(() => {
     async function fetchReqData() {
-      setApiLoadingData((prevVal) => ({
-        ...prevVal,
-        reqData: true,
-        findQuotation: true,
-      }));
-
+     
       // get private label data
       let result = await getOnePO(
         poId,
@@ -42,7 +37,7 @@ export function useOnePo() {
       if (result?.success) {
         setRequestedData((prevData) => ({
           ...prevData,
-          ...result.data.purchasingorders,
+          ...result?.data?.purchasingorders,
         }));
       }
     

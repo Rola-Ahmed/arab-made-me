@@ -99,7 +99,7 @@ export default function PoInfo({
 
             {/* <div className="form-group form-control "> */}
             <div className="form-group form-control p-4 ">
-              {requestedData?.timeLine.map((item, index) => (
+              {requestedData?.timeLine?.map((item, index) => (
                 <div className="row  row-gap">
                   <div className="col-6">
                     <div className="grid-gap-col">

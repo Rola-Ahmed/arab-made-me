@@ -1,12 +1,10 @@
-import { useEffect, useState, useContext } from "react";
-import axios from "axios";
+import {  useState, useContext } from "react";
 import { baseUrl } from "config.js";
 
-import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
+import { useOnePo } from "./useOnePo";
 
-
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import ContactBtn from "components/Importerdashboard/Shared/ContactBtn";
@@ -17,14 +15,12 @@ import FactoryInfo from "components/Forms/Shared/FactoryInfo";
 
 export default function OnePo() {
   let navigate = useNavigate();
+  let { isLogin, requestedData, apiLoadingData } = useOnePo();
 
-  let { isLogin } = useContext(UserToken);
+
   let { currentUserData } = useContext(userDetails);
 
-  const [searchParams] = useSearchParams();
-  const poId = searchParams.get("poId");
 
-  const [apiLoadingData, setapiLoadingData] = useState(true);
   const [modalShow, setModalShow] = useState({
     isLogin: false,
     isImporterVerified: false,
@@ -44,66 +40,11 @@ export default function OnePo() {
   
   const [isLoggedReDirect, setisLoggedReDirect] = useState([]);
 
-  const [PosData, setPosData] = useState();
-  let [factoryDetails, setFactoryDetails] = useState({});
 
-  async function fetchFactoriesData() {
-    setapiLoadingData(true);
 
-    try {
-      let config = {
-        method: "get",
-        url: `${baseUrl}/importers/importer/pos?include=factory`,
-        headers: {
-          authorization: isLogin,
-        },
-      };
 
-      const response = await axios.request(config);
 
-      if (response?.data?.message == "done") {
-        const matchedObject = response.data.pos.find((obj) => obj.id == poId);
 
-        if (matchedObject) {
-          setPosData(matchedObject);
-        }
-
-        setapiLoadingData(false);
-      } else {
-        setapiLoadingData(true);
-      }
-    } catch (error) {
-      setapiLoadingData(true);
-    }
-  }
-
-  useEffect(() => {
-    fetchFactoriesData();
-  }, [poId]);
-
-  // utils function
-
-  async function fetchImporterData() {
-    try {
-      let config = {
-        method: "get",
-        url: `${baseUrl}/importers/${currentUserData?.importerId}`,
-      };
-
-      const response = await axios.request(config);
-
-      if (response.data.message == "done") {
-        setFactoryDetails(response.data.importers);
-      } else if (response.data.message == "404 Not Found") {
-        // errorsMsg("404");
-      }
-    } catch (error) {}
-  }
-  useEffect(() => {
-    if (currentUserData && currentUserData?.importerId !== null) {
-      fetchImporterData();
-    }
-  }, [currentUserData]);
 
   function handleIsLoggedInBtn(loginPath, storgaeName) {
     if (!isLogin) {
@@ -163,14 +104,14 @@ export default function OnePo() {
 
               <div className="container-profile-input w-100">
                 <div className="title-contianer-input w-100">
-                <FactoryInfo productDetails={PosData?.factory} />
+                <FactoryInfo productDetails={requestedData?.factory} />
 
                 </div>
               </div>
 
 
 {/* PO INFO */}
-              <PoInfo  requestedData={PosData}
+              <PoInfo  requestedData={requestedData}
     handleImageClick={handleImageClick}
     />
               
@@ -192,7 +133,7 @@ export default function OnePo() {
                 <ContactBtn
                   isLogin={isLogin}
                   handleIsLoggedInBtn={handleIsLoggedInBtn}
-                  recieverUserId={PosData?.factory?.userId}
+                  recieverUserId={requestedData?.factory?.userId}
                   baseUrl={baseUrl}
                 />
               </div>
