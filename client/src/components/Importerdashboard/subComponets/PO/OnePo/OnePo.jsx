@@ -1,7 +1,5 @@
-import {  useState, useContext } from "react";
-import { baseUrl } from "config.js";
+import {  useState } from "react";
 
-import { userDetails } from "Context/userType";
 import { useOnePo } from "./useOnePo";
 
 import { useNavigate } from "react-router-dom";
@@ -18,7 +16,6 @@ export default function OnePo() {
   let { isLogin, requestedData, apiLoadingData } = useOnePo();
 
 
-  let { currentUserData } = useContext(userDetails);
 
 
   const [modalShow, setModalShow] = useState({
@@ -134,7 +131,6 @@ export default function OnePo() {
                   isLogin={isLogin}
                   handleIsLoggedInBtn={handleIsLoggedInBtn}
                   recieverUserId={requestedData?.factory?.userId}
-                  baseUrl={baseUrl}
                 />
               </div>
             </div>

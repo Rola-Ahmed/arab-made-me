@@ -1,8 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { baseUrl } from "config.js";
+
 
 export default function ContactBtn(props) {
-  let { isLogin, handleIsLoggedInBtn, recieverUserId, baseUrl } = props;
+  let { isLogin, handleIsLoggedInBtn, recieverUserId } = props;
 
   let [currentChat, setCurrentChat] = useState("");
 
