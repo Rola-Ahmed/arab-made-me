@@ -35,7 +35,6 @@ function Sign() {
     email: Yup.string()
       .email("Invalid email")
       .required("Input Field is Required")
-      .min(5, "min legnth is 5")
       .max(255, "max legnth is 255"),
     password: Yup.string()
       .required("Input Field is Required")

@@ -17,7 +17,7 @@ import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 import { getMonthName as getDate } from "utils/getMonthName";
 
-export default function ViewSourcingOfferFac() {
+export default function AllOffers() {
   let { isLogin } = useContext(UserToken);
   let { currentUserData } = useContext(userDetails);
 

@@ -27,8 +27,7 @@ function Navbar(props) {
   return (
     <>
       <ScrollToTop />
-      <div className=" nav-sticky position-sticky top-0">
-        <div className="lang-parent d-md-flex align-items-center justify-content-between border-bottom border-1 border-muted position-sticky top-0">
+      <div className="lang-parent d-md-flex align-items-center justify-content-between border-bottom border-1 border-muted">
           {/* btn to change lanuages */}
           <LanguageSwitcher />
 
@@ -66,6 +65,8 @@ function Navbar(props) {
             )}
           </div>
         </div>
+      <div className=" nav-sticky position-sticky top-0">
+       
         <header className="header-nav pt-4 pb-2">
           <nav className="navbar navbar-expand-lg navbar-dark  ">
             <div className="container-fluid">

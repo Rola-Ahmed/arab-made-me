@@ -166,7 +166,7 @@ export default function Conversation() {
         </div> */}
 
         <SendMsg
-          setAllPosData={setReqData}
+          setreqData={setReqData}
           SetNewMessageSuccess={SetNewMessageSuccess}
           recieverUserId={
             reqData?.userTwoId != currentUserData?.userID

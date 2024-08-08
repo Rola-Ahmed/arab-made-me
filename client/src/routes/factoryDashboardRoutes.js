@@ -18,8 +18,8 @@ import ReqVisitFactDash from "components/Factorydashboard/subComponets/ReqVisitF
 import GetAllFactoryProduct from "components/Factorydashboard/subComponets/Products/GetProducts/GetProducts";
 import EditProduct from "components/Factorydashboard/subComponets/Products/EditProduct/EditProduct";
 import AddProduct from "components/Factorydashboard/subComponets/Products/AddProduct/AddProduct";
-import AddSourcingOffer from "components/Factorydashboard/subComponets/AddSourcingOffer/AddSourcingOffer";
-import ViewSourcingOfferFac from "components/Factorydashboard/subComponets/ViewSourcingOfferFac/ViewSourcingOfferFac";
+import AddSourcingOffer from "components/Factorydashboard/offers/AddOffer/AddOffer";
+import AllOffers from "components/Factorydashboard/offers/AllOffers/AllOffers";
 import MircoSiteDash from "components/Factorydashboard/subComponets/MircoSiteDash/MircoSiteDash";
 import EditQuote from "components/Factorydashboard/subComponets/Quotations/EditQuote/EditQuote";
 
@@ -36,7 +36,7 @@ import RfqRequestFacEtc from "components/Factorydashboard/subComponets/RfqFactor
 
 // factory only
 import ProductsFacEtc from "components/ViewMoreDetailsFormDash/ProductsFacEtc/ProductsFacEtc";
-import OffersFacEtc from "components/ViewMoreDetailsFormDash/OffersFacEtc/OffersFacEtc";
+import OffersFacEtc from "components/Factorydashboard/offers/OneOffer/OneOffer";
 
 // Quote data Container
 import ViewQuotations from "components/Factorydashboard/subComponets/Quotations/AllQuotes/AllQuotes";
@@ -80,7 +80,7 @@ const factoryDashboardRoutes = [
       { path: "AllFactoryProducts", element: <GetAllFactoryProduct /> },
       { path: "addProduct", element: <AddProduct /> },
       { path: "addSourcingOffer", element: <AddSourcingOffer /> },
-      { path: "AllFactoryOffers", element: <ViewSourcingOfferFac /> },
+      { path: "AllFactoryOffers", element: <AllOffers /> },
       { path: "mircoSite", element: <MircoSiteDash /> },
       { path: "editProduct/:productId", element: <EditProduct /> },
 

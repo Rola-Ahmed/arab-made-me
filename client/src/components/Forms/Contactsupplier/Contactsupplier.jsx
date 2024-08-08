@@ -113,6 +113,8 @@ function Contactsupplier() {
 
     if (result?.success) {
       socket.emit("socketAuth", isLogin);
+      socket.emit("newMessage", data);
+
 
       setGlobalMsg("Your form has been successfully submitted.");
       navigate(-1);
@@ -138,61 +140,61 @@ function Contactsupplier() {
   }, [currentUserData, navigate]);
 
   // Debugging socket connection
-  useEffect(() => {
-    if (isLogin) {
-      const connectSocket = () => {
-        socket.connect();
+  // useEffect(() => {
+  //   if (isLogin) {
+  //     const connectSocket = () => {
+  //       socket.connect();
 
-        socket.on("connect", () => {
-        });
+  //       socket.on("connect", () => {
+  //       });
 
       
 
-        socket.on("authorization", (data) => {
-        });
+  //       socket.on("authorization", (data) => {
+  //       });
 
-        socket.on("connect_error", (err) => {
-          console.error("Connection error:", err);
-        });
+  //       socket.on("connect_error", (err) => {
+  //         console.error("Connection error:", err);
+  //       });
 
-        socket.on("connect_timeout", (err) => {
-          console.error("Connection timeout:", err);
-        });
+  //       socket.on("connect_timeout", (err) => {
+  //         console.error("Connection timeout:", err);
+  //       });
 
-        socket.on("error", (err) => {
-          console.error("General error:", err);
-        });
+  //       socket.on("error", (err) => {
+  //         console.error("General error:", err);
+  //       });
 
-        socket.on("reconnect_error", (err) => {
-          console.error("Reconnect error:", err);
-        });
+  //       socket.on("reconnect_error", (err) => {
+  //         console.error("Reconnect error:", err);
+  //       });
 
-        socket.on("reconnect_failed", () => {
-          console.error("Reconnect failed");
-        });
+  //       socket.on("reconnect_failed", () => {
+  //         console.error("Reconnect failed");
+  //       });
 
-        // Cleanup on unmount
-        return () => {
-          // socket.off("connect");
-          // socket.off("newMessage");
-          // socket.off("authorization");
-          // socket.off("connect_error");
-          // socket.off("connect_timeout");
-          // socket.off("error");
-          // socket.off("reconnect_error");
-          // socket.off("reconnect_failed");
-          // socket.disconnect();
-        };
-      };
+  //       // Cleanup on unmount
+  //       return () => {
+  //         // socket.off("connect");
+  //         // socket.off("newMessage");
+  //         // socket.off("authorization");
+  //         // socket.off("connect_error");
+  //         // socket.off("connect_timeout");
+  //         // socket.off("error");
+  //         // socket.off("reconnect_error");
+  //         // socket.off("reconnect_failed");
+  //         // socket.disconnect();
+  //       };
+  //     };
 
-      connectSocket();
+  //     connectSocket();
 
-      return () => {
-        // console.log("Disconnecting socket..."); // Debugging message
-        // socket.disconnect();
-      };
-    }
-  }, [isLogin]);
+  //     return () => {
+  //       // console.log("Disconnecting socket..."); // Debugging message
+  //       // socket.disconnect();
+  //     };
+  //   }
+  // }, [isLogin]);
 
   return (
     <>

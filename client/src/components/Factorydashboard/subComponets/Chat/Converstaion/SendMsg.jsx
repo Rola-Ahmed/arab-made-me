@@ -9,8 +9,6 @@ export default function SendMsg(props) {
   let { recieverUserId, isLogin, SetNewMessageSuccess, setreqData } = props;
   let validationSchema = Yup.object().shape({
     message: Yup.string()
-      // .min(5, "min legnth is 5")
-      // .required("Input field is Required")
       .max(255, "max legnth is 255"),
   });
 
@@ -67,7 +65,7 @@ export default function SendMsg(props) {
           ...response.data.chat,
         }));
         socket.emit("socketAuth", isLogin);
-        socket.emit("newMessage", isLogin);
+        socket.emit("newMessage", data);
       } else {
         // setErrorMsg((prevErrors) => ({
         //   ...prevErrors,

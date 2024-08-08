@@ -6,7 +6,7 @@ import { addChat } from "Services/chat";
 
 export default function SendMsg(props) {
   const [dataSent, setDataSent] = useState(false);
-  const { recieverUserId, isLogin, SetNewMessageSuccess, setAllPosData } =
+  const { recieverUserId, isLogin, SetNewMessageSuccess, setreqData } =
     props;
 
   const validationSchema = Yup.object().shape({
@@ -49,77 +49,79 @@ export default function SendMsg(props) {
     );
 
     if (result?.success) {
-      socket.emit("socketAuth", isLogin);
-      socket.emit("newMessage", data);
+     
+      // console.log("result?.data?.chat",result?.data?.chat)
       setDataSent(!dataSent);
       SetNewMessageSuccess({
         input: null,
         send: true,
       });
       formValidation.setValues(initialValues);
-      setAllPosData((prevVal) => ({
+      setreqData((prevVal) => ({
         ...prevVal,
         ...result?.data?.chat,
       }));
+      socket.emit("socketAuth", isLogin);
+      socket.emit("newMessage", data);
     }
   }
 
-  useEffect(() => {
-    if (isLogin) {
-      socket.emit("socketAuth", isLogin);
+  // useEffect(() => {
+  //   if (isLogin) {
+  //     // socket.emit("socketAuth", isLogin);
 
-      const connectSocket = () => {
+  //     const connectSocket = () => {
 
-        socket.connect();
+  //       socket.connect();
 
-        socket.on("connect", () => {
-        });
+  //       socket.on("connect", () => {
+  //       });
 
-        socket.on("newMessage", (data) => {
-          // Update state or perform actions based on the new message
-          // console.log("newMessage",data)
-        });
+  //       socket.on("newMessage", (data) => {
+  //         // Update state or perform actions based on the new message
+  //         console.log("newMessage",data)
+  //       });
 
-        socket.on("socketAuth", (data) => {
-          SetNewMessageSuccess((prev) => !prev);
-        });
+  //       socket.on("socketAuth", (data) => {
+  //         SetNewMessageSuccess((prev) => !prev);
+  //       });
 
-        socket.on("connect_error", (err) => {
-        });
+  //       socket.on("connect_error", (err) => {
+  //       });
 
-        socket.on("connect_timeout", (err) => {
-        });
+  //       socket.on("connect_timeout", (err) => {
+  //       });
 
-        socket.on("error", (err) => {
-        });
+  //       socket.on("error", (err) => {
+  //       });
 
-        socket.on("reconnect_error", (err) => {
-        });
+  //       socket.on("reconnect_error", (err) => {
+  //       });
 
-        socket.on("reconnect_failed", () => {
-        });
+  //       socket.on("reconnect_failed", () => {
+  //       });
 
-        // Cleanup on unmount or dependency change
-        return () => {
-          socket.off("connect");
-          socket.off("newMessage");
-          socket.off("socketAuth");
-          socket.off("connect_error");
-          socket.off("connect_timeout");
-          socket.off("error");
-          socket.off("reconnect_error");
-          socket.off("reconnect_failed");
-          socket.disconnect();
-        };
-      };
+  //       // Cleanup on unmount or dependency change
+  //       return () => {
+  //         // socket.off("connect");
+  //         // socket.off("newMessage");
+  //         // socket.off("socketAuth");
+  //         // socket.off("connect_error");
+  //         // socket.off("connect_timeout");
+  //         // socket.off("error");
+  //         // socket.off("reconnect_error");
+  //         // socket.off("reconnect_failed");
+  //         socket.disconnect();
+  //       };
+  //     };
 
-      const cleanup = connectSocket();
+  //     const cleanup = connectSocket();
 
-      return () => {
-        cleanup();
-      };
-    }
-  }, [isLogin, dataSent]);
+  //     return () => {
+  //       cleanup();
+  //     };
+  //   }
+  // }, [isLogin, dataSent]);
 
   return (
     <form

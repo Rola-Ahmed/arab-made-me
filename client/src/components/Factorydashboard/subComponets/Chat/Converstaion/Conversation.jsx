@@ -4,7 +4,7 @@ import { handleImageError } from "utils/ImgNotFound";
 import { baseUrl_IMG } from "config.js";
 import SubPageUtility from "components/Shared/Dashboards/PageUtility";
 import { getTimeDifference as getTimeDiff } from "utils/getTimeDifference";
-import SendMsg from "./SendMsg";
+import SendMsg from "components/Importerdashboard/subComponets/Chat/Converstaion/SendMsg"
 import useConversationBetweenUsers from "hooks/useConversationBetweenUsers";
 
 export default function Conversation() {

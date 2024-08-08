@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     borderRight: '1px solid #ddd',
     padding: 8,
     textAlign: 'left',
-    fontSize: 11,
+    fontSize: 10,
     fontWeight:'bolder'
   },
   cellFlexible: {

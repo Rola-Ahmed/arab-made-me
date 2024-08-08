@@ -31,7 +31,7 @@ import { fetchFactoryProducts2 } from "Services/factory";
 import InputField from "components/Forms/Shared/InputField";
 import FormVlaidtionError from "components/Forms/Shared/FormVlaidtionError";
 
-export default function AddSourcingOffer() {
+export default function AddOffer() {
   let { currentUserData } = useContext(userDetails);
   let categories = useCategories();
 
@@ -366,11 +366,11 @@ export default function AddSourcingOffer() {
                 selectedDocs={selectedDocs}
                 errorMsg={errorMsg}
                 setSelectedDocs={setSelectedDocs}
-                MediaName="docs"
-                mediaMaxLen="3"
+                MediaName="images"
+                mediaMaxLen="8"
                 meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
                 setErrorMsg={setErrorMsg}
-                title="Upload Document "
+                title="Upload Images "
               />
 
               <TextareaInput

@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
@@ -7,35 +7,42 @@ import axios from "axios";
 // auth
 import { baseUrl } from "config.js";
 import { UserToken } from "Context/userToken";
-import { userDetails } from "Context/userType";
 import { GlobalMsgContext } from "Context/globalMessage";
+import {
+  requiredStringValidate,
+  otherTextAreaValidate,
+  requiredDateValidate,
+  reqQualityValidate,
+  textAreaValidate,
+} from "utils/validationUtils";
+
 
 // verififcation
-import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/FactoryUnVerifiedDash";
 
-// constant
-import { qualityConditionsArr } from "constants/qualityConditionsArr";
-import { shippingConditionsArr } from "constants/shippingConditionsArr";
-import { paymentTypeArr } from "constants/paymentTypeArr";
-import { packingConditionsArr } from "constants/packingConditionsArr";
+
+
 
 // functions
-import { formattedDateValidate } from "utils/validationUtils";
-import { errorHandler } from "utils/errorHandler";
 import SubPageUtility from "components/Shared/Dashboards/SubPageUtility";
+import { updateQoute } from "Services/quotations";
+import InputField from "components/Forms/Shared/InputField";
+import SelectWithTextarea from "components/Forms/Shared/SelectWithTextarea";
+import TextareaInput from "components/Forms/Shared/TextareaInput";
+import TimeLine from "components/Forms/Shared/TimeLine/TimeLine";
+import SelectGroup from "components/Forms/Shared/SelectGroup";
+import { SupplyLocationArr } from "constants/SupplyLocationArr";
+import { ShippingTypeSizeArr } from "constants/ShippingTypeSizeArr";
+import { packingConditionsArr } from "constants/packingConditionsArr";
+import { qualityConditionsArr } from "constants/qualityConditionsArr";
+import { paymentTypeArr } from "constants/paymentTypeArr";
+import { shippingConditionsArr } from "constants/shippingConditionsArr";
+import DateTimeInput from "components/Forms/Shared/DateTimeInput";
+import SelectOption from "components/Forms/Shared/SelectOption";
 
 export default function EditQuote() {
-  const { pathname } = useLocation();
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "instant",
-    });
-  }, [pathname]);
+
 
   let { isLogin } = useContext(UserToken);
-  let { currentUserData } = useContext(userDetails);
   let { setGlobalMsg } = useContext(GlobalMsgContext);
 
   let { quoteId } = useParams();
@@ -45,12 +52,12 @@ export default function EditQuote() {
   const [apiDetails, setApiDetails] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
-  const [selectedDocs, setSelectedDocs] = useState([]);
 
   // get sectors and categrories
 
   async function fetchRequestData() {
     try {
+
       let config = {
         method: "get",
         url: `${baseUrl}/quotations/${quoteId}`,
@@ -59,12 +66,10 @@ export default function EditQuote() {
       const response = await axios.request(config);
       if (response.data.message == "done") {
         setApiDetails(response.data.quotations);
-        // setSelectedDocs(response.data.quotations?.docs)
-      } else if (response.data.message == "404 Not Found") {
-        // errorsMsg("404");
       }
     } catch (error) {}
   }
+
 
   useEffect(() => {
     if (quoteId !== undefined) {
@@ -73,90 +78,68 @@ export default function EditQuote() {
   }, [quoteId]);
 
   let validationSchema = Yup.object().shape({
+    // from cilent
+    // avialabe qunaitiy for user
+    minQuantity: reqQualityValidate,
+
+    price: reqQualityValidate,
+
     discounts: Yup.string()
       .matches(/^[0-9]+$/, "Input field must be numbers only")
       .min(1, "min 1 legnth"),
 
-    minQuantity: Yup.string()
-      .required("Input field is Required")
-      .matches(/^[0-9]+$/, "Input field must be numbers only")
-      .min(1, "min 1 legnth"),
-
-    notes: Yup.string()
-      .required(" Description is Requried")
-      .max(255, "max legnth is 255"),
-
-    price: Yup.string()
-      .required("Input field is Required")
-      .matches(/^[0-9]+$/, "Input field must be numbers only")
-      .min(1, "min 1 legnth"),
-
-    qualityConditions: Yup.string(),
-    qualityConditionsOther: Yup.string().when("qualityConditions", {
-      is: "other",
-      then: (schema) =>
-        schema
-          .max(255, "max legnth is 255")
-          .required("Input field is Required"),
-      otherwise: (schema) => schema.nullable(),
-    }),
+    packingConditions: Yup.string(),
+    packingConditionsOther: otherTextAreaValidate("packingConditions", "other"),
 
     paymentType: Yup.string(),
-    paymentTypeOther: Yup.string().when("paymentType", {
-      is: "other",
-      then: (schema) =>
-        schema
-          .max(255, "max legnth is 255")
-          .required("Input field is Required"),
-      otherwise: (schema) => schema.nullable(),
-    }),
+    paymentTypeOther: otherTextAreaValidate("paymentType", "other"),
 
-    packingConditions: Yup.string(),
-    packingConditionsOther: Yup.string().when("packingConditions", {
-      is: "other",
-      then: (schema) =>
-        schema
-          .max(255, "max legnth is 255")
-          .required("Input field is Required"),
-      otherwise: (schema) => schema.nullable(),
-    }),
+    qualityConditions: Yup.string().required("Input field is Required"),
+    qualityConditionsOther: otherTextAreaValidate("qualityConditions", "other"),
 
-    startDeliveryDate: Yup.date().min(formattedDateValidate, "Invalid Date"),
-    endDeliveryDate: Yup.date().min(formattedDateValidate, "Invalid Date"),
+    ShippingTypeSize: requiredStringValidate,
+
+    ShippingTypeSizeOther: otherTextAreaValidate("ShippingTypeSize", "other"),
+    SupplyLocation: requiredStringValidate,
+
+    shippingConditions: requiredStringValidate,
+    shippingConditionsOther: otherTextAreaValidate(
+      "shippingConditions",
+      "other"
+    ),
+
+    deadline: requiredDateValidate,
+
+    timeLine: Yup.array()
+      .of(
+        Yup.object().shape({
+          date: requiredDateValidate,
+          quantity: reqQualityValidate,
+        })
+      )
+      .min("1", "minimum length is 1"),
+
+    notes: textAreaValidate(),
   });
 
   let initialValues = {
     price: apiDetails?.price || "",
     discounts: apiDetails?.discounts || 0,
-
     minQuantity: apiDetails?.minQuantity || "",
-
-    // qualityConditions: apiDetails?.qualityConditions || "",
-    // qualityConditionsOther:"",
-    // paymentType: apiDetails?.paymentTerms || "",
-    // paymentTypeOther:""
-    // packingConditions: apiDetails?.packingConditions, //req
-
     shippingConditions: apiDetails?.shippingConditions || "",
-
     notes: apiDetails?.notes || "",
-
-    //  cant be edited => it depends on the name saved in product is && its used in filtering data
-    // productName: apiDetails?.productName || "",
-
-    startDeliveryDate: apiDetails?.timeForDelivery?.start || "",
-    endDeliveryDate: apiDetails?.timeForDelivery?.end || "",
+   
   };
 
   let formValidation = useFormik({
     initialValues,
     validationSchema,
     // validate,
-    // onSubmit: submitForm,
-    onSubmit: newNn,
+    onSubmit: submitForm,
+    // onSubmit: newNn,
   });
 
-  function newNn(textValue) {
+  async function submitForm(textValue) {
     setIsLoading(true);
 
     // clear error message
@@ -187,61 +170,21 @@ export default function EditQuote() {
           ? textValue.paymentTypeOther
           : textValue.paymentType,
 
-      // timeForDelivery: apiDetails?.timeForDelivery,
       notes: textValue.notes,
       // discounts : textValue.discounts,
-      timeForDelivery: {
-        start: textValue.startDeliveryDate,
-        end: textValue.endDeliveryDate,
-      },
+     
       discounts: textValue.discounts,
     };
-    let config = {
-      method: "put",
-      maxBodyLength: Infinity,
-      url: `${baseUrl}/quotations/${apiDetails?.id}`,
+   
 
-      headers: {
-        authorization: isLogin,
-      },
-      data: data,
-    };
+    let result = await updateQoute(quoteId,{
+      authorization: isLogin,
+    },data)
+if (
+            result?.success
 
-    // media data
-    const mediaData = new FormData();
-
-    selectedDocs?.map((item) => mediaData.append(item.keyWord, item.pdfFile));
-
-    const mediaConfig = {
-      method: "put",
-      url: `${baseUrl}/quotations/uploadMedia/${apiDetails?.id}`,
-      headers: {
-        Authorization: isLogin,
-      },
-      data: mediaData,
-    };
-
-    axios
-      .all([
-        axios(config),
-        // axios(mediaConfig),
-      ])
-      .then(
-        axios.spread((response1, response2) => {
-          const dataFromAPI1 = response1.data;
-          // const dataFromAPI2 = response2.data;
-
-          // Handle responses from both APIs
-
-          if (
-            response1.data.message == "done"
-            // &&
-            // response2.data.message == "done"
           ) {
-            setErrorMsg((previousState) => {
-              const { message, ...rest } = previousState;
-              return rest;
-            });
+          
             setIsLoading(true);
             setGlobalMsg("Quotation is updated Successfully");
 
@@ -250,7 +193,7 @@ export default function EditQuote() {
             setIsLoading(false);
             setErrorMsg((prevErrors) => ({
               ...prevErrors,
-              message: response1.data.message,
+              message: result?.error,
             }));
             // return;
           }
@@ -260,33 +203,17 @@ export default function EditQuote() {
             block: "start",
           });
 
-          // setIsLoading(false);
-        })
-      )
-      .catch((error) => {
-        // Handle errors
-
-        setIsLoading(false);
-
-        setErrorMsg((prevErrors) => ({
-          ...prevErrors,
-          message: errorHandler(error),
-        }));
-        const targetElement = document.getElementById("view");
-        targetElement.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      });
   }
 
   useEffect(() => {
     if (apiDetails && apiDetails.length !== 0) {
       // quality
+
       const matchingItem = qualityConditionsArr?.find(
         (item) => item.value === apiDetails?.qualityConditions
       );
-      let nameIfValueIsTrue = {
+
+      let nameIfValueIsTrue = { 
         qualityConditions: apiDetails?.qualityConditions || "",
         qualityConditionsOther: "",
       };
@@ -345,12 +272,6 @@ export default function EditQuote() {
     }
   }, [apiDetails]);
 
-  if (
-    currentUserData?.factoryVerified == "0" ||
-    currentUserData?.factoryEmailActivated == false
-  ) {
-    return <FactoryUnVerified />;
-  }
 
 
 
@@ -389,302 +310,134 @@ export default function EditQuote() {
             )}
 
             <div className="col-4">
-              <div className="form-group">
-                <label forhtml="minQuantity">
-                  minQuantity <span className="text-danger">*</span>
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="minQuantity"
-                  name="minQuantity"
-                  placeholder="Enter minQuantity"
-                  onChange={formValidation.handleChange}
-                  onBlur={formValidation.handleBlur}
-                  value={formValidation.values.minQuantity}
+            <InputField 
+                  // isRequired={true}
+                  title={"Total Quantity *"}
+                  formValidation={formValidation}
+                  vlaidationName={"minQuantity"}
                 />
-                {formValidation.errors.minQuantity &&
-                formValidation.touched.minQuantity ? (
-                  <small className="form-text text-danger">
-                    {formValidation.errors.minQuantity}
-                  </small>
-                ) : (
-                  ""
-                )}
-              </div>
+           
             </div>
 
             <div className="col-4">
-              <div className="form-group">
-                <label>
-                  Price <span className="text-danger">*</span>
-                </label>
-                <input
-                  type="text"
-                  className="form-control text-dark"
-                  id="price"
-                  onChange={formValidation.handleChange}
-                  onBlur={formValidation.handleBlur}
-                  value={formValidation.values.price}
+            <InputField
+                  // isRequired={true}
+                  title={"Price *"}
+                  formValidation={formValidation}
+                  vlaidationName={"price"}
                 />
-                {formValidation.errors.price && formValidation.touched.price ? (
-                  <small className="text-danger">
-                    {formValidation.errors.price}
-                  </small>
-                ) : (
-                  ""
-                )}
-              </div>
             </div>
 
             <div className="col-4">
-              <div className="form-group">
-                <label>Discounts</label>
-                <input
-                  className="form-control"
-                  id="discounts"
-                  onChange={formValidation.handleChange}
-                  onBlur={formValidation.handleBlur}
-                  value={formValidation.values.discounts}
+            <InputField
+                  isRequired={false}
+                  title={"Discounts"}
+                  formValidation={formValidation}
+                  vlaidationName={"discounts"}
                 />
-                {formValidation.errors.discounts &&
-                formValidation.touched.discounts ? (
-                  <small className="text-danger">
-                    {formValidation.errors.discounts}
-                  </small>
-                ) : (
-                  ""
-                )}
-              </div>
+           
             </div>
+            <div className="col-4">
+                <DateTimeInput
+                  isRequired={true}
+                  title={"Form Deadline"}
+                  formValidation={formValidation}
+                  vlaidationName={"deadline"}
+                />
+              </div>
+
 
             {/* ---------------------------- */}
 
             <div className="col-4">
-              <div className="form-group">
-                <label htmlFor="qualityConditions">
-                  Quality Conditions <span className="text-danger">*</span>
-                </label>
-
-                <select
-                  className="form-select form-control"
-                  id="qualityConditions"
-                  name="qualityConditions"
-                  onChange={formValidation.handleChange}
-                  onBlur={formValidation.handleBlur}
-                  value={formValidation.values.qualityConditions}
-                >
-                  {qualityConditionsArr.map((item) => (
-                    <option value={item?.value}>{item?.name}</option>
-                  ))}
-                </select>
-
-                {formValidation.values.qualityConditions == "other" ? (
-                  <textarea
-                    className="form-control w-100 "
-                    onChange={formValidation.handleChange}
-                    onBlur={formValidation.handleBlur}
-                    value={formValidation.values.qualityConditionsOther}
-                    id="qualityConditionsOther"
-                    name="qualityConditionsOther"
-                    rows="3"
-                    placeholder="enter more details"
-                  ></textarea>
-                ) : (
-                  ""
-                )}
-
-                {formValidation.errors.qualityConditionsOther &&
-                formValidation.touched.qualityConditionsOther ? (
-                  <small className="form-text text-danger">
-                    {formValidation.errors.qualityConditionsOther}
-                  </small>
-                ) : (
-                  ""
-                )}
-              </div>
+            <SelectWithTextarea
+                  formValidation={formValidation}
+                  vlaidationName={"qualityConditions"}
+                  textAreaOther={"qualityConditionsOther"}
+                  isRequired={true}
+                  title={"Quality Conditions"}
+                  array={qualityConditionsArr}
+                />
+             
             </div>
 
             <div className="col-4">
-              <div className="form-group">
-                <label htmlFor="paymentType">
-                  payment Term <span className="text-danger">*</span>
-                </label>
-
-                <select
-                  className="form-select form-control"
-                  id="paymentType"
-                  name="paymentType"
-                  onChange={formValidation.handleChange}
-                  onBlur={formValidation.handleBlur}
-                  value={formValidation.values.paymentType}
-                >
-                  {paymentTypeArr.map((item) => (
-                    <option value={item?.value}>{item?.name}</option>
-                  ))}
-                </select>
-                {formValidation.values.paymentType == "other" ? (
-                  <textarea
-                    className="form-control w-100 "
-                    onChange={formValidation.handleChange}
-                    onBlur={formValidation.handleBlur}
-                    value={formValidation.values.paymentTypeOther}
-                    id="paymentTypeOther"
-                    name="paymentTypeOther"
-                    rows="3"
-                    placeholder="enter more details"
-                  ></textarea>
-                ) : (
-                  ""
-                )}
-
-                {formValidation.errors.paymentTypeOther &&
-                formValidation.touched.paymentTypeOther ? (
-                  <small className="form-text text-danger">
-                    {formValidation.errors.paymentTypeOther}
-                  </small>
-                ) : (
-                  ""
-                )}
-              </div>
+            <SelectWithTextarea
+                  formValidation={formValidation}
+                  vlaidationName={"paymentType"}
+                  textAreaOther={"paymentTypeOther"}
+                  isRequired={true}
+                  title={"payment Term"}
+                  array={paymentTypeArr}
+                />
+             
             </div>
 
             <div className="col-4">
-              <div className="form-group">
-                <label htmlFor="packingConditions">
-                  Packing condition <span className="text-danger">*</span>
-                </label>
-                <select
-                  id="packingConditions"
-                  name="packingConditions"
-                  className="form-select form-control"
-                  onChange={formValidation.handleChange}
-                  onBlur={formValidation.handleBlur}
-                  value={formValidation.values.packingConditions}
-                >
-                  {packingConditionsArr.map((item) => (
-                    <option value={item?.value}>{item?.name}</option>
-                  ))}
-                </select>
-
-                {formValidation.values.packingConditions == "other" ? (
-                  <textarea
-                    className="form-control w-100 "
-                    onChange={formValidation.handleChange}
-                    onBlur={formValidation.handleBlur}
-                    value={formValidation.values.packingConditionsOther}
-                    id="packingConditionsOther"
-                    name="packingConditionsOther"
-                    rows="3"
-                    placeholder="enter more details"
-                  ></textarea>
-                ) : (
-                  ""
-                )}
-
-                {formValidation.errors.packingConditionsOther &&
-                formValidation.touched.packingConditionsOther ? (
-                  <small className="form-text text-danger">
-                    {formValidation.errors.packingConditionsOther}
-                  </small>
-                ) : (
-                  ""
-                )}
-              </div>
+            <SelectWithTextarea
+                  formValidation={formValidation}
+                  vlaidationName={"packingConditions"}
+                  textAreaOther={"packingConditionsOther"}
+                  isRequired={true}
+                  title={"Packing condition"}
+                  array={packingConditionsArr}
+                />
+             
             </div>
 
             <div className="col-4">
-              <div className="form-group">
-                <label htmlFor="shippingConditions">shipping conditions</label>
-                <select
-                  id="shippingConditions"
-                  name="shippingConditions"
-                  className="form-select form-control"
-                  onChange={formValidation.handleChange}
-                  onBlur={formValidation.handleBlur}
-                  value={formValidation.values.shippingConditions}
-                >
-                  {shippingConditionsArr.map((item) => (
-                    <option value={item?.value}>{item?.name}</option>
-                  ))}
-                </select>
-              </div>
+                <SelectWithTextarea
+                  formValidation={formValidation}
+                  vlaidationName={"shippingConditions"}
+                  textAreaOther={"shippingConditionsOther"}
+                  isRequired={true}
+                  title={"shipping conditions"}
+                  array={shippingConditionsArr}
+                />
             </div>
+
+            <div className="col-4">
+                <SelectOption
+                  formValidation={formValidation}
+                  vlaidationName={"SupplyLocation"}
+                  isRequired={true}
+                  title={"Supply Location"}
+                  array={SupplyLocationArr}
+                />
+              </div>
+              <div className="col-md-6 col-sm-12">
+                <SelectGroup
+                  formValidation={formValidation}
+                  vlaidationName="ShippingTypeSize"
+                  textAreaOther={"ShippingTypeSizeOther"}
+                  isRequired={true}
+                  title={"Shipping Type and Size"}
+                  array={ShippingTypeSizeArr}
+                />
+              </div>
+
+              <TimeLine
+                formValidation={formValidation}
+                vlaidationName={"timeLine"}
+              />
 
             {/*  */}
-            <div className="col-4">
-              <div className="form-group">
-                <label forhtml="startDeliveryDate">Start Deadline</label>
-                <input
-                  type="datetime-local"
-                  className="form-control d-block"
-                  id="startDeliveryDate"
-                  name="startDeliveryDate"
-                  onChange={formValidation.handleChange}
-                  onBlur={formValidation.handleBlur}
-                  value={formValidation.values.startDeliveryDate}
-                />
-                {formValidation.errors.startDeliveryDate &&
-                formValidation.touched.startDeliveryDate ? (
-                  <small className="form-text text-danger">
-                    {formValidation.errors.startDeliveryDate}
-                  </small>
-                ) : (
-                  ""
-                )}
-              </div>
-            </div>
+          
 
-            <div className="col-4">
-              <div className="form-group">
-                <label forhtml="endDeliveryDate">end Deadline</label>
-                <input
-                  type="datetime-local"
-                  className="form-control d-block"
-                  id="endDeliveryDate"
-                  name="endDeliveryDate"
-                  onChange={formValidation.handleChange}
-                  onBlur={formValidation.handleBlur}
-                  value={formValidation.values.endDeliveryDate}
-                />
-                {formValidation.errors.endDeliveryDate &&
-                formValidation.touched.endDeliveryDate ? (
-                  <small className="form-text text-danger">
-                    {formValidation.errors.endDeliveryDate}
-                  </small>
-                ) : (
-                  ""
-                )}
-              </div>
-            </div>
 
             {/*  */}
             {/* ----------------------------------------- */}
 
             {/* ------------------------------------------ */}
+            <TextareaInput
+                  vlaidationName="moreDetails"
+                  formValidation={formValidation}
+                  isRequired={false}
+                  title="More Details"
+                />
 
-            <div className="col-12">
-              <div className="form-group">
-                <label>
-                  More Details <span className="text-danger">*</span>
-                </label>
-                <textarea
-                  type="text"
-                  className="form-control"
-                  id="notes"
-                  onChange={formValidation.handleChange}
-                  onBlur={formValidation.handleBlur}
-                  value={formValidation.values.notes}
-                ></textarea>
-                {formValidation.errors.notes && formValidation.touched.notes ? (
-                  <small className="text-danger">
-                    {formValidation.errors.notes}
-                  </small>
-                ) : (
-                  ""
-                )}
-              </div>
-            </div>
+
+            
             <div className="col-12">
               <div className="btn-container d-flex justify-content-center">
                 {isLoading ? (

@@ -10,8 +10,6 @@ export default function SendMsg(props) {
   let navigate = useNavigate();
   let validationSchema = Yup.object().shape({
     message: Yup.string()
-      // .min(5, "min legnth is 5")
-      // .required("Input field is Required")
       .max(255, "max legnth is 255"),
   });
 
