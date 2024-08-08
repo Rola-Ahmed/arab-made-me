@@ -11,7 +11,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
-export default function PurchasingOrdersImp() {
+export default function AllPo() {
   let { isLogin } = useContext(UserToken);
   let navigate = useNavigate();
 

@@ -17,7 +17,7 @@ import ContactBtn from "components/Importerdashboard/Shared/ContactBtn";
 
 import SubPageUtility from "components/Shared/Dashboards/SubPageUtility";
 import { getMonthName as getDate } from "utils/getMonthName";
-export default function PurchasingOrderEtc() {
+export default function OnePo() {
   let navigate = useNavigate();
 
   let { isLogin } = useContext(UserToken);

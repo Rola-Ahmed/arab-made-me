@@ -8,27 +8,27 @@ import CusProductReq from "components/Importerdashboard/subComponets/CusProductR
 
 
 // Importer Dashboard pages
-import SourcingRequest from "components/Importerdashboard/subComponets/SourcingRequest/SourcingRequest";
+import SourcingRequest from "components/Importerdashboard/subComponets/SourcingRequest/AddSourcingReq/SourcingRequest";
 import Importerdash from "components/Importerdashboard/Importerdash";
 import ReqVisitImporter from "components/Importerdashboard/subComponets/ReqVisitImporter/ReqVisitImporter";
-import PurchasingOrdersImp from "components/Importerdashboard/subComponets/PurchasingOrdersImp/PurchasingOrdersImp";
+import PurchasingOrdersImp from "components/Importerdashboard/subComponets/PO/AllPo";
 
 import DashBoardImporter from "components/Importerdashboard/subComponets/DashBoard/DashBoard";
-import GetSourcingReq from "components/Importerdashboard/subComponets/GetSourcingRequest/GetSourcingRequest";
+import GetSourcingReq from "components/Importerdashboard/subComponets/SourcingRequest/GetSourcingRequest/GetSourcingRequest";
 import GetQuotationImp from "components/Importerdashboard/subComponets/GetQuotationImp/GetQuotationImp";
 import ImporterPofile from "components/Importerdashboard/subComponets/ImporterProfile/ImporterProfile";
 
 // View more details shared (factory & importer)
 import VisitRequestEtc from "components/Importerdashboard/subComponets/ReqVisitImporter/VisitRequestEtc/VisitRequestEtc";
 
-import PurchasingOrdersEtc from "components/Importerdashboard/subComponets/PurchasingOrdersImp/PurchasingOrderEtc";
+import PurchasingOrdersEtc from "components/Importerdashboard/subComponets/PO/OnePo";
 
 
 import CustomProductReqEtc from "components/Importerdashboard/subComponets/CusProductReqImp/CustomProductReqEtc/CustomProductReqEtc";
 
 import QuotationsEtc from "components/Importerdashboard/subComponets/GetQuotationImp/QuotationsEtc/QuotationsEtc";
 
-import SourcingReqEtc from "components/Importerdashboard/subComponets/SourcingReqEtc/SourcingReqEtc";
+import SourcingReqEtc from "components/Importerdashboard/subComponets/SourcingRequest/OneSourcingReq/SourcingReqEtc";
 
 // chats
 import ChatList from "components/Importerdashboard/subComponets/Chat/ChatList";
