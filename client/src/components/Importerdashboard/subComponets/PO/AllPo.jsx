@@ -7,8 +7,7 @@ import { baseUrl, baseUrl_IMG } from "config.js";
 
 import StarRating from "components/Shared/stars";
 import { UserToken } from "Context/userToken";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import {  toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 export default function AllPo() {
@@ -269,7 +268,6 @@ export default function AllPo() {
   };
   return (
     <div className="m-4 order-section ">
-      <ToastContainer />
       {/* section 1 */}
       <div className="header w-100">
         <PageUtility currentPage="Purchasing Orders" />

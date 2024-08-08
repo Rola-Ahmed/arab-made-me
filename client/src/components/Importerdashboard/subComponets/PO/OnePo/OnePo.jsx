@@ -115,18 +115,6 @@ export default function OnePo() {
 
            
               <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                {/* <button
-                  // submitButton bg-white border-btn
-                  className="btn-edit d-none"
-                  type="button"
-                  onClick={() => {
-                    handleIsLoggedInBtn(
-                      `contactsupplier?userId=${PosData?.factory?.userId}&factoryName=${PosData?.factory?.name}`
-                    );
-                  }}
-                >
-                  <p className="cursor ">Contact Supplier</p>
-                </button> */}
                 <ContactBtn
                   isLogin={isLogin}
                   handleIsLoggedInBtn={handleIsLoggedInBtn}
