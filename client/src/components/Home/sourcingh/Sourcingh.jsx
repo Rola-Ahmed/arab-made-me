@@ -1,7 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import "./sourcingh.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import Carousel from "react-grid-carousel";
 import { UserToken } from "Context/userToken";
 import SourcingRequestCard from "components/Sourcinghub/SourcingRequest/SourcingRequestCard";

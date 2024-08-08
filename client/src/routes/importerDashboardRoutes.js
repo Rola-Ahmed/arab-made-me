@@ -21,7 +21,7 @@ import ImporterPofile from "components/Importerdashboard/subComponets/ImporterPr
 // View more details shared (factory & importer)
 import VisitRequestEtc from "components/Importerdashboard/subComponets/ReqVisitImporter/VisitRequestEtc/VisitRequestEtc";
 
-import PurchasingOrdersEtc from "components/Importerdashboard/subComponets/PO/OnePo";
+import PurchasingOrdersEtc from "components/Importerdashboard/subComponets/PO/OnePo/OnePo";
 
 
 import CustomProductReqEtc from "components/Importerdashboard/subComponets/CusProductReqImp/CustomProductReqEtc/CustomProductReqEtc";

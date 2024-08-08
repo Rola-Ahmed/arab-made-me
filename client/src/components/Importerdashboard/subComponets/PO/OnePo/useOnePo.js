@@ -28,7 +28,7 @@ export function useOnePo() {
       // get private label data
       let result = await getOnePO(
         poId,
-        "include=product&include=sourcingOffer&include=importer"
+        "include=product&include=factory&include=sourcingOffer"
       );
 
       // check if private label has quotations
@@ -44,13 +44,17 @@ export function useOnePo() {
           ...prevData,
           ...result.data.purchasingorders,
         }));
-      }
-    
         setApiLoadingData((prevVal) => ({
           ...prevVal,
-          reqData: result?.loadingStatus,
+          reqData: false,
+        }));
+      } else {
+        setApiLoadingData((prevVal) => ({
+          ...prevVal,
+          reqData: true,
           errorWhileLoading: result?.error,
         }));
+      }
 
       if (QouteIdConfigResp?.success) {
         // Extract the quotations array from the response

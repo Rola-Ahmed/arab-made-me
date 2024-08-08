@@ -37,7 +37,7 @@ export default function ContactBtn(props) {
 
   return (
     <button
-      className="btn-edit  "
+      className="btn-edit mb-5 "
       type="button"
       onClick={() => {
         if (currentChat != "") {
