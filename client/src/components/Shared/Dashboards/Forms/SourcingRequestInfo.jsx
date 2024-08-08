@@ -129,7 +129,7 @@ export default function SourcingRequestInfo({
 
       <div className="container-profile-input w-100">
         <div className="title-contianer-input w-100">
-          <p> Documents</p>
+          <p className="h5 fw-bolder title-header"> Documents</p>
           <DisplayMultiImages
             handleImageClick={handleImageClick}
             images={requestedData?.docs}

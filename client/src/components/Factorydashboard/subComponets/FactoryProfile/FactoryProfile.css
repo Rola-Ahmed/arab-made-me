@@ -503,9 +503,10 @@
 
 
 
-.factory-profile .dots-slider-img {
+.factory-profile .dots-slider-img,.input-content .dots-slider-img {
 
-    height: 340px
+    height: 480px;
+
 }
 
 .factory-profile .dots-slider-img-2 {
@@ -515,7 +516,7 @@
 
 .factory-profile .dots-slider-img img {
 
-    object-fit: fill;
+    object-fit: cover;
 }
 
 .factory-profile .dots-slider-img.active-dot {

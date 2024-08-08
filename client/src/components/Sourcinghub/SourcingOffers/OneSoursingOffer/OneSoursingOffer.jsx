@@ -18,6 +18,8 @@ import UserNotAuthorized from "components/ActionMessages/FormAccessControl/Popup
 import { getMonthName as getDate } from "utils/getMonthName";
 import Loading from "components/Loading/Loading";
 import FactoryInfo from "components/Forms/Shared/FactoryInfo";
+import OfferInfo from "components/Shared/Dashboards/Forms/OfferInfo";
+import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
 
 function OneSoursingOffer() {
   let navigate = useNavigate();
@@ -155,6 +157,18 @@ function OneSoursingOffer() {
     fetchFactoryData();
   }, [factoryId]);
 
+
+  const [showImagePop, setShowImagePop] = useState({
+    display: false,
+    imagePath: "",
+  });
+
+  const handleImageClick = (imagePath) => {
+    setShowImagePop({
+      display: true,
+      imagePath,
+    });
+  };
   return (
     <>
       <IsLoggedIn
@@ -189,7 +203,7 @@ function OneSoursingOffer() {
         userType="Buyer"
       />
 
-      <Header title="Sourcing Request " />
+      <Header title="Sourcing Offer " />
       {isLoading?.loading && (
         <>
           {isLoading?.errorMsg ? (
@@ -198,7 +212,7 @@ function OneSoursingOffer() {
             </p>
           ) : (
             <div className=" d-flex justify-content-center py-5">
-              <Loading title="Sourcing Request Details" />
+              <Loading title="Sourcing Offer Details" />
             </div>
           )}
         </>
@@ -215,10 +229,12 @@ function OneSoursingOffer() {
             {/* Grid  */}
             <div className="container container-po ">
               <div className="input-content ">
-                <div className="title-text w-100 ">
+
+              <OfferInfo requestedData={PosData} handleImageClick={handleImageClick} />
+                <div className="title-text w-100 d-none">
                   <h5>Offer Details</h5>
                 </div>
-                <div className="row row-container w-100 ">
+                <div className="row row-container w-100 d-none">
                   {/* <div className="row  row-gap"> */}
                   <div className="col-md-6 col-sm-12">
                     <ReadOnly
@@ -353,6 +369,17 @@ function OneSoursingOffer() {
           </section>
         </>
       )}
+
+<MediaPopUp
+        show={showImagePop.display}
+        onHide={() =>
+          setShowImagePop({
+            display: false,
+            imagePath: "",
+          })
+        }
+        showImagePop={showImagePop.imagePath}
+      />
     </>
   );
 }

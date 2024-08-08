@@ -1,19 +1,12 @@
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { baseUrl } from "config.js";
-
 import { UserToken } from "Context/userToken";
-import ReadOnly from "components/Forms/Shared/ReadOnly";
-
-
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
-import DisplayMultiImages from "components/Shared/Dashboards/DisplayMultiImages";
-
 import { useNavigate, useSearchParams } from "react-router-dom";
-
 // utils function
 import SubPageUtility from "components/Shared/Dashboards/SubPageUtility";
-import { getMonthName as getDate } from "utils/getMonthName";
+import OfferInfo from "components/Shared/Dashboards/Forms/OfferInfo";
 export default function OneOffer() {
   let navigate = useNavigate();
 
@@ -76,9 +69,6 @@ export default function OneOffer() {
     fetchReqData();
   }, [factoryOffersId]);
 
-  // utils function
-  let getMonthName = getDate;
-
  
 
   return (
@@ -114,156 +104,8 @@ export default function OneOffer() {
 
           <div className="section factory-profile m-5">
             <div className="container gap-container px-0">
-                <div className=" container-2-gap  p-0 bg-info">
-                  <div className="container-profile-input w-100">
-                    <div className="title-contianer-input w-100">
-                      <p> Offer Details</p>
-                      <div className="w-100 ">
-                        <div className="row  row-gap">
-                          <div className="col-6">
-                          <ReadOnly
-                    title="Product Name"
-                    value={PosData?.productName}
-                  />
-                          </div>
-
-                          <div className="col-6">
-                          <ReadOnly
-                    title="sku"
-                    value={PosData?.sku}
-                  />
-                           
-                          </div>
-
-                          <div className="col-6">
-                <ReadOnly title="hsnCode" value={PosData?.productHSNCode} />
-
-                          
-                          </div>
-
-                          <div className="col-6">
-              <ReadOnly title="Price" value={PosData?.price} />
-            </div>
-            <div className="col-6">
-              <ReadOnly
-                title="packing Conditions"
-                value={PosData?.packingConditions}
-              />
-            </div>
-            <div className="col-6">
-              <ReadOnly
-                title="quality Conditions"
-                value={PosData?.qualityConditions}
-              />
-            </div>
-
-            <div className="col-6">
-              <ReadOnly
-                title="shipping Conditions"
-                value={PosData?.shippingConditions}
-              />
-            </div>
-
-                        
-
-                          <div className="col-6">
-              <ReadOnly
-                title="Delivery Terms"
-                value={PosData?.deliveryTerms}
-              />
-            </div>
-
-
-            <div className="col-6">
-              <ReadOnly
-                title="payment Terms"
-                value={PosData?.paymentTerms}
-              />
-            </div>
-
-            <div className="col-6">
-              <ReadOnly
-                title="available"
-                value={ PosData?.available
-                  ? "In Stock"
-                  : "Out Of Stock"}
-              />
-            </div>
-
-                        
-
-                        
-                  <div className="col-6">
-                    <ReadOnly
-                      title="preferred Countries"
-                      value={`${PosData?.preferredCountries?.join(", ") ||
-                        "All"}  `}
-                    />
-                  </div>
-
-                       
-                  <div className="col-md-6 col-sm-12">
-                    <ReadOnly title="Quantity" value={PosData?.quantity} />
-                  </div>
-
-
-                       
-                  <div className="col-md-6 col-sm-12">
-                    <ReadOnly
-                      title="Created At"
-                      value={getMonthName(PosData?.createdAt?.split("T")?.[0])}
-                    />
-                  </div>
-
-                          {/* ---------------------------- */}
-
-                          
-                  {PosData?.specialCharacteristics &&
-                    Object?.keys(PosData?.specialCharacteristics)?.length >
-                      0 && (
-                      <div className="col-12 ">
-                        <label className="fw-600 mb-1">
-                          Product Characteristics
-                        </label>
-
-                        <div className="form-group form-control p-4 ">
-                          <div className="row row-gap ">
-                            {Object?.entries(
-                              PosData?.specialCharacteristics
-                            )?.map(([key, value], index) => (
-                              <div className="col-6">
-                                <ReadOnly title={key} value={value} />
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    )}
-
-                          
-
-<div className="col-12">
-                    <ReadOnly
-                      title="Product Description"
-                      value={PosData?.productDescription}
-                    />
-                  </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="container-profile-input w-100">
-                    <div className="title-contianer-input w-100">
-                      <p> Product Images</p>
-                      <DisplayMultiImages
-                      handleImageClick={handleImageClick}
-                      images={PosData?.images}
-                    />
-
-                      
-                    </div>
-                  </div>
+                <div className=" container-2-gap  p-0">
+                <OfferInfo requestedData={PosData} handleImageClick={handleImageClick} />
 
                   {/* <div className="col-12 d-flex justify-content-start btn-modal-gap">
                     
