@@ -7,7 +7,6 @@ import { baseUrl, baseUrl_IMG } from "config.js";
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
 
-import "react-toastify/dist/ReactToastify.css";
 import { useSearchParams } from "react-router-dom";
 import SubPageUtility from "components/Shared/Dashboards/PageUtility";
 import { getTimeDifference as getTimeDiff } from "utils/getTimeDifference";

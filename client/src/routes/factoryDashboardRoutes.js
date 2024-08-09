@@ -15,7 +15,7 @@ import RfqFactoryDash from "components/Factorydashboard/subComponets/RfqFactoryD
 
 import CusProductReq from "components/Factorydashboard/subComponets/CusProductReq/AllSpmf/AllSpmf";
 import ReqVisitFactDash from "components/Factorydashboard/subComponets/ReqVisitFactDash/AllReqVisit/ReqVisitFactDash";
-import GetAllFactoryProduct from "components/Factorydashboard/subComponets/Products/GetProducts/GetProducts";
+import GetAllFactoryProduct from "components/Factorydashboard/subComponets/Products/AllProducts/AllProducts";
 import EditProduct from "components/Factorydashboard/subComponets/Products/EditProduct/EditProduct";
 import AddProduct from "components/Factorydashboard/subComponets/Products/AddProduct/AddProduct";
 import AddSourcingOffer from "components/Factorydashboard/offers/AddOffer/AddOffer";
@@ -35,7 +35,7 @@ import CustomProductReqFacEtc from "components/Factorydashboard/subComponets/Cus
 import RfqRequestFacEtc from "components/Factorydashboard/subComponets/RfqFactoryDash/OneRfqs/OneRfqs";
 
 // factory only
-import ProductsFacEtc from "components/ViewMoreDetailsFormDash/ProductsFacEtc/ProductsFacEtc";
+import ProductsFacEtc from "components/Factorydashboard/subComponets/Products/OneProduct/OneProduct";
 import OffersFacEtc from "components/Factorydashboard/offers/OneOffer/OneOffer";
 
 // Quote data Container
