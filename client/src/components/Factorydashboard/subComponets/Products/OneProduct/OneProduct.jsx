@@ -1,27 +1,15 @@
-import { useEffect, useState, useContext } from "react";
-import axios from "axios";
-import { baseUrl } from "config.js";
 
-import { UserToken } from "Context/userToken";
-
+import {  useState } from "react";
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
-
-import { useNavigate, useSearchParams } from "react-router-dom";
-// utils function
+import { useNavigate } from "react-router-dom";
 import SubPageUtility from "components/Shared/Dashboards/SubPageUtility";
-import { getMonthName as getDate } from "utils/getMonthName";
 import DisplayMultiImages from "components/Shared/Dashboards/DisplayMultiImages";
 import DisplayOneImage from "components/Shared/Dashboards/DisplayOneImage";
 import ProductDetails from "components/Forms/Shared/SelectedProductDetails";
+import { UseOneProduct } from "./UseOneProduct";
+import StatusMessagetwo from "components/Shared/Dashboards/StatusMessagetwo";
 export default function ProductsFacEtc() {
   let navigate = useNavigate();
-
-  let { isLogin } = useContext(UserToken);
-
-  const [searchParams] = useSearchParams();
-  const productId = searchParams.get("productId");
-
-  const [apiLoadingData, setapiLoadingData] = useState(true);
 
   const [showImagePop, setShowImagePop] = useState({
     display: false,
@@ -34,40 +22,13 @@ export default function ProductsFacEtc() {
     });
   };
 
-  const [PosData, setPosData] = useState();
-
-  async function fetchReqData() {
-    setapiLoadingData(true);
-
-    try {
-      let config = {
-        method: "get",
-        url: `${baseUrl}/products/${productId}`,
-        headers: {
-          authorization: isLogin,
-        },
-      };
-
-      const response = await axios.request(config);
-
-      if (response?.data?.message == "done") {
-        setPosData(response?.data?.products);
-
-        setapiLoadingData(false);
-      } else {
-        setapiLoadingData(true);
-      }
-    } catch (error) {
-      setapiLoadingData(true);
-    }
-  }
-
-  useEffect(() => {
-    fetchReqData();
-  }, [productId]);
-
+  let  {
+    // isLogin,
+    requestedData,
+    apiLoadingData,
+  } =UseOneProduct()
+ 
   // utils function
-  let getMonthName = getDate;
 
   return (
     <>
@@ -92,13 +53,18 @@ export default function ProductsFacEtc() {
         </div>
       </div>
 
+
+      {apiLoadingData?.reqData ?
+        <StatusMessagetwo  errorMsg={apiLoadingData?.errorWhileLoading}/>
+        :
+
       <div className="section factory-profile m-5">
         <div className="container gap-container">
           <div className="row">
             <div className="col-12  container-2-gap  p-0">
               <div className="container-profile-input w-100">
                 <div className="title-contianer-input w-100">
-                  <ProductDetails productDetails={PosData} />
+                  <ProductDetails productDetails={requestedData} />
                 </div>
               </div>
 
@@ -107,7 +73,7 @@ export default function ProductsFacEtc() {
                   <p> Product Banners</p>
                   <DisplayMultiImages
                     handleImageClick={handleImageClick}
-                    images={PosData?.images}
+                    images={requestedData?.images}
                   />
                 </div>
               </div>
@@ -118,7 +84,7 @@ export default function ProductsFacEtc() {
 
                   <DisplayOneImage
                     handleImageClick={handleImageClick}
-                    image={PosData?.coverImage}
+                    image={requestedData?.coverImage}
                   />
                 </div>
               </div>
@@ -129,7 +95,7 @@ export default function ProductsFacEtc() {
                   type="button"
                   onClick={() => {
                     navigate(
-                      `/factorydashboard/editProduct/${PosData?.id}?productName=${PosData?.name}`
+                      `/factorydashboard/editProduct/${requestedData?.id}?productName=${requestedData?.name}`
                     );
                   }}
                 >
@@ -140,6 +106,7 @@ export default function ProductsFacEtc() {
           </div>
         </div>
       </div>
+}
 
       <MediaPopUp
         show={showImagePop.display}

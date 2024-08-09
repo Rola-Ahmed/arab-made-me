@@ -503,10 +503,12 @@
 
 
 
-.factory-profile .dots-slider-img,.input-content .dots-slider-img {
-
+.factory-profile .dots-slider-img, .input-content .dots-slider-img {
     height: 480px;
-
+    height: 480px;
+    border: 2px solid black;
+    overflow: hidden;
+    border-radius: 5%
 }
 
 .factory-profile .dots-slider-img-2 {

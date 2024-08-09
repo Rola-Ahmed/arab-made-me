@@ -248,14 +248,6 @@ export default function GetSourcingRequest() {
             />
           </div>
 
-          {/* <div className=" btn-container d-flex justify-content-between align-items-center">
-            
-
-            <button className=" dropdown-toggle order-toggle d-flex justify-content-center align-items-center">
-              <i className="fa-solid fa-filter"></i>
-              <p>Filter</p>
-            </button>
-          </div> */}
 
           <div className=" btn-container d-flex justify-content-between align-items-center">
             <div class="dropdown">
@@ -297,14 +289,7 @@ export default function GetSourcingRequest() {
                 >
                   <p className="dropdown-item">Newest</p>
                 </li>
-                {/* <li
-                  onClick={(e) => {
-                    filtterData("rate", "sort", "Rate");
-                  }}
-                  className=" cursor  text-start"
-                >
-                  <a class="dropdown-item">Rate</a>
-                </li> */}
+               
 
                 <li
                   onClick={(e) => {
@@ -363,7 +348,7 @@ export default function GetSourcingRequest() {
 
             <tbody>
               {/* row1 */}
-              {allSpmfsData.map((poItem) => (
+              {allSpmfsData?.map((poItem) => (
                 <tr className="row">
                   <th className=" col-2  ">
                     <div className=" th-1st-title-gap d-flex justify-content-start align-items-center">
