@@ -1,82 +1,36 @@
-import { useEffect, useState, useContext } from "react";
-import axios from "axios";
-import { baseUrl } from "config.js";
-import { UserToken } from "Context/userToken";
+import {  useState } from "react";
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // utils function
 import SubPageUtility from "components/Shared/Dashboards/SubPageUtility";
 import OfferInfo from "components/Shared/Dashboards/Forms/OfferInfo";
+import { UseOneOffer } from "./UseOneOffer";
+import StatusMessagetwo from "components/Shared/Dashboards/StatusMessagetwo";
 export default function OneOffer() {
   let navigate = useNavigate();
 
-  let { isLogin } = useContext(UserToken);
-
-
-  const [searchParams] = useSearchParams();
-  const factoryOffersId = searchParams.get("factoryOffersId");
-
-  const [apiLoadingData, setapiLoadingData] = useState(true);
-
-  const [PosData, setPosData] = useState();
   const [showImagePop, setShowImagePop] = useState({
     display: false,
     imagePath: "",
   });
-
   const handleImageClick = (imagePath) => {
     setShowImagePop({
       display: true,
       imagePath,
     });
   };
-
-  async function fetchReqData() {
-    setapiLoadingData(true);
-
-    try {
-      let config = {
-        method: "get",
-        url: `${baseUrl}/factories/factory/offers`,
-        headers: {
-          authorization: isLogin,
-        },
-      };
-
-      const response = await axios.request(config);
-
-      if (response?.data?.message == "done") {
-        // setPosData(response?.data?.sourcingOffers);
-
-        const matchedObject = response.data.offers.find(
-          (obj) => obj.id == factoryOffersId
-        );
-
-        if (matchedObject) {
-          setPosData(matchedObject);
-        }
-
-        setapiLoadingData(false);
-      } else {
-        setapiLoadingData(true);
-      }
-    } catch (error) {
-      setapiLoadingData(true);
-    }
-  }
-
-  useEffect(() => {
-    fetchReqData();
-  }, [factoryOffersId]);
-
+ let {
+    isLogin,
+    requestedData,
+    apiLoadingData,
+  }=UseOneOffer()
  
 
   return (
     <>
     
 
-      {isLogin && (
-        <>
+   
           <div id="view" className="m-4 order-section  ">
             <SubPageUtility
               currentPage="More Details"
@@ -102,10 +56,14 @@ export default function OneOffer() {
             </div>
           </div>
 
+{apiLoadingData?.reqData ?
+<StatusMessagetwo  errorMsg={apiLoadingData?.errorWhileLoading}/>
+
+:
           <div className="section factory-profile m-5">
             <div className="container gap-container px-0">
                 <div className=" container-2-gap  p-0">
-                <OfferInfo requestedData={PosData} handleImageClick={handleImageClick} />
+                <OfferInfo requestedData={requestedData} handleImageClick={handleImageClick} />
 
                   {/* <div className="col-12 d-flex justify-content-start btn-modal-gap">
                     
@@ -116,8 +74,8 @@ export default function OneOffer() {
                 </div>
             </div>
           </div>
-        </>
-      )}
+}
+      
 
       <MediaPopUp
         show={showImagePop.display}
