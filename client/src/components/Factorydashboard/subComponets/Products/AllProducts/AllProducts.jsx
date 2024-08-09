@@ -15,7 +15,7 @@ export default function GetProducts() {
   let navigate = useNavigate();
 
   const [filter, setFilter] = useState({
-    filter: "",
+    formsFilter: "",
     sort: "",
     sort_name: "",
   });

@@ -3,10 +3,10 @@ import {
     deleteRequest,
   } from "../authServices";
   
-  export const getProducts = async (param, header) => {
+  export const getProducts = async (id,param) => {
     return await getRequestDataHeader(
-      `/factories/products?${param}`,
-      header,
+      `/factories/products/${id}?${param}`,
+      {},
       {}
     );
   };

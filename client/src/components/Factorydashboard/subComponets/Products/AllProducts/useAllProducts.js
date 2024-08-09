@@ -2,6 +2,7 @@ import ErrorToast from "components/ErrorToast";
 import SuccessToast from "components/SuccessToast";
 import { useEffect, useState ,useContext} from "react";
 import { UserToken } from "Context/userToken";
+import { userDetails } from "Context/userType";
 
 import {
   getProducts,
@@ -10,6 +11,7 @@ import {
 
 const useAllProducts = ( filter) => {
   let { isLogin } = useContext(UserToken);
+  let { currentUserData } = useContext(userDetails);
 
   const [pagination, setPagination] = useState({
     currentPage: 1,
@@ -26,7 +28,7 @@ const useAllProducts = ( filter) => {
 
   const fetchReqLeng = async () => {
     const params = `filter=${filter?.formsFilter}&sort=${filter?.sort}`;
-    const result = await getProducts(params, { authorization: isLogin });
+    const result = await getProducts(currentUserData?.factoryId,params);
     if (result?.success) {
       const totalReq = result.data?.products?.length || 1;
       setPagination((prevValue) => ({
@@ -47,7 +49,7 @@ const useAllProducts = ( filter) => {
 
     setReqData([]);
     const params = `size=${pagination.displayProductSize}&page=${pagination.currentPage}&filter=${filter?.formsFilter}&sort=${filter?.sort}`;
-    const result = await getProducts(params, { authorization: isLogin });
+    const result = await getProducts(currentUserData?.factoryId,params);
     if (result?.success) {
       setReqData(result?.data?.products);
       setTimeout(() => {
@@ -70,11 +72,6 @@ const useAllProducts = ( filter) => {
 
   useEffect(() => {
     fetchReqData();
-
-    // pagination?.currentPage,
-    // pagination?.totalPage,
-    // dataFilterFromChild,
-    // isLogin,
   }, [pagination?.currentPage, pagination?.totalPage, filter, isLogin]);
 
   const deleteData = async (itemId) => {
