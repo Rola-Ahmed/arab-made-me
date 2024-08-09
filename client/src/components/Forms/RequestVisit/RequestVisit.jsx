@@ -13,6 +13,7 @@ import useFormSubmission from "./hooks/useFormSubmission";
 import DateTimeInput from "../Shared/DateTimeInput";
 import TextareaInput from "../Shared/TextareaInput";
 import RadioInput from "../Shared/RadioInput";
+import ErrorToast from "components/ErrorToast";
 
 function RequestVisit() {
   let navigate = useNavigate();
@@ -35,7 +36,7 @@ function RequestVisit() {
   let { submitForm } = useFormSubmission(isLogin, setErrorMsg, setIsLoading);
 
   if (!factoryId) {
-    localStorage.setItem("ToHomePage", "Page Not Found");
+    ErrorToast("Page Not Found");
     navigate("/");
   }
 
@@ -78,7 +79,7 @@ function RequestVisit() {
   // if i used this or no it will work
 
   useEffect(() => {
-    if (factoryId.length !== 0) {
+    if (factoryId?.length !== 0) {
       formValidation.setValues(initialValues);
     }
   }, [factoryId]);

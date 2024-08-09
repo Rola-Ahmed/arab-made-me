@@ -6,8 +6,6 @@ import { baseUrl } from "config.js";
 
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 import { useNavigate, useParams } from "react-router-dom";
 import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/FactoryUnVerifiedDash";
@@ -628,7 +626,6 @@ export default function EditProduct() {
   return (
     <>
       <div id="view" className="m-4 order-section  ">
-        <ToastContainer />
         {/* section 1 */}
         <form onSubmit={formValidation.handleSubmit} className="header w-100">
           {/* <form className="header w-100"> */}

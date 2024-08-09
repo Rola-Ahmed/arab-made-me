@@ -1,5 +1,4 @@
 import { useEffect, useState, useContext } from "react";
-import ReactPaginate from "react-paginate";
 import axios from "axios";
 import { baseUrl, baseUrl_IMG } from "config.js";
 import { handleImageError } from "utils/ImgNotFound";

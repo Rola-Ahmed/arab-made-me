@@ -8,6 +8,7 @@ const useGlobalMessage = () => {
 
   useEffect(() => {
     if (globalMsg) {
+      
       toast(globalMsg, {
         position: 'top-center',
         autoClose: 5000,

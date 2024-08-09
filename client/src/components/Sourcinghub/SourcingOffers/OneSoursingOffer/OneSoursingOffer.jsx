@@ -20,6 +20,7 @@ import Loading from "components/Loading/Loading";
 import FactoryInfo from "components/Forms/Shared/FactoryInfo";
 import OfferInfo from "components/Shared/Dashboards/Forms/OfferInfo";
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
+import ErrorToast from "components/ErrorToast";
 
 function OneSoursingOffer() {
   let navigate = useNavigate();
@@ -110,7 +111,7 @@ function OneSoursingOffer() {
   }
 
   if (factoryId == null) {
-    localStorage.setItem("ToHomePage", "Page Not Found");
+    ErrorToast("Page Not Found");
 
     navigate("/");
   }

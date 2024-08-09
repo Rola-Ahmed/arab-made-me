@@ -6,6 +6,7 @@ import { baseUrl } from "config.js";
 import CustomerProductReq from "./CustomProductReq";
 import useAuthFormChecks from "components/Forms/hooks/useAuthFormChecks";
 import Header from "components/main/Header/Header";
+import ErrorToast from "components/ErrorToast";
 function FetchCustomProductContainer() {
   const [searchParams] = useSearchParams();
   const factoryId = searchParams.get("factoryId");
@@ -45,7 +46,7 @@ function FetchCustomProductContainer() {
   }
 
   if (factoryId == null) {
-    localStorage.setItem("ToHomePage", "Page Not Found");
+    ErrorToast("Page Not Found");
     navigate("/");
   }
 

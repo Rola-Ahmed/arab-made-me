@@ -10,6 +10,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 
 import { contact1, contact2 } from "constants/Images";
+import ErrorToast from "components/ErrorToast";
 
 function ContactSupplierFactoryPg() {
   let [factoryDetails, setFactoryDetails] = useState({});
@@ -28,8 +29,7 @@ function ContactSupplierFactoryPg() {
 
   //  if the factoryid is null means not defined then direct to homepage
   if (factoryId == null) {
-    localStorage.setItem("ToHomePage", "Page Not Found");
-
+    ErrorToast("Page Not Found");
     navigate("/");
   }
 
