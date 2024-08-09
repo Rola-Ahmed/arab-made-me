@@ -1,4 +1,4 @@
-import { getRequestDataHeader, postRequest, putRequest } from "./authServices";
+import { getRequestDataHeader, postRequest, putRequest,deleteRequest } from "./authServices";
 
 export const getSourcingReuqests = async (param) => {
   return await getRequestDataHeader(`sourcingRequests?${param}`, {}, {});
@@ -14,4 +14,10 @@ export const addSourcingRequest = async (header, data) => {
 
 export const addSourcingRequestrMedia = async (id, header, data) => {
   return await putRequest(`/sourcingRequests/uploadMedia/${id}`, header, data);
+};
+
+
+
+export const deleteSourceRequestUser = async (id, header) => {
+  return await deleteRequest(`/sourcingRequests/delete/fromUser/${id}`, header, {});
 };

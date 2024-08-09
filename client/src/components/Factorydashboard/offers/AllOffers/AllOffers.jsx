@@ -82,10 +82,8 @@ let navigate = useNavigate();
           </div>
         </div>
 
-        {/* search filter section */}
          {/* search filter section */}
          <SearchFilterByOrderPrice filtterData={filtterData} filter={filter} />
-        {/* data section */}
 
         <div className=" data-container w-100 p-3">
           <table className="table mb-0">

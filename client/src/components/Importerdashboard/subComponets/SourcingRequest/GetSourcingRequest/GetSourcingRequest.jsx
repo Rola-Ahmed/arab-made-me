@@ -12,6 +12,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 import { getMonthName as getDate } from "utils/getMonthName";
+import SearchFilterByOrder from "components/Shared/Dashboards/SearchFilterByOrder";
 
 export default function GetSourcingRequest() {
   let { isLogin } = useContext(UserToken);
@@ -27,8 +28,6 @@ export default function GetSourcingRequest() {
     displayProductSize: 8,
     currentPage: 1,
     totalPage: 1,
-    // will be called by api
-    // totalPage: Math.ceil((allProductsData?.length) /pagination.displayProductSize), // Use 30 as the default display size
   }));
 
   const [filter, setFilter] = useState({
@@ -185,7 +184,6 @@ export default function GetSourcingRequest() {
 
   return (
     <div className="m-4 order-section ">
-      <ToastContainer />
       {/* section 1 */}
       <div className="header w-100">
         <PageUtility currentPage="Sourcing Requests" />
@@ -218,100 +216,9 @@ export default function GetSourcingRequest() {
 
         {/* */}
 
+      
         {/* search filter section */}
-        <div className=" search-container d-flex justify-content-between align-items-center p-3">
-          <div className="input-group width-size">
-            <div
-              className="input-group-prepend cursor "
-              onClick={(e) => {
-                let value = document.getElementById("formsFilter").value;
-                filtterData(value, "formsFilter");
-              }}
-            >
-              <span
-                className="input-group-text bg-white icon-search-container pe-0"
-                id="inputGroup-sizing-default"
-              >
-                <i className="fa-solid fa-magnifying-glass icon-search"></i>
-              </span>
-            </div>
-            <input
-              type="text"
-              className="form-control input-search "
-              id="formsFilter"
-              placeholder="search by product name"
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  filtterData(e.target.value, "formsFilter");
-                }
-              }}
-            />
-          </div>
-
-
-          <div className=" btn-container d-flex justify-content-between align-items-center">
-            <div class="dropdown">
-              <button
-                className=" dropdown-toggle order-toggle d-flex justify-content-center align-items-center"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                <i className="fa-solid fa-filter"></i>
-                <p>
-                  {filter?.sort_name !== "" ? filter?.sort_name : "Sort By"}
-                </p>
-              </button>
-
-              <ul class="dropdown-menu">
-                <li
-                  onClick={(e) => {
-                    filtterData("date-DESC", "sort", "Sort By");
-                  }}
-                  className=" cursor text-start"
-                >
-                  <p className="dropdown-item">Sort By</p>
-                </li>
-
-                <li
-                  onClick={(e) => {
-                    filtterData("date-ASC", "sort", "Oldest");
-                  }}
-                  className=" cursor  text-start"
-                >
-                  <p className="dropdown-item">Oldest</p>
-                </li>
-                <li
-                  onClick={(e) => {
-                    filtterData("date-DESC", "sort", "Newest");
-                  }}
-                  className=" cursor  text-start"
-                >
-                  <p className="dropdown-item">Newest</p>
-                </li>
-               
-
-                <li
-                  onClick={(e) => {
-                    filtterData("price-ASC", "sort", "Price :Low to High");
-                  }}
-                  className=" cursor  text-start"
-                >
-                  <a class="dropdown-item">Price :Low to High</a>
-                </li>
-
-                <li
-                  onClick={(e) => {
-                    filtterData("date-DESC", "sort", "Price :High to Low");
-                  }}
-                  className=" cursor  text-start"
-                >
-                  <a class="dropdown-item">Price :High to Low</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
+        <SearchFilterByOrder filtterData={filtterData} filter={filter} />
         {/* data section */}
 
         <div className=" data-container w-100 p-3">
@@ -375,7 +282,7 @@ export default function GetSourcingRequest() {
                           <div key={key} className="py-1 ">
                             <p>
                               <span className="fw-bolder text-dark ">
-                                Keyword{index + 1}:
+                              {key}:
                               </span>
                               {value}
                             </p>
