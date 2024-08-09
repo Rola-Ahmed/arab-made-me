@@ -8,7 +8,7 @@ import {
 } from "Services/ImporterRequests/sourcingRequest";
 import {deleteSourceRequestUser} from 'Services/sourcingReuqest'
 
-const useAllOffers = ( filter) => {
+const useAllSourcingReq = ( filter) => {
   let { isLogin } = useContext(UserToken);
 
   const [pagination, setPagination] = useState({
@@ -28,7 +28,7 @@ const useAllOffers = ( filter) => {
     const params = `formsFilter=${filter?.formsFilter}&sort=${filter?.sort}`;
     const result = await getSourceRequest(params, { authorization: isLogin });
     if (result?.success) {
-      const totalReq = result.data?.offers?.length || 1;
+      const totalReq = result.data?.sourcingRequests?.length || 1;
       setPagination((prevValue) => ({
         ...prevValue,
         totalPage: Math.ceil(totalReq / prevValue.displayProductSize),
@@ -49,9 +49,9 @@ const useAllOffers = ( filter) => {
     const params = `size=${pagination.displayProductSize}&page=${pagination.currentPage}&formsFilter=${filter?.formsFilter}&sort=${filter?.sort}`;
     const result = await getSourceRequest(params, { authorization: isLogin });
     if (result?.success) {
-      setReqData(result?.data?.offers);
+      setReqData(result?.data?.sourcingRequests);
       setTimeout(() => {
-        setReqData(result?.data?.offers);
+        setReqData(result?.data?.sourcingRequests);
       }, 50);
     } 
 
@@ -99,4 +99,4 @@ const useAllOffers = ( filter) => {
   };
 };
 
-export default useAllOffers;
+export default useAllSourcingReq;

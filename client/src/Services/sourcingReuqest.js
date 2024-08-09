@@ -19,5 +19,5 @@ export const addSourcingRequestrMedia = async (id, header, data) => {
 
 
 export const deleteSourceRequestUser = async (id, header) => {
-  return await deleteRequest(`/sourcingRequests/delete/fromUser/${id}`, header, {});
+  return await deleteRequest(`/sourcingRequests/${id}`, header, {});
 };

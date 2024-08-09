@@ -1,35 +1,15 @@
-import { useEffect, useState, useContext } from "react";
-
-import ReactPaginate from "react-paginate";
-import axios from "axios";
-import { baseUrl } from "config.js";
-
-import { UserToken } from "Context/userToken";
-import { userDetails } from "Context/userType";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 import { getMonthName as getDate } from "utils/getMonthName";
 import SearchFilterByOrder from "components/Shared/Dashboards/SearchFilterByOrder";
+import PaginationDash from "components/Shared/Dashboards/PaginationDash";
+import useAllSourcingReq from "./useAllSourcingReq";
+import StatusMessage from "components/Shared/Dashboards/StatusMessage";
 
 export default function GetSourcingRequest() {
-  let { isLogin } = useContext(UserToken);
-  let { currentUserData } = useContext(userDetails);
   let navigate = useNavigate();
-
-  const [allSpmfsData, setAllSpmfsData] = useState([]);
-  const [apiLoadingData, setapiLoadingData] = useState(true);
-  const [errorsMsg, setErrorsMsg] = useState();
-
-  const [pagination, setPagination] = useState(() => ({
-    // i want to display 3 pdoructs in the 1st page
-    displayProductSize: 8,
-    currentPage: 1,
-    totalPage: 1,
-  }));
-
+  let getMonthName = getDate;
   const [filter, setFilter] = useState({
     formsFilter: "",
     sort: "date-DESC",
@@ -44,143 +24,15 @@ export default function GetSourcingRequest() {
     }));
   }
 
-  async function fetchFactoriesData() {
-    setapiLoadingData(true);
 
-    try {
-      let config = {
-        method: "get",
-        url: `${baseUrl}/importers/importer/sourcingRequests/?size=${pagination?.displayProductSize}&page=${pagination?.currentPage}&formsFilter=${filter?.formsFilter}&sort=${filter?.sort}`,
-        headers: {
-          authorization: isLogin,
-        },
-      };
+let {
+  reqData,
+  pagination,
+  apiLoadingData,
+  setPagination,
+  deleteData,
+}=useAllSourcingReq(filter)
 
-      const response = await axios.request(config);
-      if (response?.data?.message == "done") {
-        setAllSpmfsData(response.data.sourcingRequests);
-      } else {
-        setErrorsMsg(response?.data?.message);
-      }
-      setapiLoadingData(false);
-    } catch (error) {
-      setapiLoadingData(false);
-      if (error.response && error.response.status) {
-        const statusCode = error.response.status;
-        switch (statusCode) {
-          case 400:
-            setErrorsMsg(error?.data?.errorMessage);
-            break;
-          case 401:
-            setErrorsMsg(error?.response?.data?.message);
-            break;
-          case 403:
-            setErrorsMsg(
-              // error?.data?.message,
-              error?.response?.data?.message
-            );
-            break;
-          case 404:
-            setErrorsMsg(
-              "Not Found (404). The requested resource was not found."
-            );
-            break;
-
-          case 500:
-            setErrorsMsg(error?.response?.data?.errorMessage);
-            break;
-
-          case 402:
-            // 402
-            setErrorsMsg(error?.response?.data?.message);
-            break;
-          default:
-            // case message== error
-            setErrorsMsg(error?.response?.data?.errorMessage);
-            break;
-        }
-      }
-    }
-  }
-
-  useEffect(() => {
-    fetchFactoriesData();
-  }, [pagination?.currentPage, filter]);
-
-  // utils function
-  let getMonthName = getDate;
-
-  useEffect(() => {
-    const fetchDataLenght = async () => {
-      try {
-        const response1 = await axios.get(
-          `${baseUrl}/importers/importer/sourcingRequests?formsFilter=${filter?.formsFilter}&sort=${filter?.sort}`,
-          {
-            headers: {
-              authorization: isLogin,
-            },
-          }
-        );
-
-        if (response1?.data?.message === "done") {
-          setPagination((prevValue) => ({
-            ...prevValue,
-            totalPage: Math.ceil(
-              (response1.data?.sourcingRequests?.length || 0) /
-                prevValue.displayProductSize
-            ),
-          }));
-        }
-      } catch (error) {}
-    };
-
-    fetchDataLenght();
-  }, [filter]);
-
-  const handlePageClick = (currentPage) => {
-    // why plus 1 bec react pagination library reads the 1st page with index 0 but in api  is read with index 1
-    setPagination((prevValue) => ({
-      ...prevValue,
-      currentPage: currentPage.selected + 1,
-    }));
-  };
-
-  const deleteData = async (itemId) => {
-    try {
-      let config = {
-        method: "delete",
-        url: `${baseUrl}/sourcingRequests/${itemId}`,
-        headers: {
-          authorization: isLogin,
-        },
-      };
-
-      const response = await axios.request(config);
-
-      toast("Data Deleted Successfully", {
-        position: "top-center",
-        autoClose: 5000,
-        closeOnClick: true,
-        draggable: true,
-        theme: "colored",
-        type: "success",
-      });
-
-      setAllSpmfsData((prevValue) =>
-        prevValue.filter((item) => item.id !== itemId)
-      );
-    } catch (error) {
-      toast("Something went wrong, please try again", {
-        position: "top-center",
-        autoClose: 5000,
-        closeOnClick: true,
-        draggable: true,
-        theme: "colored",
-        type: "error",
-      });
-    }
-    // }
-  };
 
   return (
     <div className="m-4 order-section ">
@@ -255,7 +107,7 @@ export default function GetSourcingRequest() {
 
             <tbody>
               {/* row1 */}
-              {allSpmfsData?.map((poItem) => (
+              {reqData?.map((poItem) => (
                 <tr className="row">
                   <th className=" col-2  ">
                     <div className=" th-1st-title-gap d-flex justify-content-start align-items-center">
@@ -304,15 +156,7 @@ export default function GetSourcingRequest() {
                   </th>
 
                   <th className=" col-3  d-flex align-items-center justify-content- ">
-                    {/* <div className="profile-container justify-content-start align-items-center d-flex">
-                      <div className="profile-img">
-                        <img className="w-100 h-100" src={profile} />
-                      </div>
-                      <div>
-                        <p className="name-text">{poItem?.factoryName}</p>
-                        <p className="email-text">{poItem?.factoryRepEmail}</p>
-                      </div>
-                    </div> */}
+                   
 
                     <div className="trate-sub-title horizontal-text-handler">
                       <p className="name-text">{poItem?.productDescription}</p>
@@ -346,62 +190,19 @@ export default function GetSourcingRequest() {
                 </tr>
               ))}
 
-              {allSpmfsData?.length == 0 ? (
-                <tr className="row">
-                  <div className="col-12  w-100 h-100 my-5 py-5">
-                    <div className="text-center">
-                      <p className="trate-sub-title ">
-                        {apiLoadingData ? (
-                          <div
-                            className="spinner-border spinner-border-sm"
-                            role="status"
-                          >
-                            <span className="sr-only">Loading...</span>
-                          </div>
-                        ) : errorsMsg ? (
-                          errorsMsg
-                        ) : (
-                          "No Records Found"
-                        )}
-                      </p>
-                    </div>
-                  </div>
-                </tr>
-              ) : (
-                " "
-              )}
+              {/* is data is still loading or error occured */}
+             <StatusMessage
+                reqDataLength={reqData?.length}
+                apiLoadingData={apiLoadingData?.reqData}
+                errorsMsg={apiLoadingData?.errorWhileLoading}
+              />
+
 
               <tr className="row">
                 <div className="col-12  ReactPaginate">
-                  <ReactPaginate
-                    previousLabel={
-                      <p>
-                        <i className="fa-solid fa-arrow-left pe-2 text-dark "></i>
-                        previous
-                      </p>
-                    }
-                    nextLabel={
-                      <p>
-                        next
-                        <i className="fa-solid fa-arrow-right ps-2 text-dark "></i>
-                      </p>
-                    }
-                    pageCount={pagination?.totalPage || 1} // total number to pages
-                    forcePage={0} //to set a page to start with, defult middle page
-                    pageRangeDisplayed={3}
-                    onPageChange={handlePageClick}
-                    marginPagesDisplayed={1}
-                    containerClassName="pagination align-items-center justify-content-center"
-                    pageClassName="page-item"
-                    pageLinkClassName="page-link"
-                    activeClassName="active"
-                    breakClassName="page-item"
-                    breakLinkClassName="page-link"
-                    previousClassName="page-item-prev  me-3"
-                    previousLinkClassName="page-link text-dark margin-prev"
-                    nextClassName="page-item-next ms-3"
-                    nextLinkClassName="page-link text-dark margin-next"
-                    navClassName="pagination-custom"
+                <PaginationDash
+                    pagination={pagination}
+                    setPagination={setPagination}
                   />
                 </div>
               </tr>

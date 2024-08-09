@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 import { getMonthName as getDate } from "utils/getMonthName";
+import PaginationDash from "components/Shared/Dashboards/PaginationDash";
 
 export default function GetQuotationImp() {
   let { isLogin } = useContext(UserToken);
@@ -511,35 +512,9 @@ export default function GetQuotationImp() {
 
               <tr className="row">
                 <div className="col-12  ReactPaginate">
-                  <ReactPaginate
-                    previousLabel={
-                      <p>
-                        <i className="fa-solid fa-arrow-left pe-2 text-dark "></i>
-                        previous
-                      </p>
-                    }
-                    nextLabel={
-                      <p>
-                        next
-                        <i className="fa-solid fa-arrow-right ps-2 text-dark "></i>
-                      </p>
-                    }
-                    pageCount={pagination?.totalPage || 1} // total number to pages
-                    forcePage={0} //to set a page to start with, defult middle page
-                    pageRangeDisplayed={3}
-                    onPageChange={handlePageClick}
-                    marginPagesDisplayed={1}
-                    containerClassName="pagination align-items-center justify-content-center"
-                    pageClassName="page-item"
-                    pageLinkClassName="page-link"
-                    activeClassName="active"
-                    breakClassName="page-item"
-                    breakLinkClassName="page-link"
-                    previousClassName="page-item-prev  me-3"
-                    previousLinkClassName="page-link text-dark margin-prev"
-                    nextClassName="page-item-next ms-3"
-                    nextLinkClassName="page-link text-dark margin-next"
-                    navClassName="pagination-custom"
+                <PaginationDash
+                    pagination={pagination}
+                    setPagination={setPagination}
                   />
                 </div>
               </tr>
