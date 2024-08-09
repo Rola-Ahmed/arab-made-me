@@ -38,7 +38,6 @@ const usePrivateLabel = (isLogin, filter) => {
     } else {
       setErrorsMsg(result?.error);
     }
-    setApiLoadingData(false);
     
     setTimeout(() => {  setApiLoadingData(false); }, 50);
 

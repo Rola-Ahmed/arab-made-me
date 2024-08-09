@@ -1,37 +1,20 @@
-import { useEffect, useState, useContext } from "react";
+import {  useState } from "react";
 
 // shared components
 import PaginationDash from "components/Shared/Dashboards/PaginationDash";
-import axios from "axios";
-import { baseUrl } from "config.js";
 
-import { UserToken } from "Context/userToken";
 
 import { useNavigate } from "react-router-dom";
 
-import {  toast } from "react-toastify";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 import { getMonthName as getDate } from "utils/getMonthName";
+import useAllOffers from "./useAllOffers";
+import StatusMessage from "components/Shared/Dashboards/StatusMessage";
+import SearchFilterByOrderPrice from "components/Shared/Dashboards/SearchFilterByOrderPrice";
 
 export default function AllOffers() {
-  let { isLogin } = useContext(UserToken);
-
-  let navigate = useNavigate();
-  const [allprivateLabelData, setAllprivateLabelData] = useState([]);
-  const [apiLoadingData, setapiLoadingData] = useState(true);
-  const [errorsMsg, setErrorsMsg] = useState();
-
-  const [pagination, setPagination] = useState(() => ({
-    // i want to display 3 pdoructs in the 1st page
-    displayProductSize: 8,
-
-    currentPage: 1,
-    totalPage: 1,
-
-    // will be called by api
-    // totalPage: Math.ceil((allProductsData?.length) /pagination.displayProductSize), // Use 30 as the default display size
-  }));
-
+let navigate = useNavigate();
+  let getMonthName = getDate;
 
   const [filter, setFilter] = useState({
     formsFilter: "",
@@ -46,38 +29,13 @@ export default function AllOffers() {
       ...(name && { sort_name: name }),
     }));
   }
-
-  async function fetchFactoriesData() {
-    setapiLoadingData(true);
-
-      let config = {
-        method: "get",
-        url: `${baseUrl}/factories/factory/offers/?size=${pagination?.displayProductSize}&page=${pagination?.currentPage}&formsFilter=${filter?.formsFilter}&sort=${filter?.sort}`,
-        headers: {
-          authorization: isLogin,
-        },
-      };
-
-      const response = await axios.request(config);
-      if (response?.data?.message == "done") {
-        setAllprivateLabelData(
-          response.data.offers.filter((item) => item?.factoryId !== null)
-        );
-
-
-        setapiLoadingData(false);
-      } else {
-        setErrorsMsg(response?.data?.message);
-      }
-   
-  }
-
-  useEffect(() => {
-    fetchFactoriesData();
-  }, [pagination?.currentPage, filter]);
-
-  // utils function
-  let getMonthName = getDate;
+  let  {
+    reqData,
+    pagination,
+    apiLoadingData,
+    setPagination,
+    deleteData,
+  } = useAllOffers(filter)
 
 
 
@@ -85,75 +43,7 @@ export default function AllOffers() {
 
 
 
-  useEffect(() => {
-    const fetchDataLenght = async () => {
-      try {
-        const response1 = await axios.get(
-          `${baseUrl}/factories/factory/offers?formsFilter=${filter?.formsFilter}&sort=${filter?.sort}`,
-          {
-            headers: {
-              authorization: isLogin,
-            },
-          }
-        );
 
-        if (response1?.data?.message === "done") {
-          setPagination((prevValue) => ({
-            ...prevValue,
-            totalPage: Math.ceil(
-              (response1.data?.offers?.length || 0) /
-                prevValue.displayProductSize
-            ),
-          }));
-        }
-      } catch (error) {}
-    };
-
-    fetchDataLenght();
-  }, [filter]);
-
-  const deleteData = async (itemId) => {
-    try {
-      let config = {
-        method: "delete",
-
-        url: `${baseUrl}/sourcingOffers/delete/fromUser/${itemId}`,
-        headers: {
-          authorization: isLogin,
-        },
-      };
-
-      const response = await axios.request(config);
-
-      toast("Data Deleted Successfully", {
-        position: "top-center",
-        autoClose: 5000,
-        closeOnClick: true,
-        draggable: true,
-        theme: "colored",
-        type: "success",
-      });
-
-      setAllprivateLabelData((prevValue) =>
-        prevValue.filter((item) => item.id !== itemId)
-      );
-    } catch (error) {
-      // setapiLoadingData(true);
-
-      toast("Something went wrong, please try again later", {
-        position: "top-center",
-        autoClose: 5000,
-        // hideProgressBar: false,
-        closeOnClick: true,
-        //pauseOnHover: true,
-        draggable: true,
-        // progress: undefined,
-        theme: "colored",
-        type: "error",
-      });
-    }
-    // }
-  };
 
   return (
     <div className="m-4 order-section ">
@@ -193,100 +83,8 @@ export default function AllOffers() {
         </div>
 
         {/* search filter section */}
-        <div className=" search-container d-flex justify-content-between align-items-center p-3">
-          <div className="input-group width-size">
-            <div
-              className="input-group-prepend cursor "
-              onClick={(e) => {
-                let value = document.getElementById("formsFilter").value;
-                filtterData(value, "formsFilter");
-              }}
-            >
-              <span
-                className="input-group-text bg-white icon-search-container pe-0"
-                id="inputGroup-sizing-default"
-              >
-                <i className="fa-solid fa-magnifying-glass icon-search"></i>
-              </span>
-            </div>
-            <input
-              type="text"
-              className="form-control input-search "
-              id="formsFilter"
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  filtterData(e.target.value, "formsFilter");
-                }
-              }}
-            />
-          </div>
-
-          <div className=" btn-container d-flex justify-content-between align-items-center">
-            <div class="dropdown">
-              <button
-                className=" dropdown-toggle order-toggle d-flex justify-content-center align-items-center"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                <i className="fa-solid fa-filter"></i>
-                <p>
-                  {filter?.sort_name !== "" ? filter?.sort_name : "Sort By"}
-                </p>
-              </button>
-
-              <ul class="dropdown-menu">
-                <li
-                  onClick={(e) => {
-                    filtterData("date-DESC", "sort", "Sort By");
-                  }}
-                  className=" cursor text-start"
-                >
-                  <p className="dropdown-item">Sort By</p>
-                </li>
-
-                <li
-                  onClick={(e) => {
-                    filtterData("date-ASC", "sort", "Oldest");
-                  }}
-                  className=" cursor  text-start"
-                >
-                  <p className="dropdown-item">Oldest</p>
-                </li>
-                <li
-                  onClick={(e) => {
-                    filtterData("date-DESC", "sort", "Newest");
-                  }}
-                  className=" cursor  text-start"
-                >
-                  <p className="dropdown-item">Newest</p>
-                </li>
-
-                <li
-                  onClick={(e) => {
-                    filtterData("price-ASC", "sort", "Price :Low to High");
-                  }}
-                  className=" cursor  text-start"
-                >
-                  <a class="dropdown-item" href="#">
-                    Price :Low to High
-                  </a>
-                </li>
-
-                <li
-                  onClick={(e) => {
-                    filtterData("date-DESC", "sort", "Price :High to Low");
-                  }}
-                  className=" cursor  text-start"
-                >
-                  <a class="dropdown-item" href="#">
-                    Price :High to Low
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
+         {/* search filter section */}
+         <SearchFilterByOrderPrice filtterData={filtterData} filter={filter} />
         {/* data section */}
 
         <div className=" data-container w-100 p-3">
@@ -323,7 +121,7 @@ export default function AllOffers() {
 
             <tbody>
               {/* row1 */}
-              {allprivateLabelData.map((poItem) => (
+              {reqData?.map((poItem) => (
                 <tr className="row">
                   <th className=" col-2  ">
                     <div className=" th-1st-title-gap d-flex justify-content-start align-items-center">
@@ -400,30 +198,15 @@ export default function AllOffers() {
                 </tr>
               ))}
 
-              {allprivateLabelData?.length == 0 ? (
-                <tr className="row">
-                  <div className="col-12  w-100 h-100 my-5 py-5">
-                    <div className="text-center">
-                      <p className="trate-sub-title ">
-                        {apiLoadingData ? (
-                          <div
-                            className="spinner-border spinner-border-sm"
-                            role="status"
-                          >
-                            <span className="sr-only">Loading...</span>
-                          </div>
-                        ) : errorsMsg ? (
-                          errorsMsg
-                        ) : (
-                          "No Records Found"
-                        )}
-                      </p>
-                    </div>
-                  </div>
-                </tr>
-              ) : (
-                " "
-              )}
+
+ {/* is data is still loading or error occured */}
+ <StatusMessage
+                reqDataLength={reqData?.length}
+                apiLoadingData={apiLoadingData?.reqData}
+                errorsMsg={apiLoadingData?.errorWhileLoading}
+              />
+
+           
 
               <tr className="row">
                 <div className="col-12  ReactPaginate">

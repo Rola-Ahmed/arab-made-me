@@ -20,12 +20,7 @@ export function usePrivateLabel() {
 
   useEffect(() => {
     async function fetchReqData() {
-      setApiLoadingData((prevVal) => ({
-        ...prevVal,
-        reqData: true,
-        findQuotation: true,
-      }));
-
+      
       // get private label data
       let result = await getOnePrivateLabel(
         privateLabelId,
