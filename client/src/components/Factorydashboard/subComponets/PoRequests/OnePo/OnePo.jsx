@@ -1,8 +1,6 @@
 import { useState } from "react";
 
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
-// import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
-// import BecomomeAFactory from "components/ActionMessages/BecomeAFactory/BecomeAFactory";
 
 import { useNavigate } from "react-router-dom";
 import { useOnePo } from "./useOnePo";
@@ -11,9 +9,9 @@ import { useOnePo } from "./useOnePo";
 import SubPageUtility from "components/Shared/Dashboards/SubPageUtility";
 import ImporterInfo from "components/Shared/ImporterInfo";
 
-import Loading from "components/Loading/Loading";
 import ProductDetails from "components/Forms/Shared/SelectedProductDetails";
 import PoInfo from "components/Shared/Dashboards/Forms/PoInfo";
+import StatusMessagetwo from "components/Shared/Dashboards/StatusMessagetwo";
 
 export default function OnePo() {
   let navigate = useNavigate();
@@ -58,26 +56,13 @@ export default function OnePo() {
         </div>
       </div>
 
-      {apiLoadingData?.reqData && (
-        <div className="section factory-profile m-5 ">
-          <div className="container gap-container">
-            <div className="row">
-              <div className="d-flex justify-content-center w-100">
-                {apiLoadingData?.errorWhileLoading ? (
-                  <div className="border-3 border-row py-5">
-                    <p className="text-muted fw-semibold text-center my-5 py-5">
-                      {apiLoadingData?.errorWhileLoading}
-                    </p>
-                  </div>
-                ) : (
-                  <Loading />
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
+       {/* error or loading section */}
+       {apiLoadingData?.reqData && (
+        <StatusMessagetwo errorMsg={apiLoadingData?.errorWhileLoading} />
       )}
 
+
+   
       {!apiLoadingData?.reqData && (
         <div className="section factory-profile m-5">
           <div className="container gap-container">

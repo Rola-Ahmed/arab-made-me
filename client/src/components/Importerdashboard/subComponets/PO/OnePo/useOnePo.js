@@ -2,8 +2,6 @@ import { useEffect, useState, useContext } from "react";
 import { useSearchParams } from "react-router-dom";
 import { UserToken } from "Context/userToken";
 import { getOnePO } from "Services/PO";
-import { getQuotes } from "Services/FactoryRequests/quotations";
-
 export function useOnePo() {
   const { isLogin } = useContext(UserToken);
   const [searchParams] = useSearchParams();
@@ -12,18 +10,12 @@ export function useOnePo() {
   const [apiLoadingData, setApiLoadingData] = useState({
     reqData: true,
     errorWhileLoading: null,
-    findQuotation: true,
   });
 
   const [requestedData, setRequestedData] = useState({ quoteId: null });
 
   useEffect(() => {
     async function fetchReqData() {
-      setApiLoadingData((prevVal) => ({
-        ...prevVal,
-        reqData: true,
-        findQuotation: true,
-      }));
 
       // get private label data
       let result = await getOnePO(
@@ -31,13 +23,7 @@ export function useOnePo() {
         "include=product&include=factory&include=sourcingOffer"
       );
 
-      // check if private label has quotations
-      const QouteIdConfigResp = await getQuotes(
-        {},
-        {
-          authorization: isLogin,
-        }
-      );
+     
 
       if (result?.success) {
         setRequestedData((prevData) => ({
@@ -48,28 +34,11 @@ export function useOnePo() {
       
         setApiLoadingData((prevVal) => ({
           ...prevVal,
-          reqData: true,
+          reqData: result?.loadingStatus,
           errorWhileLoading: result?.error,
         }));
 
-      if (QouteIdConfigResp?.success) {
-        // Extract the quotations array from the response
-        const { quotations } = QouteIdConfigResp.data;
-
-        quotations.forEach((item) => {
-          if (item.privateLabelingId == poId) {
-            // Use item.id to match with privateLabelId
-            setRequestedData((prevData) => ({
-              ...prevData,
-              quoteId: item.id, // Use item.id directly
-            }));
-            setApiLoadingData((prevVal) => ({
-              ...prevVal,
-              findQuotation: false,
-            }));
-          }
-        });
-      }
+    
     }
 
     fetchReqData();

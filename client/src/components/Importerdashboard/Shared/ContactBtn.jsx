@@ -1,10 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { baseUrl } from "config.js";
+import { useNavigate } from "react-router-dom";
 
 
 export default function ContactBtn(props) {
-  let { isLogin, handleIsLoggedInBtn, recieverUserId } = props;
+  let { isLogin, recieverUserId } = props;
+  let navigate=useNavigate()
 
   let [currentChat, setCurrentChat] = useState("");
 
@@ -43,14 +45,12 @@ export default function ContactBtn(props) {
       type="button"
       onClick={() => {
         if (currentChat != "") {
-          handleIsLoggedInBtn(
+          navigate(
             `importerdashboard/conversation?currentChat=${currentChat}`
-            // `contactsupplier?userId=${userId}&factoryName=${factoryName}`
           );
         } else {
-          handleIsLoggedInBtn(
+          navigate(
             `importerdashboard/newConversation?userId=${recieverUserId}`
-            // `contactsupplier?userId=${userId}&factoryName=${factoryName}`
           );
         }
       }}

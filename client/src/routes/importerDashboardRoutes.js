@@ -11,7 +11,7 @@ import CusProductReq from "components/Importerdashboard/subComponets/CusProductR
 import SourcingRequest from "components/Importerdashboard/subComponets/SourcingRequest/AddSourcingReq/SourcingRequest";
 import Importerdash from "components/Importerdashboard/Importerdash";
 import ReqVisitImporter from "components/Importerdashboard/subComponets/ReqVisitImporter/ReqVisitImporter";
-import PurchasingOrdersImp from "components/Importerdashboard/subComponets/PO/AllPo";
+import PurchasingOrdersImp from "components/Importerdashboard/subComponets/PO/AllPo/AllPo";
 
 import DashBoardImporter from "components/Importerdashboard/subComponets/DashBoard/DashBoard";
 import GetSourcingReq from "components/Importerdashboard/subComponets/SourcingRequest/GetSourcingRequest/GetSourcingRequest";
