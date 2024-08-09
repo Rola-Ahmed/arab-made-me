@@ -11,7 +11,7 @@ import ProfileCell from "components/Shared/Dashboards/ProfileCell";
 import PaginationDash from "components/Shared/Dashboards/PaginationDash";
 import StatusMessage from "components/Shared/Dashboards/StatusMessage";
 
-export default function ReqVisitImporter() {
+export default function AllVisitReq() {
   let { isLogin } = useContext(UserToken);
   let navigate = useNavigate();
   

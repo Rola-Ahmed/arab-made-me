@@ -13,7 +13,7 @@ import FactoryInfo from "components/Forms/Shared/FactoryInfo";
 import PrivateLabelInfo from "components/Shared/Dashboards/Forms/PrivateLabelInfo";
 import { usePrivateLabel } from "./usePrivateLabel";
 import StatusMessagetwo from "components/Shared/Dashboards/StatusMessagetwo";
-export default function PrivateLabelReqEtc() {
+export default function OnePrivateLabel() {
   let navigate = useNavigate();
 
   let { isLogin, requestedData, apiLoadingData } = usePrivateLabel();

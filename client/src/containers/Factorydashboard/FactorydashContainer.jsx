@@ -4,7 +4,6 @@ import axios from "axios";
 import { baseUrl } from "config.js";
 import Factorydash from "components/Factorydashboard/Factorydash";
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
-// import BecomomeAFactory from "components/ActionMessages/BecomomeAFactory/BecomomeAFactory";
 
 export default function FactorydashContainer() {
   const { setIsLogin, isLogin } = useContext(UserToken);

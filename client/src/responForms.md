@@ -146,3 +146,18 @@ Implement RBAC to ensure users can only access what they are authorized to.
 
 
 import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/FactoryUnVerifiedDash";
+
+
+
+import FactoryUnVerifiedModal from "components/ActionMessages/FactoryUnVerified/FactoryUnVerifiedPopUpMsg";
+
+    <FactoryUnVerifiedModal
+        show={modalShow.isFactoryVerified}
+        onHide={() =>
+          setModalShow((prevVal) => ({
+            ...prevVal,
+            isFactoryVerified: false,
+          }))
+        }
+        userType="Factory"
+      />

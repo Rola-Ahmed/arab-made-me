@@ -1,8 +1,8 @@
 import RfqBuyer from "components/Importerdashboard/subComponets/RFQBuyer/AllRfq/AllRfq";
 import OneRfqReq from "components/Importerdashboard/subComponets/RFQBuyer/OneRfq/OneRfq";
 
-import PrivateLabelBuyer from "components/Importerdashboard/subComponets/PrivateLabelImp/AllReq/PrivateLabelImp";
-import OnePrivateLabel from "components/Importerdashboard/subComponets/PrivateLabelImp/PrivateLabelReqEtc/PrivateLabelReqEtc";
+import PrivateLabelBuyer from "components/Importerdashboard/subComponets/PrivateLabelImp/AllPrivateLabel/AllPrivateLabel";
+import OnePrivateLabel from "components/Importerdashboard/subComponets/PrivateLabelImp/OnePrivateLabel/OnePrivateLabel";
 
 import CusProductReq from "components/Importerdashboard/subComponets/CusProductReqImp/AllSpmfs/CusProductReqImp";
 
@@ -10,7 +10,7 @@ import CusProductReq from "components/Importerdashboard/subComponets/CusProductR
 // Importer Dashboard pages
 import SourcingRequest from "components/Importerdashboard/subComponets/SourcingRequest/AddSourcingReq/SourcingRequest";
 import Importerdash from "components/Importerdashboard/Importerdash";
-import ReqVisitImporter from "components/Importerdashboard/subComponets/ReqVisitImporter/ReqVisitImporter";
+import ReqVisitImporter from "components/Importerdashboard/subComponets/ReqVisitImporter/AllVisitReq/AllVisitReq";
 import PurchasingOrdersImp from "components/Importerdashboard/subComponets/PO/AllPo/AllPo";
 
 import DashBoardImporter from "components/Importerdashboard/subComponets/DashBoard/DashBoard";
@@ -19,7 +19,7 @@ import GetQuotationImp from "components/Importerdashboard/subComponets/GetQuotat
 import ImporterPofile from "components/Importerdashboard/subComponets/ImporterProfile/ImporterProfile";
 
 // View more details shared (factory & importer)
-import VisitRequestEtc from "components/Importerdashboard/subComponets/ReqVisitImporter/VisitRequestEtc/VisitRequestEtc";
+import VisitRequestEtc from "components/Importerdashboard/subComponets/ReqVisitImporter/oneVisitReq/OneVisitReq";
 
 import PurchasingOrdersEtc from "components/Importerdashboard/subComponets/PO/OnePo/OnePo";
 

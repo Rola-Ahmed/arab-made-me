@@ -10,7 +10,7 @@ import PaginationDash from "components/Shared/Dashboards/PaginationDash";
 import usePrivateLabel from "./usePrivateLabel";
 import StatusMessage from "components/Shared/Dashboards/StatusMessage";
 
-export default function PrivateLabelImp() {
+export default function AllPrivateLabel() {
   let { isLogin } = useContext(UserToken);
   let navigate = useNavigate();
   // utils function

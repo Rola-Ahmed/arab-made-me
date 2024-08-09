@@ -6,31 +6,20 @@ import axios from "axios";
 import { baseUrl } from "config.js";
 
 import { UserToken } from "Context/userToken";
-import { userDetails } from "Context/userType";
 
 import { useNavigate } from "react-router-dom";
 
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import FactoryUnVerifiedModal from "components/ActionMessages/FactoryUnVerified/FactoryUnVerifiedPopUpMsg";
-import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
+import {  toast } from "react-toastify";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 import { getMonthName as getDate } from "utils/getMonthName";
 
 export default function AllOffers() {
   let { isLogin } = useContext(UserToken);
-  let { currentUserData } = useContext(userDetails);
 
   let navigate = useNavigate();
-
   const [allprivateLabelData, setAllprivateLabelData] = useState([]);
   const [apiLoadingData, setapiLoadingData] = useState(true);
   const [errorsMsg, setErrorsMsg] = useState();
-  const [modalShow, setModalShow] = useState({
-    isLogin: false,
-    isFactoryVerified: false,
-  });
-  const [isLoggedReDirect, setisLoggedReDirect] = useState("");
 
   const [pagination, setPagination] = useState(() => ({
     // i want to display 3 pdoructs in the 1st page
@@ -42,9 +31,7 @@ export default function AllOffers() {
     // will be called by api
     // totalPage: Math.ceil((allProductsData?.length) /pagination.displayProductSize), // Use 30 as the default display size
   }));
-  const [uniqueFactoryIDofProducts, setUniqueFactoryIDofProducts] = useState(
-    []
-  );
+
 
   const [filter, setFilter] = useState({
     formsFilter: "",
@@ -63,7 +50,6 @@ export default function AllOffers() {
   async function fetchFactoriesData() {
     setapiLoadingData(true);
 
-    try {
       let config = {
         method: "get",
         url: `${baseUrl}/factories/factory/offers/?size=${pagination?.displayProductSize}&page=${pagination?.currentPage}&formsFilter=${filter?.formsFilter}&sort=${filter?.sort}`,
@@ -78,62 +64,12 @@ export default function AllOffers() {
           response.data.offers.filter((item) => item?.factoryId !== null)
         );
 
-        const uniqueIds = [
-          ...new Set(
-            response.data.offers
-              .map((obj) => obj.importerId) // Extract all factoryIds
-              .filter((id) => id !== null) // Filter out null values
-          ),
-        ];
 
-        setUniqueFactoryIDofProducts(uniqueIds);
         setapiLoadingData(false);
       } else {
         setErrorsMsg(response?.data?.message);
       }
-    } catch (error) {
-      setapiLoadingData(false);
-      if (error.response && error.response.status) {
-        const statusCode = error.response.status;
-        switch (statusCode) {
-          case 400:
-            setErrorsMsg(error?.data?.errorMessage);
-            break;
-          case 401:
-            setErrorsMsg(error?.response?.data?.message);
-            break;
-          case 403:
-            setErrorsMsg(
-              // error?.data?.message,
-              error?.response?.data?.message
-            );
-            break;
-          case 404:
-            setErrorsMsg(
-              "Not Found (404). The requested resource was not found."
-            );
-            break;
-
-          case 500:
-            setErrorsMsg(error?.response?.data?.errorMessage);
-            break;
-
-          //  429 Too Many Requests
-          // The user has sent too many requests in a given amount of time ("rate limiting").
-          case 429:
-            setErrorsMsg(" Too Many Requests , Please try again later.");
-            break;
-          case 402:
-            // 402
-            setErrorsMsg(error?.response?.data?.message);
-            break;
-          default:
-            // case message== error
-            setErrorsMsg(error?.response?.data?.errorMessage);
-            break;
-        }
-      }
-    }
+   
   }
 
   useEffect(() => {
@@ -143,85 +79,11 @@ export default function AllOffers() {
   // utils function
   let getMonthName = getDate;
 
-  useEffect(() => {
-    // Promise.all(
-    uniqueFactoryIDofProducts.map(async (importerID) => {
-      try {
-        const productResponse = await axios.get(
-          `${baseUrl}/importers/${importerID}`
-        );
 
-        if (productResponse.data.message === "done") {
-          setAllprivateLabelData((prevData) =>
-            prevData.map((value) =>
-              value?.importerId === importerID
-                ? {
-                    ...value,
-                    importerName: productResponse?.data?.importers?.name,
-                    importerRepEmail:
-                      productResponse?.data?.importers?.repEmail,
-                    importerProfileImg:
-                      productResponse?.data?.importers?.importerProfileImg,
-                  }
-                : value
-            )
-          );
-        }
-      } catch (error) {}
-    });
-  }, [apiLoadingData]);
 
-  const downloadCsv = () => {
-    const attributesToFilter = [
-      "productId",
-      "factoryId",
-      "importerId",
-      "updatedAt",
-      "docs",
-      "importerProfileImg",
 
-      "preferredCountries",
-      "factory",
-      "categoryId",
-    ];
-    // ,"contactData"
-    const newArray = filterAttributes(allprivateLabelData, attributesToFilter);
 
-    // const csvData = convertToCsv(allprivateLabelData);
 
-    const csvData = convertToCsv(newArray);
-
-    const blob = new Blob([csvData], { type: "text/csv" });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "privateLabel.csv";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  };
-
-  const convertToCsv = (data) => {
-    // Assuming data is an array of objects with similar structure
-    const header = Object.keys(data[0]).join(",");
-    const rows = data.map((obj) => Object.values(obj).join(",")).join("\n");
-    return `${header}\n${rows}`;
-  };
-
-  const filterAttributes = (dataArray, attributesToFilter) => {
-    return dataArray.map((originalObject) => {
-      const filteredObject = Object.keys(originalObject)
-        .filter((key) => !attributesToFilter.includes(key))
-        .reduce((acc, key) => {
-          acc[key] = originalObject[key];
-
-          return acc;
-        }, {});
-
-      return filteredObject;
-    });
-  };
 
   useEffect(() => {
     const fetchDataLenght = async () => {
@@ -295,29 +157,10 @@ export default function AllOffers() {
 
   return (
     <div className="m-4 order-section ">
-      <IsLoggedIn
-        show={modalShow.isLogin}
-        onHide={() =>
-          setModalShow((prevVal) => ({
-            ...prevVal,
-            isLogin: false,
-          }))
-        }
-        distination={isLoggedReDirect}
-      />
+  
 
-      <FactoryUnVerifiedModal
-        show={modalShow.isFactoryVerified}
-        onHide={() =>
-          setModalShow((prevVal) => ({
-            ...prevVal,
-            isFactoryVerified: false,
-          }))
-        }
-        userType="Factory"
-      />
+ 
 
-      <ToastContainer />
 
       {/* section 1 */}
       <div className="header w-100">
@@ -329,8 +172,8 @@ export default function AllOffers() {
             <div className="btn-container">
               <button
                 className="order-btn-1"
-                onClick={downloadCsv}
-                disabled={!allprivateLabelData?.length}
+                // onClick={downloadCsv}
+                disabled={true}
               >
                 <i className="fa-solid fa-cloud-arrow-down"></i>
                 <p className="cursor">Download CSV</p>
@@ -339,45 +182,8 @@ export default function AllOffers() {
               <button
                 className="order-btn-2 cursor"
                 onClick={() => {
-                  if (
-                    currentUserData?.importerId !== null &&
-                    currentUserData?.importerId !== undefined
-                  ) {
-                    localStorage.setItem("ToHomePage", "Page Not Found");
-                    navigate("/");
-                    return;
-                  }
-                  if (
-                    currentUserData?.factoryId !== null &&
-                    (currentUserData?.factoryVerified === "0" ||
-                      !currentUserData?.factoryEmailActivated)
-                  ) {
-                    setModalShow((prevVal) => ({
-                      ...prevVal,
-                      isFactoryVerified: true,
-                    }));
-
-                    return;
-                  } else if (!isLogin) {
-                    setModalShow((prevVal) => ({
-                      ...prevVal,
-                      isLogin: true,
-                    }));
-
-                    setisLoggedReDirect(
-                      `signIn/factoryDashboard/addSourcingOffer`
-                    );
-                    return;
-                  }
-
                   navigate("/factoryDashboard/addSourcingOffer");
                 }}
-
-                // onClick={() => {
-
-                //
-                //   navigate("/factoryDashboard/addProduct");
-                // }}
               >
                 <i className="fa-solid fa-plus"></i>
                 <p className="cursor">Add</p>
