@@ -14,6 +14,7 @@ import ReadOnly from "components/Forms/Shared/ReadOnly";
 import DisplayMultiImages from "components/Shared/Dashboards/DisplayMultiImages";
 import DisplayOneImage from "components/Shared/Dashboards/DisplayOneImage";
 import CustomProductInfo from "components/Shared/Dashboards/Forms/CustomProductInfo";
+import StatusMessagetwo from "components/Shared/Dashboards/StatusMessagetwo";
 
 export default function EtcCustomProductReq() {
   let navigate = useNavigate();
@@ -39,23 +40,9 @@ export default function EtcCustomProductReq() {
       <HeaderSection />
 
       {apiLoadingData?.reqData && (
-        <div className="section factory-profile m-5 ">
-          <div className="container gap-container">
-            <div className="row">
-              <div className="d-flex justify-content-center w-100">
-                {apiLoadingData?.errorWhileLoading ? (
-                  <div className="border-3 border-row py-5">
-                    <p className="text-muted fw-semibold text-center my-5 py-5">
-                      {apiLoadingData?.errorWhileLoading}
-                    </p>
-                  </div>
-                ) : (
-                  <Loading />
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
+        <StatusMessagetwo  errorMsg={apiLoadingData?.errorWhileLoading}/>
+
+      
       )}
 
       {!apiLoadingData?.reqData && (

@@ -11,6 +11,7 @@ import FactoryInfo from "components/Forms/Shared/FactoryInfo";
 import { useOneVisit } from "./useOneVisit";
 import Loading from "components/Loading/Loading";
 import VisitRequestInfo from "components/Shared/Dashboards/Forms/VisitRequestInfo";
+import StatusMessagetwo from "components/Shared/Dashboards/StatusMessagetwo";
 
 export default function VisitRequestEtc() {
   let navigate = useNavigate();
@@ -78,23 +79,7 @@ export default function VisitRequestEtc() {
       </div>
 
       {apiLoadingData?.reqData && (
-        <div className="section factory-profile m-5">
-          <div className="container gap-container">
-            <div className="row">
-              <div className="d-flex justify-content-center w-100">
-                {apiLoadingData?.errorWhileLoading ? (
-                  <div className="border-3 border-row py-5">
-                    <p className="text-muted fw-semibold text-center my-5 py-5">
-                      {apiLoadingData?.errorWhileLoading}
-                    </p>
-                  </div>
-                ) : (
-                  <Loading />
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
+       <StatusMessagetwo  errorMsg={apiLoadingData?.errorWhileLoading}/>
       )}
 
       {!apiLoadingData?.reqData && (

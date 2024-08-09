@@ -13,9 +13,7 @@ import ImporterInfo from "components/Shared/ImporterInfo";
 import ContactBtn from "components/Factorydashboard/Shared/ContactBtn";
 import { usePrivateLabel } from "./usePrivateLabel";
 import PrivateLabelInfo from "components/Shared/Dashboards/Forms/PrivateLabelInfo";
-// import ReadOnly from "components/Forms/Shared/ReadOnly";
-// import DisplayOneImage from "components/Shared/Dashboards/DisplayOneImage";
-// import DisplayMultiImages from "components/Shared/Dashboards/DisplayMultiImages";
+import StatusMessagetwo from "components/Shared/Dashboards/StatusMessagetwo";
 
 // utils function
 export default function EtcPrivateLabelReq() {
@@ -47,17 +45,7 @@ export default function EtcPrivateLabelReq() {
           <div className="row">
             <div className="col-12  container-2-gap  p-0">
               {apiLoadingData?.reqData ? (
-                <div className="d-flex justify-content-center w-100">
-                  {apiLoadingData?.errorWhileLoading ? (
-                    <div className="border-3 border-row py-5">
-                      <p className="text-muted fw-semibold text-center my-5 py-5">
-                        {apiLoadingData?.errorWhileLoading}
-                      </p>
-                    </div>
-                  ) : (
-                    <Loading />
-                  )}
-                </div>
+                <StatusMessagetwo  errorMsg={apiLoadingData?.errorWhileLoading}/>
               ) : (
                 <>
                   <ImporterInfo importerData={requestedData?.importer} />
