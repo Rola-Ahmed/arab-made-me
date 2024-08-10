@@ -297,10 +297,10 @@ export default function AddProduct() {
                 errorMsg={errorMsg}
                 setSelectedDocs={setSelectedDocs}
                 MediaName="coverImage"
-                mediaMaxLen="3"
+                mediaMaxLen="1"
                 meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
                 setErrorMsg={setErrorMsg}
-                title="Upload coverImage *"
+                title="Upload cover Image *"
               />
 
               <TextareaInput

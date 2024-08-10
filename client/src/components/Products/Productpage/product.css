@@ -283,7 +283,8 @@
 
 .sub-swiper {
     height: 14vh;
-    width: 35vw;
+    /* width: 35vw; */
+    width: 100%;
 }
 
 .sub-swiper img {

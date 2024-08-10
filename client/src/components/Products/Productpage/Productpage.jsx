@@ -385,7 +385,7 @@ function Productpage(props) {
           <div className="details">
             <div>
               <h3>Specification</h3>
-              <div className="instant-nav">
+              <div className="instant-nav w-100 ">
                 <p className="main-details">Description</p>
                 <p>{productData?.description}</p>
               </div>
@@ -395,7 +395,7 @@ function Productpage(props) {
 
             <div>
               <h3>Seller Profile</h3>
-              <div className="instant-nav">
+              <div className="instant-nav w-100">
                 <p className="main-details">Description</p>
                 <p>{productData?.factory?.description}</p>
               </div>
@@ -404,7 +404,7 @@ function Productpage(props) {
 
             <div>
               <h3>Review</h3>
-              <div className="instant-nav">
+              <div className="instant-nav w-100">
                 <p className="main-details">Description</p>
                 <p>{/* No reviews */}</p>
               </div>
