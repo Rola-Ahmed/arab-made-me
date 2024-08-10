@@ -1,12 +1,7 @@
 import { useEffect, useState, useContext, useReducer } from "react";
-import axios from "axios";
-import { baseUrl } from "config.js";
-import { errorHandler } from "utils/errorHandler";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { pdfIcon } from "constants/Images";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 
 import { UserToken } from "Context/userToken";
@@ -16,15 +11,15 @@ import "./FactoryProfile.css";
 import { handleImageError } from "utils/ImgNotFound";
 import { countriesMiddleEast } from "constants/countries";
 import SuccessToast from "components/SuccessToast";
-import ErrorToast from "components/ErrorToast";
 
 import { useOutletContext } from "react-router-dom";
+import UploadDocument from "components/Forms/Shared/UploadDocument";
 
-import Password from "./subComponents/Password/Password";
+import ChangePassword from "./subComponents/ChangePassword/ChangePassword";
 import AccountInformation from "./subComponents/AccountInformation";
 import SubscriptionPlan from "./subComponents/SubscriptionPlan";
 import LegalDocuments from "./subComponents/LegalDocuments";
-
+import {fetchOneFactory,addFactoryMedia,updateFactoryFromUser} from 'Services/factory'
 export default function FactoryProfile() {
   document.title = "Factory Profile";
   let { currentUserData } = useContext(userDetails);
@@ -60,147 +55,25 @@ export default function FactoryProfile() {
   // slider setting
 
   const [selectedDocs, setSelectedDocs] = useState([
-    // {
-    //   keyWord: null,
-    //   pdfFile: null,
-    // blob:
-    // },
+   
   ]);
 
-  function handleMultiMediaValidation(e, keyWordDoc, inputValue) {
-    const count = selectedDocs?.filter((item) => item?.keyWord === keyWordDoc)
-      ?.length;
 
-    if (count >= 3) {
-      setErrorMsg((prevErrors) => ({
-        ...prevErrors,
-        [keyWordDoc]: `Max length is 3`,
-      }));
-      return;
-    }
-    // clear error message
-    setErrorMsg((prevErrors) => {
-      const newErrors = { ...prevErrors };
-      delete newErrors[keyWordDoc];
-      return newErrors;
-    });
-    let acceptedExtensions = [];
 
-    if (keyWordDoc == "legalDocs") {
-      acceptedExtensions = ["pdf", "png", "jpeg", "jpg"];
-    }
-
-    const fileType = e.type;
-
-    const isAcceptedType = acceptedExtensions?.some((extension) =>
-      fileType?.toLowerCase()?.includes(extension?.toLowerCase())
-    );
-
-    if (!isAcceptedType) {
-      setErrorMsg((prevErrors) => ({
-        ...prevErrors,
-        [keyWordDoc]:
-          // "Invalid file format. Only pdf, png, jpeg, jpg, mp4 allowed"
-          `Invalid file format. Only ${acceptedExtensions.join(
-            ", "
-          )} are allowed`,
-      }));
-      return;
-    }
-
-    const mediaNameExists = selectedDocs?.some(
-      (item) => item?.pdfFile?.name === e?.name && item?.keyWord === keyWordDoc
-    );
-
-    // if image aleady exisit
-    if (mediaNameExists) {
-      setErrorMsg((prevErrors) => ({
-        ...prevErrors,
-        [keyWordDoc]: "Media already exists",
-      }));
-      return;
-    }
-
-    let updatedDocs = [...selectedDocs];
-
-    // Image loaded successfully
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      updatedDocs.push({
-        keyWord: keyWordDoc,
-        pdfFile: e,
-        imageReaderURL: reader.result,
-        onprogress: 100,
-      });
-
-      setSelectedDocs(updatedDocs);
-      const coverImgInput = document?.getElementById(inputValue);
-      if (coverImgInput) {
-        coverImgInput.value = "";
-      }
-    };
-
-    reader.onprogress = (event) => {
-      // Calculate and show the loading percentage
-      if (event.lengthComputable) {
-        const percentage = (event.loaded / event.total) * 100;
-
-        // if (updatedDocs.length > 0) {
-        //   // Adding a new attribute to the last object
-        //   // updatedDocs[updatedDocs.length - 1].onprogress = percentage?.toFixed(0);
-        //   // setSelectedDocs([...updatedDocs]);
-
-        //   // setSelectedDocs((prevDocs) => {
-        //   //   const updatedDocs = [...prevDocs];
-        //   //   if (updatedDocs.length > 0) {
-        //   //     updatedDocs[updatedDocs.length - 1].onprogress = percentage?.toFixed(0);
-        //   //   }
-        //   //   return updatedDocs;
-        //   // });
-        // }
-        // setimgloadin(percentage);
-      }
-    };
-
-    reader.onerror = () => {
-      setErrorMsg((prevErrors) => ({
-        ...prevErrors,
-        [keyWordDoc]: "Error loading image",
-      }));
-    };
-
-    reader.readAsDataURL(e);
-  }
-
-  function removeSelectedDoc(index) {
-    let updatedDocs = [...selectedDocs];
-    updatedDocs.splice(index, 1);
-    setSelectedDocs(updatedDocs);
-  }
 
   // api
   async function fetchFactoryPage() {
-    try {
-      let config = {
-        method: "get",
-        url: `${baseUrl}/factories/${currentUserData.factoryId}`,
-      };
-
-      const response = await axios.request(config);
-
-      if (response.data.message == "done") {
+   let result= await fetchOneFactory(currentUserData?.factoryId)
+      if (result?.success) {
         dispatch({
           type: "fetched_update_data",
-          value: response.data.factories,
+          value: result?.data?.factories,
         });
-      } else if (response.data.message == "404 Not Found") {
-        // errorMsg("404");
-      }
-    } catch (error) {}
+      } 
   }
 
   // Cover IMage Profile -----------------------------------------------------
-  function updateMedia(e) {
+  async function updateMedia(e) {
     setIsLoading(true);
 
     e.preventDefault();
@@ -209,40 +82,31 @@ export default function FactoryProfile() {
 
     selectedDocs?.map((item) => data.append(item.keyWord, item.pdfFile));
 
-    const config = {
-      method: "put",
-      url: `${baseUrl}/factories/media`,
-      headers: {
-        Authorization: isLogin,
-      },
-      data: data,
-    };
+    
 
-    axios
-      .request(config)
-      .then((response) => {
-        if (response?.data?.message == "done") {
+    let result = await addFactoryMedia({
+      Authorization: isLogin,
+    },data);
+
+        if (result?.success) {
           ModalClose();
 
           SuccessToast("Image Saved Successfully");
 
           dispatch({
             type: "update_image",
-            value: response?.data?.factory?.legalDocs,
+            value: result?.data?.factory?.legalDocs,
           });
           setSelectedDocs([]);
-          setIsLoading(false);
         } else {
-          setIsLoading(false);
-
-          ErrorToast("Image Not Saved, please try again");
+          
+          setErrorMsg((prevErrors) => ({
+            ...prevErrors,
+            response: result?.error,
+          }));
         }
-      })
-      .catch((error) => {
         setIsLoading(false);
-
-        ErrorToast("Image Not Saved, please try again");
-      });
+    
   }
 
   useEffect(() => {
@@ -312,6 +176,7 @@ export default function FactoryProfile() {
 
   async function submitForm(values) {
     //
+    setIsLoading(true);
     setErrorMsg((prevErrors) => {
       const { response, ...restErrors } = prevErrors || {};
       return restErrors;
@@ -338,21 +203,14 @@ export default function FactoryProfile() {
       };
     }
 
-    try {
-      setIsLoading(true);
-      let config = {
-        method: "put",
-        url: `${baseUrl}/factories/update/fromUser`,
-        headers: {
-          authorization: isLogin,
-        },
-        data: data,
-      };
+   
+      
 
-      const response = await axios.request(config);
-      setIsLoading(false);
+      const result = await updateFactoryFromUser({
+        authorization: isLogin,
+      },data);
 
-      if (response.data.message == "done") {
+      if (result?.success) {
         ModalClose();
         SuccessToast("Image Not Saved, please try again");
         
@@ -363,16 +221,10 @@ export default function FactoryProfile() {
       } else {
         setErrorMsg((prevErrors) => ({
           ...prevErrors,
-          response: response?.data?.message,
+          response: result?.error,
         }));
       }
-    } catch (error) {
-      window.scrollTo({ top: 1642.4000244140625 });
-      setErrorMsg((prevErrors) => ({
-        ...prevErrors,
-        response: errorHandler(error),
-      }));
-    }
+    
     setIsLoading(false);
   }
 
@@ -442,11 +294,10 @@ export default function FactoryProfile() {
                 currentUserData={currentUserData}
                 factoryProfile={factoryProfile}
                 handleShow={handleShow}
-                Button={Button}
               />
 
               {/*Password change container 2 */}
-              <Password
+              <ChangePassword
                 handleShow={handleShow}
                 handleClose={handleClose}
                 show={show}
@@ -489,9 +340,7 @@ export default function FactoryProfile() {
               {/* Lecal certifcates   */}
               <LegalDocuments
                 factoryProfile={factoryProfile}
-                pdfIcon={pdfIcon}
                 handleImageError={handleImageError}
-                Button={Button}
                 handleShow={handleShow}
               />
 
@@ -610,8 +459,8 @@ export default function FactoryProfile() {
                     <div className="col-6">
                       <div className="grid-gap-col">
                         <div className="form-group">
-                          <label>Representive Phone Number*</label>
-                          <div className="input-group  h-100">
+                          <label>Representive Phone Number *</label>
+                          <div className="input-group">
                             <div className="input-group-prepend">
                               <select
                                 className="input-group-text h-100 p-2 m-0 phone-borders"
@@ -655,13 +504,13 @@ export default function FactoryProfile() {
                     </div>
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                      <Button
-                        variant="secondary"
+                      <button
+                        className="btn btn-secondary"
                         type="button"
                         onClick={() => handleClose("accountInfoReadOnly")}
                       >
                         Close
-                      </Button>
+                      </button>
                       {isLoading ? (
                         <button type="button" className="btn-edit">
                           <i className="fas fa-spinner fa-spin text-white px-5"></i>
@@ -681,9 +530,7 @@ export default function FactoryProfile() {
       </Modal>
       {/* </form> */}
 
-      {/*  */}
 
-      {/* Password Change modal  update form*/}
 
       {/*  legal docs */}
 
@@ -702,7 +549,7 @@ export default function FactoryProfile() {
             <div className="title-contianer-input w-100">
               <Modal.Header closeButton>
                 <Modal.Title>
-                  <p class='bg-info'>Legal Documents</p>
+                  <p>Legal Documents</p>
                 </Modal.Title>
               </Modal.Header>
               {errorMsg?.response ? (
@@ -719,143 +566,28 @@ export default function FactoryProfile() {
                 >
                   {/* legalDocs */}
                   <div className="row  row-gap">
-                    <div className="col-12">
-                      <div className="grid-gap-col">
-                        <div className="form-group">
-                          {/*  */}
 
-                          {/*  */}
+                  <UploadDocument
+                  selectedDocs={selectedDocs}
+                  errorMsg={errorMsg}
+                  setSelectedDocs={setSelectedDocs}
+                  MediaName="legalDocs"
+                  mediaMaxLen="3"
+                  meidaAcceptedExtensions={["pdf", "png", "jpeg", "jpg"]}
+                  setErrorMsg={setErrorMsg}
+                  title="Upload Documents"
+                />
 
-                          <label
-                            className="mb-0 drop-drag-area  p-5 text-center cursor "
-                            htmlFor="legalDocsInput"
-                            onDrop={(e) => {
-                              e.preventDefault();
-                              const files = e?.dataTransfer?.files;
-                              if (files && files.length > 0) {
-                                handleMultiMediaValidation(
-                                  files?.[0],
-                                  "legalDocs"
-                                );
-                              }
-
-                              e.target.classList.remove("highlight");
-                            }}
-                            onDragOver={(e) => {
-                              e.target.classList.add("highlight");
-
-                              e.preventDefault();
-                            }}
-                            onDragLeave={(e) => {
-                              e.preventDefault();
-                              e.target.classList.remove("highlight");
-                            }}
-                            onChange={(e) => {
-                              const files = e.target.files;
-
-                              if (files && files?.length > 0) {
-                                handleMultiMediaValidation(
-                                  files?.[0],
-                                  "legalDocs",
-                                  e?.target?.id
-                                );
-                              }
-                            }}
-                          >
-                            Drag and drop files here or click to select files
-                            <input
-                              type="file"
-                              id="legalDocsInput"
-                              className="d-none"
-                              multiple
-                            />
-                          </label>
-                          <small className="form-text small-note">
-                            Only pdf, png, jpeg, and jpg are allowed. A maximum
-                            of 3 pictures is permitted.
-                          </small>
-
-                          <small className="text-danger">
-                            {errorMsg?.legalDocs}
-                          </small>
-
-                          {selectedDocs.map(
-                            (item, index) =>
-                              // <div className="col-12">
-                              item.keyWord === "legalDocs" && (
-                                <div
-                                  key={index}
-                                  className="col-12 img-uploaded"
-                                >
-                                  <div className="d-flex justify-content-between align-items-center  img-cont-file">
-                                    {/* <div> */}
-
-                                    <div className="d-flex justify-content-start align-items-center ">
-                                      <img
-                                        // src={item.imageReaderURL}
-                                        src={
-                                          item?.pdfFile?.name?.includes("pdf")
-                                            ? pdfIcon
-                                            : item.imageReaderURL
-                                        }
-                                        className="image-upload-file me-3"
-                                      />
-                                    </div>
-
-                                    <div className="w-100">
-                                      <div className="d-flex justify-content-between align-items-center">
-                                        <div>
-                                          <p className="img-name text-tarute">
-                                            {item?.pdfFile?.name}
-                                          </p>
-                                          <p className="img-name">
-                                            {(
-                                              item?.pdfFile?.size / 1024
-                                            )?.toFixed(2)}
-                                            KB
-                                          </p>
-                                          {/* {imgloadin} */}
-                                        </div>
-
-                                        <div
-                                          onClick={() =>
-                                            removeSelectedDoc(index)
-                                          }
-                                          className="cursor"
-                                        >
-                                          <i className="fa-solid fa-trash-can"></i>
-                                        </div>
-                                      </div>
-
-                                      <div className="d-flex  align-items-center">
-                                        <progress
-                                          className="w-100"
-                                          id="progressBar"
-                                          max="100"
-                                          value={item?.onprogress || 0}
-                                          // value="30"
-                                          imgloadin
-                                        ></progress>
-                                        {item?.onprogress}%
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              )
-                            // </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
+                
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                      <Button
-                        variant="secondary"
+                      <button
+                        className="btn btn-secondary"
                         type="button"
                         onClick={() => handleClose("legalDocsReadOnly")}
                       >
                         Close
-                      </Button>
+                      </button>
                       {isLoading ? (
                         <button type="button" className="btn-edit">
                           <i className="fas fa-spinner fa-spin text-white px-5"></i>
