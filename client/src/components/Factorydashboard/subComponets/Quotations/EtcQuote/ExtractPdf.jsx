@@ -484,7 +484,7 @@ const ExtractPdf = ({ requestedData,qouteOn })=>(
 
     {/* Provide a download link */}
     <div>
-      <PDFDownloadLink document={<MyDocument requestedData={requestedData} qouteOn={qouteOn} />} fileName="quote.pdf">
+      <PDFDownloadLink document={<MyDocument requestedData={requestedData} qouteOn={qouteOn} />} fileName="quote.pdf" className='fs-12'>
         {({ loading }) => (loading ? 'Loading document...' : 'Download PDF')}
       </PDFDownloadLink>
     </div>

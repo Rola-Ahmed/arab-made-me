@@ -7,6 +7,11 @@
 .order-section {
   display: grid;
   gap: 24px;
+
+  
+  background-color: white;
+  position: sticky;
+  top: 4px;
 }
 
 .order-section .btn-container {

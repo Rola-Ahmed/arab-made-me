@@ -48,7 +48,7 @@ export default function EtcQuote() {
   return (
     <>
    
-   <ExtractPdf requestedData={requestedData} qouteOn={qouteOn}/>
+   
       
       <div id="view" className="m-4 order-section  ">
         <SubPageUtility currentPage="More Details" PrevPage="Quotations" />
@@ -62,7 +62,11 @@ export default function EtcQuote() {
           
 
             <div className="btn-container">
+            
               
+             <ExtractPdf requestedData={requestedData} qouteOn={qouteOn}/>
+
+        
            
           <button className="fs-10 d-block cursor border-0 bg-main text-white" type="button" onClick={()=>{setDescription(true)}} > <p className="cursor">Quote brief</p></button>
 
