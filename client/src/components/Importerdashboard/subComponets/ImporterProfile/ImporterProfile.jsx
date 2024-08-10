@@ -3,14 +3,16 @@ import axios from "axios";
 import { baseUrl, baseUrl_IMG } from "config.js";
 import SuccessToast from "components/SuccessToast";
 import ErrorToast from "components/ErrorToast";
+import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
 
+
+import DisplayMultiImages from "components/Shared/Dashboards/DisplayMultiImages";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { pdfIcon } from "constants/Images";
 
-import Carousel from "react-grid-carousel";
 
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
@@ -18,7 +20,6 @@ import { userDetails } from "Context/userType";
 import { handleImageError } from "utils/ImgNotFound";
 
 import { countriesMiddleEast } from "constants/countries";
-import {  toast } from "react-toastify";
 import { useOutletContext } from "react-router-dom";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 import UploadDocument from "components/Forms/Shared/UploadDocument";
@@ -47,6 +48,19 @@ export default function ImporterProfile() {
   const [allowEmailNotification, setAllowEmailNotification] = useState();
   const [selectedDocs, setSelectedDocs] = useState([]);
   // api
+
+  const [showImagePop, setShowImagePop] = useState({
+    display: false,
+    imagePath: "",
+  });
+  const handleImageClick = (imagePath) => {
+    setShowImagePop({
+      display: true,
+      imagePath,
+    });
+  };
+
+
   async function fetchFactoryPage() {
     try {
       let config = {
@@ -58,9 +72,7 @@ export default function ImporterProfile() {
 
       if (response.data.message == "done") {
         setImporterProfile(response.data.importers);
-      } else if (response.data.message == "404 Not Found") {
-        // errorMsg("404");
-      }
+      } 
     } catch (error) {}
   }
 
@@ -141,11 +153,6 @@ export default function ImporterProfile() {
     });
   }
 
-  let [toggleSeePassword, settoggleSeePassword] = useState({
-    confirmPassword: false,
-    password: false,
-    oldPassword: false,
-  });
 
   let AccountInfoValidation = useFormik({
     initialValues: {
@@ -299,17 +306,8 @@ export default function ImporterProfile() {
       setIsLoading(false);
       if (response.data.message == "done") {
         ModalClose();
-        toast("Data added Successfully", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          //pauseOnHover: true,
-          draggable: true,
-          // progress: undefined,
-          theme: "colored",
-          type: "success",
-        });
+        successMsg()
+    
 
         setRenderDataUpdate(!renderDataUpdate);
       } else {
@@ -395,156 +393,9 @@ export default function ImporterProfile() {
     setIsLoading(false);
   }
 
-  // Password Validation
-  let formPasswordValidation = useFormik({
-    initialValues: {
-      //-------------------- change password
-      oldPassword: "",
-      password: "",
-      confirmPassword: "",
-    },
 
-    validationSchema: Yup.object().shape({
-      oldPassword: Yup.string()
-        .required("Input Field is Required")
-        .min(6, "min length is 6")
-        .max(255, "max length is 255"),
 
-      password: Yup.string()
-        .required("Input Field is Required")
-        .min(6, "min length is 6")
-        .max(255, "max length is 255"),
-      confirmPassword: Yup.string()
-        .required("Input Field is required")
-        .oneOf([Yup.ref("password")], "Passwords must match"),
-    }),
-    // validateOnChange: true, // Trigger validation on change
-    // validateOnMount: true,
-    onSubmit: submitPasswordForm,
-  });
-
-  async function submitPasswordForm(values) {
-    setErrorMsg((prevErrors) => {
-      const { response, ...restErrors } = prevErrors || {};
-      return restErrors;
-    });
-    let data = {};
-    // cotinue
-    data = {
-      oldPassword: values.oldPassword,
-
-      password: values.password,
-    };
-
-    try {
-      let config = {
-        method: "put",
-        url: `${baseUrl}/users/update/fromUser`,
-        headers: {
-          authorization: isLogin,
-        },
-        data: data,
-      };
-
-      const response = await axios.request(config);
-
-      if (response.data.message == "done") {
-        ModalClose();
-
-        toast("Data added Successfully", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          //pauseOnHover: true,
-          draggable: true,
-          // progress: undefined,
-          theme: "colored",
-          type: "success",
-        });
-
-        setRenderDataUpdate(!renderDataUpdate);
-      } else {
-        setErrorMsg((prevErrors) => ({
-          ...prevErrors,
-          response: response?.data?.message,
-        }));
-      }
-    } catch (error) {
-      if (error.response && error.response.status) {
-        const statusCode = error.response.status;
-        switch (statusCode) {
-          case 400:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.errorMessage,
-            }));
-            break;
-          case 401:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: "User is not Unauthorized ",
-            }));
-            break;
-          case 403:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response:
-                "Forbidden, You do not have permission to access this resource.",
-            }));
-
-            break;
-          case 404:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response:
-                "Not Found (404). The requested resource was not found.",
-            }));
-
-            break;
-
-          case 500:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.errorMessage,
-            }));
-            break;
-
-          //  429 Too Many Requests
-          // The user has sent too many requests in a given amount of time ("rate limiting").
-          case 429:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: " Too Many Requests , Please try again later.",
-            }));
-            break;
-          case 402:
-            // 402
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.message,
-            }));
-            window.scrollTo({ top: 1642.4000244140625 });
-
-            break;
-          default:
-            window.scrollTo({ top: 1642.4000244140625 });
-
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.errorMessage,
-            }));
-            // case message== error
-            break;
-        }
-      } else {
-        setErrorMsg((prevErrors) => ({
-          ...prevErrors,
-          response: "An unexpected error occurred. Please try again later.",
-        }));
-      }
-    }
-  }
+ 
 
   useEffect(() => {
     if (ImporterProfile && ImporterProfile.length !== 0) {
@@ -849,50 +700,6 @@ export default function ImporterProfile() {
               </div>
 
               {/*Password change container 2 */}
-              {/* <div className="container-profile-input w-100">
-                <div className="title-contianer-input w-100">
-                  <p>Password Change</p>
-                  <div className="w-100 ">
-                    <div className="row  row-gap">
-                      <div className="col-12">
-                        <div className="grid-gap-col">
-                          <div className="form-group">
-                            <label>Change Password</label>
-                            <input
-                              type="password"
-                              className="form-control"
-                              placeholder="Enter New Password"
-                              readOnly
-                            />
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="col-12">
-                        <div className="form-group">
-                          <label>Confirm Password</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Confirm Password"
-                            readOnly
-                          />
-                        </div>
-                      </div>
-
-                      <div className="col-12">
-                        <Button
-                          className="btn-edit"
-                          variant="primary"
-                          onClick={() => handleShow("passwordChangeReadOnly")}
-                        >
-                          <p className="cursor">Change Password </p>
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div> */}
 
 <ChangePassword
                 handleShow={handleShow}
@@ -1013,61 +820,10 @@ export default function ImporterProfile() {
               <div className="container-profile-input w-100">
                 <div className="title-contianer-input w-100">
                   <p>Legal Documents</p>
-                  <div className="w-100 ">
-                    {/* ----------------------- */}
-                    <div className="row grid-gap-col">
 
-                      <div className="col-12">
-                        {ImporterProfile?.legalDocs ? (
-                          <Carousel
-                            cols={2}
-                            rows={1}
-                            gap={10}
-                            scrollSnap={true}
-                            loop
-                            showDots
-                            // arrowLeft={
-                            //   <div
-                            //     className="arrow-btn   "
-                            //   >
-                            //     <i className="fa-solid fa-chevron-left"></i>
-                            //   </div>
-                            // }
-                            // arrowRight={
-                            //   <div
-                            //     className="arrow-btn  bg-danger"
-                            //   >
-                            //     <i className="fa-solid fa-chevron-right"></i>
-                            //   </div>
-                            // }
-                            hideArrow={false}
-                            // className={`d-grid`}
-                            // style={{ width: "88vw" }}
-                          >
-                            {ImporterProfile?.legalDocs?.length !== 0
-                              ? ImporterProfile?.legalDocs?.map((item) => (
-                                  <Carousel.Item>
-                                    <div className="dots-slider-img w-100">
-                                      <img
-                                        className="h-100 w-100 "
-                                        // onClick={() => next(index)}
-                                        id={handleImageError}
-                                        src={`${baseUrl_IMG}/${item}`}
-                                        // src={`http://3.28.122.72/${item}`}
-                                        alt="Img"
-                                        onError={handleImageError}
-                                      />
-                                    </div>
-                                  </Carousel.Item>
-                                ))
-                              : ""}
-                          </Carousel>
-                        ) : (
-                          <h5 className="text-muted text-center py-3">Empty</h5>
-                        )}
-                      </div>
 
-                      <div className="col-12">
+                  <DisplayMultiImages  images={ImporterProfile?.legalDocs} handleImageClick={handleImageClick}/>
+                  <div className="w-100">
                         <Button
                           className="btn-edit"
                           variant="primary"
@@ -1076,10 +832,7 @@ export default function ImporterProfile() {
                           <p className="cursor">Upload </p>
                         </Button>
                       </div>
-                    </div>
-                    {/* </form> */}
-                    {/* ----------------------- */}
-                  </div>
+                  
                 </div>
               </div>
 
@@ -1193,17 +946,8 @@ export default function ImporterProfile() {
                             <input
                               className="form-control"
                               value={
-                                ImporterProfile?.exportingCountries?.length !==
-                                0
-                                  ? (
-                                      ImporterProfile?.exportingCountries?.map(
-                                        (item) =>
-                                          Array.isArray(item)
-                                            ? item.join(", ")
-                                            : item
-                                      ) || []
-                                    ).join(", ")
-                                  : ""
+                              
+                                      ImporterProfile?.exportingCountries?.join(", ") || ''
                               }
                               readOnly
                             />
@@ -1941,6 +1685,23 @@ export default function ImporterProfile() {
           </div>
         </Modal.Body>
       </Modal>
+
+
+
+
+
+      <MediaPopUp
+        show={showImagePop.display}
+        onHide={() =>
+          setShowImagePop({
+            display: false,
+            imagePath: "",
+          })
+        }
+        showImagePop={showImagePop.imagePath}
+      />
     </>
+
+
   );
 }
