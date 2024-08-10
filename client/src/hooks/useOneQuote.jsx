@@ -27,7 +27,7 @@ export function useOneQuote() {
     async function fetchReqData() {
       const QouteIdConfigResp = await getOneQuote(
         quotationsId,
-        "include=importer"
+        "include=importer&include=factory"
       );
 
       if (QouteIdConfigResp?.success) {
