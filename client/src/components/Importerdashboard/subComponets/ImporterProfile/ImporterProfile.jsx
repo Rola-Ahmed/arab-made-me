@@ -17,7 +17,6 @@ import { handleImageError } from "utils/ImgNotFound";
 
 import { countriesMiddleEast } from "constants/countries";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { useOutletContext } from "react-router-dom";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 
@@ -1032,7 +1031,6 @@ export default function ImporterProfile() {
   }, [activeMenu]);
   return (
     <>
-      <ToastContainer />
       <div
         className="section factory-profile
       me-5 ms-5 mb-5 mt-2 "
