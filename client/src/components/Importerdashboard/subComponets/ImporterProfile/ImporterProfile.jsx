@@ -201,19 +201,16 @@ export default function ImporterProfile() {
       city: Yup.string().max(60, "max length is 60"),
 
       commercialRegisterationNumber: Yup.string()
-        // .required("Input Field is Required")
         .matches(/^[0-9]+$/, "Input Field should contain numbers only")
         .min(8, "min length is 8")
         .max(16, "max length is 16"),
 
       address: Yup.string()
         .required("Input Field is Required")
-        .min(6, "min length is 6")
         .max(255, "max length is 255"),
 
       description: Yup.string()
         .required("Input Field is Required")
-        .min(6, "min length is 6")
         .max(255, "max length is 255"),
       exportingCountries: Yup.array().of(Yup.string()).nullable(),
     }),
@@ -231,16 +228,9 @@ export default function ImporterProfile() {
     if (show?.accountInfoReadOnly) {
       data = {
         repName: values.repFullName,
-
-        // repEmail: values.repEmail,
-
         repPhone: values.repPhone,
-        // name: values.name,
+        name = values.name
       };
-
-      // if (values.name !== ImporterProfile.name) {
-      data.name = values.name;
-      // }
       if (values.repEmail !== ImporterProfile.repEmail) {
         data.repEmail = values.repEmail;
       }
@@ -291,7 +281,6 @@ export default function ImporterProfile() {
       }
     }
 
-    try {
       setIsLoading(true);
       let config = {
         method: "put",
@@ -307,8 +296,6 @@ export default function ImporterProfile() {
       if (response.data.message == "done") {
         ModalClose();
         successMsg()
-    
-
         setRenderDataUpdate(!renderDataUpdate);
       } else {
         setErrorMsg((prevErrors) => ({
@@ -316,80 +303,7 @@ export default function ImporterProfile() {
           response: response?.data?.message,
         }));
       }
-    } catch (error) {
-      if (error.response && error.response.status) {
-        const statusCode = error.response.status;
-        switch (statusCode) {
-          case 400:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.errorMessage,
-            }));
-            break;
-          case 401:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: "User is not Unauthorized ",
-            }));
-            break;
-          case 403:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response:
-                "Forbidden, You do not have permission to access this resource.",
-            }));
-
-            break;
-          case 404:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response:
-                "Not Found (404). The requested resource was not found.",
-            }));
-
-            break;
-
-          case 500:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.errorMessage,
-            }));
-            break;
-
-          //  429 Too Many Requests
-          // The user has sent too many requests in a given amount of time ("rate limiting").
-          case 429:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: " Too Many Requests , Please try again later.",
-            }));
-            break;
-          case 402:
-            // 402
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.message,
-            }));
-            window.scrollTo({ top: 1642.4000244140625 });
-
-            break;
-          default:
-            window.scrollTo({ top: 1642.4000244140625 });
-
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.errorMessage,
-            }));
-            // case message== error
-            break;
-        }
-      } else {
-        setErrorMsg((prevErrors) => ({
-          ...prevErrors,
-          response: "An unexpected error occurred. Please try again later.",
-        }));
-      }
-    }
+    
     setIsLoading(false);
   }
 
