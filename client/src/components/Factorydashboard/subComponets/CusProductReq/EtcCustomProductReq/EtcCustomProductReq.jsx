@@ -1,10 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-import Loading from "components/Loading/Loading";
-
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
-
 import ImporterInfo from "components/Shared/ImporterInfo";
 import HeaderSection from "./HeaderSection";
 import { getMonthName as getDate } from "utils/getMonthName";

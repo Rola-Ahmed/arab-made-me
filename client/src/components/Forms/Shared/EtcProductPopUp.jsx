@@ -1,13 +1,24 @@
+import { useState } from "react";
+
 import { Button, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import ProductDetails from "./SelectedProductDetails";
-import Carousel from "react-grid-carousel";
-import { handleImageError } from "utils/ImgNotFound";
-import { baseUrl_IMG } from "config.js";
+import DisplayMultiImages from "components/Shared/Dashboards/DisplayMultiImages";
+import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
 
 export default function EtcProductPopUp(directTo) {
 
   let navigate = useNavigate();
+  const [showImagePop, setShowImagePop] = useState({
+    display: false,
+    imagePath: "",
+  });
+  const handleImageClick = (imagePath) => {
+    setShowImagePop({
+      display: true,
+      imagePath,
+    });
+  };
   return (
     <>
       <Modal
@@ -31,39 +42,19 @@ export default function EtcProductPopUp(directTo) {
             <div className="w-100 ps-3">
               <ProductDetails productDetails={directTo?.selectedItemId} />
             </div>
-            <Carousel
-              cols={2}
-              rows={1}
-              gap={15}
-              scrollSnap={true}
-              loop
-              //   showDots={false}
-              //   hideArrow={false}
-            >
-              <Carousel.Item>
-                <div className="vh-75 ">
-                  <img
-                    className="w-100 h-100"
-                    src={`${baseUrl_IMG}/${directTo?.selectedItemId?.coverImage}`}
-                    onError={handleImageError}
-                    alt="sourcing request img"
-                  />
-                </div>
-              </Carousel.Item>
 
-              {directTo?.selectedItemId?.images?.map((item) => (
-                <Carousel.Item>
-                  <div className="vh-75 ">
-                    <img
-                      className="w-100 h-100"
-                      src={`${baseUrl_IMG}/${item}`}
-                      onError={handleImageError}
-                      alt="sourcing request img"
-                    />
-                  </div>
-                </Carousel.Item>
-              ))}
-            </Carousel>
+            <div className="container-profile-input w-100">
+        <div className="title-contianer-input w-100">
+          <p className="h5 fw-bolder title-header"> Images</p>
+          <DisplayMultiImages
+            handleImageClick={handleImageClick}
+            images={[
+              directTo?.selectedItemId?.coverImage,  // Include as a single image
+              ...(Array.isArray(directTo?.selectedItemId?.images) ? directTo.selectedItemId.images : [])  // Spread only if it's an array
+            ].filter(Boolean)}  
+          />
+        </div>
+      </div>
             <div className="row  row-gap  ps-4">
               <div className="col-12 d-flex justify-content-start btn-modal-gap ">
                 <Button
@@ -86,6 +77,19 @@ export default function EtcProductPopUp(directTo) {
           </div>
         </Modal.Body>
       </Modal>
+
+
+
+      {/* <MediaPopUp
+        show={showImagePop.display}
+        onHide={() =>
+          setShowImagePop({
+            display: false,
+            imagePath: "",
+          })
+        }
+        showImagePop={showImagePop.imagePath}
+      /> */}
     </>
   );
 }

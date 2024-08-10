@@ -96,51 +96,49 @@ const useConversationBetweenUsers = () => {
 
   useEffect(() => {
     if (isLogin) {
-      const connectSocket = () => {
-        // socket.connect();
-
-        socket.on("connect", () => {
-          console.log("Connected to server");
-        });
-
-        socket.on("newMessage", (data) => {
-          console.log("Connected to newMessage",data)
-          fetchReqData();
-        });
-
-        // socket.on("socketAuth", (data) => {console.log("Connected to server",data)});
-
-        // socket.on("connect_error", (err) => {console.log("Connected to server",err)});
-
-        // socket.on("connect_timeout", (err) => {console.log("Connected to server",err)});
-
-        // socket.on("error", (err) => {console.log("Connected to server",err)});
-
-        // socket.on("reconnect_error", (err) =>  {console.log("Connected to server",err)});
-
-        // socket.on("reconnect_failed", (err) =>  {console.log("Connected to server",err)});
-
-        // Cleanup on unmount
-        return () => {
-          socket.off("connect");
-          socket.off("newMessage");
-          socket.off("authorization");
-          socket.off("connect_error");
-          socket.off("connect_timeout");
-          socket.off("error");
-          socket.off("reconnect_error");
-          socket.off("reconnect_failed");
-          socket.disconnect();
-        };
+      socket.connect();
+  
+      const handleNewMessage = (data) => {
+        console.log("Received newMessage:", data);
+        fetchReqData();
       };
-
-      connectSocket();
-
+  
+      const handleSocketAuth = (data) => {
+        console.log("Received socketAuth:", data);
+      };
+  
+      const handleError = (err) => {
+        console.error("Socket error:", err);
+      };
+  
+      socket.on("connect", () => {
+        console.log("Connected to server");
+  
+        socket.on("newMessage", handleNewMessage);
+        socket.on("socketAuth", handleSocketAuth);
+        socket.on("connect_error", handleError);
+        socket.on("connect_timeout", handleError);
+        socket.on("error", handleError);
+        socket.on("reconnect_error", handleError);
+        socket.on("reconnect_failed", handleError);
+      });
+  
+      // Cleanup on unmount
       return () => {
+        socket.off("connect");
+        socket.off("newMessage", handleNewMessage);
+        socket.off("socketAuth", handleSocketAuth);
+        socket.off("connect_error", handleError);
+        socket.off("connect_timeout", handleError);
+        socket.off("error", handleError);
+        socket.off("reconnect_error", handleError);
+        socket.off("reconnect_failed", handleError);
         socket.disconnect();
       };
     }
   }, [isLogin]);
+  
+  
 
   return {
     isLogin,

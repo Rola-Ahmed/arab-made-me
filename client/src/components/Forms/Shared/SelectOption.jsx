@@ -4,7 +4,7 @@ export default function SelectOption(props) {
   let { formValidation, vlaidationName, isRequired, title, array } = props;
   return (
     <div className="form-group">
-      <label>
+      <label className="lh-normal">
         {title} {isRequired && "*"}
       </label>
 
