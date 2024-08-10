@@ -42,7 +42,6 @@ export default function ImporterProfile() {
   let {allSectors}=useFetchSectors()
 
   // slider setting
-  const [allowEmailNotification, setAllowEmailNotification] = useState();
   const [selectedDocs, setSelectedDocs] = useState([]);
   let {initalAccInfo,AccountInfoValidation,initalSocialAcc,SocialAccountValidation,ImporterInfoValidation,initalImporterInfo}=useFormValidation(submitAccInfo,onSubmitSocial,onSubmitfactoryInfo,ImporterProfile)
 
@@ -207,7 +206,7 @@ let  data = {
           response: result?.error,
         }));
 
-        if(data.allowEmailNotification!==null){
+        if(data?.allowEmailNotification!=null){
           ErrorToast(result?.error)
         }
       }
@@ -227,7 +226,6 @@ let  data = {
 
       ImporterInfoValidation.setValues(initalImporterInfo);
     }
-    setAllowEmailNotification(ImporterProfile?.allowEmailNotification);
   }, [ImporterProfile]);
 
  
@@ -262,7 +260,7 @@ let  data = {
   const EmailNotificationUpdate2 = async (e) => {
     e.preventDefault();
         let data= {
-          allowEmailNotification: !allowEmailNotification,
+          allowEmailNotification: !ImporterProfile?.allowEmailNotification,
         }
 
         submitForm(data) 
@@ -522,9 +520,7 @@ let  data = {
                               id="flexSwitchCheckChecked"
                               checked={ImporterProfile?.allowEmailNotification}
                               onClick={EmailNotificationUpdate2}
-                              // onChange={() =>
-                              //   setAllowEmailNotification((prev) => !prev)
-                              // }
+                           
                             />
                           </div>
                         </div>
