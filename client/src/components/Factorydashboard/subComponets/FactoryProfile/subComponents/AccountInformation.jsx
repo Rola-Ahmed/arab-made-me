@@ -1,5 +1,5 @@
 export default function AccountInformation(props) {
-  let { currentUserData, factoryProfile, handleShow, Button } = props;
+  let { currentUserData, factoryProfile, handleShow } = props;
   return (
     <>
       <div id="accountInformation"></div>
@@ -82,13 +82,13 @@ export default function AccountInformation(props) {
               </div>
 
               <div className="col-12">
-                <Button
+                <button
                   className="btn-edit"
                   variant="primary"
                   onClick={() => handleShow("accountInfoReadOnly")}
                 >
                   <p className="cursor">Change Account Information </p>
-                </Button>
+                </button>
               </div>
             </div>
           </div>

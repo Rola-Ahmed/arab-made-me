@@ -1,7 +1,13 @@
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Carousel from "react-grid-carousel";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
 
 // css
 import "../Products/products.css";
@@ -43,10 +49,8 @@ function Products(title) {
   const [isLoggedReDirect, setisLoggedReDirect] = useState("");
 
   const [allProductsData, setAllProductsData] = useState();
-  const [apiLoadingData, setapiLoadingData] = useState([]);
 
   useEffect(() => {
-    setapiLoadingData(true);
     axios
       .get(`${baseUrl}/products?size=20&include=factory`)
       .then((response2) => {
@@ -58,9 +62,7 @@ function Products(title) {
       })
 
       .catch((error) => {})
-      .finally(() => {
-        setapiLoadingData(!apiLoadingData);
-      });
+     
   }, []);
 
   function navProductpage(productId, productName, factoryName) {
@@ -185,68 +187,52 @@ function Products(title) {
               <p>Everything you need to know about the product and billing.</p>
             </div>
             <div className="d-flex arrow-container">
-              <div className={`arrow-btn  d-none`} disabled>
-                <i className="fa-solid fa-chevron-left"></i>
-              </div>
+            
+              <div className="arrow-btn position-static arrowLeft carousel">
+                  <i className="fa-solid fa-chevron-left"></i>
+                </div>
 
-              <div className="arrow-btn  d-none" disabled>
-                <i className="fa-solid fa-chevron-right"></i>
-              </div>
+
+                <div className="arrow-btn position-static arrowRight carousel">
+                  <i className="fa-solid fa-chevron-right"></i>
+                </div>
+          
             </div>
           </div>
 
           <div className="container  w-100 p-0">
-            <Carousel
-              cols={4}
-              rows={1}
-              gap={19}
-              scrollSnap={true}
-              hideArrow={false}
-              loop
-              responsiveLayout={[
-                {
-                  breakpoint: 1398,
-                  cols: 3,
-                  // gap: 58,
+          <Swiper
+              // modules={[Navigation]}
+              modules={[Navigation]}
+              navigation={{
+                nextEl: ".arrowRight",
+                prevEl: ".arrowLeft ",
+              }}
+              spaceBetween={19}
+              slidesPerView={1}
+              breakpoints={{
+                687: {
+                  slidesPerView: 1,
+                  // slidesPerGroup: 4,
                 },
-                {
-                  breakpoint: 1199,
-                  cols: 3,
-                  // gap: 8,
+                765: {
+                  slidesPerView: 2,
+                  // slidesPerGroup: 4,
+                },
+                994: {
+                  slidesPerView: 3,
+                  // slidesPerGroup: 4,
                 },
 
-                {
-                  breakpoint: 989,
-                  cols: 2,
-                  // gap: 19,
+                1253: {
+                  slidesPerView: 4,
+                  // slidesPerGroup: 4,
                 },
-                {
-                  breakpoint: 767,
-                  cols: 1,
-                  gap: 10,
-                  width: 74,
-                },
-                {
-                  breakpoint: 539,
-                  cols: 1,
-                  gap: 10,
-                  width: 100,
-                },
-              ]}
-              mobileBreakpoint={539}
-              arrowLeft={
-                <div className="arrow-btn position-absolute arrowLeft carousel">
-                  <i className="fa-solid fa-chevron-left"></i>
-                </div>
-              }
-              arrowRight={
-                <div className="arrow-btn position-absolute arrowRight carousel">
-                  <i className="fa-solid fa-chevron-right"></i>
-                </div>
-              }
+              }}
             >
-              {allProductsData?.map((productItem, productIndex) => (
-                <Carousel.Item>
+
+{allProductsData?.map((productItem, productIndex) => (
+                <SwiperSlide>
                   <div
                     className="card  text-decoration-none   "
                     // style={{ width: "308px" }}
@@ -390,135 +376,7 @@ function Products(title) {
                           )}
                         </div>
 
-                        {/* popup btns */}
-                        <div className=" text-dark text-decoration-none cursor d-none">
-                          {currentUserData?.datacompletelyLoaded ? (
-                            <i className=" fas fa-spinner fa-spin text-dark"></i>
-                          ) : (
-                            <i class=" ellipsis px-2 fa-solid fa-ellipsis-vertical "></i>
-                          )}
-                          {/* if fa-spinner appears then the ul wont appear  */}
-                          <ul
-                            className="dropdown-menu-top 
-                                p-3 m-2"
-                          >
-                            <div className="parent-buttons-container cursor">
-                              <div className="d-flex align-items-center gap-2">
-                                <div
-                                  className="text-container "
-                                  onClick={() => {
-                                    handleButtonClick(
-                                      `CustomerProductReq?factoryId=${productItem?.factoryId}&factoryName=${productItem?.factory?.name}&productId=${productItem?.id}&productName=${productItem?.name}`
-                                    );
-                                  }}
-                                >
-                                  <p className="cursor">
-                                    Custom Product Request
-                                  </p>
-                                </div>
-                                <button
-                                  className="fa-solid fa-circle-question cursor bg-white border-0 p-0"
-                                  title={BtnDescription.customProductRequest}
-                                  onClick={() => {
-                                    handleQuestionMarkClick(
-                                      BtnDescription.customProductRequest
-                                    );
-                                  }}
-                                ></button>
-                              </div>
-
-                              <div className="d-flex align-items-center gap-2">
-                                <button
-                                  className={`text-container  `}
-                                  onClick={() => {
-                                    handleButtonClick(
-                                      `sendrfq?factoryId=${productItem?.factoryId}&factoryName=${productItem?.factory?.name}&productId=${productItem?.id}&productName=${productItem?.name}`
-                                    );
-                                  }}
-                                >
-                                  <p className={`cursor`}>Send RFQ</p>
-                                </button>
-                                <button
-                                  className="fa-solid fa-circle-question cursor bg-white border-0 p-0"
-                                  title={BtnDescription.RFQ}
-                                  onClick={() => {
-                                    handleQuestionMarkClick(BtnDescription.RFQ);
-                                  }}
-                                ></button>
-                              </div>
-
-                              <div className="d-flex align-items-center gap-2">
-                                <button
-                                  className={`text-container `}
-                                  onClick={() => {
-                                    handleButtonClick(
-                                      `purchasingOrder/fromSelectedProduct/?factoryId=${productItem?.factoryId}&factoryName=${productItem?.factory?.name}&productId=${productItem?.id}&productName=${productItem?.name}`
-                                    );
-                                  }}
-                                >
-                                  <p className="cursor">Send PO</p>
-                                </button>
-                                <button
-                                  className="fa-solid fa-circle-question cursor bg-white border-0 p-0"
-                                  title={BtnDescription.PO}
-                                  onClick={() => {
-                                    handleQuestionMarkClick(BtnDescription.PO);
-                                  }}
-                                ></button>
-                              </div>
-
-                              <div className="d-flex align-items-center gap-2">
-                                <button
-                                  className="text-container "
-                                  onClick={() => {
-                                    handleIsLoggedInBtn(
-                                      `contactsupplier?userId=${productItem?.factory?.userId}&factoryName=${productItem?.factory?.name}`
-                                    );
-                                  }}
-                                >
-                                  <p className="cursor">Contact Supplier</p>
-                                </button>
-
-                                <button
-                                  className="fa-solid fa-circle-question cursor bg-white border-0 p-0"
-                                  title={BtnDescription.contactSupplier}
-                                  onClick={() => {
-                                    handleQuestionMarkClick(
-                                      BtnDescription.contactSupplier
-                                    );
-                                  }}
-                                ></button>
-                              </div>
-
-                              <div className="d-flex align-items-center gap-2">
-                                <div
-                                  className="text-container "
-                                  onClick={() => {
-                                    handleButtonClick(
-                                      `requestVisit?factoryId=${productItem?.factoryId}&factoryName=${productItem?.factory?.name}`,
-                                      "ToRequestVisit"
-                                    );
-                                  }}
-                                >
-                                  <p className="cursor">
-                                    Factory Visit Request
-                                  </p>
-                                </div>
-                                <button
-                                  className="fa-solid fa-circle-question cursor bg-white border-0 p-0"
-                                  title={BtnDescription.factoryVisitRequest}
-                                  onClick={() => {
-                                    handleQuestionMarkClick(
-                                      BtnDescription.factoryVisitRequest
-                                    );
-                                  }}
-                                ></button>
-                              </div>
-                            </div>
-                          </ul>
-
-                          {/*  */}
-                        </div>
+                      
                         <DropdownActionBtns
                           currentUserData={currentUserData}
                           productItem={productItem}
@@ -530,9 +388,11 @@ function Products(title) {
                       </div>
                     </div>
                   </div>
-                </Carousel.Item>
+                </SwiperSlide>
               ))}
-            </Carousel>
+              </Swiper>
+
+           
           </div>
 
           <div className="btn-container-all">

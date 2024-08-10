@@ -1,7 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import "./sourcingh.css";
 import axios from "axios";
-import Carousel from "react-grid-carousel";
 import { UserToken } from "Context/userToken";
 import SourcingRequestCard from "components/Sourcinghub/SourcingRequest/SourcingRequestCard";
 
@@ -13,6 +12,13 @@ import UserNotAuthorized from "components/ActionMessages/FormAccessControl/Popup
 import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/FactoryUnVerifiedPopUpMsg";
 
 import SourcingOffers from "components/Home/SourcingOffers/SourcingOffers";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
 
 function Sourcingh() {
   // utils function
@@ -122,51 +128,61 @@ function Sourcingh() {
       />
 
       <div className="container sourcing-h-hom">
+        
         <h2 className="sourc-h-2">Sourcing Hub</h2>
+        <div className="d-flex justify-content-between">
         <p className="sourc-p pb-2">Buyer Requests</p>
-        <div className="row row-home-sourcing ">
-          <Carousel
-            cols={3}
-            rows={1}
-            // gap={30}
-            scrollSnap={true}
-            loop
-            showDots={false}
-            hideArrow={false}
-            responsiveLayout={[
-              {
-                breakpoint: 1199,
-                cols: 2,
-                // gap: 58,
-              },
-              {
-                breakpoint: 1199,
-                cols: 1,
-                // gap: 58,
-              },
-            ]}
-            arrowLeft={
-              <div className="arrow-btn position-absolute   arrowLeft carousel">
+
+        <div className="d-flex arrow-container gap-2">
+            
+            <div className="arrow-btn position-static arrowLeft  carousel">
                 <i className="fa-solid fa-chevron-left"></i>
               </div>
-            }
-            arrowRight={
-              <div className="arrow-btn position-absolute arrowRight carousel">
+
+
+              <div className="arrow-btn position-static arrowRight carousel">
                 <i className="fa-solid fa-chevron-right"></i>
               </div>
-            }
-          >
-            {allSourcingReqData?.map((item) => (
-              <Carousel.Item>
+        
+          </div>
+          </div>
+
+
+        <div className="row row-home-sourcing ">
+        <Swiper
+              // modules={[Navigation]}
+              modules={[Navigation]}
+              navigation={{
+                nextEl: ".sourcing-h-hom .arrowRight",
+                prevEl: ".sourcing-h-hom .arrowLeft",
+              }}
+              spaceBetween={10}
+              slidesPerView={1.2}
+              breakpoints={{
+                779: {
+                  slidesPerView: 2,
+                },
+                1202: {
+                  slidesPerView: 3,
+                },
+               
+              }}
+            >
+
+{allSourcingReqData?.map((item) => (
+              <SwiperSlide>
                 <SourcingRequestCard
                   item={item}
                   setModalShow={setModalShow}
                   isLogin={isLogin}
                   currentUserData={currentUserData}
                 />
-              </Carousel.Item>
+              </SwiperSlide>
             ))}
-          </Carousel>
+
+
+              </Swiper>
+         
         </div>
 
         <SourcingOffers />
