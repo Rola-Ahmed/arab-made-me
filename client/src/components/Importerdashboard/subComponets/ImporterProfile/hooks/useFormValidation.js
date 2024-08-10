@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 
 
-const useFormValidation = (onSubmitCallback,ImporterProfile) => {
+const useFormValidation = (submitAccInfo,onSubmitSocial,onSubmitfactoryInfo,ImporterProfile) => {
 
 
   // valirable validations   // update data
@@ -34,7 +34,7 @@ let phoneValidation = Yup.string()
     name: ImporterProfile?.name || "",
   }
 let initalSocialAcc  ={
-  instgramLink: ImporterProfile?.socialLinks?.instgram || "",
+  instgramLink: ImporterProfile?.socialLinks?.instagram || "",
         facebookLink: ImporterProfile?.socialLinks?.facebook || "",
         website: ImporterProfile?.website || "",
 }
@@ -63,7 +63,7 @@ let initalImporterInfo= {
       repEmail: emailValidation,
       repPhone: phoneValidation,
     }),
-    onSubmit: onSubmitCallback,
+    onSubmit: submitAccInfo,
   });
 
 
@@ -75,7 +75,7 @@ let initalImporterInfo= {
       instgramLink: urlValidate,
       facebookLink: urlValidate,
     }),
-    onSubmit: onSubmitCallback,
+    onSubmit: onSubmitSocial,
   });
 
 
@@ -102,7 +102,7 @@ let initalImporterInfo= {
         .max(255, "max length is 255"),
       exportingCountries: Yup.array().of(Yup.string()).nullable(),
     }),
-    onSubmit: onSubmitCallback,
+    onSubmit: onSubmitfactoryInfo,
   });
 
 

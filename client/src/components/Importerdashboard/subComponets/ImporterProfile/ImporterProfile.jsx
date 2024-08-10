@@ -45,7 +45,7 @@ export default function ImporterProfile() {
   // slider setting
   const [allowEmailNotification, setAllowEmailNotification] = useState();
   const [selectedDocs, setSelectedDocs] = useState([]);
-  let {initalAccInfo,AccountInfoValidation,initalSocialAcc,SocialAccountValidation,ImporterInfoValidation,initalImporterInfo}=useFormValidation(submitForm,ImporterProfile)
+  let {initalAccInfo,AccountInfoValidation,initalSocialAcc,SocialAccountValidation,ImporterInfoValidation,initalImporterInfo}=useFormValidation(submitAccInfo,onSubmitSocial,onSubmitfactoryInfo,ImporterProfile)
 
   const [showImagePop, setShowImagePop] = useState({
     display: false,
@@ -138,75 +138,56 @@ export default function ImporterProfile() {
   }
 
 
+function submitAccInfo(values){
+  let  data = {
+    repPhone: values.repPhone,
+    repName: values.repFullName,
+    name : values.name,
+    ...(values.repEmail !== ImporterProfile.repEmail && { repEmail : values.repEmail }),
+  }
+  submitForm(data)
+}
 
+function onSubmitSocial(values){
+  let data = {
+    socialLinks: {},
+    website: values.website,
+  };
 
+  if (values.facebookLink != "") {
+    data.socialLinks["facebook"] = values.facebookLink;
+  }
+  if (values.instgramLink != "") {
+    data.socialLinks["instagram"] = values.instgramLink;
+  }
+  submitForm(data)
+}
+function onSubmitfactoryInfo(values){
 
+  let {country,address,description,commercialRegisterationNumber,city,exportingCountries,sectorId}=values;
+let  data = {
+    country,
+    address:[address],
+    description,
+    ...(commercialRegisterationNumber && {  commercialRegisterationNumber :commercialRegisterationNumber }),
+    ...(city && {  city :city }),
+    ...(sectorId && {  sectorId :sectorId }),
+    ...(exportingCountries?.length!== 0 && {  exportingCountries :exportingCountries }),
+  };
+
+  submitForm(data)
+
+}
 
   async function submitForm(values) {
-    //
+    let data =values
+    setIsLoading(true);
     setErrorMsg((prevErrors) => {
       const { response, ...restErrors } = prevErrors || {};
       return restErrors;
     });
-    let data = {};
-    // cotinue
-    if (show?.accountInfoReadOnly) {
-      data = {
-        repName: values.repFullName,
-        repPhone: values.repPhone,
-        name : values.name,
-      }
-      if (values.repEmail !== ImporterProfile.repEmail) {
-        data.repEmail = values.repEmail;
-      }
-    }
-    if (show?.factoryInfoChangeReadOnly) {
-      data = {
-        country: values.country,
-        // commercialRegisterationNumber: values.commercialRegisterationNumber,
-        address: [values.address],
-        description: values.description,
-      };
-
-      if (values.commercialRegisterationNumber !== "") {
-        data.commercialRegisterationNumber =
-          values.commercialRegisterationNumber;
-      }
-
-      if (values.city !== "") {
-        data.city = values.city;
-      }
-      if (values.exportingCountries.length !== 0) {
-        data.exportingCountries = values.exportingCountries;
-      }
-
-      if (values.sectorId !== "") {
-        data.sectorId = values.sectorId;
-      }
-    }
-
-    if (show?.socialAccountsReadOnly) {
-      data = {
-        socialLinks: {
-          // facebook: values.facebookLink,
-          // instagram: values.instgramLink,
-        },
-        website: values.website,
-      };
-
-      if (values.website !== "") {
-        data.website = values.website;
-      }
-
-      if (values.facebookLink != "") {
-        data.socialLinks["facebook"] = values.facebookLink;
-      }
-      if (values.instgramLink != "") {
-        data.socialLinks["instagram"] = values.instgramLink;
-      }
-    }
-
-      setIsLoading(true);
+    
+    
       let config = {
         method: "put",
         url: `${baseUrl}/importers/update/fromUser`,
@@ -287,7 +268,11 @@ export default function ImporterProfile() {
 
       if (response?.success) {
         successMsg()
-        setRenderDataUpdate(!renderDataUpdate);
+        setImporterProfile((prevErrors) => ({
+          ...prevErrors,
+          ...data
+        }))
+
       } else {
         ErrorToast(response?.error,)
       }
@@ -330,13 +315,9 @@ export default function ImporterProfile() {
                 // name="profileImage"
                 className="container-profile-input w-100 "
               >
-                <div className="title-contianer-input w-100">
+                <div className="title-contianer-input w-100 ">
                   <p>Profile Image</p>
                   <div className="w-100 ">
-                    <form
-                      onSubmit={(e) => updateMedia(e, "image")}
-                      encType="multipart/form-data"
-                    >
                       <div className="row  row-gap">
                         <div className="col-12">
                   
@@ -361,7 +342,6 @@ export default function ImporterProfile() {
                           </div>
                         </div>
                       </div>
-                    </form>
                   </div>
                 </div>
               </div>
@@ -550,13 +530,11 @@ export default function ImporterProfile() {
                               className="form-check-input switch-input cursor"
                               type="checkbox"
                               id="flexSwitchCheckChecked"
-                              // checked={allowEmailNotification!==null ? allowEmailNotification : ImporterProfile?.allowEmailNotification }
-                              // checked={ImporterProfile?.allowEmailNotification }
-                              checked={allowEmailNotification}
+                              checked={ImporterProfile?.allowEmailNotification}
                               onClick={EmailNotificationUpdate2}
-                              onChange={() =>
-                                setAllowEmailNotification((prev) => !prev)
-                              }
+                              // onChange={() =>
+                              //   setAllowEmailNotification((prev) => !prev)
+                              // }
                             />
                           </div>
                         </div>
@@ -1161,7 +1139,7 @@ export default function ImporterProfile() {
             <div className="title-contianer-input w-100">
               <Modal.Header closeButton>
                 <Modal.Title>
-                  <p>Importer Inforamtion</p>
+                  <p>Social Links  </p>
                 </Modal.Title>
               </Modal.Header>
               {errorMsg?.response ? (
