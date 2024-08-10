@@ -1,7 +1,4 @@
 import {  useState, useContext } from "react";
-
-
-
 import { UserToken } from "Context/userToken";
 import { useNavigate } from "react-router-dom";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
@@ -53,8 +50,6 @@ export default function AllVisitReq() {
             <div className="btn-container">
               <button
                 className="order-btn-1"
-                // onClick={downloadCsv}
-                // disabled={!allprivateLabelData?.length}
                 disabled
               >
                 <i className="fa-solid fa-cloud-arrow-down"></i>
@@ -136,32 +131,7 @@ export default function AllVisitReq() {
                 >
                   <p className="dropdown-item">Newest</p>
                 </li>
-                {/* <li     onClick={(e) => {
-                    filtterData("rate", "sort","Rate");
-                  }}
-                  className=" cursor  text-start">
-                  <a class="dropdown-item" >
-                    Rate
-                  </a>
-                </li> */}
-
-                {/* <li     onClick={(e) => {
-                    filtterData("price-ASC", "sort","Price :Low to High");
-                  }}
-                  className=" cursor  text-start">
-                  <a class="dropdown-item" >
-                    Price :Low to High
-                  </a>
-                </li>
-
-                <li     onClick={(e) => {
-                    filtterData("date-DESC", "sort","Price :High to Low");
-                  }}
-                  className=" cursor  text-start">
-                  <a class="dropdown-item" >
-                  Price :High to Low
-                  </a>
-                </li> */}
+               
               </ul>
             </div>
           </div>

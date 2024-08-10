@@ -2,9 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { socket } from "config.js";
-// import { baseUrl } from "config.js";
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
-
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
@@ -139,62 +137,6 @@ function Contactsupplier() {
     }
   }, [currentUserData, navigate]);
 
-  // Debugging socket connection
-  // useEffect(() => {
-  //   if (isLogin) {
-  //     const connectSocket = () => {
-  //       socket.connect();
-
-  //       socket.on("connect", () => {
-  //       });
-
-      
-
-  //       socket.on("authorization", (data) => {
-  //       });
-
-  //       socket.on("connect_error", (err) => {
-  //         console.error("Connection error:", err);
-  //       });
-
-  //       socket.on("connect_timeout", (err) => {
-  //         console.error("Connection timeout:", err);
-  //       });
-
-  //       socket.on("error", (err) => {
-  //         console.error("General error:", err);
-  //       });
-
-  //       socket.on("reconnect_error", (err) => {
-  //         console.error("Reconnect error:", err);
-  //       });
-
-  //       socket.on("reconnect_failed", () => {
-  //         console.error("Reconnect failed");
-  //       });
-
-  //       // Cleanup on unmount
-  //       return () => {
-  //         // socket.off("connect");
-  //         // socket.off("newMessage");
-  //         // socket.off("authorization");
-  //         // socket.off("connect_error");
-  //         // socket.off("connect_timeout");
-  //         // socket.off("error");
-  //         // socket.off("reconnect_error");
-  //         // socket.off("reconnect_failed");
-  //         // socket.disconnect();
-  //       };
-  //     };
-
-  //     connectSocket();
-
-  //     return () => {
-  //       // console.log("Disconnecting socket..."); // Debugging message
-  //       // socket.disconnect();
-  //     };
-  //   }
-  // }, [isLogin]);
 
   return (
     <>

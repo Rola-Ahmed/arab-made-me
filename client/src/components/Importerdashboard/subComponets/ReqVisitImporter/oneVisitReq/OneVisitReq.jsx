@@ -1,15 +1,12 @@
-import { useState } from "react";
 import { baseUrl } from "config.js";
 
 import { useNavigate } from "react-router-dom";
-import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import ContactBtn from "components/Importerdashboard/Shared/ContactBtn";
 
 // utils function
 import SubPageUtility from "components/Shared/Dashboards/SubPageUtility";
 import FactoryInfo from "components/Forms/Shared/FactoryInfo";
 import { useOneVisit } from "./useOneVisit";
-import Loading from "components/Loading/Loading";
 import VisitRequestInfo from "components/Shared/Dashboards/Forms/VisitRequestInfo";
 import StatusMessagetwo from "components/Shared/Dashboards/StatusMessagetwo";
 
@@ -18,42 +15,11 @@ export default function VisitRequestEtc() {
 
   let { isLogin, requestedData, apiLoadingData } = useOneVisit();
 
-  const [modalShow, setModalShow] = useState({
-    isLogin: false,
-    isImporterVerified: false,
-    isFactoryVerified: false,
-  });
-  const [isLoggedReDirect, setisLoggedReDirect] = useState([]);
 
-  // utils function
-
-  function handleIsLoggedInBtn(loginPath, storgaeName) {
-    if (!isLogin) {
-      setModalShow((prevVal) => ({
-        ...prevVal,
-        isLogin: true,
-      }));
-
-      setisLoggedReDirect(`/signIn/${loginPath}`);
-      return;
-    }
-
-    navigate(`/${loginPath}`);
-  }
 
   return (
     <>
-      <IsLoggedIn
-        show={modalShow.isLogin}
-        onHide={() =>
-          setModalShow((prevVal) => ({
-            ...prevVal,
-            isLogin: false,
-          }))
-        }
-        distination={isLoggedReDirect}
-      />
-
+     
       <div id="view" className="m-4 order-section  ">
         <SubPageUtility
           currentPage="More Details"
@@ -98,7 +64,6 @@ export default function VisitRequestEtc() {
                 <div className="col-12 d-flex justify-content-start btn-modal-gap mb-4">
                   <ContactBtn
                     isLogin={isLogin}
-                    handleIsLoggedInBtn={handleIsLoggedInBtn}
                     recieverUserId={requestedData?.factory?.userId}
                     baseUrl={baseUrl}
                   />

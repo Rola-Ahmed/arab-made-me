@@ -141,19 +141,7 @@ export default function EtcQuote() {
                     <p className="cursor">Edit Quote</p>
                   </button>
 
-                  <button
-                    className="btn-edit border-btn bg-white d-none"
-                    type="button"
-                    onClick={() => {
-                      navigate(
-                        `/contactsupplier?userId=${requestedData?.importer?.userId}&importerName=${requestedData?.importer?.name}`
-                      );
-                    }}
-                  >
-                    <p className="cursor text-success text-dark">
-                      Contact Buyer
-                    </p>
-                  </button>
+               
                   <ContactBtn
                     isLogin={isLogin}
                     // handleIsLoggedInBtn={handleIsLoggedInBtn}

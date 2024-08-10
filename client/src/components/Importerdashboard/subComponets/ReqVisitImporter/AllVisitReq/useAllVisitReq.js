@@ -33,10 +33,9 @@ const useAllVisitReq = (isLogin, filter) => {
     // bec sometime it returns the same data
     setApiLoadingData(true);
     setReqData([]);
-    const params = `size=${pagination.displayProductSize}&page=${pagination.currentPage}&formsFilter=${filter?.formsFilter}&sort=${filter?.sort}&include=factory&include=product`;
+    const params = `size=${pagination.displayProductSize}&page=${pagination.currentPage}&formsFilter=${filter?.formsFilter}&sort=${filter?.sort}&include=factory`;
     const result = await getVisitReqs(params, { authorization: isLogin });
     if (result?.success) {
-      setReqData(result?.data?.visits);
       setTimeout(() => {
         setReqData(result?.data?.visits);
       }, 50);
@@ -44,9 +43,7 @@ const useAllVisitReq = (isLogin, filter) => {
       setErrorsMsg(result?.error);
     }
 
-    setTimeout(() => {
       setApiLoadingData(false);
-    }, 50);
   };
 
   useEffect(() => {

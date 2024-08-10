@@ -56,19 +56,7 @@ export default function EtcVisitRequest() {
                 <VisitRequestInfo requestedData={requestedData} />
 
                 <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                  <button
-                    className="btn-edit border-btn bg-white  d-none"
-                    type="button"
-                    onClick={() => {
-                      navigate(
-                        `/contactsupplier?userId=${requestedData?.importer?.userId}&importerName=${requestedData?.importer?.name}`
-                      );
-                    }}
-                  >
-                    <p className="cursor text-success text-dark">
-                      Contact Buyer
-                    </p>
-                  </button>
+              
 
                   <ContactBtn
                     isLogin={isLogin}

@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
-import axios from "axios";
-import { baseUrl, baseUrl_IMG } from "config.js";
+import { fetchOneImporter } from "Services/importer";
+import {  baseUrl_IMG } from "config.js";
 import SuccessToast from "components/SuccessToast";
 import ErrorToast from "components/ErrorToast";
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
@@ -57,23 +57,14 @@ export default function ImporterProfile() {
     });
   };
 
+  async function fetchImporterData() {
+    const result = await fetchOneImporter(currentUserData?.importerId, {});
 
-  async function fetchFactoryPage() {
-    try {
-      let config = {
-        method: "get",
-        url: `${baseUrl}/importers/${currentUserData.importerId}`,
-      };
-
-      const response = await axios.request(config);
-
-      if (response.data.message == "done") {
-        setImporterProfile(response.data.importers);
-      } 
-    } catch (error) {}
+    if (result?.success) {
+      setImporterProfile(result?.data?.importers);
+    } 
   }
 
-  // Cover IMage Profile -----------------------------------------------------
 
   async function updateMedia(e) {
     setIsLoading(true);
@@ -111,7 +102,7 @@ export default function ImporterProfile() {
 
   useEffect(() => {
     if (currentUserData && currentUserData?.importerId) {
-      fetchFactoryPage();
+      fetchImporterData();
     }
   }, [currentUserData?.importerId]);
 
