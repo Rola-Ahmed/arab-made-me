@@ -193,9 +193,9 @@ export default function Orders() {
                         <div className="title-text-handler">
                           <p className="trate-title">{poItem?.product?.name}</p>
                           <p className="trate-sub-title d-flex">
-                            {poItem?.product?.avarage ? (
+                            {poItem?.product?.averageRate ? (
                               <StarRating
-                                averageRating={poItem?.product?.avarage}
+                                averageRating={poItem?.product?.averageRate}
                               />
                             ) : (
                               "0 rating"
