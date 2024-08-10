@@ -4,10 +4,10 @@ import { baseUrl, baseUrl_IMG } from "config.js";
 import SuccessToast from "components/SuccessToast";
 import ErrorToast from "components/ErrorToast";
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
+import ReadOnly from  'components/Forms/Shared/ReadOnly'
 
 
 import DisplayMultiImages from "components/Shared/Dashboards/DisplayMultiImages";
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
 
@@ -341,79 +341,52 @@ let  data = {
                   <div className="w-100 ">
                     <div className="row  row-gap">
                       <div className="col-6">
-                        <div className="grid-gap-col">
-                          <div className="form-group">
-                            <label>Business Account</label>
-                            <input
-                              className="form-control"
-                              value={currentUserData?.userEmail || ""}
-                              readOnly
-                            />
-                          </div>
-                        </div>
+                      <ReadOnly
+                title='Business Account'
+                value={ImporterProfile?.userEmail}
+                />
+                      
                       </div>
 
                       <div className="col-6">
-                        <div className="grid-gap-col">
-                          <div className="form-group">
-                            <label>representive Full Name</label>
-                            <input
-                              className="form-control"
-                              value={ImporterProfile?.repName || ""}
-                              readOnly
-                            />
-                          </div>
-                        </div>
+                      <ReadOnly
+                title="representive Full Name"
+                value={ImporterProfile?.repName}
+                />
+                      
                       </div>
 
                       <div className="col-6">
-                        <div className="grid-gap-col">
-                          <div className="form-group">
-                            <label>Importer Name</label>
-                            <input
-                              className="form-control"
-                              value={ImporterProfile?.name || ""}
-                              readOnly
-                            />
-                          </div>
-                        </div>
+                      <ReadOnly
+                title="Importer Name"
+                value={ImporterProfile?.name}
+                />
                       </div>
 
                       <div className="col-6">
-                        <div className="grid-gap-col">
-                          <div className="form-group">
-                            <label> Representive Email</label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              value={ImporterProfile?.repEmail || ""}
-                              readOnly
-                            />
-                          </div>
-                        </div>
+                      <ReadOnly
+                title="Representive Email"
+                value={ImporterProfile?.repEmail}
+                />
+                      
                       </div>
 
                       <div className="col-6">
-                        <div className="grid-gap-col">
-                          <div className="form-group">
-                            <label>Representive Phone Number</label>
-                            <input
-                              className="form-control"
-                              value={ImporterProfile?.repPhone || ""}
-                              readOnly
-                            />
-                          </div>
-                        </div>
+                      <ReadOnly
+                title="Representive  Phone Number"
+                value={ImporterProfile?.repPhone}
+                />
+                       
                       </div>
 
                       <div className="col-12">
-                        <Button
+                        <button
                           className="btn-edit"
                           variant="primary"
                           onClick={() => handleShow("accountInfoReadOnly")}
                         >
                           <p className="cursor">Change Account Information </p>
-                        </Button>
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -450,13 +423,13 @@ let  data = {
                             <i className="fab fa-facebook-f fa-2x"></i>
                           </div>
 
-                          <Button
+                          <button
                             className="btn-edit"
                             variant="primary"
                             onClick={() => handleShow("socialAccountsReadOnly")}
                           >
                             <p className="cursor">attach Link</p>
-                          </Button>
+                          </button>
                         </div>
                       </div>
                       <div className="col-12">
@@ -467,13 +440,13 @@ let  data = {
                           >
                             <i className="fab fa-instagram fa-2x"></i>
                           </div>
-                          <Button
+                          <button
                             className="btn-edit"
                             variant="primary"
                             onClick={() => handleShow("socialAccountsReadOnly")}
                           >
                             <p className="cursor">attach Link</p>
-                          </Button>
+                          </button>
                         </div>
                       </div>
 
@@ -485,13 +458,13 @@ let  data = {
                           >
                             <i className="fa-solid fa-link fa-2x"></i>
                           </div>
-                          <Button
+                          <button
                             className="btn-edit"
                             variant="primary"
                             onClick={() => handleShow("socialAccountsReadOnly")}
                           >
                             <p className="cursor">attach Link</p>
-                          </Button>
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -541,13 +514,13 @@ let  data = {
 
                   <DisplayMultiImages  images={ImporterProfile?.legalDocs} handleImageClick={handleImageClick}/>
                   <div className="w-100">
-                        <Button
+                        <button
                           className="btn-edit"
                           variant="primary"
                           onClick={() => handleShow("legalDocsReadOnly")}
                         >
                           <p className="cursor">Upload </p>
-                        </Button>
+                        </button>
                       </div>
                   
                 </div>
@@ -562,129 +535,100 @@ let  data = {
                     <form>
                       <div className="row  row-gap">
                         <div className="col-6">
-                          <div className="grid-gap-col">
-                            <div className="form-group">
-                              <label>Factory Name</label>
-                              <input
-                                className="form-control"
-                                value={ImporterProfile?.name || ""}
-                                readOnly
-                              />
-                            </div>
-                          </div>
+
+                        <ReadOnly
+                title='Importer Name'
+                value={ImporterProfile?.name}
+                />
                         </div>
 
                         <div className="col-6">
-                          <div className="grid-gap-col">
-                            <div className="form-group">
-                              <label>Sector</label>
-                              <input
-                                className="form-control"
-                                value={
-                                  allSectors?.some(
-                                    (item) =>
-                                      item.id === ImporterProfile?.sectorId
-                                  )
-                                    ? allSectors?.find(
-                                        (item) =>
-                                          item.id === ImporterProfile?.sectorId
-                                      ).name
-                                    : ""
-                                }
-                                readOnly
-                              />
-                            </div>
-                          </div>
+
+                        <ReadOnly
+                title='Sector'
+                value={
+                  allSectors?.some(
+                    (item) =>
+                      item.id === ImporterProfile?.sectorId
+                  )
+                    ? allSectors?.find(
+                        (item) =>
+                          item.id === ImporterProfile?.sectorId
+                      ).name
+                    : ""
+                }
+                />
+
+                       
                         </div>
                         <div className="col-6">
-                          <div className="form-group">
-                            <label>Country</label>
-                            <input
-                              className="form-control"
-                              value={ImporterProfile?.country || ""}
-                              readOnly
-                            />
-                          </div>
+
+
+                        <ReadOnly
+                title='Country'
+                value={ImporterProfile?.country}
+                />
+                
+                          
                         </div>
 
                         <div className="col-6">
-                          <div className="form-group">
-                            <label>City</label>
-                            <input
-                              className="form-control"
-                              value={ImporterProfile?.city || ""}
-                              readOnly
-                            />
-                          </div>
+
+                        <ReadOnly
+                title='City'
+                value={ImporterProfile?.city}
+                />
+                
+                        
                         </div>
 
                         <div className="col-6">
-                          <div className="form-group">
-                            <label>Yearly Sales Income</label>
-                            <input
-                              className="form-control"
-                              value={
-                                ImporterProfile?.yearlySalesIncome ||
-                                "USD 1M-5M"
-                              }
-                              readOnly
-                            />
-                          </div>
+
+                        <ReadOnly
+                title='Yearly Sales Income'
+                value={ImporterProfile?.yearlySalesIncome}
+                />
+
+                        
                         </div>
 
                         <div className="col-6">
-                          <div className="form-group">
-                            <label>commercial Registeration Number</label>
-                            <input
-                              className="form-control"
-                              value={
-                                ImporterProfile?.commercialRegisterationNumber ||
-                                ""
-                              }
-                              readOnly
-                            />
-                          </div>
+
+                        <ReadOnly
+                title='commercial Registeration Number'
+                value={ImporterProfile?.commercialRegisterationNumber}
+                />
+
+
+                        
                         </div>
 
                         <div className="col-6">
-                          <div className="form-group">
-                            <label>Importer Location</label>
-                            <input
-                              className="form-control"
-                              value={ImporterProfile?.address?.[0] || ""}
-                              readOnly
-                            />
-                          </div>
+                        <ReadOnly
+                title='Importer Location'
+                value={ImporterProfile?.address?.[0]}
+                />
                         </div>
 
                         <div className="col-6">
-                          <div className="form-group">
-                            <label>exporting Countries</label>
-                            <input
-                              className="form-control"
-                              value={
-                              
-                                      ImporterProfile?.exportingCountries?.join(", ") || ''
-                              }
-                              readOnly
-                            />
-                          </div>
+                        <ReadOnly
+                title='exporting Countries'
+                value={ImporterProfile?.exportingCountries?.join(", ")}
+                />
+                         
                         </div>
 
                         <div className="col-12">
-                          <div className="form-group">
-                            <label>Importer description</label>
-                            <textarea
-                              className="form-control"
-                              rows="3"
-                              value={ImporterProfile?.description || ""}
-                              readOnly
-                            ></textarea>
-                          </div>
+
+                        <ReadOnly
+                title='Importer description'
+                value={ImporterProfile?.description}
+                />
+                       
                         </div>
 
                         <div className="col-12">
-                          <Button
+                          <button
                             className="btn-edit"
                             variant="primary"
                             onClick={() =>
@@ -694,7 +638,7 @@ let  data = {
                             <p className="cursor">
                               Change Importer Information
                             </p>
-                          </Button>
+                          </button>
                         </div>
                       </div>
                     </form>
@@ -839,13 +783,13 @@ let  data = {
                     </div>
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                      <Button
+                      <button
                         variant="secondary"
                         type="button"
                         onClick={() => handleClose("accountInfoReadOnly")}
                       >
                         Close
-                      </Button>
+                      </button>
                       {isLoading ? (
                         <button type="button" className="btn-edit">
                           <i className="fas fa-spinner fa-spin text-white"></i>
@@ -1085,13 +1029,13 @@ let  data = {
                     </div>
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                      <Button
+                      <button
                         variant="secondary"
                         type="button"
                         onClick={() => handleClose("factoryInfoChangeReadOnly")}
                       >
                         Close
-                      </Button>
+                      </button>
                       {isLoading ? (
                         <button type="button" className="btn-edit">
                           <i className="fas fa-spinner fa-spin text-white"></i>
@@ -1235,13 +1179,13 @@ let  data = {
                     </div>
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                      <Button
+                      <button
                         variant="secondary"
                         type="button"
                         onClick={() => handleClose("socialAccountsReadOnly")}
                       >
                         Close
-                      </Button>
+                      </button>
                       {isLoading ? (
                         <button type="button" className="btn-edit">
                           <i className="fas fa-spinner fa-spin text-white"></i>
@@ -1303,13 +1247,13 @@ let  data = {
 
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                      <Button
+                      <button
                         variant="secondary"
                         type="button"
                         onClick={() => handleClose("legalDocsReadOnly")}
                       >
                         Close
-                      </Button>
+                      </button>
                       {isLoading ? (
                         <button type="button" className="btn-edit">
                           <i className="fas fa-spinner fa-spin text-white"></i>
@@ -1374,13 +1318,13 @@ let  data = {
                 />
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                      <Button
+                      <button
                         variant="secondary"
                         type="button"
                         onClick={() => handleClose("profilePicReadOnly")}
                       >
                         Close
-                      </Button>
+                      </button>
                       {isLoading ? (
                         <button type="button" className="btn-edit">
                           <i className="fas fa-spinner fa-spin text-white px-5"></i>

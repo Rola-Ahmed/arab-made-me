@@ -98,7 +98,6 @@ export default function ChangePassword(props) {
           <div className="w-100 ">
             <div className="row  row-gap">
               <div className="col-12">
-                <div className="grid-gap-col">
                   <div className="form-group">
                     <label>Change Password</label>
                     <input
@@ -108,7 +107,6 @@ export default function ChangePassword(props) {
                       readOnly
                     />
                   </div>
-                </div>
               </div>
 
               <div className="col-12">
@@ -166,7 +164,6 @@ export default function ChangePassword(props) {
                 <form onSubmit={formPasswordValidation.handleSubmit}>
                   <div className="row  row-gap">
                     <div className="col-12">
-                      <div className="grid-gap-col">
                         <div className="form-group">
                           <label>Old Password</label>
 
@@ -209,11 +206,9 @@ export default function ChangePassword(props) {
                             vlaidationName="oldPassword"
                           />
                         </div>
-                      </div>
                     </div>
 
                     <div className="col-12">
-                      <div className="grid-gap-col">
                         <div className="form-group">
                           <label>Change Password</label>
 
@@ -259,7 +254,6 @@ export default function ChangePassword(props) {
                             vlaidationName="password"
                           />
                         </div>
-                      </div>
                     </div>
 
                     <div className="col-12">
