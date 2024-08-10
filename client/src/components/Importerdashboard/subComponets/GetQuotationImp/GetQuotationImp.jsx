@@ -37,7 +37,7 @@ let {
   apiLoadingData,
   setPagination,
   
-}=useAllQuotes()
+}=useAllQuotes(filter)
  
 
   return (

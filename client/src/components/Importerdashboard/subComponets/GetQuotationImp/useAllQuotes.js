@@ -32,25 +32,26 @@ const useAllQuotes = (filter) => {
     // why added SetTimeOut? inorder for the user to see that the data has changes when using filtter or seach
     // bec sometime it returns the same data
     setApiLoadingData((prevValue) => ({
+      ...prevValue,
       reqData: true,
     errorWhileLoading: null,
     }));
     setReqData([]);
     const params = `size=${pagination.displayProductSize}&page=${pagination.currentPage}&formsFilter=${filter?.formsFilter}&sort=${filter?.sort}&include=factory`;
     const result = await getQuotes(params, { authorization: isLogin });
+
     if (result?.success) {
+
       setTimeout(() => {
         setReqData(result?.data?.quotations);
       }, 50);
     } 
 
-    setTimeout(() => {
       setApiLoadingData((prevVal) => ({
         ...prevVal,
         reqData: result?.loadingStatus,
           errorWhileLoading: result?.error,
       }));
-    }, 50);
   };
 
   useEffect(() => {
