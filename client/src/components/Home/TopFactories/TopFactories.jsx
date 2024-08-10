@@ -175,7 +175,7 @@ export default function TopFactories(props) {
             </div>
           </div>
 
-          <div className="factoryCard  container m-0 p-0 overflow-hidden ">
+          <div className="factoryCard  container m-0 p-0 overflow-hidden  mb-1">
             {/* <Slider {...settingsMain} ref={sliderRef}> */}
 
             <Swiper
