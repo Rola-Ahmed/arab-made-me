@@ -17,7 +17,7 @@ export default function ExportedCountries({ importingCountries,countriesMiddleEa
         >
           <Geographies geography={your_geography_data}>
             {({ geographies }) =>
-              geographies.map((geo) => (
+              geographies?.map((geo) => (
                 <>
                   <Geography
                     key={geo.rsmKey}
@@ -57,7 +57,7 @@ export default function ExportedCountries({ importingCountries,countriesMiddleEa
             }
           </Geographies>
 
-          {ExportedCountries?.map((item, index) => {
+          {importingCountries?.map((item, index) => {
             const country = countriesMiddleEast?.find(
               (item1) => item1.code === item
             );

@@ -1,8 +1,10 @@
 import { baseUrl_IMG } from "config.js";
 import { handleImageError } from "utils/ImgNotFound";
 import { pdfIcon } from "constants/Images";
-import Carousel from "react-grid-carousel";
-
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
 export default function  DisplayMultiImages(props) {
   let { handleImageClick, images } = props;
   return (
@@ -10,19 +12,16 @@ export default function  DisplayMultiImages(props) {
       {" "}
       {images?.length > 0 ? (
         <div className="w-100 ">
-          <div className="row grid-gap-col">
-            <div className="col-12">
-              <Carousel
-                cols={2}
-                rows={1}
+          <div className="row grid-gap-col overflow-hidden">
+            <div className="col-12 ">
+              <Swiper
+              modules={[Navigation]}
+                                navigation={true}
+                                slidesPerView={2}
                 gap={10}
-                scrollSnap={true}
-                loop
-                showDots
-                hideArrow={false}
               >
                 {images?.map((item) => (
-                  <Carousel.Item>
+                  <SwiperSlide>
                     <div
                       className="dots-slider-img w-100  cursor"
                       onClick={() => {
@@ -41,9 +40,9 @@ export default function  DisplayMultiImages(props) {
                         onError={handleImageError}
                       />
                     </div>
-                  </Carousel.Item>
+                  </SwiperSlide>
                 ))}
-              </Carousel>
+              </Swiper>
             </div>
           </div>
         </div>

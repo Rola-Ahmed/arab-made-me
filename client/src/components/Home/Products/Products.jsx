@@ -200,7 +200,7 @@ function Products(title) {
             </div>
           </div>
 
-          <div className="container  w-100 p-0">
+          <div className="container  w-100 p-0 overflow-hidden">
           <Swiper
               // modules={[Navigation]}
               modules={[Navigation]}

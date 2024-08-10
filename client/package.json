@@ -19,7 +19,6 @@
     "react-bootstrap": "^2.10.1",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
-    "react-grid-carousel": "^1.0.1",
     "react-i18next": "^14.1.2",
     "react-paginate": "^8.2.0",
     "react-router-dom": "^6.21.0",

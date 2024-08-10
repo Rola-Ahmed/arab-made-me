@@ -188,6 +188,7 @@ function Factorypage() {
   
   }, []);
 
+  console.log("factoryDetails?.importingCountries?.length",factoryDetails?.importingCountries?.length)
   return (
     <>
       <IsLoggedIn
@@ -421,6 +422,7 @@ function Factorypage() {
                   />
                 </div>
               )}
+
 
               {factoryDetails?.importingCountries?.length > 0 && (
                 <ExportedCountries

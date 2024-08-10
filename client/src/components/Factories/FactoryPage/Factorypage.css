@@ -62,6 +62,10 @@
   padding: 50px 0;
 }
 
+.sub-product-slider .swiper-wrapper {
+  justify-content: center;
+}
+
 .call-fac-page {
   color: #14181F;
   font-family: "Inter-med";
@@ -70,7 +74,7 @@
   font-weight: 600;
   line-height: 17.5px;
   position: sticky;
-  top: 188px;
+  top: 104px;
   left: initial;
   background: white;
   z-index: 4;
