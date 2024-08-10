@@ -11,3 +11,9 @@ export const addImporterMedia = async (header, data) => {
 export const addImporter = async (header, data) => {
   return await postRequest(`/importers/add`, header, data);
 };
+
+
+
+export const updateImporterFromUser = async (header, data) => {
+  return await putRequest(`/importers/update/fromUser`, header, data);
+};

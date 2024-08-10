@@ -1,6 +1,8 @@
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { baseUrl, baseUrl_IMG } from "config.js";
+import SuccessToast from "components/SuccessToast";
+import ErrorToast from "components/ErrorToast";
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -21,6 +23,11 @@ import { useOutletContext } from "react-router-dom";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 import UploadDocument from "components/Forms/Shared/UploadDocument";
 import {useFetchSectors} from 'hooks/useFetchSectors'
+import {addImporterMedia,updateImporterFromUser} from 'Services/importer'
+
+function successMsg(){
+  SuccessToast("Changes updated successfully");
+}
 
 export default function ImporterProfile() {
   document.title = "Importer Profile";
@@ -58,7 +65,7 @@ export default function ImporterProfile() {
 
   // Cover IMage Profile -----------------------------------------------------
 
-  function updateMedia(e) {
+  async function updateMedia(e) {
     setIsLoading(true);
 
     e.preventDefault();
@@ -67,64 +74,27 @@ export default function ImporterProfile() {
 
     selectedDocs?.map((item) => data.append(item.keyWord, item.pdfFile));
 
-    const config = {
-      method: "put",
-      url: `${baseUrl}/importers/media`,
-      headers: {
-        Authorization: isLogin,
-      },
-      data: data,
-    };
+  
+    let result = await addImporterMedia({Authorization: isLogin},data)
 
-    axios
-      .request(config)
-      .then((response) => {
-        if (response?.data?.message == "done") {
+        if (result?.success) {
           ModalClose();
-          toast("Image Saved Successfully", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            //pauseOnHover: true,
-            draggable: true,
-            theme: "colored",
-            type: "success",
-          });
+          successMsg()
+
+        
           setRenderDataUpdate(!renderDataUpdate);
           //
           setSelectedDocs([]);
-          setIsLoading(false);
         } else {
-          setIsLoading(false);
 
-          toast("Image Not Saved, please try again", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            draggable: true,
-            // progress: undefined,
-            theme: "colored",
-            type: "error",
-          });
+          setErrorMsg((prevErrors) => ({
+            ...prevErrors,
+            response: result?.error,
+          }));
         }
-      })
-      .catch((error) => {
         setIsLoading(false);
 
-        toast("Image Not Saved, please try again", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          draggable: true,
-          // progress: undefined,
-          theme: "colored",
-          type: "error",
-        });
-        // console.error("IMG error", error);
-      });
+     
   }
 
   useEffect(() => {
@@ -751,128 +721,21 @@ export default function ImporterProfile() {
 
   const EmailNotificationUpdate2 = async (e) => {
     e.preventDefault();
-    setErrorMsg((prevErrors) => {
-      const { response, ...restErrors } = prevErrors || {};
-      return restErrors;
-    });
-
-    try {
-      let config = {
-        method: "put",
-        url: `${baseUrl}/importers/update/fromUser`,
-        headers: {
-          authorization: isLogin,
-        },
-        data: {
+        let data= {
           allowEmailNotification: !allowEmailNotification,
-        },
-      };
+        }
 
-      const response = await axios.request(config);
+      const response = await  updateImporterFromUser({
+        authorization: isLogin,
+      },data)
 
-      if (response.data.message == "done") {
-        toast("Allow Email Notifications updated Successfully", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          //pauseOnHover: true,
-          draggable: true,
-          // progress: undefined,
-          theme: "colored",
-          type: "success",
-        });
-
+      if (response?.success) {
+        successMsg()
         setRenderDataUpdate(!renderDataUpdate);
       } else {
-        toast(response?.data?.message, {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          //pauseOnHover: true,
-          draggable: true,
-          // progress: undefined,
-          theme: "colored",
-          type: "error",
-        });
+        ErrorToast(response?.error,)
       }
-    } catch (error) {
-      if (error.response && error.response.status) {
-        const statusCode = error.response.status;
-        switch (statusCode) {
-          case 400:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.errorMessage,
-            }));
-            break;
-          case 401:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: "User is not Unauthorized ",
-            }));
-            break;
-          case 403:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response:
-                "Forbidden, You do not have permission to access this resource.",
-            }));
-
-            break;
-          case 404:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response:
-                "Not Found (404). The requested resource was not found.",
-            }));
-
-            break;
-
-          case 500:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.errorMessage,
-            }));
-            break;
-
-          //  429 Too Many Requests
-          // The user has sent too many requests in a given amount of time ("rate limiting").
-          case 429:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: " Too Many Requests , Please try again later.",
-            }));
-            break;
-          case 402:
-            // 402
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.message,
-            }));
-            window.scrollTo({ top: 1642.4000244140625 });
-
-            break;
-          default:
-            window.scrollTo({ top: 1642.4000244140625 });
-
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.errorMessage,
-            }));
-            // case message== error
-            break;
-        }
-      } else {
-        setErrorMsg((prevErrors) => ({
-          ...prevErrors,
-          response: "An unexpected error occurred. Please try again later.",
-        }));
-      }
-
-      // window.scrollTo({ top: 1642.4000244140625 });
-    }
+   
   };
 
 
