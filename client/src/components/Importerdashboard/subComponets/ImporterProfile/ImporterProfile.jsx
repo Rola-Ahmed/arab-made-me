@@ -16,9 +16,11 @@ import { userDetails } from "Context/userType";
 import { handleImageError } from "utils/ImgNotFound";
 
 import { countriesMiddleEast } from "constants/countries";
-import { ToastContainer, toast } from "react-toastify";
+import {  toast } from "react-toastify";
 import { useOutletContext } from "react-router-dom";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
+import UploadDocument from "components/Forms/Shared/UploadDocument";
+
 
 export default function ImporterProfile() {
   document.title = "Importer Profile";
@@ -1055,6 +1057,7 @@ export default function ImporterProfile() {
                     >
                       <div className="row  row-gap">
                         <div className="col-12">
+                  
                           <div className="grid-gap-col position-relative">
                             <div className="factory-logo  edit-img ">
                               <img
@@ -1324,6 +1327,7 @@ export default function ImporterProfile() {
                   <div className="w-100 ">
                     {/* ----------------------- */}
                     <div className="row grid-gap-col">
+
                       <div className="col-12">
                         {ImporterProfile?.legalDocs ? (
                           <Carousel
@@ -2340,12 +2344,10 @@ export default function ImporterProfile() {
                   <p>Legal Documents</p>
                 </Modal.Title>
               </Modal.Header>
-              {errorMsg?.response ? (
+              {errorMsg?.response && (
                 <div className="alert mt-3 p-2 alert-danger form-control text-dark">
                   {errorMsg?.response}
                 </div>
-              ) : (
-                ""
               )}
               <form
                 onSubmit={(e) => updateMedia(e)}
@@ -2353,7 +2355,20 @@ export default function ImporterProfile() {
               >
                 <div className="w-100 ">
                   <div className="row  row-gap">
-                    <div className="col-12">
+
+                  <UploadDocument
+                  selectedDocs={selectedDocs}
+                  errorMsg={errorMsg}
+                  setSelectedDocs={setSelectedDocs}
+                  MediaName="legalDocs"
+                  mediaMaxLen="3"
+                  meidaAcceptedExtensions={["pdf", "png", "jpeg", "jpg"]}
+                  setErrorMsg={setErrorMsg}
+                  // title="Upload Documents"
+                />
+
+
+                    <div className="col-12 d-none">
                       <div className="grid-gap-col">
                         <div className="form-group">
                           {/*  */}
@@ -2562,140 +2577,27 @@ export default function ImporterProfile() {
                   <p>Profile Picture</p>
                 </Modal.Title>
               </Modal.Header>
-              {errorMsg?.response ? (
+              {errorMsg?.response && (
                 <div className="alert mt-3 p-2 alert-danger form-control text-dark">
                   {errorMsg?.response}
                 </div>
-              ) : (
-                ""
-              )}
+              ) }
               <div className="w-100 ">
                 <form
                   onSubmit={(e) => updateMedia(e)}
                   encType="multipart/form-data"
                 >
                   <div className="row  row-gap">
-                    <div className="col-12">
-                      <div className="grid-gap-col">
-                        <div className="form-group">
-                          <label
-                            className="mb-0 drop-drag-area  p-5 text-center cursor "
-                            htmlFor="image"
-                            onDrop={(e) => {
-                              e.preventDefault();
-                              const files = e?.dataTransfer?.files;
-                              if (files && files.length > 0) {
-                                handleMultiMediaValidation(
-                                  files?.[0],
-                                  "image",
-                                  e?.target?.id
-                                );
-                              }
-
-                              e.target.classList.remove("highlight");
-                            }}
-                            onDragOver={(e) => {
-                              e.target.classList.add("highlight");
-
-                              e.preventDefault();
-                            }}
-                            onDragLeave={(e) => {
-                              e.preventDefault();
-                              e.target.classList.remove("highlight");
-                            }}
-                            onChange={(e) => {
-                              const files = e.target.files;
-
-                              if (files && files?.length > 0) {
-                                handleMultiMediaValidation(
-                                  files?.[0],
-                                  "image",
-                                  e?.target?.id
-                                );
-                              }
-                            }}
-                          >
-                            Drag and drop files here or click to select files
-                            <input
-                              type="file"
-                              id="image"
-                              className="d-none"
-                              multiple
-                            />
-                          </label>
-                          <small className="form-text small-note">
-                            Only png, jpeg, and jpg are allowed. A maximum of 3
-                            pictures is permitted.
-                          </small>
-
-                          <small className="text-danger">
-                            {errorMsg?.image}
-                          </small>
-                          {selectedDocs.map(
-                            (item, index) =>
-                              // <div className="col-12">
-                              item.keyWord === "image" && (
-                                <div
-                                  key={index}
-                                  className="col-12 img-uploaded"
-                                >
-                                  <div className="d-flex justify-content-between align-items-center  img-cont-file">
-                                    <div className="d-flex justify-content-start align-items-center ">
-                                      <img
-                                        src={item.imageReaderURL}
-                                        className="image-upload-file me-3"
-                                      />
-                                    </div>
-
-                                    <div className="w-100">
-                                      <div className="d-flex justify-content-between align-items-center">
-                                        <div>
-                                          <p className="img-name text-tarute">
-                                            {item?.pdfFile?.name}
-                                          </p>
-                                          <p className="img-name">
-                                            {(
-                                              item?.pdfFile?.size / 1024
-                                            )?.toFixed(2)}
-                                            KB
-                                          </p>
-                                          {/* {imgloadin} */}
-                                        </div>
-
-                                        <div
-                                          onClick={() =>
-                                            removeSelectedDoc(
-                                              item?.pdfFile?.name,
-                                              "image",
-                                              index
-                                            )
-                                          }
-                                          className="cursor"
-                                        >
-                                          <i className="fa-solid fa-trash-can"></i>
-                                        </div>
-                                      </div>
-
-                                      <div className="d-flex  align-items-center">
-                                        <progress
-                                          className="w-100"
-                                          id="progressBar"
-                                          max="100"
-                                          value={item?.onprogress || 0}
-                                          // value="30"
-                                          imgloadin
-                                        ></progress>
-                                        {item?.onprogress}%
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              )
-                            // </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
+                  <UploadDocument
+                  selectedDocs={selectedDocs}
+                  errorMsg={errorMsg}
+                  setSelectedDocs={setSelectedDocs}
+                  MediaName="image"
+                  mediaMaxLen="1"
+                  meidaAcceptedExtensions={[ "png", "jpeg", "jpg"]}
+                  setErrorMsg={setErrorMsg}
+                  // title="Upload Documents"
+                />
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
                       <Button
