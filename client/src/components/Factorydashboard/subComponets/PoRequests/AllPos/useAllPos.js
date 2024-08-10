@@ -53,10 +53,7 @@ const useAllPos = (isLogin, filter) => {
   useEffect(() => {
     fetchReqData();
 
-    // pagination?.currentPage,
-    // pagination?.totalPage,
-    // dataFilterFromChild,
-    // isLogin,
+    
   }, [pagination.currentPage, pagination?.totalPage, filter, isLogin]);
 
   return { reqData, pagination, apiLoadingData, errorsMsg, setPagination };

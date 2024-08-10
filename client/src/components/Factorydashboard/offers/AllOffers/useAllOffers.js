@@ -49,7 +49,6 @@ const useAllOffers = ( filter) => {
     const params = `size=${pagination.displayProductSize}&page=${pagination.currentPage}&formsFilter=${filter?.formsFilter}&sort=${filter?.sort}`;
     const result = await getOffers(params, { authorization: isLogin });
     if (result?.success) {
-      setReqData(result?.data?.offers);
       setTimeout(() => {
         setReqData(result?.data?.offers);
       }, 50);
@@ -71,10 +70,7 @@ const useAllOffers = ( filter) => {
   useEffect(() => {
     fetchReqData();
 
-    // pagination?.currentPage,
-    // pagination?.totalPage,
-    // dataFilterFromChild,
-    // isLogin,
+    
   }, [pagination.currentPage, pagination?.totalPage, filter, isLogin]);
 
   const deleteData = async (itemId) => {

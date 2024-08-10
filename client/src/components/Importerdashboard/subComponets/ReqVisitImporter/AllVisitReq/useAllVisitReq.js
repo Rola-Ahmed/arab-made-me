@@ -56,10 +56,7 @@ const useAllVisitReq = (isLogin, filter) => {
   useEffect(() => {
     fetchReqData();
 
-    // pagination?.currentPage,
-    // pagination?.totalPage,
-    // dataFilterFromChild,
-    // isLogin,
+    
   }, [pagination.currentPage, pagination?.totalPage, filter, isLogin]);
 
   const deleteData = async (itemId) => {

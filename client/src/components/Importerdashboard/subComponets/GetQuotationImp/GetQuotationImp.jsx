@@ -1,31 +1,20 @@
-import { useEffect, useState, useContext } from "react";
-import axios from "axios";
-import { baseUrl, baseUrl_IMG } from "config.js";
-import { handleImageError } from "utils/ImgNotFound";
+import {  useState } from "react";
+import {  baseUrl_IMG } from "config.js";
 
 import StarRating from "components/Shared/stars";
-import { UserToken } from "Context/userToken";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 import { getMonthName as getDate } from "utils/getMonthName";
 import PaginationDash from "components/Shared/Dashboards/PaginationDash";
+import SearchFilterByOrderPrice from "components/Shared/Dashboards/SearchFilterByOrderPrice";
+import ProfileCell from "components/Shared/Dashboards/ProfileCell";
+import StatusMessage from "components/Shared/Dashboards/StatusMessage";
+import useAllQuotes from "./useAllQuotes";
 
 export default function GetQuotationImp() {
-  let { isLogin } = useContext(UserToken);
   let navigate = useNavigate();
+  let getMonthName = getDate;
 
-  const [allAnsRfqData, setAllAnsRfqData] = useState([]);
-  const [apiLoadingData, setapiLoadingData] = useState(true);
-  const [errorsMsg, setErrorsMsg] = useState();
-  const [pagination, setPagination] = useState(() => ({
-    // i want to display 3 pdoructs in the 1st page
-    displayProductSize: 8,
-    currentPage: 1,
-    // will be called by api
-    totalPage: 1,
-  }));
 
   const [filter, setFilter] = useState({
     formsFilter: "",
@@ -41,157 +30,18 @@ export default function GetQuotationImp() {
     }));
   }
 
-  async function fetchImportersData() {
-    setapiLoadingData(true);
-
-    try {
-      let config = {
-        method: "get",
-        url: `${baseUrl}/importers/importer/quotations?size=${pagination?.displayProductSize}&page=${pagination?.currentPage}&formsFilter=${filter?.formsFilter}&sort=${filter?.sort}&include=factory`,
-        headers: {
-          authorization: isLogin,
-        },
-      };
-
-      const response = await axios.request(config);
-
-      if (response?.data?.message == "done") {
-        setAllAnsRfqData(response.data.quotations);
-      } else {
-        setErrorsMsg(response?.data?.message);
-      }
-      setapiLoadingData(false);
-    } catch (error) {
-      setapiLoadingData(false);
-      if (error.response) {
-        const statusCode = error.response.status;
-        switch (statusCode) {
-          case 400:
-            setErrorsMsg(error?.data?.errorMessage);
-            break;
-          case 401:
-            setErrorsMsg(error?.response?.data?.message);
-            break;
-          case 403:
-            setErrorsMsg(
-              // error?.data?.message,
-              error?.response?.data?.message
-            );
-            break;
-          case 404:
-            setErrorsMsg(
-              "Not Found (404). The requested resource was not found."
-            );
-            break;
-
-          case 500:
-            setErrorsMsg(error?.response?.data?.errorMessage);
-            break;
-
-          //  429 Too Many Requests
-          // The user has sent too many requests in a given amount of time ("rate limiting").
-          case 429:
-            setErrorsMsg(" Too Many Requests , Please try again later.");
-            break;
-          case 402:
-            // 402
-            setErrorsMsg(error?.response?.data?.message);
-            break;
-          default:
-            // case message== error
-            setErrorsMsg(error?.response?.data?.errorMessage);
-            break;
-        }
-      }
-    }
-  }
-
-  useEffect(() => {
-    fetchImportersData();
-  }, [pagination?.currentPage, filter]);
-
-  // utils function
-  let getMonthName = getDate;
-
-
-
+  
+let {
+  reqData,
+  pagination,
+  apiLoadingData,
+  setPagination,
+  
+}=useAllQuotes()
  
-
-  useEffect(() => {
-    const fetchDataLenght = async () => {
-      try {
-        const response1 = await axios.get(
-          `${baseUrl}/importers/importer/quotations?formsFilter=${filter?.formsFilter}&sort=${filter?.sort}`,
-          {
-            headers: {
-              authorization: isLogin,
-            },
-          }
-        );
-
-        if (response1?.data?.message === "done") {
-          setPagination((prevValue) => ({
-            ...prevValue,
-            totalPage: Math.ceil(
-              (response1.data?.quotations?.length || 0) /
-                prevValue.displayProductSize
-            ),
-          }));
-        }
-      } catch (error) {}
-    };
-
-    fetchDataLenght();
-  }, [filter]);
-
-  const handlePageClick = (currentPage) => {
-    // why plus 1 bec react pagination library reads the 1st page with index 0 but in api  is read with index 1
-    setPagination((prevValue) => ({
-      ...prevValue,
-      currentPage: currentPage.selected + 1,
-    }));
-  };
-
-  const deleteData = async (itemId) => {
-    try {
-      let config = {
-        method: "delete",
-        url: `${baseUrl}/importers/importer/quotations/${itemId}`,
-        headers: {
-          authorization: isLogin,
-        },
-      };
-
-      const response = await axios.request(config);
-
-      toast("Data Deleted Successfully", {
-        position: "top-center",
-        autoClose: 5000,
-        closeOnClick: true,
-        draggable: true,
-        theme: "colored",
-        type: "success",
-      });
-
-      setAllAnsRfqData((prevValue) =>
-        prevValue.filter((item) => item.id !== itemId)
-      );
-    } catch (error) {
-      toast("Something went wrong, please try again later", {
-        position: "top-center",
-        autoClose: 5000,
-        closeOnClick: true,
-        draggable: true,
-        theme: "colored",
-        type: "error",
-      });
-    }
-    // }
-  };
 
   return (
     <div className="m-4 order-section ">
-      <ToastContainer />
 
       {/* section 1 */}
       <div className="header w-100">
@@ -215,103 +65,11 @@ export default function GetQuotationImp() {
         </div>
 
         {/* search filter section */}
-        <div className=" search-container d-flex justify-content-between align-items-center p-3">
-          <div className="input-group width-size">
-            <div
-              className="input-group-prepend cursor "
-              onClick={(e) => {
-                let value = document.getElementById("formsFilter").value;
-                filtterData(value, "formsFilter");
-              }}
-            >
-              <span
-                className="input-group-text bg-white icon-search-container pe-0"
-                id="inputGroup-sizing-default"
-              >
-                <i className="fa-solid fa-magnifying-glass icon-search"></i>
-              </span>
-            </div>
-            <input
-              type="text"
-              className="form-control input-search "
-              placeholder="Search by product name"
-              id="formsFilter"
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  filtterData(e.target.value, "formsFilter");
-                }
-              }}
-            />
-          </div>
-
-          <div className=" btn-container d-flex justify-content-between align-items-center">
-            <div class="dropdown">
-              <button
-                className=" dropdown-toggle order-toggle d-flex justify-content-center align-items-center"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                <i className="fa-solid fa-filter"></i>
-                <p>
-                  {filter?.sort_name !== "" ? filter?.sort_name : "Sort By"}
-                </p>
-              </button>
-
-              <ul class="dropdown-menu">
-                <li
-                  onClick={(e) => {
-                    filtterData("date-DESC", "sort", "Sort By");
-                  }}
-                  className=" cursor text-start"
-                >
-                  <p className="dropdown-item">Sort By</p>
-                </li>
-
-                <li
-                  onClick={(e) => {
-                    filtterData("date-ASC", "sort", "Oldest");
-                  }}
-                  className=" cursor  text-start"
-                >
-                  <p className="dropdown-item">Oldest</p>
-                </li>
-                <li
-                  onClick={(e) => {
-                    filtterData("date-DESC", "sort", "Newest");
-                  }}
-                  className=" cursor  text-start"
-                >
-                  <p className="dropdown-item">Newest</p>
-                </li>
-
-                <li
-                  onClick={(e) => {
-                    filtterData("price-ASC", "sort", "Price :Low to High");
-                  }}
-                  className=" cursor  text-start"
-                >
-                  <a class="dropdown-item">Price :Low to High</a>
-                </li>
-
-                <li
-                  onClick={(e) => {
-                    filtterData("date-DESC", "sort", "Price :High to Low");
-                  }}
-                  className=" cursor  text-start"
-                >
-                  <a class="dropdown-item">Price :High to Low</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        {/* data section */}
+                {/* search filter section */}
+                <SearchFilterByOrderPrice filtterData={filtterData} filter={filter} />
 
         <div className=" data-container w-100 p-3">
           <table className="table mb-0">
-            {/* headers */}
-
             <thead>
               <tr className="row">
                 <th className=" col-2">
@@ -350,7 +108,7 @@ export default function GetQuotationImp() {
 
             <tbody>
               {/* row1 */}
-              {allAnsRfqData?.map((poItem) => (
+              {reqData?.map((poItem) => (
                 <tr className="row">
                   <th className=" col-2">
                     <div className=" th-1st-title-gap d-flex justify-content-start align-items-center">
@@ -438,22 +196,12 @@ export default function GetQuotationImp() {
                   </th>
 
                   <th className=" col-4  d-flex align-items-center  justify-content-center ">
-                    <div className="profile-container justify-content-start align-items-center d-flex ">
-                      <div className="profile-img">
-                        <img
-                          className="w-100 h-100"
-                          src={`${baseUrl_IMG}/${poItem?.importer?.image}`}
-                          onError={handleImageError}
-                          alt="factoryh "
-                        />
-                      </div>
-                      <div>
-                        <p className=" name-text">{poItem?.factory?.name}</p>
-                        <p className=" email-text">
-                          {poItem?.factory?.repEmail}
-                        </p>
-                      </div>
-                    </div>
+                  <ProfileCell
+                        profile={poItem?.factory?.coverImage}
+                        repEmail={poItem?.factory?.repEmail}
+                        name={poItem?.factory?.name}
+                      />
+                  
                   </th>
 
                   <th
@@ -472,42 +220,16 @@ export default function GetQuotationImp() {
                       {/* view */}
                       <i class="fa-solid fa-up-right-from-square"></i>
                     </p>
-                    <p
-                      className="trate-sub-title view-more-details cursor"
-                      title="delete the form"
-                      onClick={() => {
-                        deleteData(poItem?.id);
-                      }}
-                    >
-                      {/* view */}
-                      <i class="fa-regular fa-trash-can"></i>
-                    </p>
+                  
                   </th>
                 </tr>
               ))}
 
-              {allAnsRfqData?.length == 0 ? (
-                <tr className="row">
-                  <div className="col-12  w-100 h-100 my-5 py-5">
-                    <div className="text-center">
-                      <p className="trate-sub-title ">
-                        {apiLoadingData ? (
-                          <div
-                            class="spinner-border spinner-border-sm"
-                            role="status"
-                          >
-                            <span class="sr-only">Loading...</span>
-                          </div>
-                        ) : (
-                          errorsMsg ?? "No Records"
-                        )}
-                      </p>
-                    </div>
-                  </div>
-                </tr>
-              ) : (
-                " "
-              )}
+<StatusMessage
+                reqDataLength={reqData?.length}
+                apiLoadingData={apiLoadingData?.reqData}
+                errorsMsg={apiLoadingData?.errorWhileLoading}
+              />
 
               <tr className="row">
                 <div className="col-12  ReactPaginate">

@@ -1,14 +1,7 @@
-import ErrorToast from "components/ErrorToast";
-import SuccessToast from "components/SuccessToast";
-import { useEffect, useState ,useContext} from "react";
+import { useEffect, useState, useContext } from "react";
+import { getQuotes } from "Services/ImporterRequests/quotations";
 import { UserToken } from "Context/userToken";
-
-import {
-  getSourceRequest,
-} from "Services/ImporterRequests/sourcingRequest";
-import {deleteSourceRequestUser} from 'Services/sourcingReuqest'
-
-const useAllSourcingReq = ( filter) => {
+const useAllQuotes = (filter) => {
   let { isLogin } = useContext(UserToken);
 
   const [pagination, setPagination] = useState({
@@ -16,19 +9,18 @@ const useAllSourcingReq = ( filter) => {
     displayProductSize: 8,
     totalPage: 1,
   });
-
+  const [reqData, setReqData] = useState([])
 
   const [apiLoadingData, setApiLoadingData] = useState({
     reqData: true,
     errorWhileLoading: null,
   });
-  const [reqData, setReqData] = useState([]);
 
   const fetchReqLeng = async () => {
     const params = `formsFilter=${filter?.formsFilter}&sort=${filter?.sort}`;
-    const result = await getSourceRequest(params, { authorization: isLogin });
+    const result = await getQuotes(params, { authorization: isLogin });
     if (result?.success) {
-      const totalReq = result.data?.sourcingRequests?.length || 1;
+      const totalReq = result.data?.quotations?.length || 1;
       setPagination((prevValue) => ({
         ...prevValue,
         totalPage: Math.ceil(totalReq / prevValue.displayProductSize),
@@ -39,19 +31,16 @@ const useAllSourcingReq = ( filter) => {
   const fetchReqData = async () => {
     // why added SetTimeOut? inorder for the user to see that the data has changes when using filtter or seach
     // bec sometime it returns the same data
-    setApiLoadingData((prevVal) => ({
-      ...prevVal,
+    setApiLoadingData((prevValue) => ({
       reqData: true,
-      errorWhileLoading: null,
+    errorWhileLoading: null,
     }));
-
     setReqData([]);
-    const params = `size=${pagination.displayProductSize}&page=${pagination.currentPage}&formsFilter=${filter?.formsFilter}&sort=${filter?.sort}`;
-    const result = await getSourceRequest(params, { authorization: isLogin });
+    const params = `size=${pagination.displayProductSize}&page=${pagination.currentPage}&formsFilter=${filter?.formsFilter}&sort=${filter?.sort}&include=factory`;
+    const result = await getQuotes(params, { authorization: isLogin });
     if (result?.success) {
-      setReqData(result?.data?.sourcingRequests);
       setTimeout(() => {
-        setReqData(result?.data?.sourcingRequests);
+        setReqData(result?.data?.quotations);
       }, 50);
     } 
 
@@ -74,26 +63,13 @@ const useAllSourcingReq = ( filter) => {
     
   }, [pagination.currentPage, pagination?.totalPage, filter, isLogin]);
 
-  const deleteData = async (itemId) => {
-    let result = await deleteSourceRequestUser(itemId, {
-      authorization: isLogin,
-    });
-
-    if (result?.success) {
-      SuccessToast("Data Deleted Successfully");
-      setReqData((prevValue) => prevValue.filter((item) => item.id !== itemId));
-    } else {
-      ErrorToast("Something went wrong");
-    }
-  };
 
   return {
     reqData,
     pagination,
     apiLoadingData,
     setPagination,
-    deleteData,
   };
 };
 
-export default useAllSourcingReq;
+export default useAllQuotes;

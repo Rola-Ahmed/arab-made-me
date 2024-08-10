@@ -111,17 +111,12 @@ export default function AllQuotes() {
                           id="flexCheckDefault"
                         />
                       </div>
-                      {/* <td className="">
-                        <div className="title-text-handler">
-                          <p className="trate-title">{poItem?.productName}</p>
-                        </div>
-                      </td> */}
+                     
 
                       <td className="text-truncate">
                         <div className="">
                           <p className="trate-title text-truncate">
                             {poItem?.productName}
-                            {/* {poItem?.id} */}
                           </p>
                           <p className="trate-sub-title d-flex">
                             {poItem?.productAverageRate ? (
