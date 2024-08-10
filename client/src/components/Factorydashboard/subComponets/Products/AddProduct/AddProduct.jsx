@@ -289,7 +289,7 @@ export default function AddProduct() {
                 mediaMaxLen="3"
                 meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
                 setErrorMsg={setErrorMsg}
-                title="Upload Images "
+                title="Upload Images"
               />
 
               <UploadDocument
