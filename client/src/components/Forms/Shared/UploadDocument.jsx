@@ -124,21 +124,23 @@ export default function UploadDocument(props) {
     <div className="col-12">
       <div className="form-group gap">
         <label className="form-title">{title}</label>
-        <label
-          className="mb-0 drop-drag-area p-5 text-center cursor w-100"
-          htmlFor={MediaName}
+        <button
+        type='button'
+          className="mb-0 drop-drag-area p-5 text-center cursor w-100 bg-white"
+          // htmlFor={MediaName}
           onDrop={e => handleDrop(e, selectedDocs, setSelectedDocs, MediaName, mediaMaxLen, meidaAcceptedExtensions, setErrorMsg)}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
         >
           Drag and drop files here or click to select files
           <input
+          class='border-none'
             type="file"
             id={MediaName}
-            hidden
+            // hidden
             onChange={e => handleFileChange(e, selectedDocs, setSelectedDocs, MediaName, mediaMaxLen, meidaAcceptedExtensions, setErrorMsg)}
           />
-        </label>
+        </button>
         <small className="form-text small-note d-block">
           Only {meidaAcceptedExtensions.join(" ")} are allowed. A maximum of {mediaMaxLen} pictures is permitted.
         </small>

@@ -20,7 +20,7 @@ import {  toast } from "react-toastify";
 import { useOutletContext } from "react-router-dom";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 import UploadDocument from "components/Forms/Shared/UploadDocument";
-
+import {useFetchSectors} from 'hooks/useFetchSectors'
 
 export default function ImporterProfile() {
   document.title = "Importer Profile";
@@ -32,8 +32,8 @@ export default function ImporterProfile() {
   const [ImporterProfile, setImporterProfile] = useState([]);
   const [renderDataUpdate, setRenderDataUpdate] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [allSectors, setAllSectors] = useState([]);
   const [errorMsg, setErrorMsg] = useState();
+  let {allSectors}=useFetchSectors()
 
   // slider setting
   const [allowEmailNotification, setAllowEmailNotification] = useState();
@@ -875,144 +875,7 @@ export default function ImporterProfile() {
     }
   };
 
-  function handleMultiMediaValidation(e, keyWordDoc, inputValue) {
-    const count = selectedDocs?.filter(
-      (item) => item?.keyWord === keyWordDoc
-    )?.length;
 
-    if (count == 1 && keyWordDoc == "coverImage") {
-      setErrorMsg((prevErrors) => ({
-        ...prevErrors,
-        [keyWordDoc]: `Max length is 1`,
-      }));
-      return;
-    }
-
-    if (count >= 3) {
-      setErrorMsg((prevErrors) => ({
-        ...prevErrors,
-        [keyWordDoc]: `Max length is 3`,
-      }));
-      return;
-    }
-    // clear error message
-    setErrorMsg((prevErrors) => {
-      const newErrors = { ...prevErrors };
-      delete newErrors[keyWordDoc];
-      return newErrors;
-    });
-    let acceptedExtensions = [];
-
-    if (keyWordDoc == "legalDocs") {
-      acceptedExtensions = ["pdf", "png", "jpeg", "jpg"];
-    } else if (keyWordDoc == "image") {
-      acceptedExtensions = ["png", "jpeg", "jpg"];
-    }
-    const fileType = e.type;
-
-    const isAcceptedType = acceptedExtensions?.some((extension) =>
-      fileType?.toLowerCase()?.includes(extension?.toLowerCase())
-    );
-
-    if (!isAcceptedType) {
-      setErrorMsg((prevErrors) => ({
-        ...prevErrors,
-        [keyWordDoc]:
-          // "Invalid file format. Only pdf, png, jpeg, jpg, mp4 allowed"
-          `Invalid file format. Only ${acceptedExtensions.join(
-            ", "
-          )} are allowed`,
-      }));
-      return;
-    }
-
-    const mediaNameExists = selectedDocs?.some(
-      (item) => item?.pdfFile?.name === e?.name && item?.keyWord === keyWordDoc
-    );
-
-    // if image aleady exisit
-    if (mediaNameExists) {
-      setErrorMsg((prevErrors) => ({
-        ...prevErrors,
-        [keyWordDoc]: "Media already exists",
-      }));
-      return;
-    } else {
-    }
-
-    let updatedDocs = [...selectedDocs];
-
-    // Image loaded successfully
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      updatedDocs.push({
-        keyWord: keyWordDoc,
-        pdfFile: e,
-        imageReaderURL: reader.result,
-        onprogress: 100,
-      });
-
-      setSelectedDocs(updatedDocs);
-      const coverImgInput = document?.getElementById(inputValue);
-      if (coverImgInput) {
-        coverImgInput.value = "";
-      }
-    };
-
-    reader.onprogress = (event) => {
-      // Calculate and show the loading percentage
-      if (event.lengthComputable) {
-        const percentage = (event.loaded / event.total) * 100;
-
-        // if (updatedDocs.length > 0) {
-        //   // Adding a new attribute to the last object
-        //   // updatedDocs[updatedDocs.length - 1].onprogress = percentage?.toFixed(0);
-        //   // setSelectedDocs([...updatedDocs]);
-
-        //   // setSelectedDocs((prevDocs) => {
-        //   //   const updatedDocs = [...prevDocs];
-        //   //   if (updatedDocs.length > 0) {
-        //   //     updatedDocs[updatedDocs.length - 1].onprogress = percentage?.toFixed(0);
-        //   //   }
-        //   //   return updatedDocs;
-        //   // });
-        // }
-        // setimgloadin(percentage);
-      }
-    };
-
-    reader.onerror = () => {
-      setErrorMsg((prevErrors) => ({
-        ...prevErrors,
-        [keyWordDoc]: "Error loading image",
-      }));
-    };
-
-    reader.readAsDataURL(e);
-  }
-
-  function removeSelectedDoc(docId, keyWordDoc) {
-    // when removing
-    setSelectedDocs((prevValue) =>
-      prevValue.filter(
-        (doc) => !(doc.pdfFile?.name === docId && doc.keyWord === keyWordDoc)
-      )
-    );
-  }
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${baseUrl}/sectors?size=10`);
-
-        if (response.data.message === "done") {
-          setAllSectors(response.data.sectors);
-        }
-      } catch (error) {}
-    };
-
-    fetchData(); // Call the asynchronous function
-  }, []);
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -1422,11 +1285,11 @@ export default function ImporterProfile() {
                               <input
                                 className="form-control"
                                 value={
-                                  allSectors.some(
+                                  allSectors?.some(
                                     (item) =>
                                       item.id === ImporterProfile?.sectorId
                                   )
-                                    ? allSectors.find(
+                                    ? allSectors?.find(
                                         (item) =>
                                           item.id === ImporterProfile?.sectorId
                                       ).name
@@ -2367,166 +2230,6 @@ export default function ImporterProfile() {
                   // title="Upload Documents"
                 />
 
-
-                    <div className="col-12 d-none">
-                      <div className="grid-gap-col">
-                        <div className="form-group">
-                          {/*  */}
-
-                          {/*  */}
-
-                          <label
-                            className="mb-0 drop-drag-area  p-5 text-center cursor "
-                            htmlFor="legalDocsInput"
-                            onDrop={(e) => {
-                              e.preventDefault();
-                              const files = e?.dataTransfer?.files;
-                              if (files && files.length > 0) {
-                                handleMultiMediaValidation(
-                                  files?.[0],
-                                  "legalDocs"
-                                );
-                              }
-
-                              e.target.classList.remove("highlight");
-                            }}
-                            onDragOver={(e) => {
-                              e.target.classList.add("highlight");
-
-                              e.preventDefault();
-                            }}
-                            onDragLeave={(e) => {
-                              e.preventDefault();
-                              e.target.classList.remove("highlight");
-                            }}
-                            onChange={(e) => {
-                              const files = e.target.files;
-
-                              if (files && files?.length > 0) {
-                                handleMultiMediaValidation(
-                                  files?.[0],
-                                  "legalDocs",
-                                  e?.target?.id
-                                );
-                              }
-                            }}
-                          >
-                            Drag and drop files here or click to select files
-                            <input
-                              type="file"
-                              id="legalDocsInput"
-                              className="d-none"
-                              multiple
-                            />
-                          </label>
-                          <small className="form-text small-note">
-                            Only pdf, png, jpeg, and jpg are allowed. A maximum
-                            of 3 pictures is permitted.
-                          </small>
-
-                          <small className="text-danger">
-                            {errorMsg?.legalDocs}
-                          </small>
-
-                          {selectedDocs.map(
-                            (item, index) =>
-                              // <div className="col-12">
-                              item.keyWord === "legalDocs" && (
-                                <div
-                                  key={index}
-                                  className="col-12 img-uploaded"
-                                >
-                                  <div className="d-flex justify-content-between align-items-center  img-cont-file">
-                                    {/* <div> */}
-
-                                    <div className="d-flex justify-content-start align-items-center ">
-                                      <img
-                                        // src={item.imageReaderURL}
-                                        src={
-                                          item?.pdfFile?.name?.includes("pdf")
-                                            ? pdfIcon
-                                            : item.imageReaderURL
-                                        }
-                                        className="image-upload-file me-3"
-                                      />
-                                    </div>
-
-                                    <div className="w-100">
-                                      <div className="d-flex justify-content-between align-items-center">
-                                        <div>
-                                          <p className="img-name text-tarute">
-                                            {item?.pdfFile?.name}
-                                          </p>
-                                          <p className="img-name">
-                                            {(
-                                              item?.pdfFile?.size / 1024
-                                            )?.toFixed(2)}
-                                            KB
-                                          </p>
-                                          {/* {imgloadin} */}
-                                        </div>
-
-                                        <div
-                                          onClick={() =>
-                                            removeSelectedDoc(
-                                              item?.pdfFile?.name,
-                                              "legalDocs",
-                                              index
-                                            )
-                                          }
-                                          className="cursor"
-                                        >
-                                          <i className="fa-solid fa-trash-can"></i>
-                                        </div>
-                                      </div>
-
-                                      <div className="d-flex  align-items-center">
-                                        <progress
-                                          className="w-100"
-                                          id="progressBar"
-                                          max="100"
-                                          value={item?.onprogress || 0}
-                                          // value="30"
-                                          imgloadin
-                                        ></progress>
-                                        {item?.onprogress}%
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              )
-                            // </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="col-12">
-                      <div className="update-img-container row">
-                        {selectedDocs.map((item, index) => (
-                          <div className="col-12">
-                            <div className="d-flex justify-content-start align-items-start ">
-                              <img
-                                src={item.imageReaderURL}
-                                className="img-update"
-                                alt={` legal documents ${index}`}
-                              />
-                              <div
-                                onClick={() =>
-                                  removeSelectedDoc(
-                                    item?.pdfFile?.name,
-                                    "legalDocs"
-                                  )
-                                }
-                                className="cursor"
-                              >
-                                <i class="fa-solid fa-xmark"></i>
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
                       <Button
