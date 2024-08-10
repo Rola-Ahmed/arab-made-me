@@ -229,8 +229,8 @@ export default function ImporterProfile() {
       data = {
         repName: values.repFullName,
         repPhone: values.repPhone,
-        name = values.name
-      };
+        name : values.name,
+      }
       if (values.repEmail !== ImporterProfile.repEmail) {
         data.repEmail = values.repEmail;
       }
