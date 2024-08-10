@@ -13,12 +13,13 @@ import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
 
 import RFQinfo from "components/Shared/Dashboards/Forms/RFQinfo";
 import Quote from "components/Shared/Dashboards/Forms/Quote";
-import { useOneQuote } from "./useOneQuote";
+import { useOneQuote } from "hooks/useOneQuote";
 import CustomProductInfo from "components/Shared/Dashboards/Forms/CustomProductInfo";
 import PrivateLabelInfo from "components/Shared/Dashboards/Forms/PrivateLabelInfo";
 import WhiteLabelInfo from "components/Shared/Dashboards/Forms/WhiteLabelInfo";
 import SourcingRequestInfo from "components/Shared/Dashboards/Forms/SourcingRequestInfo";
-import Loading from "components/Loading/Loading";
+import ExtractPdf from "./ExtractPdf";
+import StatusMessagetwo from "components/Shared/Dashboards/StatusMessagetwo";
 
 export default function EtcQuote() {
   let navigate = useNavigate();
@@ -38,8 +39,17 @@ export default function EtcQuote() {
     });
   };
 
+
+ 
+  
+
+
+
   return (
     <>
+   
+   <ExtractPdf requestedData={requestedData} qouteOn={qouteOn}/>
+      
       <div id="view" className="m-4 order-section  ">
         <SubPageUtility currentPage="More Details" PrevPage="Quotations" />
 
@@ -52,6 +62,8 @@ export default function EtcQuote() {
           
 
             <div className="btn-container">
+              
+           
           <button className="fs-10 d-block cursor border-0 bg-main text-white" type="button" onClick={()=>{setDescription(true)}} > <p className="cursor">Quote brief</p></button>
 
               <button
@@ -71,17 +83,7 @@ export default function EtcQuote() {
 
       {/* error occured Or Loading data */}
       {apiLoadingData?.reqData ? (
-        <div className="d-flex justify-content-center w-100">
-          {apiLoadingData?.errorWhileLoading ? (
-            <div className="border-3 border-row py-5">
-              <p className="text-muted fw-semibold text-center my-5 py-5">
-                {apiLoadingData?.errorWhileLoading}
-              </p>
-            </div>
-          ) : (
-            <Loading />
-          )}
-        </div>
+      <StatusMessagetwo  errorMsg={apiLoadingData?.errorWhileLoading}/>
       ) : (
         <div className="section factory-profile m-5">
           <div className="container gap-container">
@@ -132,7 +134,7 @@ export default function EtcQuote() {
                     type="button"
                     onClick={() => {
                       navigate(
-                        `/factorydashboard/editQuote/${requestedData?.quoteId}?quoteId=${requestedData?.id}&productName=${requestedData?.productName}`
+                        `/factorydashboard/editQuote/${requestedData?.id}?quoteId=${requestedData?.id}&productName=${requestedData?.productName}`
                       );
                     }}
                   >
@@ -143,7 +145,6 @@ export default function EtcQuote() {
                     className="btn-edit border-btn bg-white d-none"
                     type="button"
                     onClick={() => {
-                      // UpdateData("accepted");
                       navigate(
                         `/contactsupplier?userId=${requestedData?.importer?.userId}&importerName=${requestedData?.importer?.name}`
                       );
