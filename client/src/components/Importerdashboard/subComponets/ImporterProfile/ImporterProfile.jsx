@@ -37,7 +37,6 @@ export default function ImporterProfile() {
   const [activeMenu] = useOutletContext();
 
   const [ImporterProfile, setImporterProfile] = useState([]);
-  const [renderDataUpdate, setRenderDataUpdate] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState();
   let {allSectors}=useFetchSectors()
@@ -92,8 +91,10 @@ export default function ImporterProfile() {
           ModalClose();
           successMsg()
 
-        
-          setRenderDataUpdate(!renderDataUpdate);
+          setImporterProfile((prevErrors) => ({
+            ...prevErrors,
+            ...result?.data?.importer
+          }))
           //
           setSelectedDocs([]);
         } else {
@@ -112,7 +113,7 @@ export default function ImporterProfile() {
     if (currentUserData && currentUserData?.importerId) {
       fetchFactoryPage();
     }
-  }, [currentUserData?.importerId, renderDataUpdate]);
+  }, [currentUserData?.importerId]);
 
 
 
@@ -187,26 +188,28 @@ let  data = {
       return restErrors;
     });
     
-    
-      let config = {
-        method: "put",
-        url: `${baseUrl}/importers/update/fromUser`,
-        headers: {
-          authorization: isLogin,
-        },
-        data: data,
-      };
 
-      const response = await axios.request(config);
-      if (response.data.message == "done") {
+
+    const result = await  updateImporterFromUser({
+      authorization: isLogin,
+    },data)
+    
+      if (result?.success) {
         ModalClose();
         successMsg()
-        setRenderDataUpdate(!renderDataUpdate);
+        setImporterProfile((prevErrors) => ({
+          ...prevErrors,
+          ...data
+        }))
       } else {
         setErrorMsg((prevErrors) => ({
           ...prevErrors,
-          response: response?.data?.message,
+          response: result?.error,
         }));
+
+        if(data.allowEmailNotification!==null){
+          ErrorToast(result?.error)
+        }
       }
     
     setIsLoading(false);
@@ -262,20 +265,7 @@ let  data = {
           allowEmailNotification: !allowEmailNotification,
         }
 
-      const response = await  updateImporterFromUser({
-        authorization: isLogin,
-      },data)
-
-      if (response?.success) {
-        successMsg()
-        setImporterProfile((prevErrors) => ({
-          ...prevErrors,
-          ...data
-        }))
-
-      } else {
-        ErrorToast(response?.error,)
-      }
+        submitForm(data) 
    
   };
 
