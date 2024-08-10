@@ -1,6 +1,4 @@
 import { useContext, useState, useEffect } from "react";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
 import {
@@ -62,22 +60,23 @@ function Importerdash() {
     return <Navigate to="/signIn" />;
     // };
   }
-  if (!currentUserData?.importerId) {
-    ErrorToast("You are not authorized to access");
+  if ( currentUserData && !currentUserData?.importerId) {
+   
     if (currentUserData?.factoryId) {
+      ErrorToast("You are not authorized to access");
       return <Navigate to="/factorydashboard/403?refresh" />;
     } else if (currentUserData?.userRole == "admin") {
+      ErrorToast("You are not authorized to access");
       return <Navigate to="/adminDashboard/403?refresh" />;
     } else if (currentUserData?.userRole == "user"){
+      ErrorToast("You are not authorized to access");
       return <Navigate to="/403" />;
     }
   }
 
   return (
     <section id="scrollTo" className="factory-dashboard vh-100 overflow-hidden">
-      {/* <ScrollToTop id="scrollTo" />; */}
 
-      <ToastContainer />
       <div className="row h-100 w-100 remove-x">
         <div className="col-2 left-nav-fac-dashboard h-100 d-grid">
           <div className="static-navbar">

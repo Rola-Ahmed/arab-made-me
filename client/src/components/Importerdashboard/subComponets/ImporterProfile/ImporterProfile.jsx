@@ -11,7 +11,6 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { pdfIcon } from "constants/Images";
 
 
 import { UserToken } from "Context/userToken";
@@ -292,7 +291,6 @@ export default function ImporterProfile() {
       };
 
       const response = await axios.request(config);
-      setIsLoading(false);
       if (response.data.message == "done") {
         ModalClose();
         successMsg()
