@@ -23,6 +23,7 @@ import UploadDocument from "components/Forms/Shared/UploadDocument";
 import {useFetchSectors} from 'hooks/useFetchSectors'
 import {addImporterMedia,updateImporterFromUser} from 'Services/importer';
 import ChangePassword from "components/Factorydashboard/subComponets/FactoryProfile/subComponents/ChangePassword/ChangePassword"
+import InputField from 'components/Forms/Shared/InputField'
 
 import useFormValidation from './hooks/useFormValidation'
 function successMsg(){
@@ -343,7 +344,7 @@ let  data = {
                       <div className="col-6">
                       <ReadOnly
                 title='Business Account'
-                value={ImporterProfile?.userEmail}
+                value={currentUserData?.userEmail}
                 />
                       
                       </div>
@@ -677,109 +678,52 @@ let  data = {
                 <div className="w-100 ">
                   <div className="row  row-gap">
                     <div className="col-6">
-                      <div className="grid-gap-col">
-                        <div className="form-group">
-                          <label>representive full Name</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="repFullName"
-                            name="repFullName"
-                            placeholder="Enter full Name"
-                            onChange={AccountInfoValidation.handleChange}
-                            onBlur={AccountInfoValidation.handleBlur}
-                            value={AccountInfoValidation.values.repFullName}
-                          />
-                          {AccountInfoValidation.errors.repFullName &&
-                          AccountInfoValidation.touched.repFullName ? (
-                            <small className="text-danger">
-                              {AccountInfoValidation.errors.repFullName}
-                            </small>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                      </div>
+                    <InputField
+                       formValidation={AccountInfoValidation}
+                       vlaidationName='repFullName'
+                       isRequired={true}
+                       title="representive full Name"
+                       />
+
+                 
                     </div>
 
                     <div className="col-6">
-                      <div className="grid-gap-col">
-                        <div className="form-group">
-                          <label>Importer Name</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="name"
-                            name="name"
-                            placeholder="Enter full Name"
-                            onChange={AccountInfoValidation.handleChange}
-                            onBlur={AccountInfoValidation.handleBlur}
-                            value={AccountInfoValidation.values.name}
-                          />
-                          {AccountInfoValidation.errors.name &&
-                          AccountInfoValidation.touched.name ? (
-                            <small className="text-danger">
-                              {AccountInfoValidation.errors.name}
-                            </small>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                      </div>
+
+
+                    <InputField
+                       formValidation={AccountInfoValidation}
+                       vlaidationName='name'
+                       isRequired={true}
+                       title="Importer Name"
+                       />
+
+                   
                     </div>
 
                     <div className="col-6">
-                      <div className="grid-gap-col">
-                        <div className="form-group">
-                          <label> Representive Email</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="repEmail"
-                            name="repEmail"
-                            placeholder="enter Representive Email"
-                            onChange={AccountInfoValidation.handleChange}
-                            onBlur={AccountInfoValidation.handleBlur}
-                            value={AccountInfoValidation.values.repEmail}
-                          />
 
-                          {AccountInfoValidation.errors.repEmail &&
-                          AccountInfoValidation.touched.repEmail ? (
-                            <small className="text-danger">
-                              {AccountInfoValidation.errors.repEmail}
-                            </small>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                      </div>
+
+                    <InputField
+                       formValidation={AccountInfoValidation}
+                       vlaidationName='repEmail'
+                       isRequired={true}
+                       title=" Representive Email"
+                       />
+                    
                     </div>
 
                     <div className="col-6">
-                      <div className="grid-gap-col">
-                        <div className="form-group">
-                          <label>Representive Phone Number</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="repPhone"
-                            name="repPhone"
-                            placeholder="01113622484"
-                            onChange={AccountInfoValidation.handleChange}
-                            onBlur={AccountInfoValidation.handleBlur}
-                            value={AccountInfoValidation.values.repPhone}
-                          />
 
-                          {AccountInfoValidation.errors.repPhone &&
-                          AccountInfoValidation.touched.repPhone ? (
-                            <small className="text-danger">
-                              {AccountInfoValidation.errors.repPhone}
-                            </small>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                      </div>
+
+                    <InputField
+                       formValidation={AccountInfoValidation}
+                       vlaidationName='repPhone'
+                       isRequired={true}
+                       title="Representive Phone Number"
+                       />
+               
+
                     </div>
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
@@ -884,82 +828,46 @@ let  data = {
                     </div>
 
                     <div className="col-6">
-                      <div className="form-group">
-                        <label>City</label>
-                        <input
-                          // type="text"
-                          placeholder="Enter City"
-                          className="form-control"
-                          id="city"
-                          onChange={ImporterInfoValidation.handleChange}
-                          onBlur={ImporterInfoValidation.handleBlur}
-                          value={ImporterInfoValidation.values.city}
-                        />
-                        {ImporterInfoValidation.errors.city &&
-                        ImporterInfoValidation.touched.city ? (
-                          <small className="text-danger">
-                            {ImporterInfoValidation.errors.city}
-                          </small>
-                        ) : (
-                          ""
-                        )}
-                      </div>
+
+                    <InputField
+                       formValidation={ImporterInfoValidation}
+                       vlaidationName='city'
+                       isRequired={true}
+                       title="city"
+                       />
+                      
+                    </div>
+
+                    <div className="col-6">
+
+                    <InputField
+                       formValidation={ImporterInfoValidation}
+                       vlaidationName='commercialRegisterationNumber'
+                       isRequired={true}
+                       title="commercial Registeration Number"
+                       />
+
+                    
+                    </div>
+
+                    <div className="col-6">
+
+
+
+                      
+                    <InputField
+                       formValidation={ImporterInfoValidation}
+                       vlaidationName='address'
+                       isRequired={true}
+                       title="Location"
+                       />
+
+                      
                     </div>
 
                     <div className="col-6">
                       <div className="form-group">
-                        <label>commercial Registeration Number</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="commercialRegisterationNumber"
-                          onChange={ImporterInfoValidation.handleChange}
-                          onBlur={ImporterInfoValidation.handleBlur}
-                          value={
-                            ImporterInfoValidation.values
-                              .commercialRegisterationNumber
-                          }
-                        />
-                        {ImporterInfoValidation.errors
-                          .commercialRegisterationNumber &&
-                        ImporterInfoValidation.touched
-                          .commercialRegisterationNumber ? (
-                          <small className="text-danger">
-                            {
-                              ImporterInfoValidation.errors
-                                .commercialRegisterationNumber
-                            }
-                          </small>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="col-6">
-                      <div className="form-group">
-                        <label> Location</label>
-                        <input
-                          className="form-control"
-                          id="address"
-                          onChange={ImporterInfoValidation.handleChange}
-                          onBlur={ImporterInfoValidation.handleBlur}
-                          value={ImporterInfoValidation.values.address}
-                        />
-                        {ImporterInfoValidation.errors.address &&
-                        ImporterInfoValidation.touched.address ? (
-                          <small className="text-danger">
-                            {ImporterInfoValidation.errors.address}
-                          </small>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="col-6">
-                      <div className="form-group">
-                        <label forhtml="exportingCountries">
+                        <label >
                           exporting Countries
                         </label>
 
@@ -1007,6 +915,7 @@ let  data = {
                     </div>
 
                     <div className="col-12">
+                      
                       <div className="form-group">
                         <label> description</label>
                         <textarea
@@ -1030,7 +939,7 @@ let  data = {
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
                       <button
-                        variant="secondary"
+                        variant="btn- btn-secondary"
                         type="button"
                         onClick={() => handleClose("factoryInfoChangeReadOnly")}
                       >
@@ -1180,7 +1089,7 @@ let  data = {
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
                       <button
-                        variant="secondary"
+                        variant="btn btn-secondary "
                         type="button"
                         onClick={() => handleClose("socialAccountsReadOnly")}
                       >
