@@ -7,8 +7,6 @@ import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
 
 
 import DisplayMultiImages from "components/Shared/Dashboards/DisplayMultiImages";
-import { useFormik } from "formik";
-import * as Yup from "yup";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
@@ -26,6 +24,7 @@ import {useFetchSectors} from 'hooks/useFetchSectors'
 import {addImporterMedia,updateImporterFromUser} from 'Services/importer';
 import ChangePassword from "components/Factorydashboard/subComponets/FactoryProfile/subComponents/ChangePassword/ChangePassword"
 
+import useFormValidation from './hooks/useFormValidation'
 function successMsg(){
   SuccessToast("Changes updated successfully");
 }
@@ -46,7 +45,7 @@ export default function ImporterProfile() {
   // slider setting
   const [allowEmailNotification, setAllowEmailNotification] = useState();
   const [selectedDocs, setSelectedDocs] = useState([]);
-  // api
+  let {initalAccInfo,AccountInfoValidation,initalSocialAcc,SocialAccountValidation,ImporterInfoValidation,initalImporterInfo}=useFormValidation(submitForm,ImporterProfile)
 
   const [showImagePop, setShowImagePop] = useState({
     display: false,
@@ -115,21 +114,7 @@ export default function ImporterProfile() {
     }
   }, [currentUserData?.importerId, renderDataUpdate]);
 
-  // update data
-  let emailValidation = Yup.string()
-    .email("Invalid email")
-    .required("Input Field is Required")
-    .min(5, "min length is 5")
-    .max(255, "max length is 255");
 
-  let nameValidation = Yup.string()
-    .required("Input Field is Required")
-    .max(25, "max length is 25");
-  let phoneValidation = Yup.string()
-    .required("Input Field is Required")
-    // .matches(/^[0-9]+$/, "Input Field should contain numbers only")
-    .min(6, "min length is 6")
-    .max(15, "max length is 15");
 
   const [show, setShow] = useState({
     accountInfoReadOnly: false,
@@ -153,68 +138,9 @@ export default function ImporterProfile() {
   }
 
 
-  let AccountInfoValidation = useFormik({
-    initialValues: {
-      repFullName: ImporterProfile?.repName || "",
-      repEmail: ImporterProfile?.repEmail || "",
-      repPhone: ImporterProfile?.repPhone || "",
-      name: ImporterProfile?.name || "",
-    },
 
-    validationSchema: Yup.object().shape({
-      repFullName: nameValidation,
-      name: nameValidation,
-      repEmail: emailValidation,
-      repPhone: phoneValidation,
-    }),
-    onSubmit: submitForm,
-  });
 
-  // social links
-  let SocialAccountValidation = useFormik({
-    initialValues: {
-      instgramLink: "",
-      facebookLink: "",
-      website: "",
-    },
-    validationSchema: Yup.object().shape({
-      website: Yup.string().url("Invalid URL format"),
-      instgramLink: Yup.string().url("Invalid URL format"),
-      facebookLink: Yup.string().url("Invalid URL format"),
-    }),
-    onSubmit: submitForm,
-  });
 
-  // IMporterInfoValidation
-  let ImporterInfoValidation = useFormik({
-    initialValues: {
-      city: "",
-      country: "",
-      commercialRegisterationNumber: "",
-      sectorId: "",
-      address: "",
-      description: "",
-      exportingCountries: "",
-    },
-    validationSchema: Yup.object().shape({
-      city: Yup.string().max(60, "max length is 60"),
-
-      commercialRegisterationNumber: Yup.string()
-        .matches(/^[0-9]+$/, "Input Field should contain numbers only")
-        .min(8, "min length is 8")
-        .max(16, "max length is 16"),
-
-      address: Yup.string()
-        .required("Input Field is Required")
-        .max(255, "max length is 255"),
-
-      description: Yup.string()
-        .required("Input Field is Required")
-        .max(255, "max length is 255"),
-      exportingCountries: Yup.array().of(Yup.string()).nullable(),
-    }),
-    onSubmit: submitForm,
-  });
 
   async function submitForm(values) {
     //
@@ -311,100 +237,21 @@ export default function ImporterProfile() {
 
   useEffect(() => {
     if (ImporterProfile && ImporterProfile.length !== 0) {
-      AccountInfoValidation.setValues({
-        repFullName: ImporterProfile?.repName || "",
-        repEmail: ImporterProfile?.repEmail || "",
-        repPhone: ImporterProfile?.repPhone || "",
-        name: ImporterProfile?.name || "",
-      });
+      AccountInfoValidation.setValues(initalAccInfo);
 
-      SocialAccountValidation.setValues({
-        instgramLink: ImporterProfile?.socialLinks?.instgram || "",
-        facebookLink: ImporterProfile?.socialLinks?.facebook || "",
-        website: ImporterProfile?.website || "",
-      });
+      SocialAccountValidation.setValues(initalSocialAcc);
 
-      ImporterInfoValidation.setValues({
-        city: ImporterProfile?.city || "",
-        country: ImporterProfile?.country || "",
-
-        commercialRegisterationNumber:
-          ImporterProfile?.commercialRegisterationNumber || "",
-
-        address: ImporterProfile?.address?.[0] || "",
-
-        description: ImporterProfile?.description || "",
-        exportingCountries: ImporterProfile?.exportingCountries,
-        sectorId: ImporterProfile?.[0]?.id || "",
-      });
+      ImporterInfoValidation.setValues(initalImporterInfo);
     }
     setAllowEmailNotification(ImporterProfile?.allowEmailNotification);
   }, [ImporterProfile]);
 
-  function initializeFormValues() {
-    let accInfo = {
-      repFullName: ImporterProfile?.repName || "",
-      repEmail: ImporterProfile?.repEmail || "",
-      repPhone: ImporterProfile?.repPhone || "",
-      name: ImporterProfile?.name || "",
-    };
-
-    let socialAcc = {
-      instgramLink: ImporterProfile?.socialLinks?.instgram || "",
-      facebookLink: ImporterProfile?.socialLinks?.facebook || "",
-      website: ImporterProfile?.website || "",
-    };
-    let ImporterInfo = {
-      city: ImporterProfile?.city || "",
-      country: ImporterProfile?.country || "",
-
-      commercialRegisterationNumber:
-        ImporterProfile?.commercialRegisterationNumber || "",
-
-      address: ImporterProfile?.address?.[0] || "",
-
-      description: ImporterProfile?.description || "",
-      exportingCountries: ImporterProfile?.exportingCountries,
-      sectorId: ImporterProfile?.[0]?.id || "",
-    };
-
-    return ImporterInfo, socialAcc, accInfo;
-    // resetFormVal(ImporterInfo,socialAcc,accInfo)
-  }
-  function resetFormVal() {
-    const { ImporterInfo, socialAcc, accInfo } = initializeFormValues();
-
-    SocialAccountValidation.resetForm({
-      values: socialAcc, // Optional: Reset values to an empty object
-      errors: {}, // Optional: Reset errors to an empty object
-      touched: {}, // Optional: Reset touched to an empty object
-      status: undefined, // Optional: Reset status to undefined
-      isSubmitting: false, // Optional: Reset isSubmitting to false
-      isValidating: false, // Optional: Reset isValidating to false
-      submitCount: 0, // Optional: Reset submitCount to 0
-    });
-
-    AccountInfoValidation.resetForm({
-      values: accInfo,
-      errors: {},
-      touched: {},
-      status: undefined,
-      isSubmitting: false,
-      isValidating: false,
-      submitCount: 0,
-    });
-
-    ImporterInfoValidation.resetForm({
-      values: ImporterInfo,
-      errors: {},
-      touched: {},
-      status: undefined,
-      isSubmitting: false,
-      isValidating: false,
-      submitCount: 0,
-    });
-
  
+  function resetFormVal() {
+
+    SocialAccountValidation.resetForm({values: initalSocialAcc})
+    AccountInfoValidation.resetForm({values: initalAccInfo});
+    ImporterInfoValidation.resetForm({ values: initalImporterInfo});
     setSelectedDocs([]);
   }
   function handleClose(value) {
@@ -412,19 +259,13 @@ export default function ImporterProfile() {
       ...preValue,
       [value]: false,
     }));
-
     // reset message
     setErrorMsg((prevErrors) => {
       const { response, ...restErrors } = prevErrors || {};
       return restErrors;
     });
-
     // Reset the form and clear validation errors
-    //  SocialAccountValidation.resetForm();
-    //  OR
-
     resetFormVal();
-    // initializeFormValues()
   }
 
   function handleShow(value) {
