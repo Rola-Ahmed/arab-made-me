@@ -32,7 +32,6 @@ export default function AnswerQuotation() {
   //   formTitle:'',
   //   initalData:
   // });
-  console.log("formInfo",formInfo)
 
   function data(data) {
     switch (data) {

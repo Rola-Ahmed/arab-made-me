@@ -10,6 +10,14 @@ export default function Quote({requestedData}) {
         <p> Quotations Details</p>
         <div className="w-100 ">
           <div className="row  row-gap">
+
+          <div className="col-6">
+              <ReadOnly
+                title="Quotation Code"
+                value={requestedData?.formCode}
+              />
+            </div>
+
             <div className="col-6">
               <ReadOnly
                 title="Product Name"

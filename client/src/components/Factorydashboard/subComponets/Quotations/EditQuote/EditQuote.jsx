@@ -71,6 +71,7 @@ export default function EditQuote() {
   }
 
 
+
   useEffect(() => {
     if (quoteId !== undefined) {
       fetchRequestData();
@@ -98,9 +99,11 @@ export default function EditQuote() {
     qualityConditionsOther: otherTextAreaValidate("qualityConditions", "other"),
 
     ShippingTypeSize: requiredStringValidate,
-
-    ShippingTypeSizeOther: otherTextAreaValidate("ShippingTypeSize", "other"),
-    SupplyLocation: requiredStringValidate,
+   ShippingTypeSizeOther: otherTextAreaValidate("ShippingTypeSize", "other"),
+    
+   
+   
+   SupplyLocation: requiredStringValidate,
 
     shippingConditions: requiredStringValidate,
     shippingConditionsOther: otherTextAreaValidate(
@@ -126,8 +129,11 @@ export default function EditQuote() {
     price: apiDetails?.price || "",
     discounts: apiDetails?.discounts || 0,
     minQuantity: apiDetails?.minQuantity || "",
-    shippingConditions: apiDetails?.shippingConditions || "",
+  
     notes: apiDetails?.notes || "",
+    SupplyLocation:apiDetails?.supplyLocation,
+    deadline:apiDetails?.deadline?.split('.')?.[0]||"",
+    timeLine:apiDetails?.timeLine || [{date: "", quantity: ""}]
    
   };
 
@@ -158,7 +164,9 @@ export default function EditQuote() {
           ? textValue.qualityConditionsOther
           : textValue.qualityConditions,
 
-      shippingConditions: textValue.shippingConditions,
+
+
+      shippingConditions:textValue.packingConditions === "other"?textValue.shippingConditionsOther: textValue.shippingConditions,
 
       packingConditions:
         textValue.packingConditions === "other"
@@ -171,9 +179,11 @@ export default function EditQuote() {
           : textValue.paymentType,
 
       notes: textValue.notes,
-      // discounts : textValue.discounts,
      
       discounts: textValue.discounts,
+      timeLine:textValue.timeLine,
+      supplyLocation:textValue?.SupplyLocation,
+      deadline:textValue.deadline
     };
    
 
@@ -198,10 +208,11 @@ if (
             // return;
           }
           const targetElement = document.getElementById("view");
+          if(targetElement){
           targetElement.scrollIntoView({
             behavior: "smooth",
             block: "start",
-          });
+          });}
 
   }
 
@@ -212,12 +223,13 @@ if (
       const matchingItem = qualityConditionsArr?.find(
         (item) => item.value === apiDetails?.qualityConditions
       );
-
+      // inital values
       let nameIfValueIsTrue = { 
         qualityConditions: apiDetails?.qualityConditions || "",
         qualityConditionsOther: "",
       };
 
+      // case matchingItem is false then reset values
       if (!matchingItem) {
         nameIfValueIsTrue = {
           qualityConditions: "other",
@@ -232,13 +244,11 @@ if (
       );
       let paymentVal = {
         // if packging condition is null   || value is not selection on option "others"
-
         paymentType: apiDetails?.paymentType || "",
         paymentTypeOther: "",
       };
       if (!initalPaymentType) {
         // means that data is selected to option others
-
         paymentVal = {
           paymentType: "other",
           paymentTypeOther: apiDetails?.paymentTerms || "",
@@ -261,18 +271,60 @@ if (
           packingConditionsOther: apiDetails?.packingConditions || "",
         };
       }
+
+
+
+
+       // shippingConditions condition
+       const initalShippingConditions = ShippingTypeSizeArr?.find(
+        (item) => item.value === apiDetails?.shippingSize
+      );
+      let ShippingCondVal = {
+        // if packging condition is null   || value is not selection on option "others"
+        shippingConditions: apiDetails?.shippingSize || "",
+        shippingConditionsOther: "",
+      };
+      if (!initalShippingConditions) {
+        // means that data is selected to option others
+        ShippingCondVal = {
+          shippingConditions: "other",
+          shippingConditionsOther: apiDetails?.shippingSize || "",
+        };
+      }
+
+
+
+        // ShippingTypeSize condition
+        const initalShippingTypeSize = ShippingTypeSizeArr?.find(
+          (item) => item.value === apiDetails?.shippingSize
+        );
+        let ShippingTypeCondVal = {
+          // if packging condition is null   || value is not selection on option "others"
+          ShippingTypeSize: apiDetails?.shippingSize || "",
+          ShippingTypeSizeOther: "",
+        };
+        if (!initalShippingTypeSize) {
+          // means that data is selected to option others
+          ShippingTypeCondVal = {
+            ShippingTypeSize: "other",
+            ShippingTypeSizeOther: apiDetails?.shippingSize || "",
+          };
+        }
+
+
+
       initialValues = {
         ...initialValues,
         ...PackingCondVal,
         ...paymentVal,
         ...nameIfValueIsTrue,
+        ...ShippingTypeCondVal,
+        ...ShippingCondVal
       };
 
       formValidation.setValues(initialValues);
     }
   }, [apiDetails]);
-
-
 
 
   return (
@@ -405,7 +457,7 @@ if (
                   array={SupplyLocationArr}
                 />
               </div>
-              <div className="col-md-6 col-sm-12">
+              <div className="col-md-4 col-sm-12">
                 <SelectGroup
                   formValidation={formValidation}
                   vlaidationName="ShippingTypeSize"
@@ -430,7 +482,7 @@ if (
 
             {/* ------------------------------------------ */}
             <TextareaInput
-                  vlaidationName="moreDetails"
+                  vlaidationName="notes"
                   formValidation={formValidation}
                   isRequired={false}
                   title="More Details"
