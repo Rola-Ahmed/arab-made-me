@@ -23,7 +23,8 @@ import { useOutletContext } from "react-router-dom";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 import UploadDocument from "components/Forms/Shared/UploadDocument";
 import {useFetchSectors} from 'hooks/useFetchSectors'
-import {addImporterMedia,updateImporterFromUser} from 'Services/importer'
+import {addImporterMedia,updateImporterFromUser} from 'Services/importer';
+import ChangePassword from "components/Factorydashboard/subComponets/FactoryProfile/subComponents/ChangePassword/ChangePassword"
 
 function successMsg(){
   SuccessToast("Changes updated successfully");
@@ -32,7 +33,7 @@ function successMsg(){
 export default function ImporterProfile() {
   document.title = "Importer Profile";
 
-  let { isLogin } = useContext(UserToken);
+  let { isLogin ,setIsLogin} = useContext(UserToken);
   let { currentUserData } = useContext(userDetails);
   const [activeMenu] = useOutletContext();
 
@@ -640,56 +641,7 @@ export default function ImporterProfile() {
       submitCount: 0,
     });
 
-    // -------------------------------------------------------
-
-    // SocialAccountValidation.resetForm({
-    //   values: {
-    //     instgramLink: ImporterProfile?.socialLinks?.instgram || "",
-    //     facebookLink: ImporterProfile?.socialLinks?.facebook || "",
-    //     website: ImporterProfile?.website || "",
-    //   }, // Optional: Reset values to an empty object
-    //   errors: {}, // Optional: Reset errors to an empty object
-    //   touched: {}, // Optional: Reset touched to an empty object
-    //   status: undefined, // Optional: Reset status to undefined
-    //   isSubmitting: false, // Optional: Reset isSubmitting to false
-    //   isValidating: false, // Optional: Reset isValidating to false
-    //   submitCount: 0, // Optional: Reset submitCount to 0
-    // });
-
-    // AccountInfoValidation.resetForm({
-    //   values: {
-    //     repFullName: ImporterProfile?.repName || "",
-    //     repEmail: ImporterProfile?.repEmail || "",
-    //     repPhone: ImporterProfile?.repPhone || "",
-    //     name: ImporterProfile?.name || "",
-    //   },
-    //   errors: {},
-    //   touched: {},
-    //   status: undefined,
-    //   isSubmitting: false,
-    //   isValidating: false,
-    //   submitCount: 0,
-    // });
-
-    // ImporterInfoValidation.resetForm({
-    //   values: {
-    //     city: ImporterProfile?.city || "",
-    //     country: ImporterProfile?.country || "",
-    //     commercialRegisterationNumber:
-    //       ImporterProfile?.commercialRegisterationNumber || "",
-    //     address: ImporterProfile?.address?.[0] || "",
-    //     description: ImporterProfile?.description || "",
-    //     exportingCountries: ImporterProfile?.exportingCountries || [],
-    //     sectorId: ImporterProfile?.[0]?.id || "",
-    //   },
-    //   errors: {},
-    //   touched: {},
-    //   status: undefined,
-    //   isSubmitting: false,
-    //   isValidating: false,
-    //   submitCount: 0,
-    // });
-
+ 
     setSelectedDocs([]);
   }
   function handleClose(value) {
@@ -896,9 +848,8 @@ export default function ImporterProfile() {
                 </div>
               </div>
 
-              <div id="PasswordChange"></div>
               {/*Password change container 2 */}
-              <div className="container-profile-input w-100">
+              {/* <div className="container-profile-input w-100">
                 <div className="title-contianer-input w-100">
                   <p>Password Change</p>
                   <div className="w-100 ">
@@ -941,7 +892,19 @@ export default function ImporterProfile() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
+
+<ChangePassword
+                handleShow={handleShow}
+                handleClose={handleClose}
+                show={show}
+                errorMsg={errorMsg}
+                setIsLogin={setIsLogin}
+                ModalClose={ModalClose}
+                setErrorMsg={setErrorMsg}
+                isLogin={isLogin}
+                isLoading={isLoading}
+              />
 
               {/*Social Accounts container 2 */}
               <div id="socialAccount"></div>
@@ -1440,223 +1403,7 @@ export default function ImporterProfile() {
         </Modal.Body>
       </Modal>
 
-      {/* Password Change modal  update form*/}
-      <form onSubmit={formPasswordValidation.handleSubmit}>
-        <Modal
-          show={show.passwordChangeReadOnly}
-          onHide={() => handleClose("passwordChangeReadOnly")}
-          size="lg"
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-          className="factory-profile"
-        >
-          <Modal.Body closeButton>
-            <div className="container-profile-input w-100">
-              <div className="title-contianer-input w-100">
-                <Modal.Header closeButton>
-                  <Modal.Title>
-                    <p>Password Change</p>
-                  </Modal.Title>
-                </Modal.Header>
-                {errorMsg?.response ? (
-                  <div className="alert mt-3 p-2 alert-danger form-control text-dark">
-                    {errorMsg?.response}
-                  </div>
-                ) : (
-                  ""
-                )}
-                <div className="w-100 ">
-                  <div className="row  row-gap">
-                    <div className="col-12">
-                      <div className="grid-gap-col">
-                        <div className="form-group">
-                          <label>Old Password</label>
-
-                          <div class="input-group">
-                            <input
-                              type={`${
-                                toggleSeePassword.oldPassword == true
-                                  ? "text"
-                                  : "password"
-                              }`}
-                              autoComplete="new-password"
-                              className="form-control"
-                              id="oldPassword"
-                              name="oldPassword"
-                              onChange={formPasswordValidation.handleChange}
-                              onBlur={formPasswordValidation.handleBlur}
-                              value={formPasswordValidation.values.oldPassword}
-                              // didnt allow pating
-                              // onPaste={(e) => e.preventDefault()}
-
-                              // placeholder="Change Password"
-                            />
-                            <div
-                              class="input-group-append h-100 cursor"
-                              onClick={() =>
-                                settoggleSeePassword((prevData) => ({
-                                  ...prevData,
-                                  oldPassword: !toggleSeePassword.oldPassword,
-                                }))
-                              }
-                            >
-                              <span
-                                class={`input-group-text bg-white h-100 icon-eye-passowrd    cursor ${
-                                  toggleSeePassword.oldPassword == true
-                                    ? "fa-solid fa-eye-slash"
-                                    : "fa-solid fa-eye"
-                                }`}
-                              ></span>
-                            </div>
-                          </div>
-
-                          {formPasswordValidation.errors.oldPassword &&
-                          formPasswordValidation.touched.oldPassword ? (
-                            <small className="text-danger">
-                              {formPasswordValidation.errors.oldPassword}
-                            </small>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="col-12">
-                      <div className="grid-gap-col">
-                        <div className="form-group">
-                          <label>Change Password</label>
-
-                          <div class="input-group">
-                            <input
-                              type={`${
-                                toggleSeePassword.password == true
-                                  ? "text"
-                                  : "password"
-                              }`}
-                              className="form-control"
-                              id="password"
-                              name="password"
-                              placeholder="Change Password"
-                              onChange={formPasswordValidation.handleChange}
-                              onBlur={formPasswordValidation.handleBlur}
-                              value={formPasswordValidation.values.password}
-                              autoComplete="new-passowrd"
-                            />
-                            <div
-                              class="input-group-append h-100 cursor"
-                              onClick={() =>
-                                settoggleSeePassword((prevData) => ({
-                                  ...prevData,
-                                  password: !toggleSeePassword.password,
-                                }))
-                              }
-                            >
-                              <span
-                                class={`input-group-text bg-white h-100 icon-eye-passowrd    cursor ${
-                                  toggleSeePassword.password == true
-                                    ? "fa-solid fa-eye-slash"
-                                    : "fa-solid fa-eye"
-                                }`}
-                              ></span>
-                            </div>
-                          </div>
-
-                          {formPasswordValidation.errors.password &&
-                          formPasswordValidation.touched.password ? (
-                            <small className="text-danger">
-                              {formPasswordValidation.errors.password}
-                            </small>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="col-12">
-                      <div className="form-group">
-                        <label>Confirm Password</label>
-
-                        <div class="input-group">
-                          <input
-                            type={`${
-                              toggleSeePassword.confirmPassword == true
-                                ? "text"
-                                : "password"
-                            }`}
-                            className="form-control"
-                            onPaste={(event) => {
-                              // paste is not allowed
-                              event.preventDefault();
-                              event.clipboardData.getData("text/plain");
-                            }}
-                            id="confirmPassword"
-                            name="confirmPassword"
-                            placeholder="Confirm Password"
-                            onChange={formPasswordValidation.handleChange}
-                            onBlur={formPasswordValidation.handleBlur}
-                            value={
-                              formPasswordValidation.values.confirmPassword
-                            }
-                          />
-                          <div
-                            class="input-group-append h-100 cursor"
-                            onClick={() =>
-                              settoggleSeePassword((prevData) => ({
-                                ...prevData,
-                                confirmPassword:
-                                  !toggleSeePassword.confirmPassword,
-                              }))
-                            }
-                          >
-                            <span
-                              class={`input-group-text bg-white h-100 icon-eye-passowrd    cursor ${
-                                toggleSeePassword.confirmPassword == true
-                                  ? "fa-solid fa-eye-slash"
-                                  : "fa-solid fa-eye"
-                              }`}
-                            ></span>
-                          </div>
-                        </div>
-
-                        {formPasswordValidation.errors.confirmPassword &&
-                        formPasswordValidation.touched.confirmPassword ? (
-                          <small className="text-danger">
-                            {formPasswordValidation.errors.confirmPassword}
-                          </small>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                      <Button
-                        variant="secondary"
-                        type="button"
-                        onClick={() => handleClose("passwordChangeReadOnly")}
-                      >
-                        Close
-                      </Button>
-                      {isLoading ? (
-                        <button type="button" className="btn-edit">
-                          <i className="fas fa-spinner fa-spin text-white"></i>
-                        </button>
-                      ) : (
-                        <button className="btn-edit submitButton" type="submit">
-                          <p className="cursor">save changes</p>
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                  {/* </form> */}
-                </div>
-              </div>
-            </div>
-          </Modal.Body>
-        </Modal>
-      </form>
+  
 
       {/* -------------------------------------------------------------------------------------------------- */}
       {/* Factory Info Modal update form */}

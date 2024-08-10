@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 
 import Button from "react-bootstrap/Button";
+import SuccessToast from "components/SuccessToast";
 import Modal from "react-bootstrap/Modal";
 
 import { useFormik } from "formik";
@@ -13,7 +14,7 @@ import { passwordValidate } from "utils/validationUtils";
 import FormVlaidtionError from "components/Forms/Shared/FormVlaidtionError";
 import { updateFromUser } from "Services/UserAuth";
 
-export default function Password(props) {
+export default function ChangePassword(props) {
   let {
     handleShow,
     handleClose,
@@ -58,7 +59,7 @@ export default function Password(props) {
     if (result?.success) {
       logOuut();
       ModalClose();
-      setGlobalMsg("Password updated Successfully");
+      SuccessToast("Password updated Successfully");
     } else {
       setErrorMsg((prevErrors) => ({
         ...prevErrors,
@@ -186,7 +187,7 @@ export default function Password(props) {
                               value={formPasswordValidation.values.oldPassword}
                             />
                             <div
-                              class="input-group-append h-100 cursor"
+                              class="input-group-append cursor"
                               onClick={() =>
                                 settoggleSeePassword((prevData) => ({
                                   ...prevData,
@@ -234,7 +235,7 @@ export default function Password(props) {
                               autoComplete="new-passowrd"
                             />
                             <div
-                              class="input-group-append h-100 cursor"
+                              class="input-group-append cursor"
                               onClick={() =>
                                 settoggleSeePassword((prevData) => ({
                                   ...prevData,
@@ -284,7 +285,7 @@ export default function Password(props) {
                             }
                           />
                           <div
-                            class="input-group-append h-100 cursor"
+                            class="input-group-append cursor"
                             onClick={() =>
                               settoggleSeePassword((prevData) => ({
                                 ...prevData,
