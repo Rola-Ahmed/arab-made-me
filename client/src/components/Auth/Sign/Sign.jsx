@@ -97,13 +97,11 @@ function Sign() {
   return (
     <>
       <Header title="Sign in" />
-      <section className="login">
+      <section className="py-5">
         <div className="container d-flex justify-content-center align-content-center">
-          <div className="frame-container-1">
-            <div className="container content-1">
-              <div className="sub-content">
+          <div className="cont border border-1 d-flex justify-content-center mx-auto py-5 rounded-3 w-all-50 w-xl-60 w-lg-75 w-md-100">
+            {/* <div className="col-6 "> */}
                 <form onSubmit={formValidation.handleSubmit} className="w-100">
-                  <div className="input-content">
                     {errorMsg && (
                       <div className="alert mt-3 p-2 alert-danger form-control text-dark">
                         {errorMsg}
@@ -198,10 +196,8 @@ function Sign() {
                         </div>
                       </div>
                     </div>
-                  </div>
                 </form>
-              </div>
-            </div>
+            {/* </div> */}
           </div>
         </div>
       </section>

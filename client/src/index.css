@@ -194,11 +194,13 @@ p, button, div, textarea, input {
 .gap-16 {
   gap: 16px;
 }
-.gap-12{
+
+.gap-12 {
 
   gap: 12px
 }
-.gap-row-32{
+
+.gap-row-32 {
   gap: 32px
 }
 
@@ -366,6 +368,12 @@ p, button, div, textarea, input {
   visibility: visible;
 }
 
+/* wwwwwwwwwwwwwww */
+
+.w-all-50 {
+  width: 50%;
+}
+
 /* --------------------------------------------------------- */
 @media (max-width:539px) {
   .margin-sm-screen {
@@ -397,5 +405,30 @@ p, button, div, textarea, input {
 
   .md-d-none {
     display: none
+  }
+
+
+  .w-md-100 {
+    width: 100;
+  }
+
+}
+
+@media (max-width: 992px) {
+
+  .w-lg-75 {
+    width: 75% !important ;
+  }
+}
+
+
+@media (max-width: 1200px) {
+
+  .md-d-none {
+    display: none
+  }
+
+  .w-xl-60 {
+    width: 60%;
   }
 }
