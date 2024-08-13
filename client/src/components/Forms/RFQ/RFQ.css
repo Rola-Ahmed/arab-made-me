@@ -6,7 +6,10 @@
 }
 
 .send-rfq .container-rfq,
-.req-visit .container-req, .send-po .container-po {
+.req-visit .container-req, .send-po .container-po
+,
+.signup-factory .container.container-req
+ {
   display: flex;
   width: 888px !important;
   flex-direction: column;
@@ -80,29 +83,9 @@
   align-self: stretch;
 }
 
-.send-rfq .form-group label,
-.req-visit .form-group label,
-.send-po .form-group label {
-  color: var(--Gray-700);
-  font-family: "Inter-reg";
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  text-transform: capitalize;
-}
 
-.send-rfq .form-group input,
-.send-po .form-group input,
-.req-visit .form-group .form-control {
-  display: flex;
-  padding: 10px 14px;
-  align-items: center;
-  gap: 8px;
-  align-self: stretch;
-  border-radius: 8px;
-  border: 1px solid var(--Gray-300);
-  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
-}
+
+
 
 .send-rfq .form-group input[readOnly],
 .send-rfq .form-group textarea[readOnly],
@@ -159,7 +142,7 @@
 
 .send-rfq .action .action-btn,
 .req-visit .action .action-btn,
-.send-po .action .action-btn {
+.send-po .action .action-btn,.register-msg .action-btn {
   display: flex;
   padding: 10px 16px;
   justify-content: center;
@@ -171,6 +154,12 @@
   background: var(--primary-color);
   box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
 }
+.register-msg .action-btn {
+  border: none;
+  color: white;
+}
+
+
 
 .send-rfq .action .action-btn.btn-1,
 .req-visit .action .action-btn.btn-1,

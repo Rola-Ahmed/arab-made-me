@@ -126,7 +126,7 @@ function CompanyMircoSiteDocs() {
                   </p>
                 )}
 
-                <div className="row gap-row-2">
+                <div className="row gap-12-32">
                   {/* factory cover Images */}
 
                   <UploadDocument

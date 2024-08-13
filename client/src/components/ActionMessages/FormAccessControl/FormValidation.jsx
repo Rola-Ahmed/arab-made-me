@@ -38,7 +38,7 @@ export default function FormValidation(props) {
                   By clicking "Sign In," you will be signed out of your current account and redirected to the Sign In page.
                   </p>
 
-                  <div className="row gap-row">
+                  <div className="row gap-12">
                     <div className="col-12 action">
                       <button
                         className="action-btn btn-1 w-100 submitButton"

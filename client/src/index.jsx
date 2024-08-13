@@ -1,5 +1,6 @@
 import ReactDOM from "react-dom/client";
 import "./index.css";
+import "./forms.css";
 
 
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";

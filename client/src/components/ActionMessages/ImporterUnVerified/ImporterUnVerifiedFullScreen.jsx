@@ -39,7 +39,7 @@ export default function ImporterUnVerifiedFullScreen(props) {
                         following steps to become verified:
                       </p>
 
-                      <div className="row border-css  ">
+                      <div className="row gap-12 ">
                         <div className="col-12  justify-content-start align-items-center d-flex">
                           <label className="h1    m-0 p-2 px-3 me-4 steps-text">
                             1
@@ -71,7 +71,7 @@ export default function ImporterUnVerifiedFullScreen(props) {
                         </div>
                       </div>
 
-                      <div className="row gap-row">
+                      <div className="row gap-12">
                         <div className="col-12 action">
                           <button
                             className="action-btn btn-1 w-100 submitButton"

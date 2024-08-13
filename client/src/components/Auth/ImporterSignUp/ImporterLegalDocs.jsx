@@ -121,7 +121,7 @@ function ImporterRepDetails() {
                     </p>
                   )}
 
-                  <div className="row gap-row-2">
+                  <div className="row gap-12-32">
                     {/* factory profileeee */}
 
                     <UploadDocument

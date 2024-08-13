@@ -240,7 +240,7 @@ export default function ImporterRepDetails() {
                   </p>
                 )}
 
-                <div className="row gap-row-2">
+                <div className="row gap-12-32">
                   <div className="col-12">
                     <InputField
                       isRequired={true}

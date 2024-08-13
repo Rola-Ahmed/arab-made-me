@@ -194,6 +194,13 @@ p, button, div, textarea, input {
 .gap-16 {
   gap: 16px;
 }
+.gap-12{
+
+  gap: 12px
+}
+.gap-row-32{
+  gap: 32px
+}
 
 .gap-8 {
   gap: 8px;
@@ -220,12 +227,17 @@ p, button, div, textarea, input {
 
 }
 
-.fs-14 {
+.fs-14, .send-rfq .form-group label,
+.req-visit .form-group label,
+.send-po .form-group label,
+.login .form-group label, .signup .form-group label {
   color: var(--Gray-700);
   font-family: "Inter-reg";
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
+  text-transform: capitalize;
+
 }
 
 .fw-600 {

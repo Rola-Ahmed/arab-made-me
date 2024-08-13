@@ -1,0 +1,263 @@
+/* rfq user type combine */
+
+
+
+
+
+.send-rfq .form-group input,
+.send-po .form-group input,
+.req-visit .form-group .form-control,
+.userType .form-group input,
+.login .form-group input,
+.signup .form-group input
+
+/*action btns */
+.userType .action .action-btn,
+.login .action .action-btn,
+.signup .action .action-btn {
+    display: flex;
+    padding: 10px 14px;
+    align-items: center;
+    gap: 8px;
+    align-self: stretch;
+    border-radius: 8px;
+    border: 1px solid var(--Gray-300);
+    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+}
+
+/* action btns-2 */
+
+.userType .action .action-btn.btn-1, .login .action .action-btn.btn-1, .signup .action .action-btn.btn-1 {
+    border: 1px solid var(--primary-color);
+    background: var(--primary-color);
+    color: white;
+
+}
+
+.userType .action .action-btn.btn-2, .login .action .action-btn.btn-2, .signup .action .action-btn.btn-2 {
+    border-radius: 8px;
+    border: 1px solid var(--Gray-300);
+    background: var(--white);
+
+    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+
+}
+
+
+
+/* Password eyes css */
+.icon-eye-passowrd {
+    padding: 10px 14px !important;
+    border-left: none !important;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+}
+
+
+
+.img-cont {
+    width: fit-content !important;
+}
+
+.img-cont img {
+
+    object-fit: fill;
+
+}
+
+
+.img-cont-file img {
+
+    height: 80px;
+    width: 80px;
+    object-fit: fill;
+
+}
+
+.video-cont video {
+    width: 291px;
+    height: 163px;
+    border-radius: 20px;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.50) 100%);
+    max-height: 49vh;
+    width: 289px;
+    object-fit: cover;
+
+}
+
+
+/* -------------------------------- */
+.frame-container-1 {
+    border-radius: 16px;
+    border: 1px solid var(--light-gray, #F1F1F1);
+    display: grid;
+    padding: 40px 0px;
+    justify-content: center;
+    align-items: flex-start;
+    width: 640px;
+}
+
+/* -------------------------------- */
+.frame-container-2 {
+    border-radius: 16px;
+    border: 1px solid var(--light-gray);
+    display: grid;
+  
+    justify-content: center;
+    align-items: flex-start;
+  
+    width: 557px;
+    padding: 32px;
+  }
+
+  .cont-frame-1 {
+    display: grid;
+    gap: 16px
+  }
+  
+  .img-logo {
+  
+    width: 186px;
+    height: 40px;
+  
+  
+  }
+  
+  .img-logo img {
+  
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  
+  
+  }
+  
+  .user-icon {
+    width: 42px;
+    height: 42px;
+  }
+  
+  .user-icon img {
+  
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  
+  
+  }
+   
+
+/*----------- titlesssssssssssssssssssssssss ------------------*/
+
+  
+.text-title {
+
+
+    font-family: "Inter-reg";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 32px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #101828;
+  
+  }
+  
+  .text-sub {
+    font-family: "Inter-reg";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #475467;
+  
+  
+  }
+  
+  .user-text {
+    font-family: "Inter-reg";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--primary-color);
+  
+  }
+  
+  .user-text-sub {
+    font-family: 'Inter-reg';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+    display: flex;
+    align-items: center;
+    color: #475467;
+  }
+
+  .form-title {
+    height: 20px;
+    font-family: 'Inter-reg';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    color: #344054;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    text-transform: capitalize;
+  
+  }
+  
+  .title-small {
+    font-family: 'Inter-reg';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    color: #667085;
+  }
+  
+  small {
+    font-family: 'Inter-reg';
+  
+  }
+
+  .register-msg .img-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 1 !important;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+
+  .action-msg .steps-text {
+    background-color: var(--secondary-color);
+    border-radius: 40px;
+    color: white;
+    font-size: x-large;
+  }
+  
+  /* end titles */
+
+
+
+  /* -------------------icons------------------ */
+  .icon-msg {
+
+    font-size: 45px;
+    border: 1px solid black;
+    padding: 25px 18px;
+    border-radius: 80px;
+  }
+  .phone-borders {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+  
+  }

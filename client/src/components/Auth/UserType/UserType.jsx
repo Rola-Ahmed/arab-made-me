@@ -89,7 +89,7 @@ export default function UserType() {
                   started.
                 </p>
 
-                <div className="row gap-row">
+                <div className="row gap-12">
                   <div
                     className="col-12 cursor"
                     onClick={() => {
@@ -97,7 +97,7 @@ export default function UserType() {
                     }}
                   >
                     <div className="border-type p-3 ">
-                      <div className="d-flex justify-content-start align-content-center gap-cont">
+                      <div className="d-flex justify-content-start align-content-center gap-16">
                         <div className="user-icon">
                           <img src={buyerIcon} alt="buyer icon" />
                         </div>
@@ -118,7 +118,7 @@ export default function UserType() {
                     }}
                   >
                     <div className="border-type p-3 ">
-                      <div className="d-flex justify-content-start align-content-center gap-cont">
+                      <div className="d-flex justify-content-start align-content-center gap-16">
                         <div className="user-icon">
                           <img src={factoryIcon} alt="buyer icon" />
                         </div>
