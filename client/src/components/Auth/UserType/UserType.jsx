@@ -15,7 +15,6 @@ export default function UserType() {
   let navigate = useNavigate();
 
   return (
-    <>
       <section className="register-msg ">
         {/* <div className="container "> */}
         <div className=" container ">
@@ -152,6 +151,5 @@ export default function UserType() {
           </div>
         </div>
       </section>
-    </>
   );
 }

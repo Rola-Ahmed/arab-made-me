@@ -7,6 +7,8 @@ import "./Sign.css";
 import Header from "components/main/Header/Header";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { UserToken } from "Context/userToken";
+import InputField from "components/Forms/Shared/InputField";
+import FormVlaidtionError from "components/Forms/Shared/FormVlaidtionError";
 
 function Sign() {
   document.title = "Sign In";
@@ -109,31 +111,17 @@ function Sign() {
                     )}
                     <div className="gap-20 row">
                       <div className="col-12">
-                        <div className="form-group">
-                          <label >Email*</label>
-                          <input
-                            type="email"
-                            className="form-control"
-                            id="email"
-                            name="email"
-                            placeholder="Enter email"
-                            onChange={formValidation.handleChange}
-                            value={formValidation.values.email}
-                            onBlur={formValidation.handleBlur}
-                          />
-                          {formValidation.errors.email &&
-                          formValidation.touched.email ? (
-                            <small className="form-text text-danger">
-                              {formValidation.errors.email}
-                            </small>
-                          ) : (
-                            ""
-                          )}
-                        </div>
+                      <InputField
+                        isRequired={true}
+                        title={"Email"}
+                        formValidation={formValidation}
+                        vlaidationName={"email"}
+                      />
+                      
                       </div>
                       <div className="col-12">
                         <div className="form-group">
-                          <label >password*</label>
+                          <label >password <span className="text-danger">*</span></label>
 
                           <div className="input-group">
                             <input
@@ -143,19 +131,19 @@ function Sign() {
                               className="form-control remove-left-border"
                               id="password"
                               name="password"
-                              // placeholder="Enter Password"
+                              
                               onChange={formValidation.handleChange}
                               value={formValidation.values.password}
                               onBlur={formValidation.handleBlur}
                             />
                             <div
-                              class="input-group-append h-100 cursor"
+                              class="input-group-append cursor"
                               onClick={() =>
                                 settoggleSeePassword(!toggleSeePassword)
                               }
                             >
                               <span
-                                class={`input-group-text bg-white h-100 icon-eye-passowrd    cursor ${
+                                class={`input-group-text bg-white  h-100  icon-eye-passowrd cursor ${
                                   toggleSeePassword == true
                                     ? "fa-solid fa-eye-slash"
                                     : "fa-solid fa-eye"
@@ -164,14 +152,10 @@ function Sign() {
                             </div>
                           </div>
 
-                          {formValidation.errors.password &&
-                          formValidation.touched.password ? (
-                            <small className="form-text  text-danger">
-                              {formValidation.errors.password}
-                            </small>
-                          ) : (
-                            ""
-                          )}
+                          <FormVlaidtionError
+                            formValidation={formValidation}
+                            vlaidationName={"password"}
+                          />
                         </div>
                       </div>
 

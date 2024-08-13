@@ -1,20 +1,15 @@
-import { useState, useContext } from "react";
+import { useState} from "react";
 import { useFormik } from "formik";
-
 import * as Yup from "yup";
 import Header from "components/main/Header/Header";
 import { useNavigate } from "react-router-dom";
-import { UserToken } from "Context/userToken";
-import { addUser } from "Services/UserAuth.js";
 import InputField from "components/Forms/Shared/InputField";
+import FormVlaidtionError from "components/Forms/Shared/FormVlaidtionError";
+import useSignUp from "./useSignUp";
 export default function SignUp() {
-  let { setIsLogin } = useContext(UserToken);
-
   document.title = "Sign Up";
-
   let navigate = useNavigate();
-  const [errorMsg, setErrorMsg] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  let { submitForm,isLoading,errorMsg}=useSignUp()
   let [toggleSeePassword, settoggleSeePassword] = useState(false);
 
   let validationSchema = Yup.object().shape({
@@ -36,26 +31,6 @@ export default function SignUp() {
     validationSchema,
     onSubmit: submitForm,
   });
-
-  async function submitForm(values) {
-    setErrorMsg("");
-      setIsLoading(true);
-      let data = {
-        email: values.email,
-        password: values.password,
-      };
-
-      let result = await addUser(data);
-      if (result?.success) {
-        setIsLoading(true);
-        setIsLogin(result?.data?.token);
-        navigate(`/userType`);
-      } else {
-        setErrorMsg(result?.error);
-        window.scrollTo({ top: 0 });
-      }
-    setIsLoading(false);
-  }
   return (
     <>
       <Header title="Create Account" />
@@ -102,13 +77,13 @@ export default function SignUp() {
                               className="form-control remove-left-border"
                               id="password"
                               name="password"
-                              // placeholder="Enter Password"
+                              
                               onChange={formValidation.handleChange}
                               value={formValidation.values.password}
                               onBlur={formValidation.handleBlur}
                             />
                             <div
-                              class="input-group-append h-100 cursor"
+                              class="input-group-append cursor"
                               onClick={() =>
                                 settoggleSeePassword(!toggleSeePassword)
                               }
@@ -122,15 +97,11 @@ export default function SignUp() {
                               ></span>
                             </div>
                           </div>
-
-                          {formValidation.errors.password &&
-                          formValidation.touched.password ? (
-                            <small className="form-text  text-danger">
-                              {formValidation.errors.password}
-                            </small>
-                          ) : (
-                            ""
-                          )}
+                          <FormVlaidtionError
+                            formValidation={formValidation}
+                            vlaidationName={"password"}
+                          />
+                         
                         </div>
                       </div>
 

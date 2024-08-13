@@ -121,7 +121,7 @@ function ForgotPassword() {
                         )}
 
                         <div className="d-flex justify-content-center align-content-center mt-2 ">
-                          <i class="fa-solid fa-chevron-left"></i>
+                          <i class="fa-solid fa-chevron-left my-auto"></i>
                           
                           <button
                             className="small-note bg-transparent border-0 my-auto"
