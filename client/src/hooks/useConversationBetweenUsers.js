@@ -97,9 +97,12 @@ const useConversationBetweenUsers = () => {
   useEffect(() => {
     if (isLogin) {
       socket.connect();
+      socket.emit("socketAuth", isLogin);
+
   
       const handleNewMessage = (data) => {
         console.log("Received newMessage:", data);
+        
         fetchReqData();
       };
   
@@ -112,7 +115,7 @@ const useConversationBetweenUsers = () => {
       };
   
       socket.on("connect", () => {
-        console.log("Connected to server");
+        console.log("Connected to server", socket?.id);
   
         socket.on("newMessage", handleNewMessage);
         socket.on("socketAuth", handleSocketAuth);

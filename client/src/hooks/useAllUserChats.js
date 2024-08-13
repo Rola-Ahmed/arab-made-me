@@ -48,7 +48,6 @@ const useAllUserChats = (isLogin) => {
     const result = await getChatsForUser({}, { authorization: isLogin });
 
     if (result?.success) {
-      setReqData(result?.data?.chats);
       setTimeout(() => {
         setReqData(result?.data?.chats);
       }, 50);
@@ -153,11 +152,13 @@ const useAllUserChats = (isLogin) => {
         });
 
         socket.on("newMessage", (data) => {
-          console.log("data",data)
+          console.log(" newMessage data",data)
           fetchReqData();
         });
 
-        socket.on("socketAuth", (data) => {});
+        socket.on("socketAuth", (data) => {
+          console.log("socketAuth data",data)
+        });
 
         socket.on("connect_error", (err) => {
           console.log(err);
@@ -206,7 +207,7 @@ const useAllUserChats = (isLogin) => {
     }
   }, [isLogin]);
 
-  console.log("here")
+  // console.log("here")
   return { reqData, pagination, apiLoadingData, errorsMsg, setPagination };
 };
 

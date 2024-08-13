@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { socket } from "config.js";
 import { addChat } from "Services/chat";
 
 export default function SendMsg(props) {
@@ -61,8 +60,7 @@ export default function SendMsg(props) {
         ...prevVal,
         ...result?.data?.chat,
       }));
-      socket.emit("socketAuth", isLogin);
-      socket.emit("newMessage", data);
+   
     }
   }
 

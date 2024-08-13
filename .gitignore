@@ -123,3 +123,4 @@ client/src/config copy 2.js
 client/src/config copy.js
 client/public/index copy.html
 client/src/components/Factorydashboard/subComponets/MircoSiteDash/MircoSiteDashMain.jsx
+client/src/components/Factorydashboard/subComponets/Quotations/EditQuote/EditQuote copy.jsx
