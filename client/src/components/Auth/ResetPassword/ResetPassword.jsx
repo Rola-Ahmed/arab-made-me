@@ -147,9 +147,7 @@ function ResetPassword() {
           <div className="frame-container-1">
             <div className="container content-1">
               <div className="sub-content">
-                {/* <div className="title-text ">
-                  <p>Login</p>
-                </div> */}
+
                 <div className="title-text ">
                   <p>Change your password by entering a new one below.</p>
                 </div>
@@ -159,14 +157,12 @@ function ResetPassword() {
                   className="w-100"
                 >
                   <div className="input-content">
-                    {errorMsg ? (
+                    {errorMsg ** (
                       <div className="alert mt-3 p-2 alert-danger form-control text-dark">
                         {errorMsg}
                       </div>
-                    ) : (
-                      ""
-                    )}
-                    <div className="form-1 row">
+                    ) }
+                    <div className="gap-20 row">
                       <div className="col-12">
                         <div className="form-group">
                           <label forHtml="password">
@@ -183,7 +179,6 @@ function ResetPassword() {
                               className="form-control remove-left-border"
                               id="password"
                               name="password"
-                              // placeholder="Enter Password"
                               onChange={formValidation.handleChange}
                               value={formValidation.values.password}
                               onBlur={formValidation.handleBlur}
@@ -270,41 +265,41 @@ function ResetPassword() {
                           )}
                         </div>
                       </div>
-                    </div>
 
-                    <div className="action row">
                       <div className="col-12">
+                    
+
                         {isLoading ? (
                           <button
                             type="button"
-                            className="action-btn btn-1 w-100"
+                            className="btn btn-primary w-100 bg-main"
                           >
                             <i className="fas fa-spinner fa-spin"></i>
                           </button>
                         ) : (
                           <button
                             type="submit"
-                            className="action-btn btn-1 w-100 submitButton"
-                            disabled={
-                              !(formValidation.isValid && formValidation.dirty)
-                            }
+                            className="btn btn-primary fs-14 px-5 mx-auto bg-main border-0 w-100"
                           >
-                            Confirm
+                            Submit
                           </button>
                         )}
+
+                        <div className="d-flex justify-content-center align-content-center mt-2 ">
+                          <p className=" small-note">Don't have an account?</p>
+                          <button
+                            className="small-note bg-transparent border-0 text-main"
+                            onClick={() => {
+                              navigate("/signup");
+                            }}
+                          >
+                            Create New
+                          </button>
+                        </div>
                       </div>
+
                     </div>
 
-                    <div className="signUp-container">
-                      <p className="text">Don't have an account?</p>
-                      <button
-                        onClick={() => {
-                          navigate("/signup");
-                        }}
-                      >
-                        Create New
-                      </button>
-                    </div>
                   </div>
                 </form>
               </div>

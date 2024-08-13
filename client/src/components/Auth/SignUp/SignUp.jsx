@@ -6,6 +6,7 @@ import Header from "components/main/Header/Header";
 import { useNavigate } from "react-router-dom";
 import { UserToken } from "Context/userToken";
 import { addUser } from "Services/UserAuth.js";
+import InputField from "components/Forms/Shared/InputField";
 export default function SignUp() {
   let { setIsLogin } = useContext(UserToken);
 
@@ -38,10 +39,6 @@ export default function SignUp() {
 
   async function submitForm(values) {
     setErrorMsg("");
-
-    // e.preventDefault();
-
-    try {
       setIsLoading(true);
       let data = {
         email: values.email,
@@ -54,11 +51,9 @@ export default function SignUp() {
         setIsLogin(result?.data?.token);
         navigate(`/userType`);
       } else {
-        // setIsLoading(false);
         setErrorMsg(result?.error);
         window.scrollTo({ top: 0 });
       }
-    } catch (error) {}
     setIsLoading(false);
   }
   return (
@@ -67,16 +62,11 @@ export default function SignUp() {
 
       <section className="login">
         <div className="container d-flex justify-content-center align-content-center">
-          <div className="frame-container-1">
+          <div className="frame-container-1 ">
             <div className="container content-1">
               <div className="sub-content">
-                {/* <div className="title-text ">
-                  <p>Login</p>
-                </div> */}
 
                 <form
-                  // onSubmit={formValidation.handleSubmit}
-
                   onSubmit={(e) => {
                     e.preventDefault();
                     formValidation.handleSubmit(e);
@@ -84,40 +74,25 @@ export default function SignUp() {
                   className="w-100"
                 >
                   <div className="input-content">
-                    {errorMsg ? (
+                    {errorMsg && (
                       <div className="alert mt-3 p-2 alert-danger form-control text-dark w-100">
                         {errorMsg}
                       </div>
-                    ) : (
-                      ""
                     )}
-                    <div className="form-1 row">
+                    <div className="gap-20 row">
                       <div className="col-12">
-                        <div className="form-group">
-                          <label forHtml="email">Email*</label>
-                          <input
-                            type="email"
-                            className="form-control"
-                            id="email"
-                            name="email"
-                            placeholder="Enter email"
-                            onChange={formValidation.handleChange}
-                            value={formValidation.values.email}
-                            onBlur={formValidation.handleBlur}
-                          />
-                          {formValidation.errors.email &&
-                          formValidation.touched.email ? (
-                            <small className="form-text text-danger">
-                              {formValidation.errors.email}
-                            </small>
-                          ) : (
-                            ""
-                          )}
-                        </div>
+                      <InputField
+                        isRequired={true}
+                        title={"Email"}
+                        formValidation={formValidation}
+                        vlaidationName={"email"}
+                      />
                       </div>
                       <div className="col-12">
+
+                        
                         <div className="form-group">
-                          <label forHtml="password">password*</label>
+                          <label forHtml="password">password <span className="text-danger">*</span></label>
 
                           <div className="input-group">
                             <input
@@ -158,41 +133,42 @@ export default function SignUp() {
                           )}
                         </div>
                       </div>
-                    </div>
 
-                    <div className="action row">
+
+
                       <div className="col-12">
                         {isLoading ? (
                           <button
                             type="button"
-                            className="action-btn btn-1 w-100"
+                            className="btn btn-primary w-100 bg-main"
                           >
-                            <i className="fas fa-spinner fa-spin text-white"></i>
+                            <i className="fas fa-spinner fa-spin"></i>
                           </button>
                         ) : (
                           <button
                             type="submit"
-                            className="action-btn btn-1 w-100 submitButton"
-                            // disabled={
-                            //   !(formValidation.isValid && formValidation.dirty)
-                            // }
+                            className="btn btn-primary fs-14 px-5 mx-auto bg-main border-0 w-100"
                           >
-                            Sign Up
+                            Submit
                           </button>
                         )}
+
+                        <div className="d-flex justify-content-center align-content-center mt-2 ">
+                          <p className=" small-note">Already have an account?</p>
+                          <button
+                            className="small-note bg-transparent border-0 text-main"
+                            onClick={() => {
+                              navigate("/signIn");
+                            }}
+                          >
+                           Sign in
+                          </button>
+                        </div>
                       </div>
+
+
                     </div>
 
-                    <div className="signUp-container">
-                      <p className="text">Already have an account?</p>
-                      <button
-                        onClick={() => {
-                          navigate("/signIn");
-                        }}
-                      >
-                        Sign In
-                      </button>
-                    </div>
                   </div>
                 </form>
               </div>

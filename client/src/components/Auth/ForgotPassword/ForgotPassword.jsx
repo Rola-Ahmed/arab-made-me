@@ -91,7 +91,7 @@ function ForgotPassword() {
                         {errorMsg}
                       </div>
                     )}
-                    <div className="form-1 row">
+                    <div className="gap-20 row">
                       <div className="col-12">
                         <InputField
                           formValidation={formValidation}
@@ -100,36 +100,40 @@ function ForgotPassword() {
                           title="Email"
                         />
                       </div>
-                    </div>
 
-                    <div className="action row">
                       <div className="col-12">
+                      
+
                         {isLoading ? (
                           <button
                             type="button"
-                            className="action-btn btn-1 w-100"
+                            className="btn btn-primary w-100 bg-main"
                           >
                             <i className="fas fa-spinner fa-spin"></i>
                           </button>
                         ) : (
                           <button
                             type="submit"
-                            className="action-btn btn-1 w-100 submitButton"
+                            className="btn btn-primary fs-14 px-5 mx-auto bg-main border-0 w-100"
                           >
                             Submit
                           </button>
                         )}
-                      </div>
-                    </div>
 
-                    <div
-                      className="signUp-container align-items-center"
-                      onClick={() => {
-                        navigate("/signIn");
-                      }}
-                    >
-                      <i class="fa-solid fa-chevron-left"></i>
-                      <p className="text">Back to Login</p>
+                        <div className="d-flex justify-content-center align-content-center mt-2 ">
+                          <i class="fa-solid fa-chevron-left"></i>
+                          
+                          <button
+                            className="small-note bg-transparent border-0 my-auto"
+                              onClick={() => {
+                                navigate("/signIn");
+                            }}
+                          >
+                           Back to Login
+                          </button>
+                        </div>
+                      </div>
+
                     </div>
                   </div>
                 </form>

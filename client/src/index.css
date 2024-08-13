@@ -119,17 +119,22 @@ p, h1, h2, h3, h4, h5, h6 {
 
 
 
+
+
 .small-note {
   font-family: 'Inter-reg';
   font-style: normal;
   font-weight: 400;
   font-size: 12px !important;
-  line-height: 20px;
+  /* line-height: 20px; */
   color: #475467;
-  flex: none;
-  align-self: stretch;
+  /* flex: none; */
+  /* align-self: stretch; */
 }
 
+.bg-0 {
+  background-color: transparent;
+}
 
 .bg-blur {
   backdrop-filter: blur(10px);
@@ -182,6 +187,10 @@ p, button, div, textarea, input {
   row-gap: 24px;
 }
 
+.gap-20 {
+  gap: 24px;
+}
+
 .gap-16 {
   gap: 16px;
 }
@@ -208,6 +217,15 @@ p, button, div, textarea, input {
 
 .fs-24 {
   font-size: 24px;
+
+}
+
+.fs-14 {
+  color: var(--Gray-700);
+  font-family: "Inter-reg";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
 }
 
 .fw-600 {

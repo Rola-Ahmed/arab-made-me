@@ -116,17 +116,9 @@ export default function AllQuotes() {
                       <td className="text-truncate">
                         <div className="">
                           <p className="trate-title text-truncate">
-                            {poItem?.productName}
+                            {poItem?.productName || 'Empty'}
                           </p>
-                          <p className="trate-sub-title d-flex">
-                            {poItem?.productAverageRate ? (
-                              <StarRating
-                                averageRating={poItem?.productAverageRate}
-                              />
-                            ) : (
-                              "0 rating"
-                            )}
-                          </p>
+                        
                         </div>
                       </td>
                     </div>
