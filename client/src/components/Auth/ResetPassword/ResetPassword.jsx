@@ -1,17 +1,14 @@
 import { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
-import { baseUrl } from "config.js";
-
 import Header from "components/main/Header/Header";
 import { useNavigate } from "react-router-dom";
+import { resetPassword } from "Services/UserAuth";
 
 function ResetPassword() {
   let revoceryToken = localStorage.getItem("recoverEmailAction");
-
   document.title = "Reset Password";
-
+  
   let navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -39,26 +36,16 @@ function ResetPassword() {
 
   async function submitForm(values) {
     setErrorMsg("");
-    try {
-      setIsLoading(true);
+    setIsLoading(true);
 
       let data = {
         password: values.password,
       };
 
-      let config = {
-        method: "patch",
-        url: `${baseUrl}/users/resetPassword/${revoceryToken}`,
+      let result = await resetPassword(revoceryToken,data);
 
-        data: data,
-      };
-
-      const response = await axios.request(config);
-      setErrorMsg("");
-      setIsLoading(false);
-
-      if (response?.data?.message === "done") {
-        // if (response?.data?.user?.factoryId !== null) {
+      
+      if (result?.success) {
         localStorage.setItem("RecoverAccMsg", true);
         localStorage.removeItem("recoverEmailAction");
 
@@ -66,11 +53,7 @@ function ResetPassword() {
           state: {
             title: "Password changed!",
             message: `Your password has been successfully changed. `,
-            //   buttonName:`Login`,
             icon: `fa-solid fa-check recvoerAcc-icon checked-success`,
-            //   actionBtn:{localStorage.setItem("ToSignIn"),
-            //   navigate("/signIn")}
-
             actionBtn: {
               name: "Login", // Button text
               navigate: "/signIn",
@@ -80,57 +63,9 @@ function ResetPassword() {
         });
         // }
       } else {
-        setErrorMsg(response?.data?.message);
+        setErrorMsg(result?.error);
       }
-    } catch (error) {
-      if (error.response && error.response.status) {
-        const statusCode = error.response.status;
-        switch (statusCode) {
-          case 400:
-            setErrorMsg(error?.response?.data?.errorMessage);
-            break;
-          case 401:
-            setErrorMsg("User is not Unauthorized ");
-            break;
-          case 403:
-            setErrorMsg(
-              "Forbidden, You do not have permission to access this resource."
-            );
-            break;
-          case 404:
-            setErrorMsg(
-              "Not Found (404). The requested resource was not found."
-            );
-            break;
-
-          case 500:
-            setErrorMsg(error?.response?.data?.errorMessage);
-            break;
-
-          //  429 Too Many Requests
-          // The user has sent too many requests in a given amount of time ("rate limiting").
-          case 429:
-            setErrorMsg(" Too Many Requests , Please try again later.");
-            break;
-          case 402:
-            // 402
-            setErrorMsg(error?.response?.data?.message);
-            break;
-          default:
-            // case message== error
-            setErrorMsg(error?.response?.data?.errorMessage);
-            break;
-        }
-      } else {
-        setErrorMsg("An unexpected error occurred. Please try again later.");
-      }
-
-      if (error.message === "Network Error") {
-        setErrorMsg("Something Went Wrong Please Try Again");
-      } else if (error.message === "error") {
-        setErrorMsg(error?.response?.data?.errorMessage);
-      }
-    }
+    
     setIsLoading(false);
   }
 

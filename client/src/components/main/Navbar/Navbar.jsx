@@ -43,7 +43,7 @@ function Navbar(props) {
                   Log in
                 </div>
                 <button
-                  className="btn1"
+                  className="btn1 bg-sec border-0 text-white rounded-3 px-3 py-1"
                   onClick={() => {
                     navigate("/signup");
                   }}
@@ -58,7 +58,7 @@ function Navbar(props) {
                   currentUserData={currentUserData}
                 />
 
-                <button className="btn1" onClick={() => logOuut()}>
+                <button className="btn1 bg-sec border-0 rounded-3 text-white px-3 py-2 fw-600" onClick={() => logOuut()}>
                   Log Out
                 </button>
               </>
@@ -67,14 +67,14 @@ function Navbar(props) {
         </div>
       <div className=" nav-sticky position-sticky top-0">
        
-        <header className="header-nav pt-4 pb-2">
+        <header className="header-nav pt-1">
           <nav className="navbar navbar-expand-lg navbar-dark  ">
             <div className="container-fluid">
               <Link className="navbar-brand" to="/">
                 <img src={logo} alt="logo" className="w-100 h-100" />
               </Link>
               <button
-                className="navbar-toggler "
+                className="navbar-toggler fs-16 "
                 type="button"
                 data-bs-toggle="collapse"
                 data-bs-target=".navbarNav"

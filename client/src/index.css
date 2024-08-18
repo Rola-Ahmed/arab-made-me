@@ -144,6 +144,11 @@ p, h1, h2, h3, h4, h5, h6 {
   background-color: var(--primary-color) !important;
 }
 
+.bg-sec {
+  background-color: var(--secondary-color) !important;
+}
+
+
 .text-main {
   color: var(--secondary-color) !important;
 }
@@ -401,7 +406,7 @@ p, button, div, textarea, input {
 
 }
 
-@media (max-width: 768px) {
+@media (max-width: 768.98px) {
 
   .md-d-none {
     display: none
@@ -412,12 +417,15 @@ p, button, div, textarea, input {
     width: 100;
   }
 
+  .fs-md-25 {
+    font-size: 25px !important;
+  }
 }
 
 @media (max-width: 992px) {
 
   .w-lg-75 {
-    width: 75% !important ;
+    width: 75% !important;
   }
 }
 

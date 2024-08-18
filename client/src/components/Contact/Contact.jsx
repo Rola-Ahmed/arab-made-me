@@ -305,7 +305,7 @@ function Contact() {
                 onSubmit={formValidation.handleSubmit}
                 className="w-100 contact-card-2 "
               >
-                <h3 className="contact-text-head">Ready To Get Started?</h3>
+                <h3 className="contact-text-head py-1 px-2">Ready To Get Started?</h3>
                 {errorMsg?.response && (
                   <p className="text-sub m-auto alert  alert-danger  text-dark w-100">
                     {errorMsg.response}

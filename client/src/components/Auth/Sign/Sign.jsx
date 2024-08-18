@@ -1,35 +1,23 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
-import { baseUrl } from "config.js";
 import "./Sign.css";
 import Header from "components/main/Header/Header";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
-import { UserToken } from "Context/userToken";
+import { useNavigate} from "react-router-dom";
 import InputField from "components/Forms/Shared/InputField";
 import FormVlaidtionError from "components/Forms/Shared/FormVlaidtionError";
+import useSignIn from "./useSignIn";
 
 function Sign() {
   document.title = "Sign In";
 
-  let params = useParams();
-  const location = useLocation();
   let navigate = useNavigate();
-  const searchParams = new URLSearchParams(location?.search);
+  let { submitForm,isLoading,errorMsg}=useSignIn()
 
-  // Resulting query string will be "?factoryId=3&factoryName=samsung"
-  if (searchParams?.size != 0) {
-    const queryString = searchParams?.toString();
-    params = `${params["*"]}?${queryString}`;
-  }
-  // console.log("params", params, params["*"]);
 
-  const [errorMsg, setErrorMsg] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+
   const [toggleSeePassword, settoggleSeePassword] = useState(false);
 
-  let { setIsLogin } = useContext(UserToken);
 
   // Form Validation
   const validationSchema = Yup.object().shape({
@@ -52,47 +40,7 @@ function Sign() {
     onSubmit: submitForm,
   });
 
-  async function submitForm(values) {
-    setErrorMsg("");
-    setIsLoading(true);
-
-    const data = {
-      email: values.email,
-      password: values.password,
-    };
-
-    const config = {
-      method: "post",
-      maxBodyLength: Infinity,
-      url: `${baseUrl}/users/signin`,
-      data: data,
-    };
-
-    const response = await axios.request(config);
-    setErrorMsg("");
-    setIsLoading(false);
-
-    if (response?.data?.message === "done") {
-      setIsLogin(response?.data?.token);
-
-      //1st if condition  means there is a redirect page that needs sign in first
-      // the other else conditons means that its only sign in && user is directed to a specific path based on his type
-      if (params !== null && params !== undefined && params["*"] != "") {
-        // console.log("params if", params);
-        navigate(`/${params["*"]}`);
-      } else if (response?.data?.user?.factoryId !== null) {
-        navigate(`/factorydashboard`);
-      } else if (response?.data?.user?.role == "admin") {
-        navigate(`/admin/adminDashboard`);
-      } else {
-        navigate("/");
-      }
-    } else {
-      setErrorMsg(response?.data?.message);
-    }
-
-    setIsLoading(false);
-  }
+ 
 
   return (
     <>

@@ -4,7 +4,6 @@ import * as Yup from "yup";
 import Header from "components/main/Header/Header";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { forgotPassword } from "Services/UserAuth";
-import FormVlaidtionError from "components/Forms/Shared/FormVlaidtionError";
 import InputField from "components/Forms/Shared/InputField";
 function ForgotPassword() {
   document.title = "Forgot Password";

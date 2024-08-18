@@ -49,14 +49,14 @@
 
 .btn1 {
   display: flex;
-  padding: 8px 12px;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  border-radius: 8px;
-  background: var(--secondary-color);
-  color: white;
-  border: 1px solid #f2ae31;
+  /* padding: 8px 12px; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* gap: 8px; */
+  /* border-radius: 8px; */
+  /* background: var(--secondary-color); */
+  /* color: white; */
+  /* border: 1px solid #f2ae31; */
 
 
 }
@@ -76,15 +76,14 @@
   gap: 16px;
 }
 
-.btns .text-1 {
+/* .btns .text-1 {
   color: var(--light-gray);
   font-family: "Inter-med";
-  font-size: 14px;
+  font-size: 16px;
   font-style: normal;
   font-weight: 500;
   line-height: 150%;
-  /* 21px */
-}
+} */
 
 .drop-account {
   width: auto !important;
@@ -196,13 +195,6 @@
 
 
 .lang-parent {
-  /* padding-right: 67px !important;
-  padding-left: 48px !important;
-  padding-top: 38px !important;
-  padding-bottom: 5vh !important;
-  background-color: var(--primary-color);
-  z-index: 1000; */
-
 
   padding-right: 67px !important;
   padding-left: 48px !important;
@@ -218,11 +210,10 @@
 }
 
 .Lang-cont .show-lang {
-  font-size: 19px !important;
+  /* font-size: 19px !important; */
   color: white !important;
   font-weight: 400 !important;
-  font-family: "Inter-reg" !important;
-
+  /* font-family: "Inter-reg" !important; */
 }
 
 /* .navbar-collapse {
@@ -235,11 +226,17 @@
 
 
 @media (max-width:539px) {
-  lang-parent {
+  .lang-parent {
     padding-right: 61px !important;
     padding-left: 40px !important;
   }
 
+}
 
+
+@media (max-width:768.98px) {
+  .navbar-brand {
+    width: 22vw;
+}
 
 }

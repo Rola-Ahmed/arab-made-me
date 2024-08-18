@@ -5,10 +5,10 @@
   padding: 5px 12px !important;
 }
 
-.Lang-cont button{
+/* .Lang-cont button{
   font-size: 12px !important;
 
-}
+} */
 
 .Lang-cont #local-btns.dropdown-menu[data-bs-popper] {
   left: 0% !important;
