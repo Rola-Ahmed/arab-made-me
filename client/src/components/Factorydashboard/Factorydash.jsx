@@ -296,7 +296,7 @@ function Factorydash(props) {
                   activePageName="whitelabel"
                   navigateToPage="whiteLabel"
                   title="White Label Requests"
-                  // notification={notification?.PrivateLabelingsNotif}
+                  notification={0}
                 />
                 <DashNavBtn
                   icon="fa-solid fa-industry"

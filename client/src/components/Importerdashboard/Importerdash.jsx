@@ -12,7 +12,6 @@ import DashLogo from "components/Shared/Dashboards/DashLogo";
 import DashNavBtn from "components/Shared/Dashboards/DashNavBtn";
 import BottomDashMenu from "components/Shared/Dashboards/BottomDashMenu";
 import DashListsDropDown from "components/Shared/Dashboards/DashListsDropDown";
-import useGlobalMessage from "hooks/useGlobalMessage";
 import ErrorToast from "components/ErrorToast";
 
 function Importerdash() {
@@ -21,7 +20,6 @@ function Importerdash() {
   let { currentUserData } = useContext(userDetails);
 
   // global message appearing "used pop up message"
-  const { setGlobalMsg } = useGlobalMessage();
 
   let navigate = useNavigate();
   const { pathname } = useLocation();
@@ -209,6 +207,14 @@ function Importerdash() {
                   activePageName="customerproductrequest"
                   navigateToPage="CustomerProductRequest"
                   title="Custom Product Requests"
+                  notification=""
+                />
+                <DashNavBtn
+                  icon="fa-solid fa-tag"
+                  currentNavPage={currentNavPage}
+                  activePageName="whitelabel"
+                  navigateToPage="whiteLabel"
+                  title="White Label Requests"
                   notification=""
                 />
                 <DashNavBtn

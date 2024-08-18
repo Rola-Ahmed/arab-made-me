@@ -4,8 +4,10 @@ import OneRfqReq from "components/Importerdashboard/subComponets/RFQBuyer/OneRfq
 import PrivateLabelBuyer from "components/Importerdashboard/subComponets/PrivateLabelImp/AllPrivateLabel/AllPrivateLabel";
 import OnePrivateLabel from "components/Importerdashboard/subComponets/PrivateLabelImp/OnePrivateLabel/OnePrivateLabel";
 
-import CusProductReq from "components/Importerdashboard/subComponets/CusProductReqImp/AllSpmfs/CusProductReqImp";
+import WhiteLabel from "components/Importerdashboard/subComponets/WhiteLabel/AllWhiteLabel/AllWhiteLabel";
+import OneWhiteLabel from "components/Importerdashboard/subComponets/WhiteLabel/OneWhiteLabel/OneWhiteLabel";
 
+import CusProductReq from "components/Importerdashboard/subComponets/CusProductReqImp/AllSpmfs/CusProductReqImp";
 
 // Importer Dashboard pages
 import SourcingRequest from "components/Importerdashboard/subComponets/SourcingRequest/AddSourcingReq/SourcingRequest";
@@ -22,7 +24,6 @@ import ImporterPofile from "components/Importerdashboard/subComponets/ImporterPr
 import VisitRequestEtc from "components/Importerdashboard/subComponets/ReqVisitImporter/oneVisitReq/OneVisitReq";
 
 import PurchasingOrdersEtc from "components/Importerdashboard/subComponets/PO/OnePo/OnePo";
-
 
 import CustomProductReqEtc from "components/Importerdashboard/subComponets/CusProductReqImp/CustomProductReqEtc/CustomProductReqEtc";
 
@@ -42,7 +43,7 @@ const importerDashboardRoutes = [
     element: <Importerdash />,
     children: [
       { path: "", element: <DashBoardImporter /> },
-      
+
       // done
       { path: "Rfqs", element: <RfqBuyer /> },
       { path: "RFQReq/moreDetails", element: <OneRfqReq /> },
@@ -50,17 +51,17 @@ const importerDashboardRoutes = [
       { path: "PrivateLabel", element: <PrivateLabelBuyer /> },
       { path: "PrivateLabelReq/moreDetails", element: <OnePrivateLabel /> },
 
-
       { path: "CustomerProductRequest", element: <CusProductReq /> },
-      { path: "customProductReq/moreDetails", element: <CustomProductReqEtc />,
+      {
+        path: "customProductReq/moreDetails",
+        element: <CustomProductReqEtc />,
       },
 
       // --------------------------------------------------
-   
+
       { path: "RequestVisit", element: <ReqVisitImporter /> },
       { path: "purchasingOrders", element: <PurchasingOrdersImp /> },
 
-    
       {
         path: "add/sourcingRequest",
 
@@ -101,7 +102,8 @@ const importerDashboardRoutes = [
         element: <PurchasingOrdersEtc />,
       },
 
-  
+      { path: "whiteLabel", element: <WhiteLabel /> },
+      { path: "whiteLabel/moredetails", element: <OneWhiteLabel /> },
 
       {
         path: "quotations/moreDetails",

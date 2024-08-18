@@ -116,12 +116,12 @@ export default function AllPrivateLabel() {
                         <td className="">
                           <div className="title-text-handler">
                             <p className="trate-title">
-                              {poItem?.producy?.name ?? "Private Label Product"}
+                              {poItem?.product?.name ?? "Private Label Product"}
                             </p>
                             <p className="trate-sub-title d-flex">
-                              {poItem?.producy?.averageRate ? (
+                              {poItem?.product?.averageRate ? (
                                 <StarRating
-                                  averageRating={poItem?.producy?.averageRate}
+                                  averageRating={poItem?.product?.averageRate}
                                 />
                               ) : (
                                 "0 rating"

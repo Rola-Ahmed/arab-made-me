@@ -32,7 +32,6 @@ export function useWhiteLabel() {
         "include=importer&include=product"
       );
 
-      console.log("result getOneWhiteLabel", result);
       // check if private label has quotations
       const QouteIdConfigResp = await getQuotes(
         {},
@@ -46,17 +45,13 @@ export function useWhiteLabel() {
           ...prevData,
           ...result.data.whitelabelings,
         }));
-        setApiLoadingData((prevVal) => ({
-          ...prevVal,
-          reqData: false,
-        }));
-      } else {
-        setApiLoadingData((prevVal) => ({
-          ...prevVal,
-          reqData: true,
-          errorWhileLoading: result?.error,
-        }));
       }
+
+      setApiLoadingData((prevVal) => ({
+        ...prevVal,
+        reqData: result?.loadingStatus,
+        errorWhileLoading: result?.error,
+      }));
 
       if (QouteIdConfigResp?.success) {
         // Extract the quotations array from the response

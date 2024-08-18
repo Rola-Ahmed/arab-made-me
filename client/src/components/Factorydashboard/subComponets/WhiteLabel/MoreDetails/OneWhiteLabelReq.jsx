@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Loading from "components/Loading/Loading";
 
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
 import ProductDetails from "components/Forms/Shared/SelectedProductDetails";

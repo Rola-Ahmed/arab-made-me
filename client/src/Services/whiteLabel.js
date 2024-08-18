@@ -1,4 +1,9 @@
-import { postRequest, putRequest, getRequestDataHeader } from "./authServices";
+import {
+  postRequest,
+  putRequest,
+  getRequestDataHeader,
+  deleteRequest,
+} from "./authServices";
 
 // get spesific product Value
 export const addWhiteLabel = async (header, data) => {
@@ -16,4 +21,8 @@ export const getOneWhiteLabel = async (id, param) => {
 
 export const getWhiteLables = async (param) => {
   return await getRequestDataHeader(`/whiteLabelings?${param}`, {}, {});
+};
+
+export const deleteWhiteLabelFromUser = async (id, header) => {
+  return await deleteRequest(`/whiteLabelings/${id}`, header, {});
 };
