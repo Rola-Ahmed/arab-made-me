@@ -55,7 +55,7 @@ function PurchasingOrder(props) {
     quantity: reqQualityValidate,
     deadline: requiredDateValidate,
 
-    productId: requiredStringValidate,
+    // productId: requiredStringValidate,
     packingConditions: requiredStringValidate,
     packingConditionsOther: otherTextAreaValidate("packingConditions", "other"),
 
@@ -179,7 +179,7 @@ function PurchasingOrder(props) {
 
   return (
     <>
-      <Header title="Send PO " />
+      <Header title={`Send PO  ${sourcingOfferId && "on Sourcing Offer"}`} />
 
       <section id="view" className="send-po">
         {/* Factory description */}
@@ -207,6 +207,7 @@ function PurchasingOrder(props) {
           setErrorMsg={setErrorMsg}
           productIsSelected={productIsSelected}
           setSelectedDocs={setSelectedDocs}
+          SourcingIsSelected={SourcingIsSelected}
           selectedDocs={selectedDocs}
         />
       </section>

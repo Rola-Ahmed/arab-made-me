@@ -5,8 +5,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
-export default function  DisplayMultiImages(props) {
+export default function DisplayMultiImages(props) {
   let { handleImageClick, images } = props;
+  console.log("images",images)
   return (
     <>
       {" "}
@@ -15,9 +16,9 @@ export default function  DisplayMultiImages(props) {
           <div className="row grid-gap-col overflow-hidden">
             <div className="col-12 ">
               <Swiper
-              modules={[Navigation]}
-                                navigation={true}
-                                slidesPerView={2}
+                modules={[Navigation]}
+                navigation={true}
+                slidesPerView={2}
                 gap={10}
               >
                 {images?.map((item) => (

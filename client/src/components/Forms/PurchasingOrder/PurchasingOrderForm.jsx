@@ -27,12 +27,15 @@ function PurchasingOrderForm(props) {
     formValidation,
     errorMsg,
     setErrorMsg,
+    SourcingIsSelected,
   } = props;
+
+  // console.log("formvalitaion", formValidation);
 
   return (
     <form
       id="view"
-      className="container container-po"
+      className="container container-po "
       onSubmit={formValidation.handleSubmit}
     >
       <div className="input-content ">
@@ -47,7 +50,7 @@ function PurchasingOrderForm(props) {
         </div>
 
         <div className="row row-container w-100 ">
-          {!productIsSelected && (
+          {!productIsSelected && !SourcingIsSelected && (
             <div className="col-md-6 col-sm-12">
               <div className="form-group">
                 <label>selected product</label>
@@ -59,7 +62,7 @@ function PurchasingOrderForm(props) {
                   value={formValidation?.values?.productId}
                   onClick={(e) => {
                     let selectedProductName = "";
-                    productDetails.find(
+                    productDetails?.find(
                       (item) =>
                         item.id == e.target.value
                           ? (selectedProductName = item.name)
@@ -246,7 +249,6 @@ function PurchasingOrderForm(props) {
               title="instructions"
             />
           </div>
-
 
           <UploadDocument
             selectedDocs={selectedDocs}

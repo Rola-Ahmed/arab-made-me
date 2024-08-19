@@ -1,5 +1,5 @@
+import React, { useRef, useEffect } from "react";
 import { useContext } from "react";
-
 import { Link, useNavigate } from "react-router-dom";
 import { logo } from "constants/Images";
 import { userDetails } from "Context/userType";
@@ -24,49 +24,89 @@ function Navbar(props) {
     navigate("/");
   };
 
+  const navBarRef = useRef(null);
+
+  useEffect(() => {
+    // Function to handle click outside the nav bar
+    const handleClickOutside = (event) => {
+      // if (navBarRef.current && !navBarRef.current.contains(event.target)) {
+      //   console.log("Clicked outside the navbar");
+      //   // Perform your action here (e.g., close the navbar)
+      //   // Example: document.getElementById('navbarNav').classList.remove('show');
+      // }
+
+      if (navBarRef.current && !navBarRef.current.contains(event.target)) {
+        // Check if 'show' class is present and remove it
+        console.log("Clicked outside the navbar");
+
+        let nav = document.getElementById("navBarCont");
+        let btn = document.getElementById("menuBtn");
+        console.log("nav", nav);
+        console.log("nav", nav.classList.value);
+        if (nav.classList.contains("show")) {
+          nav.classList.remove("show");
+          console.log("Removed 'show' class from navbar");
+          btn.classList.add("collapsed");
+          btn.setAttribute("aria-expanded", "false");
+        }
+      }
+    };
+
+    // Add event listener for clicks
+    document.addEventListener("mousedown", handleClickOutside);
+
+    // Cleanup event listener on component unmount
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <>
       <ScrollToTop />
       <div className="lang-parent d-md-flex align-items-center justify-content-between border-bottom border-1 border-muted">
-          {/* btn to change lanuages */}
-          <LanguageSwitcher />
+        {/* btn to change lanuages */}
+        <LanguageSwitcher />
 
-          <div className="btns p-0  w-fit-content  mx-md-0 mx-auto">
-            {!isLogin ? (
-              <>
-                <div
-                  className="text-1 text-decoration-none cursor d-flex justify-content-center"
-                  onClick={() => {
-                    navigate("/signIn");
-                  }}
-                >
-                  Log in
-                </div>
-                <button
-                  className="btn1 bg-sec border-0 text-white rounded-3 px-3 py-1"
-                  onClick={() => {
-                    navigate("/signup");
-                  }}
-                >
-                  Get Started
-                </button>
-              </>
-            ) : (
-              <>
-                <AllUsersDropListComp
-                  loading={currentUserData?.datacompletelyLoaded}
-                  currentUserData={currentUserData}
-                />
+        <div className="btns p-0  w-fit-content  mx-md-0 mx-auto">
+          {!isLogin ? (
+            <>
+              <div
+                className="text-1 text-decoration-none cursor d-flex justify-content-center"
+                onClick={() => {
+                  navigate("/signIn");
+                }}
+              >
+                Log in
+              </div>
+              <button
+                className="btn1 bg-sec border-0 text-white rounded-3 px-3 py-1"
+                onClick={() => {
+                  navigate("/signup");
+                }}
+              >
+                Get Started
+              </button>
+            </>
+          ) : (
+            <>
+              <AllUsersDropListComp
+                loading={currentUserData?.datacompletelyLoaded}
+                currentUserData={currentUserData}
+              />
 
-                <button className="btn1 bg-sec border-0 rounded-3 text-white px-3 py-2 fw-600" onClick={() => logOuut()}>
-                  Log Out
-                </button>
-              </>
-            )}
-          </div>
+              <button
+                className="btn1 bg-sec border-0 rounded-3 text-white px-3 py-2 fw-600"
+                onClick={() => logOuut()}
+              >
+                Log Out
+              </button>
+            </>
+          )}
         </div>
-      <div className=" nav-sticky position-sticky top-0">
-       
+      </div>
+
+      <div className=" nav-sticky position-sticky top-0" ref={navBarRef}>
         <header className="header-nav pt-1">
           <nav className="navbar navbar-expand-lg navbar-dark  ">
             <div className="container-fluid">
@@ -74,6 +114,7 @@ function Navbar(props) {
                 <img src={logo} alt="logo" className="w-100 h-100" />
               </Link>
               <button
+                id="menuBtn"
                 className="navbar-toggler fs-16 "
                 type="button"
                 data-bs-toggle="collapse"
@@ -86,7 +127,7 @@ function Navbar(props) {
               </button>
               <div
                 className="collapse navbar-collapse  navbarNav "
-                id="navbarNav"
+                id="navBarCont"
               >
                 <ul className="navbar-nav m-auto mb-2 mb-lg-0">
                   <li className="nav-item">

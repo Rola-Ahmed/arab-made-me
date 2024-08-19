@@ -10,12 +10,10 @@ import io from "socket.io-client";
 //     ? process.env.REACT_APP_IMAGE_URL
 //     : process.env.REACT_APP_DEV_IMAGE_URL;
 
-export const baseUrl = 
-"http://localhost:5000/api/v1";
+export const baseUrl = "http://localhost:5000/api/v1";
 // "https://backend-rail-subbase-production.up.railway.app/api/v1";
 
-export const baseUrl_IMG =
- "http://localhost:5000";
+export const baseUrl_IMG = "http://localhost:5000";
 // "https://backend-rail-subbase-production.up.railway.app";
 
 export const socket = io.connect(baseUrl_IMG, {
@@ -26,6 +24,5 @@ export const socket = io.connect(baseUrl_IMG, {
   },
 });
 
-
-// 
+//
 // io.listen(4000);

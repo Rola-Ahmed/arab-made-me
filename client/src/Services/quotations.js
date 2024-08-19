@@ -21,13 +21,14 @@ export const addqouteForSpmf = async (header, data) => {
   return await postRequest(`/quotations/add/spmf`, header, data);
 };
 
-
-
 export const getOneQuote = async (id, param) => {
   return await getRequestDataHeader(`/quotations/${id}?${param}`, {}, {});
 };
 
-
-export const updateQoute = async (id,header, data) => {
+export const updateQoute = async (id, header, data) => {
   return await putRequest(`/quotations/${id}`, header, data);
+};
+
+export const AddQuoteUpdates = async (header, data) => {
+  return await postRequest(`quotationUpdates/add`, header, data);
 };

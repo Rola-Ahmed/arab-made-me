@@ -5,6 +5,7 @@ import { fetchFactoryProducts } from "Services/factory";
 import { fetchProductData } from "Services/products";
 import { getOnePO } from "Services/PO";
 import PurchasingOrder from "./PurchasingOrder";
+import { getOneSourcingOffer } from "Services/sourcingOffer";
 
 function FetchPurchasingOrder() {
   const [searchParams] = useSearchParams();
@@ -31,6 +32,7 @@ function FetchPurchasingOrder() {
 
   // if a sepcific prouct is selected
   let [productDetails, setProductDetails] = useState({});
+  let [rquestedData, setRquestedData] = useState({});
 
   // if no product is selected
   let [productDetailsArr, setProductDetailsArr] = useState([]);
@@ -48,12 +50,20 @@ function FetchPurchasingOrder() {
         } else if (
           normalizedRequestType == requestTypeValues.fromSourcingReuqest
         ) {
-          result = await getOnePO(sourcingOfferId);
+          // result = await getOnePO(sourcingOfferId);
+          result = await getOneSourcingOffer(
+            sourcingOfferId,
+            "&include=factory&include=product"
+          );
         }
+        console.log("result----------", result);
 
         if (result && result?.success) {
           if (normalizedRequestType == requestTypeValues.fromFactory) {
             setProductDetailsArr(result.data.products);
+          }
+          if (normalizedRequestType == requestTypeValues.fromSourcingReuqest) {
+            setRquestedData(result.data.sourcingoffers);
           } else {
             setProductDetails(result.data.products);
           }
@@ -92,12 +102,13 @@ function FetchPurchasingOrder() {
   } else if (normalizedRequestType == requestTypeValues.fromSourcingReuqest) {
     return (
       <PurchasingOrder
-        productIsSelected={true}
+        // productIsSelected={rquestedData?.productId != ""}
+        productIsSelected={false}
         SourcingIsSelected={true}
         isLoading={isLoading}
         setIsLoading={setIsLoading}
-        factoryData={productDetails?.factory} //not array
-        productDetails={productDetails?.product} //not array
+        factoryData={rquestedData?.factory} //not array
+        productDetails={rquestedData?.product} //not array
         productName={productName}
         productId={productId}
         factoryId={factoryId}

@@ -75,7 +75,7 @@ const useFormSubmitForAllQoutes = (isLogin, setErrorMsg, setIsLoading) => {
     } = values;
 
     let data = {
-      formCode:`${importerId}-${Math.floor(1000 + Math.random() * 9000)}-${minQuantity}`,
+      // formCode:`${importerId}-${Math.floor(1000 + Math.random() * 9000)}-${minQuantity}`,
       importerId,
       //   productName,
       price,
