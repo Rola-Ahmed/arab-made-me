@@ -14,7 +14,7 @@ export default function Quote({requestedData}) {
           <div className="col-6">
               <ReadOnly
                 title="Quotation Code"
-                value={requestedData?.formCode}
+                value={requestedData?.id}
               />
             </div>
 
