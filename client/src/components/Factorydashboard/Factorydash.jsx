@@ -1,70 +1,40 @@
-import { useEffect, useState, useContext } from "react";
 import "./Factorydash.css";
 import {
   Link,
-  Navigate,
   Outlet,
   useLocation,
-  useNavigate,
 } from "react-router-dom";
-import { userDetails } from "Context/userType";
+// import { userDetails } from "Context/userType";
 import DashLogo from "components/Shared/Dashboards/DashLogo";
 import BottomDashMenu from "components/Shared/Dashboards/BottomDashMenu";
 import DashNavBtn from "components/Shared/Dashboards/DashNavBtn";
 import DashListsDropDown from "components/Shared/Dashboards/DashListsDropDown";
-import ErrorToast from "components/ErrorToast";
-import useFactorydash from "./FactorydashContainer";
+import useFactorydashLogic from "./subComponets/hooks/useFactorydashLogic";
+import { checkFactorydashAuthorization } from "roles/factorydashRoles";
 function Factorydash() {
   document.title = "Factory Dashboard";
-  const { isLogin, notification } = useFactorydash();
-  const { currentUserData, clearSession } = useContext(userDetails);
-  const navigate = useNavigate();
   const { pathname } = useLocation();
-  const [activeMenu, setActiveMenu] = useState("");
+  const {
+    isLogin,
+    notification,
+    currentUserData,
+    handleLogout,
+    handleDropdownToggle,
+    setActiveMenu,
+    activeMenu,
+  } = useFactorydashLogic(pathname);
 
-  useEffect(() => {
-    const scrollElement = document.getElementById("scollTOTop");
-    if (scrollElement) {
-      scrollElement.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: "instant",
-      });
-    }
-  }, [pathname]);
+  // Use the authorization check function
+  const authorizationResult = checkFactorydashAuthorization(
+    isLogin,
+    currentUserData
+  );
+  if (authorizationResult) return authorizationResult;
 
-  const handleLogout = () => {
-    clearSession();
-    navigate("/");
-  };
-
-  const handleDropdownToggle = (dropdownId, iconId) => {
-    const dropdown = document.getElementById(dropdownId);
-    const icon = document.getElementById(iconId).querySelector(".caret");
-
-    dropdown.classList.toggle("d-block");
-    icon.classList.toggle("fa-caret-up");
-    icon.classList.toggle("fa-caret-down");
-  };
-
+ 
   const currentNavPage = pathname.split("/").pop().toLowerCase();
 
-  if (!isLogin) {
-    ErrorToast("You are not authorized to access this page. Please sign in first.");
-    return <Navigate to="/signIn" />;
-  }
 
-  if (currentUserData) {
-    const { factoryId, importerId, userRole } = currentUserData;
-    if (!factoryId) {
-      let navigatePath = "/403";
-      if (importerId) navigatePath = "/importerdashboard/403?refresh";
-      if (userRole === "admin") navigatePath = "/adminDashboard/403?refresh";
-      
-      ErrorToast("You are not authorized to access this page.");
-      return <Navigate to={navigatePath} />;
-    }
-  }
 
   return (
     <section className="factory-dashboard vh-100 overflow-hidden  vw-100">
@@ -95,8 +65,9 @@ function Factorydash() {
                     id="factoryProfile"
                     // to="#"
                     to="factoryProfile#accountInformation"
-                    onClick={() => handleDropdownToggle("drop-profile", "factoryProfile")}
-                 
+                    onClick={() =>
+                      handleDropdownToggle("drop-profile", "factoryProfile")
+                    }
                   >
                     <i class="fa-solid fa-user"></i>
                     <p className="sub-title cursor">Profile</p>
@@ -168,10 +139,9 @@ function Factorydash() {
                     id="mircoSite"
                     // to="#"
                     to="mircoSite#factorylogo"
-
-                    onClick={() => handleDropdownToggle("drop-mircoSite", "mircoSite")}
-
-
+                    onClick={() =>
+                      handleDropdownToggle("drop-mircoSite", "mircoSite")
+                    }
                   >
                     <i class="fa-solid fa-user"></i>
                     <p className="sub-title cursor">My Microsite</p>
