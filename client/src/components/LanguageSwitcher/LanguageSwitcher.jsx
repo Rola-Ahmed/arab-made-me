@@ -5,9 +5,10 @@ const LanguageSwitcher = () => {
   const { i18n } = useTranslation();
   const languageNames = {
     en: " English",
-    "en-us": "English (US)",
-    "en-gb": "English (UK)",
-    "en-gb": "English (UK)",
+    "en-us": "English",
+    "en-US": "English",
+    // "en-gb": "English (UK)",
+    // "en-gb": "English (UK)",
     ar: " العربيه",
   };
 

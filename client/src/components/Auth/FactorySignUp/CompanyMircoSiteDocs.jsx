@@ -1,5 +1,7 @@
 import { useState, useContext, useEffect } from "react";
-import UploadDocument,{UploadVedio} from "components/Forms/Shared/UploadDocument";
+import UploadDocument, {
+  UploadVedio,
+} from "components/Forms/Shared/UploadDocument";
 
 import { awaitImg, currentsubPoint } from "constants/Images";
 import { addFactoryMedia } from "Services/factory";
@@ -39,32 +41,31 @@ function CompanyMircoSiteDocs() {
     e.preventDefault();
     let data = new FormData();
     selectedDocs?.map((item) => data.append(item.keyWord, item.pdfFile));
-    try {
-      let result = await addFactoryMedia({ authorization: isLogin }, data);
-      if (result?.success) {
-        setCurrentUserData((prevUserData) => ({
-          ...prevUserData,
-          factoryId: result?.data?.factory?.id,
-        }));
+    let result = await addFactoryMedia({ authorization: isLogin }, data);
+    if (result?.success) {
+      setCurrentUserData((prevUserData) => ({
+        ...prevUserData,
+        factoryId: result?.data?.factory?.id,
+        continueProfilePath: "CompanyDetails/RepresentiveDetails",
+      }));
 
-        setIsLoading(true);
-        navigate(`/CompanyDetails/RepresentiveDetails`);
-      } else {
-        setIsLoading(false);
-        setErrorMsg((prevErrors) => ({
-          ...prevErrors,
-          response: result?.error,
-        }));
+      setIsLoading(true);
+      navigate(`/CompanyDetails/RepresentiveDetails`);
+    } else {
+      setIsLoading(false);
+      setErrorMsg((prevErrors) => ({
+        ...prevErrors,
+        response: result?.error,
+      }));
 
-        const targetElement = document.getElementById("view");
-        if (targetElement) {
-          targetElement.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-          });
-        }
+      const targetElement = document.getElementById("view");
+      if (targetElement) {
+        targetElement.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
       }
-    } catch (error) {}
+    }
   }
 
   const [selectedDocs, setSelectedDocs] = useState([
@@ -126,7 +127,7 @@ function CompanyMircoSiteDocs() {
                   </p>
                 )}
 
-                <div className="row gap-12-32">
+                <div className="row gap-12">
                   {/* factory cover Images */}
 
                   <UploadDocument
@@ -137,7 +138,7 @@ function CompanyMircoSiteDocs() {
                     mediaMaxLen="3"
                     meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
                     setErrorMsg={setErrorMsg}
-                    title="Company Banners"
+                    title="Company Banners *"
                   />
 
                   {/* factory profileeee */}
@@ -149,7 +150,7 @@ function CompanyMircoSiteDocs() {
                     mediaMaxLen="3"
                     meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
                     setErrorMsg={setErrorMsg}
-                    title="Company Logo"
+                    title="Company Logo *"
                   />
 
                   {/* cetifactessssss */}
@@ -161,7 +162,7 @@ function CompanyMircoSiteDocs() {
                     mediaMaxLen="3"
                     meidaAcceptedExtensions={["pdf", "png", "jpeg", "jpg"]}
                     setErrorMsg={setErrorMsg}
-                    title="Certificates"
+                    title="Certificates *"
                   />
 
                   <UploadVedio
@@ -170,9 +171,9 @@ function CompanyMircoSiteDocs() {
                     setSelectedDocs={setSelectedDocs}
                     MediaName="coverVideo"
                     mediaMaxLen="3"
-                    meidaAcceptedExtensions={["mkv","mp4",'x-matroska']}
+                    meidaAcceptedExtensions={["mkv", "mp4", "x-matroska"]}
                     setErrorMsg={setErrorMsg}
-                    title="Factory Cover video"
+                    title="Factory Cover video *"
                   />
 
                   <div className="col-12 action">

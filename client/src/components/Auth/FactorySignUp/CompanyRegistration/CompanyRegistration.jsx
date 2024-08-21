@@ -13,6 +13,7 @@ import { addFactory } from "Services/factory";
 import LastPointStatus from "../TimeLineHeader/LastPointStatus";
 import SelectRole from "../TimeLineHeader/SelectRole";
 import NextPoint from "../TimeLineHeader/NextPoint";
+// import useMapsApi from "Services/mapsApi";
 
 export default function CompanyRegistration() {
   document.title = "Factory Registration";
@@ -22,6 +23,7 @@ export default function CompanyRegistration() {
   let { setCurrentUserData, currentUserData } = useContext(userDetails);
   let formValidation = useFormValidation(countriesMiddleEast, submitForm);
   let { allSectors } = useFetchSectors();
+  // let {data, apiLoadingData } = useMapsApi(700, "EG");
   // Ensure formValidation is not undefined
   // if (!formValidation) formValidation = null;
   // if (currentUserData?.factoryId)
@@ -48,48 +50,50 @@ export default function CompanyRegistration() {
       return restErrors;
     });
 
-      let data = {
-        description: values.description,
-        country: values.country,
-        sectorId: values.sectorId,
-        name: values.factoryName,
-        socialLinks: {},
+    let data = {
+      description: values.description,
+      country: values.country,
+      sectorId: values.sectorId,
+      name: values.factoryName,
+      socialLinks: {},
 
-        ...(values.website && { website: values.website }),
-        ...(values.city && { city: values.city }),
-        ...(values.factoryPhone && {
-          phone: `${values.factoryPhoneCode}${values.factoryPhone}`,
-        }),
-      };
+      ...(values.website && { website: values.website }),
+      ...(values.city && { city: values.city }),
+      ...(values.factoryPhone && {
+        phone: `${values.factoryPhoneCode}${values.factoryPhone}`,
+        ...(values.address && { address: [values.address] }),
+      }),
+    };
 
-      if (values.WhatsappPhone !== "")
-        data.socialLinks[
-          "whatsapp"
-        ] = `${values.WhatsappPhoneCode}${values.WhatsappPhone}`;
+    if (values.WhatsappPhone !== "")
+      data.socialLinks[
+        "whatsapp"
+      ] = `${values.WhatsappPhoneCode}${values.WhatsappPhone}`;
 
-      let result = await addFactory({ authorization: isLogin }, data);
-      if (result?.success) {
-        setCurrentUserData((prevUserData) => ({
-          ...prevUserData,
-          factoryId: result?.data?.factory?.id,
-        }));
+    let result = await addFactory({ authorization: isLogin }, data);
+    if (result?.success) {
+      setCurrentUserData((prevUserData) => ({
+        ...prevUserData,
+        factoryId: result?.data?.factory?.id,
+        continueProfilePath: "CompanyDetails/MircoSiteDocs",
+      }));
 
-        navigate(`/CompanyDetails/step2`);
-      } else {
-        setIsLoading(false);
-        setErrorMsg((prevErrors) => ({
-          ...prevErrors,
-          response: result?.error,
-        }));
+      navigate(`/CompanyDetails/step2`);
+    } else {
+      setIsLoading(false);
+      setErrorMsg((prevErrors) => ({
+        ...prevErrors,
+        response: result?.error,
+      }));
 
-        const targetElement = document.getElementById("view");
-        if (targetElement) {
-          targetElement.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-          });
-        }
+      const targetElement = document.getElementById("view");
+      if (targetElement) {
+        targetElement.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
       }
+    }
   }
 
   return (
@@ -152,8 +156,32 @@ export default function CompanyRegistration() {
                   </div>
 
                   <div className="col-12">
+                    <div className="form-group gap">
+                      <label className="form-title">sector *</label>
+                      <select
+                        className="form-select form-control "
+                        onChange={
+                          // setCountryVal(event.target.value);
+                          formValidation.handleChange
+                        }
+                        id="sectorId"
+                        onBlur={formValidation.handleBlur}
+                        value={formValidation.values.sectorId}
+                      >
+                        <option value="">Select</option>
+
+                        {allSectors?.map((item) => (
+                          <option value={item?.id}>{item?.name}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                  <div className="col-12">
                     <div className="form-group ">
-                      <label className="form-title">Factory Phone Number</label>
+                      <label className="form-title">
+                        Factory Phone Number{" "}
+                        <span className="text-danger">*</span>
+                      </label>
                       <div className="input-group  h-100">
                         <div className="input-group-prepend">
                           <select
@@ -192,6 +220,7 @@ export default function CompanyRegistration() {
                     <div className="form-group ">
                       <label className="form-title">
                         WhatsApp Number Services, Exporting, and Sales Manager
+                        <span className="text-danger"> *</span>
                       </label>
                       <div className="input-group  h-100">
                         <div className="input-group-prepend">
@@ -230,7 +259,7 @@ export default function CompanyRegistration() {
 
                   <div className="col-12">
                     <InputField
-                      isRequired={false}
+                      isRequired={true}
                       title={"Website"}
                       formValidation={formValidation}
                       vlaidationName={"website"}
@@ -267,23 +296,24 @@ export default function CompanyRegistration() {
 
                   <div className="col-12">
                     <div className="form-group gap">
-                      <label className="form-title">sector *</label>
-                      <select
-                        className="form-select form-control "
-                        onChange={
-                          // setCountryVal(event.target.value);
-                          formValidation.handleChange
-                        }
-                        id="sectorId"
+                      <label className="form-title">Address</label>
+                      <input
+                        type="text"
+                        className="form-control "
+                        id="address"
+                        placeholder="Enter Address"
+                        onChange={formValidation.handleChange}
                         onBlur={formValidation.handleBlur}
-                        value={formValidation.values.sectorId}
-                      >
-                        <option value="">Select</option>
-
-                        {allSectors?.map((item) => (
-                          <option value={item?.id}>{item?.name}</option>
-                        ))}
-                      </select>
+                        value={formValidation.values.address}
+                      />
+                      {formValidation.errors.address &&
+                      formValidation.touched.address ? (
+                        <small className="text-danger">
+                          {formValidation.errors.address}
+                        </small>
+                      ) : (
+                        ""
+                      )}
                     </div>
                   </div>
 

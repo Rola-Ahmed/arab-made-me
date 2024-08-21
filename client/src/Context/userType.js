@@ -83,6 +83,10 @@ export function UserTypeProvider({ children }) {
             response?.data?.users?.factoryId == null
               ? false
               : true,
+
+          ...(response.data.users.role == "user" && {
+            continueProfilePath: "userType",
+          }),
         }));
       } else {
         setIsLogin("");
@@ -114,6 +118,30 @@ export function UserTypeProvider({ children }) {
         .request(configFactory)
         .then((response) => {
           if (response.data.message === "done") {
+            let path = null;
+
+            if (response.data.factories?.name == null) {
+              path = "CompanyDetails";
+            } else if (
+              response.data.factories?.qualityCertificates == null ||
+              response.data.factories?.coverVideo == null ||
+              response.data.factories?.images == null ||
+              response.data.factories?.coverImage == null
+            ) {
+              path = "CompanyDetails/MircoSiteDocs";
+            } else if (
+              response.data.factories?.repName == null ||
+              response.data.factories?.repPhone == null ||
+              response.data.factories?.repEmail == null
+            ) {
+              path = "CompanyDetails/RepresentiveDetails";
+            } else if (response.data.factories?.legalDocs == null) {
+              path = "CompanyDetails/LegalDocuments";
+            }
+            // console.log("path", path);
+
+
+
             setAndStoreData((prevVal) => ({
               ...prevVal,
               factoryVerified: response.data.factories.verified,
@@ -123,6 +151,7 @@ export function UserTypeProvider({ children }) {
               factoryEmailActivated: response.data.factories.emailActivated,
               datacompletelyLoaded: false,
               profile: response.data.factories.coverImage,
+              continueProfilePath: path,
             }));
           }
         })
@@ -171,30 +200,33 @@ export function UserTypeProvider({ children }) {
     }
   }, [loading, currentUserData.factoryId, currentUserData.importerId, isLogin]);
 
-  const clearSesssion = () => {
-    // setUser(null);
-    // setToken("");
-    // localStorage.removeItem("site");
-    // navigate("/login");
-
+  const clearSession = () => {
     setIsLogin("");
-    // localStorage.clear();
-    localStorage.remove("tocker");
-
-    // navigate("/");
+    localStorage.removeItem("userToken");
   };
 
   const setAndStoreData = (newValue) => {
     setCurrentUserData(newValue);
   };
+
+  // const logOuut = () => {
+  //   setIsLogin("");
+  //   localStorage.clear();
+  // };
+
   // console.log("currentUserData", currentUserData);
 
+  console.log(
+    "currentUserData",
+    currentUserData,
+    currentUserData.continueProfilePath
+  );
   return (
     <userDetails.Provider
       value={{
         currentUserData,
         setCurrentUserData: setAndStoreData,
-        clearSesssion,
+        clearSession,
       }}
     >
       {children}

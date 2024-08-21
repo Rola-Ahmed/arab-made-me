@@ -59,8 +59,6 @@ function ImporterRepDetails() {
     setIsLoading(false);
   }
 
-  
-
   return (
     <>
       <section id="view" className="register-msg ">
@@ -121,7 +119,7 @@ function ImporterRepDetails() {
                     </p>
                   )}
 
-                  <div className="row gap-12-32">
+                  <div className="row gap-12">
                     {/* factory profileeee */}
 
                     <UploadDocument

@@ -1,6 +1,12 @@
 import { Button, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { userDetails } from "Context/userType";
+import { useContext } from "react";
+
 export default function UserNotAuthorized(directTo) {
+  // let { clearSession } = useContext(UserToken);
+  let { clearSession } = useContext(userDetails);
+
   let navigate = useNavigate();
   return (
     <Modal
@@ -9,7 +15,6 @@ export default function UserNotAuthorized(directTo) {
       aria-labelledby="contained-modal-title-vcenter"
       centered
       className="factory-profile "
-    
     >
       <Modal.Body>
         <Modal.Header closeButton></Modal.Header>
@@ -32,8 +37,17 @@ export default function UserNotAuthorized(directTo) {
 
               <button
                 className="btn-edit submitButton"
+                // onClick={() => {
+                //   clearSession();
+                //   navigate("/signin");
+                // }}
                 onClick={() => {
-                  navigate("/signin");
+                  if (directTo?.goToPath) {
+                    navigate(`/${directTo?.goToPath}`);
+                  } else {
+                    clearSession(); // Note the correct spelling
+                    navigate("/signin");
+                  }
                 }}
               >
                 <p className="cursor">sign In</p>

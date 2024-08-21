@@ -19,7 +19,11 @@ import ChangePassword from "./subComponents/ChangePassword/ChangePassword";
 import AccountInformation from "./subComponents/AccountInformation";
 import SubscriptionPlan from "./subComponents/SubscriptionPlan";
 import LegalDocuments from "./subComponents/LegalDocuments";
-import {fetchOneFactory,addFactoryMedia,updateFactoryFromUser} from 'Services/factory'
+import {
+  fetchOneFactory,
+  addFactoryMedia,
+  updateFactoryFromUser,
+} from "Services/factory";
 export default function FactoryProfile() {
   document.title = "Factory Profile";
   let { currentUserData } = useContext(userDetails);
@@ -54,22 +58,17 @@ export default function FactoryProfile() {
 
   // slider setting
 
-  const [selectedDocs, setSelectedDocs] = useState([
-   
-  ]);
-
-
-
+  const [selectedDocs, setSelectedDocs] = useState([]);
 
   // api
   async function fetchFactoryPage() {
-   let result= await fetchOneFactory(currentUserData?.factoryId)
-      if (result?.success) {
-        dispatch({
-          type: "fetched_update_data",
-          value: result?.data?.factories,
-        });
-      } 
+    let result = await fetchOneFactory(currentUserData?.factoryId);
+    if (result?.success) {
+      dispatch({
+        type: "fetched_update_data",
+        value: result?.data?.factories,
+      });
+    }
   }
 
   // Cover IMage Profile -----------------------------------------------------
@@ -82,31 +81,30 @@ export default function FactoryProfile() {
 
     selectedDocs?.map((item) => data.append(item.keyWord, item.pdfFile));
 
-    
+    let result = await addFactoryMedia(
+      {
+        Authorization: isLogin,
+      },
+      data
+    );
 
-    let result = await addFactoryMedia({
-      Authorization: isLogin,
-    },data);
+    if (result?.success) {
+      ModalClose();
 
-        if (result?.success) {
-          ModalClose();
+      SuccessToast("Data Updated Successfully");
 
-          SuccessToast("Image Saved Successfully");
-
-          dispatch({
-            type: "update_image",
-            value: result?.data?.factory?.legalDocs,
-          });
-          setSelectedDocs([]);
-        } else {
-          
-          setErrorMsg((prevErrors) => ({
-            ...prevErrors,
-            response: result?.error,
-          }));
-        }
-        setIsLoading(false);
-    
+      dispatch({
+        type: "update_image",
+        value: result?.data?.factory?.legalDocs,
+      });
+      setSelectedDocs([]);
+    } else {
+      setErrorMsg((prevErrors) => ({
+        ...prevErrors,
+        response: result?.error,
+      }));
+    }
+    setIsLoading(false);
   }
 
   useEffect(() => {
@@ -203,28 +201,28 @@ export default function FactoryProfile() {
       };
     }
 
-   
-      
-
-      const result = await updateFactoryFromUser({
+    const result = await updateFactoryFromUser(
+      {
         authorization: isLogin,
-      },data);
+      },
+      data
+    );
 
-      if (result?.success) {
-        ModalClose();
-        SuccessToast("Image Not Saved, please try again");
-        
-        dispatch({
-          type: "fetched_update_data",
-          value: data,
-        });
-      } else {
-        setErrorMsg((prevErrors) => ({
-          ...prevErrors,
-          response: result?.error,
-        }));
-      }
-    
+    if (result?.success) {
+      ModalClose();
+      SuccessToast("Image Not Saved, please try again");
+
+      dispatch({
+        type: "fetched_update_data",
+        value: data,
+      });
+    } else {
+      setErrorMsg((prevErrors) => ({
+        ...prevErrors,
+        response: result?.error,
+      }));
+    }
+
     setIsLoading(false);
   }
 
@@ -530,8 +528,6 @@ export default function FactoryProfile() {
       </Modal>
       {/* </form> */}
 
-
-
       {/*  legal docs */}
 
       <Modal
@@ -566,19 +562,16 @@ export default function FactoryProfile() {
                 >
                   {/* legalDocs */}
                   <div className="row  row-gap">
-
-                  <UploadDocument
-                  selectedDocs={selectedDocs}
-                  errorMsg={errorMsg}
-                  setSelectedDocs={setSelectedDocs}
-                  MediaName="legalDocs"
-                  mediaMaxLen="3"
-                  meidaAcceptedExtensions={["pdf", "png", "jpeg", "jpg"]}
-                  setErrorMsg={setErrorMsg}
-                  title="Upload Documents"
-                />
-
-                
+                    <UploadDocument
+                      selectedDocs={selectedDocs}
+                      errorMsg={errorMsg}
+                      setSelectedDocs={setSelectedDocs}
+                      MediaName="legalDocs"
+                      mediaMaxLen="3"
+                      meidaAcceptedExtensions={["pdf", "png", "jpeg", "jpg"]}
+                      setErrorMsg={setErrorMsg}
+                      title="Upload Documents"
+                    />
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
                       <button

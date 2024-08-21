@@ -1,8 +1,13 @@
 import { addFactoryMedia, updateFactoryFromUser } from "Services/factory";
 import { useNavigate } from "react-router-dom";
-import  { useState } from "react";
+import { useState } from "react";
 
-const useFormSubmission = (isLogin, setErrorMsg, setIsLoading) => {
+const useFormSubmission = (
+  isLogin,
+  setErrorMsg,
+  setIsLoading,
+  updateCurrentUser
+) => {
   let navigate = useNavigate();
 
   const [requestAddedText, setRequestAddedText] = useState(false);
@@ -63,8 +68,10 @@ const useFormSubmission = (isLogin, setErrorMsg, setIsLoading) => {
       } else {
         // display  successfully submitted message
         navigate(`/factorydashboard`);
+        updateCurrentUser();
       }
     } else {
+      setLoadingState(false);
       handleResponseError(result.error);
     }
   };
@@ -83,13 +90,15 @@ const useFormSubmission = (isLogin, setErrorMsg, setIsLoading) => {
       if (result?.success) {
         setLoadingState(true);
         navigate(`/factorydashboard`);
+        updateCurrentUser();
       } else {
         handleResponseError(result.error);
+        setLoadingState(false);
       }
     } catch (error) {}
   };
 
-  return { submitForm, submitDocs,requestAddedText };
+  return { submitForm, submitDocs, requestAddedText };
 };
 
 export default useFormSubmission;

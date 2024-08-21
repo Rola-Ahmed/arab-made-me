@@ -1,17 +1,18 @@
-import { useState,useContext } from "react";
+import { useState, useContext } from "react";
 import { addSignIn } from "Services/UserAuth.js";
 import { UserToken } from "Context/userToken";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 
 const useSignIn = () => {
   let params = useParams();
+  // console.log("params",params)
+  // console.log("params", params, params["*"]);
+
   const location = useLocation();
 
   let { setIsLogin } = useContext(UserToken);
   const [errorMsg, setErrorMsg] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-
-
 
   const searchParams = new URLSearchParams(location?.search);
 
@@ -19,30 +20,35 @@ const useSignIn = () => {
   if (searchParams?.size != 0) {
     const queryString = searchParams?.toString();
     params = `${params["*"]}?${queryString}`;
+  } else {
+    params = params["*"];
   }
+
   // console.log("params", params, params["*"]);
 
+  // console.log("params", params);
 
   let navigate = useNavigate();
 
-
   async function submitForm(values) {
     setErrorMsg("");
-      setIsLoading(true);
-      let data = {
-        email: values.email,
-        password: values.password,
-      };
+    setIsLoading(true);
+    let data = {
+      email: values.email,
+      password: values.password,
+    };
 
-      let result = await addSignIn(data);
-      if (result?.success) {
-        setIsLogin(result?.data?.token);
+    let result = await addSignIn(data);
+    console.log("errorMsg result", result);
+    if (result?.success) {
+      setIsLogin(result?.data?.token);
 
       //1st if condition  means there is a redirect page that needs sign in first
       // the other else conditons means that its only sign in && user is directed to a specific path based on his type
       if (params !== null && params !== undefined && params["*"] != "") {
         // console.log("params if", params);
-        navigate(`/${params["*"]}`);
+        // navigate(`/${params["*"]}`);
+        navigate(`/${params}`);
       } else if (result?.data?.user?.factoryId !== null) {
         navigate(`/factorydashboard`);
       } else if (result?.data?.user?.role == "admin") {
@@ -50,12 +56,13 @@ const useSignIn = () => {
       } else {
         navigate("/");
       }
-      } else {
-        setErrorMsg(result?.error);
-      }
+    } else {
+      setErrorMsg(result?.error);
+    }
     setIsLoading(false);
   }
-  return { submitForm,isLoading,errorMsg};
+  console.log("errorMsg", errorMsg);
+  return { submitForm, isLoading, errorMsg };
 };
 
 export default useSignIn;

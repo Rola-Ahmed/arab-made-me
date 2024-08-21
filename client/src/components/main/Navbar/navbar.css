@@ -174,8 +174,52 @@
   left: 50% !important;
 }
 
+/* 
+.user-msg-pop {
+  z-index: 5000;
+  position: fixed;
+  border: 1px solid rgba(0, 0, 0, 0.108);
+  bottom: 1%;
+  left: 40%;
+  width: fit-content;
+  background: #ffffffe3;
+  border-left: red solid 2px;
+  color: red;
+  font-size: 10px !important;
+} */
 
 
+
+.color-changing-button {
+  background-color: red;
+  /* Initial color */
+  color: black;
+  border: none;
+  /* padding: 10px 20px; */
+  padding: 6px 16px;
+  /* font-size: 16px; */
+  cursor: pointer;
+  border-radius: 5px;
+  animation: colorChange 4s infinite;
+  /* Apply the animation */
+}
+
+/* Define the keyframes for the color change */
+@keyframes colorChange {
+  0% {
+    background-color: var(--secondary-color);
+
+  }
+
+  50% {
+    background-color: white;
+    /* color: var(--secondary-color);  */
+  }
+
+  100% {
+    background-color: var(--secondary-color);
+  }
+}
 
 
 
@@ -237,6 +281,6 @@
 @media (max-width:768.98px) {
   .navbar-brand {
     width: 22vw;
-}
+  }
 
 }

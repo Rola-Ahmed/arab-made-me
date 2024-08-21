@@ -3,11 +3,7 @@ import SelectRole from "components/Auth/FactorySignUp/TimeLineHeader/SelectRole"
 import UploadDocument from "components/Forms/Shared/UploadDocument";
 import useFormSubmission from "./useFormSubmission";
 
-import {
-  awaitImg,
-  checkedImg,
-  currentsubPoint,
-} from "constants/Images";
+import { awaitImg, checkedImg, currentsubPoint } from "constants/Images";
 
 import { useNavigate } from "react-router-dom";
 
@@ -19,10 +15,17 @@ import * as Yup from "yup";
 
 function FactoryLegalDocs() {
   let { isLogin } = useContext(UserToken);
-  let { currentUserData } = useContext(userDetails);
+  let { currentUserData, setCurrentUserData } = useContext(userDetails);
   let navigate = useNavigate();
   let currentUrl = window.location.pathname;
   document.title = "Company Registration";
+
+  const updateCurrentUser = () => {
+    setCurrentUserData((prevUserData) => ({
+      ...prevUserData,
+      continueProfilePath: null,
+    }));
+  };
 
   useEffect(() => {
     if (!isLogin) {
@@ -37,19 +40,20 @@ function FactoryLegalDocs() {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const [selectedDocs, setSelectedDocs] = useState([
-  ]);
+  const [selectedDocs, setSelectedDocs] = useState([]);
 
   let { submitForm, requestAddedText, submitDocs } = useFormSubmission(
     isLogin,
     setErrorMsg,
-    setIsLoading
+    setIsLoading,
+    updateCurrentUser
   );
   // ----------------------------------------------------------
   let validation = Yup.string()
     .matches(/^[0-9]+$/, "Input Field should contain numbers only")
     .min(8, "min length is 8")
-    .max(16, "max length is 16");
+    .max(16, "max length is 16")
+    .required("Input field is Required");
   let validationSchema = Yup.object().shape({
     taxRegisterationNumber: validation,
     commercialRegisterationNumber: validation,
@@ -81,6 +85,7 @@ function FactoryLegalDocs() {
     else if (selectedDocs?.length > 0) {
       submitDocs(selectedDocs);
     } else {
+      updateCurrentUser();
       navigate(`/factorydashboard`);
     }
   }
@@ -158,11 +163,11 @@ function FactoryLegalDocs() {
                   </p>
                 )}
 
-                <div className="row gap-12-32">
+                <div className="row gap-12">
                   <div className="col-12">
                     <div className="form-group gap">
                       <label className="form-title">
-                        Business Registration Number
+                        Business Registration Number *
                       </label>
                       <input
                         type="text"
@@ -187,7 +192,7 @@ function FactoryLegalDocs() {
                   <div className="col-12">
                     <div className="form-group gap">
                       <label className="form-title">
-                        Industrial Registration Number
+                        Industrial Registration Number *
                       </label>
                       <input
                         type="text"
@@ -214,7 +219,7 @@ function FactoryLegalDocs() {
                   <div className="col-12">
                     <div className="form-group gap">
                       <label className="form-title">
-                        Industrial license number
+                        Industrial license number *
                       </label>
                       <input
                         type="text"
@@ -239,7 +244,7 @@ function FactoryLegalDocs() {
                   <div className="col-12">
                     <div className="form-group gap">
                       <label className="form-title">
-                        commercial Registeration Number
+                        commercial Registeration Number *
                       </label>
                       <input
                         type="text"
@@ -275,21 +280,24 @@ function FactoryLegalDocs() {
                     // title={`Legal Documents ${<i class="fa-solid fa-circle-info"></i>}`}
                     title={
                       <>
-                       
-                        
                         <div className="d-flex d-flex gap-2">
-                        Legal Documents 
-                          <div class="tooltip-1"><i className="fa-solid fa-circle-info my-auto "></i>
-  <span class="tooltiptext-1 w-50">Upload your Business Registration Number, Industrial Registration Number, Industrial License Number, and Commercial Registration Number documents.</span>
-</div>
-                         
+                          Legal Documents *
+                          <div class="tooltip-1">
+                            <i className="fa-solid fa-circle-info my-auto "></i>
+                            <span class="tooltiptext-1 w-50">
+                              Upload your Business Registration Number,
+                              Industrial Registration Number, Industrial License
+                              Number, and Commercial Registration Number
+                              documents.
+                            </span>
+                          </div>
                         </div>
                       </>
                     }
                   />
 
                   <div className="col-12 action">
-                    {isLoading ? (
+                    {isLoading?.submitLoading ? (
                       <button type="button" className="action-btn btn-1 w-100">
                         <i className="fas fa-spinner fa-spin"></i>
                       </button>

@@ -6,7 +6,6 @@ import "../source.css";
 import { UserToken } from "Context/userToken";
 import { useNavigate } from "react-router-dom";
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
-import BecomomeAFactory from "components/ActionMessages/BecomeAFactory/BecomeAFactory";
 import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
 import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/FactoryUnVerifiedPopUpMsg";
 import SourcingRequestCard from "./SourcingRequestCard";
@@ -65,6 +64,8 @@ function Sourcinghub() {
   useEffect(() => {
     fetchSourcingReqData();
   }, [pagination?.currentPage]);
+  // console.log("hiiiiiiiiiiiiiiiiii", currentUserData?.continueProfilePath);
+  // console.log("hiiiiiiiiiiiiiiiiii");
 
   return (
     <>
@@ -76,7 +77,7 @@ function Sourcinghub() {
             isLogin: false,
           }))
         }
-        distination={`/sigin`}
+        distination={`/signIn`}
       />
 
       <UserNotAuthorized
@@ -89,8 +90,20 @@ function Sourcinghub() {
         }
         userType="Factory"
       />
+      <UserNotAuthorized
+        show={modalShow.isUser}
+        onHide={() =>
+          setModalShow((prevVal) => ({
+            ...prevVal,
+            isUser: false,
+          }))
+        }
+        userType="user"
+        goToPath={"CompanyDetails"}
+      />
 
       <FactoryUnVerified
+        goToPath={currentUserData?.continueProfilePath}
         show={modalShow.isFactoryVerified}
         onHide={() =>
           setModalShow((prevVal) => ({
@@ -100,15 +113,6 @@ function Sourcinghub() {
         }
       />
 
-      <BecomomeAFactory
-        show={modalShow.BecomeAfactory}
-        onHide={() =>
-          setModalShow((prevVal) => ({
-            ...prevVal,
-            BecomeAfactory: false,
-          }))
-        }
-      />
       <Header title="Sourcing Hub" />
 
       <div
@@ -161,20 +165,20 @@ function Sourcinghub() {
             )}
           </>
         ) : (
-            <div class="tab-content mt-5" id="pills-tabContent">
-              <div class=" row">
-                {reqData?.map((item) => (
-                  <div className="col-lg-4 sour-card gy-4">
-                    <SourcingRequestCard
-                      item={item}
-                      setModalShow={setModalShow}
-                      isLogin={isLogin}
-                      currentUserData={currentUserData}
-                    />
-                  </div>
-                ))}
-              </div>
+          <div class="tab-content mt-5" id="pills-tabContent">
+            <div class=" row">
+              {reqData?.map((item) => (
+                <div className="col-lg-4 sour-card gy-4">
+                  <SourcingRequestCard
+                    item={item}
+                    setModalShow={setModalShow}
+                    isLogin={isLogin}
+                    currentUserData={currentUserData}
+                  />
+                </div>
+              ))}
             </div>
+          </div>
         )}
 
         <PublicPaginate pagination={pagination} setPagination={setPagination} />

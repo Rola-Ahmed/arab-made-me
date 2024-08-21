@@ -35,17 +35,17 @@ function Navbar(props) {
       //   // Example: document.getElementById('navbarNav').classList.remove('show');
       // }
 
-      if (navBarRef.current && !navBarRef.current.contains(event.target)) {
+      if (
+        isLogin &&
+        navBarRef.current &&
+        !navBarRef.current.contains(event.target)
+      ) {
         // Check if 'show' class is present and remove it
-        console.log("Clicked outside the navbar");
 
         let nav = document.getElementById("navBarCont");
         let btn = document.getElementById("menuBtn");
-        console.log("nav", nav);
-        console.log("nav", nav.classList.value);
         if (nav.classList.contains("show")) {
           nav.classList.remove("show");
-          console.log("Removed 'show' class from navbar");
           btn.classList.add("collapsed");
           btn.setAttribute("aria-expanded", "false");
         }
@@ -63,12 +63,37 @@ function Navbar(props) {
 
   return (
     <>
+      {/* //   {currentUserData?.continueProfilePath && ( */}
+      {/* //     <div className="user-msg-pop px-5 py-2">
+    //       <p className="fs-12 mb-0 pb-0 lh-normal mb-2">
+    //         please countine your registration process.
+    //       </p>
+    //       <p className="fs-12 lh-normal ">
+    //         To ensure a smooth validation process
+    //       </p>
+    //       <Link to={`/${currentUserData?.continueProfilePath}`}>
+    //         Countinue proccess
+    //       </Link>
+    //     </div>
+    //   )} */}
+
       <ScrollToTop />
       <div className="lang-parent d-md-flex align-items-center justify-content-between border-bottom border-1 border-muted">
         {/* btn to change lanuages */}
         <LanguageSwitcher />
 
         <div className="btns p-0  w-fit-content  mx-md-0 mx-auto">
+          {(isLogin && currentUserData?.continueProfilePath) && (
+            <button
+              className="btn1  border-0 rounded-3 color-changing-button  fw-600 fs-12 "
+              onClick={() =>
+                navigate(`/${currentUserData?.continueProfilePath}`)
+              }
+            >
+              Please countine registration
+            </button>
+          )}
+          {/* <i class="fa-solid fa-triangle-exclamation"></i> */}
           {!isLogin ? (
             <>
               <div

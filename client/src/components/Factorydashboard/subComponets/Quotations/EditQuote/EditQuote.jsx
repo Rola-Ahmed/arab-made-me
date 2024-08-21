@@ -127,7 +127,8 @@ export default function EditQuote() {
       quotationId: apiDetails?.id,
     };
 
-    // console.log("uniqueData", getOldData);
+    console.log("uniqueData", oldData);
+    // return
     // console.log("uniqueData oldData", getOldData);
     // setIsLoading(false);
 
@@ -156,7 +157,7 @@ export default function EditQuote() {
       setIsLoading(false);
       setErrorMsg((prevErrors) => ({
         ...prevErrors,
-        message: result?.error || result2?.success,
+        message: result?.error || result2?.error,
       }));
       // return;
     }

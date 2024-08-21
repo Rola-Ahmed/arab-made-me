@@ -38,7 +38,6 @@ function CompanyRegistrationPhase2() {
   let validationSchema = Yup.object().shape({
     userType: Yup.string(),
 
-    address: Yup.string().max(255, "max length is 255"),
 
     yearOfEstablishmint: Yup.string()
       // .required("Input Field is Required")
@@ -49,7 +48,6 @@ function CompanyRegistrationPhase2() {
 
   let formValidation = useFormik({
     initialValues: {
-      address: "",
       yearOfEstablishmint: "",
       yearlySalesIncome: "",
       numberOfEmployees: "", //select optiton
@@ -67,7 +65,6 @@ function CompanyRegistrationPhase2() {
     try {
       let data = {
         // if  values.moreDetails!==null add value
-        ...(values.address && { address: [values.address] }),
         ...(values.numberOfEmployees && {
           numberOfEmployees: values.numberOfEmployees,
         }),
@@ -161,7 +158,7 @@ function CompanyRegistrationPhase2() {
                       {errorMsg.response}
                     </p>
                   )}
-                  <div className="row gap-12-32">
+                  <div className="row gap-12">
                     <div className="col-12">
                       <div className="form-group gap">
                         <label className="form-title">
@@ -242,28 +239,7 @@ function CompanyRegistrationPhase2() {
                       </div>
                     </div>
 
-                    <div className="col-12">
-                      <div className="form-group gap">
-                        <label className="form-title">Address</label>
-                        <input
-                          type="text"
-                          className="form-control "
-                          id="address"
-                          placeholder="Enter Address"
-                          onChange={formValidation.handleChange}
-                          onBlur={formValidation.handleBlur}
-                          value={formValidation.values.address}
-                        />
-                        {formValidation.errors.address &&
-                        formValidation.touched.address ? (
-                          <small className="text-danger">
-                            {formValidation.errors.address}
-                          </small>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                    </div>
+                  
 
                     {/* <div className="col-12">
                       <div className="form-group gap">

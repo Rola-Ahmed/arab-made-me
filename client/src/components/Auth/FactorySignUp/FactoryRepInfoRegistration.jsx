@@ -99,6 +99,7 @@ function FactoryRepInfoRegistration() {
         setCurrentUserData((prevUserData) => ({
           ...prevUserData,
           factoryId: result?.data?.factory?.id,
+          continueProfilePath: "CompanyDetails/LegalDocuments",
         }));
         navigate(`/CompanyDetails/LegalDocuments`);
       } else {
@@ -179,7 +180,7 @@ function FactoryRepInfoRegistration() {
                     </p>
                   )}
 
-                  <div className="row gap-12-32">
+                  <div className="row gap-12">
                     <div className="col-12">
                       <InputField
                         isRequired={true}

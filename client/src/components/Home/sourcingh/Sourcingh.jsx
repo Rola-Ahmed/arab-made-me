@@ -102,7 +102,7 @@ function Sourcingh() {
             isLogin: false,
           }))
         }
-        distination={`/sigin`}
+        distination={`/signIn`}
       />
 
       <UserNotAuthorized
@@ -115,8 +115,20 @@ function Sourcingh() {
         }
         userType="Factory"
       />
+      <UserNotAuthorized
+        show={modalShow.isUser}
+        onHide={() =>
+          setModalShow((prevVal) => ({
+            ...prevVal,
+            isUser: false,
+          }))
+        }
+        userType="User"
+        goToPath={"CompanyDetails"}
+      />
 
       <FactoryUnVerified
+        goToPath={currentUserData?.continueProfilePath}
         show={modalShow.isFactoryVerified}
         onHide={() =>
           setModalShow((prevVal) => ({
@@ -128,48 +140,41 @@ function Sourcingh() {
       />
 
       <div className="container sourcing-h-hom">
-        
         <h2 className="sourc-h-2">Sourcing Hub</h2>
         <div className="d-flex justify-content-between">
-        <p className="sourc-p pb-2">Buyer Requests</p>
+          <p className="sourc-p pb-2">Buyer Requests</p>
 
-        <div className="d-flex arrow-container gap-2">
-            
+          <div className="d-flex arrow-container gap-2">
             <div className="arrow-btn position-static arrowLeft  carousel">
-                <i className="fa-solid fa-chevron-left"></i>
-              </div>
+              <i className="fa-solid fa-chevron-left"></i>
+            </div>
 
-
-              <div className="arrow-btn position-static arrowRight carousel">
-                <i className="fa-solid fa-chevron-right"></i>
-              </div>
-        
+            <div className="arrow-btn position-static arrowRight carousel">
+              <i className="fa-solid fa-chevron-right"></i>
+            </div>
           </div>
-          </div>
-
+        </div>
 
         <div className="row row-home-sourcing ">
-        <Swiper
-              // modules={[Navigation]}
-              modules={[Navigation]}
-              navigation={{
-                nextEl: ".sourcing-h-hom .arrowRight",
-                prevEl: ".sourcing-h-hom .arrowLeft",
-              }}
-              spaceBetween={10}
-              slidesPerView={1.2}
-              breakpoints={{
-                779: {
-                  slidesPerView: 2,
-                },
-                1202: {
-                  slidesPerView: 3,
-                },
-               
-              }}
-            >
-
-{allSourcingReqData?.map((item) => (
+          <Swiper
+            // modules={[Navigation]}
+            modules={[Navigation]}
+            navigation={{
+              nextEl: ".sourcing-h-hom .arrowRight",
+              prevEl: ".sourcing-h-hom .arrowLeft",
+            }}
+            spaceBetween={10}
+            slidesPerView={1.2}
+            breakpoints={{
+              779: {
+                slidesPerView: 2,
+              },
+              1202: {
+                slidesPerView: 3,
+              },
+            }}
+          >
+            {allSourcingReqData?.map((item) => (
               <SwiperSlide>
                 <SourcingRequestCard
                   item={item}
@@ -179,10 +184,7 @@ function Sourcingh() {
                 />
               </SwiperSlide>
             ))}
-
-
-              </Swiper>
-         
+          </Swiper>
         </div>
 
         <SourcingOffers />

@@ -7,7 +7,6 @@ import "swiper/css";
 import "swiper/css/navigation";
 export default function DisplayMultiImages(props) {
   let { handleImageClick, images } = props;
-  console.log("images",images)
   return (
     <>
       {" "}
@@ -27,17 +26,27 @@ export default function DisplayMultiImages(props) {
                       className="dots-slider-img w-100  cursor"
                       onClick={() => {
                         handleImageClick(`${baseUrl_IMG}/${item}`);
+                        console.log(
+                          "`${baseUrl_IMG}/${item}`",
+                          `${baseUrl_IMG}/${item}`
+                        );
                       }}
                     >
+                      {/* {item} */}
                       <img
-                        className="h-100 w-100 "
+                        className="h-100 w-100 bg-info "
                         id={handleImageError}
                         src={
                           item?.includes("pdf")
                             ? pdfIcon
                             : `${baseUrl_IMG}/${item}`
                         }
-                        alt={item?.pdfFile?.name?.includes("pdf")}
+                        // src={`http://localhost:5000/uploads/images-1724072365669-k-qcrOcazzQc2Hf7Iz_gqparralel5.PNG`}
+                        alt={
+                          item?.includes("pdf")
+                            ? pdfIcon
+                            : `${baseUrl_IMG}/${item}`
+                        }
                         onError={handleImageError}
                       />
                     </div>

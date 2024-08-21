@@ -177,11 +177,12 @@ export default function ImporterRepDetails() {
         response: result?.error,
       }));
       const targetElement = document.getElementById("view");
-      if(targetElement)
-      {targetElement.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });}
+      if (targetElement) {
+        targetElement.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
       setIsLoading(false);
     }
   }
@@ -240,7 +241,7 @@ export default function ImporterRepDetails() {
                   </p>
                 )}
 
-                <div className="row gap-12-32">
+                <div className="row gap-12">
                   <div className="col-12">
                     <InputField
                       isRequired={true}
@@ -276,83 +277,87 @@ export default function ImporterRepDetails() {
                   </div>
 
                   <div className="col-12">
-                      <div className="form-group gap">
-                        <label className="form-title">
-                          Representive Phone Number *
-                        </label>
-                        <div className="input-group  h-100">
-                          <div className="input-group-prepend">
-                            <select
-                              className="input-group-text h-100 p-2 m-0 phone-borders"
-                              id="repPhoneCode"
-                              name="repPhoneCode"
-                              placeholder="1113534343"
-                              onChange={formValidation.handleChange}
-                              value={formValidation.values.repPhoneCode}
-                              onBlur={formValidation.handleBlur}
-                            >
-                              {/* <select className="input-group-text h-100  m-0" name="" id=""> */}
-
-                              {countriesMiddleEast.map((phoneItem) => (
-                                <option value={phoneItem.phoneCode}>
-                                  {phoneItem.phoneCode}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                          <input
-                            type="text"
-                            className="form-control  phone-border"
-                            id="repPhone"
-                            name="repPhone"
+                    <div className="form-group gap">
+                      <label className="form-title">
+                        Representive Phone Number *
+                      </label>
+                      <div className="input-group  h-100">
+                        <div className="input-group-prepend">
+                          <select
+                            className="input-group-text h-100 p-2 m-0 phone-borders"
+                            id="repPhoneCode"
+                            name="repPhoneCode"
                             placeholder="1113534343"
                             onChange={formValidation.handleChange}
-                            value={formValidation.values.repPhone}
+                            value={formValidation.values.repPhoneCode}
                             onBlur={formValidation.handleBlur}
-                          />
+                          >
+                            {/* <select className="input-group-text h-100  m-0" name="" id=""> */}
+
+                            {countriesMiddleEast.map((phoneItem) => (
+                              <option value={phoneItem.phoneCode}>
+                                {phoneItem.phoneCode}
+                              </option>
+                            ))}
+                          </select>
                         </div>
-                        <FormVlaidtionError formValidation={formValidation}
-                        vlaidationName='repPhone'/>
+                        <input
+                          type="text"
+                          className="form-control  phone-border"
+                          id="repPhone"
+                          name="repPhone"
+                          placeholder="1113534343"
+                          onChange={formValidation.handleChange}
+                          value={formValidation.values.repPhone}
+                          onBlur={formValidation.handleBlur}
+                        />
                       </div>
+                      <FormVlaidtionError
+                        formValidation={formValidation}
+                        vlaidationName="repPhone"
+                      />
+                    </div>
                   </div>
                   <div className="col-12">
-                      <div className="form-group gap">
-                        <label className="form-title">
-                          Whatsapp Phone Number
-                        </label>
-                        <div className="input-group  h-100">
-                          <div className="input-group-prepend">
-                            <select
-                              className="input-group-text h-100 p-2 m-0 phone-borders"
-                              id="WhatsappPhoneCode"
-                              name="WhatsappPhoneCode"
-                              placeholder="1113534343"
-                              onChange={formValidation.handleChange}
-                              value={formValidation.values.WhatsappPhoneCode}
-                              onBlur={formValidation.handleBlur}
-                            >
-                              {countriesMiddleEast.map((phoneItem) => (
-                                <option value={phoneItem.phoneCode}>
-                                  {phoneItem.phoneCode}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                          <input
-                            type="text"
-                            className="form-control  phone-border"
-                            id="WhatsappPhone"
-                            name="WhatsappPhone"
+                    <div className="form-group gap">
+                      <label className="form-title">
+                        Whatsapp Phone Number
+                      </label>
+                      <div className="input-group  h-100">
+                        <div className="input-group-prepend">
+                          <select
+                            className="input-group-text h-100 p-2 m-0 phone-borders"
+                            id="WhatsappPhoneCode"
+                            name="WhatsappPhoneCode"
                             placeholder="1113534343"
                             onChange={formValidation.handleChange}
-                            value={formValidation.values.WhatsappPhone}
+                            value={formValidation.values.WhatsappPhoneCode}
                             onBlur={formValidation.handleBlur}
-                          />
+                          >
+                            {countriesMiddleEast.map((phoneItem) => (
+                              <option value={phoneItem.phoneCode}>
+                                {phoneItem.phoneCode}
+                              </option>
+                            ))}
+                          </select>
                         </div>
-                      
-                        <FormVlaidtionError formValidation={formValidation}
-                        vlaidationName='WhatsappPhone'/>
+                        <input
+                          type="text"
+                          className="form-control  phone-border"
+                          id="WhatsappPhone"
+                          name="WhatsappPhone"
+                          placeholder="1113534343"
+                          onChange={formValidation.handleChange}
+                          value={formValidation.values.WhatsappPhone}
+                          onBlur={formValidation.handleBlur}
+                        />
                       </div>
+
+                      <FormVlaidtionError
+                        formValidation={formValidation}
+                        vlaidationName="WhatsappPhone"
+                      />
+                    </div>
                   </div>
 
                   <div className="col-12">
@@ -441,13 +446,12 @@ export default function ImporterRepDetails() {
                   </div>
 
                   <div className="col-12">
-                  <TextareaInput
+                    <TextareaInput
                       vlaidationName="description"
                       formValidation={formValidation}
                       isRequired={true}
                       title="Buyer Description"
                     />
-                   
                   </div>
 
                   <div className="col-12 action">

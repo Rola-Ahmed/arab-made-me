@@ -1,11 +1,14 @@
 import { Button, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-export default function FactoryUnVerifiedModal(directTo) {
+export default function FactoryUnVerifiedModal({ show, onHide, goToPath, hi }) {
+  console.log("directTo", show, onHide, goToPath,hi);
   let navigate = useNavigate();
   return (
     <Modal
-      {...directTo}
+      // {...directTo}
       // size="md-down"
+      show={show}
+      onHide={onHide}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
@@ -54,7 +57,7 @@ export default function FactoryUnVerifiedModal(directTo) {
                 <label>Add your Commercial Registration Number.</label>
               </div>
 
-              <div className="col-12  justify-content-start align-items-center d-flex">
+              <div className="col-12  justify-content-start align-items-center d-flex d-none">
                 <small className="py-4">
                   It might take up to 24 hours to fully activate your Buyer
                   account. If you can't access your services after that time,
@@ -69,7 +72,7 @@ export default function FactoryUnVerifiedModal(directTo) {
                 variant="secondary"
                 type="button"
                 // onClick={handleClose}
-                onClick={directTo.onHide}
+                onClick={onHide}
                 // onClick={()=>handleClose(true)}
               >
                 Close
@@ -78,7 +81,8 @@ export default function FactoryUnVerifiedModal(directTo) {
                 className="btn-edit submitButton"
                 // type="submit"
                 onClick={() => {
-                  navigate("/factorydashboard/factoryProfile");
+                  // navigate("/factorydashboard/factoryProfile");
+                  navigate(`/${goToPath}`);
                 }}
               >
                 <p className="cursor">Complete Factory Verification</p>
@@ -86,7 +90,6 @@ export default function FactoryUnVerifiedModal(directTo) {
             </div>
           </div>
         </div>
-      
       </Modal.Body>
     </Modal>
   );

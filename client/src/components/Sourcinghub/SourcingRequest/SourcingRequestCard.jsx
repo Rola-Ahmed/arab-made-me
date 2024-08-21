@@ -5,11 +5,24 @@ import { useNavigate } from "react-router-dom";
 
 let getMonthName = getDate;
 export default function SourcingRequestCard(props) {
-  let { item, currentUserData, setModalShow } = props;
+  let { item, currentUserData, setModalShow, isLogin } = props;
   let navigate = useNavigate();
 
   const accessForm = (directto) => {
-    if (currentUserData?.importerId !== null) {
+    if (!isLogin) {
+      setModalShow((prevVal) => ({
+        ...prevVal,
+        isLogin: true,
+      }));
+
+      return;
+    }
+
+    if (
+      currentUserData?.userRole == "importer" ||
+      currentUserData?.userRole == "admin"
+    ) {
+      // if (currentUserData?.importerId !== null) {
       setModalShow((prevVal) => ({
         ...prevVal,
         isImporterVerified: true,
@@ -18,26 +31,23 @@ export default function SourcingRequestCard(props) {
       return;
     }
 
+    if (currentUserData?.userRole == "user") {
+      console.log("user");
+      setModalShow((prevVal) => ({
+        ...prevVal,
+        isUser: true,
+      }));
+
+      return;
+    }
+
     if (
-      currentUserData?.factoryId !== null &&
-      (currentUserData?.factoryVerified === "0" ||
-        !currentUserData?.factoryEmailActivated)
+      currentUserData?.userRole == "factory" &&
+      currentUserData?.continueProfilePath != null
     ) {
       setModalShow((prevVal) => ({
         ...prevVal,
         isFactoryVerified: true,
-      }));
-
-      return;
-    }
-
-    if (
-      currentUserData?.importerId == null &&
-      currentUserData?.factoryId == null
-    ) {
-      setModalShow((prevVal) => ({
-        ...prevVal,
-        isImporterVerified: true,
       }));
 
       return;
