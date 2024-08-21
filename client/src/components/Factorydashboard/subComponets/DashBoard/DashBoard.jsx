@@ -1,4 +1,3 @@
-import { Line } from "react-chartjs-2";
 import "./DashBoard.css";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 import ReactPaginate from "react-paginate";
@@ -10,134 +9,6 @@ import { useEffect } from "react";
 // Declare Chart as a global variable to avoid ESLint errors
 
 export default function DashBoard() {
-  const labels = [
-    "Jan",
-    "Febr",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
-
-  const data = {
-    labels,
-    datasets: [
-      {
-        label: "Dataset 1",
-        data: [
-          "10",
-          "50",
-          "65",
-          "60",
-          "200",
-          "0",
-          "100",
-
-          "70",
-          "400",
-          "600",
-          "800",
-          "1000",
-        ],
-        // borderColor: "rgb(255, 99, 132)",
-        // backgroundColor: "rgba(255, 99, 132, 0.5)",
-
-        backgroundColor: "green",
-        borderColor: "green",
-        borderWidth: 2,
-        pointRadius: 0,
-        borderDashOffset: 0,
-        borderCapStyle: "rounded",
-      },
-      {
-        label: "Dataset 2",
-        data: [
-          // "-1000",
-          // "-800",
-          // "-80",
-          // "-50",
-          // "-70",
-          "0",
-          "300",
-          "68",
-          "90",
-          "90",
-          "1000",
-        ],
-        backgroundColor: "red",
-        borderColor: "red",
-        borderWidth: 2,
-        pointRadius: 0,
-        borderDashOffset: 0,
-        borderCapStyle: "rounded",
-      },
-    ],
-  };
-
-  const options = {
-    maintainAspectRatio: false, //allows  to customize the height
-    scales: {
-      y: {
-        // min: -500, // Minimum value for the y-axis
-        // max: 1000, // Maximum value for the y-axis
-        // stepSize: 200,
-        // labels:["0", "100", "200", "300", "400", "500"]
-        // Specify y-axis options here
-        // For example, to set specific values:
-        // min: 0, // Minimum value for the y-axis
-        // max: 1000, // Maximum value for the y-axis
-        // stepSize: 200, // Interval between ticks on the y-axis
-
-        ticks: {
-          textStrokeWidth: 2,
-          padding: 2,
-          font: 1, // Set the font size for x-axis labels
-          autoSkip: false, // Disable auto-skipping of ticks
-          maxTicksLimit: 10, // Maximum number of ticks to display
-          maxRotation: 45,
-          // callback: (value) => ["0", "100", "200", "300", "400", "500"],
-          callback: function (value, index, ticks) {
-            if (value > 1000) {
-              return;
-            } else {
-              return value + 500;
-            }
-          },
-        },
-      },
-    },
-    responsive: true,
-    plugins: {
-      legend: {
-        // position: "top",
-        display: true,
-        // labels: {
-        //   font: {
-        //     size: 1,
-        //   },
-        // },
-      },
-      // plugins: {
-      //   colors: {
-      //     enabled: false,
-      //   },
-      //   //  legend and scales to hide the
-      //   legend: {
-      //     display: false, // This will hide the legend
-      //   },
-      // },
-      title: {
-        display: false,
-        // text: "Chart.js Line Chart",
-      },
-    },
-  };
 
   useEffect(() => {
     // Ensure Chart.js is loaded
@@ -264,8 +135,107 @@ export default function DashBoard() {
           },
         },
       });
+
+      const xlabels = [
+        "Jan",
+        "Feb",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
+
+      new window.Chart("myChart4", {
+        type: "line",
+        data: {
+          labels: xlabels,
+          datasets: [
+            {
+              label: "Red Dataset", //
+              data: ["0", "300", "68", "90", "90", "1000"],
+              borderColor: "red",
+              fill: false,
+              backgroundColor: "red",
+              lineTension: 0, // Use a value less than 1 for a smoother line, adjust as needed
+              pointRadius: 0, // Remove the dots
+            },
+            {
+              label: "green Dataset", //
+
+              data: [
+                "10",
+                "50",
+                "65",
+                "60",
+                "200",
+                "0",
+                "100",
+
+                "70",
+                "400",
+                "600",
+                "800",
+                "1000",
+              ],
+              borderColor: "green",
+              backgroundColor: "green",
+
+              fill: false,
+              lineTension: 0, // Use a value less than 1 for a smoother line, adjust as needed
+              pointRadius: 0, // Remove the dots
+            },
+          ],
+        },
+        options: {
+          maintainAspectRatio: false, // Allows customization of the height
+          scales: {
+            yAxes: [
+              {
+                ticks: {
+                  fontSize: 12, // Set the font size for y-axis labels
+                  padding: 10,
+                  autoSkip: false, // Disable auto-skipping of ticks
+                  maxTicksLimit: 10, // Maximum number of ticks to display
+                  maxRotation: 45,
+                  labels: (value) => [
+                    "500",
+                    "700",
+                    "900",
+                    "1100",
+                    "1300",
+                    "1500",
+                  ],
+                },
+              },
+            ],
+            xAxes: [
+              {
+                ticks: {
+                  fontSize: 12, // Set the font size for x-axis labels
+                  padding: 10,
+                },
+              },
+            ],
+          },
+          responsive: true,
+          plugins: {
+            legend: {
+              display: true,
+            },
+            title: {
+              display: false,
+            },
+          },
+        },
+      });
     }
-  }, []); // E
+  }, []); 
   return (
     <div className="m-4 dash-home-section">
       <div className="header w-100">
@@ -376,7 +346,7 @@ export default function DashBoard() {
         </div>
 
         <div className="sales-graph-contaier">
-          <Line options={options} data={data} className="line-sales-canvas" />
+          <canvas id="myChart4"></canvas>
         </div>
 
         {/* search filter section */}
