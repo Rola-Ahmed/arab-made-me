@@ -22,6 +22,7 @@ function Factorydash() {
     handleDropdownToggle,
     setActiveMenu,
     activeMenu,
+    currentNavPage
   } = useFactorydashLogic(pathname);
 
   // Use the authorization check function
@@ -32,7 +33,7 @@ function Factorydash() {
   if (authorizationResult) return authorizationResult;
 
  
-  const currentNavPage = pathname.split("/").pop().toLowerCase();
+
 
 
 

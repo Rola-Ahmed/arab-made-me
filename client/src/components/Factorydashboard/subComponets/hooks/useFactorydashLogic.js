@@ -1,14 +1,17 @@
 // FactorydashLogic.js
 import { useEffect, useState, useContext } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { userDetails } from "Context/userType";
-import useFactorydash from "./useFactoryNotification";
+import useFactoryNotification from "./useFactoryNotification";
+import { UserToken } from "Context/userToken";
 
-const useFactorydashLogic = () => {
-  const { isLogin, notification } = useFactorydash();
+const useFactorydashLogic = (pathname ) => {
+  console.log("pathname",pathname)
+  const currentNavPage = pathname?.split("/")?.pop()?.toLowerCase();
+  const { isLogin } = useContext(UserToken);
   const { currentUserData, clearSession } = useContext(userDetails);
+  const { notification } = useFactoryNotification(isLogin);
   const navigate = useNavigate();
-  const { pathname } = useLocation();
   const [activeMenu, setActiveMenu] = useState("");
 
   useEffect(() => {
@@ -43,6 +46,7 @@ const useFactorydashLogic = () => {
     setActiveMenu,
     currentUserData,
     isLogin,
+    currentNavPage,
   };
 };
 

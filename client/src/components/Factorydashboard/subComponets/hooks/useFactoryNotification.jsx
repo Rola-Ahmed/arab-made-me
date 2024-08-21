@@ -1,6 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from "react";
-import { UserToken } from "Context/userToken";
-// import Factorydash from "components/Factorydashboard/Factorydash";
+import { useCallback, useEffect, useState } from "react";
 import { getPrivateLables } from "Services/FactoryRequests/privateLabel";
 import { getRFQs } from "Services/FactoryRequests/rfq";
 import { getSpmfs } from "Services/FactoryRequests/spmf";
@@ -9,9 +7,7 @@ import { getPos } from "Services/FactoryRequests/pos";
 import { getOffers } from "Services/FactoryRequests/offers";
 import { getQuotes } from "Services/FactoryRequests/quotations";
 
-export default function useFactorydash() {
-  const { isLogin } = useContext(UserToken);
-
+export default function useFactoryNotification(isLogin) {
   // Fetch notifications
   const [notification, setNotification] = useState([]);
 

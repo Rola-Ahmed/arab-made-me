@@ -2,7 +2,6 @@
 import { Navigate } from "react-router-dom";
 import ErrorToast from "components/ErrorToast"; // Adjusted import path
 
-
 // Authorization check function
 export const checkFactorydashAuthorization = (isLogin, currentUserData) => {
   // Check if the user is logged in
@@ -14,23 +13,19 @@ export const checkFactorydashAuthorization = (isLogin, currentUserData) => {
   }
 
   // If the user is logged in, check user data
-  if (currentUserData) {
-    const { factoryId, userRole } = currentUserData;
+  if (currentUserData && !currentUserData?.factoryId) {
+    const { userRole } = currentUserData;
 
     // Log user data for debugging purposes
-    console.log("User Data:", { factoryId, userRole });
-
-    if (!factoryId) {
-      if (userRole == "importer") {
-        ErrorToast("You are not authorized to access");
-        return <Navigate to="/importerdashboard/403?refresh" />;
-      } else if (userRole == "admin") {
-        ErrorToast("You are not authorized to access");
-        return <Navigate to="/adminDashboard/403?refresh" />;
-      } else if (userRole == "user") {
-        ErrorToast("You are not authorized to access");
-        return <Navigate to="/403" />;
-      }
+    if (userRole == "importer") {
+      ErrorToast("You are not authorized to access");
+      return <Navigate to="/importerdashboard/403?refresh" />;
+    } else if (userRole == "admin") {
+      ErrorToast("You are not authorized to access");
+      return <Navigate to="/adminDashboard/403?refresh" />;
+    } else if (userRole == "user") {
+      ErrorToast("You are not authorized to access");
+      return <Navigate to="/403" />;
     }
   }
 
