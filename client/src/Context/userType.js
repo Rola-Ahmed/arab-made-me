@@ -98,7 +98,6 @@ export function UserTypeProvider({ children }) {
       if (error?.response?.data?.message == "users not found") {
         setIsLogin("");
         localStorage.clear();
-
         errorCase();
       }
     } finally {
@@ -216,11 +215,11 @@ export function UserTypeProvider({ children }) {
 
   // console.log("currentUserData", currentUserData);
 
-  console.log(
-    "currentUserData",
-    currentUserData,
-    currentUserData.continueProfilePath
-  );
+  // console.log(
+  //   "currentUserData",
+  //   currentUserData,
+  //   currentUserData.continueProfilePath
+  // );
   return (
     <userDetails.Provider
       value={{

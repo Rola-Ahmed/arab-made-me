@@ -1,12 +1,8 @@
 import { useEffect, useState, useContext } from "react";
-import useGlobalMessage from "hooks/useGlobalMessage";
-
 import "./Factorydash.css";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
-
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
-
 import DashLogo from "components/Shared/Dashboards/DashLogo";
 import BottomDashMenu from "components/Shared/Dashboards/BottomDashMenu";
 import DashNavBtn from "components/Shared/Dashboards/DashNavBtn";
@@ -17,8 +13,13 @@ function Factorydash(props) {
   document.title = "Factory Dashboard";
   // State the clicked menu
   let { setIsLogin } = useContext(UserToken);
-  let { currentUserData } = useContext(userDetails);
+  let { currentUserData,clearSession } = useContext(userDetails);
   let navigate = useNavigate();
+
+  const logOuut = () => {
+    clearSession()
+    navigate("/");
+  };
 
   const [activeMenu, setActiveMenu] = useState("");
   // starte from the top of the page at navigation
@@ -37,22 +38,9 @@ function Factorydash(props) {
     }
   }, [pathname]);
 
-  const logOuut = () => {
-    setIsLogin("");
-    localStorage.clear();
-    navigate("/");
-  };
-
   // used this to highlight the current tap
   // Determine current active page for navigation highlight
-  const currentNavPage = pathname
-    .split("/")
-    .pop()
-    .toLowerCase();
-
-  // Toast on global message change
-  // global message appearing "used pop up message"
-  const { setGlobalMsg } = useGlobalMessage();
+  const currentNavPage = pathname.split("/").pop().toLowerCase();
 
   return (
     <section className="factory-dashboard vh-100 overflow-hidden  vw-100">
