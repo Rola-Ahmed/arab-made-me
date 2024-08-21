@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { UserToken } from "Context/userToken";
-import Factorydash from "components/Factorydashboard/Factorydash";
+// import Factorydash from "components/Factorydashboard/Factorydash";
 import { getPrivateLables } from "Services/FactoryRequests/privateLabel";
 import { getRFQs } from "Services/FactoryRequests/rfq";
 import { getSpmfs } from "Services/FactoryRequests/spmf";
@@ -9,7 +9,7 @@ import { getPos } from "Services/FactoryRequests/pos";
 import { getOffers } from "Services/FactoryRequests/offers";
 import { getQuotes } from "Services/FactoryRequests/quotations";
 
-export default function FactorydashContainer() {
+export default function useFactorydash() {
   const { isLogin } = useContext(UserToken);
 
   // Fetch notifications
@@ -63,5 +63,5 @@ export default function FactorydashContainer() {
     }
   }, [isLogin, fetchNotificationCounts]);
 
-  return <Factorydash notification={notification} />;
+  return { notification, isLogin };
 }

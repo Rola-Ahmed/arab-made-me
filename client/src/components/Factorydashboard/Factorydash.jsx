@@ -1,19 +1,22 @@
 import { useEffect, useState, useContext } from "react";
 import "./Factorydash.css";
-import { Link, Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { UserToken } from "Context/userToken";
+import {
+  Link,
+  Navigate,
+  Outlet,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { userDetails } from "Context/userType";
 import DashLogo from "components/Shared/Dashboards/DashLogo";
 import BottomDashMenu from "components/Shared/Dashboards/BottomDashMenu";
 import DashNavBtn from "components/Shared/Dashboards/DashNavBtn";
 import DashListsDropDown from "components/Shared/Dashboards/DashListsDropDown";
 import ErrorToast from "components/ErrorToast";
-
-function Factorydash(props) {
+import useFactorydash from "./FactorydashContainer";
+function Factorydash() {
   document.title = "Factory Dashboard";
-  let { notification } = props;
-  // State the clicked menu
-  let {  isLogin } = useContext(UserToken);
+  let { isLogin, notification } = useFactorydash();
   let { currentUserData, clearSession } = useContext(userDetails);
   let navigate = useNavigate();
 
@@ -43,30 +46,28 @@ function Factorydash(props) {
   // Determine current active page for navigation highlight
   const currentNavPage = pathname.split("/").pop().toLowerCase();
 
-    // if user is not loged in
-    if (!isLogin) {
-      // return {
-      // navigate("/");
-      ErrorToast(
-        "You are not authorized to access this page. Please sign in first."
-      );
-      return <Navigate to="/signIn" />;
-      // };
+  // if user is not loged in
+  if (!isLogin) {
+    // return {
+    // navigate("/");
+    ErrorToast(
+      "You are not authorized to access this page. Please sign in first."
+    );
+    return <Navigate to="/signIn" />;
+    // };
+  }
+  if (currentUserData && !currentUserData?.factoryId) {
+    if (currentUserData?.importerId) {
+      ErrorToast("You are not authorized to access");
+      return <Navigate to="/importerdashboard/403?refresh" />;
+    } else if (currentUserData?.userRole == "admin") {
+      ErrorToast("You are not authorized to access");
+      return <Navigate to="/adminDashboard/403?refresh" />;
+    } else if (currentUserData?.userRole == "user") {
+      ErrorToast("You are not authorized to access");
+      return <Navigate to="/403" />;
     }
-    if ( currentUserData && !currentUserData?.factoryId) {
-     
-      if (currentUserData?.importerId) {
-        ErrorToast("You are not authorized to access");
-        return <Navigate to="/importerdashboard/403?refresh" />;
-      } else if (currentUserData?.userRole == "admin") {
-        ErrorToast("You are not authorized to access");
-        return <Navigate to="/adminDashboard/403?refresh" />;
-      } else if (currentUserData?.userRole == "user"){
-        ErrorToast("You are not authorized to access");
-        return <Navigate to="/403" />;
-      }
-    }
-
+  }
 
   return (
     <section className="factory-dashboard vh-100 overflow-hidden  vw-100">

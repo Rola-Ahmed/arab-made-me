@@ -1,5 +1,5 @@
 // Factory Dashboard pages
-import Factorydash from "components/Factorydashboard/FactorydashContainer";
+import Factorydash from "components/Factorydashboard/Factorydash";
 
 // private Label Data
 import PrivateLabeLReq from "components/Factorydashboard/subComponets/PrivateLabelRequest/Index/IndexContainer";
