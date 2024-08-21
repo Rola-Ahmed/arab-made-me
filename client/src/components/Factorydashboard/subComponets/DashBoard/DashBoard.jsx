@@ -5,6 +5,9 @@ import ReactPaginate from "react-paginate";
 import payemtIcon from "../../../../assets/images/Payment method icon.png";
 
 import profile from "../../../../assets/images/Avatar (1).png";
+import { useEffect } from "react";
+
+// Declare Chart as a global variable to avoid ESLint errors
 
 export default function DashBoard() {
   const labels = [
@@ -136,6 +139,133 @@ export default function DashBoard() {
     },
   };
 
+  useEffect(() => {
+    // Ensure Chart.js is loaded
+    if (window.Chart) {
+      // Get the canvas context
+      const ctx = document.getElementById("myChart").getContext("2d");
+
+      // Create a new chart
+      new window.Chart(ctx, {
+        type: "line",
+        data: {
+          // labels: [50, 60, 70, 80, 90, 0, 110, 120, 130, 140, 150],
+          // name
+          // el x axis names values of x -axis
+          labels: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
+          datasets: [
+            {
+              fill: false,
+              lineTension: 0, // Use a value less than 1 for a smoother line, adjust as needed
+              backgroundColor: "green",
+              borderColor: "green",
+              borderWidth: 2,
+              pointRadius: 0, // Remove the dots
+              // label: "Total customers",
+              //   values
+              // points on the graph
+              data: [1, 4, 10, 11, 34, 42, 45, 2, 10, 12],
+            },
+          ],
+        },
+        options: {
+          legend: { display: false },
+          // scales: {
+          //   xAxes: [{ type: 'linear', position: 'bottom' }]
+          // }
+
+          title: {
+            display: false,
+            text: "y = x * 2 + 7",
+            fontSize: 16,
+          },
+        },
+      });
+
+      // mychart22222222222222222
+
+      // Get the canvas context
+
+      // Create a new chart
+      new window.Chart("myChart2", {
+        type: "line",
+        data: {
+          // labels: [50, 60, 70, 80, 90, 0, 110, 120, 130, 140, 150],
+          // name
+          // el x axis names values of x -axis
+          labels: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
+          datasets: [
+            {
+              fill: false,
+              lineTension: 0, // Use a value less than 1 for a smoother line, adjust as needed
+              backgroundColor: "red",
+              borderColor: "red",
+              borderWidth: 2,
+              pointRadius: 0, // Remove the dots
+              // label: "Total customers",
+              //   values
+              // points on the graph
+              data: [10, 41, 15, 13, 345, 46, 47, 8, 10, 120],
+            },
+          ],
+        },
+        options: {
+          legend: { display: false },
+          // scales: {
+          //   xAxes: [{ type: 'linear', position: 'bottom' }]
+          // }
+
+          title: {
+            display: false,
+            text: "y = x * 2 + 7",
+            fontSize: 16,
+          },
+        },
+      });
+
+      // mychart 333333333333333333333333333333333
+      // mychart22222222222222222
+
+      // Get the canvas context
+
+      // Create a new chart
+      new window.Chart("myChart3", {
+        type: "line",
+        data: {
+          // labels: [50, 60, 70, 80, 90, 0, 110, 120, 130, 140, 150],
+          // name
+          // el x axis names values of x -axis
+          labels: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
+          datasets: [
+            {
+              fill: false,
+              lineTension: 0, // Use a value less than 1 for a smoother line, adjust as needed
+              backgroundColor: "green",
+              borderColor: "green",
+              borderWidth: 2,
+              pointRadius: 0, // Remove the dots
+              // label: "Total customers",
+              //   values
+              // points on the graph
+              data: [1, 4, 10, 11, 34, 42, 45, 2, 10, 12],
+            },
+          ],
+        },
+        options: {
+          legend: { display: false },
+          // scales: {
+          //   xAxes: [{ type: 'linear', position: 'bottom' }]
+          // }
+
+          title: {
+            display: false,
+            text: "y = x * 2 + 7",
+            fontSize: 16,
+          },
+        },
+      });
+    }
+  }, []); // E
   return (
     <div className="m-4 dash-home-section">
       <div className="header w-100">
@@ -154,41 +284,16 @@ export default function DashBoard() {
               <h6 className="title-graph">Total customers</h6>
               <i className="fa-solid fa-ellipsis graph-setting cursor"></i>
             </div>
-            <Line
-              className="line-Graph"
-              data={{
-                // name
-                // el x axis names values of x -axis
-                labels: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-                datasets: [
-                  {
-                    // label: "Total customers",
-                    //   values
-                    // points on the graph
-                    data: [1, 4, 10, 11, 34, 42, 45, 2, 10, 12],
-                    backgroundColor: "green",
-                    borderColor: "green",
-                    borderWidth: 2,
-                    pointRadius: 0,
-                    borderDashOffset: 0,
-                    borderCapStyle: "rounded",
-                    // tension:0,
-                  },
-                ],
+
+            <canvas
+              id="myChart"
+              style={{
+                maxHeight: "100px",
+                maxWidth: "375px",
+                height: "100px",
+                width: "375px",
               }}
-              options={{
-                maintainAspectRatio: false,
-                plugins: {
-                  colors: {
-                    enabled: false,
-                  },
-                  //  legend and scales to hide the
-                  legend: {
-                    display: false, // This will hide the legend
-                  },
-                },
-              }}
-            />
+            ></canvas>
 
             <div className="d-flex justify-content-start align-items-center w-100 parent-persantage  px-1">
               <h6 className="title-graph m-0 p-0">2,420</h6>
@@ -206,47 +311,16 @@ export default function DashBoard() {
               <h6 className="title-graph">Total customers</h6>
               <i className="fa-solid fa-ellipsis graph-setting cursor"></i>
             </div>
-            <Line
-              className="line-Graph"
-              data={{
-                // name
-                // el x axis names values of x -axis
-                labels: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-                datasets: [
-                  {
-                    // label: "Total customers",
-                    //   values
-                    // points on the graph
-                    data: [10, 41, 15, 13, 345, 46, 47, 8, 10, 120],
-                    backgroundColor: "red",
-                    borderColor: "red",
-                    borderWidth: 2,
-                    pointRadius: 0,
-                    borderDashOffset: 0,
-                    borderCapStyle: "rounded",
-                    // tension:0,
-                  },
-                ],
+
+            <canvas
+              id="myChart2"
+              style={{
+                maxHeight: "100px",
+                maxWidth: "375px",
+                height: "100px",
+                width: "375px",
               }}
-              options={{
-                maintainAspectRatio: false,
-                plugins: {
-                  colors: {
-                    enabled: false,
-                  },
-                  //  legend and scales to hide the
-                  legend: {
-                    display: false, // This will hide the legend
-                  },
-                },
-                // scalesused to hide the x lines
-                scales: {
-                  // x:{
-                  //   display:false , // This will hide the x-axis labels
-                  // }
-                },
-              }}
-            />
+            ></canvas>
 
             <div className="d-flex justify-content-start align-items-center w-100 parent-persantage px-1">
               <h6 className="title-graph m-0 p-0">2,420</h6>
@@ -264,48 +338,16 @@ export default function DashBoard() {
               <h6 className="title-graph">Total customers</h6>
               <i className="fa-solid fa-ellipsis graph-setting cursor"></i>
             </div>
-            <Line
-              className="line-Graph"
-              data={{
-                // name
-                // el x axis names values of x -axis
-                labels: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-                datasets: [
-                  {
-                    // label: "Total customers",
-                    //   values
-                    // points on the graph
-                    data: [1, 4, 10, 11, 34, 42, 45, 2, 10, 12],
-                    backgroundColor: "green",
-                    borderColor: "green",
-                    borderWidth: 2,
-                    pointRadius: 0,
-                    borderDashOffset: 0,
-                    borderCapStyle: "rounded",
-                    // tension:0,
-                  },
-                ],
-              }}
-              options={{
-                maintainAspectRatio: false,
-                plugins: {
-                  colors: {
-                    enabled: false,
-                  },
-                  //  legend and scales to hide the
-                  legend: {
-                    display: false, // This will hide the legend
-                  },
-                },
-                // scalesused to hide the x lines
-                scales: {
-                  // x:{
-                  //   display:false , // This will hide the x-axis labels
-                  // }
-                },
-              }}
-            />
 
+            <canvas
+              id="myChart3"
+              style={{
+                maxHeight: "100px",
+                maxWidth: "375px",
+                height: "100px",
+                width: "375px",
+              }}
+            ></canvas>
             <div className="d-flex justify-content-start align-items-center w-100 parent-persantage px-1">
               <h6 className="title-graph m-0 p-0">2,420</h6>
               <div className="d-flex justify-content-between align-items-center perg-div">
