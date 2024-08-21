@@ -61,7 +61,7 @@ export default function useFactorydash() {
     if (isLogin) {
       fetchNotificationCounts();
     }
-  }, [isLogin, fetchNotificationCounts]);
+  }, [isLogin]);
 
   return { notification, isLogin };
 }

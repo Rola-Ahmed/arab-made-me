@@ -16,25 +16,16 @@ import ErrorToast from "components/ErrorToast";
 import useFactorydash from "./FactorydashContainer";
 function Factorydash() {
   document.title = "Factory Dashboard";
-  let { isLogin, notification } = useFactorydash();
-  let { currentUserData, clearSession } = useContext(userDetails);
-  let navigate = useNavigate();
-
-  const logOuut = () => {
-    clearSession();
-    navigate("/");
-  };
-
-  const [activeMenu, setActiveMenu] = useState("");
-  // starte from the top of the page at navigation
+  const { isLogin, notification } = useFactorydash();
+  const { currentUserData, clearSession } = useContext(userDetails);
+  const navigate = useNavigate();
   const { pathname } = useLocation();
-  // const scrollRef = useRef(null);
+  const [activeMenu, setActiveMenu] = useState("");
 
   useEffect(() => {
-    let scroll = document.getElementById("scollTOTop");
-
-    if (scroll) {
-      scroll.scrollTo({
+    const scrollElement = document.getElementById("scollTOTop");
+    if (scrollElement) {
+      scrollElement.scrollTo({
         top: 0,
         left: 0,
         behavior: "instant",
@@ -42,30 +33,36 @@ function Factorydash() {
     }
   }, [pathname]);
 
-  // used this to highlight the current tap
-  // Determine current active page for navigation highlight
+  const handleLogout = () => {
+    clearSession();
+    navigate("/");
+  };
+
+  const handleDropdownToggle = (dropdownId, iconId) => {
+    const dropdown = document.getElementById(dropdownId);
+    const icon = document.getElementById(iconId).querySelector(".caret");
+
+    dropdown.classList.toggle("d-block");
+    icon.classList.toggle("fa-caret-up");
+    icon.classList.toggle("fa-caret-down");
+  };
+
   const currentNavPage = pathname.split("/").pop().toLowerCase();
 
-  // if user is not loged in
   if (!isLogin) {
-    // return {
-    // navigate("/");
-    ErrorToast(
-      "You are not authorized to access this page. Please sign in first."
-    );
+    ErrorToast("You are not authorized to access this page. Please sign in first.");
     return <Navigate to="/signIn" />;
-    // };
   }
-  if (currentUserData && !currentUserData?.factoryId) {
-    if (currentUserData?.importerId) {
-      ErrorToast("You are not authorized to access");
-      return <Navigate to="/importerdashboard/403?refresh" />;
-    } else if (currentUserData?.userRole == "admin") {
-      ErrorToast("You are not authorized to access");
-      return <Navigate to="/adminDashboard/403?refresh" />;
-    } else if (currentUserData?.userRole == "user") {
-      ErrorToast("You are not authorized to access");
-      return <Navigate to="/403" />;
+
+  if (currentUserData) {
+    const { factoryId, importerId, userRole } = currentUserData;
+    if (!factoryId) {
+      let navigatePath = "/403";
+      if (importerId) navigatePath = "/importerdashboard/403?refresh";
+      if (userRole === "admin") navigatePath = "/adminDashboard/403?refresh";
+      
+      ErrorToast("You are not authorized to access this page.");
+      return <Navigate to={navigatePath} />;
     }
   }
 
@@ -98,18 +95,8 @@ function Factorydash() {
                     id="factoryProfile"
                     // to="#"
                     to="factoryProfile#accountInformation"
-                    onClick={() => {
-                      let dropdown = document.getElementById("drop-profile");
-                      let dropicon = document.getElementById("factoryProfile");
-
-                      dropdown.classList.toggle("d-block");
-                      dropicon
-                        .querySelector(".caret")
-                        .classList.toggle("fa-caret-up");
-                      dropicon
-                        .querySelector(".caret")
-                        .classList.toggle("fa-caret-down");
-                    }}
+                    onClick={() => handleDropdownToggle("drop-profile", "factoryProfile")}
+                 
                   >
                     <i class="fa-solid fa-user"></i>
                     <p className="sub-title cursor">Profile</p>
@@ -181,18 +168,10 @@ function Factorydash() {
                     id="mircoSite"
                     // to="#"
                     to="mircoSite#factorylogo"
-                    onClick={() => {
-                      let dropdown = document.getElementById("drop-mircoSite");
-                      let dropicon = document.getElementById("mircoSite");
 
-                      dropdown.classList.toggle("d-block");
-                      dropicon
-                        .querySelector(".caret")
-                        .classList.toggle("fa-caret-up");
-                      dropicon
-                        .querySelector(".caret")
-                        .classList.toggle("fa-caret-down");
-                    }}
+                    onClick={() => handleDropdownToggle("drop-mircoSite", "mircoSite")}
+
+
                   >
                     <i class="fa-solid fa-user"></i>
                     <p className="sub-title cursor">My Microsite</p>
@@ -383,7 +362,7 @@ function Factorydash() {
             profile={currentUserData?.profile}
             name={currentUserData?.FactoryName}
             email={currentUserData?.factoryRepEmail}
-            logOuut={logOuut}
+            logOuut={handleLogout}
           />
         </div>
         <div
