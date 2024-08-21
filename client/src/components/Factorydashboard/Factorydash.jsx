@@ -32,11 +32,6 @@ function Factorydash() {
   );
   if (authorizationResult) return authorizationResult;
 
- 
-
-
-
-
   return (
     <section className="factory-dashboard vh-100 overflow-hidden  vw-100">
       <div className="row h-100 w-100 remove-x">
