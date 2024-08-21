@@ -9,7 +9,7 @@ import DashLogo from "components/Shared/Dashboards/DashLogo";
 import BottomDashMenu from "components/Shared/Dashboards/BottomDashMenu";
 import DashNavBtn from "components/Shared/Dashboards/DashNavBtn";
 import DashListsDropDown from "components/Shared/Dashboards/DashListsDropDown";
-import useFactorydashLogic from "./subComponets/hooks/useFactorydashLogic";
+import useFactorydashLogic from "./hooks/useFactorydashLogic";
 import { checkFactorydashAuthorization } from "roles/factorydashRoles";
 function Factorydash() {
   document.title = "Factory Dashboard";
