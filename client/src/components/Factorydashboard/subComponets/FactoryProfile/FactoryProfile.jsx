@@ -202,7 +202,7 @@ export default function FactoryProfile() {
   return (
     <>
       <div
-        class="modal fade  p-5 factory-profile"
+        class="modal fade   factory-profile"
         id="editAccountInfo"
         tabindex="-1"
         role="dialog"
@@ -213,10 +213,8 @@ export default function FactoryProfile() {
           class="modal-dialog  modal-dialog-centered modal-lg rounded-3"
           role="document"
         >
-          {/* < div closeButton className="container-profile-input w-100"> */}
-          <div className="title-contianer-input w-100 p-3 bg-white rounded-4">
-            <div class="modal-content px-4 py-3">
-              <div class="modal-header mx-3 mt-4 mb-3">
+            <div class="modal-content   px-4 py-4">
+              <div class="modal-header mb-3">
                 <h4 class="modal-title fw-normal" id="exampleModalLabel">
                   Account Inforamtions
                 </h4>
@@ -229,7 +227,7 @@ export default function FactoryProfile() {
                   <i class="fa-solid fa-xmark fs-24"></i>
                 </button>
               </div>
-              <div class="modal-body m-3 p-0">
+              <div class="modal-body p-0 ">
                 {" "}
                 {errorMsg?.response ? (
                   <div className="alert mt-3 p-2 alert-danger form-control text-dark">
@@ -238,7 +236,7 @@ export default function FactoryProfile() {
                 ) : (
                   ""
                 )}
-                <div className="w-100 ">
+                <div className="w-100  ">
                   <form onSubmit={AccountInfoValidation.handleSubmit}>
                     <div className="row  row-gap">
                       <div className="col-6">
@@ -393,7 +391,7 @@ export default function FactoryProfile() {
                   </form>
                 </div>
               </div>
-              <div class="modal-footer d-none">
+              <div class="modal-footer">
                 <button
                   type="button"
                   class="btn btn-secondary"
@@ -406,7 +404,7 @@ export default function FactoryProfile() {
                 </button>
               </div>
             </div>
-          </div>
+          {/* </div> */}
           {/* </div> */}
         </div>
       </div>

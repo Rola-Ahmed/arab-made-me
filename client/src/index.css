@@ -271,6 +271,7 @@ p, button, div, textarea, input {
 .fw-600 {
   font-weight: 600;
 }
+
 .fw-normal {
   font-weight: normal !important;
 }
