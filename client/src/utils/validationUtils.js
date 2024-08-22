@@ -46,3 +46,14 @@ export const reqQualityValidate = Yup.string()
   .required("Input field is Required")
   .matches(/^[0-9]+$/, "Input field must be numbers only")
   .min(1, "min 1 legnth");
+
+export const phoneValidation = Yup.string()
+  .required("Input Field is Required")
+  .matches(/^[0-9]+$/, "Input Field should contain numbers only")
+  .min(6, "min length is 6")
+  .max(15, "max length is 15");
+
+export const emailValidation = Yup.string()
+  .email("Invalid email")
+  .required("Input Field is Required")
+  .max(255, "max length is 255");

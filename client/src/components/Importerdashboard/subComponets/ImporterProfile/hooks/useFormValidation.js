@@ -9,7 +9,6 @@ const useFormValidation = (submitAccInfo,onSubmitSocial,onSubmitfactoryInfo,Impo
   let emailValidation = Yup.string()
   .email("Invalid email")
   .required("Input Field is Required")
-  .min(5, "min length is 5")
   .max(255, "max length is 255");
 
 let nameValidation = Yup.string()

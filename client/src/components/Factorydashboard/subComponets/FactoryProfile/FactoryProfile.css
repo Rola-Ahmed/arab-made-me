@@ -4,13 +4,13 @@
 }
 
 /* factory logo img  */
-.factory-profile .factory-logo-name {
+/* .factory-profile .factory-logo-name {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 28px;
     margin-left: 28px;
-}
+} */
 
 .factory-profile .factory-logo {
     overflow: hidden;
@@ -32,23 +32,23 @@
 }
 
 
-.factory-profile .ar-texts {
+/* .factory-profile .ar-texts {
     display: inline-flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 2px;
-}
+} */
 
-.factory-profile .ar-texts .factory-title-text {
+/* .factory-profile .ar-texts .factory-title-text {
     color: var(--gray-900, #111928);
     font-family: "Inter-reg";
     font-size: 36px;
     font-style: normal;
     font-weight: 700;
     line-height: 125%;
-}
+} */
 
-.ar-texts .factory-Subtitle-text {
+/* .ar-texts .factory-Subtitle-text {
 
     color: var(--gray-500);
     font-family: "Inter-reg";
@@ -56,32 +56,32 @@
     font-style: normal;
     font-weight: 400;
     line-height: 150%;
-}
+} */
 
 
 /* row section */
 
 
 .factory-profile .page-sub-menu {
-    border-radius: 20px;
-    border: 1px solid var(--tag-border, #E3E3E3);
-    background: var(--Light-Background-Paper, #FFF);
-    display: flex;
-    width: 290px;
-    padding: 16px 8px;
-    flex-direction: column;
-    align-items: center;
+    /* border-radius: 20px; */
+    /* border: 1px solid var(--tag-border, #E3E3E3); */
+    /* background: var(--Light-Background-Paper, #FFF); */
+    /* display: flex; */
+    /* width: 290px; */
+    /* padding: 16px 8px; */
+    /* flex-direction: column; */
+    /* align-items: center; */
 
     position: sticky;
     top: 119px;
 
 }
 
-.factory-profile .page-sub-menu .sub-menu-item {
+/* .factory-profile .page-sub-menu .sub-menu-item {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-}
+} */
 
 /* not used  btn-container*/
 .factory-profile .btn-container {
@@ -164,15 +164,15 @@
 
 
 .factory-profile .title-contianer-input p {
-    color: var(--Light-Text-Primary, #1C1C1E);
+    /* color: var(--Light-Text-Primary, #1C1C1E); */
 
     font-family: "Inter-semi";
 
     font-size: 24px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 28px;
-    align-self: stretch;
+    /* font-style: normal; */
+    /* font-weight: 500; */
+    /* line-height: 28px; */
+    /* align-self: stretch; */
 }
 
 .factory-profile .img-name {

@@ -24,10 +24,7 @@ function Importerdash() {
   let navigate = useNavigate();
   const { pathname } = useLocation();
   // Determine current active page for navigation highlight
-  const currentNavPage = pathname
-    .split("/")
-    .pop()
-    .toLowerCase();
+  const currentNavPage = pathname.split("/").pop().toLowerCase();
   const [activeMenu, setActiveMenu] = useState("");
 
   useEffect(() => {
@@ -58,15 +55,14 @@ function Importerdash() {
     return <Navigate to="/signIn" />;
     // };
   }
-  if ( currentUserData && !currentUserData?.importerId) {
-   
+  if (currentUserData && !currentUserData?.importerId) {
     if (currentUserData?.factoryId) {
       ErrorToast("You are not authorized to access");
       return <Navigate to="/factorydashboard/403?refresh" />;
     } else if (currentUserData?.userRole == "admin") {
       ErrorToast("You are not authorized to access");
       return <Navigate to="/adminDashboard/403?refresh" />;
-    } else if (currentUserData?.userRole == "user"){
+    } else if (currentUserData?.userRole == "user") {
       ErrorToast("You are not authorized to access");
       return <Navigate to="/403" />;
     }
@@ -74,14 +70,13 @@ function Importerdash() {
 
   return (
     <section id="scrollTo" className="factory-dashboard vh-100 overflow-hidden">
-
       <div className="row h-100 w-100 remove-x">
         <div className="col-2 left-nav-fac-dashboard h-100 d-grid">
           <div className="static-navbar">
             <DashLogo />
 
             <div className="scroller-container">
-              <div className="page-sub-menu">
+              <div className="page-sub-menu ">
                 <Link
                   className={`base-btn  cursor dashboard-color  ${
                     currentNavPage == "importerdashboard" ? "active" : ""

@@ -115,7 +115,6 @@ export default function FactoryProfile() {
   let emailValidation = Yup.string()
     .email("Invalid email")
     .required("Input Field is Required")
-    .min(5, "min length is 5")
     .max(255, "max length is 255");
 
   let nameValidation = Yup.string()
@@ -309,28 +308,20 @@ export default function FactoryProfile() {
 
               {/*Links container 2 */}
               <div id="EmailNotification"></div>
-              <div className="container-profile-input w-100">
-                <div className="title-contianer-input w-100">
-                  <p>Notifications</p>
-                  <div className="w-100 ">
-                    <div className="row grid-gap-col">
-                      <div className="col-12">
-                        <div className="d-flex justify-content-between align-items-center form-control">
-                          <div className="form-group m-0 p-0">
-                            <label>Allow Email Notifications</label>
-                          </div>
-                          <div className="form-check form-switch">
-                            <input
-                              className="form-check-input switch-input cursor"
-                              type="checkbox"
-                              id="allowEmailNotification"
-                              checked={factoryProfile?.allowEmailNotification}
-                              onClick={(e) => submitForm(!e.target.value)}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+              <div className="container-profile-input w-100 gap-16">
+                <p className="fs-24-semi">Notifications</p>
+                <div className="d-flex justify-content-between align-items-center form-control">
+                  <labe className="fs-16-semi m-0 p-0">
+                    Allow Email Notifications
+                  </labe>
+                  <div className="form-check form-switch py-2">
+                    <input
+                      className="form-check-input switch-input cursor"
+                      type="checkbox"
+                      id="allowEmailNotification"
+                      checked={factoryProfile?.allowEmailNotification}
+                      onClick={(e) => submitForm(!e.target.value)}
+                    />
                   </div>
                 </div>
               </div>
