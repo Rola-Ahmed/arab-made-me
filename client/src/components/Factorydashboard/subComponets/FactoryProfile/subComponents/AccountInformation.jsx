@@ -84,8 +84,10 @@ export default function AccountInformation(props) {
               <div className="col-12">
                 <button
                   className="btn-edit"
-                  variant="primary"
-                  onClick={() => handleShow("accountInfoReadOnly")}
+                  // variant="primary"
+                  // onClick={() => handleShow("accountInfoReadOnly")}
+                  data-bs-toggle="modal"
+                  data-bs-target="#editAccountInfo"
                 >
                   <p className="cursor">Change Account Information </p>
                 </button>
