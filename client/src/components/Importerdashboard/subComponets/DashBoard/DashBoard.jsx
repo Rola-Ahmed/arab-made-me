@@ -1,35 +1,169 @@
-import { Chart as ChartJS } from "chart.js/auto";
-import { Line, Doughnut } from "react-chartjs-2";
 import "./DashBoard.css";
 import ReactPaginate from "react-paginate";
+import { useEffect } from "react";
+
 import payemtIcon from "../../../../assets/images/Payment method icon.png";
 
 import profile from "../../../../assets/images/Avatar (1).png";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
-import { getMonthName as getDate } from "utils/getMonthName";
 
 export default function DashBoard() {
-  const labels = [
-    "Jan",
-    "Febr",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
+  function chart(id, xLabels, yData, color) {
+    new window.Chart(id, {
+      type: "line",
+      data: {
+        // labels: [50, 60, 70, 80, 90, 0, 110, 120, 130, 140, 150],
+        // name
+        // el x axis names values of x -axis
+        labels: xLabels,
+        datasets: [
+          {
+            fill: false,
+            lineTension: 0, // Use a value less than 1 for a smoother line, adjust as needed
+            backgroundColor: color,
+            borderColor: color,
+            borderWidth: 2,
+            pointRadius: 0,
+            data: yData,
+          },
+        ],
+      },
+      options: {
+        legend: { display: false },
 
-  const data = {
-    labels,
-    datasets: [
-      {
-        label: "Dataset 1",
-        data: [
+        title: {
+          display: false,
+          text: "y = x * 2 + 7",
+          fontSize: 16,
+        },
+      },
+    });
+  }
+
+  function chatWithTwoDataset(
+    id,
+    xLabels,
+    yLabel,
+    color1,
+    color2,
+    datasetLabel1,
+    dataset1,
+    datasetLabel2,
+    dataset2
+  ) {
+    new window.Chart(id, {
+      type: "line",
+      data: {
+        labels: xLabels,
+        datasets: [
+          {
+            label: datasetLabel1, //
+            data: dataset1,
+            borderColor: color1,
+            backgroundColor: color1,
+            fill: false,
+            lineTension: 0, // Use a value less than 1 for a smoother line, adjust as needed
+            pointRadius: 0, // Remove the dots
+          },
+          {
+            label: datasetLabel2, //
+            data: dataset2,
+            borderColor: color2,
+            fill: false,
+            backgroundColor: color2,
+            lineTension: 0, // Use a value less than 1 for a smoother line, adjust as needed
+            pointRadius: 0, // Remove the dots
+          },
+        ],
+      },
+      options: {
+        maintainAspectRatio: false, // Allows customization of the height
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                fontSize: 12, // Set the font size for y-axis labels
+                padding: 10,
+                autoSkip: false, // Disable auto-skipping of ticks
+                maxTicksLimit: 10, // Maximum number of ticks to display
+                maxRotation: 45,
+                labels: yLabel,
+              },
+            },
+          ],
+          xAxes: [
+            {
+              ticks: {
+                fontSize: 12, // Set the font size for x-axis labels
+                padding: 10,
+              },
+            },
+          ],
+        },
+        responsive: true,
+        plugins: {
+          legend: {
+            display: true,
+          },
+          title: {
+            display: false,
+          },
+        },
+      },
+    });
+  }
+
+  useEffect(() => {
+    // Ensure Chart.js is loaded
+
+    let label = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
+    if (window.Chart) {
+      // Get the canvas context
+
+      const chart1 = {
+        id: "myChart",
+        xLabel: label,
+        yLabel: [1, 4, 10, 11, 34, 42, 45, 2, 10, 12],
+        color: "green",
+      };
+      const chart2 = {
+        id: "myChart2",
+        xLabel: label,
+        yLabel: [10, 41, 15, 13, 345, 46, 47, 8, 10, 120],
+        color: "red",
+      };
+
+      const chart3 = {
+        id: "myChart3",
+        xLabel: label,
+        yLabel: [1, 4, 10, 11, 34, 42, 45, 2, 10, 12],
+        color: "green",
+      };
+
+      const chart4 = {
+        id: "myChart4",
+        xLabel: [
+          "Jan",
+          "Feb",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec",
+        ],
+        yLabel: ["500", "700", "900", "1100", "1300", "1500"],
+        color2: "green",
+        color1: "red",
+        datasetLabel1: "Red Dataset",
+        dataset1: ["0", "300", "68", "90", "90", "1000"],
+
+        datasetLabel2: "Greed Dataset",
+        dataset2: [
           "10",
           "50",
           "65",
@@ -44,162 +178,29 @@ export default function DashBoard() {
           "800",
           "1000",
         ],
-        // borderColor: "rgb(255, 99, 132)",
-        // backgroundColor: "rgba(255, 99, 132, 0.5)",
+      };
 
-        backgroundColor: "green",
-        borderColor: "green",
-        borderWidth: 2,
-        pointRadius: 0,
-        borderDashOffset: 0,
-        borderCapStyle: "rounded",
-      },
-      {
-        label: "Dataset 2",
-        data: [
-          // "-1000",
-          // "-800",
-          // "-80",
-          // "-50",
-          // "-70",
-          "0",
-          "300",
-          "68",
-          "90",
-          "90",
-          "1000",
-        ],
-        backgroundColor: "red",
-        borderColor: "red",
-        borderWidth: 2,
-        pointRadius: 0,
-        borderDashOffset: 0,
-        borderCapStyle: "rounded",
-      },
-    ],
-  };
-
-  const options = {
-    maintainAspectRatio: false, //allows  to customize the height
-    scales: {
-      y: {
-        // min: -500, // Minimum value for the y-axis
-        // max: 1000, // Maximum value for the y-axis
-        // stepSize: 200,
-        // labels:["0", "100", "200", "300", "400", "500"]
-        // Specify y-axis options here
-        // For example, to set specific values:
-        // min: 0, // Minimum value for the y-axis
-        // max: 1000, // Maximum value for the y-axis
-        // stepSize: 200, // Interval between ticks on the y-axis
-
-        ticks: {
-          textStrokeWidth: 2,
-          padding: 2,
-          font: 1, // Set the font size for x-axis labels
-          autoSkip: false, // Disable auto-skipping of ticks
-          maxTicksLimit: 10, // Maximum number of ticks to display
-          maxRotation: 45,
-          // callback: (value) => ["0", "100", "200", "300", "400", "500"],
-          callback: function (value, index, ticks) {
-            if (value > 1000) {
-              return;
-            } else {
-              return value + 500;
-            }
-          },
-        },
-      },
-    },
-    responsive: true,
-    plugins: {
-      legend: {
-        // position: "top",
-        display: true,
-        // labels: {
-        //   font: {
-        //     size: 1,
-        //   },
-        // },
-      },
-      // plugins: {
-      //   colors: {
-      //     enabled: false,
-      //   },
-      //   //  legend and scales to hide the
-      //   legend: {
-      //     display: false, // This will hide the legend
-      //   },
-      // },
-      title: {
-        display: false,
-        // text: "Chart.js Line Chart",
-      },
-    },
-  };
-  const options2 = {
-    plugins: {
-      legend: {
-        labels: {
-          // This more specific font property overrides the global property
-          font: {
-            // size: 400,
-          },
-        },
-      },
-    },
-  };
-  const options4 = {
-    scales: {
-      x: [
-        {
-          ticks: {
-            fontSize: 14,
-            autoSkip: true,
-            maxTicksLimit: 10,
-            maxRotation: 45,
-          },
-          layout: {
-            padding: {
-              bottom: 10, // Adjust the bottom padding to reduce the gap
-            },
-          },
-        },
-      ],
-      y: [
-        {
-          ticks: {
-            fontSize: 14,
-            autoSkip: true,
-            maxTicksLimit: 10,
-            maxRotation: 45,
-            stepSize: 200,
-            min: 0,
-            max: 1000,
-          },
-        },
-      ],
-    },
-  };
-
-  // const chart = new Chart(ctx, {
-  //     type: 'line',
-  //     data: data,
-  //     options: {
-  //       onClick: (e) => {
-  //         const canvasPosition = getRelativePosition(e, chart);
-
-  //         // Substitute the appropriate scale IDs
-  //         const dataX = chart.scales.x.getValueForPixel(canvasPosition.x);
-  //         const dataY = chart.scales.y.getValueForPixel(canvasPosition.y);
-  //       }
-  //     }
-  //   });
+      chart(chart1.id, chart1.xLabel, chart1.yLabel, chart1.color);
+      chart(chart2.id, chart2.xLabel, chart2.yLabel, chart2.color);
+      chart(chart3.id, chart3.xLabel, chart3.yLabel, chart3.color);
+      chatWithTwoDataset(
+        chart4.id,
+        chart4.xLabel,
+        chart4.yLabel,
+        chart4.color1,
+        chart4.color2,
+        chart4.datasetLabel1,
+        chart4.dataset1,
+        chart4.datasetLabel2,
+        chart4.dataset2
+      );
+    }
+  }, []);
 
   return (
     <div className="m-4 dash-home-section">
       <div className="header w-100">
-        <PageUtility currentPage="Importer Dashboard " />
+        <PageUtility currentPage="Importer Dashboard" />
         <div>
           <div className=" d-flex justify-content-between align-items-center ">
             <h2>Trade History</h2>
@@ -211,47 +212,15 @@ export default function DashBoard() {
               <h6 className="title-graph">Total customers</h6>
               <i className="fa-solid fa-ellipsis graph-setting cursor"></i>
             </div>
-            <Line
-              className="line-Graph"
-              data={{
-                // name
-                // el x axis names values of x -axis
-                labels: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-                datasets: [
-                  {
-                    // label: "Total customers",
-                    //   values
-                    // points on the graph
-                    data: [1, 4, 10, 11, 34, 42, 45, 2, 10, 12],
-                    backgroundColor: "green",
-                    borderColor: "green",
-                    borderWidth: 2,
-                    pointRadius: 0,
-                    borderDashOffset: 0,
-                    borderCapStyle: "rounded",
-                    // tension:0,
-                  },
-                ],
+            <canvas
+              id="myChart"
+              style={{
+                maxHeight: "100px",
+                maxWidth: "375px",
+                height: "100px",
+                width: "375px",
               }}
-              options={{
-                maintainAspectRatio: false,
-                plugins: {
-                  colors: {
-                    enabled: false,
-                  },
-                  //  legend and scales to hide the
-                  legend: {
-                    display: false, // This will hide the legend
-                  },
-                },
-                // scalesused to hide the x lines
-                scales: {
-                  // x:{
-                  //   display:false , // This will hide the x-axis labels
-                  // }
-                },
-              }}
-            />
+            ></canvas>
 
             <div className="d-flex justify-content-start align-items-center w-100 parent-persantage  px-1">
               <h6 className="title-graph m-0 p-0">2,420</h6>
@@ -269,47 +238,15 @@ export default function DashBoard() {
               <h6 className="title-graph">Total customers</h6>
               <i className="fa-solid fa-ellipsis graph-setting cursor"></i>
             </div>
-            <Line
-              className="line-Graph"
-              data={{
-                // name
-                // el x axis names values of x -axis
-                labels: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-                datasets: [
-                  {
-                    // label: "Total customers",
-                    //   values
-                    // points on the graph
-                    data: [10, 41, 15, 13, 345, 46, 47, 8, 10, 120],
-                    backgroundColor: "red",
-                    borderColor: "red",
-                    borderWidth: 2,
-                    pointRadius: 0,
-                    borderDashOffset: 0,
-                    borderCapStyle: "rounded",
-                    // tension:0,
-                  },
-                ],
+            <canvas
+              id="myChart2"
+              style={{
+                maxHeight: "100px",
+                maxWidth: "375px",
+                height: "100px",
+                width: "375px",
               }}
-              options={{
-                maintainAspectRatio: false,
-                plugins: {
-                  colors: {
-                    enabled: false,
-                  },
-                  //  legend and scales to hide the
-                  legend: {
-                    display: false, // This will hide the legend
-                  },
-                },
-                // scalesused to hide the x lines
-                scales: {
-                  // x:{
-                  //   display:false , // This will hide the x-axis labels
-                  // }
-                },
-              }}
-            />
+            ></canvas>
 
             <div className="d-flex justify-content-start align-items-center w-100 parent-persantage px-1">
               <h6 className="title-graph m-0 p-0">2,420</h6>
@@ -327,47 +264,15 @@ export default function DashBoard() {
               <h6 className="title-graph">Total customers</h6>
               <i className="fa-solid fa-ellipsis graph-setting cursor"></i>
             </div>
-            <Line
-              className="line-Graph"
-              data={{
-                // name
-                // el x axis names values of x -axis
-                labels: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-                datasets: [
-                  {
-                    // label: "Total customers",
-                    //   values
-                    // points on the graph
-                    data: [1, 4, 10, 11, 34, 42, 45, 2, 10, 12],
-                    backgroundColor: "green",
-                    borderColor: "green",
-                    borderWidth: 2,
-                    pointRadius: 0,
-                    borderDashOffset: 0,
-                    borderCapStyle: "rounded",
-                    // tension:0,
-                  },
-                ],
+            <canvas
+              id="myChart3"
+              style={{
+                maxHeight: "100px",
+                maxWidth: "375px",
+                height: "100px",
+                width: "375px",
               }}
-              options={{
-                maintainAspectRatio: false,
-                plugins: {
-                  colors: {
-                    enabled: false,
-                  },
-                  //  legend and scales to hide the
-                  legend: {
-                    display: false, // This will hide the legend
-                  },
-                },
-                // scalesused to hide the x lines
-                scales: {
-                  // x:{
-                  //   display:false , // This will hide the x-axis labels
-                  // }
-                },
-              }}
-            />
+            ></canvas>
 
             <div className="d-flex justify-content-start align-items-center w-100 parent-persantage px-1">
               <h6 className="title-graph m-0 p-0">2,420</h6>
@@ -397,7 +302,7 @@ export default function DashBoard() {
         </div>
 
         <div className="sales-graph-contaier">
-          <Line options={options} data={data} className="line-sales-canvas" />
+          <canvas id="myChart4"></canvas>
         </div>
 
         {/* search filter section */}
