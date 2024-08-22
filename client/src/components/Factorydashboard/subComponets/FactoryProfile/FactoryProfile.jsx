@@ -1,6 +1,4 @@
 import { useEffect, useState, useContext, useReducer } from "react";
-import { useFormik } from "formik";
-import * as Yup from "yup";
 import Modal from "react-bootstrap/Modal";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 
@@ -12,7 +10,6 @@ import { handleImageError } from "utils/ImgNotFound";
 import { countriesMiddleEast } from "constants/countries";
 import SuccessToast from "components/SuccessToast";
 
-import { useOutletContext } from "react-router-dom";
 import UploadDocument from "components/Forms/Shared/UploadDocument";
 
 import ChangePassword from "./subComponents/ChangePassword/ChangePassword";
@@ -24,33 +21,18 @@ import {
   addFactoryMedia,
   updateFactoryFromUser,
 } from "Services/factory";
+import useFormValidation from "./hooks/useFormValidation";
 export default function FactoryProfile() {
   document.title = "Factory Profile";
   let { currentUserData } = useContext(userDetails);
 
-  const [activeMenu] = useOutletContext();
   let { isLogin, setIsLogin } = useContext(UserToken);
-  const setFactoryProfile = [];
-  const reducer = (state, action) => {
-    switch (action.type) {
-      case "fetched_update_data":
-        return {
-          ...state,
-          ...action.value,
-        };
+  let { factoryProfile, setFactoryProfile } = useState(UserToken);
 
-      case "update_image":
-        return {
-          ...state,
-          legalDocs: action.value,
-        };
-
-      default:
-        return state;
-    }
-  };
-
-  const [factoryProfile, dispatch] = useReducer(reducer, setFactoryProfile);
+  let { initialAccountInfo, AccountInfoValidation } = useFormValidation(
+    submitAccInfo,
+    factoryProfile
+  );
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -64,10 +46,10 @@ export default function FactoryProfile() {
   async function fetchFactoryPage() {
     let result = await fetchOneFactory(currentUserData?.factoryId);
     if (result?.success) {
-      dispatch({
-        type: "fetched_update_data",
-        value: result?.data?.factories,
-      });
+      setFactoryProfile((prevErrors) => ({
+        ...prevErrors,
+        ...result?.data?.factories,
+      }));
     }
   }
 
@@ -90,14 +72,12 @@ export default function FactoryProfile() {
 
     if (result?.success) {
       ModalClose();
-
-      SuccessToast("Data Updated Successfully");
-
-      dispatch({
-        type: "update_image",
-        value: result?.data?.factory?.legalDocs,
-      });
       setSelectedDocs([]);
+      SuccessToast("Data Updated Successfully");
+      setFactoryProfile((prevErrors) => ({
+        ...prevErrors,
+        ...result?.data?.factories?.legalDocs,
+      }));
     } else {
       setErrorMsg((prevErrors) => ({
         ...prevErrors,
@@ -110,21 +90,6 @@ export default function FactoryProfile() {
   useEffect(() => {
     fetchFactoryPage();
   }, [currentUserData?.factoryId]);
-
-  // update data
-  let emailValidation = Yup.string()
-    .email("Invalid email")
-    .required("Input Field is Required")
-    .max(255, "max length is 255");
-
-  let nameValidation = Yup.string()
-    .required("Input Field is Required")
-    .max(25, "max length is 25");
-  let phoneValidation = Yup.string()
-    .required("Input Field is Required")
-    .matches(/^[0-9]+$/, "Input Field should contain numbers only")
-    .min(6, "min length is 6")
-    .max(15, "max length is 15");
 
   const [show, setShow] = useState({
     accountInfoReadOnly: false,
@@ -143,62 +108,35 @@ export default function FactoryProfile() {
       return newState; // Return the updated state
     });
   }
-  let initialAccountInfo = {
-    //----------------- Account Info
-    repFirstName: factoryProfile?.repName?.[0] || "",
-    repLastName: factoryProfile?.repName?.[1] || "",
 
-    repEmail: factoryProfile?.repEmail || "",
+  const EmailNotificationUpdate2 = async (e) => {
+    e.preventDefault();
+    let data = {
+      allowEmailNotification: !factoryProfile?.allowEmailNotification,
+    };
 
-    repPhoneCode:
-      factoryProfile?.repPhone?.slice(0, 3) ||
-      countriesMiddleEast?.[0]?.phoneCode,
-    repPhone: factoryProfile?.repPhone?.slice(3) || "",
+    submitForm(data);
   };
 
-  // -------------------------------------------------------
-  let AccountInfoValidation = useFormik({
-    initialValues: initialAccountInfo,
-
-    validationSchema: Yup.object().shape({
-      repFirstName: nameValidation,
-      repLastName: nameValidation,
-
-      repEmail: emailValidation,
-
-      repPhone: phoneValidation,
-    }),
-    onSubmit: submitForm,
-  });
+  function submitAccInfo(values) {
+    let data = {};
+    data.repName = [values.repFirstName, values.repLastName];
+    if (factoryProfile?.repEmail !== values.repEmail) {
+      data.repEmail = values.repEmail;
+    }
+    if (factoryProfile?.repPhone !== values.repPhone) {
+      data.repPhone = `${values.repPhoneCode}${values.repPhone}`;
+    }
+    submitForm(data);
+  }
 
   async function submitForm(values) {
-    //
+    let data = values;
     setIsLoading(true);
     setErrorMsg((prevErrors) => {
       const { response, ...restErrors } = prevErrors || {};
       return restErrors;
     });
-    let data = {};
-    // cotinue
-    if (show?.accountInfoReadOnly) {
-      // if (factoryProfile?.repName !== values.repName) {
-      data.repName = [values.repFirstName, values.repLastName];
-      // }
-
-      // update only if there is a change because
-      // if email changes the user must get confirmation from admin again
-      if (factoryProfile?.repEmail !== values.repEmail) {
-        data.repEmail = values.repEmail;
-      }
-
-      if (factoryProfile?.repPhone !== values.repPhone) {
-        data.repPhone = `${values.repPhoneCode}${values.repPhone}`;
-      }
-    } else {
-      data = {
-        allowEmailNotification: !factoryProfile?.allowEmailNotification,
-      };
-    }
 
     const result = await updateFactoryFromUser(
       {
@@ -209,12 +147,12 @@ export default function FactoryProfile() {
 
     if (result?.success) {
       ModalClose();
-      SuccessToast("Image Not Saved, please try again");
+      SuccessToast("data updated succcfully");
 
-      dispatch({
-        type: "fetched_update_data",
-        value: data,
-      });
+      setFactoryProfile((prevErrors) => ({
+        ...prevErrors,
+        ...data,
+      }));
     } else {
       setErrorMsg((prevErrors) => ({
         ...prevErrors,
@@ -231,32 +169,18 @@ export default function FactoryProfile() {
     }
   }, [factoryProfile]);
 
-  useEffect(() => {
-    // used to highlight the current btn
-    const hash = window.location.hash;
-
-    // Check if there is a hash in the URL
-    if (hash) {
-      // Remove the '#' character to get the ID
-      const targetId = hash.substring(1);
-
-      // Get the target element by ID
-      const targetElement = document.getElementById(targetId);
-
-      if (targetElement) {
-        targetElement.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      }
-    }
-  }, [activeMenu]);
-
   function handleClose(value) {
     setShow((preValue) => ({
       ...preValue,
       [value]: false,
     }));
+
+    // reset message
+
+    setErrorMsg((prevErrors) => {
+      const { response, ...restErrors } = prevErrors || {};
+      return restErrors;
+    });
 
     AccountInfoValidation.resetForm({
       values: initialAccountInfo,
@@ -272,10 +196,7 @@ export default function FactoryProfile() {
   }
 
   function handleShow(value) {
-    setShow((preValue) => ({
-      ...preValue,
-      [value]: true,
-    }));
+    setShow((prevValue) => ({ ...prevValue, [value]: true }));
   }
 
   return (
@@ -318,9 +239,8 @@ export default function FactoryProfile() {
                     <input
                       className="form-check-input switch-input cursor"
                       type="checkbox"
-                      id="allowEmailNotification"
                       checked={factoryProfile?.allowEmailNotification}
-                      onClick={(e) => submitForm(!e.target.value)}
+                      onClick={EmailNotificationUpdate2}
                     />
                   </div>
                 </div>
@@ -454,16 +374,19 @@ export default function FactoryProfile() {
                               <select
                                 className="input-group-text h-100 p-2 m-0 phone-borders"
                                 id="repPhoneCode"
-                                name="repPhoneCode"
-                                placeholder="1113534343"
                                 onChange={AccountInfoValidation.handleChange}
+                                onBlur={AccountInfoValidation.handleBlur}
                                 value={
                                   AccountInfoValidation.values.repPhoneCode
                                 }
-                                onBlur={AccountInfoValidation.handleBlur}
+                                // defaultValue={AccountInfoValidation.values.repPhoneCode}
                               >
                                 {countriesMiddleEast.map((phoneItem) => (
-                                  <option value={phoneItem.phoneCode}>
+                                  <option
+                                    //  selected={AccountInfoValidation.values.repPhoneCode==phoneItem.phoneCode}
+                                    value={phoneItem.phoneCode}
+                                    key={phoneItem.phoneCode}
+                                  >
                                     {phoneItem.phoneCode}
                                   </option>
                                 ))}
