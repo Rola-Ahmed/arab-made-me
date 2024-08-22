@@ -714,23 +714,7 @@ export default function EditProduct() {
                     ))}
                   </select>
 
-                  {/* <div class="dropdown">
-                    <label for="nestedDropdown">Nested Dropdown:</label>
-                    <select id="nestedDropdown">
-                      <optgroup label="Option 1">
-                        <option value="subOption1">Sub Option 1</option>
-                        <option value="subOption2">Sub Option 2</option>
-                      </optgroup>
-                      <optgroup label="Option 2">
-                        <option value="subOption3">Sub Option 3</option>
-                        <option value="subOption4">Sub Option 4</option>
-                      </optgroup>
-                      <optgroup label="Option 3">
-                        <option value="subOption5">Sub Option 5</option>
-                        <option value="subOption6">Sub Option 6</option>
-                      </optgroup>
-                    </select>
-                  </div> */}
+              
                 </div>
               </div>
 

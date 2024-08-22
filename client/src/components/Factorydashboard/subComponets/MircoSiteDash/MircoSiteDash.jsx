@@ -19,7 +19,6 @@ import { countriesMiddleEast } from "constants/countries";
 import SuccessToast from "components/SuccessToast";
 import ErrorToast from "components/ErrorToast";
 
-import { useOutletContext } from "react-router-dom";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 import FactoryInforamtion from "./subComponents/FactoryInforamtion";
 import Team from "./subComponents/Team";
@@ -506,28 +505,7 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
     }
   }, [factoryProfile]);
 
-  const [activeMenu] = useOutletContext();
 
-  useEffect(() => {
-    const hash = window.location.hash;
-
-    // Check if there is a hash in the URL
-    if (hash) {
-      // Remove the '#' character to get the ID
-      const targetId = hash.substring(1);
-
-      // Get the target element by ID
-      const targetElement = document.getElementById(targetId);
-
-      if (targetElement) {
-        // Scroll to the target element
-        targetElement.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      }
-    }
-  }, [activeMenu]);
 
   function handleClose(value) {
     setShow((preValue) => ({

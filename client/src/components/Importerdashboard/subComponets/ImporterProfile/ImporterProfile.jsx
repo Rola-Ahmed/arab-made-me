@@ -482,7 +482,6 @@ let  data = {
                             <input
                               className="form-check-input switch-input cursor"
                               type="checkbox"
-                              id="flexSwitchCheckChecked"
                               checked={ImporterProfile?.allowEmailNotification}
                               onClick={EmailNotificationUpdate2}
                            

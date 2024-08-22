@@ -1,18 +1,16 @@
 // FactorydashLogic.js
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { userDetails } from "Context/userType";
 import useFactoryNotification from "./useFactoryNotification";
 import { UserToken } from "Context/userToken";
 
-const useFactorydashLogic = (pathname ) => {
-  console.log("pathname",pathname)
+const useFactorydashLogic = (pathname) => {
   const currentNavPage = pathname?.split("/")?.pop()?.toLowerCase();
   const { isLogin } = useContext(UserToken);
   const { currentUserData, clearSession } = useContext(userDetails);
   const { notification } = useFactoryNotification(isLogin);
   const navigate = useNavigate();
-  const [activeMenu, setActiveMenu] = useState("");
 
   useEffect(() => {
     const scrollElement = document.getElementById("scollTOTop");
@@ -42,8 +40,7 @@ const useFactorydashLogic = (pathname ) => {
     handleLogout,
     handleDropdownToggle,
     notification,
-    activeMenu,
-    setActiveMenu,
+
     currentUserData,
     isLogin,
     currentNavPage,

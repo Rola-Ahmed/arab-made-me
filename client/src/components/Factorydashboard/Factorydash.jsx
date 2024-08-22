@@ -1,9 +1,5 @@
 import "./Factorydash.css";
-import {
-  Link,
-  Outlet,
-  useLocation,
-} from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 // import { userDetails } from "Context/userType";
 import DashLogo from "components/Shared/Dashboards/DashLogo";
 import BottomDashMenu from "components/Shared/Dashboards/BottomDashMenu";
@@ -20,9 +16,7 @@ function Factorydash() {
     currentUserData,
     handleLogout,
     handleDropdownToggle,
-    setActiveMenu,
-    activeMenu,
-    currentNavPage
+    currentNavPage,
   } = useFactorydashLogic(pathname);
 
   // Use the authorization check function
@@ -79,7 +73,7 @@ function Factorydash() {
                     <div className="mt-3"></div>
                     <DashListsDropDown
                       path={"factoryProfile"}
-                      setActiveMenu={setActiveMenu}
+                      
                       urlHashValue="accountInformation"
                       title="Account Inforamtion"
                       icon="fa-solid fa-gears"
@@ -88,7 +82,7 @@ function Factorydash() {
                     {/* Password Change */}
                     <DashListsDropDown
                       path={"factoryProfile"}
-                      setActiveMenu={setActiveMenu}
+                      
                       urlHashValue="PasswordChange"
                       title="Password Change"
                       icon="fa-solid fa-lock "
@@ -99,7 +93,7 @@ function Factorydash() {
                     {/* Email Notification */}
                     <DashListsDropDown
                       path={"factoryProfile"}
-                      setActiveMenu={setActiveMenu}
+                      
                       urlHashValue="EmailNotification"
                       title="Notifications"
                       icon="fa-solid fa-bell"
@@ -107,7 +101,7 @@ function Factorydash() {
                     {/* legal docs */}
                     <DashListsDropDown
                       path={"factoryProfile"}
-                      setActiveMenu={setActiveMenu}
+                      
                       urlHashValue="legalDocs"
                       title="Legal Documents"
                       icon="fa-solid fa-file-circle-check"
@@ -116,7 +110,7 @@ function Factorydash() {
                     {/* legal docs */}
                     <DashListsDropDown
                       path={"factoryProfile"}
-                      setActiveMenu={setActiveMenu}
+                      
                       urlHashValue="subscriptionPlan"
                       title="Subscription Plan"
                       icon="fa-solid fa-envelope-circle-check pe-2"
@@ -149,7 +143,7 @@ function Factorydash() {
                   <div id="drop-mircoSite" className={`dropdwon-menu-style `}>
                     <DashListsDropDown
                       path={"mircoSite"}
-                      setActiveMenu={setActiveMenu}
+                      
                       urlHashValue="factorylogo"
                       title="Factory Logo"
                       icon="fa-solid fa-user"
@@ -157,7 +151,7 @@ function Factorydash() {
 
                     <DashListsDropDown
                       path={"mircoSite"}
-                      setActiveMenu={setActiveMenu}
+                      
                       urlHashValue="socialAccount"
                       title="Social Accounts"
                       icon="fa-solid fa-share-nodes"
@@ -165,7 +159,7 @@ function Factorydash() {
 
                     <DashListsDropDown
                       path={"mircoSite"}
-                      setActiveMenu={setActiveMenu}
+                      
                       urlHashValue="factoryimages"
                       title="Cover Images"
                       icon="fa-solid fa-images"
@@ -173,7 +167,7 @@ function Factorydash() {
 
                     <DashListsDropDown
                       path={"mircoSite"}
-                      setActiveMenu={setActiveMenu}
+                      
                       urlHashValue="certificates"
                       title="Certificates"
                       icon="fa-solid fa-stamp"
@@ -181,7 +175,7 @@ function Factorydash() {
 
                     <DashListsDropDown
                       path={"mircoSite"}
-                      setActiveMenu={setActiveMenu}
+                      
                       urlHashValue="CoverVideo"
                       title="Cover Video"
                       icon="fa-solid fa-video"
@@ -189,9 +183,7 @@ function Factorydash() {
 
                     <Link
                       to="mircoSite#FactoryInforamtion"
-                      onClick={() => {
-                        setActiveMenu("FactoryInforamtion");
-                      }}
+                     
                       className={` sub-btn  text-decoration-none  ${
                         window?.location.href.includes("FactoryInforamtion")
                           ? "active"
@@ -224,7 +216,7 @@ function Factorydash() {
 
                     <DashListsDropDown
                       path={"mircoSite"}
-                      setActiveMenu={setActiveMenu}
+                      
                       urlHashValue="team"
                       title="Team"
                       icon="fa-solid fa-user-plus"
@@ -335,7 +327,7 @@ function Factorydash() {
           id="scollTOTop"
           className="col-10 bg-white border-rounded   overflow-container factory-scroll-padding "
         >
-          <Outlet context={[activeMenu, setActiveMenu]} />
+          <Outlet />
         </div>
       </div>
     </section>
