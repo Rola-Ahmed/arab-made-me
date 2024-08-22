@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import Modal from "react-bootstrap/Modal";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
+import InputField from "components/Forms/Shared/InputField";
 
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
@@ -213,197 +214,139 @@ export default function FactoryProfile() {
           class="modal-dialog  modal-dialog-centered modal-lg rounded-3"
           role="document"
         >
-            <div class="modal-content   px-4 py-4">
-              <div class="modal-header mb-3">
-                <h4 class="modal-title fw-normal" id="exampleModalLabel">
-                  Account Inforamtions
-                </h4>
-                <button
-                  type="button"
-                  class="close bg-0 border-0"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <i class="fa-solid fa-xmark fs-24"></i>
-                </button>
-              </div>
-              <div class="modal-body p-0 ">
-                {" "}
-                {errorMsg?.response ? (
-                  <div className="alert mt-3 p-2 alert-danger form-control text-dark">
-                    {errorMsg?.response}
-                  </div>
-                ) : (
-                  ""
-                )}
-                <div className="w-100  ">
-                  <form onSubmit={AccountInfoValidation.handleSubmit}>
-                    <div className="row  row-gap">
-                      <div className="col-6">
-                        <div className="grid-gap-col">
-                          <div className="form-group">
-                            <label>Representive first Name</label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              id="repFirstName"
-                              name="repFirstName"
-                              placeholder="Enter first Name"
+          <div class="modal-content   px-4 py-4">
+            <div class="modal-header mb-3">
+              <h4 class="modal-title fw-normal" id="exampleModalLabel">
+                Account Inforamtions
+              </h4>
+              <button
+                type="button"
+                class="close bg-0 border-0"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <i class="fa-solid fa-xmark fs-24"></i>
+              </button>
+            </div>
+            <div class="modal-body p-0 ">
+              {" "}
+              {errorMsg?.response ? (
+                <div className="alert mt-3 p-2 alert-danger form-control text-dark">
+                  {errorMsg?.response}
+                </div>
+              ) : (
+                ""
+              )}
+              <div className="w-100  ">
+                <form onSubmit={AccountInfoValidation.handleSubmit}>
+                  <div className="row  row-gap">
+                    <div className="col-6">
+                      <InputField
+                        formValidation={AccountInfoValidation}
+                        vlaidationName="repFirstName"
+                        isRequire={true}
+                        title="Representive first Name"
+                      />
+                    </div>
+                    <div className="col-6">
+                      <InputField
+                        formValidation={AccountInfoValidation}
+                        vlaidationName="repLastName"
+                        isRequire={true}
+                        title="Representive Last Name"
+                      />
+                    </div>
+
+                    <div className="col-6">
+                      <InputField
+                        formValidation={AccountInfoValidation}
+                        vlaidationName="repEmail"
+                        isRequire={true}
+                        title="Representive Email"
+                      />
+                    </div>
+
+                    <div className="col-6">
+                      <div className="form-group">
+                        <label className="m-0 p-0">
+                          Representive Phone Number *
+                        </label>
+                        <div className="input-group">
+                          <div className="input-group-prepend">
+                            <select
+                              className="input-group-text h-100 p-2 m-0 phone-borders"
+                              id="repPhoneCode"
                               onChange={AccountInfoValidation.handleChange}
                               onBlur={AccountInfoValidation.handleBlur}
-                              value={AccountInfoValidation.values.repFirstName}
-                            />
-                            {AccountInfoValidation.errors.repFirstName &&
-                            AccountInfoValidation.touched.repFirstName ? (
-                              <small className="text-danger">
-                                {AccountInfoValidation.errors.repFirstName}
-                              </small>
-                            ) : (
-                              ""
-                            )}
+                              value={AccountInfoValidation.values.repPhoneCode}
+                            >
+                              {countriesMiddleEast.map((phoneItem) => (
+                                <option
+                                  value={phoneItem.phoneCode}
+                                  key={phoneItem.phoneCode}
+                                >
+                                  {phoneItem.phoneCode}
+                                </option>
+                              ))}
+                            </select>
                           </div>
-                        </div>
-                      </div>
-                      <div className="col-6">
-                        <div className="form-group">
-                          <label>representive Last Name</label>
                           <input
                             type="text"
-                            className="form-control"
-                            id="repLastName"
-                            name="repLastName"
-                            placeholder="Enter Last Name"
+                            className="form-control phone-border"
+                            id="repPhone"
+                            name="repPhone"
+                            placeholder="1113534343"
                             onChange={AccountInfoValidation.handleChange}
+                            value={AccountInfoValidation.values.repPhone}
                             onBlur={AccountInfoValidation.handleBlur}
-                            value={AccountInfoValidation.values.repLastName}
                           />
-
-                          {AccountInfoValidation.errors.repLastName &&
-                          AccountInfoValidation.touched.repLastName ? (
-                            <small className="text-danger">
-                              {AccountInfoValidation.errors.repLastName}
-                            </small>
-                          ) : (
-                            ""
-                          )}
                         </div>
-                      </div>
-
-                      <div className="col-6">
-                        <div className="grid-gap-col">
-                          <div className="form-group">
-                            <label> Representive Email</label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              id="repEmail"
-                              name="repEmail"
-                              placeholder="enter Representive Email"
-                              onChange={AccountInfoValidation.handleChange}
-                              onBlur={AccountInfoValidation.handleBlur}
-                              value={AccountInfoValidation.values.repEmail}
-                            />
-
-                            {AccountInfoValidation.errors.repEmail &&
-                            AccountInfoValidation.touched.repEmail ? (
-                              <small className="text-danger">
-                                {AccountInfoValidation.errors.repEmail}
-                              </small>
-                            ) : (
-                              ""
-                            )}
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="col-6">
-                        <div className="grid-gap-col">
-                          <div className="form-group">
-                            <label>Representive Phone Number *</label>
-                            <div className="input-group">
-                              <div className="input-group-prepend">
-                                <select
-                                  className="input-group-text h-100 p-2 m-0 phone-borders"
-                                  id="repPhoneCode"
-                                  onChange={AccountInfoValidation.handleChange}
-                                  onBlur={AccountInfoValidation.handleBlur}
-                                  value={
-                                    AccountInfoValidation.values.repPhoneCode
-                                  }
-                                  // defaultValue={AccountInfoValidation.values.repPhoneCode}
-                                >
-                                  {countriesMiddleEast.map((phoneItem) => (
-                                    <option
-                                      //  selected={AccountInfoValidation.values.repPhoneCode==phoneItem.phoneCode}
-                                      value={phoneItem.phoneCode}
-                                      key={phoneItem.phoneCode}
-                                    >
-                                      {phoneItem.phoneCode}
-                                    </option>
-                                  ))}
-                                </select>
-                              </div>
-                              <input
-                                type="text"
-                                className="form-control phone-border"
-                                id="repPhone"
-                                name="repPhone"
-                                placeholder="1113534343"
-                                onChange={AccountInfoValidation.handleChange}
-                                value={AccountInfoValidation.values.repPhone}
-                                onBlur={AccountInfoValidation.handleBlur}
-                              />
-                            </div>
-                            {AccountInfoValidation.errors.repPhone &&
-                            AccountInfoValidation.touched.repPhone ? (
-                              <small className="form-text text-danger">
-                                {AccountInfoValidation.errors.repPhone}
-                              </small>
-                            ) : (
-                              ""
-                            )}
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="col-12 d-flex justify-content-start btn-modal-gap mt-3">
-                        <button
-                          className="btn btn-secondary"
-                          type="button"
-                          onClick={() => handleClose("accountInfoReadOnly")}
-                        >
-                          Close
-                        </button>
-                        {isLoading ? (
-                          <button type="button" className="btn-edit">
-                            <i className="fas fa-spinner fa-spin text-white px-5"></i>
-                          </button>
+                        {AccountInfoValidation.errors.repPhone &&
+                        AccountInfoValidation.touched.repPhone ? (
+                          <small className="form-text text-danger">
+                            {AccountInfoValidation.errors.repPhone}
+                          </small>
                         ) : (
-                          <button
-                            className="btn-edit submitButton"
-                            type="submit"
-                          >
-                            <p className="cursor">save changes</p>
-                          </button>
+                          ""
                         )}
                       </div>
                     </div>
-                  </form>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-dismiss="modal"
-                >
-                  Close
-                </button>
-                <button type="button" class="btn btn-primary">
-                  Save changes
-                </button>
+
+                    <div className="col-12 d-flex justify-content-start btn-modal-gap mt-3">
+                      <button
+                        className="btn btn-secondary"
+                        type="button"
+                        onClick={() => handleClose("accountInfoReadOnly")}
+                      >
+                        Close
+                      </button>
+                      {isLoading ? (
+                        <button type="button" className="btn-edit">
+                          <i className="fas fa-spinner fa-spin text-white px-5"></i>
+                        </button>
+                      ) : (
+                        <button className="btn-edit submitButton" type="submit">
+                          <p className="cursor">save changes</p>
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </form>
               </div>
             </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="button" class="btn btn-primary">
+                Save changes
+              </button>
+            </div>
+          </div>
           {/* </div> */}
           {/* </div> */}
         </div>
