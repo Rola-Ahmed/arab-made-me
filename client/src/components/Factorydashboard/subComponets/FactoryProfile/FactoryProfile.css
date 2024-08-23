@@ -189,11 +189,11 @@
 
 
 
-.factory-profile .form-group input {
+/* .factory-profile .form-group input {
     padding-top: 11px;
     padding-bottom: 11px;
 
-}
+} */
 
 
 .factory-profile .form-select.form-control {
@@ -204,9 +204,9 @@
 
 .factory-profile .form-group label {
     font-family: "Inter-semi";
-    margin-left: 1px;
+    /* margin-left: 1px;
     padding-top: 7px;
-    padding-bottom: 7px;
+    padding-bottom: 7px; */
 
 
 }

@@ -25,9 +25,9 @@ import {
 import useFormValidation from "./hooks/useFormValidation";
 export default function FactoryProfile() {
   document.title = "Factory Profile";
-  let { currentUserData } = useContext(userDetails);
+  let { currentUserData, clearSession } = useContext(userDetails);
 
-  let { isLogin, setIsLogin } = useContext(UserToken);
+  let { isLogin } = useContext(UserToken);
   let [factoryProfile, setFactoryProfile] = useState();
 
   let { initialAccountInfo, AccountInfoValidation } = useFormValidation(
@@ -93,8 +93,6 @@ export default function FactoryProfile() {
   }, [currentUserData?.factoryId]);
 
   const [show, setShow] = useState({
-    accountInfoReadOnly: false,
-    passwordChangeReadOnly: false,
     legalDocsReadOnly: false,
   });
   function ModalClose() {
@@ -240,15 +238,11 @@ export default function FactoryProfile() {
 
               {/*Password change container 2 */}
               <ChangePassword
-                handleShow={handleShow}
-                handleClose={handleClose}
-                show={show}
                 errorMsg={errorMsg}
-                setIsLogin={setIsLogin}
-                ModalClose={ModalClose}
                 setErrorMsg={setErrorMsg}
                 isLogin={isLogin}
                 isLoading={isLoading}
+                clearSession={clearSession}
               />
 
               {/*Links container 2 */}

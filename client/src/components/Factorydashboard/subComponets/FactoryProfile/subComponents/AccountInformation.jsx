@@ -94,6 +94,7 @@ export default function AccountInformation(props) {
               <div className="col-12">
                 <button
                   className="btn-edit"
+                  type="button"
                   // variant="primary"
                   // onClick={() => handleShow("accountInfoReadOnly")}
                   data-bs-toggle="modal"
@@ -115,7 +116,6 @@ export default function AccountInformation(props) {
         id="editAccountInfo"
         tabindex="-1"
         role="dialog"
-        aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
         <div
@@ -124,7 +124,7 @@ export default function AccountInformation(props) {
         >
           <div class="modal-content   px-4 py-4">
             <div class="modal-header mb-3">
-              <h4 class="modal-title fw-normal" id="exampleModalLabel">
+              <h4 class="modal-title fw-normal" >
                 Account Inforamtions
               </h4>
               <button
