@@ -1,15 +1,9 @@
 import { useState } from "react";
-import Modal from "react-bootstrap/Modal";
 import DisplayMultiImages from "components/Shared/Dashboards/DisplayMultiImages";
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
 
 export default function LegalDocuments(props) {
-  let {
-    factoryProfile,
-    handleImageError,
-    Button,
-    handleShow,
-  } = props;
+  let { legalDocs } = props;
 
   const [showImagePop, setShowImagePop] = useState({
     display: false,
@@ -28,21 +22,20 @@ export default function LegalDocuments(props) {
         <div className="title-contianer-input w-100">
           <p className="">Legal Documents</p>
           <DisplayMultiImages
-                      handleImageClick={handleImageClick}
-                      images={factoryProfile?.legalDocs}
-                    />
+            handleImageClick={handleImageClick}
+            images={legalDocs}
+          />
 
-<div className="w-100">
-                <button
-                type="button"
-                  className="btn-edit"
-                  variant="primary"
-                  onClick={() => handleShow("legalDocsReadOnly")}
-                >
-                  <p className="cursor">Upload </p>
-                </button>
-              </div>
-         
+          <div className="w-100">
+            <button
+              type="button"
+              className="btn-edit"
+              data-bs-toggle="modal"
+              data-bs-target="#addLegalDocs"
+            >
+              <p className="cursor">Upload </p>
+            </button>
+          </div>
         </div>
       </div>
 

@@ -1,7 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import Modal from "react-bootstrap/Modal";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
-import InputField from "components/Forms/Shared/InputField";
 
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
@@ -120,11 +119,6 @@ export default function FactoryProfile() {
   console.log("AccountInfoValidation", AccountInfoValidation);
 
   function submitAccInfo(values) {
-    console.log(
-      "AccountInfoValidation.repPhone}`",
-      factoryProfile?.repPhone,
-      `${values.repPhoneCode}${values.repPhone}`
-    );
     let data = {};
     data.repName = [values.repFirstName, values.repLastName];
     if (factoryProfile?.repEmail !== values.repEmail) {
@@ -173,7 +167,6 @@ export default function FactoryProfile() {
     const modal = document.getElementById("editAccountInfo");
     modal.classList.remove("show"); // Remove the 'show' class
     modal.classList.add("d-none"); // Remove the 'show' class
-    console.log("modal", modal);
   }
 
   useEffect(() => {
@@ -181,32 +174,6 @@ export default function FactoryProfile() {
       AccountInfoValidation.setValues(initialAccountInfo);
     }
   }, [factoryProfile]);
-
-  function handleClose(value) {
-    setShow((preValue) => ({
-      ...preValue,
-      [value]: false,
-    }));
-
-    // reset message
-
-    setErrorMsg((prevErrors) => {
-      const { response, ...restErrors } = prevErrors || {};
-      return restErrors;
-    });
-
-    AccountInfoValidation.resetForm({
-      values: initialAccountInfo,
-      errors: {},
-      touched: {},
-      status: undefined,
-      isSubmitting: false,
-      isValidating: false,
-      submitCount: 0,
-    });
-
-    setSelectedDocs([]);
-  }
 
   function handleShow(value) {
     setShow((prevValue) => ({ ...prevValue, [value]: true }));
@@ -280,7 +247,7 @@ export default function FactoryProfile() {
 
               {/* Lecal certifcates   */}
               <LegalDocuments
-                factoryProfile={factoryProfile}
+                legalDocs={factoryProfile?.legalDocs}
                 handleImageError={handleImageError}
                 handleShow={handleShow}
               />
@@ -294,30 +261,37 @@ export default function FactoryProfile() {
 
       {/*  legal docs */}
 
-      <Modal
-        show={show.legalDocsReadOnly}
-        onHide={() => handleClose("legalDocsReadOnly")}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-        className="factory-profile"
+      <div
+        class="modal fade "
+        id="addLegalDocs"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true"
       >
-        <Modal.Body closeButton>
-          {/* Account Info container 1 */}
-
-          <div className="container-profile-input w-100">
-            <div className="title-contianer-input w-100">
-              <Modal.Header closeButton>
-                <Modal.Title>
-                  <p>Legal Documents</p>
-                </Modal.Title>
-              </Modal.Header>
-              {errorMsg?.response ? (
+        <div
+          class="modal-dialog  modal-dialog-centered modal-lg rounded-3"
+          role="document"
+        >
+          <div class="modal-content   px-4 py-4">
+            <div class="modal-header mb-3">
+              <h4 class="modal-title fw-normal">Upload New Legal Documents</h4>
+              <button
+                type="button"
+                class="close bg-0 border-0"
+                data-dismiss="modal"
+                aria-label="Close"
+                data-bs-dismiss="modal"
+                onClick={() => handleClose2()}
+              >
+                <i class="fa-solid fa-xmark fs-24"></i>
+              </button>
+            </div>
+            <div class="modal-body p-0 ">
+              {" "}
+              {errorMsg?.response && (
                 <div className="alert mt-3 p-2 alert-danger form-control text-dark">
                   {errorMsg?.response}
                 </div>
-              ) : (
-                ""
               )}
               <div className="w-100 ">
                 <form
@@ -337,25 +311,26 @@ export default function FactoryProfile() {
                       title="Upload Documents"
                     />
 
-                    <div className="col-12 d-flex justify-content-start btn-modal-gap">
+                    <div className="col-12 d-flex justify-content-start btn-modal-gap mt-3">
                       <button
-                        className="btn btn-secondary"
+                        className="border-0 rounded-3 bg-header fs-14 fw-600 px-3 py-2"
                         type="button"
-                        onClick={() => handleClose("legalDocsReadOnly")}
+                        data-bs-dismiss="modal"
+                        onClick={() => handleClose2()}
                       >
                         Close
                       </button>
                       {isLoading ? (
-                        <button type="button" className="btn-edit">
+                        <button type="button" className="rounded-3 bg-main text-white px-4 py-2 border-0">
                           <i className="fas fa-spinner fa-spin text-white px-5"></i>
                         </button>
                       ) : (
                         <button
-                          className="btn-edit submitButton"
+                          className="rounded-3 border-0 bg-main text-white px-3 py-2 fs-14 fw-bolder"
                           type="submit"
                           disabled={!(selectedDocs?.length > 0)}
                         >
-                          <p className="cursor">Submit for review</p>
+                          Submit New Images
                         </button>
                       )}
                     </div>
@@ -364,9 +339,8 @@ export default function FactoryProfile() {
               </div>
             </div>
           </div>
-        </Modal.Body>
-      </Modal>
-      {/* </form> */}
+        </div>
+      </div>
     </>
   );
 }

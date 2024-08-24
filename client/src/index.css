@@ -99,8 +99,9 @@ p, h1, h2, h3, h4, h5, h6 {
 
 .submitButton[disabled] {
   background-color: #0f1e3bad !important;
-  border-color: #0f1e3bad !important;
-  cursor: not-allowed
+  border: none !important;
+  cursor: not-allowed;
+  color: white
 }
 
 .submitButton-border[disabled] {
