@@ -25,10 +25,11 @@ const useFormValidation = (submitAccInfo, factoryProfile) => {
 
     repEmail: factoryProfile?.repEmail || "",
 
-    repPhoneCode:
+    repPhoneCode: 
       factoryProfile?.repPhone?.slice(0, 4) ||
       countriesMiddleEast?.[0]?.phoneCode,
-    repPhone: factoryProfile?.repPhone?.slice(3) || "",
+    repPhone: factoryProfile?.repPhone?.slice(4) || "",
+    // realPhone:factoryProfile?.repPhone
   };
 
   // ----formik---------------------------------

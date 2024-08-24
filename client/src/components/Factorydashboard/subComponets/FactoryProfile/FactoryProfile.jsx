@@ -117,13 +117,22 @@ export default function FactoryProfile() {
     submitForm(data);
   };
 
+  console.log("AccountInfoValidation", AccountInfoValidation);
+
   function submitAccInfo(values) {
+    console.log(
+      "AccountInfoValidation.repPhone}`",
+      factoryProfile?.repPhone,
+      `${values.repPhoneCode}${values.repPhone}`
+    );
     let data = {};
     data.repName = [values.repFirstName, values.repLastName];
     if (factoryProfile?.repEmail !== values.repEmail) {
       data.repEmail = values.repEmail;
     }
-    if (factoryProfile?.repPhone !== values.repPhone) {
+    if (
+      factoryProfile?.repPhone != `${values.repPhoneCode}${values.repPhone}`
+    ) {
       data.repPhone = `${values.repPhoneCode}${values.repPhone}`;
     }
     submitForm(data);
@@ -160,6 +169,11 @@ export default function FactoryProfile() {
     }
 
     setIsLoading(false);
+
+    const modal = document.getElementById("editAccountInfo");
+    modal.classList.remove("show"); // Remove the 'show' class
+    modal.classList.add("d-none"); // Remove the 'show' class
+    console.log("modal", modal);
   }
 
   useEffect(() => {
