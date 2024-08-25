@@ -387,7 +387,7 @@ let  data = {
 
               {/*Password change container 2 */}
 
-<ChangePassword
+{/* <ChangePassword
                 handleShow={handleShow}
                 handleClose={handleClose}
                 show={show}
@@ -397,7 +397,7 @@ let  data = {
                 setErrorMsg={setErrorMsg}
                 isLogin={isLogin}
                 isLoading={isLoading}
-              />
+              /> */}
 
               {/*Social Accounts container 2 */}
               <div id="socialAccount"></div>
