@@ -714,7 +714,7 @@ p.readOnly {
 
 
 
-/* HTML: <div class="loader"></div> */
+/* HTML: <div className="loader"></div> */
 .loader {
   width: 40px;
   aspect-ratio: 4;
