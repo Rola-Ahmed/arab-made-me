@@ -1,11 +1,9 @@
 import { useEffect, useState, useContext } from "react";
 
-import axios from "axios";
 import { UserToken } from "Context/userToken";
-// import SourcingRequestCard from "components/Sourcinghub/SourcingRequest/SourcingRequestCard";
 
 import { userDetails } from "Context/userType";
-import { baseUrl, useAppTranslation } from "config.js";
+import { useAppTranslation } from "config.js";
 
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 
@@ -13,52 +11,51 @@ import UserNotAuthorized from "components/ActionMessages/FormAccessControl/Popup
 import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/FactoryUnVerifiedPopUpMsg";
 
 import SourcingOffers from "components/Home/SourcingHub/SourcingOffers/SourcingOffers";
-
-// import { Swiper, SwiperSlide } from "swiper/react";
-// import { Navigation } from "swiper/modules";
 import SourcingRequest from "./sourcingRequest/SourcingRequest";
-
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/navigation";
+import { getSourcingReuqests } from "Services/sourcingReuqest";
+import { useNavigate } from "react-router-dom";
 
 const displayProductSize = 20;
+let displayProductSizeOffer = 100;
 
 function SourcingHub() {
   // utils function
   let { currentUserData } = useContext(userDetails);
+  let navigate = useNavigate();
   let { isLogin } = useContext(UserToken);
   const { trans: t, currentLang } = useAppTranslation();
-
   const [allSourcingReqData, setAllSourcingReqData] = useState([]);
+  const [allSourcingOffer, setAllSourcingOffer] = useState([]);
+
+
 
   const [modalShow, setModalShow] = useState({
     isFactoryVerified: false,
     isImporterVerified: false,
     BecomeAfactory: false,
   });
-
+  const [apiStatus, setApiStatus] = useState({});
   async function fetchSourcingReqData() {
-    try {
-      let config = {
-        method: "get",
-        url: `${baseUrl}/sourcingRequests/?size=${displayProductSize}&include=importer`,
-      };
+    let result = await getSourcingReuqests(
+      `size=${displayProductSize}&include=importer`
+    );
 
-      const response = await axios.request(config);
+    if (result?.success) {
+      setAllSourcingReqData(result.data?.sourcingrequests);
+    }
 
-      setAllSourcingReqData(response.data?.sourcingrequests);
-    } catch (error) {}
+    setApiStatus({
+      loadingPage: result?.loadingStatus,
+      errorCausedMsg: result?.error,
+    });
   }
 
   useEffect(() => {
     fetchSourcingReqData();
   }, []);
 
-  console.log("allSourcingReqData", allSourcingReqData);
-
   return (
-    <section className="margin-sm-screen">
+    <>
       <IsLoggedIn
         show={modalShow.isLogin}
         onHide={() =>
@@ -104,41 +101,59 @@ function SourcingHub() {
         // userType="Factory"
       />
 
-      <div className={`container sourcing-h-hom   home-padding-y `}>
-        <p
-          className={`header-Title  ${currentLang == "ar" && "ar-text-left"} `}
-        >
-          {" "}
-          {t("translation:titles.SourcingHub")}
-        </p>
-        <div
-          className={`d-flex justify-content-between ${
-            currentLang == "ar" && "ar-flex-reverse"
-          }`}
-        >
+      <section className="margin-sm-screen">
+        <div className={`container sourcing-h-hom   home-padding-y `}>
           <p
-            className={`fs-20-semi pb-2 ${
-              currentLang == "ar" && "ar-text-left fw-900"
+            className={`header-Title  ${
+              currentLang == "ar" && "ar-text-left"
+            } `}
+          >
+            {" "}
+            {t("translation:titles.SourcingHub")}
+          </p>
+          <div
+            className={`d-flex justify-content-between ${
+              currentLang == "ar" && "ar-flex-reverse"
             }`}
           >
-            {t("translation:titles.buyerRequests")}
-          </p>
+            <p
+              className={`fs-20-semi pb-2 ${
+                currentLang == "ar" && "ar-text-left fw-900"
+              }`}
+            >
+              {t("translation:titles.buyerRequests")}
+            </p>
 
-          <div className="d-flex arrow-container gap-2">
-            <div className="arrow-btn position-static arrowLeft  carousel rounded-5">
-              <i className="fa-solid fa-chevron-left"></i>
+            <div className="d-flex arrow-container gap-2">
+              <div className="arrow-btn position-static arrowLeft  carousel rounded-5">
+                <i className="fa-solid fa-chevron-left"></i>
+              </div>
+
+              <div className="arrow-btn position-static arrowRight carousel rounded-5">
+                <i className="fa-solid fa-chevron-right"></i>
+              </div>
             </div>
+          </div>
+          <SourcingRequest
+            apiStatus={apiStatus}
+            allSourcingReqData={allSourcingReqData}
+          />
 
-            <div className="arrow-btn position-static arrowRight carousel rounded-5">
-              <i className="fa-solid fa-chevron-right"></i>
+          <SourcingOffers />
+
+          <div className="btn-container-all cursor">
+            <div
+              className="get-all-btn text-decoration-none text-white cursor"
+              onClick={() => {
+                navigate("/sourcinghub/SourcingRequests");
+              }}
+            >
+              Sourcing Hub
             </div>
           </div>
         </div>
-        <SourcingRequest />
-
-        <SourcingOffers />
-      </div>
-    </section>
+      </section>
+    </>
   );
 }
 

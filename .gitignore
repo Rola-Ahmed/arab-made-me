@@ -124,3 +124,5 @@ client/src/config copy.js
 client/public/index copy.html
 client/src/components/Factorydashboard/subComponets/MircoSiteDash/MircoSiteDashMain.jsx
 client/src/components/Factorydashboard/subComponets/Quotations/EditQuote/EditQuote copy.jsx
+client/src/components/Home/SourcingHub/SourcingOffers/SourcingOffers copy.jsx
+client/src/components/Home/SourcingHub/sourcingRequest/SourcingRequestOriginal.jsx

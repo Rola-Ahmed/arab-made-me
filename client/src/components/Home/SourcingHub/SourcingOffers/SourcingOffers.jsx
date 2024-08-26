@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import "./SourcingOffers.css";
 
 import { useEffect, useState } from "react";
@@ -9,23 +8,23 @@ import Loading from "components/Loading/Loading";
 import { useAppTranslation } from "config.js";
 
 export default function SourcingOffers() {
-  let navigate = useNavigate();
   const { trans: t, currentLang } = useAppTranslation();
 
   // utils function
   let displayProductSize = 100;
 
-  const [allSourcingReqData, setAllSourcingReqData] = useState([]);
+  const [allSourcingOffer, setAllSourcingOffer] = useState([]);
 
-  const [apiLoadingData, setapiLoadingData] = useState(true);
+  // const [apiLoadingData, setapiLoadingData] = useState(true);
+  const [apiStatus, setApiStatus] = useState([]);
 
   async function fetchSourcingReqData() {
     let result = await getSourcingOffers(`size=${displayProductSize}`);
     if (result?.success) {
-      setAllSourcingReqData(result.data?.sourcingoffers);
+      setAllSourcingOffer(result.data?.sourcingoffers);
     }
 
-    setapiLoadingData((prevValue) => ({
+    setApiStatus((prevValue) => ({
       ...prevValue,
       laoding: result?.loadingStatus,
       errorMsg: result?.error,
@@ -50,16 +49,16 @@ export default function SourcingOffers() {
       <div className="row position-relative">
         <div className="col-12">
           <div className="border-container">
-            <SourcingOfferTable allSourcingReqData={allSourcingReqData} />
+            <SourcingOfferTable allSourcingReqData={allSourcingOffer} />
           </div>
         </div>
 
-        {apiLoadingData?.laoding && (
+        {apiStatus?.laoding && (
           <>
             <div className="position-absolute error-float">
-              {apiLoadingData?.errorMsg ? (
+              {apiStatus?.errorMsg ? (
                 <p className="fs-5 text-muted fw-bolder text-5 mt-5 pt-5 mx-auto">
-                  {apiLoadingData?.errorMsg || "No records Found"}
+                  {apiStatus?.errorMsg || "No records Found"}
                 </p>
               ) : (
                 <div className="d-flex justify-content-center">
@@ -69,24 +68,15 @@ export default function SourcingOffers() {
             </div>
           </>
         )}
-        {allSourcingReqData?.length == 0 && !apiLoadingData?.laoding && (
+
+        {/* error */}
+        {allSourcingOffer?.length == 0 && !apiStatus?.laoding && (
           <div className="position-absolute error-float">
             <p className="fs-5 text-muted fw-bolder text-5 mt-5 pt-5 mx-auto">
               {"No records"}
             </p>
           </div>
         )}
-      </div>
-
-      <div className="btn-container-all cursor">
-        <div
-          className="get-all-btn text-decoration-none text-white cursor"
-          onClick={() => {
-            navigate("/sourcinghub/SourcingRequests");
-          }}
-        >
-          Sourcing Hub
-        </div>
       </div>
     </>
   );
