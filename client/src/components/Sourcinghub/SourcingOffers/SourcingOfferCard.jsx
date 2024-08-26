@@ -16,24 +16,24 @@ export default function SourcingOfferCard({ item }) {
       }}
     >
       <th className="  " scope="row">
-        <div className="d-flex flag-container align-items-center">
+        <div className="d-flex gap-12 align-items-center">
           <img
             className="flag-img"
             src={`${baseUrl_IMG}/${item?.docs}`}
             onError={handleImageError}
             alt={`${baseUrl_IMG}/${item?.docs}`}
           />
-          <p className="title">{item?.productName}</p>
+          <p className="fs-14 fw-600">{item?.productName}</p>
         </div>
       </th>
       <td className="">
         <div className="d-flex  align-items-center ">
-          <p className="title-2">{item?.quantity}</p>
+          <p className="fs-14 fw-normal">{item?.quantity}</p>
         </div>
       </td>
       <td className="">
         <div className="d-flex  align-items-center ">
-          <p className="title-2">
+          <p className="fs-14">
             {item?.preferredCountries?.length !== 0
               ? item?.preferredCountries?.join(", ")
               : "All"}
@@ -43,11 +43,11 @@ export default function SourcingOfferCard({ item }) {
 
       <td className="">
         <div className="d-flex  align-items-center ">
-          <p className="title-2">{item?.productDescription}</p>
+          <p className="fs-14">{item?.productDescription}</p>
         </div>
       </td>
       <td className="">
-        <p className="title">
+        <p className="fs-14 ">
           {getMonthName(item?.createdAt?.split("T")?.[0])}
         </p>
       </td>
