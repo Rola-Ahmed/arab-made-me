@@ -41,7 +41,7 @@ export default function SourcingOffers() {
       {/* home page */}
 
       <p
-        className={`fs-20-semi pb-2 ${
+        className={`fs-20-semi pb-3 pt-5 ${
           currentLang == "ar" && "ar-text-left fw-900"
         }`}
       >
