@@ -67,16 +67,16 @@ export default function SourcingRequestCard(props) {
               {reqData?.productDescription}
             </p>
             <p className="mb-1">
-              <span className="fw-bold">Requested by</span>
+              <span className="fw-bold">Requested by </span>
               {reqData?.importer?.name}
             </p>
             {/* <div className="mb-1 d-flex"> */}
             <p className="mb-1 me-3">
-              <span className="fw-bold">Quantity</span>
+              <span className="fw-bold">Quantity </span>
               {reqData?.quantity}
             </p>
             <p className="mb-1">
-              <span className="fw-bold">Deadline</span>
+              <span className="fw-bold">Deadline </span>
               {reqData?.deadline
                 ? getMonthName(reqData?.deadline?.split("T")?.[0])
                 : " - "}
@@ -86,11 +86,9 @@ export default function SourcingRequestCard(props) {
             <p className="d-flex">
               <span className="fw-bold pe-1">Sourcing Countries</span>
               <span className="sourcing horizontal-text-handler-1">
-                {reqData?.preferredCountries?.length === 0
+                {reqData?.preferredCountries?.length == 0
                   ? "All Countries"
-                  : reqData?.preferredCountries
-                      ?.map((countryreqData) => countryreqData)
-                      .join(", ")}
+                  : reqData?.preferredCountries?.join(", ")}
               </span>
             </p>
           </div>

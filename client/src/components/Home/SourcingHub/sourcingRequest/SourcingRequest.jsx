@@ -12,7 +12,7 @@ import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
 import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/FactoryUnVerifiedPopUpMsg";
 
-import SourcingOffers from "components/Home/SourcingOffers/SourcingOffers";
+import SourcingOffers from "components/Home/SourcingHub/SourcingOffers/SourcingOffers";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
