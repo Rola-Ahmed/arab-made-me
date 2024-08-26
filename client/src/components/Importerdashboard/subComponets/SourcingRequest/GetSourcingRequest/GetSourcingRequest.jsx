@@ -24,15 +24,13 @@ export default function GetSourcingRequest() {
     }));
   }
 
-
-let {
-  reqData,
-  pagination,
-  apiLoadingData,
-  setPagination,
-  deleteData,
-}=useAllSourcingReq(filter)
-
+  let {
+    reqData,
+    pagination,
+    apiLoadingData,
+    setPagination,
+    deleteData,
+  } = useAllSourcingReq(filter);
 
   return (
     <div className="m-4 order-section ">
@@ -68,7 +66,6 @@ let {
 
         {/* */}
 
-      
         {/* search filter section */}
         <SearchFilterByOrder filtterData={filtterData} filter={filter} />
         {/* data section */}
@@ -134,7 +131,7 @@ let {
                           <div key={key} className="py-1 ">
                             <p>
                               <span className="fw-bolder text-dark ">
-                              {key}:
+                                {key}:
                               </span>
                               {value}
                             </p>
@@ -156,8 +153,6 @@ let {
                   </th>
 
                   <th className=" col-3  d-flex align-items-center justify-content- ">
-                   
-
                     <div className="trate-sub-title horizontal-text-handler">
                       <p className="name-text">{poItem?.productDescription}</p>
                     </div>
@@ -174,7 +169,7 @@ let {
                       }}
                     >
                       {/* view */}
-                      <i class="fa-solid fa-up-right-from-square"></i>
+                      <i className="fa-solid fa-up-right-from-square"></i>
                     </p>
                     <p
                       className="trate-sub-title view-more-details cursor"
@@ -184,23 +179,22 @@ let {
                       }}
                     >
                       {/* view */}
-                      <i class="fa-regular fa-trash-can"></i>
+                      <i className="fa-regular fa-trash-can"></i>
                     </p>
                   </th>
                 </tr>
               ))}
 
               {/* is data is still loading or error occured */}
-             <StatusMessage
+              <StatusMessage
                 reqDataLength={reqData?.length}
                 apiLoadingData={apiLoadingData?.reqData}
                 errorsMsg={apiLoadingData?.errorWhileLoading}
               />
 
-
               <tr className="row">
                 <div className="col-12  ReactPaginate">
-                <PaginationDash
+                  <PaginationDash
                     pagination={pagination}
                     setPagination={setPagination}
                   />

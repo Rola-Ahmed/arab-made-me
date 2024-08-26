@@ -17,7 +17,7 @@ export default function DashNavBtn(props) {
         }   text-decoration-none`}
         to={navigateToPage}
       >
-        <i class={`${icon}`}></i>
+        <i className={`${icon}`}></i>
         <p className="sub-title cursor">{title}</p>
       </Link>
       {notification != 0 && (

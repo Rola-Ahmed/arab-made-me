@@ -13,16 +13,16 @@ export default function Trademakr(props) {
   return (
     <>
       <div className="col-12">
-        <div class="form-check w-100 d-blcok ">
+        <div className="form-check w-100 d-blcok ">
           <input
-            class="form-check-input"
+            className="form-check-input"
             type="checkbox"
             id="trademarkCheckBox"
             onChange={formValidation.handleChange}
             onBlur={formValidation.handleBlur}
             value={formValidation.values.trademarkCheckBox}
           />
-          <label class="form-check-label">Do you have a trademark?</label>
+          <label className="form-check-label">Do you have a trademark?</label>
         </div>
       </div>
 

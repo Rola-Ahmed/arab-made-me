@@ -1,8 +1,7 @@
-import {  useState } from "react";
+import { useState } from "react";
 
 // shared components
 import PaginationDash from "components/Shared/Dashboards/PaginationDash";
-
 
 import { useNavigate } from "react-router-dom";
 
@@ -13,7 +12,7 @@ import StatusMessage from "components/Shared/Dashboards/StatusMessage";
 import SearchFilterByOrderPrice from "components/Shared/Dashboards/SearchFilterByOrderPrice";
 
 export default function AllOffers() {
-let navigate = useNavigate();
+  let navigate = useNavigate();
   let getMonthName = getDate;
 
   const [filter, setFilter] = useState({
@@ -29,29 +28,16 @@ let navigate = useNavigate();
       ...(name && { sort_name: name }),
     }));
   }
-  let  {
+  let {
     reqData,
     pagination,
     apiLoadingData,
     setPagination,
     deleteData,
-  } = useAllOffers(filter)
-
-
-
-
-
-
-
-
+  } = useAllOffers(filter);
 
   return (
     <div className="m-4 order-section ">
-  
-
- 
-
-
       {/* section 1 */}
       <div className="header w-100">
         <PageUtility currentPage="Factory Offers" />
@@ -82,8 +68,8 @@ let navigate = useNavigate();
           </div>
         </div>
 
-         {/* search filter section */}
-         <SearchFilterByOrderPrice filtterData={filtterData} filter={filter} />
+        {/* search filter section */}
+        <SearchFilterByOrderPrice filtterData={filtterData} filter={filter} />
 
         <div className=" data-container w-100 p-3">
           <table className="table mb-0">
@@ -180,7 +166,7 @@ let navigate = useNavigate();
                       }}
                     >
                       {/* view */}
-                      <i class="fa-solid fa-up-right-from-square"></i>
+                      <i className="fa-solid fa-up-right-from-square"></i>
                     </p>
                     <p
                       className="trate-sub-title view-more-details cursor"
@@ -190,21 +176,18 @@ let navigate = useNavigate();
                       }}
                     >
                       {/* view */}
-                      <i class="fa-regular fa-trash-can"></i>
+                      <i className="fa-regular fa-trash-can"></i>
                     </p>
                   </th>
                 </tr>
               ))}
 
-
- {/* is data is still loading or error occured */}
- <StatusMessage
+              {/* is data is still loading or error occured */}
+              <StatusMessage
                 reqDataLength={reqData?.length}
                 apiLoadingData={apiLoadingData?.reqData}
                 errorsMsg={apiLoadingData?.errorWhileLoading}
               />
-
-           
 
               <tr className="row">
                 <div className="col-12  ReactPaginate">

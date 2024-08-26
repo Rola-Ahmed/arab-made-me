@@ -1,5 +1,5 @@
-import {  useState } from "react";
-import {  baseUrl_IMG } from "config.js";
+import { useState } from "react";
+import { baseUrl_IMG } from "config.js";
 
 import StarRating from "components/Shared/stars";
 import { useNavigate } from "react-router-dom";
@@ -15,7 +15,6 @@ export default function GetQuotationImp() {
   let navigate = useNavigate();
   let getMonthName = getDate;
 
-
   const [filter, setFilter] = useState({
     formsFilter: "",
     sort: "date-DESC",
@@ -30,19 +29,12 @@ export default function GetQuotationImp() {
     }));
   }
 
-  
-let {
-  reqData,
-  pagination,
-  apiLoadingData,
-  setPagination,
-  
-}=useAllQuotes(filter)
- 
+  let { reqData, pagination, apiLoadingData, setPagination } = useAllQuotes(
+    filter
+  );
 
   return (
     <div className="m-4 order-section ">
-
       {/* section 1 */}
       <div className="header w-100">
         <PageUtility currentPage="Request for Quotations" />
@@ -65,8 +57,8 @@ let {
         </div>
 
         {/* search filter section */}
-                {/* search filter section */}
-                <SearchFilterByOrderPrice filtterData={filtterData} filter={filter} />
+        {/* search filter section */}
+        <SearchFilterByOrderPrice filtterData={filtterData} filter={filter} />
 
         <div className=" data-container w-100 p-3">
           <table className="table mb-0">
@@ -142,30 +134,35 @@ let {
 
                   <th className=" col-1 d-flex align-items-center d-none ">
                     <div>
-                      {// allAnsRfqData.map((item) =>
-                      poItem?.docs != null
-                        ? poItem?.docs?.map((i, index) =>
-                            i !== null ? (
-                              <>
-                                <a
-                                  className="text-decoration-none"
-                                  target="_blank"
-                                  rel="noreferrer"
-                                  href={`${baseUrl_IMG}/${i}`}
-                                  download
-                                >
-                                  <p className="trate-sub-title doc-download-color cursor">
-                                    Doc{index}.
-                                    {i?.split(".")?.[i.split(".")?.length - 1]}
-                                  </p>
-                                </a>
-                              </>
-                            ) : (
-                              ""
+                      {
+                        // allAnsRfqData.map((item) =>
+                        poItem?.docs != null
+                          ? poItem?.docs?.map((i, index) =>
+                              i !== null ? (
+                                <>
+                                  <a
+                                    className="text-decoration-none"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    href={`${baseUrl_IMG}/${i}`}
+                                    download
+                                  >
+                                    <p className="trate-sub-title doc-download-color cursor">
+                                      Doc{index}.
+                                      {
+                                        i?.split(".")?.[
+                                          i.split(".")?.length - 1
+                                        ]
+                                      }
+                                    </p>
+                                  </a>
+                                </>
+                              ) : (
+                                ""
+                              )
                             )
-                          )
-                        : ""
-                      // )
+                          : ""
+                        // )
                       }
                     </div>
                   </th>
@@ -196,12 +193,11 @@ let {
                   </th>
 
                   <th className=" col-4  d-flex align-items-center  justify-content-center ">
-                  <ProfileCell
-                        profile={poItem?.factory?.coverImage}
-                        repEmail={poItem?.factory?.repEmail}
-                        name={poItem?.factory?.name}
-                      />
-                  
+                    <ProfileCell
+                      profile={poItem?.factory?.coverImage}
+                      repEmail={poItem?.factory?.repEmail}
+                      name={poItem?.factory?.name}
+                    />
                   </th>
 
                   <th
@@ -218,14 +214,13 @@ let {
                       }}
                     >
                       {/* view */}
-                      <i class="fa-solid fa-up-right-from-square"></i>
+                      <i className="fa-solid fa-up-right-from-square"></i>
                     </p>
-                  
                   </th>
                 </tr>
               ))}
 
-<StatusMessage
+              <StatusMessage
                 reqDataLength={reqData?.length}
                 apiLoadingData={apiLoadingData?.reqData}
                 errorsMsg={apiLoadingData?.errorWhileLoading}
@@ -233,7 +228,7 @@ let {
 
               <tr className="row">
                 <div className="col-12  ReactPaginate">
-                <PaginationDash
+                  <PaginationDash
                     pagination={pagination}
                     setPagination={setPagination}
                   />

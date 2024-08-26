@@ -73,7 +73,7 @@ export default function SpecialCharList(props) {
           index !== 0 && (
             <div className="col-md-1 col-sm-12  justify-content-center align-items-center d-flex pt-mt ">
               <i
-                class=" cursor fa-solid fa-minus text-white px-3 py-2 w-25"
+                className=" cursor fa-solid fa-minus text-white px-3 py-2 w-25"
                 onClick={() => removenewSepcialChar(index)}
               ></i>
             </div>

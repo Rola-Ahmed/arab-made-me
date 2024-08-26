@@ -212,30 +212,35 @@ export default function Orders() {
 
                   <th className=" col-1 d-flex align-items-center  ">
                     <div>
-                      {// allAnsRfqData.map((item) =>
-                      poItem?.docs != null
-                        ? poItem?.docs?.map((i, index) =>
-                            i !== null ? (
-                              <>
-                                <a
-                                  className="text-decoration-none"
-                                  target="_blank"
-                                  rel="noreferrer"
-                                  href={`${baseUrl_IMG}/${i}`}
-                                  download
-                                >
-                                  <p className="trate-sub-title doc-download-color cursor">
-                                    Doc{index}.
-                                    {i?.split(".")?.[i.split(".")?.length - 1]}
-                                  </p>
-                                </a>
-                              </>
-                            ) : (
-                              ""
+                      {
+                        // allAnsRfqData.map((item) =>
+                        poItem?.docs != null
+                          ? poItem?.docs?.map((i, index) =>
+                              i !== null ? (
+                                <>
+                                  <a
+                                    className="text-decoration-none"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    href={`${baseUrl_IMG}/${i}`}
+                                    download
+                                  >
+                                    <p className="trate-sub-title doc-download-color cursor">
+                                      Doc{index}.
+                                      {
+                                        i?.split(".")?.[
+                                          i.split(".")?.length - 1
+                                        ]
+                                      }
+                                    </p>
+                                  </a>
+                                </>
+                              ) : (
+                                ""
+                              )
                             )
-                          )
-                        : ""
-                      // )
+                          : ""
+                        // )
                       }
                     </div>
                   </th>
@@ -285,7 +290,7 @@ export default function Orders() {
                       }}
                     >
                       {/* view */}
-                      <i class="fa-solid fa-up-right-from-square"></i>
+                      <i className="fa-solid fa-up-right-from-square"></i>
                     </p>
                   </th>
                 </tr>

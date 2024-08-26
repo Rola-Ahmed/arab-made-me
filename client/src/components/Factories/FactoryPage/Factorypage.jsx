@@ -1,4 +1,4 @@
-import { useState, useContext ,useEffect} from "react";
+import { useState, useContext, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import "./Factorypage.css";
@@ -37,7 +37,6 @@ import HandleUsersBtnAccess, {
 import FactoryTeam from "./subComponents/FactoryTeam";
 import { useFetchData } from "./useFetchData";
 import HeaderSlider from "./subComponents/HeaderSlider";
-
 
 function Factorypage() {
   let { currentUserData } = useContext(userDetails);
@@ -147,8 +146,6 @@ function Factorypage() {
     });
   };
 
-
-
   const [activeMenu, setActiveMenu] = useState("about");
 
   const handleSetActive = (to) => {
@@ -159,36 +156,37 @@ function Factorypage() {
   };
 
   useEffect(() => {
-
-    const targetElements = document.querySelectorAll('.fac-cert');
+    const targetElements = document.querySelectorAll(".fac-cert");
     const observerCallback = (entries) => {
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           console.log(entry.target.id); // Set active section based on ID
-          setActiveMenu(entry.target.id)
+          setActiveMenu(entry.target.id);
         }
       });
     };
 
     const observer = new IntersectionObserver(observerCallback, {
       root: null, // Root element, null means the browser viewport
-      rootMargin: '0px',
+      rootMargin: "0px",
       // threshold: 0.5 // Trigger the callback when 100% of the target is visible
     });
 
-    targetElements.forEach(element => {
+    targetElements.forEach((element) => {
       observer.observe(element);
     });
 
     return () => {
-      targetElements.forEach(element => {
+      targetElements.forEach((element) => {
         observer.unobserve(element);
       });
     };
-  
   }, []);
 
-  console.log("factoryDetails?.importingCountries?.length",factoryDetails?.importingCountries?.length)
+  console.log(
+    "factoryDetails?.importingCountries?.length",
+    factoryDetails?.importingCountries?.length
+  );
   return (
     <>
       <IsLoggedIn
@@ -237,9 +235,6 @@ function Factorypage() {
           country: factoryDetails?.country,
         }}
       />
-
-    
-     
 
       <section className="det-fact margin-sm-screen">
         <div className="container">
@@ -381,7 +376,7 @@ function Factorypage() {
                               );
                             }}
                           >
-                            <i class="fa-regular fa-comments fa-2x"></i>
+                            <i className="fa-regular fa-comments fa-2x"></i>
                           </div>
                         </div>
 
@@ -422,7 +417,6 @@ function Factorypage() {
                   />
                 </div>
               )}
-
 
               {factoryDetails?.importingCountries?.length > 0 && (
                 <ExportedCountries

@@ -6,7 +6,7 @@ export default function TextareaInput(props) {
     <>
       <div className="col-12">
         <div className="form-group">
-          <label class="form-title">
+          <label className="form-title">
             {title} {isRequired && "*"}
           </label>
           <textarea

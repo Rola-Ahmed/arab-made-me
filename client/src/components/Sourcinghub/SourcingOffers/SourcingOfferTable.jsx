@@ -2,10 +2,10 @@ import SourcingOfferCard from "./SourcingOfferCard";
 
 export default function SourcingOfferTable({ allSourcingReqData }) {
   return (
-    <table class="table table-striped align-middle bg-danger ">
+    <table className="table table-striped align-middle bg-danger ">
       <thead>
         <tr className=" bg-header ">
-          <th scope="col" >
+          <th scope="col">
             <div className="d-flex  align-items-center justify-contnet-center ">
               <p className="fs-14-semi text-muted">Product</p>
             </div>

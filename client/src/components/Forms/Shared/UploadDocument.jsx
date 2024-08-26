@@ -6,18 +6,27 @@ function removeSelectedDoc(index, selectedDocs, setSelectedDocs) {
   setSelectedDocs(updatedDocs);
 }
 
-function handleMultiMediaValidation(e, selectedDocs, setSelectedDocs, MediaName, mediaMaxLen, meidaAcceptedExtensions, setErrorMsg) {
-  const count = selectedDocs?.filter(item => item?.keyWord === MediaName)?.length;
+function handleMultiMediaValidation(
+  e,
+  selectedDocs,
+  setSelectedDocs,
+  MediaName,
+  mediaMaxLen,
+  meidaAcceptedExtensions,
+  setErrorMsg
+) {
+  const count = selectedDocs?.filter((item) => item?.keyWord === MediaName)
+    ?.length;
 
   if (count >= mediaMaxLen) {
-    setErrorMsg(prevErrors => ({
+    setErrorMsg((prevErrors) => ({
       ...prevErrors,
       [MediaName]: `Max length is ${mediaMaxLen}`,
     }));
     return;
   }
 
-  setErrorMsg(prevErrors => {
+  setErrorMsg((prevErrors) => {
     const newErrors = { ...prevErrors };
     delete newErrors[MediaName];
     return newErrors;
@@ -25,23 +34,26 @@ function handleMultiMediaValidation(e, selectedDocs, setSelectedDocs, MediaName,
 
   const acceptedExtensions = meidaAcceptedExtensions;
   const fileType = e.type;
-  const isAcceptedType = acceptedExtensions?.some(extension =>
+  const isAcceptedType = acceptedExtensions?.some((extension) =>
     fileType?.toLowerCase()?.includes(extension?.toLowerCase())
   );
 
-
   if (!isAcceptedType) {
-    setErrorMsg(prevErrors => ({
+    setErrorMsg((prevErrors) => ({
       ...prevErrors,
-      [MediaName]: `Invalid file format. Only ${acceptedExtensions.join(", ")} are allowed`,
+      [MediaName]: `Invalid file format. Only ${acceptedExtensions.join(
+        ", "
+      )} are allowed`,
     }));
     return;
   }
 
-  const mediaNameExists = selectedDocs?.some(item => item?.pdfFile?.name === e?.name && item?.keyWord === MediaName);
+  const mediaNameExists = selectedDocs?.some(
+    (item) => item?.pdfFile?.name === e?.name && item?.keyWord === MediaName
+  );
 
   if (mediaNameExists) {
-    setErrorMsg(prevErrors => ({
+    setErrorMsg((prevErrors) => ({
       ...prevErrors,
       [MediaName]: "Media already exists",
     }));
@@ -66,14 +78,14 @@ function handleMultiMediaValidation(e, selectedDocs, setSelectedDocs, MediaName,
     }
   };
 
-  reader.onprogress = event => {
+  reader.onprogress = (event) => {
     if (event.lengthComputable) {
       const percentage = (event.loaded / event.total) * 100;
     }
   };
 
   reader.onerror = () => {
-    setErrorMsg(prevErrors => ({
+    setErrorMsg((prevErrors) => ({
       ...prevErrors,
       [MediaName]: "Error loading image",
     }));
@@ -82,28 +94,60 @@ function handleMultiMediaValidation(e, selectedDocs, setSelectedDocs, MediaName,
   reader.readAsDataURL(e);
 }
 
-const handleFileChange = (e, selectedDocs, setSelectedDocs, MediaName, mediaMaxLen, meidaAcceptedExtensions, setErrorMsg) => {
+const handleFileChange = (
+  e,
+  selectedDocs,
+  setSelectedDocs,
+  MediaName,
+  mediaMaxLen,
+  meidaAcceptedExtensions,
+  setErrorMsg
+) => {
   const files = e.target.files;
   if (files && files.length > 0) {
-    handleMultiMediaValidation(files[0], selectedDocs, setSelectedDocs, MediaName, mediaMaxLen, meidaAcceptedExtensions, setErrorMsg);
+    handleMultiMediaValidation(
+      files[0],
+      selectedDocs,
+      setSelectedDocs,
+      MediaName,
+      mediaMaxLen,
+      meidaAcceptedExtensions,
+      setErrorMsg
+    );
   }
 };
 
-const handleDrop = (e, selectedDocs, setSelectedDocs, MediaName, mediaMaxLen, meidaAcceptedExtensions, setErrorMsg) => {
+const handleDrop = (
+  e,
+  selectedDocs,
+  setSelectedDocs,
+  MediaName,
+  mediaMaxLen,
+  meidaAcceptedExtensions,
+  setErrorMsg
+) => {
   e.preventDefault();
   const files = e.dataTransfer.files;
   if (files && files.length > 0) {
-    handleMultiMediaValidation(files[0], selectedDocs, setSelectedDocs, MediaName, mediaMaxLen, meidaAcceptedExtensions, setErrorMsg);
+    handleMultiMediaValidation(
+      files[0],
+      selectedDocs,
+      setSelectedDocs,
+      MediaName,
+      mediaMaxLen,
+      meidaAcceptedExtensions,
+      setErrorMsg
+    );
   }
   e.target.classList.remove("highlight");
 };
 
-const handleDragOver = e => {
+const handleDragOver = (e) => {
   e.preventDefault();
   e.target.classList.add("highlight");
 };
 
-const handleDragLeave = e => {
+const handleDragLeave = (e) => {
   e.preventDefault();
   e.target.classList.remove("highlight");
 };
@@ -125,56 +169,96 @@ export default function UploadDocument(props) {
       <div className="form-group gap">
         <label className="form-title">{title}</label>
         <button
-        type='button'
+          type="button"
           className="mb-0 drop-drag-area p-5 text-center cursor w-100 bg-white"
           // htmlFor={MediaName}
-          onDrop={e => handleDrop(e, selectedDocs, setSelectedDocs, MediaName, mediaMaxLen, meidaAcceptedExtensions, setErrorMsg)}
+          onDrop={(e) =>
+            handleDrop(
+              e,
+              selectedDocs,
+              setSelectedDocs,
+              MediaName,
+              mediaMaxLen,
+              meidaAcceptedExtensions,
+              setErrorMsg
+            )
+          }
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
         >
           Drag and drop files here or click to select files
           <input
-          class='border-0 mx-auto'
+            className="border-0 mx-auto"
             type="file"
             id={MediaName}
             // hidden
-            onChange={e => handleFileChange(e, selectedDocs, setSelectedDocs, MediaName, mediaMaxLen, meidaAcceptedExtensions, setErrorMsg)}
+            onChange={(e) =>
+              handleFileChange(
+                e,
+                selectedDocs,
+                setSelectedDocs,
+                MediaName,
+                mediaMaxLen,
+                meidaAcceptedExtensions,
+                setErrorMsg
+              )
+            }
           />
         </button>
         <small className="form-text small-note d-block">
-          Only {meidaAcceptedExtensions.join(" ")} are allowed. A maximum of {mediaMaxLen} pictures is permitted.
+          Only {meidaAcceptedExtensions.join(" ")} are allowed. A maximum of{" "}
+          {mediaMaxLen} pictures is permitted.
         </small>
         <small className="text-danger">{errorMsg?.[MediaName]}</small>
 
-        {selectedDocs?.map((item, index) =>
-          item.keyWord === MediaName && (
-            <div key={index} className="col-12 img-uploaded">
-              <div className="d-flex justify-content-between align-items-center img-cont-file">
-                <div className="d-flex justify-content-start align-items-center">
-                  <img
-                    alt={`img ${index}`}
-                    src={item?.pdfFile?.name?.includes("pdf") ? pdfIcon : item.imageReaderURL}
-                    className="image-upload-file me-3"
-                  />
-                </div>
-                <div className="w-100">
-                  <div className="d-flex justify-content-between align-items-center">
-                    <div>
-                      <p>{item?.pdfFile?.name}</p>
-                      <p>{(item?.pdfFile?.size / 1024).toFixed(2)} KB</p>
-                    </div>
-                    <div onClick={() => removeSelectedDoc(index, selectedDocs, setSelectedDocs)} className="cursor">
-                      <i className="fa-solid fa-trash-can"></i>
-                    </div>
+        {selectedDocs?.map(
+          (item, index) =>
+            item.keyWord === MediaName && (
+              <div key={index} className="col-12 img-uploaded">
+                <div className="d-flex justify-content-between align-items-center img-cont-file">
+                  <div className="d-flex justify-content-start align-items-center">
+                    <img
+                      alt={`img ${index}`}
+                      src={
+                        item?.pdfFile?.name?.includes("pdf")
+                          ? pdfIcon
+                          : item.imageReaderURL
+                      }
+                      className="image-upload-file me-3"
+                    />
                   </div>
-                  <div className="d-flex align-items-center">
-                    <progress className="w-100" id="progressBar" max="100" value={item?.onprogress || 0}></progress>
-                    {item?.onprogress}%
+                  <div className="w-100">
+                    <div className="d-flex justify-content-between align-items-center">
+                      <div>
+                        <p>{item?.pdfFile?.name}</p>
+                        <p>{(item?.pdfFile?.size / 1024).toFixed(2)} KB</p>
+                      </div>
+                      <div
+                        onClick={() =>
+                          removeSelectedDoc(
+                            index,
+                            selectedDocs,
+                            setSelectedDocs
+                          )
+                        }
+                        className="cursor"
+                      >
+                        <i className="fa-solid fa-trash-can"></i>
+                      </div>
+                    </div>
+                    <div className="d-flex align-items-center">
+                      <progress
+                        className="w-100"
+                        id="progressBar"
+                        max="100"
+                        value={item?.onprogress || 0}
+                      ></progress>
+                      {item?.onprogress}%
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          )
+            )
         )}
       </div>
     </div>
@@ -196,60 +280,95 @@ export function UploadVedio(props) {
   return (
     <div className="col-12">
       {/* <div className="grid-gap-col"> */}
-        <div className="form-group">
+      <div className="form-group">
         <label className="form-title">{title}</label>
-          <label
-            className="mb-0 drop-drag-area p-5 text-center cursor d-block"
-            htmlFor={MediaName}
-            onDrop={e => handleDrop(e, selectedDocs, setSelectedDocs, MediaName, mediaMaxLen, meidaAcceptedExtensions, setErrorMsg)}
-            onDragOver={handleDragOver}
-            onDragLeave={handleDragLeave}
-          >
-            Drag and drop files here or click to select files
-            <input
-              type="file"
-              id={MediaName}
-              hidden
-              onChange={e => handleFileChange(e, selectedDocs, setSelectedDocs, MediaName, mediaMaxLen, meidaAcceptedExtensions, setErrorMsg)}
-            />
-          </label>
-          <small className="form-text small-note d-block">
-            Only {meidaAcceptedExtensions.join(" ")} are allowed. A maximum of {mediaMaxLen} pictures is permitted.
-          </small>
-          <small className="text-danger">{errorMsg?.[MediaName]}</small>
+        <label
+          className="mb-0 drop-drag-area p-5 text-center cursor d-block"
+          htmlFor={MediaName}
+          onDrop={(e) =>
+            handleDrop(
+              e,
+              selectedDocs,
+              setSelectedDocs,
+              MediaName,
+              mediaMaxLen,
+              meidaAcceptedExtensions,
+              setErrorMsg
+            )
+          }
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+        >
+          Drag and drop files here or click to select files
+          <input
+            type="file"
+            id={MediaName}
+            hidden
+            onChange={(e) =>
+              handleFileChange(
+                e,
+                selectedDocs,
+                setSelectedDocs,
+                MediaName,
+                mediaMaxLen,
+                meidaAcceptedExtensions,
+                setErrorMsg
+              )
+            }
+          />
+        </label>
+        <small className="form-text small-note d-block">
+          Only {meidaAcceptedExtensions.join(" ")} are allowed. A maximum of{" "}
+          {mediaMaxLen} pictures is permitted.
+        </small>
+        <small className="text-danger">{errorMsg?.[MediaName]}</small>
 
-          {selectedDocs.map(
-            (item, index) =>
-              item.keyWord === MediaName && (
-                <div key={index} className="col-12 img-uploaded">
-                  <div className="d-flex justify-content-start align-items-center">
-                    <video
-                      src={item.imageReaderURL}
-                      controls="controls"
-                      autoPlay={false}
-                      muted={true}
-                      className="w-100"
-                    />
+        {selectedDocs.map(
+          (item, index) =>
+            item.keyWord === MediaName && (
+              <div key={index} className="col-12 img-uploaded">
+                <div className="d-flex justify-content-start align-items-center">
+                  <video
+                    src={item.imageReaderURL}
+                    controls="controls"
+                    autoPlay={false}
+                    muted={true}
+                    className="w-100"
+                  />
+                </div>
+                <div className="w-100">
+                  <div className="d-flex justify-content-between align-items-center">
+                    <div>
+                      <p className="img-name text-tarute">
+                        {item?.pdfFile?.name}
+                      </p>
+                      <p className="img-name">
+                        {(item?.pdfFile?.size / 1024)?.toFixed(2)} KB
+                      </p>
+                    </div>
+                    <div
+                      onClick={() =>
+                        removeSelectedDoc(index, selectedDocs, setSelectedDocs)
+                      }
+                      className="cursor"
+                    >
+                      <i className="fa-solid fa-trash-can"></i>
+                    </div>
                   </div>
-                  <div className="w-100">
-                    <div className="d-flex justify-content-between align-items-center">
-                      <div>
-                        <p className="img-name text-tarute">{item?.pdfFile?.name}</p>
-                        <p className="img-name">{(item?.pdfFile?.size / 1024)?.toFixed(2)} KB</p>
-                      </div>
-                      <div onClick={() => removeSelectedDoc(index, selectedDocs, setSelectedDocs)} className="cursor">
-                        <i className="fa-solid fa-trash-can"></i>
-                      </div>
-                    </div>
-                    <div className="d-flex align-items-center">
-                      <progress className="w-100" id="progressBar" max="100" value={item?.onprogress || 0}></progress>
-                      {item?.onprogress}%
-                    </div>
+                  <div className="d-flex align-items-center">
+                    <progress
+                      className="w-100"
+                      id="progressBar"
+                      max="100"
+                      value={item?.onprogress || 0}
+                    ></progress>
+                    {item?.onprogress}%
                   </div>
                 </div>
-              )
-          )}
-        </div>
+              </div>
+            )
+        )}
+      </div>
       {/* </div> */}
     </div>
   );

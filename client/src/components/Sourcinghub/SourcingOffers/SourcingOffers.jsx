@@ -56,13 +56,12 @@ function SourcingOffers() {
 
   // utils function
 
-
   return (
     <>
       <Header title="Sourcing Hub" />
       <div className="container sourcing-hub-section-pg sourcing-pg">
-        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-          <li class="nav-item" role="presentation">
+        <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
+          <li className="nav-item" role="presentation">
             <button
               className={`btn-sourcing `}
               id="pills-home-tab"
@@ -77,7 +76,7 @@ function SourcingOffers() {
               Requests
             </button>
           </li>
-          <li class="nav-item" role="presentation">
+          <li className="nav-item" role="presentation">
             <button
               id="pills-profile-tab"
               data-bs-toggle="pill"
@@ -94,41 +93,37 @@ function SourcingOffers() {
           </li>
         </ul>
 
-          <div className="row pt-5">
-            <div className="col-12">
-              <div className="border-container-2">
-                <SourcingOfferTable
-                  allSourcingReqData={allSourcingReqData}
-                  apiLoadingData={apiLoadingData}
-                />
+        <div className="row pt-5">
+          <div className="col-12">
+            <div className="border-container-2">
+              <SourcingOfferTable
+                allSourcingReqData={allSourcingReqData}
+                apiLoadingData={apiLoadingData}
+              />
 
-                {apiLoadingData?.laoding&& (
-                  <div className="d-flex justify-content-center py-5">
-                    {apiLoadingData?.errorMsg ? (
-                      <p className="fs-5 text-muted fw-bolder text-5 mt-5 pt-5 mx-auto">
-                        {apiLoadingData?.errorMsg }
-                      </p>
-                    ) : (
-                      <div className="d-flex justify-content-center">
-                        <Loading />
-                      </div>
-                    )}
-                  </div>
-                ) }
-                {
-                  (allSourcingReqData?.length == 0 && !apiLoadingData?.laoding) &&  
-                  
-                  <div className="d-flex justify-content-center py-5">
-                    <p className="fs-5 text-muted fw-bolder text-5 mb-5 pt-3 mx-auto">
-                      No Records Found
+              {apiLoadingData?.laoding && (
+                <div className="d-flex justify-content-center py-5">
+                  {apiLoadingData?.errorMsg ? (
+                    <p className="fs-5 text-muted fw-bolder text-5 mt-5 pt-5 mx-auto">
+                      {apiLoadingData?.errorMsg}
                     </p>
-                 
+                  ) : (
+                    <div className="d-flex justify-content-center">
+                      <Loading />
+                    </div>
+                  )}
                 </div>
-
-                }
-              </div>
+              )}
+              {allSourcingReqData?.length == 0 && !apiLoadingData?.laoding && (
+                <div className="d-flex justify-content-center py-5">
+                  <p className="fs-5 text-muted fw-bolder text-5 mb-5 pt-3 mx-auto">
+                    No Records Found
+                  </p>
+                </div>
+              )}
             </div>
           </div>
+        </div>
         {/* </div> */}
 
         <PublicPaginate pagination={pagination} setPagination={setPagination} />

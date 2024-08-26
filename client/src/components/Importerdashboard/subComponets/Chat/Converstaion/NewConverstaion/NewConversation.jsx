@@ -7,7 +7,6 @@ import { baseUrl, baseUrl_IMG } from "config.js";
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
 
-
 import { useSearchParams } from "react-router-dom";
 import SubPageUtility from "components/Shared/Dashboards/PageUtility";
 import { getTimeDifference as getTimeDiff } from "utils/getTimeDifference";
@@ -134,7 +133,7 @@ export default function Conversation() {
                           <small className="d-flex justify-content-end text-muted fs-12 ">
                             {getTimeDifference(allPosData?.createdAt)}
 
-                            <i class="fa-solid fa-check-double text-muted my-auto ms-2"></i>
+                            <i className="fa-solid fa-check-double text-muted my-auto ms-2"></i>
                             {/* {allPosData?.createdA} */}
                           </small>
                         </div>
@@ -175,9 +174,9 @@ export default function Conversation() {
                       {getTimeDifference(allPosData?.createdAt)}
 
                       {newMessageSuccess?.send ? (
-                        <i class="fa-solid fa-check-double text-muted my-auto ms-2"></i>
+                        <i className="fa-solid fa-check-double text-muted my-auto ms-2"></i>
                       ) : (
-                        <i class="fa-solid fa-check text-muted my-auto ms-2"></i>
+                        <i className="fa-solid fa-check text-muted my-auto ms-2"></i>
                       )}
                       {/* {allPosData?.createdA} */}
                     </small>

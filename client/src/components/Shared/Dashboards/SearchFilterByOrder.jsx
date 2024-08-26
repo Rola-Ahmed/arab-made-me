@@ -31,7 +31,7 @@ export default function SearchFilterByOrder(props) {
       </div>
 
       <div className=" btn-container d-flex justify-content-between align-items-center">
-        <div class="dropdown">
+        <div className="dropdown">
           <button
             className=" dropdown-toggle order-toggle d-flex justify-content-center align-items-center"
             role="button"
@@ -42,7 +42,7 @@ export default function SearchFilterByOrder(props) {
             <p>{filter?.sort_name !== "" ? filter?.sort_name : "Sort By"}</p>
           </button>
 
-          <ul class="dropdown-menu  ">
+          <ul className="dropdown-menu  ">
             <li
               onClick={(e) => {
                 filtterData("date-DESC", "sort", "Sort By");

@@ -33,7 +33,7 @@ export default function ChatList() {
 
             <div className="btn-container">
               <button className="order-btn-1 p-0">
-                <i class="fa-regular fa-pen-to-square edit-btn-chat"></i>
+                <i className="fa-regular fa-pen-to-square edit-btn-chat"></i>
               </button>
             </div>
           </div>
@@ -91,7 +91,7 @@ export default function ChatList() {
                           <p className="  trate-title lh-normal">
                             {poItem?.UserTwoName}
                             <small className="fw-light ms-2 ">
-                              <i class="fa-solid fa-industry me-1"></i>
+                              <i className="fa-solid fa-industry me-1"></i>
                               {poItem?.UserTwoFactoryName}
                             </small>
                           </p>
@@ -116,7 +116,7 @@ export default function ChatList() {
                   </th>
                   <th className=" col-2 d-flex align-items-center justify-content-center gap-icon-table">
                     <small className="notifi-date text-muted  lh-base">
-                      <i class="fa-regular fa-clock me-1"></i>
+                      <i className="fa-regular fa-clock me-1"></i>
                       <span className="pe-1">
                         {getTimeDifference(poItem?.createdAt)}
                       </span>

@@ -84,7 +84,7 @@ export default function ProductMultiSelector(props) {
                 </label>
                 <button
                   type="button"
-                  class="fa-solid fa-circle-info ps-3 bg-none border-0 p-0 m-0"
+                  className="fa-solid fa-circle-info ps-3 bg-none border-0 p-0 m-0"
                   title="view product details"
                   onClick={() => {
                     setSelectedItem(productDetails?.[index]);

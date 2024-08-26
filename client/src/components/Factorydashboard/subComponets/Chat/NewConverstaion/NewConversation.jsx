@@ -126,7 +126,7 @@ export default function Conversation() {
                         <small className="d-flex justify-content-end text-muted fs-12 ">
                           {getTimeDifference(allPosData?.createdAt)}
 
-                          <i class="fa-solid fa-check-double text-muted my-auto ms-2"></i>
+                          <i className="fa-solid fa-check-double text-muted my-auto ms-2"></i>
                           {/* {allPosData?.createdA} */}
                         </small>
                       </div>
@@ -166,9 +166,9 @@ export default function Conversation() {
                       {getTimeDifference(allPosData?.createdAt)}
 
                       {newMessageSuccess?.send ? (
-                        <i class="fa-solid fa-check-double text-muted my-auto ms-2"></i>
+                        <i className="fa-solid fa-check-double text-muted my-auto ms-2"></i>
                       ) : (
-                        <i class="fa-solid fa-check text-muted my-auto ms-2"></i>
+                        <i className="fa-solid fa-check text-muted my-auto ms-2"></i>
                       )}
                     </small>
                   </div>

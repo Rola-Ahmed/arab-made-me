@@ -3,7 +3,7 @@ export default function RadioInput(props) {
   return (
     <>
       <input
-        class="form-check-input"
+        className="form-check-input"
         type="radio"
         id={vlaidationName}
         name={vlaidationName}
@@ -12,7 +12,7 @@ export default function RadioInput(props) {
         value={value}
         defaultChecked={defaultChecked}
       />
-      <label class="form-check-label">{label}</label>
+      <label className="form-check-label">{label}</label>
     </>
   );
 }

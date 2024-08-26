@@ -277,14 +277,14 @@ function FactoryLegalDocs() {
                     mediaMaxLen="3"
                     meidaAcceptedExtensions={["pdf", "png", "jpeg", "jpg"]}
                     setErrorMsg={setErrorMsg}
-                    // title={`Legal Documents ${<i class="fa-solid fa-circle-info"></i>}`}
+                    // title={`Legal Documents ${<i className="fa-solid fa-circle-info"></i>}`}
                     title={
                       <>
                         <div className="d-flex d-flex gap-2">
                           Legal Documents *
-                          <div class="tooltip-1">
+                          <div className="tooltip-1">
                             <i className="fa-solid fa-circle-info my-auto "></i>
-                            <span class="tooltiptext-1 w-50">
+                            <span className="tooltiptext-1 w-50">
                               Upload your Business Registration Number,
                               Industrial Registration Number, Industrial License
                               Number, and Commercial Registration Number

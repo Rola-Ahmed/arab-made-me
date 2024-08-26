@@ -8,7 +8,7 @@ import { resetPassword } from "Services/UserAuth";
 function ResetPassword() {
   let revoceryToken = localStorage.getItem("recoverEmailAction");
   document.title = "Reset Password";
-  
+
   let navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -38,34 +38,33 @@ function ResetPassword() {
     setErrorMsg("");
     setIsLoading(true);
 
-      let data = {
-        password: values.password,
-      };
+    let data = {
+      password: values.password,
+    };
 
-      let result = await resetPassword(revoceryToken,data);
+    let result = await resetPassword(revoceryToken, data);
 
-      
-      if (result?.success) {
-        localStorage.setItem("RecoverAccMsg", true);
-        localStorage.removeItem("recoverEmailAction");
+    if (result?.success) {
+      localStorage.setItem("RecoverAccMsg", true);
+      localStorage.removeItem("recoverEmailAction");
 
-        navigate(`/recover/account/`, {
-          state: {
-            title: "Password changed!",
-            message: `Your password has been successfully changed. `,
-            icon: `fa-solid fa-check recvoerAcc-icon checked-success`,
-            actionBtn: {
-              name: "Login", // Button text
-              navigate: "/signIn",
-              setlocalStorage: "ToSignIn",
-            },
+      navigate(`/recover/account/`, {
+        state: {
+          title: "Password changed!",
+          message: `Your password has been successfully changed. `,
+          icon: `fa-solid fa-check recvoerAcc-icon checked-success`,
+          actionBtn: {
+            name: "Login", // Button text
+            navigate: "/signIn",
+            setlocalStorage: "ToSignIn",
           },
-        });
-        // }
-      } else {
-        setErrorMsg(result?.error);
-      }
-    
+        },
+      });
+      // }
+    } else {
+      setErrorMsg(result?.error);
+    }
+
     setIsLoading(false);
   }
 
@@ -82,7 +81,6 @@ function ResetPassword() {
           <div className="frame-container-1">
             <div className="container content-1">
               <div className="sub-content">
-
                 <div className="title-text ">
                   <p>Change your password by entering a new one below.</p>
                 </div>
@@ -92,11 +90,12 @@ function ResetPassword() {
                   className="w-100"
                 >
                   <div className="input-content">
-                    {errorMsg ** (
+                    {errorMsg **
+                    (
                       <div className="alert mt-3 p-2 alert-danger form-control text-dark">
                         {errorMsg}
                       </div>
-                    ) }
+                    )}
                     <div className="gap-20 row">
                       <div className="col-12">
                         <div className="form-group">
@@ -120,7 +119,7 @@ function ResetPassword() {
                               autoComplete="new-password"
                             />
                             <div
-                              class="input-group-append h-100 cursor"
+                              className="input-group-append h-100 cursor"
                               onClick={() =>
                                 settoggleSeePassword((prevData) => ({
                                   ...prevData,
@@ -129,7 +128,7 @@ function ResetPassword() {
                               }
                             >
                               <span
-                                class={`input-group-text bg-white h-100 icon-eye-passowrd    cursor ${
+                                className={`input-group-text bg-white h-100 icon-eye-passowrd    cursor ${
                                   toggleSeePassword.password == true
                                     ? "fa-solid fa-eye-slash"
                                     : "fa-solid fa-eye"
@@ -172,17 +171,16 @@ function ResetPassword() {
                               autoComplete="new-password"
                             />
                             <div
-                              class="input-group-append h-100 cursor"
+                              className="input-group-append h-100 cursor"
                               onClick={() =>
                                 settoggleSeePassword((prevData) => ({
                                   ...prevData,
-                                  confirmPassword:
-                                    !toggleSeePassword.confirmPassword,
+                                  confirmPassword: !toggleSeePassword.confirmPassword,
                                 }))
                               }
                             >
                               <span
-                                class={`input-group-text bg-white h-100 icon-eye-passowrd    cursor ${
+                                className={`input-group-text bg-white h-100 icon-eye-passowrd    cursor ${
                                   toggleSeePassword.confirmPassword == true
                                     ? "fa-solid fa-eye-slash"
                                     : "fa-solid fa-eye"
@@ -202,8 +200,6 @@ function ResetPassword() {
                       </div>
 
                       <div className="col-12">
-                    
-
                         {isLoading ? (
                           <button
                             type="button"
@@ -232,9 +228,7 @@ function ResetPassword() {
                           </button>
                         </div>
                       </div>
-
                     </div>
-
                   </div>
                 </form>
               </div>

@@ -49,10 +49,11 @@ function SourcingRequest() {
     try {
       let config = {
         method: "get",
-        url: `${baseUrl}/sourcingRequests/?size=${displayProductSize}`,
+        url: `${baseUrl}/sourcingRequests/?size=${displayProductSize}&include=importer`,
       };
 
       const response = await axios.request(config);
+      
       setAllSourcingReqData(response.data?.sourcingrequests);
       const uniqueIds = [
         ...new Set(
@@ -73,6 +74,7 @@ function SourcingRequest() {
     fetchSourcingReqData();
   }, []);
 
+  console.log("allSourcingReqData",allSourcingReqData)
   useEffect(() => {
     // Promise.all(
     uniqueFactoryIDofProducts.map(async (importerID) => {

@@ -29,8 +29,13 @@ export default function AllSpmf() {
     sort: "date-DESC",
     sort_name: "",
   });
-  let { reqData, pagination, apiLoadingData, errorsMsg, setPagination } =
-    useSpmfs(isLogin, filter);
+  let {
+    reqData,
+    pagination,
+    apiLoadingData,
+    errorsMsg,
+    setPagination,
+  } = useSpmfs(isLogin, filter);
 
   function filtterData(value, keyword, name) {
     setFilter((prevValue) => ({
@@ -259,7 +264,7 @@ export default function AllSpmf() {
                       }}
                     >
                       {/* view */}
-                      <i class="fa-solid fa-up-right-from-square"></i>
+                      <i className="fa-solid fa-up-right-from-square"></i>
                     </p>
                   </th>
                 </tr>

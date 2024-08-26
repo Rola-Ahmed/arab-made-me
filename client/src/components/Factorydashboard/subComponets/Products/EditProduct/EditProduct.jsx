@@ -522,9 +522,8 @@ export default function EditProduct() {
   }
 
   function handleMultiMediaValidation(e, keyWordDoc) {
-    const count = selectedDocs?.filter(
-      (item) => item?.keyWord === "docs"
-    )?.length;
+    const count = selectedDocs?.filter((item) => item?.keyWord === "docs")
+      ?.length;
 
     if (count >= 3) {
       setErrorMsg((prevErrors) => ({
@@ -713,8 +712,6 @@ export default function EditProduct() {
                       </optgroup>
                     ))}
                   </select>
-
-              
                 </div>
               </div>
 
@@ -961,7 +958,7 @@ export default function EditProduct() {
                                   index ? (
                                     <div className=" col-1 h-100 justify-content-center align-items-center d-flex   pt-4">
                                       <i
-                                        class=" cursor fa-solid fa-minus text-white px-3 py-2"
+                                        className=" cursor fa-solid fa-minus text-white px-3 py-2"
                                         // onClick={() => removenewSepcialChar()}
                                       ></i>
                                       {/* {dateSection} */}

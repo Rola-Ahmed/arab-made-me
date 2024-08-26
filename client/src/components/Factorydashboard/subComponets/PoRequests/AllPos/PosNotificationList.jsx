@@ -9,8 +9,13 @@ import { getMonthName as getDate } from "utils/getMonthName";
 import usePoNotific from "./usePoNotific";
 
 export default function PosNotificationList() {
-  let { isLoading, notificationData, page, handleDisplayPrevData, totalPage } =
-    usePoNotific();
+  let {
+    isLoading,
+    notificationData,
+    page,
+    handleDisplayPrevData,
+    totalPage,
+  } = usePoNotific();
 
   let currentScroller = useRef(null);
 
@@ -71,7 +76,7 @@ export default function PosNotificationList() {
                   {item?.importer?.name} sent you a request
                 </small>
                 <small className="notifi-date text-muted  lh-base">
-                  <i class="fa-regular fa-clock me-1"></i>
+                  <i className="fa-regular fa-clock me-1"></i>
                   <span className="pe-1">
                     {getTimeDifference(item?.createdAt)}
                   </span>

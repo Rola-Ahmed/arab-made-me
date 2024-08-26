@@ -11,7 +11,6 @@ import { useNavigate } from "react-router-dom";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 import { getMonthName as getDate } from "utils/getMonthName";
 
-
 import useRFQData from "./useRfq";
 // Container Components
 // stand alone component
@@ -208,30 +207,35 @@ export default function AllRfqs() {
 
                   <th className=" col-1 d-flex align-items-center  ">
                     <div>
-                      {// allAnsRfqData.map((item) =>
-                      poItem?.docs != null
-                        ? poItem?.docs?.map((i, index) =>
-                            i !== null ? (
-                              <>
-                                <a
-                                  className="text-decoration-none"
-                                  target="_blank"
-                                  rel="noreferrer"
-                                  href={`${baseUrl_IMG}/${i}`}
-                                  download
-                                >
-                                  <p className="trate-sub-title doc-download-color cursor">
-                                    Doc{index}.
-                                    {i?.split(".")?.[i.split(".")?.length - 1]}
-                                  </p>
-                                </a>
-                              </>
-                            ) : (
-                              ""
+                      {
+                        // allAnsRfqData.map((item) =>
+                        poItem?.docs != null
+                          ? poItem?.docs?.map((i, index) =>
+                              i !== null ? (
+                                <>
+                                  <a
+                                    className="text-decoration-none"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    href={`${baseUrl_IMG}/${i}`}
+                                    download
+                                  >
+                                    <p className="trate-sub-title doc-download-color cursor">
+                                      Doc{index}.
+                                      {
+                                        i?.split(".")?.[
+                                          i.split(".")?.length - 1
+                                        ]
+                                      }
+                                    </p>
+                                  </a>
+                                </>
+                              ) : (
+                                ""
+                              )
                             )
-                          )
-                        : ""
-                      // )
+                          : ""
+                        // )
                       }
                     </div>
                   </th>
@@ -279,7 +283,7 @@ export default function AllRfqs() {
                       }}
                     >
                       {/* view */}
-                      <i class="fa-solid fa-up-right-from-square"></i>
+                      <i className="fa-solid fa-up-right-from-square"></i>
                     </p>
                   </th>
                 </tr>
@@ -290,7 +294,6 @@ export default function AllRfqs() {
                 apiLoadingData={apiLoadingData}
                 errorsMsg={errorsMsg}
               />
-            
 
               <tr className="row">
                 <div className="col-12  ReactPaginate">

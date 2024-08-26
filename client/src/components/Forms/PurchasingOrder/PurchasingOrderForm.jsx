@@ -173,16 +173,16 @@ function PurchasingOrderForm(props) {
           </div>
 
           <div className="col-12">
-            <div class="form-check w-100 d-blcok ">
+            <div className="form-check w-100 d-blcok ">
               <input
-                class="form-check-input"
+                className="form-check-input"
                 type="checkbox"
                 id="allowDelay"
                 onChange={formValidation.handleChange}
                 onBlur={formValidation.handleBlur}
                 value={formValidation.values.allowDelay}
               />
-              <label class="form-check-label">Allow Delay</label>
+              <label className="form-check-label">Allow Delay</label>
             </div>
           </div>
           {formValidation?.values?.allowDelay && (

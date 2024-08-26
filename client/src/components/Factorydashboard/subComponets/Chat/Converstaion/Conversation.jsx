@@ -4,7 +4,7 @@ import { handleImageError } from "utils/ImgNotFound";
 import { baseUrl_IMG } from "config.js";
 import SubPageUtility from "components/Shared/Dashboards/PageUtility";
 import { getTimeDifference as getTimeDiff } from "utils/getTimeDifference";
-import SendMsg from "components/Importerdashboard/subComponets/Chat/Converstaion/SendMsg"
+import SendMsg from "components/Importerdashboard/subComponets/Chat/Converstaion/SendMsg";
 import useConversationBetweenUsers from "hooks/useConversationBetweenUsers";
 
 export default function Conversation() {
@@ -78,7 +78,7 @@ export default function Conversation() {
                           <small className="d-flex justify-content-end text-muted fs-12 ">
                             {getTimeDifference(reqData?.createdAt)}
 
-                            <i class="fa-solid fa-check-double text-muted my-auto ms-2"></i>
+                            <i className="fa-solid fa-check-double text-muted my-auto ms-2"></i>
                           </small>
                         </div>
                       </>
@@ -117,9 +117,9 @@ export default function Conversation() {
                       {getTimeDifference(reqData?.createdAt)}
 
                       {newMessageSuccess?.send ? (
-                        <i class="fa-solid fa-check-double text-muted my-auto ms-2"></i>
+                        <i className="fa-solid fa-check-double text-muted my-auto ms-2"></i>
                       ) : (
-                        <i class="fa-solid fa-check text-muted my-auto ms-2"></i>
+                        <i className="fa-solid fa-check text-muted my-auto ms-2"></i>
                       )}
                     </small>
                   </div>

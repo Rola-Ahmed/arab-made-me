@@ -34,8 +34,13 @@ export default function ReqVisitFactDash() {
     }));
   }
 
-  let { reqData, pagination, apiLoadingData, errorsMsg, setPagination } =
-    useVisit(filter);
+  let {
+    reqData,
+    pagination,
+    apiLoadingData,
+    errorsMsg,
+    setPagination,
+  } = useVisit(filter);
   // utils function
   let getMonthName = getDate;
 
@@ -255,7 +260,7 @@ export default function ReqVisitFactDash() {
                       }}
                     >
                       {/* view */}
-                      <i class="fa-solid fa-up-right-from-square"></i>
+                      <i className="fa-solid fa-up-right-from-square"></i>
                     </p>
                   </th>
                 </tr>

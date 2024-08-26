@@ -111,14 +111,12 @@ export default function AllQuotes() {
                           id="flexCheckDefault"
                         />
                       </div>
-                     
 
                       <td className="text-truncate">
                         <div className="">
                           <p className="trate-title text-truncate">
-                            {poItem?.productName || 'Empty'}
+                            {poItem?.productName || "Empty"}
                           </p>
-                        
                         </div>
                       </td>
                     </div>
@@ -172,7 +170,7 @@ export default function AllQuotes() {
                         );
                       }}
                     >
-                      <i class="fa-solid fa-up-right-from-square"></i>
+                      <i className="fa-solid fa-up-right-from-square"></i>
                     </p>
                     {/* Delete data*/}
                     <p
@@ -184,7 +182,7 @@ export default function AllQuotes() {
                         deleteData(poItem?.id);
                       }}
                     >
-                      <i class="fa-regular fa-trash-can"></i>
+                      <i className="fa-regular fa-trash-can"></i>
                     </p>
                   </th>
                 </tr>

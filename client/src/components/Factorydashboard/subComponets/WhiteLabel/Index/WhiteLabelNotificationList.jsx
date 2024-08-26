@@ -54,8 +54,9 @@ export default function WhiteLabelNotificationList() {
 
       {notificationData?.map((item) => (
         <div
-          className={`dropdown-item  cont-notif  ${item?.status === "open" &&
-            "active-Notifi"}`}
+          className={`dropdown-item  cont-notif  ${
+            item?.status === "open" && "active-Notifi"
+          }`}
         >
           <div className="d-grid gap-4 grid-col-size">
             <div className="profile-img">
@@ -73,7 +74,7 @@ export default function WhiteLabelNotificationList() {
                   {item?.importer?.name} sent you a request
                 </small>
                 <small className="notifi-date text-muted  lh-base">
-                  <i class="fa-regular fa-clock me-1 me-1"></i>
+                  <i className="fa-regular fa-clock me-1 me-1"></i>
                   <span className="pe-1">
                     {getTimeDifference(item?.createdAt)}
                   </span>

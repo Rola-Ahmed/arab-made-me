@@ -108,37 +108,33 @@ export default function AccountInformation(props) {
         </div>
       </div>
 
-
-
- {/* Account setting Info Chnage  update form*/}
+      {/* Account setting Info Chnage  update form*/}
       <div
-        class="modal fade "
+        className="modal fade "
         id="editAccountInfo"
         tabindex="-1"
         role="dialog"
         aria-hidden="true"
       >
         <div
-          class="modal-dialog  modal-dialog-centered modal-lg rounded-3"
+          className="modal-dialog  modal-dialog-centered modal-lg rounded-3"
           role="document"
         >
-          <div class="modal-content   px-4 py-4">
-            <div class="modal-header mb-3">
-              <h4 class="modal-title fw-normal" >
-                Account Inforamtions
-              </h4>
+          <div className="modal-content   px-4 py-4">
+            <div className="modal-header mb-3">
+              <h4 className="modal-title fw-normal">Account Inforamtions</h4>
               <button
                 type="button"
-                class="close bg-0 border-0"
+                className="close bg-0 border-0"
                 data-dismiss="modal"
                 aria-label="Close"
                 data-bs-dismiss="modal"
                 onClick={() => handleClose()}
               >
-                <i class="fa-solid fa-xmark fs-24"></i>
+                <i className="fa-solid fa-xmark fs-24"></i>
               </button>
             </div>
-            <div class="modal-body p-0 ">
+            <div className="modal-body p-0 ">
               {" "}
               {errorMsg && (
                 <div className="alert mt-3 p-2 alert-danger form-control text-dark">

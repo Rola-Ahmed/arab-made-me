@@ -33,13 +33,11 @@ export default function ChangePassword(props) {
     //   return restErrors;
     // });
 
-
     // setErrorMsg((prevErrors) => {
     //   const { response, ...restErrors } = prevErrors || {};
     //   return Object.keys(restErrors).length ? JSON.stringify(restErrors) : null;
     // });
-    
-    
+
     let data = {
       oldPassword: values.oldPassword,
       password: values.password,
@@ -86,7 +84,6 @@ export default function ChangePassword(props) {
     //   return restErrors;
     // });
 
-
     setErrorMsg((prevErrors) => {
       const { response, ...restErrors } = prevErrors || {};
       return Object.keys(restErrors).length ? JSON.stringify(restErrors) : null;
@@ -107,7 +104,6 @@ export default function ChangePassword(props) {
     });
 
     // console.log("changes")
-
   }
   // console.log("formPasswordValidation",formPasswordValidation)
 
@@ -159,7 +155,7 @@ export default function ChangePassword(props) {
       </div>
 
       <div
-        class="modal fade "
+        className="modal fade "
         id="changePassword"
         tabindex="-1"
         role="dialog"
@@ -167,27 +163,27 @@ export default function ChangePassword(props) {
         aria-hidden="true"
       >
         <div
-          class="modal-dialog  modal-dialog-centered modal-lg rounded-3"
+          className="modal-dialog  modal-dialog-centered modal-lg rounded-3"
           role="document"
         >
-          <div class="modal-content   px-4 py-4">
-            <div class="modal-header mb-3">
-              <h4 class="modal-title fw-normal">
-                {/* <h4 class="modal-title fw-normal" id="exampleModalLabel"> */}
+          <div className="modal-content   px-4 py-4">
+            <div className="modal-header mb-3">
+              <h4 className="modal-title fw-normal">
+                {/* <h4 className="modal-title fw-normal" id="exampleModalLabel"> */}
                 Change Password
               </h4>
               <button
                 type="button"
-                class="close bg-0 border-0"
+                className="close bg-0 border-0"
                 data-dismiss="modal"
                 aria-label="Close"
                 data-bs-dismiss="modal"
                 onClick={() => handleClose()}
               >
-                <i class="fa-solid fa-xmark fs-24"></i>
+                <i className="fa-solid fa-xmark fs-24"></i>
               </button>
             </div>
-            <div class="modal-body p-0 ">
+            <div className="modal-body p-0 ">
               {" "}
               {errorMsg?.response && (
                 <div className="alert mt-3 p-2 alert-danger form-control text-dark">
@@ -203,7 +199,7 @@ export default function ChangePassword(props) {
                   <div className="col-12">
                     <div className="form-group">
                       <label>Old Password</label>
-                      <div class="input-group">
+                      <div className="input-group">
                         <input
                           type={`${
                             toggleSeePassword.oldPassword == true
@@ -218,7 +214,7 @@ export default function ChangePassword(props) {
                           value={formPasswordValidation.values.oldPassword}
                         />
                         <div
-                          class="input-group-append cursor"
+                          className="input-group-append cursor"
                           onClick={() =>
                             settoggleSeePassword((prevData) => ({
                               ...prevData,
@@ -227,7 +223,7 @@ export default function ChangePassword(props) {
                           }
                         >
                           <span
-                            class={`input-group-text bg-white h-100 icon-eye-passowrd    cursor ${
+                            className={`input-group-text bg-white h-100 icon-eye-passowrd    cursor ${
                               toggleSeePassword.oldPassword == true
                                 ? "fa-solid fa-eye-slash"
                                 : "fa-solid fa-eye"
@@ -247,7 +243,7 @@ export default function ChangePassword(props) {
                       <label>Change Password</label>
 
                       {/*  */}
-                      <div class="input-group">
+                      <div className="input-group">
                         <input
                           type={`${
                             toggleSeePassword.password == true
@@ -263,7 +259,7 @@ export default function ChangePassword(props) {
                           autoComplete="new-passowrd"
                         />
                         <div
-                          class="input-group-append cursor"
+                          className="input-group-append cursor"
                           onClick={() =>
                             settoggleSeePassword((prevData) => ({
                               ...prevData,
@@ -272,7 +268,7 @@ export default function ChangePassword(props) {
                           }
                         >
                           <span
-                            class={`input-group-text bg-white h-100 icon-eye-passowrd    cursor ${
+                            className={`input-group-text bg-white h-100 icon-eye-passowrd    cursor ${
                               toggleSeePassword.password == true
                                 ? "fa-solid fa-eye-slash"
                                 : "fa-solid fa-eye"
@@ -294,7 +290,7 @@ export default function ChangePassword(props) {
                       <label>Confirm Password</label>
 
                       {/*  */}
-                      <div class="input-group">
+                      <div className="input-group">
                         <input
                           type={`${
                             toggleSeePassword.confirmPassword == true
@@ -310,7 +306,7 @@ export default function ChangePassword(props) {
                           value={formPasswordValidation.values.confirmPassword}
                         />
                         <div
-                          class="input-group-append cursor"
+                          className="input-group-append cursor"
                           onClick={() =>
                             settoggleSeePassword((prevData) => ({
                               ...prevData,
@@ -319,7 +315,7 @@ export default function ChangePassword(props) {
                           }
                         >
                           <span
-                            class={`input-group-text bg-white h-100 icon-eye-passowrd    cursor ${
+                            className={`input-group-text bg-white h-100 icon-eye-passowrd    cursor ${
                               toggleSeePassword.confirmPassword == true
                                 ? "fa-solid fa-eye-slash"
                                 : "fa-solid fa-eye"

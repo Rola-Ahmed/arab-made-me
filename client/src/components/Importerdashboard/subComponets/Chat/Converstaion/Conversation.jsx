@@ -1,7 +1,7 @@
-import {  useState,  useRef } from "react";
+import { useState, useRef } from "react";
 import { handleImageError } from "utils/ImgNotFound";
 // shared components
-import {  baseUrl_IMG } from "config.js";
+import { baseUrl_IMG } from "config.js";
 import SubPageUtility from "components/Shared/Dashboards/PageUtility";
 import { getTimeDifference as getTimeDiff } from "utils/getTimeDifference";
 import SendMsg from "./SendMsg";
@@ -17,10 +17,7 @@ export default function Conversation() {
   });
   const scrollChat = useRef(null);
 
-
   // utils function
-
-
 
   let {
     reqData,
@@ -80,7 +77,7 @@ export default function Conversation() {
                           <small className="d-flex justify-content-end text-muted fs-12 ">
                             {getTimeDifference(reqData?.createdAt)}
 
-                            <i class="fa-solid fa-check-double text-muted my-auto ms-2"></i>
+                            <i className="fa-solid fa-check-double text-muted my-auto ms-2"></i>
                             {/* {reqData?.createdA} */}
                           </small>
                         </div>
@@ -121,9 +118,9 @@ export default function Conversation() {
                       {getTimeDifference(reqData?.createdAt)}
 
                       {newMessageSuccess?.send ? (
-                        <i class="fa-solid fa-check-double text-muted my-auto ms-2"></i>
+                        <i className="fa-solid fa-check-double text-muted my-auto ms-2"></i>
                       ) : (
-                        <i class="fa-solid fa-check text-muted my-auto ms-2"></i>
+                        <i className="fa-solid fa-check text-muted my-auto ms-2"></i>
                       )}
                       {/* {reqData?.createdA} */}
                     </small>

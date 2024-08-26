@@ -1,4 +1,4 @@
-import { useState} from "react";
+import { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Header from "components/main/Header/Header";
@@ -9,7 +9,7 @@ import useSignUp from "./useSignUp";
 export default function SignUp() {
   document.title = "Sign Up";
   let navigate = useNavigate();
-  let { submitForm,isLoading,errorMsg}=useSignUp()
+  let { submitForm, isLoading, errorMsg } = useSignUp();
   let [toggleSeePassword, settoggleSeePassword] = useState(false);
 
   let validationSchema = Yup.object().shape({
@@ -40,7 +40,6 @@ export default function SignUp() {
           <div className="frame-container-1 ">
             <div className="container content-1">
               <div className="sub-content">
-
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
@@ -56,18 +55,18 @@ export default function SignUp() {
                     )}
                     <div className="gap-20 row">
                       <div className="col-12">
-                      <InputField
-                        isRequired={true}
-                        title={"Email"}
-                        formValidation={formValidation}
-                        vlaidationName={"email"}
-                      />
+                        <InputField
+                          isRequired={true}
+                          title={"Email"}
+                          formValidation={formValidation}
+                          vlaidationName={"email"}
+                        />
                       </div>
                       <div className="col-12">
-
-                        
                         <div className="form-group">
-                          <label forHtml="password">password <span className="text-danger">*</span></label>
+                          <label forHtml="password">
+                            password <span className="text-danger">*</span>
+                          </label>
 
                           <div className="input-group">
                             <input
@@ -77,19 +76,18 @@ export default function SignUp() {
                               className="form-control remove-left-border"
                               id="password"
                               name="password"
-                              
                               onChange={formValidation.handleChange}
                               value={formValidation.values.password}
                               onBlur={formValidation.handleBlur}
                             />
                             <div
-                              class="input-group-append cursor"
+                              className="input-group-append cursor"
                               onClick={() =>
                                 settoggleSeePassword(!toggleSeePassword)
                               }
                             >
                               <span
-                                class={`input-group-text bg-white h-100 icon-eye-passowrd    cursor ${
+                                className={`input-group-text bg-white h-100 icon-eye-passowrd    cursor ${
                                   toggleSeePassword == true
                                     ? "fa-solid fa-eye-slash"
                                     : "fa-solid fa-eye"
@@ -101,11 +99,8 @@ export default function SignUp() {
                             formValidation={formValidation}
                             vlaidationName={"password"}
                           />
-                         
                         </div>
                       </div>
-
-
 
                       <div className="col-12">
                         {isLoading ? (
@@ -125,21 +120,20 @@ export default function SignUp() {
                         )}
 
                         <div className="d-flex justify-content-center align-content-center mt-2 ">
-                          <p className=" small-note">Already have an account?</p>
+                          <p className=" small-note">
+                            Already have an account?
+                          </p>
                           <button
                             className="small-note bg-transparent border-0 text-main"
                             onClick={() => {
                               navigate("/signIn");
                             }}
                           >
-                           Sign in
+                            Sign in
                           </button>
                         </div>
                       </div>
-
-
                     </div>
-
                   </div>
                 </form>
               </div>

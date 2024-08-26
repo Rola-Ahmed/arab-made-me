@@ -152,7 +152,7 @@ export default function IndexList(props) {
                       }}
                     >
                       {/* view */}
-                      <i class="fa-solid fa-up-right-from-square"></i>
+                      <i className="fa-solid fa-up-right-from-square"></i>
                     </p>
                   </th>
                 </tr>

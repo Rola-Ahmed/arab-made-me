@@ -168,13 +168,13 @@ export default function ProductCard(props) {
                 );
               }}
             >
-              <i class="fa-regular fa-comments fa-2x"></i>
+              <i className="fa-regular fa-comments fa-2x"></i>
             </button>
           </div>
 
           <div className=" text-dark text-decoration-none cursor">
             <i
-              class=" ellipsis  fa-solid fa-ellipsis-vertical "
+              className=" ellipsis  fa-solid fa-ellipsis-vertical "
               onMouseEnter={() => {
                 document
                   .getElementById(productItem?.id)

@@ -119,8 +119,8 @@ function Sourcinghub() {
         className="container sourcing-hub-section-pg sourcing-pg"
         id="sourcing-pg"
       >
-        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-          <li class="nav-item" role="presentation">
+        <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
+          <li className="nav-item" role="presentation">
             <button
               className={`btn-sourcing btn-warning`}
               id="pills-home-tab"
@@ -135,7 +135,7 @@ function Sourcinghub() {
               Requests
             </button>
           </li>
-          <li class="nav-item" role="presentation">
+          <li className="nav-item" role="presentation">
             <button
               id="pills-profile-tab"
               data-bs-toggle="pill"
@@ -165,8 +165,8 @@ function Sourcinghub() {
             )}
           </>
         ) : (
-          <div class="tab-content mt-5" id="pills-tabContent">
-            <div class=" row">
+          <div className="tab-content mt-5" id="pills-tabContent">
+            <div className=" row">
               {reqData?.map((item) => (
                 <div className="col-lg-4 sour-card gy-4">
                   <SourcingRequestCard

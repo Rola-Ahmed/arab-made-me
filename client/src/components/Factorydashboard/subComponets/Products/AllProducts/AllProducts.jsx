@@ -1,4 +1,4 @@
-import {  useState } from "react";
+import { useState } from "react";
 
 // shared components
 import PaginationDash from "components/Shared/Dashboards/PaginationDash";
@@ -37,12 +37,10 @@ export default function GetProducts() {
     apiLoadingData,
     setPagination,
     deleteData,
-  } =useAllProducts(filter)
-
+  } = useAllProducts(filter);
 
   return (
     <div className="m-4 order-section ">
-
       {/* section 1 */}
       <div className="header w-100">
         <PageUtility currentPage="Products" />
@@ -51,10 +49,7 @@ export default function GetProducts() {
             <h2>All Products</h2>
 
             <div className="btn-container">
-              <button
-                className="order-btn-1"
-                disabled={false}
-              >
+              <button className="order-btn-1" disabled={false}>
                 <i className="fa-solid fa-cloud-arrow-down"></i>
                 <p className="cursor">Download CSV</p>
               </button>
@@ -64,7 +59,6 @@ export default function GetProducts() {
                 onClick={() => {
                   navigate("/factoryDashboard/addProduct");
                 }}
-
               >
                 <i className="fa-solid fa-plus"></i>
                 <p className="cursor">Add</p>
@@ -75,7 +69,7 @@ export default function GetProducts() {
 
         {/* search filter section */}
         <SearchFilterByOrderPrice filtterData={filtterData} filter={filter} />
-       
+
         {/* data section */}
 
         <div className=" data-container w-100 p-3">
@@ -153,7 +147,6 @@ export default function GetProducts() {
 
                   <th className=" col-1 d-flex align-items-center  ">
                     <p className="">
-
                       {poItem?.minOrderQuantity}
                       {`${
                         poItem?.maxOrderQuantity
@@ -167,8 +160,6 @@ export default function GetProducts() {
                       {getMonthName(poItem?.createdAt?.split("T")?.[0])}
                     </p>
                   </th>
-
-                  
 
                   <th className=" col-2  d-flex align-items-center ">
                     <p>{poItem?.hsnCode ?? ""} </p>
@@ -189,7 +180,7 @@ export default function GetProducts() {
                       }}
                     >
                       {/* view */}
-                      <i class="fa-solid fa-up-right-from-square"></i>
+                      <i className="fa-solid fa-up-right-from-square"></i>
                     </p>
                     <p
                       className="trate-sub-title view-more-details cursor"
@@ -198,24 +189,18 @@ export default function GetProducts() {
                         deleteData(poItem?.id);
                       }}
                     >
-                      <i class="fa-regular fa-trash-can"></i>
+                      <i className="fa-regular fa-trash-can"></i>
                     </p>
                   </th>
                 </tr>
               ))}
-              
 
-
-              
-               {/* is data is still loading or error occured */}
-                <StatusMessage
+              {/* is data is still loading or error occured */}
+              <StatusMessage
                 reqDataLength={reqData?.length}
                 apiLoadingData={apiLoadingData?.reqData}
                 errorsMsg={apiLoadingData?.errorWhileLoading}
               />
-
-
-            
 
               <tr className="row">
                 <div className="col-12  ReactPaginate">

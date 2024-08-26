@@ -1,4 +1,4 @@
-import {  useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { UserToken } from "Context/userToken";
 import { useNavigate } from "react-router-dom";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
@@ -11,7 +11,6 @@ import StatusMessage from "components/Shared/Dashboards/StatusMessage";
 export default function AllVisitReq() {
   let { isLogin } = useContext(UserToken);
   let navigate = useNavigate();
-  
 
   const [filter, setFilter] = useState({
     formsFilter: "",
@@ -33,7 +32,7 @@ export default function AllVisitReq() {
     errorsMsg,
     setPagination,
     deleteData,
-  } = useAllVisitReq(isLogin,filter);
+  } = useAllVisitReq(isLogin, filter);
 
   // utils function
   let getMonthName = getDate;
@@ -48,10 +47,7 @@ export default function AllVisitReq() {
             <h2> Factory Visit Requests</h2>
 
             <div className="btn-container">
-              <button
-                className="order-btn-1"
-                disabled
-              >
+              <button className="order-btn-1" disabled>
                 <i className="fa-solid fa-cloud-arrow-down"></i>
                 <p className="cursor">Download CSV</p>
               </button>
@@ -92,7 +88,7 @@ export default function AllVisitReq() {
 
           <div className=" btn-container d-flex justify-content-between align-items-center">
             <p>Sort By:</p>
-            <div class="dropdown">
+            <div className="dropdown">
               <button
                 className=" dropdown-toggle order-toggle d-flex justify-content-center align-items-center"
                 role="button"
@@ -105,7 +101,7 @@ export default function AllVisitReq() {
                 </p>
               </button>
 
-              <ul class="dropdown-menu">
+              <ul className="dropdown-menu">
                 <li
                   onClick={(e) => {
                     filtterData("date-DESC", "sort", "Sort By");
@@ -131,7 +127,6 @@ export default function AllVisitReq() {
                 >
                   <p className="dropdown-item">Newest</p>
                 </li>
-               
               </ul>
             </div>
           </div>
@@ -213,11 +208,11 @@ export default function AllVisitReq() {
                   </th>
 
                   <th className=" col-3  d-flex align-items-center justify-content- ">
-                  <ProfileCell
-                        profile={poItem?.factory?.coverImage}
-                        repEmail={poItem?.factory?.repEmail}
-                        name={poItem?.factory?.name}
-                      />
+                    <ProfileCell
+                      profile={poItem?.factory?.coverImage}
+                      repEmail={poItem?.factory?.repEmail}
+                      name={poItem?.factory?.name}
+                    />
                   </th>
 
                   <th className=" col-1 d-flex align-items-center justify-content-center  gap-icon-table">
@@ -231,7 +226,7 @@ export default function AllVisitReq() {
                       }}
                     >
                       {/* view */}
-                      <i class="fa-solid fa-up-right-from-square"></i>
+                      <i className="fa-solid fa-up-right-from-square"></i>
                     </p>
                     <p
                       className="trate-sub-title view-more-details cursor"
@@ -241,7 +236,7 @@ export default function AllVisitReq() {
                       }}
                     >
                       {/* view */}
-                      <i class="fa-regular fa-trash-can"></i>
+                      <i className="fa-regular fa-trash-can"></i>
                     </p>
                   </th>
                 </tr>

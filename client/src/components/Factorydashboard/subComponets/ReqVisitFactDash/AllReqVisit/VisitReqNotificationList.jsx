@@ -9,8 +9,13 @@ import { getMonthName as getDate } from "utils/getMonthName";
 import useVisitNotific from "./useVisitNotific";
 
 export default function VisitReqNotificationList() {
-  let { isLoading, notificationData, page, handleDisplayPrevData, totalPage } =
-    useVisitNotific();
+  let {
+    isLoading,
+    notificationData,
+    page,
+    handleDisplayPrevData,
+    totalPage,
+  } = useVisitNotific();
 
   let currentScroller = useRef(null);
 
@@ -71,7 +76,7 @@ export default function VisitReqNotificationList() {
                   {item?.importer?.name} sent you a request
                 </small>
                 <small className="notifi-date text-muted  lh-base">
-                  <i class="fa-regular fa-clock me-1"></i>
+                  <i className="fa-regular fa-clock me-1"></i>
                   <span className="pe-1">
                     {getTimeDifference(item?.createdAt)}
                   </span>

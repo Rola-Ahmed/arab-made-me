@@ -110,10 +110,10 @@ function Importerdash() {
                         .classList.toggle("fa-caret-down");
                     }}
                   >
-                    <i class="fa-solid fa-user"></i>
+                    <i className="fa-solid fa-user"></i>
                     <p className="sub-title cursor">Profile</p>
                     <i
-                      class={`fa-solid caret  fa-caret-down
+                      className={`fa-solid caret  fa-caret-down
                        text-white`}
                     ></i>
                   </Link>

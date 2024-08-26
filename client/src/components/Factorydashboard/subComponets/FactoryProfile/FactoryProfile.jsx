@@ -262,31 +262,33 @@ export default function FactoryProfile() {
       {/*  legal docs */}
 
       <div
-        class="modal fade "
+        className="modal fade "
         id="addLegalDocs"
         tabindex="-1"
         role="dialog"
         aria-hidden="true"
       >
         <div
-          class="modal-dialog  modal-dialog-centered modal-lg rounded-3"
+          className="modal-dialog  modal-dialog-centered modal-lg rounded-3"
           role="document"
         >
-          <div class="modal-content   px-4 py-4">
-            <div class="modal-header mb-3">
-              <h4 class="modal-title fw-normal">Upload New Legal Documents</h4>
+          <div className="modal-content   px-4 py-4">
+            <div className="modal-header mb-3">
+              <h4 className="modal-title fw-normal">
+                Upload New Legal Documents
+              </h4>
               <button
                 type="button"
-                class="close bg-0 border-0"
+                className="close bg-0 border-0"
                 data-dismiss="modal"
                 aria-label="Close"
                 data-bs-dismiss="modal"
                 onClick={() => handleClose2()}
               >
-                <i class="fa-solid fa-xmark fs-24"></i>
+                <i className="fa-solid fa-xmark fs-24"></i>
               </button>
             </div>
-            <div class="modal-body p-0 ">
+            <div className="modal-body p-0 ">
               {" "}
               {errorMsg?.response && (
                 <div className="alert mt-3 p-2 alert-danger form-control text-dark">
@@ -321,7 +323,10 @@ export default function FactoryProfile() {
                         Close
                       </button>
                       {isLoading ? (
-                        <button type="button" className="rounded-3 bg-main text-white px-4 py-2 border-0">
+                        <button
+                          type="button"
+                          className="rounded-3 bg-main text-white px-4 py-2 border-0"
+                        >
                           <i className="fas fa-spinner fa-spin text-white px-5"></i>
                         </button>
                       ) : (

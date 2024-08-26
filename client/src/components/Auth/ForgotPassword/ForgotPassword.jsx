@@ -101,8 +101,6 @@ function ForgotPassword() {
                       </div>
 
                       <div className="col-12">
-                      
-
                         {isLoading ? (
                           <button
                             type="button"
@@ -120,19 +118,18 @@ function ForgotPassword() {
                         )}
 
                         <div className="d-flex justify-content-center align-content-center mt-2 ">
-                          <i class="fa-solid fa-chevron-left my-auto"></i>
-                          
+                          <i className="fa-solid fa-chevron-left my-auto"></i>
+
                           <button
                             className="small-note bg-transparent border-0 my-auto"
-                              onClick={() => {
-                                navigate("/signIn");
+                            onClick={() => {
+                              navigate("/signIn");
                             }}
                           >
-                           Back to Login
+                            Back to Login
                           </button>
                         </div>
                       </div>
-
                     </div>
                   </div>
                 </form>

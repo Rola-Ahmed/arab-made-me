@@ -367,7 +367,7 @@ function Products(title) {
                               }}
                             >
                               <i
-                                class="fa-regular fa-comments fa-2x"
+                                className="fa-regular fa-comments fa-2x"
                                 style={{ fontSize: "1.5rem" }}
                               ></i>
                             </button>

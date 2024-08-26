@@ -33,9 +33,9 @@ export default function TimeLine(props) {
         <div className="form-group timeline-container">
           <label> Timeline</label>
           <div className="d-flex justify-content-between align-items-center w-100 ">
-            <div class="form-check w-100 d-blcok ">
+            <div className="form-check w-100 d-blcok ">
               <input
-                class="form-check-input p-0"
+                className="form-check-input p-0"
                 type="radio"
                 id="recurrence"
                 name="recurrence"
@@ -46,12 +46,12 @@ export default function TimeLine(props) {
                   oneBatch();
                 }}
               />
-              <label class="form-check-label">1 Batch</label>
+              <label className="form-check-label">1 Batch</label>
             </div>
 
-            <div class="form-check w-100 d-blcok ">
+            <div className="form-check w-100 d-blcok ">
               <input
-                class="form-check-input p-0"
+                className="form-check-input p-0"
                 type="radio"
                 id="recurrence"
                 name="recurrence"
@@ -59,7 +59,7 @@ export default function TimeLine(props) {
                 onBlur={formValidation.handleBlur}
                 value={"repeat"}
               />
-              <label class="form-check-label">Repeat</label>
+              <label className="form-check-label">Repeat</label>
             </div>
           </div>
           {/* <div className="timeline form-control checked d-flex justify-content-between align-content-center"> */}

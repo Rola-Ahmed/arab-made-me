@@ -150,8 +150,8 @@ function Productpage(props) {
                   </SwiperSlide>
                 ))}
 
-                <i class="fa-solid fa-chevron-left main-slider-prev rounded-4"></i>
-                <i class="fa-solid fa-chevron-right main-slider-next  rounded-4"></i>
+                <i className="fa-solid fa-chevron-left main-slider-prev rounded-4"></i>
+                <i className="fa-solid fa-chevron-right main-slider-next  rounded-4"></i>
               </Swiper>
             </div>
             <div className="col-lg-4 parent2  text-truncate">

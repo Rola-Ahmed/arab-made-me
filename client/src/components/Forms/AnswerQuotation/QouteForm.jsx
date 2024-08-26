@@ -18,11 +18,11 @@ export default function QouteForm(props) {
         {/* Grid  */}
         <div className="container container-req ">
           <div className="input-content ">
-            {errorMsg?.response &&(
+            {errorMsg?.response && (
               <div className="alert mt-3 p-2 alert-danger form-control text-dark">
                 {errorMsg?.response}
               </div>
-            ) }
+            )}
 
             <div className="title-text w-100 ">
               <h5> Quotation Details</h5>
@@ -40,7 +40,7 @@ export default function QouteForm(props) {
 
               <div className="col-md-6 col-sm-12 d-none">
                 <div className="form-group">
-                  {/* <label class={"form-title"}> */}
+                  {/* <label className={"form-title"}> */}
                   <label>requested Quantity</label>
                   <input className="form-control " readonly />
                 </div>

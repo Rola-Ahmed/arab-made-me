@@ -34,7 +34,7 @@ const LanguageSwitcher = () => {
           aria-expanded="false"
           data-bs-toggle="dropdown"
         >
-          <i class="fa-solid fa-globe color-white me-2"></i>{" "}
+          <i className="fa-solid fa-globe color-white me-2"></i>{" "}
           {currentLanguageName}
         </button>
         <div

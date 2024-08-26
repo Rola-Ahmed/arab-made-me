@@ -10,7 +10,7 @@ export default function PageUtility(props) {
       >
         Home
       </Link>
-      <i class="fa-solid fa-chevron-right btn-back-icon"></i>
+      <i className="fa-solid fa-chevron-right btn-back-icon"></i>
       <p className="back-btn-dash-2  text-muted">{currentPage}</p>
     </div>
   );

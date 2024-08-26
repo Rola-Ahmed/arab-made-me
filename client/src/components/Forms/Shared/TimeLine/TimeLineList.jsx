@@ -69,7 +69,7 @@ export default function TimeLineList(props) {
           <div className="col-md-1 col-sm-12">
             <div className="w-100 h-100 justify-content-center align-items-center d-flex pt-mt ">
               <i
-                class=" w-25 cursor fa-solid fa-minus text-white px-3 py-2"
+                className=" w-25 cursor fa-solid fa-minus text-white px-3 py-2"
                 onClick={() => removenewSepcialChar(index)}
               ></i>
             </div>

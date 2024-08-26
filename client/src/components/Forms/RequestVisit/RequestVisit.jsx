@@ -123,7 +123,7 @@ function RequestVisit() {
                 {/* will use it in the future */}
                 {/* <div className="col-12">
                   <div className="d-flex justify-content-between align-items-center">
-                    <div class="form-check w-100 d-blcok ">
+                    <div className="form-check w-100 d-blcok ">
                       <RadioInput
                         formValidation={formValidation}
                         vlaidationName="visitType"
@@ -132,7 +132,7 @@ function RequestVisit() {
                         defaultChecked={true}
                       />
                     </div>
-                    <div class="form-check w-100 d-blcok ">
+                    <div className="form-check w-100 d-blcok ">
                       <RadioInput
                         formValidation={formValidation}
                         vlaidationName="visitType"

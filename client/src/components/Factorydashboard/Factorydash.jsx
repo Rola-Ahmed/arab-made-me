@@ -59,10 +59,10 @@ function Factorydash() {
                       handleDropdownToggle("drop-profile", "factoryProfile")
                     }
                   >
-                    <i class="fa-solid fa-user"></i>
+                    <i className="fa-solid fa-user"></i>
                     <p className="sub-title cursor">Profile</p>
                     <i
-                      class={`fa-solid caret  fa-caret-down
+                      className={`fa-solid caret  fa-caret-down
                        text-white`}
                     ></i>
                   </Link>
@@ -73,7 +73,6 @@ function Factorydash() {
                     <div className="mt-3"></div>
                     <DashListsDropDown
                       path={"factoryProfile"}
-                      
                       urlHashValue="accountInformation"
                       title="Account Inforamtion"
                       icon="fa-solid fa-gears"
@@ -82,7 +81,6 @@ function Factorydash() {
                     {/* Password Change */}
                     <DashListsDropDown
                       path={"factoryProfile"}
-                      
                       urlHashValue="PasswordChange"
                       title="Password Change"
                       icon="fa-solid fa-lock "
@@ -93,7 +91,6 @@ function Factorydash() {
                     {/* Email Notification */}
                     <DashListsDropDown
                       path={"factoryProfile"}
-                      
                       urlHashValue="EmailNotification"
                       title="Notifications"
                       icon="fa-solid fa-bell"
@@ -101,7 +98,6 @@ function Factorydash() {
                     {/* legal docs */}
                     <DashListsDropDown
                       path={"factoryProfile"}
-                      
                       urlHashValue="legalDocs"
                       title="Legal Documents"
                       icon="fa-solid fa-file-circle-check"
@@ -110,7 +106,6 @@ function Factorydash() {
                     {/* legal docs */}
                     <DashListsDropDown
                       path={"factoryProfile"}
-                      
                       urlHashValue="subscriptionPlan"
                       title="Subscription Plan"
                       icon="fa-solid fa-envelope-circle-check pe-2"
@@ -133,17 +128,16 @@ function Factorydash() {
                       handleDropdownToggle("drop-mircoSite", "mircoSite")
                     }
                   >
-                    <i class="fa-solid fa-user"></i>
+                    <i className="fa-solid fa-user"></i>
                     <p className="sub-title cursor">My Microsite</p>
                     <i
-                      class={`fa-solid caret  fa-caret-down
+                      className={`fa-solid caret  fa-caret-down
                        text-white`}
                     ></i>
                   </Link>
                   <div id="drop-mircoSite" className={`dropdwon-menu-style `}>
                     <DashListsDropDown
                       path={"mircoSite"}
-                      
                       urlHashValue="factorylogo"
                       title="Factory Logo"
                       icon="fa-solid fa-user"
@@ -151,7 +145,6 @@ function Factorydash() {
 
                     <DashListsDropDown
                       path={"mircoSite"}
-                      
                       urlHashValue="socialAccount"
                       title="Social Accounts"
                       icon="fa-solid fa-share-nodes"
@@ -159,7 +152,6 @@ function Factorydash() {
 
                     <DashListsDropDown
                       path={"mircoSite"}
-                      
                       urlHashValue="factoryimages"
                       title="Cover Images"
                       icon="fa-solid fa-images"
@@ -167,7 +159,6 @@ function Factorydash() {
 
                     <DashListsDropDown
                       path={"mircoSite"}
-                      
                       urlHashValue="certificates"
                       title="Certificates"
                       icon="fa-solid fa-stamp"
@@ -175,7 +166,6 @@ function Factorydash() {
 
                     <DashListsDropDown
                       path={"mircoSite"}
-                      
                       urlHashValue="CoverVideo"
                       title="Cover Video"
                       icon="fa-solid fa-video"
@@ -183,7 +173,6 @@ function Factorydash() {
 
                     <Link
                       to="mircoSite#FactoryInforamtion"
-                     
                       className={` sub-btn  text-decoration-none  ${
                         window?.location.href.includes("FactoryInforamtion")
                           ? "active"
@@ -216,7 +205,6 @@ function Factorydash() {
 
                     <DashListsDropDown
                       path={"mircoSite"}
-                      
                       urlHashValue="team"
                       title="Team"
                       icon="fa-solid fa-user-plus"

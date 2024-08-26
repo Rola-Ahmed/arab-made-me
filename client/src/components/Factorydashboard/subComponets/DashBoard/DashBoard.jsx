@@ -229,7 +229,7 @@ export default function DashBoard() {
             <div className="d-flex justify-content-start align-items-center w-100 parent-persantage  px-1">
               <h6 className="title-graph m-0 p-0">2,420</h6>
               <div className="d-flex justify-content-between align-items-center perg-div">
-                <i class="fa-solid fa-arrow-up arrow-icon text-success"></i>
+                <i className="fa-solid fa-arrow-up arrow-icon text-success"></i>
                 <p className="perg-text">40% vs last Month</p>
               </div>
             </div>
@@ -256,7 +256,7 @@ export default function DashBoard() {
             <div className="d-flex justify-content-start align-items-center w-100 parent-persantage px-1">
               <h6 className="title-graph m-0 p-0">2,420</h6>
               <div className="d-flex justify-content-between align-items-center perg-div">
-                <i class="fa-solid fa-arrow-down text-danger arrow-icon"></i>
+                <i className="fa-solid fa-arrow-down text-danger arrow-icon"></i>
                 <p className="perg-text">40% vs last Month</p>
               </div>
             </div>

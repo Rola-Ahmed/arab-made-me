@@ -8,11 +8,10 @@ export default function SubPageUtility(props) {
       <Link
         to="/"
         className="back-btn-dash cursor text-decoration-none text-muted"
-        
       >
         Home
       </Link>
-      <i class="fa-solid fa-chevron-right btn-back-icon"></i>
+      <i className="fa-solid fa-chevron-right btn-back-icon"></i>
 
       <p
         to="-1"
@@ -24,7 +23,7 @@ export default function SubPageUtility(props) {
         {PrevPage}
       </p>
 
-      <i class="fa-solid fa-chevron-right btn-back-icon"></i>
+      <i className="fa-solid fa-chevron-right btn-back-icon"></i>
 
       <p className="back-btn-dash-2  text-muted">{currentPage}</p>
     </div>

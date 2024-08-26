@@ -83,7 +83,7 @@ function Navbar(props) {
         <LanguageSwitcher />
 
         <div className="btns p-0  w-fit-content  mx-md-0 mx-auto">
-          {(isLogin && currentUserData?.continueProfilePath) && (
+          {isLogin && currentUserData?.continueProfilePath && (
             <button
               className="btn1  border-0 rounded-3 color-changing-button  fw-600 fs-12 "
               onClick={() =>
@@ -93,7 +93,7 @@ function Navbar(props) {
               Please countine registration
             </button>
           )}
-          {/* <i class="fa-solid fa-triangle-exclamation"></i> */}
+          {/* <i className="fa-solid fa-triangle-exclamation"></i> */}
           {!isLogin ? (
             <>
               <div
