@@ -1,4 +1,3 @@
-// import "./sourcingh.css";
 import { useNavigate } from "react-router-dom";
 import "./SourcingOffers.css";
 
@@ -7,9 +6,12 @@ import { useEffect, useState } from "react";
 import { getSourcingOffers } from "Services/sourcingOffer";
 import SourcingOfferTable from "components/Sourcinghub/SourcingOffers/SourcingOfferTable";
 import Loading from "components/Loading/Loading";
+import { useAppTranslation } from "config.js";
 
 export default function SourcingOffers() {
   let navigate = useNavigate();
+  const { trans: t, currentLang } = useAppTranslation();
+
   // utils function
   let displayProductSize = 100;
 
@@ -36,16 +38,21 @@ export default function SourcingOffers() {
 
   return (
     <>
-      {/* // <section> */}
+      {/* home page */}
 
-      <p className="sourc-p pb-2">Factory Offers</p>
+      <p
+        className={`fs-20-semi pb-2 ${
+          currentLang == "ar" && "ar-text-left fw-900"
+        }`}
+      >
+        {t("translation:titles.factoryOffers")}
+      </p>
       <div className="row position-relative">
         <div className="col-12">
           <div className="border-container">
             <SourcingOfferTable allSourcingReqData={allSourcingReqData} />
           </div>
         </div>
-
 
         {apiLoadingData?.laoding && (
           <>
@@ -62,16 +69,13 @@ export default function SourcingOffers() {
             </div>
           </>
         )}
-        {
-          allSourcingReqData?.length ==0 && !apiLoadingData?.laoding &&(
-            <div className="position-absolute error-float">
-              <p className="fs-5 text-muted fw-bolder text-5 mt-5 pt-5 mx-auto">
-                { "No records"}
-              </p>
+        {allSourcingReqData?.length == 0 && !apiLoadingData?.laoding && (
+          <div className="position-absolute error-float">
+            <p className="fs-5 text-muted fw-bolder text-5 mt-5 pt-5 mx-auto">
+              {"No records"}
+            </p>
           </div>
-          )
-
-        }
+        )}
       </div>
 
       <div className="btn-container-all cursor">

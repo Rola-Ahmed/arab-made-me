@@ -271,9 +271,19 @@ p, button, div, textarea, input {
 
 }
 
+.fs-22-semi {
+  font-family: "Inter-semi";
+  font-size: 22px;
+}
+
 .fs-24-semi {
   font-family: "Inter-semi";
   font-size: 24px;
+}
+
+.fs-20-semi {
+  font-family: "Inter-semi";
+  font-size: 20px;
 }
 
 .fs-14, .send-rfq .form-group label,
@@ -302,6 +312,9 @@ p, button, div, textarea, input {
 .fw-600 {
   font-weight: 600;
 }
+.fw-900 {
+  font-weight: 900;
+}
 
 .fw-normal {
   font-weight: normal !important;
@@ -311,8 +324,9 @@ p, button, div, textarea, input {
 .object-fit-contain {
   object-fit: contain !important;
 }
+
 .object-fit-cover {
-  object-fit: cover ;
+  object-fit: cover;
 }
 
 .bg-none {
@@ -358,7 +372,12 @@ p, button, div, textarea, input {
 .ar-text p {
   text-align: end !important;
 }
-.ar-flex-reverse{
+
+.ar-text-left {
+  text-align: end
+}
+
+.ar-flex-reverse {
   flex-direction: row-reverse;
 }
 
@@ -447,6 +466,15 @@ p, button, div, textarea, input {
 
 .home-padding-t {
   padding-top: 70px;
+}
+
+.home-padding-y {
+  padding-block: 70px;
+}
+
+
+.default-padding {
+  padding: 8px 10px;
 }
 
 /* --------------------------------------------------------- */

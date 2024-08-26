@@ -14,8 +14,13 @@ export default function ChatList() {
   let navigate = useNavigate();
   let getTimeDifference = getTimeDiff;
 
-  let { reqData, pagination, apiLoadingData, errorsMsg, setPagination } =
-    useAllUserChats(isLogin);
+  let {
+    reqData,
+    pagination,
+    apiLoadingData,
+    errorsMsg,
+    setPagination,
+  } = useAllUserChats(isLogin);
 
   return (
     <div className="m-4 order-section ">
@@ -81,7 +86,7 @@ export default function ChatList() {
                           />
                         </div>
 
-                        {/* bg-info */}
+                        {/*  */}
                         <div className="d-grid gap-1 h-fit-content ">
                           <p className="  trate-title lh-normal">
                             {poItem?.UserTwoName}

@@ -349,7 +349,7 @@ export default function TopFactories(props) {
                   </div>
                 </>
               ) : (
-                // <div className="factoryCard   bg-info">
+                // <div className="factoryCard   ">
                 <div className="row gap  row-gap-24  w-100 me-0">
                   {allFactoriesData?.length === 0 ? (
                     <>

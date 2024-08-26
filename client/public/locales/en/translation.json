@@ -1,9 +1,7 @@
 {
-  "welcome_message": "Welcome to our application",
 
   "Home": "Home",
   "aboutUs": "About Us",
-  "sourcingHub": "Sourcing Hub",
   "contactUs": "Contact Us",
   "LogOut": "Log out",
   "logIn": "Log In",
@@ -43,7 +41,7 @@
       },
 
       "factoryOffers": "Factory Offers",
-      "Sourcing Hub": "Sourcing Hub",
+      "SourcingHub": "Sourcing Hub",
       "buyerRequests": "Buyer Requests",
       "manufacturingSectors": "Manufacturing Sectors",
       "address": "Address",

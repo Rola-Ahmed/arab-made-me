@@ -40,15 +40,15 @@ function Sectors() {
     <section className=" margin-sm-screen home-padding-t">
       <div className="container container-1 p-0 d-flex gap-48">
         <div className={`w-100 ${currentLang == "ar" && "ar-text"}`}>
-          <p className={`header-Title `}>
-            {t("translation:titles.manufacturingSectors lh-normal")}
+          <p className={`header-Title lh-normal`}>
+            {t("translation:titles.manufacturingSectors")}
           </p>
           <p className="fs-16 text-muted lh-normal">
             {t("titles.manufacturingSectorsSubtitle", { ns: "translation" })}
           </p>
         </div>
         {/* <div className="sector-container bg-danger"> */}
-        <div className="sec-r-container secrotr-row bg-success w-100">
+        <div className="sec-r-container secrotr-row  w-100">
           {errormsg != "" ? (
             <div className=" text-center m-auto w-100 rounded-3 border-2 border-row fw-bold m-auto py-5 rounded-3 text-center text-muted w-100">
               {errormsg}
@@ -58,7 +58,7 @@ function Sectors() {
               {allsSectors?.map((item, index) => (
                 <div className="sec-r-item">
                   <div
-                    className="card-sector h-100 cursor bg-white border rounded-4 gap-16 d-flex align-items-center"
+                    className="default-padding h-100 cursor bg-white border rounded-4 gap-16 d-flex align-items-center"
                     onClick={() => {
                       navigate(`productMarketPlace/${item?.id}-${item?.name}`);
                     }}
@@ -75,7 +75,7 @@ function Sectors() {
                         {item?.name?.replace(/\bSupplies\b/gi, "")}
                       </p>
 
-                      <p className="mb-0 fs-14">
+                      <p className="mb-0 fs-14  lh-normal">
                         {item?.productQuntity == 0
                           ? "Comming soon"
                           : `${item?.productQuntity} Products`}

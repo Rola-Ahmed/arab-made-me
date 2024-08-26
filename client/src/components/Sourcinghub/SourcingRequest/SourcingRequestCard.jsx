@@ -57,11 +57,12 @@ export default function SourcingRequestCard(props) {
   };
 
   return (
-    <div className="parentsourc  pe-0 ">
+    // bg-success
+    <div className="padding-card  pe-0  rounded-3 border">
       <div className="row w-100">
         <div className="col-9  ">
           <div className=" ">
-            <h5 className="sour-2">{item?.productName} </h5>
+            <p className="fs-22-semi  fs-600">{item?.productName} </p>
             <p className="sourcing horizontal-text-handler ">
               {item?.productDescription}
             </p>
@@ -96,7 +97,7 @@ export default function SourcingRequestCard(props) {
         </div>
 
         <div className="col-3 pe-0 ">
-          <div className="img-parent-source">
+          <div className="position-relative w-100">
             <img
               className="sorcingh-img"
               src={`${baseUrl_IMG}/${item?.docs}`}
