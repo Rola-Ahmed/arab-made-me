@@ -1,10 +1,10 @@
-.factories {
+/* .factories {
 
     display: grid;
 
     align-items: flex-start;
     gap: 29px;
-}
+} */
 
 .search-filter-container {
     display: flex;
@@ -152,25 +152,25 @@
 
 
 /* ----------------------------- */
-.sector-sub-container {
+/* .sector-sub-container {
+    background: red;
     display: flex;
     align-items: flex-start;
-    /* gap: 16px; */
     justify-content: space-between;
-
-}
+} */
 
 
 
 /* ------------------- */
-.factories .card-sector {
+/* .factories .card-sector {
+    background-color: red;
     display: flex;
     padding: 8px 16px 8px 10px;
     align-items: center;
     gap: 16px;
-}
+} */
 
-.factories .sector-img {
+/* .factories .sector-img {
     width: 80px;
     height: 80px;
     display: flex;
@@ -178,9 +178,9 @@
     overflow: hidden;
     border-radius: 6px;
 
-}
+} */
 
-.factories .sector-text-fac {
+/* .factories .sector-text-fac {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -207,12 +207,11 @@
     line-height: 24px;
     margin-bottom: 0;
 
-}
+} */
 
-.factory-sub-sector {
-    /* display: grid; */
+/* .factory-sub-sector {
     padding: 48px 0;
-}
+} */
 
 
 
@@ -233,20 +232,11 @@
 
 
 
-.fo3 .factoryCard {
-    align-items: flex-start;
-    row-gap: 25px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    /* grid-template-columns: repeat(4, 1fr); */
 
-    width: 100%;
-
-}
 
 .fo3 .row.gap {
-    row-gap: 25px;
-    margin-left:0 !important ;
+    /* row-gap: 25px; */
+    margin-left: 0 !important;
 
 }
 
@@ -257,14 +247,8 @@
     max-width: 72vw;
 }
 
-.fo3 .factoryCard .card {
-    overflow: hidden;
-    width: 19rem;
 
 
-}
-
-/* .fo3 .factoryCard .sliderImg { */
 .fo3 .sliderImg {
     display: flex;
     height: 192px;
@@ -277,45 +261,42 @@
 
 }
 
-.fo3 .cardBody {
+/* .fo3 .cardBody {
     display: flex;
     padding: 20px;
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;
     align-self: stretch;
-}
+} */
 
-.fo3 .cardBody .card-title {
+/* .fo3 .cardBody .card-title {
     display: flex;
     align-items: center;
     gap: 10px;
-}
+} */
 
-.fo3 .imgLogo {
+/* .fo3 .imgLogo {
     width: 55.559px;
     height: 51px;
     border-radius: 6px;
     overflow: hidden;
-}
+} */
 
-.fo3 .cardBody .card-title .title {
+/* .fo3 .cardBody .card-title .title {
     color: var(--gray-900, #111928);
 
-    /* leading-tight/text-2xl/font-bold */
     font-family: Inter-reg;
     font-size: 24px;
     font-style: normal;
     font-weight: 700;
     line-height: 125%;
-    /* 30px */
 
 
-    /* display: flex; */
     flex-direction: column;
     align-items: flex-start;
     gap: 2px;
-}
+} */
 
 .fo3 .title.fac {
     display: -webkit-box;
@@ -325,89 +306,26 @@
 
 }
 
-.cardBody .title h2 {
-    color: var(--gray-900, #111928);
-
-    /* leading-tight/text-2xl/font-bold */
-    font-family: Inter-reg;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 125%;
-    /* 30px */
-    margin-bottom: 0;
 
 
-}
-
-.cardBody .title p {
-    color: var(--gray-500);
-
-    /* text-base/font-normal */
-    font-family: Inter-reg;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 150%;
-    /* 24px */
-    margin-bottom: 0;
-
-}
-
-.subCard {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-    align-self: stretch;
-}
-
-.subText {
-    display: grid;
-    gap: 8px;
-}
-
-.subText div p {
-    color: var(--gray-500);
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 120%;
-    margin-bottom: 0;
-}
-
-.subText div p span {
-    color: var(--gray-500);
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 120%;
-}
 
 
-.factories .profile-img {
-    /* gap: 8px;
-    display: flex;
-    width: auto; */
-
-    /* gap: 8px; */
-    /* width: 100%; */
+.factories .profile-img, .topFactory .profile-img {
+    width: 100%;
     height: 53px;
     border-radius: 0%;
-
 }
 
 .profile-img .subProfileCont {
     width: 40px;
     height: 40px;
     overflow: hidden;
-    border-radius: 21px;
+
 }
 
 
 .fo3 .btn-container {
     display: flex;
-    /* gap:12px; */
     justify-content: space-between;
     width: 100%;
 }

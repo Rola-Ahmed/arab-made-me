@@ -45,7 +45,7 @@ export default function FactoryCardParent(props) {
         </Link>
       )}
 
-      <div className="card-body cardBody">
+      <div className="card-body cardBody ">
         <div className="subCard ">
           <FactoryCard
             factoryitem={factoryitem}
@@ -59,20 +59,18 @@ export default function FactoryCardParent(props) {
             )}
           </div>
 
-          <div className="subText w-100 ">
-            <div className="text-truncate">
-              <p className="text-truncate">
-                products:
-                <span>
-                  {factoryitem?.productLength > 0
-                    ? factoryitem?.productData?.map(
-                        (item) => ` ${item?.name} ,`
-                      )
-                    : " none"}
-                </span>
-              </p>
-            </div>
-          </div>
+          {/* <div className="subText w-100 "> */}
+          {/* <div className="text-truncate"> */}
+          <p className="text-truncate fs-12 fw-600 mb-0 lh-normal w-100">
+            products:
+            <span className="fw-normal">
+              {factoryitem?.productLength > 0
+                ? factoryitem?.productData?.map((item) => ` ${item?.name} ,`)
+                : " none"}
+            </span>
+          </p>
+          {/* </div> */}
+          {/* </div> */}
 
           <div className="d-flex justify-content-between align-items-center   w-100">
             <div className="call-btns d-flex justify-content-between  align-items-center w-100  pe-2">

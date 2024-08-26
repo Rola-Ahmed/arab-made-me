@@ -32,7 +32,7 @@ export default function DisplayMultiImages(props) {
                 >
                   {/* {item} */}
                   <img
-                    className="h-100 w-100 bg-info "
+                    className="h-100 w-100  "
                     id={handleImageError}
                     src={
                       item?.includes("pdf") ? pdfIcon : `${baseUrl_IMG}/${item}`

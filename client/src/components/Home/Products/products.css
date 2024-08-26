@@ -7,41 +7,8 @@
 }
 
 /* start headder */
-.products-section .header {
-  display: flex;
-  align-items: flex-end;
-  /* gap: 372px; */
 
 
-}
-
-.products-section .header-Title {
-  color: var(--Gray-900);
-
-  /* Display md/Semibold */
-  font-family: Inter-reg;
-  font-size: 36px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 44px;
-  /* 122.222% */
-  letter-spacing: -0.72px;
-  align-self: stretch;
-
-}
-
-.products-section .header-Title p {
-  align-self: stretch;
-
-  color: var(--Gray-500);
-
-  /* Text xl/Regular */
-  font-family: Inter-reg;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 30px;
-}
 
 .products-section .arrow-container {
   gap: 12px;

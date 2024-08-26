@@ -17,7 +17,7 @@ import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
 
 // api url
-import { baseUrl, baseUrl_IMG } from "config.js";
+import { baseUrl, baseUrl_IMG, useAppTranslation } from "config.js";
 
 // sub components
 import StarRating from "components/Shared/stars";
@@ -49,6 +49,7 @@ function Products(title) {
   const [isLoggedReDirect, setisLoggedReDirect] = useState("");
 
   const [allProductsData, setAllProductsData] = useState();
+  const { trans: t, currentLang } = useAppTranslation();
 
   useEffect(() => {
     axios
@@ -61,8 +62,7 @@ function Products(title) {
         }
       })
 
-      .catch((error) => {})
-     
+      .catch((error) => {});
   }, []);
 
   function navProductpage(productId, productName, factoryName) {
@@ -75,7 +75,6 @@ function Products(title) {
       (currentUserData?.importerVerified === "0" ||
         !currentUserData?.importerEmailActivated)
     ) {
-
       setModalShow((prevVal) => ({
         ...prevVal,
         isImporterVerified: true,
@@ -87,7 +86,6 @@ function Products(title) {
     }
 
     if (currentUserData?.factoryId !== null) {
-
       setModalShow((prevVal) => ({
         ...prevVal,
         isFactoryVerified: true,
@@ -99,7 +97,6 @@ function Products(title) {
       currentUserData?.importerId == null &&
       currentUserData?.factoryId == null
     ) {
-
       setModalShow((prevVal) => ({
         ...prevVal,
         isFactoryVerified: true,
@@ -108,7 +105,6 @@ function Products(title) {
     }
 
     if (!isLogin) {
-
       setModalShow((prevVal) => ({
         ...prevVal,
         isLogin: true,
@@ -179,29 +175,32 @@ function Products(title) {
         />
 
         <div className="container topProducts">
-          <div className="header d-flex justify-content-between">
-            <div>
-              <h2 className="header-Title">
-                {title?.title ? title?.title : "Products"}
-              </h2>
-              <p>Everything you need to know about the product and billing.</p>
+          <div
+            className={` d-flex justify-content-between align-content-end ${
+              currentLang == "ar" && "ar-flex-reverse"
+            }`}
+          >
+            <div className={` ${currentLang == "ar" && "ar-text"}`}>
+              <p className="header-Title">
+                {title?.title ? title?.title : `${t("translation:products")}`}
+              </p>
+              <p className="fs-16 text-muted">
+                {t("translation:titles.subTitleProduct")}
+              </p>
             </div>
-            <div className="d-flex arrow-container">
-            
+            <div className="d-flex arrow-container align-items-end ">
               <div className="arrow-btn position-static arrowLeft carousel">
-                  <i className="fa-solid fa-chevron-left"></i>
-                </div>
+                <i className="fa-solid fa-chevron-left"></i>
+              </div>
 
-
-                <div className="arrow-btn position-static arrowRight carousel">
-                  <i className="fa-solid fa-chevron-right"></i>
-                </div>
-          
+              <div className="arrow-btn position-static arrowRight carousel">
+                <i className="fa-solid fa-chevron-right"></i>
+              </div>
             </div>
           </div>
 
           <div className="container  w-100 p-0 overflow-hidden">
-          <Swiper
+            <Swiper
               // modules={[Navigation]}
               modules={[Navigation]}
               navigation={{
@@ -230,8 +229,7 @@ function Products(title) {
                 },
               }}
             >
-
-{allProductsData?.map((productItem, productIndex) => (
+              {allProductsData?.map((productItem, productIndex) => (
                 <SwiperSlide>
                   <div
                     className="card  text-decoration-none   "
@@ -376,7 +374,6 @@ function Products(title) {
                           )}
                         </div>
 
-                      
                         <DropdownActionBtns
                           currentUserData={currentUserData}
                           productItem={productItem}
@@ -390,9 +387,7 @@ function Products(title) {
                   </div>
                 </SwiperSlide>
               ))}
-              </Swiper>
-
-           
+            </Swiper>
           </div>
 
           <div className="btn-container-all">

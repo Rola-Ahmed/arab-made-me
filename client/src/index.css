@@ -93,6 +93,7 @@
 
 p, h1, h2, h3, h4, h5, h6 {
   cursor: default;
+  font-family: 'Inter-reg';
 }
 
 
@@ -199,8 +200,13 @@ p, button, div, textarea, input {
 }
 
 
+.gap-10 {
+  gap: 10px;
+}
+
+
 .gap-20 {
-  gap: 24px;
+  gap: 20px;
 }
 
 .gap-16 {
@@ -224,6 +230,10 @@ p, button, div, textarea, input {
   gap: 24px;
 }
 
+.gap-48 {
+  gap: 48px
+}
+
 .fs-10 {
   font-size: 10px;
 }
@@ -234,6 +244,16 @@ p, button, div, textarea, input {
 
 .fs-16 {
   font-size: 16px;
+}
+
+.fs-18 {
+  font-size: 18px;
+}
+
+.fs-18-semi {
+  font-size: 18px;
+  font-family: "Inter-semi";
+
 }
 
 .fs-16-semi {
@@ -269,6 +289,16 @@ p, button, div, textarea, input {
 
 }
 
+.header-Title {
+  font-family: "Inter-reg";
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 44px;
+  letter-spacing: -0.72px;
+
+}
+
+
 .fw-600 {
   font-weight: 600;
 }
@@ -280,6 +310,9 @@ p, button, div, textarea, input {
 
 .object-fit-contain {
   object-fit: contain !important;
+}
+.object-fit-cover {
+  object-fit: cover ;
 }
 
 .bg-none {
@@ -322,6 +355,12 @@ p, button, div, textarea, input {
 }
 
 
+.ar-text p {
+  text-align: end !important;
+}
+.ar-flex-reverse{
+  flex-direction: row-reverse;
+}
 
 /* icons-css  */
 .fa-solid.fa-minus {
@@ -403,6 +442,11 @@ p, button, div, textarea, input {
 
 .w-all-50 {
   width: 50%;
+}
+
+
+.home-padding-t {
+  padding-top: 70px;
 }
 
 /* --------------------------------------------------------- */

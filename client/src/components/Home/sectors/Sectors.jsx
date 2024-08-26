@@ -1,9 +1,8 @@
 import "./sector.css";
 import { useEffect, useState } from "react";
 
-import { baseUrl_IMG } from "config.js";
+import { baseUrl_IMG, useAppTranslation } from "config.js";
 
-import Loading from "components/Loading/Loading";
 import { handleImageError } from "utils/ImgNotFound";
 import { useNavigate } from "react-router-dom";
 import { useFetchSectors } from "hooks/useFetchSectors";
@@ -11,9 +10,8 @@ import { fetchSectorProducts } from "Services/sector";
 
 function Sectors() {
   let { allSectors, errormsg } = useFetchSectors();
-  // let  errormsg = useFetchSectors();
-
   const [allsSectors, setAllSectors] = useState([]);
+  const { trans: t, currentLang } = useAppTranslation();
 
   const navigate = useNavigate();
 
@@ -39,58 +37,57 @@ function Sectors() {
     fetchProductData();
   }, [allSectors]);
   return (
-    <section className="sector-section  margin-sm-screen">
-      <div className="container container-1">
-        <div className="w-100">
-          <h2 className="text-4 text-start">Manufacturing Sectors</h2>
-          <p className="text-5 text-start ">
-            Everything you need to know about the product and billing.
+    <section className=" margin-sm-screen home-padding-t">
+      <div className="container container-1 p-0 d-flex gap-48">
+        <div className={`w-100 ${currentLang == "ar" && "ar-text"}`}>
+          <p className={`header-Title `}>
+            {t("translation:titles.manufacturingSectors lh-normal")}
+          </p>
+          <p className="fs-16 text-muted lh-normal">
+            {t("titles.manufacturingSectorsSubtitle", { ns: "translation" })}
           </p>
         </div>
-        <div className="sector-container">
-          <div className="sec-r-container secrotr-row">
-            {errormsg != "" ? (
-              <div className=" text-center m-auto w-100 rounded-3 border-2 border-row fw-bold m-auto py-5 rounded-3 text-center text-muted w-100">
-                {errormsg}
-              </div>
-            ) : (
-              <>
-                {allsSectors?.map((item, index) => (
-                  <div className="sec-r-item">
-                    <div
-                      className="card-sector cursor"
-                      onClick={() => {
-                        navigate(
-                          `productMarketPlace/${item?.id}-${item?.name}`
-                        );
-                      }}
-                    >
-                      <div className="sector-img">
-                        <img
-                          id={index}
-                          className={`m-0 p-0  borderContainer`}
-                          src={`${baseUrl_IMG}/${item?.image}`}
-                          alt={`${baseUrl_IMG}/${item?.image}`}
-                          onError={handleImageError}
-                        />
-                      </div>
-                      <div className="sector-text">
-                        <h4>{item?.name?.replace(/\bSupplies\b/gi, "")}</h4>
+        {/* <div className="sector-container bg-danger"> */}
+        <div className="sec-r-container secrotr-row bg-success w-100">
+          {errormsg != "" ? (
+            <div className=" text-center m-auto w-100 rounded-3 border-2 border-row fw-bold m-auto py-5 rounded-3 text-center text-muted w-100">
+              {errormsg}
+            </div>
+          ) : (
+            <>
+              {allsSectors?.map((item, index) => (
+                <div className="sec-r-item">
+                  <div
+                    className="card-sector h-100 cursor bg-white border rounded-4 gap-16 d-flex align-items-center"
+                    onClick={() => {
+                      navigate(`productMarketPlace/${item?.id}-${item?.name}`);
+                    }}
+                  >
+                    <img
+                      id={index}
+                      className={`m-0 p-0  borderContainer rounded-3 `}
+                      src={`${baseUrl_IMG}/${item?.image}`}
+                      alt={`${baseUrl_IMG}/${item?.image}`}
+                      onError={handleImageError}
+                    />
+                    <div className="sector-text">
+                      <p className="fs-18-semi mb-2 lh-normal">
+                        {item?.name?.replace(/\bSupplies\b/gi, "")}
+                      </p>
 
-                        <p> 
-                        {
-item?.productQuntity==0?'Comming soon': `${item?.productQuntity} Products`
-                        }
-</p>
-                        
-                      </div>
+                      <p className="mb-0 fs-14">
+                        {item?.productQuntity == 0
+                          ? "Comming soon"
+                          : `${item?.productQuntity} Products`}
+                      </p>
                     </div>
                   </div>
-                ))}
-              </>
-            )}
-          </div>
+                </div>
+              ))}
+            </>
+          )}
         </div>
+        {/* </div> */}
       </div>
     </section>
   );

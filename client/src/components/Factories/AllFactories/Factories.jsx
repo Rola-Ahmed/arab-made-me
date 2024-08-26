@@ -253,7 +253,7 @@ export default function TopFactories(props) {
         </div>
       </section>
       <section className="fo3 margin-sm-screen">
-        <div className="container factories  overflow-hidden">
+        <div className="container factories  overflow-hidden pe-0">
           <div className="row w-100">
             <div
               className="  
@@ -349,8 +349,8 @@ export default function TopFactories(props) {
                   </div>
                 </>
               ) : (
-                // <div className="factoryCard ">
-                <div className="row gap  w-100 me-0">
+                // <div className="factoryCard   bg-info">
+                <div className="row gap  row-gap-24  w-100 me-0">
                   {allFactoriesData?.length === 0 ? (
                     <>
                       <span></span>{" "}

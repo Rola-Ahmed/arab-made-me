@@ -23,6 +23,7 @@
   "createNew": "Create New",
   "buyer": "buyer",
   "factory": "Factory",
+  "factories": "Factories",
   "product": "product",
   "moreDetails": "More Details",
   "search": "Search",
@@ -35,8 +36,7 @@
   "requestDetails": "Request details",
   "documents": "Documents",
 
-  "titles": [
-    {
+  "titles": {
       "hero": {
         "title": "Powerful, self-serve product and growth analytics to help launch you product, and retain more buyers.",
         "subTitle": "Arab B2B platform for Private Label services"
@@ -46,9 +46,12 @@
       "Sourcing Hub": "Sourcing Hub",
       "buyerRequests": "Buyer Requests",
       "manufacturingSectors": "Manufacturing Sectors",
-      "address": "Address"
-    }
-  ],
+      "address": "Address",
+
+      "subTitleSector":"Find the Perfect Product for Your Needs",
+      "subTitleFactories":"Driving Excellence in Manufacturing: Your Trusted Partner in Production",
+       "manufacturingSectorsSubtitle": "Explore all the sectors we offer."
+  },
   "texts": [
     {
       "UserDescription": "Welcome to Egyption fastest-growing B2B platform, connecting buyers and suppliers in the consumer goods industry. Please choose your preferred account type to get started.",

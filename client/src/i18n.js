@@ -24,6 +24,11 @@ i18n
       default: ["en"],
     },
 
+    // resources: {
+    //   en: {translation: EN},
+    //   fr: {translation: FR},
+    // },
+
     // ns: ['ar', 'en'],
     debug: true,
 

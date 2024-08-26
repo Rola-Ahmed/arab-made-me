@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import "./TopFactories.css";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import { useAppTranslation } from "config.js";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
@@ -36,6 +37,7 @@ export default function TopFactories(props) {
   let navigate = useNavigate();
 
   const [description, setDescription] = useState("");
+  const { trans: t, currentLang } = useAppTranslation();
 
   // action verification
   const [modalShow, setModalShow] = useState({
@@ -125,57 +127,33 @@ export default function TopFactories(props) {
         />
 
         <div className="container topFactory  ">
-          <div className="header-size d-flex justify-content-between align-content-end">
-            <div>
-              <h2 className="header-Title"> Factories</h2>
-              <p className="sub-Title">
-                Everything you need to know about the product and billing.
+          {/* <div className=" d-flex justify-content-between align-content-end"> */}
+          <div
+            className={` d-flex justify-content-between align-content-end ${
+              currentLang == "ar" && "ar-flex-reverse"
+            }`}
+          >
+            <div className={` ${currentLang == "ar" && "ar-text"}`}>
+              <p className="header-Title">{t("translation:factories")}</p>
+              <p className=" fs-16 text-muted">
+                {t("translation:titles.subTitleFactories")}
               </p>
             </div>
-            <div className="d-flex arrow-container">
+            <div className="d-flex arrow-container align-items-end ">
               <div className={`arrow-btn  prev-btn-swiper `}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 18 18"
-                  fill="none"
-                >
-                  <path
-                    d="M11.625 14.25L6.375 9L11.625 3.75"
-                    stroke="#131313"
-                    stroke-width="1.875"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-                {/* </button> */}
+                <i className="fa-solid fa-chevron-left"></i>
               </div>
 
               <div
                 // disabled
                 className={`arrow-btn next-btn-swiper  `}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 18 18"
-                  fill="none"
-                >
-                  <path
-                    d="M6.375 3.75L11.625 9L6.375 14.25"
-                    stroke="#131313"
-                    stroke-width="1.875"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
+                <i className="fa-solid fa-chevron-right"></i>
               </div>
             </div>
           </div>
 
-          <div className="factoryCard  container m-0 p-0 overflow-hidden  mb-1">
+          <div className="factoryCard  container m-0 p-0 overflow-hidden  mb-1 ">
             {/* <Slider {...settingsMain} ref={sliderRef}> */}
 
             <Swiper

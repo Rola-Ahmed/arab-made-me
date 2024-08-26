@@ -7,7 +7,7 @@ export default function FactoryCard(props) {
     <div
       onClick={() => DirectToFactoryPage(factoryitem?.id, factoryitem?.name)}
     >
-      <div className="card-title d-flex w-100 cursorcursor">
+      <div className="card-title d-flex w-100 cursorcursor align-items-center gap-10 ">
         <div className="imgLogo">
           <img
             className={`m-0 p-0 w-100 h-100 borderContainer`}
@@ -16,11 +16,11 @@ export default function FactoryCard(props) {
             onError={handleImageError}
           />
         </div>
-        <div className="title fac">
-          <h2 className=" fac-title text-truncate cursor">
+        <div className="title fac ">
+          <h2 className=" fac-title text-truncate cursor fs-18 m-0 text-black">
             {factoryitem?.name}
           </h2>
-          <p className="cursor ">
+          <p className="cursor fs-12 text-muted">
             {/* city, country */}
             {factoryitem?.city && factoryitem?.city + ", "}
             {factoryitem?.country ?? ""}

@@ -1,43 +1,15 @@
 .topFactory {
   display: grid;
-
-  align-items: flex-start;
   gap: 29px;
   padding-top: 130px;
 }
 
 
-.topFactory .header-size {
-  width: 99%;
-
-}
-
-.topFactory .header-Title {
-  color: var(--Gray-900);
-
-  /* Display md/Semibold */
-  font-family: Inter-reg;
-  font-size: 36px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 44px;
-  /* 122.222% */
-  letter-spacing: -0.72px;
-  align-self: stretch;
-
-}
 
 .topFactory .header-Title p {
-  align-self: stretch;
-
   color: var(--Gray-500);
-
-  /* Text xl/Regular */
-  font-family: Inter-reg;
   font-size: 20px;
-  font-style: normal;
   font-weight: 400;
-  line-height: 30px;
 }
 
 .topFactory .arrow-container {
@@ -45,16 +17,12 @@
 }
 
 
-.topFactory .arrow-btn-2,.fo3 .arrow-btn-2 {
+.topFactory .arrow-btn-2, .fo3 .arrow-btn-2 {
   background: transparent;
   top: 9px;
-  /* left:0; */
   z-index: 5;
-  /* display: flex; */
-  /* align-items: center; */
   border: none;
   cursor: pointer;
-
 }
 
 .arrowL {
@@ -67,14 +35,12 @@
 
 
 .topFactory .arrow-btn:hover {
-
   background: var(--secondary-color)
 }
 
-.topFactory .arrow-btn.disabled {
-
+/* .topFactory .arrow-btn.disabled {
   background: rgba(128, 128, 128, 0.542) !important;
-}
+} */
 
 .topFactory .arrow-btn {
   display: flex;
@@ -92,15 +58,12 @@
 
 .topFactory .factoryCard {
   align-items: flex-start;
-
   grid-template-columns: repeat(4, 1fr);
-
   width: 100%;
-
+  /* background-color: red !important; */
 }
 
 .topFactory .factoryCard .card {
-  /* overflow: hidden; */
   width: 96% !important;
 
 
@@ -117,43 +80,16 @@
 }
 
 .cardBody {
-  display: flex;
   padding: 20px;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
-  align-self: stretch;
 }
 
-.cardBody .card-title {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+
 
 .imgLogo {
   width: 55.559px;
   height: 51px;
   border-radius: 6px;
   overflow: hidden;
-}
-
-.cardBody .card-title .title {
-  color: var(--gray-900, #111928);
-
-  /* leading-tight/text-2xl/font-bold */
-  font-family: Inter-reg;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 125%;
-  /* 30px */
-
-
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 2px;
 }
 
 .topFactory .title.fac {
@@ -164,83 +100,10 @@
 
 }
 
-.cardBody .title h2 {
-  color: var(--gray-900, #111928);
-
-  /* leading-tight/text-2xl/font-bold */
-  font-family: Inter-reg;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 125%;
-  /* 30px */
-  margin-bottom: 0;
 
 
-}
-
-.cardBody .title p {
-  color: var(--gray-500);
-
-  /* text-base/font-normal */
-  font-family: Inter-reg;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 150%;
-  /* 24px */
-  margin-bottom: 0;
-
-}
-
-.subCard {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
-  align-self: stretch;
-}
-
-.subText {
-  display: grid;
-  gap: 8px;
-}
-
-.subText div p {
-  color: var(--gray-500);
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 120%;
-  margin-bottom: 0;
-}
-
-.subText div p span {
-  color: var(--gray-500);
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 120%;
-}
 
 
-.topFactory .profile-img {
-  gap: 8px;
-  /* display: flex; */
-  width: 100%;
-
-  /* width: 53px; */
-  height: 53px;
-  border-radius: 0%;
-
-}
-
-.profile-img .subProfileCont {
-  width: 40px;
-  height: 40px;
-  overflow: hidden;
-  border-radius: 21px;
-}
 
 
 .topFactory .btn-container {
@@ -391,9 +254,9 @@
 @media (max-width: 765px) {
 
 
-  .top-factories .sub-Title {
+  /* .top-factories .sub-Title {
     font-size: 2.3vw;
-  }
+  } */
 
   .topFactory .factoryCard .card {
     width: 514px !important;

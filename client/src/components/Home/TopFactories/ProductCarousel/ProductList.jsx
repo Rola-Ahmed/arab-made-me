@@ -8,7 +8,7 @@ export default function ProductList(props) {
 
   return (
     <div
-      className="subProfileCont cursor"
+      className="subProfileCont cursor rounded-5"
       onClick={() => {
         localStorage.setItem("ToProductPage", true);
         navigate(`/productPage/${item?.id}-${item?.name}`);
