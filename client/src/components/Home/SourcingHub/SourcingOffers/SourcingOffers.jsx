@@ -6,7 +6,6 @@ import { useAppTranslation } from "config.js";
 export default function SourcingOffers({ allSourcingOffer, apiStatus }) {
   const { trans: t, currentLang } = useAppTranslation();
 
-
   return (
     <>
       {/* home page */}
@@ -25,6 +24,7 @@ export default function SourcingOffers({ allSourcingOffer, apiStatus }) {
           </div>
         </div>
 
+        {/* loading or error case */}
         {apiStatus?.laoding && (
           <>
             <div className="position-absolute error-float">
@@ -41,7 +41,8 @@ export default function SourcingOffers({ allSourcingOffer, apiStatus }) {
           </>
         )}
 
-        {/* error */}
+        {/* sucess state but data is empty */}
+
         {allSourcingOffer?.length == 0 && !apiStatus?.laoding && (
           <div className="position-absolute error-float">
             <p className="fs-5 text-muted fw-bolder text-5 mt-5 pt-5 mx-auto">
