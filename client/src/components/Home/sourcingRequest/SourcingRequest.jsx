@@ -21,7 +21,11 @@ import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 
-function Sourcingh() {
+const displayProductSize = 20;
+
+
+
+function SourcingRequest() {
   // utils function
   let { currentUserData } = useContext(userDetails);
   let { isLogin } = useContext(UserToken);
@@ -32,7 +36,6 @@ function Sourcingh() {
     []
   );
   const [apiLoadingData, setApiLoadingData] = useState(true);
-  const displayProductSize = 20;
 
   const [modalShow, setModalShow] = useState({
     isFactoryVerified: false,
@@ -208,4 +211,4 @@ function Sourcingh() {
   );
 }
 
-export default Sourcingh;
+export default SourcingRequest;

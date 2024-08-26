@@ -6,17 +6,16 @@ import Companies from "./companies/Companies";
 import Hero from "./hero-section/Hero";
 import Sectors from "./sectors/Sectors";
 import Freq from "./freq/Freq";
-import Sourcingh from "./sourcingh/Sourcingh";
+import sourcingRequest from "./sourcingRequest/SourcingRequest";
 
 function Home() {
   document.title = "Home";
-
 
   return (
     <>
       <Hero />
       <Companies />
-      <Sourcingh />
+      <sourcingRequest />
       <Sectors />
       <TopFactories />
       <Products />
