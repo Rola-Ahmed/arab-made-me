@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useState, useContext } from "react";
 
 import { UserToken } from "Context/userToken";
 
@@ -12,8 +12,9 @@ import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/Facto
 
 import SourcingOffers from "components/Home/SourcingHub/SourcingOffers/SourcingOffers";
 import SourcingRequest from "./sourcingRequest/SourcingRequest";
-import { getSourcingReuqests } from "Services/sourcingReuqest";
 import { useNavigate } from "react-router-dom";
+import { useSourcingRequests } from "hooks/useSourcingRequests";
+import { useSourcingOffers } from "hooks/useSourcingOffers";
 
 const displayProductSize = 20;
 let displayProductSizeOffer = 100;
@@ -24,35 +25,68 @@ function SourcingHub() {
   let navigate = useNavigate();
   let { isLogin } = useContext(UserToken);
   const { trans: t, currentLang } = useAppTranslation();
-  const [allSourcingReqData, setAllSourcingReqData] = useState([]);
-  const [allSourcingOffer, setAllSourcingOffer] = useState([]);
+  let { allSourcingRequest, apiStatus } = useSourcingRequests(
+    displayProductSize
+  );
 
-
+  let { allSourcingOffer, apiStatus: offerStatus } = useSourcingOffers(
+    displayProductSizeOffer
+  );
+  console.log("allSourcingRequest", allSourcingRequest, allSourcingOffer);
 
   const [modalShow, setModalShow] = useState({
     isFactoryVerified: false,
     isImporterVerified: false,
     BecomeAfactory: false,
   });
-  const [apiStatus, setApiStatus] = useState({});
-  async function fetchSourcingReqData() {
-    let result = await getSourcingReuqests(
-      `size=${displayProductSize}&include=importer`
-    );
 
-    if (result?.success) {
-      setAllSourcingReqData(result.data?.sourcingrequests);
+  const accessFormOffer = (directto) => {
+    if (!isLogin) {
+      setModalShow((prevVal) => ({
+        ...prevVal,
+        isLogin: true,
+      }));
+
+      return;
     }
 
-    setApiStatus({
-      loadingPage: result?.loadingStatus,
-      errorCausedMsg: result?.error,
-    });
-  }
+    if (
+      currentUserData?.userRole == "importer" ||
+      currentUserData?.userRole == "admin"
+    ) {
+      // if (currentUserData?.importerId !== null) {
+      setModalShow((prevVal) => ({
+        ...prevVal,
+        isImporterVerified: true,
+      }));
 
-  useEffect(() => {
-    fetchSourcingReqData();
-  }, []);
+      return;
+    }
+
+    if (currentUserData?.userRole == "user") {
+      console.log("user");
+      setModalShow((prevVal) => ({
+        ...prevVal,
+        isUser: true,
+      }));
+
+      return;
+    }
+
+    if (
+      currentUserData?.userRole == "factory" &&
+      currentUserData?.continueProfilePath != null
+    ) {
+      setModalShow((prevVal) => ({
+        ...prevVal,
+        isFactoryVerified: true,
+      }));
+
+      return;
+    } else {
+      navigate(directto);
+    }
+  };
 
   return (
     <>
@@ -86,11 +120,10 @@ function SourcingHub() {
           }))
         }
         userType="User"
-        goToPath={"CompanyDetails"}
+        goToPath="CompanyDetails"
       />
 
       <FactoryUnVerified
-        goToPath={currentUserData?.continueProfilePath}
         show={modalShow.isFactoryVerified}
         onHide={() =>
           setModalShow((prevVal) => ({
@@ -98,7 +131,7 @@ function SourcingHub() {
             isFactoryVerified: false,
           }))
         }
-        // userType="Factory"
+        goToPath={currentUserData?.continueProfilePath}
       />
 
       <section className="margin-sm-screen">
@@ -135,11 +168,16 @@ function SourcingHub() {
             </div>
           </div>
           <SourcingRequest
-            apiStatus={apiStatus}
-            allSourcingReqData={allSourcingReqData}
+            // apiStatus={apiStatus}
+            allSourcingReqData={allSourcingRequest}
+            accessFormOffer={accessFormOffer}
+            datacompletelyLoaded={currentUserData?.datacompletelyLoaded}
           />
 
-          <SourcingOffers />
+          <SourcingOffers
+            allSourcingOffer={allSourcingOffer}
+            apiStatus={offerStatus}
+          />
 
           <div className="btn-container-all cursor">
             <div

@@ -1,39 +1,11 @@
 import "./SourcingOffers.css";
 
-import { useEffect, useState } from "react";
-
-import { getSourcingOffers } from "Services/sourcingOffer";
 import SourcingOfferTable from "components/Sourcinghub/SourcingOffers/SourcingOfferTable";
 import Loading from "components/Loading/Loading";
 import { useAppTranslation } from "config.js";
-
-export default function SourcingOffers() {
+export default function SourcingOffers({ allSourcingOffer, apiStatus }) {
   const { trans: t, currentLang } = useAppTranslation();
 
-  // utils function
-  let displayProductSize = 100;
-
-  const [allSourcingOffer, setAllSourcingOffer] = useState([]);
-
-  // const [apiLoadingData, setapiLoadingData] = useState(true);
-  const [apiStatus, setApiStatus] = useState([]);
-
-  async function fetchSourcingReqData() {
-    let result = await getSourcingOffers(`size=${displayProductSize}`);
-    if (result?.success) {
-      setAllSourcingOffer(result.data?.sourcingoffers);
-    }
-
-    setApiStatus((prevValue) => ({
-      ...prevValue,
-      laoding: result?.loadingStatus,
-      errorMsg: result?.error,
-    }));
-  }
-
-  useEffect(() => {
-    fetchSourcingReqData();
-  }, []);
 
   return (
     <>

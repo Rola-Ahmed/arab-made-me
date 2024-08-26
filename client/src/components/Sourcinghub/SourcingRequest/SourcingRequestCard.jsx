@@ -1,60 +1,10 @@
 import { getMonthName as getDate } from "utils/getMonthName";
 import { baseUrl_IMG } from "config.js";
 import { handleImageError } from "utils/ImgNotFound";
-import { useNavigate } from "react-router-dom";
 
 let getMonthName = getDate;
 export default function SourcingRequestCard(props) {
-  let { reqData, currentUserData, setModalShow, isLogin } = props;
-  let navigate = useNavigate();
-
-  const accessForm = (directto) => {
-    if (!isLogin) {
-      setModalShow((prevVal) => ({
-        ...prevVal,
-        isLogin: true,
-      }));
-
-      return;
-    }
-
-    if (
-      currentUserData?.userRole == "importer" ||
-      currentUserData?.userRole == "admin"
-    ) {
-      // if (currentUserData?.importerId !== null) {
-      setModalShow((prevVal) => ({
-        ...prevVal,
-        isImporterVerified: true,
-      }));
-
-      return;
-    }
-
-    if (currentUserData?.userRole == "user") {
-      console.log("user");
-      setModalShow((prevVal) => ({
-        ...prevVal,
-        isUser: true,
-      }));
-
-      return;
-    }
-
-    if (
-      currentUserData?.userRole == "factory" &&
-      currentUserData?.continueProfilePath != null
-    ) {
-      setModalShow((prevVal) => ({
-        ...prevVal,
-        isFactoryVerified: true,
-      }));
-
-      return;
-    } else {
-      navigate(directto);
-    }
-  };
+  let { reqData, datacompletelyLoaded, accessFormOffer } = props;
 
   return (
     // bg-success
@@ -106,7 +56,7 @@ export default function SourcingRequestCard(props) {
         </div>
         <div className="col-12 pe-0">
           <div className="d-flex mt-2">
-            {currentUserData?.datacompletelyLoaded ? (
+            {datacompletelyLoaded ? (
               <button
                 className="req-btn btn-color me-2 req-btn cursor"
                 type="button"
@@ -117,7 +67,7 @@ export default function SourcingRequestCard(props) {
               <button
                 className="req-btn btn-color me-2 req-btn cursor"
                 onClick={() => {
-                  accessForm(
+                  accessFormOffer(
                     `/answerQuotation/SourcingReq?id=${reqData?.id}&productName=${reqData?.productName}&userId=${reqData?.importerId}`
                   );
                 }}
@@ -130,7 +80,7 @@ export default function SourcingRequestCard(props) {
               className="req-btn cursor "
               type="button"
               onClick={() => {
-                accessForm(
+                accessFormOffer(
                   `/SourcingRequest?sourcingRequestId=${reqData?.id}&productName=${reqData?.productName}`
                 );
               }}
