@@ -1,7 +1,9 @@
 {
   "welcome_message": "مرحبًا بكم في تطبيقنا",
 
-  "Home": "الرئيسية",
+  "home": "الرئيسية",
+  "marketPlace": "السوق التجاري",
+  "factoryGallery": "معرض المصنع",
   "aboutUs": "من نحن",
   "sourcingHub": "مركز التوريد",
   "contactUs": "اتصل بنا",

@@ -32,7 +32,6 @@ function SourcingHub() {
   let { allSourcingOffer, apiStatus: offerStatus } = useSourcingOffers(
     displayProductSizeOffer
   );
-  console.log("allSourcingRequest", allSourcingRequest, allSourcingOffer);
 
   const [modalShow, setModalShow] = useState({
     isFactoryVerified: false,

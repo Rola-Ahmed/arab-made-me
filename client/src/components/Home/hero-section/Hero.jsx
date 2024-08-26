@@ -2,10 +2,12 @@ import "./hero.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { logo } from "constants/Images";
+import { useAppTranslation } from "config.js";
 
 function Hero() {
   let navigate = useNavigate();
   let [dropdownValue, setDropdownValue] = useState("Product");
+  const { trans: t, currentLang } = useAppTranslation();
 
   const [searchTermSecotr, setsearchTermSecotr] = useState("");
 
@@ -125,13 +127,15 @@ function Hero() {
                 className="btn2 btn-1 text-decoration-none"
                 to="/productMarketPlace"
               >
-                Market Place
+               {t("translation:marketPlace")}
               </Link>
               <Link
                 className="btn2 btn-2 text-decoration-none"
                 to="/factoryGallery/"
               >
-                Factory Gallery
+               
+               {t("translation:factoryGallery")}
+
               </Link>
             </div>
           </div>

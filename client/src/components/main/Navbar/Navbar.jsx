@@ -6,6 +6,8 @@ import { userDetails } from "Context/userType";
 import { UserToken } from "Context/userToken";
 import AllUsersDropListComp from "./AllUsersDropListComp";
 import useGlobalMessage from "hooks/useGlobalMessage";
+import { useAppTranslation } from "config.js";
+
 import "./navbar.css";
 import LanguageSwitcher from "components/LanguageSwitcher/LanguageSwitcher";
 import NavLinkBtn from "./NavLinkBtn";
@@ -17,6 +19,7 @@ function Navbar(props) {
 
   // pop up message
   const { setGlobalMsg } = useGlobalMessage();
+  const { trans: t, currentLang } = useAppTranslation();
 
   const logOuut = () => {
     setIsLogin("");
@@ -63,20 +66,6 @@ function Navbar(props) {
 
   return (
     <>
-      {/* //   {currentUserData?.continueProfilePath && ( */}
-      {/* //     <div className="user-msg-pop px-5 py-2">
-    //       <p className="fs-12 mb-0 pb-0 lh-normal mb-2">
-    //         please countine your registration process.
-    //       </p>
-    //       <p className="fs-12 lh-normal ">
-    //         To ensure a smooth validation process
-    //       </p>
-    //       <Link to={`/${currentUserData?.continueProfilePath}`}>
-    //         Countinue proccess
-    //       </Link>
-    //     </div>
-    //   )} */}
-
       <ScrollToTop />
       <div className="lang-parent d-md-flex align-items-center justify-content-between border-bottom border-1 border-muted">
         {/* btn to change lanuages */}
@@ -154,25 +143,33 @@ function Navbar(props) {
                 className="collapse navbar-collapse  navbarNav "
                 id="navBarCont"
               >
-                <ul className="navbar-nav m-auto mb-2 mb-lg-0">
-                  <li className="nav-item">
-                    <Link className="nav-link " aria-current="page" to="/">
-                      Home
-                    </Link>
-                  </li>
+                <ul className={`navbar-nav m-auto mb-2 mb-lg-0  ${ currentLang == "ar" && "ar-displayed"}`}>
+                 
 
-                  <NavLinkBtn path="/aboutus" name="About Us" />
+                  <NavLinkBtn path="/" name={t("translation:home")}/>
+
+
+                  <NavLinkBtn path="/aboutus" name={t("translation:aboutUs")} />
 
                   <NavLinkBtn
                     path="/sourcinghub/sourcingRequests"
-                    name="Sourcing Hub"
+                    name={t("translation:titles.SourcingHub")}
                   />
 
-                  <NavLinkBtn path="/productMarketPlace" name="Market Place" />
+                  <NavLinkBtn
+                    path="/productMarketPlace"
+                    name={t("translation:marketPlace")}
+                  />
 
-                  <NavLinkBtn path="/factoryGallery" name=" Factory Gallery" />
+                  <NavLinkBtn
+                    path="/factoryGallery"
+                    name={t("translation:factoryGallery")}
+                  />
 
-                  <NavLinkBtn path="/contact" name=" Contact Us" />
+                  <NavLinkBtn
+                    path="/contact"
+                    name={t("translation:contactUs")}
+                  />
                 </ul>
               </div>
             </div>

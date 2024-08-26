@@ -1,16 +1,14 @@
-li {
+/* li a {
     list-style: none;
     color: white;
     text-align: center;
 
-    /* text-base/font-medium */
     font-family: "Inter-med";
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
     line-height: 150%;
-    /* 24px */
-}
+} */
 
 .fotter-logo {
     height: 48px;

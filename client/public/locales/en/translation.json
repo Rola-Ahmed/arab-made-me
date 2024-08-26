@@ -1,8 +1,10 @@
 {
 
-  "Home": "Home",
+  "home": "Home",
   "aboutUs": "About Us",
   "contactUs": "Contact Us",
+  "marketPlace": "Market Place",
+  "factoryGallery": "Factory Gallery",
   "LogOut": "Log out",
   "logIn": "Log In",
   "register": "Register",
