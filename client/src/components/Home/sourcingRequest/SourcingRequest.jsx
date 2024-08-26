@@ -23,8 +23,6 @@ import "swiper/css/navigation";
 
 const displayProductSize = 20;
 
-
-
 function SourcingRequest() {
   // utils function
   let { currentUserData } = useContext(userDetails);
@@ -32,10 +30,6 @@ function SourcingRequest() {
   const { trans: t, currentLang } = useAppTranslation();
 
   const [allSourcingReqData, setAllSourcingReqData] = useState([]);
-  const [uniqueFactoryIDofProducts, setUniqueFactoryIDofProducts] = useState(
-    []
-  );
-  const [apiLoadingData, setApiLoadingData] = useState(true);
 
   const [modalShow, setModalShow] = useState({
     isFactoryVerified: false,
@@ -44,8 +38,6 @@ function SourcingRequest() {
   });
 
   async function fetchSourcingReqData() {
-    setApiLoadingData(true);
-
     try {
       let config = {
         method: "get",
@@ -53,51 +45,16 @@ function SourcingRequest() {
       };
 
       const response = await axios.request(config);
-      
-      setAllSourcingReqData(response.data?.sourcingrequests);
-      const uniqueIds = [
-        ...new Set(
-          response.data?.sourcingrequests
-            .map((obj) => obj.importerId) // Extract all factoryIds
-            .filter((id) => id !== null) // Filter out null values
-        ),
-      ];
 
-      setUniqueFactoryIDofProducts(uniqueIds);
-      setApiLoadingData(false);
-    } catch (error) {
-      setApiLoadingData(true);
-    }
+      setAllSourcingReqData(response.data?.sourcingrequests);
+    } catch (error) {}
   }
 
   useEffect(() => {
     fetchSourcingReqData();
   }, []);
 
-  console.log("allSourcingReqData",allSourcingReqData)
-  useEffect(() => {
-    // Promise.all(
-    uniqueFactoryIDofProducts.map(async (importerID) => {
-      try {
-        const productResponse = await axios.get(
-          `${baseUrl}/importers/${importerID}`
-        );
-
-        if (productResponse.data.message === "done") {
-          setAllSourcingReqData((prevData) =>
-            prevData.map((value) =>
-              value?.importerId === importerID
-                ? {
-                    ...value,
-                    importerName: productResponse?.data?.importers?.name,
-                  }
-                : value
-            )
-          );
-        }
-      } catch (error) {}
-    });
-  }, [apiLoadingData]);
+  console.log("allSourcingReqData", allSourcingReqData);
 
   return (
     <section className="margin-sm-screen">
@@ -198,7 +155,7 @@ function SourcingRequest() {
             {allSourcingReqData?.map((item) => (
               <SwiperSlide>
                 <SourcingRequestCard
-                  item={item}
+                  reqData={item}
                   setModalShow={setModalShow}
                   isLogin={isLogin}
                   currentUserData={currentUserData}

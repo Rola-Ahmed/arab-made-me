@@ -40,7 +40,7 @@ function Sectors() {
     <section className=" margin-sm-screen home-padding-t">
       <div className="container container-1 p-0 d-flex gap-48">
         <div className={`w-100 ${currentLang == "ar" && "ar-text"}`}>
-          <p className={`header-Title lh-normal`}>
+          <p className={`header-Title mb-2 `}>
             {t("translation:titles.manufacturingSectors")}
           </p>
           <p className="fs-16 text-muted lh-normal">

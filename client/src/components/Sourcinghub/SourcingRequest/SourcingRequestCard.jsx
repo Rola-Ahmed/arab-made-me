@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 let getMonthName = getDate;
 export default function SourcingRequestCard(props) {
-  let { item, currentUserData, setModalShow, isLogin } = props;
+  let { reqData, currentUserData, setModalShow, isLogin } = props;
   let navigate = useNavigate();
 
   const accessForm = (directto) => {
@@ -62,23 +62,23 @@ export default function SourcingRequestCard(props) {
       <div className="row w-100">
         <div className="col-9  ">
           <div className=" ">
-            <p className="fs-22-semi  fs-600">{item?.productName} </p>
+            <p className="fs-22-semi  fs-600">{reqData?.productName} </p>
             <p className="sourcing horizontal-text-handler ">
-              {item?.productDescription}
+              {reqData?.productDescription}
             </p>
             <p className="mb-1">
               <span className="fw-bold">Requested by</span>
-              {item?.importer?.name}
+              {reqData?.importer?.name}
             </p>
             {/* <div className="mb-1 d-flex"> */}
             <p className="mb-1 me-3">
               <span className="fw-bold">Quantity</span>
-              {item?.quantity}
+              {reqData?.quantity}
             </p>
             <p className="mb-1">
               <span className="fw-bold">Deadline</span>
-              {item?.deadline
-                ? getMonthName(item?.deadline?.split("T")?.[0])
+              {reqData?.deadline
+                ? getMonthName(reqData?.deadline?.split("T")?.[0])
                 : " - "}
             </p>
 
@@ -86,10 +86,10 @@ export default function SourcingRequestCard(props) {
             <p className="d-flex">
               <span className="fw-bold pe-1">Sourcing Countries</span>
               <span className="sourcing horizontal-text-handler-1">
-                {item?.preferredCountries?.length === 0
+                {reqData?.preferredCountries?.length === 0
                   ? "All Countries"
-                  : item?.preferredCountries
-                      ?.map((countryitem) => countryitem)
+                  : reqData?.preferredCountries
+                      ?.map((countryreqData) => countryreqData)
                       .join(", ")}
               </span>
             </p>
@@ -100,7 +100,7 @@ export default function SourcingRequestCard(props) {
           <div className="position-relative w-100">
             <img
               className="sorcingh-img"
-              src={`${baseUrl_IMG}/${item?.docs}`}
+              src={`${baseUrl_IMG}/${reqData?.docs}`}
               onError={handleImageError}
               alt="sourcing request img"
             />
@@ -120,7 +120,7 @@ export default function SourcingRequestCard(props) {
                 className="req-btn btn-color me-2 req-btn cursor"
                 onClick={() => {
                   accessForm(
-                    `/answerQuotation/SourcingReq?id=${item?.id}&productName=${item?.productName}&userId=${item?.importerId}`
+                    `/answerQuotation/SourcingReq?id=${reqData?.id}&productName=${reqData?.productName}&userId=${reqData?.importerId}`
                   );
                 }}
               >
@@ -133,7 +133,7 @@ export default function SourcingRequestCard(props) {
               type="button"
               onClick={() => {
                 accessForm(
-                  `/SourcingRequest?sourcingRequestId=${item?.id}&productName=${item?.productName}`
+                  `/SourcingRequest?sourcingRequestId=${reqData?.id}&productName=${reqData?.productName}`
                 );
               }}
             >
