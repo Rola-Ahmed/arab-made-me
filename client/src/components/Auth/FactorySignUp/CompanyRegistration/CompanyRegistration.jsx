@@ -266,33 +266,9 @@ export default function CompanyRegistration() {
                     />
                   </div>
 
-                  <div className="col-12">
-                    <div className="form-group ">
-                      <label className="form-title">Country</label>
-                      <select
-                        className="form-select form-control "
-                        onChange={formValidation.handleChange}
-                        id="country"
-                        onBlur={formValidation.handleBlur}
-                        value={formValidation.values.country}
-                      >
-                        {countriesMiddleEast.map((countryItem) => (
-                          <option value={countryItem.code}>
-                            {countryItem.name}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
+                  
 
-                  <div className="col-12">
-                    <InputField
-                      isRequired={false}
-                      title={"City"}
-                      formValidation={formValidation}
-                      vlaidationName={"city"}
-                    />
-                  </div>
+                
 
                   <div className="col-12">
                     <div className="form-group gap">
@@ -316,6 +292,35 @@ export default function CompanyRegistration() {
                       )}
                     </div>
                   </div>
+
+                  <div className="col-12">
+                    <InputField
+                      isRequired={false}
+                      title={"City"}
+                      formValidation={formValidation}
+                      vlaidationName={"city"}
+                    />
+                  </div>
+
+                  <div className="col-12">
+                    <div className="form-group ">
+                      <label className="form-title">Country</label>
+                      <select
+                        className="form-select form-control "
+                        onChange={formValidation.handleChange}
+                        id="country"
+                        onBlur={formValidation.handleBlur}
+                        value={formValidation.values.country}
+                      >
+                        {countriesMiddleEast.map((countryItem) => (
+                          <option value={countryItem.code}>
+                            {countryItem.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                  
 
                   <div className="col-12">
                     <TextareaInput

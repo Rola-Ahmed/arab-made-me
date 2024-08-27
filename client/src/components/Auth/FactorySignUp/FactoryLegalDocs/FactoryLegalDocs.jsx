@@ -12,6 +12,8 @@ import { userDetails } from "Context/userType";
 import { useFormik } from "formik";
 
 import * as Yup from "yup";
+import InputField from "components/Forms/Shared/InputField";
+import { RegisterationNumbers } from "utils/validationUtils";
 
 function FactoryLegalDocs() {
   let { isLogin } = useContext(UserToken);
@@ -49,16 +51,39 @@ function FactoryLegalDocs() {
     updateCurrentUser
   );
   // ----------------------------------------------------------
-  let validation = Yup.string()
-    .matches(/^[0-9]+$/, "Input Field should contain numbers only")
-    .min(8, "min length is 8")
-    .max(16, "max length is 16")
-    .required("Input field is Required");
+
   let validationSchema = Yup.object().shape({
-    taxRegisterationNumber: validation,
-    commercialRegisterationNumber: validation,
-    IndustrialRegistrationNumber: validation,
-    IndustrialLicenseNumber: validation,
+    taxRegisterationNumber: RegisterationNumbers([
+      Yup.ref("commercialRegisterationNumber"),
+      Yup.ref("IndustrialRegistrationNumber"),
+      Yup.ref("IndustrialLicenseNumber"),
+      Yup.ref("BusinessRegistrationNumber"),
+    ]),
+
+    commercialRegisterationNumber: RegisterationNumbers([
+      Yup.ref("taxRegisterationNumber"),
+      Yup.ref("IndustrialRegistrationNumber"),
+      Yup.ref("IndustrialLicenseNumber"),
+      Yup.ref("BusinessRegistrationNumber"),
+    ]),
+    IndustrialRegistrationNumber: RegisterationNumbers([
+      Yup.ref("taxRegisterationNumber"),
+      Yup.ref("commercialRegisterationNumber"),
+      Yup.ref("IndustrialLicenseNumber"),
+      Yup.ref("BusinessRegistrationNumber"),
+    ]),
+    IndustrialLicenseNumber: RegisterationNumbers([
+      Yup.ref("taxRegisterationNumber"),
+      Yup.ref("commercialRegisterationNumber"),
+      Yup.ref("IndustrialRegistrationNumber"),
+      Yup.ref("BusinessRegistrationNumber"),
+    ]),
+    BusinessRegistrationNumber: RegisterationNumbers([
+      Yup.ref("taxRegisterationNumber"),
+      Yup.ref("commercialRegisterationNumber"),
+      Yup.ref("IndustrialRegistrationNumber"),
+      Yup.ref("IndustrialLicenseNumber"),
+    ]),
   });
 
   let formValidation = useFormik({
@@ -67,6 +92,7 @@ function FactoryLegalDocs() {
       commercialRegisterationNumber: "",
       IndustrialLicenseNumber: "",
       IndustrialRegistrationNumber: "",
+      BusinessRegistrationNumber: "",
     },
     validationSchema,
     onSubmit: submit,
@@ -165,107 +191,48 @@ function FactoryLegalDocs() {
 
                 <div className="row gap-12">
                   <div className="col-12">
-                    <div className="form-group gap">
-                      <label className="form-title">
-                        Business Registration Number *
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control "
-                        id="taxRegisterationNumber"
-                        placeholder="12345678"
-                        onChange={formValidation.handleChange}
-                        onBlur={formValidation.handleBlur}
-                        value={formValidation.values.taxRegisterationNumber}
-                      />
-                      {formValidation.errors.taxRegisterationNumber &&
-                      formValidation.touched.taxRegisterationNumber ? (
-                        <small className="text-danger">
-                          {formValidation.errors.taxRegisterationNumber}
-                        </small>
-                      ) : (
-                        ""
-                      )}
-                    </div>
+                    <InputField
+                      isRequired={true}
+                      title={"Business Registration Number "}
+                      formValidation={formValidation}
+                      vlaidationName={"BusinessRegistrationNumber"}
+                    />
                   </div>
 
                   <div className="col-12">
-                    <div className="form-group gap">
-                      <label className="form-title">
-                        Industrial Registration Number *
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control "
-                        id="IndustrialRegistrationNumber"
-                        placeholder="12345678"
-                        onChange={formValidation.handleChange}
-                        onBlur={formValidation.handleBlur}
-                        value={
-                          formValidation.values.IndustrialRegistrationNumber
-                        }
-                      />
-                      {formValidation.errors.IndustrialRegistrationNumber &&
-                      formValidation.touched.IndustrialRegistrationNumber ? (
-                        <small className="text-danger">
-                          {formValidation.errors.IndustrialRegistrationNumber}
-                        </small>
-                      ) : (
-                        ""
-                      )}
-                    </div>
+                    <InputField
+                      isRequired={true}
+                      title={"Vat Number"}
+                      formValidation={formValidation}
+                      vlaidationName={"taxRegisterationNumber"}
+                    />
                   </div>
 
                   <div className="col-12">
-                    <div className="form-group gap">
-                      <label className="form-title">
-                        Industrial license number *
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control "
-                        id="IndustrialLicenseNumber"
-                        placeholder="12345678"
-                        onChange={formValidation.handleChange}
-                        onBlur={formValidation.handleBlur}
-                        value={formValidation.values.IndustrialLicenseNumber}
-                      />
-                      {formValidation.errors.IndustrialLicenseNumber &&
-                      formValidation.touched.IndustrialLicenseNumber ? (
-                        <small className="text-danger">
-                          {formValidation.errors.IndustrialLicenseNumber}
-                        </small>
-                      ) : (
-                        ""
-                      )}
-                    </div>
+                    <InputField
+                      isRequired={true}
+                      title={"Industrial Registration Number"}
+                      formValidation={formValidation}
+                      vlaidationName={"IndustrialRegistrationNumber"}
+                    />
                   </div>
 
                   <div className="col-12">
-                    <div className="form-group gap">
-                      <label className="form-title">
-                        commercial Registeration Number *
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control "
-                        placeholder="12345678"
-                        id="commercialRegisterationNumber"
-                        onChange={formValidation.handleChange}
-                        onBlur={formValidation.handleBlur}
-                        value={
-                          formValidation.values.commercialRegisterationNumber
-                        }
-                      />
-                      {formValidation.errors.commercialRegisterationNumber &&
-                      formValidation.touched.commercialRegisterationNumber ? (
-                        <small className="text-danger">
-                          {formValidation.errors.commercialRegisterationNumber}
-                        </small>
-                      ) : (
-                        ""
-                      )}
-                    </div>
+                    <InputField
+                      isRequired={true}
+                      title={"Industrial license number"}
+                      formValidation={formValidation}
+                      vlaidationName={"IndustrialLicenseNumber"}
+                    />
+                  </div>
+
+                  <div className="col-12">
+                    <InputField
+                      isRequired={true}
+                      title={"commercial Registeration Number"}
+                      formValidation={formValidation}
+                      vlaidationName={"commercialRegisterationNumber"}
+                    />
                   </div>
 
                   {/* factory profileeee */}
