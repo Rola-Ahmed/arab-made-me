@@ -241,28 +241,7 @@ function CompanyRegistrationPhase2() {
 
                   
 
-                    {/* <div className="col-12">
-                      <div className="form-group gap">
-                        <label className="form-title">Address Link</label>
-                        <input
-                          type="link"
-                          className="form-control "
-                          id="addressLink"
-                          placeholder="Enter address Link"
-                          onChange={formValidation.handleChange}
-                          onBlur={formValidation.handleBlur}
-                          value={formValidation.values.addressLink}
-                        />
-                        {formValidation.errors.addressLink &&
-                        formValidation.touched.addressLink ? (
-                          <small className="text-danger">
-                            {formValidation.errors.addressLink}
-                          </small>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                    </div> */}
+                  
 
                     <div className="col-12 action">
                       {isLoading ? (

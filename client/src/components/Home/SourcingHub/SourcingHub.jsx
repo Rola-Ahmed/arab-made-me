@@ -185,7 +185,7 @@ function SourcingHub() {
                 navigate("/sourcinghub/SourcingRequests");
               }}
             >
-              Sourcing Hub
+              {t("translation:titles.SourcingHub")}
             </div>
           </div>
         </div>

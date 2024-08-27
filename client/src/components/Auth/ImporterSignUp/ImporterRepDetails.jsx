@@ -148,7 +148,7 @@ export default function ImporterRepDetails() {
       sectorId,
       allowEmailNotification,
       socialLinks: {},
-      ...(address && { address: address }),
+      ...(values.address && { address: [address] }),
       ...(website && { website: website }),
       ...(commercialRegisterationNumber && {
         commercialRegisterationNumber: commercialRegisterationNumber,

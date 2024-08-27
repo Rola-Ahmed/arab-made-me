@@ -6,8 +6,8 @@ import { useAppTranslation } from "config.js";
 
 function Hero() {
   let navigate = useNavigate();
-  let [dropdownValue, setDropdownValue] = useState("Product");
   const { trans: t, currentLang } = useAppTranslation();
+  let [dropdownValue, setDropdownValue] = useState(t("translation:product"));
 
   const [searchTermSecotr, setsearchTermSecotr] = useState("");
 
@@ -64,20 +64,20 @@ function Hero() {
                   </button>
                   <ul className="dropdown-menu">
                     <li
-                      className=" cursor"
-                      onClick={() => setDropdownValue("Factory")}
+                      className={`cursor dropdown-item hover-drop ${
+                        currentLang == "ar" && "ar-text-left fs-18"
+                      }`}
+                      onClick={() => setDropdownValue(t("translation:factory"))}
                     >
-                      <div className="dropdown-item hover-drop cursor">
-                        Factory
-                      </div>
+                      {t("translation:factory")}
                     </li>
                     <li
-                      className=" cursor"
-                      onClick={() => setDropdownValue("Product")}
+                      className={`cursor dropdown-item hover-drop ${
+                        currentLang == "ar" && "ar-text-left fs-18"
+                      }`}
+                      onClick={() => setDropdownValue(t("translation:product"))}
                     >
-                      <div className="dropdown-item hover-drop cursor">
-                        Product
-                      </div>
+                      {t("translation:product")}
                     </li>
                   </ul>
                   <input
@@ -127,15 +127,13 @@ function Hero() {
                 className="btn2 btn-1 text-decoration-none"
                 to="/productMarketPlace"
               >
-               {t("translation:marketPlace")}
+                {t("translation:marketPlace")}
               </Link>
               <Link
                 className="btn2 btn-2 text-decoration-none"
                 to="/factoryGallery/"
               >
-               
-               {t("translation:factoryGallery")}
-
+                {t("translation:factoryGallery")}
               </Link>
             </div>
           </div>

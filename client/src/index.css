@@ -241,6 +241,7 @@ p, button, div, textarea, input {
 .fs-14 {
   font-size: 14px;
 }
+
 .fs-14-semi {
   font-size: 14px;
   font-family: "Inter-semi";
@@ -316,6 +317,7 @@ p, button, div, textarea, input {
 .fw-600 {
   font-weight: 600;
 }
+
 .fw-900 {
   font-weight: 900;
 }
@@ -378,7 +380,7 @@ p, button, div, textarea, input {
 }
 
 .ar-text-left {
-  text-align: end
+  text-align: end !important
 }
 
 .ar-flex-reverse {
