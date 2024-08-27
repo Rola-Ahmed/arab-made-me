@@ -319,7 +319,7 @@ function Factorypage() {
                           Your Brand
                         </h5>
                         <div>
-                          <p className="card-text product-card-text2 ">
+                          <p className=" product-card-text2 ">
                             Personal Branding? Partner with
                             {factoryIdName?.split("-")?.[1]} for your private
                             label brand journey, and let us transform your
@@ -438,14 +438,14 @@ function Factorypage() {
               <div className="parent-buttons-container  d-table-cell ">
                 <div className="d-flex align-items-center">
                   <div
-                    className={`text-container `}
+                    className="text-container text-white fw-600 fs-15"
                     onClick={() => {
                       handleUserClickValidation(
                         `privatelabel?factoryId=${factoryDetails?.id}&factoryName=${factoryDetails?.name}`
                       );
                     }}
                   >
-                    <p className="cursor"> Private Label Request</p>
+                     Private Label Request
                   </div>
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0"
@@ -460,14 +460,14 @@ function Factorypage() {
 
                 <div className="d-flex align-items-center">
                   <div
-                    className="text-container"
+                    className="text-container text-white fw-600 fs-15"
                     onClick={() => {
                       handleUserClickValidation(
                         `CustomerProductReq?factoryId=${factoryDetails?.id}&factoryName=${factoryDetails?.name}`
                       );
                     }}
                   >
-                    <p className="cursor">Custom Product Request </p>
+                    Custom Product Request 
                   </div>
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0"
@@ -482,14 +482,14 @@ function Factorypage() {
 
                 <div className="d-flex align-items-center">
                   <div
-                    className={`text-container `}
+                    className="text-container text-white fw-600 fs-15"
                     onClick={() => {
                       handleUserClickValidation(
                         `whiteLabelings/form?factoryId=${factoryDetails?.id}&factoryName=${factoryDetails?.name}`
                       );
                     }}
                   >
-                    <p className="cursor"> White Label Request</p>
+                     White Label Request
                   </div>
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0"
@@ -502,7 +502,7 @@ function Factorypage() {
 
                 <div className="d-flex align-items-center">
                   <button
-                    className={`text-container `}
+                    className="text-container text-white fw-600 fs-15"
                     onClick={() => {
                       if (factoryProduct?.length == 0) {
                         setFactoryHasProduct(true);
@@ -513,7 +513,7 @@ function Factorypage() {
                       );
                     }}
                   >
-                    <p className="cursor">Send RFQ</p>
+                    Send RFQ
                   </button>
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0"
@@ -526,7 +526,7 @@ function Factorypage() {
 
                 <div className="d-flex align-items-center">
                   <button
-                    className={`text-container `}
+                    className="text-container text-white fw-600 fs-15"
                     onClick={() => {
                       if (factoryProduct?.length == 0) {
                         setFactoryHasProduct(true);
@@ -537,7 +537,7 @@ function Factorypage() {
                       );
                     }}
                   >
-                    <p className="cursor">Send PO</p>
+                    Send PO
                   </button>
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0"
@@ -550,14 +550,14 @@ function Factorypage() {
 
                 <div className="d-flex align-items-center">
                   <button
-                    className="text-container"
+                    className="text-container text-white fw-600 fs-15"
                     onClick={() => {
                       handleUserClickValidLogin(
                         `contactsupplier?userId=${factoryDetails?.userId}&factoryName=${factoryDetails?.name}`
                       );
                     }}
                   >
-                    <p className="cursor">Contact Supplier</p>
+                    Contact Supplier
                   </button>
 
                   <button
@@ -571,14 +571,14 @@ function Factorypage() {
 
                 <div className="d-flex align-items-center">
                   <div
-                    className="text-container"
+                    className="text-container text-white fw-600 fs-15"
                     onClick={() => {
                       handleUserClickValidation(
                         `requestVisit?factoryId=${factoryDetails?.id}&factoryName=${factoryDetails?.name}`
                       );
                     }}
                   >
-                    <p className="cursor">Factory Visit Request</p>
+                    Factory Visit Request
                   </div>
 
                   <button

@@ -7,8 +7,8 @@ const DropdownMenuItem = ({
   handleQuestionMarkClick,
 }) => (
   <div className="d-flex align-items-center gap-2">
-    <div className="text-container cursor" onClick={onClick}>
-      <p className="cursor">{title}</p>
+    <div className="text-container text-white fw-600 fs-15" onClick={onClick}>
+   {title}
     </div>
     <button
       className="fa-solid fa-circle-question cursor bg-white border-0 p-0"

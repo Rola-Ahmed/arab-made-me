@@ -148,7 +148,7 @@ export default function ProductCard(props) {
           </div>
         </div>
 
-        <div className=" d-flex justify-content-between align-items-center   w-100 px-3">
+        <div className=" d-flex justify-content-between align-items-center   w-100 px-3 bg-danger">
           <div className="call-btns d-flex justify-content-between  align-items-center w-100 pe-2 ">
             <button
               className="btn-call-1"
@@ -197,14 +197,14 @@ export default function ProductCard(props) {
               <div className="parent-buttons-container cursor">
                 <div className="d-flex align-items-center gap-2">
                   <div
-                    className="text-container "
+                    className="text-container text-white fw-600 fs-15 "
                     onClick={() => {
                       handleUserClickValidation1(
                         `CustomerProductReq?factoryId=${productItem?.factoryId}&factoryName=${productItem?.factory?.name}&productId=${productItem?.id}&productName=${productItem?.name}`
                       );
                     }}
                   >
-                    <p className="cursor">Custom Product Request</p>
+                   Custom Product Request
                   </div>
 
                   <button
@@ -220,14 +220,14 @@ export default function ProductCard(props) {
 
                 <div className="d-flex align-items-center gap-2">
                   <button
-                    className={`text-container  `}
+                    className="text-container text-white fw-600 fs-15 "
                     onClick={() => {
                       handleUserClickValidation1(
                         `sendrfq?factoryId=${productItem?.factoryId}&factoryName=${productItem?.factory?.name}&productId=${productItem?.id}&productName=${productItem?.name}`
                       );
                     }}
                   >
-                    <p className={`cursor`}>Send RFQ</p>
+                    Send RFQ
                   </button>
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0"
@@ -239,14 +239,14 @@ export default function ProductCard(props) {
                 </div>
                 <div className="d-flex align-items-center gap-2">
                   <button
-                    className={`text-container `}
+                    className="text-container text-white fw-600 fs-15 "
                     onClick={() => {
                       handleUserClickValidation1(
                         `purchasingOrder/fromSelectedProduct?factoryId=${productItem?.factoryId}&factoryName=${productItem?.factory?.name}&productId=${productItem?.id}&productName=${productItem?.name}`
                       );
                     }}
                   >
-                    <p className="cursor">Send PO</p>
+                   Send PO
                   </button>
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0"
@@ -258,14 +258,14 @@ export default function ProductCard(props) {
                 </div>
                 <div className="d-flex align-items-center gap-2">
                   <button
-                    className="text-container "
+                    className="text-container text-white fw-600 fs-15 "
                     onClick={() => {
                       handleUserClickValidation1(
                         `whiteLabelings/form?factoryId=${productItem?.factoryId}&factoryName=${productItem?.factory?.name}&productId=${productItem?.id}&productName=${productItem?.name}`
                       );
                     }}
                   >
-                    <p className="cursor">White Label</p>
+                   White Label
                   </button>
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0"
@@ -277,14 +277,14 @@ export default function ProductCard(props) {
                 </div>
                 <div className="d-flex align-items-center gap-2">
                   <div
-                    className="text-container "
+                    className="text-container text-white fw-600 fs-15 "
                     onClick={() => {
                       handleUserClickValidation1(
                         `requestVisit?factoryId=${productItem?.factoryId}&factoryName=${productItem?.factory?.name}`
                       );
                     }}
                   >
-                    <p className="cursor">Factory Visit Request</p>
+                    Factory Visit Request
                   </div>
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0"

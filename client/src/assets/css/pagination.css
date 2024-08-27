@@ -99,6 +99,7 @@ a:hover {
     background: #FAFAFA;
     cursor: pointer;
 }
+
 .arrow-btn:hover {
     background: var(--secondary-color)
 }
@@ -107,7 +108,7 @@ a:hover {
 
 
 
-.factories .btn-call-1,.fac-cert .btn-call-1,.topProducts .btn-call-1,.topFactory .btn-call-1 ,.all-products .btn-call-1   {
+.factories .btn-call-1, .fac-cert .btn-call-1, .topProducts .btn-call-1, .topFactory .btn-call-1, .all-products .btn-call-1 {
     display: flex;
     padding: 10px 14px;
     justify-content: center;
@@ -120,3 +121,14 @@ a:hover {
 
 
 
+.text-container {
+    border-bottom: 1px solid #FFF;
+    background: var(--primary-color);
+    display: flex;
+    width: 213px;
+    padding: 16px 10px;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    margin-right: 3%;
+}

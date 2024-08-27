@@ -185,21 +185,3 @@
 
 }
 
-
-/* .product-page {
-    display: none;
-} */
-
-
-
-
-.parent-buttons-container .text-container {
-    border-bottom: 1px solid #FFF;
-    background: var(--primary-color);
-    display: flex;
-    width: 213px;
-    padding: 16px 10px;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-}
