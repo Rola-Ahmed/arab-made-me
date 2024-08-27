@@ -105,7 +105,7 @@ function Productpage(props) {
       />
 
       <Header title="Product Page " />
-      <section className="product-page-section1">
+      <section className="product-page-section1  home-padding-y">
         <div className="container">
           <div className="row product-parent">
             <div className="col-lg-5 product-images">
@@ -164,12 +164,14 @@ function Productpage(props) {
                       />
                     )}
                   </div>
-                  <div className="text-product-1">
+                 
+
+                  <div className="fs-14-med lh-normal fw-600">
                     {productData?.averageRate ?? 0} Rating
                   </div>
                 </div>
                 <div className="">
-                  <p className="text-product-2 text-truncate">
+                  <p className="fs-20-semi text-truncate">
                     {/* product name */}
                     {productData?.name}
                   </p>
@@ -177,24 +179,32 @@ function Productpage(props) {
               </div>
               <div className="sku w-100">
                 <div className="avail">
-                  <p className="skkkkku">
-                    Sku:<span>{productData?.sku}</span>
+                  <p className="fw-400 fs-14-med text-muted-2">
+                    Sku:
+                    <span className="fw-600 text-black">
+                      {productData?.sku}
+                    </span>
                   </p>
-                  <p className="skkkkku paddig-ava">
+                  <p className="fw-400 fs-14-med text-muted-2 paddig-ava">
                     Availability:
-                    <span className="stock">
+                    <span
+                      className={`fw-600 ${
+                        productData?.available ? "text-success" : "text-danger"
+                      }`}
+                    >
                       {productData?.available ? "In Stock" : "Out of Stock"}
                     </span>
                   </p>
                 </div>
                 <div className="material  w-100">
                   {productData?.specialCharacteristics &&
-                    Object.entries(productData?.specialCharacteristics).map(
+                    Object.entries(productData?.specialCharacteristics)?.map(
                       ([key, value], index) => (
                         <div className="row  w-100">
                           <div className="col-4">
-                            <p className="skkkkku">
-                              {key}: <span>{value}</span>
+                            <p className="fw-400 fs-14-med text-muted-2">
+                              {key}:{" "}
+                              <span className="fw-600 text-black">{value}</span>
                             </p>
                           </div>
                         </div>
@@ -214,10 +224,10 @@ function Productpage(props) {
                     />
                   </div>
                   <div className="ar-texts">
-                    <p className="text-product-3">
+                    <p className="fs-18-semi lh-normal">
                       {productData?.factory?.name}
                     </p>
-                    <p className="text-product-4">
+                    <p className="fs-14-med fw-400 lh-normal">
                       {/* city, country */}
 
                       {`${productData?.city ? productData?.city + ", " : ""}`}
@@ -226,13 +236,17 @@ function Productpage(props) {
                   </div>
                 </div>
               </div>
-              <div className="pricing">
+              <div className="pricing ">
                 <div>
-                  <p className="text-product-5">${productData?.price} </p>
+                  <p className=" fs-24-semi text-main-2 fw-600 ">
+                    ${productData?.price}{" "}
+                  </p>
                 </div>
 
                 {productData?.discount && (
-                  <div className="sale">{productData?.discount} OFF</div>
+                  <p className="  fw-600 lh-normal fs-14-semi">
+                    {productData?.discount}  OFF
+                  </p>
                 )}
               </div>
             </div>
@@ -240,14 +254,14 @@ function Productpage(props) {
               <div className="parent-buttons-container d-table-cell ">
                 <div className="d-flex align-items-center">
                   <div
-                    className="text-container"
+                    className="text-container  text-white fw-600 fs-15"
                     onClick={() => {
                       handleUserClickValidation1(
                         `privatelabel?factoryId=${productData?.factoryId}&factoryName=${productData?.factory?.name}&productId=${productData?.id}&productName=${productData?.name} `
                       );
                     }}
                   >
-                    <p className="cursor"> Private Label Request</p>
+                     Private Label Request
                   </div>
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0 ms-1"
@@ -259,14 +273,14 @@ function Productpage(props) {
                 </div>
                 <div className="d-flex align-items-center">
                   <div
-                    className="text-container"
+                    className="text-container text-white fw-600 fs-15"
                     onClick={() => {
                       handleUserClickValidation1(
                         `CustomerProductReq?factoryId=${productData?.factoryId}&factoryName=${productData?.factory?.name}&productId=${productData?.id}&productName=${productData?.name} `
                       );
                     }}
                   >
-                    <p className="cursor">Custom Product Request</p>
+                    Custom Product Request
                   </div>
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0 ms-1"
@@ -279,14 +293,14 @@ function Productpage(props) {
 
                 <div className="d-flex align-items-center">
                   <div
-                    className="text-container"
+                    className="text-container text-white fw-600 fs-15"
                     onClick={() => {
                       handleUserClickValidation1(
                         `whiteLabelings/form?factoryId=${productData?.factoryId}&factoryName=${productData?.factory?.name}&productId=${productData?.id}&productName=${productData?.name} `
                       );
                     }}
                   >
-                    <p className="cursor"> White Label Request</p>
+                     White Label Request
                   </div>
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0 ms-1"
@@ -299,14 +313,14 @@ function Productpage(props) {
 
                 <div className="d-flex align-items-center">
                   <div
-                    className="text-container"
+                    className="text-container text-white fw-600 fs-15"
                     onClick={() => {
                       handleUserClickValidation1(
                         `sendrfq?factoryId=${productData?.factoryId}&factoryName=${productData?.factory?.name}&productId=${productData?.id}&productName=${productData?.name} `
                       );
                     }}
                   >
-                    <p className="cursor">Send RFQ</p>
+                    Send RFQ
                   </div>
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0 ms-1"
@@ -318,14 +332,14 @@ function Productpage(props) {
                 </div>
                 <div className="d-flex align-items-center">
                   <div
-                    className="text-container"
+                    className="text-container text-white fw-600 fs-15"
                     onClick={() => {
                       handleUserClickValidation1(
                         `purchasingOrder/fromSelectedProduct?factoryId=${productData?.factoryId}&factoryName=${productData?.factory?.name}&productId=${productData?.id}&productName=${productData?.name} `
                       );
                     }}
                   >
-                    <p className="cursor">Send PO</p>
+                    Send PO
                   </div>
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0 ms-1"
@@ -338,14 +352,14 @@ function Productpage(props) {
 
                 <div className="d-flex align-items-center">
                   <div
-                    className="text-container cursor"
+                    className="text-container text-white fw-600 fs-15 cursor"
                     onClick={() => {
                       handleUserClickValidLogin(
                         `contactsupplier?userId=${productData?.factory?.userId}&factoryName${productData?.factory?.name}`
                       );
                     }}
                   >
-                    <p className="cursor">Contact Supplier</p>
+                    Contact Supplier
                   </div>
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0 ms-1"
@@ -357,14 +371,14 @@ function Productpage(props) {
                 </div>
                 <div className="d-flex align-items-center">
                   <div
-                    className="text-container"
+                    className="text-container text-white fw-600 fs-15"
                     onClick={() => {
                       handleUserClickValidation1(
                         `requestVisit?factoryId=${productData?.factoryId}&factoryName=${productData?.factory?.name}&productId=${productData?.id}&productName=${productData?.name} `
                       );
                     }}
                   >
-                    <p className="cursor">Factory Visit Request</p>
+                    Factory Visit Request
                   </div>
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0 ms-1"
@@ -380,13 +394,13 @@ function Productpage(props) {
         </div>
       </section>
 
-      <section className="de">
+      <section className="home-padding-b">
         <div className="container">
-          <div className="details">
+          <div className=" d-flex flex-column gap-32">
             <div>
               <h3>Specification</h3>
-              <div className="instant-nav w-100 ">
-                <p className="main-details">Description</p>
+              <div className="d-flex flex-column gap-12 w-100  ">
+                <p className="text-muted-2 fw-400 fs-14-semi">Description</p>
                 <p>{productData?.description}</p>
               </div>
             </div>
@@ -395,8 +409,8 @@ function Productpage(props) {
 
             <div>
               <h3>Seller Profile</h3>
-              <div className="instant-nav w-100">
-                <p className="main-details">Description</p>
+              <div className="d-flex flex-column gap-12 w-100">
+                <p className="text-muted-2 fw-400 fs-14-semi">Description</p>
                 <p>{productData?.factory?.description}</p>
               </div>
             </div>
@@ -404,8 +418,8 @@ function Productpage(props) {
 
             <div>
               <h3>Review</h3>
-              <div className="instant-nav w-100">
-                <p className="main-details">Description</p>
+              <div className="d-flex flex-column gap-12 w-100">
+                <p className="text-muted-2 fw-400 fs-14-semi">Description</p>
                 <p>{/* No reviews */}</p>
               </div>
             </div>

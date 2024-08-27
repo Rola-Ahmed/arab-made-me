@@ -1,6 +1,6 @@
 import { getMonthName as getDate } from "utils/getMonthName";
 import { baseUrl_IMG } from "config.js";
-import { handleImageError } from "utils/ImgNotFound";
+import { handleLogoTextError } from "utils/ImgNotFound";
 
 let getMonthName = getDate;
 export default function SourcingRequestCard(props) {
@@ -49,7 +49,7 @@ export default function SourcingRequestCard(props) {
             <img
               className="sorcingh-img"
               src={`${baseUrl_IMG}/${reqData?.docs}`}
-              onError={handleImageError}
+              onError={handleLogoTextError}
               alt="sourcing request img"
             />
           </div>

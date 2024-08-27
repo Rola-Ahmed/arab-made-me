@@ -141,7 +141,7 @@ function Products(title) {
 
   return (
     <>
-      <section className="products-section  margin-sm-screen ">
+      <section className=" home-padding-y  margin-sm-screen ">
         <IsLoggedIn
           show={modalShow.isLogin}
           onHide={() =>
@@ -188,12 +188,12 @@ function Products(title) {
                 {t("translation:titles.subTitleProduct")}
               </p>
             </div>
-            <div className="d-flex arrow-container align-items-end ">
-              <div className="arrow-btn position-static arrowLeft carousel">
+            <div className="d-flex gap-12 align-items-end ">
+              <div className="arrow-btn  arrowLeft">
                 <i className="fa-solid fa-chevron-left"></i>
               </div>
 
-              <div className="arrow-btn position-static arrowRight carousel">
+              <div className="arrow-btn  arrowRight">
                 <i className="fa-solid fa-chevron-right"></i>
               </div>
             </div>
@@ -243,7 +243,7 @@ function Products(title) {
                           productItem?.factory?.name
                         );
                       }}
-                      className="card-img-top card-cursor img-size"
+                      className="card-img-top cursor img-size object-fit-contain"
                       src={`${baseUrl_IMG}/${productItem?.coverImage}`}
                       alt={`${baseUrl_IMG}/${productIndex}`}
                       onError={handleImageError}
@@ -390,15 +390,15 @@ function Products(title) {
             </Swiper>
           </div>
 
-          <div className="btn-container-all">
-            <div
-              className="get-all-btn text-decoration-none text-white card-cursors cursor"
+          <div className="mx-auto pt-60">
+            <button
+              className="get-all-btn  fs-15-semi  rounded-3"
               onClick={() => {
                 navigate("/productMarketPlace");
               }}
             >
               All Products
-            </div>
+            </button>
           </div>
         </div>
       </section>

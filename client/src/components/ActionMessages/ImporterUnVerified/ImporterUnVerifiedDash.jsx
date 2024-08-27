@@ -33,10 +33,10 @@ export default function ImporterUnVerifiedDash() {
           </div>
 
           <div className="col-12  justify-content-start align-items-center d-flex">
-            <small className="py-4">
+            <small className="py-4 fw-600">
               It might take up to 24 hours to fully activate your Buyer account.
               If you can't access your services after that time, please
-              <span className="cont-btn"> contact support</span> .
+              <span className="text-main text-decoration-underline "> contact support</span> .
             </small>
           </div>
 

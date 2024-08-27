@@ -9,7 +9,7 @@ function AboutUs(props) {
   return (
     <>
       <Header title="About Arab Made"  />
-      <section className="section-about-1 margin-sm-screen">
+      <section className=" home-padding-y  margin-sm-screen">
         <div className="container">
           <div className="row justify-content-between ">
             <div className="col-lg-7   ">
@@ -51,7 +51,7 @@ function AboutUs(props) {
           </div>
         </div>
       </section>
-      <section className="section-about-2  margin-sm-screen">
+      <section className="home-padding-b margin-sm-screen">
         <div className="container">
           <div className="row ">
             <div className="col-lg-6 ">

@@ -1,6 +1,6 @@
 import { baseUrl_IMG } from "config.js";
 import { useNavigate } from "react-router-dom";
-import { handleImageError } from "utils/ImgNotFound";
+import { handleProfileError } from "utils/ImgNotFound";
 import { getMonthName as getDate } from "utils/getMonthName";
 
 export default function SourcingOfferCard({ item }) {
@@ -20,7 +20,7 @@ export default function SourcingOfferCard({ item }) {
           <img
             className="flag-img"
             src={`${baseUrl_IMG}/${item?.docs}`}
-            onError={handleImageError}
+            onError={handleProfileError}
             alt={`${baseUrl_IMG}/${item?.docs}`}
           />
           <p className="fs-14 fw-600">{item?.productName}</p>

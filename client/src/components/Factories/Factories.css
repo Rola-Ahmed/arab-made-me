@@ -19,61 +19,24 @@
     padding-bottom: 2px;
 }
 
-.sector-style {
-    border-radius: 10px;
-    color: black;
-    text-align: center;
-    font-family: "Inter-semi";
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 24px;
-}
 
-.sector-style.active {
-    border: 1px solid #E3E6EA;
-    background: #F1F2F4;
-}
 
-.filt-btn.allproducts {
+
+
+.filt-btn {
     display: flex;
-    width: 200px;
-    padding: 22px 30px;
+    padding-block: 22px;
     justify-content: center;
     align-items: center;
-    gap: 10px;
-    flex-shrink: 0;
-    border-radius: 10px;
-    border: 1px solid #E3E6EA;
-    background: var(--primary-color);
-    color: var(white) !important;
-    text-align: center;
-    font-family: "Inter-semi";
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 24px;
 }
 
 .in {
-    display: flex;
-    width: 1054px;
     padding: 22px 18px;
-    align-items: center;
-    gap: 10px;
-    flex-shrink: 0;
-    border-radius: 8px;
-    border: 1px solid #DDD;
-    background: #FFF;
 }
 
-.search-bar {
-    padding-bottom: 30px;
-}
 
-.fo2 {
-    padding-top: 50px;
-}
+
+
 
 .in input {
     border-radius: 8px;
@@ -151,82 +114,7 @@
 
 
 
-/* ----------------------------- */
-/* .sector-sub-container {
-    background: red;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-} */
 
-
-
-/* ------------------- */
-/* .factories .card-sector {
-    background-color: red;
-    display: flex;
-    padding: 8px 16px 8px 10px;
-    align-items: center;
-    gap: 16px;
-} */
-
-/* .factories .sector-img {
-    width: 80px;
-    height: 80px;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    border-radius: 6px;
-
-} */
-
-/* .factories .sector-text-fac {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 2px;
-
-}
-
-.factories .sector-text-fac h4 {
-    display: flex;
-    width: 178px;
-    height: 24px;
-    flex-direction: column;
-    justify-content: center;
-    margin-bottom: 0 !important;
-
-}
-
-.factories .sector-text-fac p {
-    color: #696969;
-    font-family: Inter-reg;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 24px;
-    margin-bottom: 0;
-
-} */
-
-/* .factory-sub-sector {
-    padding: 48px 0;
-} */
-
-
-
-
-
-
-.fo3 .arrow-btn:hover {
-
-    background: var(--secondary-color)
-}
-
-.fo3 .arrow-btn:active {
-
-    background: var(--secondary-color)
-}
 
 
 
@@ -249,54 +137,9 @@
 
 
 
-.fo3 .sliderImg {
-    display: flex;
-    height: 192px;
-    /* width: 26rem; */
-    align-items: flex-start;
-    align-self: stretch;
-    border-top-left-radius: 7px;
-    border-top-right-radius: 7px;
 
 
-}
 
-/* .fo3 .cardBody {
-    display: flex;
-    padding: 20px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-    align-self: stretch;
-} */
-
-/* .fo3 .cardBody .card-title {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-} */
-
-/* .fo3 .imgLogo {
-    width: 55.559px;
-    height: 51px;
-    border-radius: 6px;
-    overflow: hidden;
-} */
-
-/* .fo3 .cardBody .card-title .title {
-    color: var(--gray-900, #111928);
-
-    font-family: Inter-reg;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 125%;
-
-
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 2px;
-} */
 
 .fo3 .title.fac {
     display: -webkit-box;
@@ -331,17 +174,6 @@
 }
 
 .btn-container .btn-1 {
-    /* color: #FAFAFA;
-    border-radius: 8px;
-    background: var(--primary-color);
-    display: flex;
-    padding: 10px 15px;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    border: none; */
-
-
 
     color: #FAFAFA;
     border-radius: 8px;
@@ -386,52 +218,18 @@
     transition: transform 0.3s ease-in-out;
 }
 
-.active-dot {
-    color: var(--secondary-color);
-}
 
 
-.dashed-line {
-    width: 344px;
-    height: 1px;
-    border: none;
-    border-top: 1px dotted black;
-}
 
-.btn-container-all {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
-.get-all-btn {
-    width: 194px;
-    padding: 14px;
 
-    gap: 10px;
-    border-radius: 10px;
-    background: var(--primary-color);
-    color: var(--white);
-    text-align: center;
-
-    /* Body/Body_9 */
-    font-family: "Inter-semi";
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 24px;
-    /* 160% */
-}
 
 .factories .btn-call-2.padd {
     padding: 10px 13px;
 }
 
 .factories .dropdown-menu-top {
-    /* display: none; */
     position: absolute;
-    /* top: 69px; */
-    /* top: 139px; */
     top: 159px;
     right: 0;
     border: 1px solid var(--Gray-300);
@@ -445,16 +243,7 @@
     font-size: 1.5rem;
 }
 
-.factories .btn-call-1 {
-    display: flex;
-    padding: 10px 14px;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    border-radius: 8px;
-    background: var(--primary-color);
-    border-color: transparent;
-}
+
 
 
 @media (max-width: 1399px) and (min-width: 992px) {

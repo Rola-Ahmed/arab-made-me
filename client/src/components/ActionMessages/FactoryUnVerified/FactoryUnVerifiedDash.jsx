@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 
-
 export default function FactoryUnVerifiedDash() {
   let navigate = useNavigate();
 
@@ -10,7 +9,7 @@ export default function FactoryUnVerifiedDash() {
         <h3 className="fw-bolder mb-4">Factory is Not Verifiyed yet</h3>
         <div className="row row-container  border-css p-4">
           <div className="col-12 mb-4">
-            <label>
+            <label className="fs-15 fs-600 lh-normal">
               Thank you for signing up for Arab Made. If you've been directed to
               this page, it means you haven't completed the registration
               process. Ensure you've completed the following steps to become
@@ -40,10 +39,10 @@ export default function FactoryUnVerifiedDash() {
           </div>
 
           <div className="col-12  justify-content-start align-items-center d-flex">
-            <small className="py-4">
+            <small className="py-4 fw-600">
               It might take up to 24 hours to fully activate your factory
               account. If you can't access your services after that time, please
-              <span className="cont-btn"> contact support</span> .
+              <span className="  text-main text-decoration-underline  "> contact support</span> .
             </small>
           </div>
 

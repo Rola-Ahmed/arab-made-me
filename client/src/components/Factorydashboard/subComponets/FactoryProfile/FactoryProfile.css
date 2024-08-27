@@ -512,10 +512,6 @@
     object-fit: cover;
 }
 
-.factory-profile .dots-slider-img.active-dot {
-    border-radius: 2px;
-    border: 2px solid var(--star-color);
-}
 
 
 /* ---------------------------------------------- */

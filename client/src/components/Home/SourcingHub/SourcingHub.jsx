@@ -156,12 +156,12 @@ function SourcingHub() {
               {t("translation:titles.buyerRequests")}
             </p>
 
-            <div className="d-flex arrow-container gap-2">
-              <div className="arrow-btn position-static arrowLeft  carousel rounded-5">
+            <div className="d-flex  gap-12 bg-ingo">
+              <div className="arrow-btn  arrowLeft ">
                 <i className="fa-solid fa-chevron-left"></i>
               </div>
 
-              <div className="arrow-btn position-static arrowRight carousel rounded-5">
+              <div className="arrow-btn  arrowRight">
                 <i className="fa-solid fa-chevron-right"></i>
               </div>
             </div>
@@ -178,15 +178,15 @@ function SourcingHub() {
             apiStatus={offerStatus}
           />
 
-          <div className="btn-container-all cursor">
-            <div
-              className="get-all-btn text-decoration-none text-white cursor"
+          <div className="mx-auto pt-60 w-fit-content">
+            <button
+              className="get-all-btn  fs-15-semi  rounded-3"
               onClick={() => {
                 navigate("/sourcinghub/SourcingRequests");
               }}
             >
               {t("translation:titles.SourcingHub")}
-            </div>
+            </button>
           </div>
         </div>
       </section>

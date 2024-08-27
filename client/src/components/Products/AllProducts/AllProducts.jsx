@@ -68,7 +68,7 @@ function AllProducts(props) {
       <Header title={headerTitle} />
 
       <div className="container">
-        <section className="  products-section all-products margin-sm-screen ">
+        <section className="    home-padding-y all-products margin-sm-screen ">
           <div className="container p-0 ">
             <div className="d-flex justify-content-between  row  ">
               <div className="col-xxl-3 col-xl-3  col-lg-5 col-md-5 col-sm-5 col-5  col-sm-d-none   ">

@@ -209,13 +209,13 @@ export default function TopFactories(props) {
 
       <Header title="All Factories" />
 
-      <section className="fo2  margin-sm-screen">
-        <div className="container search-bar   ">
-          <div className="row">
+      <section className="pt-5  margin-sm-screen">
+        <div className="container mb-5   ">
+          <div className="row m-0 p-0">
             <div className=" col-xxl-10 col-xl-10  col-lg-10  col-md-9  col-sm-9  col-9  ">
               <input
                 type="text"
-                className="in w-100"
+                className="in h-25 overflow-hidden  w-100 rounded-3 border w-100"
                 placeholder="Search here"
                 // value={searchTermSecotr}
                 defaultValue={filter?.filterSearch}
@@ -232,7 +232,7 @@ export default function TopFactories(props) {
             <div className=" col-xxl-2 col-xl-2 col-lg-2 col-md-3 col-sm-3 col-3 ">
               <button
                 type="button"
-                className="filt-btn allproducts text-white w-100"
+                className="filt-btn h-25 rounded-3 border-0 bg-main  text-white w-100 fs-16-semi  m-auto"
                 // onClick={() => clearFilters()}
                 onClick={(e) => {
                   // if (e.key === "Enter") {

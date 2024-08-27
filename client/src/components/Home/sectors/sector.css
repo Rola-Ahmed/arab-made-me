@@ -1,5 +1,5 @@
 .borderContainer {
-    object-fit: cover;
+    object-fit: contain;
     width: 73px;
     height: 73px;
 }

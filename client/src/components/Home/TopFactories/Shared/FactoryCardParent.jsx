@@ -46,7 +46,7 @@ export default function FactoryCardParent(props) {
       )}
 
       <div className="card-body cardBody ">
-        <div className="subCard ">
+        <div className="subCard">
           <FactoryCard
             factoryitem={factoryitem}
             DirectToFactoryPage={DirectToFactoryPage}

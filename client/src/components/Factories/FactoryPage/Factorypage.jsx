@@ -291,9 +291,9 @@ function Factorypage() {
                       ))}
                     </Swiper>
 
-                    <div className="btn-container-all">
-                      <div
-                        className="get-all-btn text-decoration-none text-white card-cursors cursor"
+                    <div className=" w-fit-content  mx-auto pt-60  ">
+                      <button
+                        className="get-all-btn  fs-15-semi  rounded-3 "
                         onClick={() => {
                           navigate(
                             `/factoryProducts/MarketPlace?factoryId=${factoryDetails?.id}&factoryName=${factoryDetails?.name}`
@@ -301,7 +301,7 @@ function Factorypage() {
                         }}
                       >
                         All Products
-                      </div>
+                      </button>
                     </div>
                   </>
                 ) : (

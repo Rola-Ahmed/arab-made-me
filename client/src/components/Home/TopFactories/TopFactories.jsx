@@ -139,14 +139,14 @@ export default function TopFactories(props) {
                 {t("translation:titles.subTitleFactories")}
               </p>
             </div>
-            <div className="d-flex arrow-container align-items-end ">
-              <div className={`arrow-btn  prev-btn-swiper `}>
+            <div className="d-flex gap-12 align-items-end ">
+              <div className="arrow-btn  prev-btn-swiper">
                 <i className="fa-solid fa-chevron-left"></i>
               </div>
 
               <div
                 // disabled
-                className={`arrow-btn next-btn-swiper  `}
+                className="arrow-btn next-btn-swipe"
               >
                 <i className="fa-solid fa-chevron-right"></i>
               </div>
@@ -161,7 +161,7 @@ export default function TopFactories(props) {
               modules={[Navigation]}
               navigation={{
                 nextEl: ".next-btn-swiper",
-                prevEl: ".prev-btn-swiper ",
+                prevEl: ".prev-btn-swiper",
               }}
               spaceBetween={0}
               slidesPerView={1}
@@ -205,15 +205,15 @@ export default function TopFactories(props) {
             </Swiper>
           </div>
 
-          <div className="btn-container-all cursor">
-            <div
+          <div className="mx-auto pt-60">
+            <button
               onClick={() => {
                 navigate("/factoryGallery");
               }}
-              className="get-all-btn text-decoration-none text-white"
+              className="get-all-btn  fs-15-semi  rounded-3"
             >
               All Factories
-            </div>
+            </button>
           </div>
         </div>
       </section>

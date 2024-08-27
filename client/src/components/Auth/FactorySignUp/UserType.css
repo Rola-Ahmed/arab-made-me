@@ -97,10 +97,7 @@
 
 }
 
-/* .userType .select-border {
-  border-top-right-radius: 0 !important;
-  border-bottom-right-radius: 0 !important;
-} */
+
 
 .userType .phone-borders {
   border-top-right-radius: 0 !important;
@@ -154,11 +151,6 @@
 .checked-success {
   color: green;
 }
-
-
-
-/* ------------------- */
-
 
 .border-type {
   border: 1px solid var(--Gray-300);

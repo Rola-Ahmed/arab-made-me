@@ -81,3 +81,42 @@
 a:hover {
     color: black;
 }
+
+
+
+
+
+/*------------------------shared------------------ */
+.arrow-btn {
+    display: flex;
+    width: 32px;
+    height: 32px;
+    padding: 7px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 16px;
+    border: 1px solid #6B7B8A;
+    background: #FAFAFA;
+    cursor: pointer;
+}
+.arrow-btn:hover {
+    background: var(--secondary-color)
+}
+
+
+
+
+
+.factories .btn-call-1,.fac-cert .btn-call-1,.topProducts .btn-call-1,.topFactory .btn-call-1 ,.all-products .btn-call-1   {
+    display: flex;
+    padding: 10px 14px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 8px;
+    background: var(--primary-color);
+    border-color: transparent;
+}
+
+
+

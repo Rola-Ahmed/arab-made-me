@@ -4,6 +4,10 @@
     height: 55px;
     position: absolute;
     right: 7px;
+
+
+    object-fit: contain;
+    border: solid 1px #00000008;
 }
 
 
@@ -43,7 +47,7 @@
 
 
 
-.sourcing-h-hom .arrow-btn {
+/* {
     display: flex;
     width: 32px;
     height: 32px;
@@ -52,4 +56,4 @@
     border: 1px solid #6B7B8A;
     background: #FAFAFA;
     cursor: pointer;
-}
+} */

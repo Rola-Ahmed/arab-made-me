@@ -156,6 +156,15 @@ p, h1, h2, h3, h4, h5, h6 {
   color: var(--secondary-color) !important;
 }
 
+.text-main-2 {
+  color: var(--primary-color) !important;
+}
+
+
+.text-muted-2 {
+  color: #5F6C72;
+}
+
 
 
 
@@ -167,6 +176,11 @@ p, button, div, textarea, input {
   font-size: 16px;
   font-weight: 500;
   line-height: 27.2px;
+}
+
+small {
+  font-family: 'Inter-reg';
+
 }
 
 .h1, h2, h3, h4, h5, h6 {
@@ -193,6 +207,11 @@ p, button, div, textarea, input {
 
 .row-gap-24 {
   row-gap: 24px;
+}
+
+
+.-gap-32 {
+  rgap: 32px;
 }
 
 .row-gap-12 {
@@ -234,6 +253,10 @@ p, button, div, textarea, input {
   gap: 48px
 }
 
+.gap-15 {
+  gap: 15px
+}
+
 .fs-10 {
   font-size: 10px;
 }
@@ -244,6 +267,21 @@ p, button, div, textarea, input {
 
 .fs-14-semi {
   font-size: 14px;
+  font-family: "Inter-semi";
+}
+
+
+.fs-14-med {
+  font-size: 14px;
+  font-family: "Inter-med";
+}
+
+.fs-15 {
+  font-size: 15px;
+}
+
+.fs-15-semi {
+  font-size: 15px;
   font-family: "Inter-semi";
 }
 
@@ -313,6 +351,10 @@ p, button, div, textarea, input {
 
 }
 
+
+.fw-400 {
+  font-weight: 400;
+}
 
 .fw-600 {
   font-weight: 600;
@@ -483,6 +525,10 @@ p, button, div, textarea, input {
   padding-top: 70px;
 }
 
+.home-padding-b {
+  padding-bottom: 70px;
+}
+
 .home-padding-y {
   padding-block: 70px;
 }
@@ -491,6 +537,25 @@ p, button, div, textarea, input {
 .default-padding {
   padding: 8px 10px;
 }
+
+.pt-60 {
+  padding-top: 60px;
+}
+
+
+
+
+.get-all-btn {
+  width: 194px;
+  padding: 14px;
+  background: var(--primary-color);
+  color: white;
+  font-weight: 700;
+  line-height: normal;
+  border: none !important;
+  align-content: center;
+}
+
 
 /* --------------------------------------------------------- */
 @media (max-width:539px) {

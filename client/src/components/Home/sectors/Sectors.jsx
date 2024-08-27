@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 import { baseUrl_IMG, useAppTranslation } from "config.js";
 
-import { handleImageError } from "utils/ImgNotFound";
+import { handleLogoTextError } from "utils/ImgNotFound";
 import { useNavigate } from "react-router-dom";
 import { useFetchSectors } from "hooks/useFetchSectors";
 import { fetchSectorProducts } from "Services/sector";
@@ -68,7 +68,7 @@ function Sectors() {
                       className={`m-0 p-0  borderContainer rounded-3 `}
                       src={`${baseUrl_IMG}/${item?.image}`}
                       alt={`${baseUrl_IMG}/${item?.image}`}
-                      onError={handleImageError}
+                      onError={handleLogoTextError}
                     />
                     <div className="sector-text">
                       <p className="fs-18-semi mb-2 lh-normal">

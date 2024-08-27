@@ -56,7 +56,7 @@ export default function ImporterUnVerifiedPopUpMsg(directTo) {
                     It might take up to 24 hours to fully activate your Buyer
                     account. If you can't access your services after that time,
                     please
-                    <span className="cont-btn"> contact support</span> .
+                    <span className="text-main text-decoration-underline"> contact support</span> .
                   </small>
                 </div>
               </div>

@@ -12,9 +12,7 @@
   font-weight: 400;
 }
 
-.topFactory .arrow-container {
-  gap: 12px;
-}
+
 
 
 .topFactory .arrow-btn-2, .fo3 .arrow-btn-2 {
@@ -34,27 +32,6 @@
 }
 
 
-.topFactory .arrow-btn:hover {
-  background: var(--secondary-color)
-}
-
-/* .topFactory .arrow-btn.disabled {
-  background: rgba(128, 128, 128, 0.542) !important;
-} */
-
-.topFactory .arrow-btn {
-  display: flex;
-  width: 32px;
-  height: 32px;
-  padding: 7px;
-  justify-content: center;
-  align-items: center;
-  flex-shrink: 0;
-  border-radius: 16px;
-  border: 1px solid #6B7B8A;
-  background: #FAFAFA;
-  cursor: pointer;
-}
 
 .topFactory .factoryCard {
   align-items: flex-start;
@@ -69,13 +46,9 @@
 
 }
 
-.factoryCard .sliderImg {
-  display: flex;
+.factoryCard .sliderImg, .fo3 .sliderImg {
   height: 192px;
-  /* width: 26rem; */
-  align-items: flex-start;
-  align-self: stretch;
-
+  object-fit: contain;
 
 }
 
@@ -158,42 +131,16 @@
   transition: transform 0.3s ease-in-out;
 }
 
-.active-dot {
-  color: var(--secondary-color);
-}
 
 
-.dashed-line {
+/* .dashed-line {
   width: 344px;
   height: 1px;
   border: none;
   border-top: 1px dotted black;
-}
+} */
 
-.btn-container-all {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
-.get-all-btn {
-  width: 194px;
-  padding: 14px;
-
-  gap: 10px;
-  border-radius: 10px;
-  background: var(--primary-color);
-  color: var(--white);
-  text-align: center;
-
-  /* Body/Body_9 */
-  font-family: "Inter-semi";
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 24px;
-  /* 160% */
-}
 
 
 .topFactory .text-expand {
@@ -223,16 +170,6 @@
 
 
 
-.topFactory .btn-call-1 {
-  display: flex;
-  padding: 10px 14px;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  border-radius: 8px;
-  background: var(--primary-color);
-  border-color: transparent;
-}
 
 
 
