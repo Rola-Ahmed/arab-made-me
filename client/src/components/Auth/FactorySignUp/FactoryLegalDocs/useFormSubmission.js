@@ -56,6 +56,9 @@ const useFormSubmission = (
       ...(values.IndustrialRegistrationNumber && {
         IndustrialRegistrationNumber: values.IndustrialRegistrationNumber,
       }),
+      ...(values.BusinessRegistrationNumber && {
+        BusinessRegistrationNumber: values.BusinessRegistrationNumber,
+      }),
     };
 
     // try {
