@@ -130,7 +130,7 @@ function ImporterRepDetails() {
                       mediaMaxLen="8"
                       meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
                       setErrorMsg={setErrorMsg}
-                      title="Profile picture"
+                      title="Importer Logo"
                     />
 
                     <UploadDocument

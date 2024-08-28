@@ -12,6 +12,13 @@ import { useFetchSectors } from "hooks/useFetchSectors";
 import TextareaInput from "components/Forms/Shared/TextareaInput";
 import { addImporter } from "Services/importer";
 import FormVlaidtionError from "components/Forms/Shared/FormVlaidtionError";
+import {
+  RegisterationNumbers,
+  requiredStringMax255,
+  phoneValidation,
+  emailValidation,
+  websiteValidation,
+} from "utils/validationUtils";
 
 export default function ImporterRepDetails() {
   let { isLogin } = useContext(UserToken);
@@ -32,50 +39,37 @@ export default function ImporterRepDetails() {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  let phoneValidation = Yup.string()
-    .required("Input Field is Required")
-    .matches(/^[0-9]+$/, "Input Field should contain numbers only")
-    .min(6, "min length is 6")
-    .max(15, "max length is 15");
-
   let validationSchema = Yup.object().shape({
     // userType: Yup.string(),
 
-    repName: Yup.string()
-      .max(50, "max length is 50")
-      .required("Input field is Required"),
+    repName: requiredStringMax255,
 
-    importerName: Yup.string()
-      .max(50, "max length is 50")
-      .required("Input field is Required"),
+    importerName: requiredStringMax255,
 
-    repEmail: Yup.string()
-      .email("Invalid email")
-      .required("Input Field is Required")
-      .max(255, "max length is 255"),
+    repEmail: emailValidation,
 
     repPhone: phoneValidation,
 
-    WhatsappPhone: Yup.string()
-      .matches(/^[0-9]+$/, "Input Field should contain numbers only")
-      .min(6, "min length is 6")
-      .max(15, "max length is 15"),
+    WhatsappPhone: phoneValidation,
 
-    commercialRegisterationNumber: Yup.string()
-      .matches(/^[0-9]+$/, "Input Field should contain numbers only")
-      .min(8, "min length is 8")
-      .max(16, "max length is 16"),
+    commercialRegisterationNumber: RegisterationNumbers([
+      Yup.ref("vatNumber"),
+      Yup.ref("importerLicenseNumber"),
+    ]),
+    vatNumber: RegisterationNumbers([
+      Yup.ref("importerLicenseNumber"),
+      Yup.ref("commercialRegisterationNumber"),
+    ]),
+    importerLicenseNumber: RegisterationNumbers([
+      Yup.ref("vatNumber"),
+      Yup.ref("commercialRegisterationNumber"),
+    ]),
 
-    website: Yup.string().matches(
-      /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,63}([/?#]\S*)?$/,
-      "Invalid URL"
-    ),
+    website: websiteValidation,
 
     address: Yup.string().max(255, "max length is 255"),
 
-    description: Yup.string()
-      .required("Input Field is Required")
-      .max(255, "max legnth is 255"),
+    description: requiredStringMax255,
   });
 
   let formValidation = useFormik({
@@ -100,6 +94,8 @@ export default function ImporterRepDetails() {
       address: "",
 
       allowEmailNotification: "false",
+      vatNumber: "",
+      importerLicenseNumber: "",
     },
     validationSchema,
     onSubmit: submitForm,
@@ -137,6 +133,8 @@ export default function ImporterRepDetails() {
       commercialRegisterationNumber,
       WhatsappPhone,
       WhatsappPhoneCode,
+      importerLicenseNumber,
+      vatNumber,
     } = values;
     let data = {
       name: importerName,
@@ -147,12 +145,12 @@ export default function ImporterRepDetails() {
       country,
       sectorId,
       allowEmailNotification,
+      importerLicenseNumber,
+      commercialRegisterationNumber,
+      vatNumber,
       socialLinks: {},
-      ...(values.address && { address: [address] }),
+      ...(address && { address: [address] }),
       ...(website && { website: website }),
-      ...(commercialRegisterationNumber && {
-        commercialRegisterationNumber: commercialRegisterationNumber,
-      }),
     };
 
     if (WhatsappPhone !== "")
@@ -170,6 +168,7 @@ export default function ImporterRepDetails() {
       setCurrentUserData((prevUserData) => ({
         ...prevUserData,
         importerId: result?.data?.importer?.id,
+        continueProfilePath: "buyerRegistration/LegalDocuments",
       }));
     } else {
       setErrorMsg((prevErrors) => ({
@@ -250,13 +249,6 @@ export default function ImporterRepDetails() {
                       vlaidationName="importerName"
                     />
                   </div>
-
-                  {/* <TextareaInput
-                vlaidationName="importerName"
-                formValidation={formValidation}
-                isRequired={true}
-                title="Buyer Name "
-              /> */}
 
                   <div className="col-12">
                     <InputField
@@ -373,10 +365,27 @@ export default function ImporterRepDetails() {
 
                   <div className="col-12">
                     <InputField
-                      isRequired={false}
+                      isRequired={true}
                       title={"commercial Registeration Number"}
                       formValidation={formValidation}
                       vlaidationName={"commercialRegisterationNumber"}
+                    />
+                  </div>
+
+                  <div className="col-12">
+                    <InputField
+                      isRequired={true}
+                      title="importer License Number"
+                      formValidation={formValidation}
+                      vlaidationName="importerLicenseNumber"
+                    />
+                  </div>
+                  <div className="col-12">
+                    <InputField
+                      isRequired={true}
+                      title="Vat Number"
+                      formValidation={formValidation}
+                      vlaidationName="vatNumber"
                     />
                   </div>
 

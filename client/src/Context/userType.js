@@ -1,15 +1,16 @@
 import { createContext, useState, useContext, useEffect } from "react";
-import axios from "axios";
-import { baseUrl } from "config.js";
-
 import { UserToken } from "Context/userToken";
 import { jwtDecode } from "jwt-decode";
+import { getUser } from "Services/UserAuth";
+import { fetchOneFactory } from "Services/factory";
+import { fetchOneImporter } from "Services/importer";
 
 // Create the user context
 export const userDetails = createContext("");
 
 export function UserTypeProvider({ children }) {
   let { isLogin, setIsLogin } = useContext(UserToken);
+  const [loading, setLoading] = useState(true);
 
   // State for user data
   // const [currentUserData, setCurrentUserData] = useState(() => "");
@@ -37,6 +38,7 @@ export function UserTypeProvider({ children }) {
     // adminName: null,
     datacompletelyLoaded: true,
   };
+  const [currentUserData, setCurrentUserData] = useState(itialValues);
 
   // if there is any error then remove userdata and set  datacompletelyLoaded: false
   const errorCase = () => {
@@ -45,8 +47,6 @@ export function UserTypeProvider({ children }) {
       datacompletelyLoaded: false,
     }));
   };
-  const [currentUserData, setCurrentUserData] = useState(itialValues);
-  const [loading, setLoading] = useState(true);
 
   async function getCurrentUser() {
     let decodedToken = "";
@@ -57,129 +57,104 @@ export function UserTypeProvider({ children }) {
       return;
     }
 
-    try {
-      let config = {
-        method: "get",
-        url: `${baseUrl}/users/${decodedToken}`,
-      };
+    let result = await getUser(decodedToken);
 
-      const response = await axios.request(config);
+    console.log("result user", result);
 
-      if (response.data.message === "done") {
-        setAndStoreData((prevVal) => ({
-          ...prevVal,
-          userRole: response.data.users.role,
-          // userName: response.data.users.name?.join(' '),
-          userName: response.data.users.name?.[0],
+    if (result?.success) {
+      let output = result?.data?.users;
+      setAndStoreData((prevVal) => ({
+        ...prevVal,
+        userRole: output?.role,
+        // userName: response.data.users.name?.join(' '),
+        userName: output?.name?.[0],
 
-          userID: response.data.users.id,
-          userEmail: response.data.users.email,
+        userID: output?.id,
+        userEmail: output?.email,
 
-          importerId: response?.data?.users?.importerId,
-          factoryId: response?.data?.users?.factoryId,
-          // datacompletelyLoaded:1
-          datacompletelyLoaded:
-            response?.data?.users?.importerId === null &&
-            response?.data?.users?.factoryId == null
-              ? false
-              : true,
+        importerId: output?.importerId,
+        factoryId: output?.factoryId,
+        // datacompletelyLoaded:1
+        datacompletelyLoaded:
+          output?.importerId === null && output?.factoryId == null
+            ? false
+            : true,
 
-          ...(response.data.users.role == "user" && {
-            continueProfilePath: "userType",
-          }),
-        }));
-      } else {
-        setIsLogin("");
-        localStorage.clear();
-      }
-    } catch (error) {
-      // console.log("error",error.message=='timeout of 5000ms exceeded')
-      // if (error?.response?.data?.message == "users not found"  || error.message=='timeout of 5000ms exceeded') {
-      if (error?.response?.data?.message == "users not found") {
-        setIsLogin("");
-        localStorage.clear();
-        errorCase();
-      }
-    } finally {
-      setLoading(false);
+        ...(output?.role == "user" && {
+          continueProfilePath: "userType",
+        }),
+      }));
+    } else if (result?.error == "users not found") {
+      setIsLogin("");
+      localStorage.clear();
+      errorCase();
+    } else {
+      // error message occured
+      setIsLogin("");
+      localStorage.clear();
     }
+    setLoading(false);
   }
 
   async function getFactory() {
-    if (currentUserData.factoryId !== null) {
-      let configFactory = {
-        method: "get",
+    let result = await fetchOneFactory(currentUserData?.factoryId);
 
-        url: `${baseUrl}/factories/${currentUserData.factoryId}`,
-      };
+    console.log("result fetchOneFactory", result);
+    if (result?.success) {
+      let path = null;
 
-      axios
-        .request(configFactory)
-        .then((response) => {
-          if (response.data.message === "done") {
-            let path = null;
+      let output = result?.data?.factories;
 
-            if (response.data.factories?.name == null) {
-              path = "CompanyDetails";
-            } else if (
-              response.data.factories?.qualityCertificates == null ||
-              response.data.factories?.coverVideo == null ||
-              response.data.factories?.images == null ||
-              response.data.factories?.coverImage == null
-            ) {
-              path = "CompanyDetails/MircoSiteDocs";
-            } else if (
-              response.data.factories?.repName == null ||
-              response.data.factories?.repPhone == null ||
-              response.data.factories?.repEmail == null
-            ) {
-              path = "CompanyDetails/RepresentiveDetails";
-            } else if (response.data.factories?.legalDocs == null) {
-              path = "CompanyDetails/LegalDocuments";
-            }
-            // console.log("path", path);
+      if (output?.name == null) {
+        path = "CompanyDetails";
+      } else if (
+        output?.qualityCertificates == null ||
+        output?.coverVideo == null ||
+        output?.images == null ||
+        output?.coverImage == null
+      ) {
+        path = "CompanyDetails/MircoSiteDocs";
+      } else if (
+        output?.repName == null ||
+        output?.repPhone == null ||
+        output?.repEmail == null
+      ) {
+        path = "CompanyDetails/RepresentiveDetails";
+      } else if (output?.legalDocs == null) {
+        path = "CompanyDetails/LegalDocuments";
+      }
 
-
-
-            setAndStoreData((prevVal) => ({
-              ...prevVal,
-              factoryVerified: response.data.factories.verified,
-              // FactoryName:response.data.factories?.repName?.[0],
-              FactoryName: response.data.factories?.name,
-              factoryRepEmail: response.data.factories?.repEmail,
-              factoryEmailActivated: response.data.factories.emailActivated,
-              datacompletelyLoaded: false,
-              profile: response.data.factories.coverImage,
-              continueProfilePath: path,
-            }));
-          }
-        })
-        .catch((error) => {});
+      setAndStoreData((prevVal) => ({
+        ...prevVal,
+        factoryVerified: output?.verified,
+        FactoryName: output?.name,
+        factoryRepEmail: output?.repEmail,
+        factoryEmailActivated: output?.emailActivated,
+        datacompletelyLoaded: false,
+        profile: output?.coverImage,
+        continueProfilePath: path,
+      }));
     }
   }
   async function getImporter() {
-    if (currentUserData.importerId !== null) {
-      let configFactory = {
-        method: "get",
-        url: `${baseUrl}/importers/${currentUserData.importerId}`,
-      };
+    const result = await fetchOneImporter(currentUserData?.importerId, {});
 
-      axios
-        .request(configFactory)
-        .then((response) => {
-          if (response.data.message == "done") {
-            setAndStoreData((prevData) => ({
-              ...prevData,
-              importerVerified: response.data.importers.verified,
-              importerName: response.data.importers?.repName,
-              importerEmail: response.data.importers?.repEmail,
-              importerEmailActivated: response.data.importers.emailActivated,
-              datacompletelyLoaded: false,
-              profile: response.data.importers.image,
-            }));
-          }
-        })
-        .catch((error) => {});
+    let path = "";
+    if (result?.success) {
+      let output = result?.data?.importers;
+      if (!output?.repName) {
+        path = "buyerRegistration";
+      }
+      setAndStoreData((prevData) => ({
+        ...prevData,
+        importerVerified: output?.verified,
+        importerName: output?.repName,
+        importerEmail: output?.repEmail,
+        importerEmailActivated: output?.emailActivated,
+        datacompletelyLoaded: false,
+        profile: output?.image,
+        continueProfilePath: path,
+      }));
     }
   }
 
