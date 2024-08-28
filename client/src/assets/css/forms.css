@@ -226,7 +226,7 @@
   
  
 
-  .register-msg .img-text {
+  .register-msg .img-text,.fo3 .title.fac ,.topFactory .text-expand ,.topFactory .title.fac {
     display: -webkit-box;
     -webkit-line-clamp: 1 !important;
     -webkit-box-orient: vertical;

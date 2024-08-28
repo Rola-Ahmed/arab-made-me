@@ -93,7 +93,7 @@ export default function TopFactories(props) {
 
   return (
     <>
-      <section className="top-factories margin-sm-screen ">
+      <section className="home-padding-t margin-sm-screen ">
         <IsLoggedIn
           show={modalShow.isLogin}
           onHide={() =>
@@ -146,7 +146,7 @@ export default function TopFactories(props) {
 
               <div
                 // disabled
-                className="arrow-btn next-btn-swipe"
+                className="arrow-btn next-btn-swiper"
               >
                 <i className="fa-solid fa-chevron-right"></i>
               </div>
@@ -166,22 +166,20 @@ export default function TopFactories(props) {
               spaceBetween={0}
               slidesPerView={1}
               breakpoints={{
-                687: {
-                  slidesPerView: 1,
-                  // slidesPerGroup: 4,
+                654: {
+                  slidesPerView: 1.5,
                 },
-                765: {
+
+                775: {
                   slidesPerView: 2,
-                  // slidesPerGroup: 4,
                 },
-                994: {
+
+                1004: {
                   slidesPerView: 3,
-                  // slidesPerGroup: 4,
                 },
 
                 1253: {
                   slidesPerView: 4,
-                  // slidesPerGroup: 4,
                 },
               }}
             >

@@ -1,7 +1,5 @@
 import "./about.css";
 import { homeAbout } from "constants/Images";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 function About() {
   return (

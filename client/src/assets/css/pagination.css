@@ -132,3 +132,13 @@ a:hover {
     cursor: pointer;
     margin-right: 3%;
 }
+
+
+
+.btn-text {
+    font-family: "Inter-med";
+    font-size: 0.8rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%;
+  }

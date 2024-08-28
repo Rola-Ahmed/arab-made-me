@@ -136,7 +136,7 @@ function SourcingHub() {
       <section className="margin-sm-screen">
         <div className={`container sourcing-h-hom   home-padding-y `}>
           <p
-            className={`header-Title  ${
+            className={`header-Title pb-3 ${
               currentLang == "ar" && "ar-text-left"
             } `}
           >

@@ -2,42 +2,14 @@
   display: grid;
   gap: 29px;
   padding-top: 130px;
+  
 }
-
-
-
-.topFactory .header-Title p {
-  color: var(--Gray-500);
-  font-size: 20px;
-  font-weight: 400;
-}
-
-
-
-
-.topFactory .arrow-btn-2, .fo3 .arrow-btn-2 {
-  background: transparent;
-  top: 9px;
-  z-index: 5;
-  border: none;
-  cursor: pointer;
-}
-
-.arrowL {
-  left: 0;
-}
-
-.arrowR {
-  right: 0
-}
-
 
 
 .topFactory .factoryCard {
   align-items: flex-start;
   grid-template-columns: repeat(4, 1fr);
   width: 100%;
-  /* background-color: red !important; */
 }
 
 .topFactory .factoryCard .card {
@@ -65,95 +37,11 @@
   overflow: hidden;
 }
 
-.topFactory .title.fac {
-  display: -webkit-box;
-  -webkit-line-clamp: 1 !important;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-
-}
 
 
-
-
-
-
-
-.topFactory .btn-container {
-  display: flex;
-  /* gap:12px; */
-  justify-content: space-between;
-  width: 100%;
-
-}
-
-.topFactory .btn-container .btn-1 {
-  color: #FAFAFA;
-  border-radius: 8px;
-  background: var(--primary-color);
-  display: flex;
-  padding: 10px 20px;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-}
-
-.topFactory .btn-container .btn-1 .rfq-icon {
-
-  width: 20px;
-  height: 20px;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-}
-
-
-.topFactory .btn-container .btn-2-factory {
-  display: flex;
-  padding: 10px 20px;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  border-radius: 8px;
-  background-color: white;
-  border: 1px solid var(--gray-200);
-  font-family: "Inter-med";
-}
-
-.top-factories {
-  padding-bottom: 70px;
-}
-
-
-
-/* Add hover styles for the custom dot */
-.custom-dot {
-  transition: transform 0.3s ease-in-out;
-}
-
-
-
-/* .dashed-line {
-  width: 344px;
-  height: 1px;
-  border: none;
-  border-top: 1px dotted black;
-} */
-
-
-
-
-.topFactory .text-expand {
-  display: -webkit-box;
-  -webkit-line-clamp: 1 !important;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
 
 .topFactory .dropdown-menu-top {
-  /* display: none; */
   position: absolute;
-  /* top: 138px; */
   top: 141px;
   right: 0;
   border: 1px solid var(--Gray-300);
@@ -168,32 +56,9 @@
 
 
 
+/* @media (max-width: 765px) {
 
 
-
-
-
-.topFactory .slick-track {
-  /* width: auto !important; */
-  /* width: 3652px !important; */
-  /* width:100% !important; */
-}
-
-
-.topFactory .slick-slide.slick-active.slick-cloned {
-  display: none !important;
-}
-
-.slick-track {
-  margin-left: 0 !important;
-}
-
-@media (max-width: 765px) {
-
-
-  /* .top-factories .sub-Title {
-    font-size: 2.3vw;
-  } */
 
   .topFactory .factoryCard .card {
     width: 514px !important;
@@ -212,4 +77,4 @@
   .topFactory .factoryCard .card {
     width: 82vw !important;
   }
-}
+} */

@@ -6,19 +6,6 @@
     gap: 29px;
 } */
 
-.search-filter-container {
-    display: flex;
-    width: 1248px;
-    align-items: flex-start;
-    gap: 13px;
-}
-
-.gap-sector {
-    /* gap:6px */
-    column-gap: 10px;
-    padding-bottom: 2px;
-}
-
 
 
 
@@ -44,83 +31,6 @@
     background: #FFF;
 }
 
-.search-filter-container .type-filter-input {
-    display: flex;
-    width: 1054px;
-    /* padding: 22px 18px; */
-    align-items: center;
-    gap: 10px;
-    flex-shrink: 0;
-}
-
-.search-filter-container .type-filter-input input {
-    color: var(--label-color, #687799);
-
-    /* label-text */
-    font-family: Inter-reg;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-}
-
-.filter-btn {
-    border-radius: 10px;
-    border: 1px solid #E3E6EA;
-    background: #F1F2F4;
-    display: flex;
-    width: 181px;
-    padding: 20px 30px;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    flex-shrink: 0;
-}
-
-.filter-btn {
-    display: flex;
-    width: 181px;
-    padding: 20px 30px;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    flex-shrink: 0;
-    height: 78.16px;
-}
-
-.filter-icon-1 {
-    display: flex;
-    width: 24px;
-    height: 25.16px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex-shrink: 0;
-    width: 24px;
-    height: 24px;
-    flex-shrink: 0;
-}
-
-.filter-btn p {
-    color: var(--gray-1, #687799);
-    text-align: center;
-    font-family: Inter-reg;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 24px;
-}
-
-
-
-
-
-
-
-
-
-
-
 
 .fo3 .row.gap {
     /* row-gap: 25px; */
@@ -141,17 +51,6 @@
 
 
 
-.fo3 .title.fac {
-    display: -webkit-box;
-    -webkit-line-clamp: 1 !important;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-
-}
-
-
-
-
 
 .factories .profile-img, .topFactory .profile-img {
     width: 100%;
@@ -167,7 +66,7 @@
 }
 
 
-.fo3 .btn-container {
+.fo3 .btn-container,.topFactory .btn-container  {
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -207,16 +106,10 @@
     font-family: "Inter-med";
 }
 
-.top-factories {
-    padding-bottom: 70px;
-}
 
 
 
-/* Add hover styles for the custom dot */
-.custom-dot {
-    transition: transform 0.3s ease-in-out;
-}
+
 
 
 
