@@ -5,7 +5,6 @@ import { logo } from "constants/Images";
 import { userDetails } from "Context/userType";
 import { UserToken } from "Context/userToken";
 import AllUsersDropListComp from "./AllUsersDropListComp";
-import useGlobalMessage from "hooks/useGlobalMessage";
 import { useAppTranslation } from "config.js";
 
 import "./navbar.css";
@@ -18,7 +17,6 @@ function Navbar(props) {
   let { currentUserData } = useContext(userDetails);
 
   // pop up message
-  const { setGlobalMsg } = useGlobalMessage();
   const { trans: t, currentLang } = useAppTranslation();
 
   const logOuut = () => {
