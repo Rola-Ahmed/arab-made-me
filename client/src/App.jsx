@@ -14,8 +14,6 @@ import Errorpage from "components/Errorpage";
 // contact for arab-made itself
 import ContactArabMade from "components/Contact/Contact";
 
-// conact page for each factory
-import ContactSupplierFactoryPg from "components/Factories/ContactSupplierFactoryPg/ContactSupplierFactoryPg";
 
 // forms
 // OutSide Formsclean
@@ -87,11 +85,7 @@ const router = createBrowserRouter([
         element: <Factorypage />,
       },
 
-      // market palces end-----------------------------
-      {
-        path: "/contactCompany",
-        element: <ContactSupplierFactoryPg />,
-      },
+      
       {
         // `contactsupplier?userId=${factoryDetails?.id}&importerName=${factoryDetails?.name}`,
         path: "/contactsupplier",

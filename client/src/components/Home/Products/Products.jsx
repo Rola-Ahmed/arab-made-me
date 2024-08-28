@@ -23,7 +23,7 @@ import { baseUrl, baseUrl_IMG, useAppTranslation } from "config.js";
 import StarRating from "components/Shared/stars";
 
 // const functions
-import { handleImageError } from "utils/ImgNotFound";
+import { handleImageError, handleProfileError } from "utils/ImgNotFound";
 import { BtnDescription } from "constants/BtnDescription";
 
 // modals validation
@@ -293,7 +293,7 @@ function Products(title) {
                               className="cursor"
                               src={`${baseUrl_IMG}/${productItem?.factory?.coverImage}`}
                               alt="factory cover image"
-                              onError={handleImageError}
+                              onError={handleProfileError}
                               onClick={() => {
                                 navigate(
                                   `/factoryPage/${productItem?.factoryId}-${productItem?.factory?.name}`

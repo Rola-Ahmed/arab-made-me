@@ -193,7 +193,7 @@ function FactoryLegalDocs() {
                   <div className="col-12">
                     <InputField
                       isRequired={true}
-                      title={"Business Registration Number "}
+                      title="Business Registration Number"
                       formValidation={formValidation}
                       vlaidationName={"BusinessRegistrationNumber"}
                     />

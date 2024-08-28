@@ -224,6 +224,13 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
     taxRegisterationNumber: factoryProfile?.taxRegisterationNumber || "",
     commercialRegisterationNumber:
       factoryProfile?.commercialRegisterationNumber || "",
+
+     
+      IndustrialLicenseNumber: factoryProfile?.IndustrialLicenseNumber || "",
+      IndustrialRegistrationNumber: factoryProfile?.IndustrialRegistrationNumber || "",
+      BusinessRegistrationNumber:factoryProfile?.BusinessRegistrationNumber ||  "",
+
+
     address: factoryProfile?.address?.[0] || "",
     description: factoryProfile?.description || "",
     whyUs: factoryProfile?.whyUs || "",
@@ -239,24 +246,42 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
     validationSchema: Yup.object().shape({
       factoryName: nameValidation,
       yearOfEstablishmint: Yup.string()
-        // .required("Input Field is Required")
+        .required("Input Field is Required")
         .matches(/^[0-9]+$/, "Input Field should contain numbers only")
         .min(4, "min length is 4")
         .max(4, "max length is 4"),
 
       taxRegisterationNumber: Yup.string()
-        // .required("Input Field is Required")
-        .matches(/^[0-9]+$/, "Input Field should contain numbers only")
-        .min(8, "min length is 8")
-        .max(16, "max length is 16"),
-      commercialRegisterationNumber: Yup.string()
-        // .required("Input Field is Required")
+        .required("Input Field is Required")
         .matches(/^[0-9]+$/, "Input Field should contain numbers only")
         .min(8, "min length is 8")
         .max(16, "max length is 16"),
 
+      commercialRegisterationNumber: Yup.string()
+        .required("Input Field is Required")
+        .matches(/^[0-9]+$/, "Input Field should contain numbers only")
+        .min(8, "min length is 8")
+        .max(16, "max length is 16"),
+
+        IndustrialLicenseNumber:  Yup.string()
+        .required("Input Field is Required")
+        .matches(/^[0-9]+$/, "Input Field should contain numbers only")
+        .min(8, "min length is 8")
+        .max(16, "max length is 16"),
+      IndustrialRegistrationNumber:  Yup.string()
+        .required("Input Field is Required")
+        .matches(/^[0-9]+$/, "Input Field should contain numbers only")
+        .min(8, "min length is 8")
+        .max(16, "max length is 16"),
+      BusinessRegistrationNumber:  Yup.string()
+        .required("Input Field is Required")
+        .matches(/^[0-9]+$/, "Input Field should contain numbers only")
+        .min(8, "min length is 8")
+        .max(16, "max length is 16"),
+
+
       address: Yup.string()
-        // .required("Input Field is Required")
+        .required("Input Field is Required")
         .min(6, "min length is 6")
         .max(255, "max length is 255"),
 
@@ -265,7 +290,7 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
         .min(6, "min length is 6")
         .max(255, "max length is 255"),
       whyUs: Yup.string()
-        // .required("Input Field is Required")
+        .required("Input Field is Required")
         .min(6, "min length is 6")
         .max(255, "max length is 255"),
       factoryPhone: phoneValidation,
@@ -444,6 +469,11 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
         numberOfEmployees: values.numberOfEmployees,
         commercialRegisterationNumber: values.commercialRegisterationNumber,
         taxRegisterationNumber: values.taxRegisterationNumber,
+        IndustrialLicenseNumber:values.IndustrialLicenseNumber,
+
+     
+        IndustrialRegistrationNumber: values.IndustrialRegistrationNumber,
+        BusinessRegistrationNumber: values.BusinessRegistrationNumber,
 
         description: values.description,
         address: [values.address],
@@ -675,7 +705,8 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
               <FactoryInforamtion
                 Button={Button}
                 factoryProfile={factoryProfile}
-                handleShow={handleShow}  show={show}
+                handleShow={handleShow}
+                  show={show}
                 errorMsg={errorMsg}
                 factoryInfoValidation={factoryInfoValidation}
                 handleClose={handleClose}

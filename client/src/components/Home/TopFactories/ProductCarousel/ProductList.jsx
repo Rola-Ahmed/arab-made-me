@@ -1,4 +1,4 @@
-import { handleImageError } from "utils/ImgNotFound";
+import { handleProfileError } from "utils/ImgNotFound";
 import { useNavigate } from "react-router-dom";
 import { baseUrl_IMG } from "config.js";
 
@@ -10,16 +10,16 @@ export default function ProductList(props) {
     <div
       className="subProfileCont cursor rounded-5"
       onClick={() => {
-        localStorage.setItem("ToProductPage", true);
+        // ("ToProductPage", true);
         navigate(`/productPage/${item?.id}-${item?.name}`);
       }}
       key={index}
     >
       <img
         src={`${baseUrl_IMG}/${item?.coverImage}`}
-        className="w-100 h-100"
+        className="w-100 h-100 object-fit-contain"
         alt={`slide ${item?.coverImage} `}
-        onError={handleImageError}
+        onError={handleProfileError}
       />
     </div>
   );

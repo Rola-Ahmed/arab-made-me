@@ -156,15 +156,18 @@ function onSubmitSocial(values){
 }
 function onSubmitfactoryInfo(values){
 
-  let {country,address,description,commercialRegisterationNumber,city,exportingCountries,sectorId}=values;
+  let {country,address,description,commercialRegisterationNumber,city,exportingCountries,sectorId, vatNumber,
+    importerLicenseNumber}=values;
 let  data = {
     country,
     address:[address],
     description,
-    ...(commercialRegisterationNumber && {  commercialRegisterationNumber :commercialRegisterationNumber }),
     ...(city && {  city :city }),
     ...(sectorId && {  sectorId :sectorId }),
     ...(exportingCountries?.length!== 0 && {  exportingCountries :exportingCountries }),
+    vatNumber,
+    importerLicenseNumber,
+    commercialRegisterationNumber,
   };
 
   submitForm(data)
@@ -370,6 +373,30 @@ let  data = {
                 />
                        
                       </div>
+
+
+                      <div className="col-6">
+                      <ReadOnly
+                title="commercial Registeration Number"
+                value={ImporterProfile?.commercialRegisterationNumber}
+                />
+                      </div>
+
+                      
+                      <div className="col-6">
+                      <ReadOnly
+                title="vat Number"
+                value={ImporterProfile?.vatNumber}
+                />
+                      </div>
+
+                      <div className="col-6">
+                      <ReadOnly
+                title="importer License Number"
+                value={ImporterProfile?.importerLicenseNumber}
+                />
+                      </div>
+
 
                       <div className="col-12">
                         <button
@@ -716,6 +743,47 @@ let  data = {
 
                     </div>
 
+                    <div className="col-6">
+                    <InputField
+                      isRequired={false}
+                      title={"website"}
+                      formValidation={AccountInfoValidation}
+                      vlaidationName={"website"}
+                    />
+                  </div>
+
+                  <div className="col-6">
+                    <InputField
+                      isRequired={true}
+                      title="importer License Number"
+                      formValidation={AccountInfoValidation}
+                      vlaidationName="importerLicenseNumber"
+                    />
+                  </div>
+
+
+                  {/*  */}
+
+                  <div className="col-6">
+                    <InputField
+                      isRequired={true}
+                      title={"commercial Registeration Number"}
+                      formValidation={AccountInfoValidation}
+                      vlaidationName={"commercialRegisterationNumber"}
+                    />
+                  </div>
+                  <div className="col-6">
+                    <InputField
+                      isRequired={true}
+                      title="Vat Number"
+                      formValidation={AccountInfoValidation}
+                      vlaidationName="vatNumber"
+                    />
+                  </div>
+
+
+
+
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
                       <button
                         variant="secondary"
@@ -827,6 +895,40 @@ let  data = {
                        />
                       
                     </div>
+
+
+                    <div className="col-6">
+
+<InputField
+   formValidation={ImporterInfoValidation}
+   vlaidationName='commercialRegisterationNumber'
+   isRequired={true}
+   title="commercial Registeration Number"
+   />
+  
+</div>
+
+<div className="col-6">
+
+<InputField
+   formValidation={ImporterInfoValidation}
+   vlaidationName='vatNumber'
+   isRequired={true}
+   title="vat Number"
+   />
+  
+</div>
+
+<div className="col-6">
+
+<InputField
+   formValidation={ImporterInfoValidation}
+   vlaidationName='importerLicenseNumber'
+   isRequired={true}
+   title="importer License Number"
+   />
+  
+</div>
 
                     <div className="col-6">
 

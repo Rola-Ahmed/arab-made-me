@@ -1,7 +1,6 @@
 import { Button, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 export default function FactoryUnVerifiedModal({ show, onHide, goToPath, hi }) {
-  console.log("directTo", show, onHide, goToPath,hi);
   let navigate = useNavigate();
   return (
     <Modal

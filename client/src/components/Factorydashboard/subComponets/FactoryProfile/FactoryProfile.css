@@ -28,7 +28,7 @@
 }
 
 .factory-profile .factory-logo img {
-    object-fit: cover;
+    object-fit: contain;
 }
 
 
@@ -164,15 +164,8 @@
 
 
 .factory-profile .title-contianer-input p {
-    /* color: var(--Light-Text-Primary, #1C1C1E); */
-
     font-family: "Inter-semi";
-
     font-size: 24px;
-    /* font-style: normal; */
-    /* font-weight: 500; */
-    /* line-height: 28px; */
-    /* align-self: stretch; */
 }
 
 .factory-profile .img-name {
@@ -564,10 +557,11 @@
 
 
 .team-img {
-    object-fit: fill;
     width: 5rem;
     height: 5rem;
     border-radius: 50px;
+    object-fit: contain;
+    border: 1px solid #00000017;
 }
 
 

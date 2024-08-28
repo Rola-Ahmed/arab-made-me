@@ -1,19 +1,24 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
+import {
+  RegisterationNumbers,
+  requiredStringMax255,
+  emailValidation,
+} from "utils/validationUtils";
 
 const useFormValidation = (submitAccInfo,onSubmitSocial,onSubmitfactoryInfo,ImporterProfile) => {
 
 
   // valirable validations   // update data
-  let emailValidation = Yup.string()
-  .email("Invalid email")
-  .required("Input Field is Required")
-  .max(255, "max length is 255");
+  // let emailValidation = Yup.string()
+  // .email("Invalid email")
+  // .required("Input Field is Required")
+  // .max(255, "max length is 255");
 
-let nameValidation = Yup.string()
-  .required("Input Field is Required")
-  .max(25, "max length is 25");
+// let nameValidation = Yup.string()
+//   .required("Input Field is Required")
+//   .max(25, "max length is 25");
 let phoneValidation = Yup.string()
   .required("Input Field is Required")
   // .matches(/^[0-9]+$/, "Input Field should contain numbers only")
@@ -31,6 +36,10 @@ let phoneValidation = Yup.string()
     repEmail: ImporterProfile?.repEmail || "",
     repPhone: ImporterProfile?.repPhone || "",
     name: ImporterProfile?.name || "",
+    
+    commercialRegisterationNumber: ImporterProfile?.commercialRegisterationNumber || "",
+    vatNumber: ImporterProfile?.vatNumber || "",
+    importerLicenseNumber:ImporterProfile?.importerLicenseNumber || "",
   }
 let initalSocialAcc  ={
   instgramLink: ImporterProfile?.socialLinks?.instagram || "",
@@ -57,10 +66,23 @@ let initalImporterInfo= {
   let AccountInfoValidation = useFormik({
     initialValues: initalAccInfo,
     validationSchema: Yup.object().shape({
-      repFullName: nameValidation,
-      name: nameValidation,
+      repFullName: requiredStringMax255,
+      name: requiredStringMax255,
       repEmail: emailValidation,
       repPhone: phoneValidation,
+      commercialRegisterationNumber: RegisterationNumbers([
+        Yup.ref("vatNumber"),
+        Yup.ref("importerLicenseNumber"),
+      ]),
+      vatNumber: RegisterationNumbers([
+        Yup.ref("importerLicenseNumber"),
+        Yup.ref("commercialRegisterationNumber"),
+      ]),
+      importerLicenseNumber: RegisterationNumbers([
+        Yup.ref("vatNumber"),
+        Yup.ref("commercialRegisterationNumber"),
+      ]),
+
     }),
     onSubmit: submitAccInfo,
   });
@@ -76,6 +98,7 @@ let initalImporterInfo= {
     }),
     onSubmit: onSubmitSocial,
   });
+
 
 
 
@@ -105,7 +128,7 @@ let initalImporterInfo= {
   });
 
 
-
+  console.log("AccountInfoValidation",AccountInfoValidation)
   return {initalAccInfo,AccountInfoValidation,initalSocialAcc,SocialAccountValidation,ImporterInfoValidation,initalImporterInfo};
 };
 

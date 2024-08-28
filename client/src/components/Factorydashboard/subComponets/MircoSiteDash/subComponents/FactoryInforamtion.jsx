@@ -19,100 +19,115 @@ export default function FactoryInforamtion(props) {
   return (
     <>
       <div id="FactoryInforamtion"></div>
-      <div className="container-profile-input w-100">
-        <div className="title-contianer-input w-100">
-          <p>Factory Inforamtion</p>
-          <div className="w-100 ">
-            <div className="row  row-gap">
-              <div className="col-6">
-                <ReadOnly title="Factory Name" value={factoryProfile?.name} />
-              </div>
-              <div className="col-6">
-                <ReadOnly
-                  title="Year Of establishment"
-                  value={factoryProfile?.yearOfEstablishmint}
-                />
-              </div>
-              <div className="col-6">
-                <ReadOnly title="Country" value={factoryProfile?.country} />
-              </div>
+      <div className="container-profile-input w-100 d-flex gap-16">
+        <p className="fs-24-semi">Factory Inforamtion</p>
+        <div className="w-100 ">
+          <div className="row  row-gap">
+            <div className="col-6">
+              <ReadOnly title="Factory Name" value={factoryProfile?.name} />
+            </div>
+            <div className="col-6">
+              <ReadOnly
+                title="Year Of establishment"
+                value={factoryProfile?.yearOfEstablishmint}
+              />
+            </div>
+            <div className="col-6">
+              <ReadOnly title="Country" value={factoryProfile?.country} />
+            </div>
 
-              <div className="col-6">
-                <ReadOnly title="City" value={factoryProfile?.city} />
-              </div>
+            <div className="col-6">
+              <ReadOnly title="City" value={factoryProfile?.city} />
+            </div>
 
-              <div className="col-6">
-                <ReadOnly
-                  title="Yearly Sales Income"
-                  value={factoryProfile?.yearlySalesIncome}
-                />
-              </div>
+            <div className="col-6">
+              <ReadOnly
+                title="Yearly Sales Income"
+                value={factoryProfile?.yearlySalesIncome}
+              />
+            </div>
 
-              <div className="col-6">
-                <ReadOnly
-                  title="Number of employees"
-                  value={factoryProfile?.numberOfEmployees}
-                />
-              </div>
+            <div className="col-6">
+              <ReadOnly
+                title="Number of employees"
+                value={factoryProfile?.numberOfEmployees}
+              />
+            </div>
+            <div className="col-6">
+              <ReadOnly
+                title="Business Registration Number"
+                value={factoryProfile?.BusinessRegistrationNumber}
+              />
+            </div>
 
-              <div className="col-6">
-                <ReadOnly
-                  title="Business Registration Number"
-                  value={factoryProfile?.taxRegisterationNumber}
-                />
-              </div>
+            <div className="col-6">
+              <ReadOnly
+                title="Vat Number"
+                value={factoryProfile?.taxRegisterationNumber}
+              />
+            </div>
 
-              <div className="col-6">
-                <ReadOnly
-                  title="commercial Registeration Number"
-                  value={factoryProfile?.commercialRegisterationNumber}
-                />
-              </div>
+            <div className="col-6">
+              <ReadOnly
+                title="Industrial Registration Number"
+                value={factoryProfile?.IndustrialRegistrationNumber}
+              />
+            </div>
 
-              <div className="col-6">
-                <ReadOnly
-                  title="Factory Phone Number"
-                  value={factoryProfile?.phone}
-                />
-              </div>
+            <div className="col-6">
+              <ReadOnly
+                title="Industrial license Number"
+                value={factoryProfile?.IndustrialLicenseNumber}
+              />
+            </div>
 
-              <div className="col-6">
-                <ReadOnly
-                  title="Factory Location"
-                  value={factoryProfile?.address}
-                />
-              </div>
+            <div className="col-6">
+              <ReadOnly
+                title="commercial Registeration Number"
+                value={factoryProfile?.commercialRegisterationNumber}
+              />
+            </div>
 
-              <div className="col-6">
-                <ReadOnly
-                  title="exporting Countries"
-                  value={factoryProfile?.importingCountries?.join(", ")}
-                />
-              </div>
+            <div className="col-6">
+              <ReadOnly
+                title="Factory Phone Number"
+                value={factoryProfile?.phone}
+              />
+            </div>
 
-              <div className="col-6">
-                <ReadOnly
-                  title="Factory description"
-                  value={factoryProfile?.description}
-                />
-              </div>
+            <div className="col-6">
+              <ReadOnly
+                title="Factory Location"
+                value={factoryProfile?.address}
+              />
+            </div>
 
-              <div className="col-6">
-                <ReadOnly title="Why Us" value={factoryProfile?.whyUs} />
-              </div>
+            <div className="col-6">
+              <ReadOnly
+                title="exporting Countries"
+                value={factoryProfile?.importingCountries?.join(", ")}
+              />
+            </div>
 
-              <div className="col-12">
-                <Button
-                  className="btn-edit"
-                  variant="primary"
-                  onClick={() => handleShow("factoryInfoChangeReadOnly")}
-                >
-                  <p className="cursor">Change Factory Information </p>
-                </Button>
-              </div>
+            <div className="col-6">
+              <ReadOnly
+                title="Factory description"
+                value={factoryProfile?.description}
+              />
+            </div>
+
+            <div className="col-6">
+              <ReadOnly title="Why Us" value={factoryProfile?.whyUs} />
             </div>
           </div>
         </div>
+        <Button
+          className="btn-edit mt-2"
+          variant="primary"
+          onClick={() => handleShow("factoryInfoChangeReadOnly")}
+        >
+          <p className="cursor">Change Factory Information </p>
+        </Button>
       </div>
 
       {/* Factory Info Modal update form */}
@@ -226,13 +241,39 @@ export default function FactoryInforamtion(props) {
                           </select>
                         </div>
                       </div>
+                      <div className="col-6">
+                        <InputField
+                          formValidation={factoryInfoValidation}
+                          vlaidationName="BusinessRegistrationNumber"
+                          isRequire={false}
+                          title="Business Registration Number"
+                        />
+                      </div>
 
                       <div className="col-6">
                         <InputField
                           formValidation={factoryInfoValidation}
                           vlaidationName="taxRegisterationNumber"
                           isRequire={false}
-                          title="Business Registration Number"
+                          title="Vat Number"
+                        />
+                      </div>
+
+                      <div className="col-6">
+                        <InputField
+                          isRequired={true}
+                          title={"Industrial Registration Number"}
+                          formValidation={factoryInfoValidation}
+                          vlaidationName={"IndustrialRegistrationNumber"}
+                        />
+                      </div>
+
+                      <div className="col-6">
+                        <InputField
+                          isRequired={true}
+                          title={"Industrial license number"}
+                          formValidation={factoryInfoValidation}
+                          vlaidationName={"IndustrialLicenseNumber"}
                         />
                       </div>
 

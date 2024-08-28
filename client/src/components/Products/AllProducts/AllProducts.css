@@ -240,6 +240,7 @@
     width: 37.039px;
     height: 34px;
     border-radius: 6px;
+    object-fit: contain;
 }
 
 .profile-title {

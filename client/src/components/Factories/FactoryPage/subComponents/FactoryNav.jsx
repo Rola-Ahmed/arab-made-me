@@ -1,8 +1,9 @@
-import { useState } from "react";
-
-export default function FactoryNav({ factoryDetails, handleIsLoggedInBtn,handleSetActive,activeMenu }) {
-
-
+export default function FactoryNav({
+  factoryDetails,
+  handleIsLoggedInBtn,
+  handleSetActive,
+  activeMenu,
+}) {
   function scrollToView(elementId) {
     handleSetActive(elementId);
     const targetElement = document.getElementById(elementId);
@@ -96,7 +97,7 @@ export default function FactoryNav({ factoryDetails, handleIsLoggedInBtn,handleS
         className="btn contact"
         onClick={() => {
           handleIsLoggedInBtn(
-            `contactCompany?factoryId=${factoryDetails?.id}&factoryName=${factoryDetails?.name}`
+            `contactsupplier?userId=${factoryDetails?.userId}&factoryName=${factoryDetails?.name}`
           );
         }}
       >
