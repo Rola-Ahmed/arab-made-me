@@ -37,7 +37,7 @@ export default function TopFactories(props) {
   document.title = "Factory Gallery";
   let { allSectors } = useFetchSectors();
 
-  let location = useLocation();
+  // let location = useLocation();
   let navigate = useNavigate();
   let { isLogin } = useContext(UserToken);
   let { currentUserData } = useContext(userDetails);

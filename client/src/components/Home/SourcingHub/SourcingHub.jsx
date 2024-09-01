@@ -190,7 +190,7 @@ function SourcingHub() {
           <SourcingOffers
             allSourcingOffer={allSourcingOffer}
             apiStatus={offerStatus}
-            // assessFormOPAuth={HandleUsersBtnAccess}
+            assessFormOPAuth={HandleUsersBtnAccess}
           />
 
           <div className="mx-auto pt-60 w-fit-content">
