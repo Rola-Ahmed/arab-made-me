@@ -138,7 +138,7 @@ function OneSourcingReq() {
             </div>
             {/* Grid  */}
             {/* col-xxl-6 col-xl-6   col-lg-6 col-md-6 col-sm-12  */}
-            <div className="container container-po ">
+            <div className="container container-po bg-danger">
               <SourcingRequestInfo
                 requestedData={PosData}
                 handleImageClick={handleImageClick}

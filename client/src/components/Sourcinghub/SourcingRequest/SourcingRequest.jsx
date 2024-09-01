@@ -20,11 +20,15 @@ function Sourcinghub() {
 
   const [reqData, setReqData] = useState([]);
 
+  const [isLoggedReDirect, setisLoggedReDirect] = useState("");
   const [modalShow, setModalShow] = useState({
-    isFactoryVerified: false,
+    //  Indicates that the factory user is allowed and verified.
+    isFactoryAllowedAndVerified: false,
+    // Indicates that a general user is not allowed.
+    isUserNotAllowed: false,
+    //Indicates that a default user is not allowed.
+    isDefaultUserNotAllowed: false,
     isLogin: false,
-    isImporterVerified: false,
-    BecomeAfactory: false,
   });
 
   const [apiLoadingData, setapiLoadingData] = useState({
@@ -67,6 +71,49 @@ function Sourcinghub() {
   // console.log("hiiiiiiiiiiiiiiiiii", currentUserData?.continueProfilePath);
   // console.log("hiiiiiiiiiiiiiiiiii");
 
+  const accessFormSourcingRequest = (directto) => {
+    if (!isLogin) {
+      setModalShow((prevVal) => ({
+        ...prevVal,
+        isLogin: true,
+      }));
+
+      setisLoggedReDirect(`/signIn${directto}`);
+      return;
+    }
+
+    switch (currentUserData?.userRole) {
+      case "importer":
+      case "admin":
+        setModalShow((prevVal) => ({
+          ...prevVal,
+          isUserNotAllowed: true,
+        }));
+        return;
+
+      case "user":
+        setModalShow((prevVal) => ({
+          ...prevVal,
+          isDefaultUserNotAllowed: true,
+        }));
+        return;
+
+      case "factory":
+        console.log("enretrttere");
+        if (currentUserData?.continueProfilePath != null) {
+          setModalShow((prevVal) => ({
+            ...prevVal,
+            isFactoryAllowedAndVerified: true,
+          }));
+          // return;
+          break;
+        }
+
+      default:
+        // console.log(currentUserData?.userRole);
+        navigate(directto);
+    }
+  };
   return (
     <>
       <IsLoggedIn
@@ -77,40 +124,40 @@ function Sourcinghub() {
             isLogin: false,
           }))
         }
-        distination={`/signIn`}
+        distination={isLoggedReDirect}
       />
 
       <UserNotAuthorized
-        show={modalShow.isImporterVerified}
+        show={modalShow.isUserNotAllowed}
         onHide={() =>
           setModalShow((prevVal) => ({
             ...prevVal,
-            isImporterVerified: false,
+            isUserNotAllowed: false,
           }))
         }
         userType="Factory"
       />
       <UserNotAuthorized
-        show={modalShow.isUser}
+        show={modalShow.isDefaultUserNotAllowed}
         onHide={() =>
           setModalShow((prevVal) => ({
             ...prevVal,
-            isUser: false,
+            isDefaultUserNotAllowed: false,
           }))
         }
-        userType="user"
-        goToPath={"CompanyDetails"}
+        userType="User"
+        goToPath="CompanyDetails"
       />
 
       <FactoryUnVerified
-        goToPath={currentUserData?.continueProfilePath}
-        show={modalShow.isFactoryVerified}
+        show={modalShow.isFactoryAllowedAndVerified}
         onHide={() =>
           setModalShow((prevVal) => ({
             ...prevVal,
-            isFactoryVerified: false,
+            isFactoryAllowedAndVerified: false,
           }))
         }
+        goToPath={currentUserData?.continueProfilePath}
       />
 
       <Header title="Sourcing Hub" />
@@ -174,6 +221,7 @@ function Sourcinghub() {
                     setModalShow={setModalShow}
                     isLogin={isLogin}
                     currentUserData={currentUserData}
+                    accessFormSourcingRequest={accessFormSourcingRequest}
                   />
                 </div>
               ))}
