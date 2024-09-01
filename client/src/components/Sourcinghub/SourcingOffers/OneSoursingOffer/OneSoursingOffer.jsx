@@ -1,19 +1,12 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import axios from "axios";
 import { baseUrl } from "config.js";
-
-import { UserToken } from "Context/userToken";
-import { userDetails } from "Context/userType";
 
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import Header from "components/main/Header/Header";
 import ReadOnly from "components/Forms/Shared/ReadOnly";
-
-import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
-import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/ImporterUnVerifiedPopUpMsg";
-import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
 
 import { getMonthName as getDate } from "utils/getMonthName";
 import Loading from "components/Loading/Loading";
@@ -21,15 +14,14 @@ import FactoryInfo from "components/Forms/Shared/FactoryInfo";
 import OfferInfo from "components/Shared/Dashboards/Forms/OfferInfo";
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
 import ErrorToast from "components/ErrorToast";
+import useAuthFormChecks from "components/Forms/hooks/useAuthFormChecks";
 
 function OneSoursingOffer() {
   let navigate = useNavigate();
-  let { isLogin } = useContext(UserToken);
+  let currentUrl = window.location.pathname;
 
   // utils function
   let getMonthName = getDate;
-
-  let { currentUserData } = useContext(userDetails);
 
   const [searchParams] = useSearchParams();
   const factoryId = searchParams.get("factoryId");
@@ -43,13 +35,7 @@ function OneSoursingOffer() {
     pageLoading: false,
     reqInfo: false,
   });
-  const [isLoggedReDirect, setisLoggedReDirect] = useState("");
   const [PosData, setPosData] = useState();
-  const [modalShow, setModalShow] = useState({
-    isLogin: false,
-    isImporterVerified: false,
-    isFactoryVerified: false,
-  });
 
   async function fetchReqData() {
     setIsLoading((prev) => ({
@@ -116,40 +102,6 @@ function OneSoursingOffer() {
     navigate("/");
   }
 
-  function handleButtonClick(loginPath) {
-    if (
-      currentUserData?.importerId !== null &&
-      (currentUserData?.importerVerified === "0" ||
-        !currentUserData?.importerEmailActivated)
-    ) {
-      setModalShow((prevVal) => ({
-        ...prevVal,
-        isImporterVerified: true,
-      }));
-      return;
-    }
-
-    if (currentUserData?.factoryId !== null) {
-      setModalShow((prevVal) => ({
-        ...prevVal,
-        isFactoryVerified: true,
-      }));
-      return;
-    }
-
-    if (!isLogin) {
-      setModalShow((prevVal) => ({
-        ...prevVal,
-        isLogin: true,
-      }));
-
-      setisLoggedReDirect(`/signIn/${loginPath}`);
-      return;
-    }
-
-    navigate(`/${loginPath}`);
-  }
-
   useEffect(() => {
     fetchReqData();
   }, [factoryOffersId]);
@@ -157,7 +109,6 @@ function OneSoursingOffer() {
   useEffect(() => {
     fetchFactoryData();
   }, [factoryId]);
-
 
   const [showImagePop, setShowImagePop] = useState({
     display: false,
@@ -170,40 +121,22 @@ function OneSoursingOffer() {
       imagePath,
     });
   };
+
+  // checks if user is logged in
+  // can user access this page
+  // if page is loading
+  const authChecks = useAuthFormChecks(
+    isLoading,
+    "Sourcing Offer",
+    `${currentUrl}`
+  );
+
+  if (authChecks) {
+    return authChecks;
+  }
+
   return (
     <>
-      <IsLoggedIn
-        show={modalShow.isLogin}
-        onHide={() =>
-          setModalShow((prevVal) => ({
-            ...prevVal,
-            isLogin: false,
-          }))
-        }
-        distination={isLoggedReDirect}
-      />
-
-      <ImporterUnVerified
-        show={modalShow.isImporterVerified}
-        onHide={() =>
-          setModalShow((prevVal) => ({
-            ...prevVal,
-            isImporterVerified: false,
-          }))
-        }
-      />
-
-      <UserNotAuthorized
-        show={modalShow.isFactoryVerified}
-        onHide={() =>
-          setModalShow((prevVal) => ({
-            ...prevVal,
-            isFactoryVerified: false,
-          }))
-        }
-        userType="Buyer"
-      />
-
       <Header title="Sourcing Offer " />
       {isLoading?.loading && (
         <>
@@ -230,8 +163,10 @@ function OneSoursingOffer() {
             {/* Grid  */}
             <div className="container container-po ">
               <div className="input-content ">
-
-              <OfferInfo requestedData={PosData} handleImageClick={handleImageClick} />
+                <OfferInfo
+                  requestedData={PosData}
+                  handleImageClick={handleImageClick}
+                />
                 <div className="title-text w-100 d-none">
                   <h5>Offer Details</h5>
                 </div>
@@ -303,8 +238,9 @@ function OneSoursingOffer() {
                   <div className="col-md-6 col-sm-12">
                     <ReadOnly
                       title="preferred Countries"
-                      value={`${PosData?.preferredCountries?.join(", ") ||
-                        "All"}  `}
+                      value={`${
+                        PosData?.preferredCountries?.join(", ") || "All"
+                      }  `}
                     />
                   </div>
 
@@ -354,7 +290,7 @@ function OneSoursingOffer() {
                     <button
                       className="action-btn btn-1 w-100 submitButton"
                       onClick={() => {
-                        handleButtonClick(
+                        navigate(
                           `purchasingOrder/fromSourcingReuqest?sourcingOfferId=${factoryOffersId}&factoryId=${factoryId}&factoryName=${factoryName}${
                             productId !== null ? `&productId=${productId}` : ""
                           }&productName=${PosData?.productName}`
@@ -371,7 +307,7 @@ function OneSoursingOffer() {
         </>
       )}
 
-<MediaPopUp
+      <MediaPopUp
         show={showImagePop.display}
         onHide={() =>
           setShowImagePop({
