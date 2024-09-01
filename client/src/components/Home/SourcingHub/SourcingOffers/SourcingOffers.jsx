@@ -3,7 +3,7 @@ import "./SourcingOffers.css";
 import SourcingOfferTable from "components/Sourcinghub/SourcingOffers/SourcingOfferTable";
 import Loading from "components/Loading/Loading";
 import { useAppTranslation } from "config.js";
-export default function SourcingOffers({ allSourcingOffer, apiStatus }) {
+export default function SourcingOffers({ allSourcingOffer, apiStatus,assessFormOPAuth }) {
   const { trans: t, currentLang } = useAppTranslation();
 
   return (
@@ -20,7 +20,7 @@ export default function SourcingOffers({ allSourcingOffer, apiStatus }) {
       <div className="row position-relative">
         <div className="col-12">
           <div className="border-container">
-            <SourcingOfferTable allSourcingReqData={allSourcingOffer} />
+            <SourcingOfferTable allSourcingReqData={allSourcingOffer}  assessFormOPAuth={assessFormOPAuth}/>
           </div>
         </div>
 
@@ -30,7 +30,7 @@ export default function SourcingOffers({ allSourcingOffer, apiStatus }) {
             <div className="position-absolute error-float">
               {apiStatus?.errorMsg ? (
                 <p className="fs-5 text-muted fw-bolder text-5 mt-5 pt-5 mx-auto">
-                  {apiStatus?.errorMsg || "No records Found"}
+                  {apiStatus?.errorMsg || "something went wrong"}
                 </p>
               ) : (
                 <div className="d-flex justify-content-center">
@@ -46,7 +46,7 @@ export default function SourcingOffers({ allSourcingOffer, apiStatus }) {
         {allSourcingOffer?.length == 0 && !apiStatus?.laoding && (
           <div className="position-absolute error-float">
             <p className="fs-5 text-muted fw-bolder text-5 mt-5 pt-5 mx-auto">
-              {"No records"}
+              No records
             </p>
           </div>
         )}

@@ -4,7 +4,7 @@ import { handleLogoTextError } from "utils/ImgNotFound";
 
 let getMonthName = getDate;
 export default function SourcingRequestCard(props) {
-  let { reqData, datacompletelyLoaded, accessFormOffer } = props;
+  let { reqData, datacompletelyLoaded, accessFormSourcingRequest } = props;
 
   return (
     // bg-success
@@ -67,7 +67,7 @@ export default function SourcingRequestCard(props) {
               <button
                 className="req-btn btn-color me-2 req-btn cursor"
                 onClick={() => {
-                  accessFormOffer(
+                  accessFormSourcingRequest(
                     `/answerQuotation/SourcingReq?id=${reqData?.id}&productName=${reqData?.productName}&userId=${reqData?.importerId}`
                   );
                 }}
@@ -80,7 +80,7 @@ export default function SourcingRequestCard(props) {
               className="req-btn cursor "
               type="button"
               onClick={() => {
-                accessFormOffer(
+                accessFormSourcingRequest(
                   `/SourcingRequest?sourcingRequestId=${reqData?.id}&productName=${reqData?.productName}`
                 );
               }}

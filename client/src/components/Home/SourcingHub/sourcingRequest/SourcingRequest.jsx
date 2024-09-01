@@ -6,7 +6,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 
 function SourcingRequest(props) {
-  let { allSourcingReqData, accessFormOffer, datacompletelyLoaded } = props;
+  let { allSourcingReqData, accessFormSourcingRequest, datacompletelyLoaded } = props;
   return (
     <div className="row pt-3 w-100  m-0 ">
       <Swiper
@@ -31,7 +31,7 @@ function SourcingRequest(props) {
           <SwiperSlide>
             <SourcingRequestCard
               reqData={item}
-              accessFormOffer={accessFormOffer}
+              accessFormSourcingRequest={accessFormSourcingRequest}
               datacompletelyLoaded={datacompletelyLoaded}
             />
           </SwiperSlide>

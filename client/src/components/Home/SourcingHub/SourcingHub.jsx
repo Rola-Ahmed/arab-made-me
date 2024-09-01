@@ -15,6 +15,7 @@ import SourcingRequest from "./sourcingRequest/SourcingRequest";
 import { useNavigate } from "react-router-dom";
 import { useSourcingRequests } from "hooks/useSourcingRequests";
 import { useSourcingOffers } from "hooks/useSourcingOffers";
+import HandleUsersBtnAccess from "utils/actionBtns/HandleUsersBtnAccess";
 
 const displayProductSize = 20;
 let displayProductSizeOffer = 100;
@@ -40,7 +41,7 @@ function SourcingHub() {
   });
 
 
-  const accessFormOffer = (directto) => {
+  const accessFormSourcingRequest = (directto) => {
     if (!isLogin) {
       setModalShow((prevVal) => ({
         ...prevVal,
@@ -87,6 +88,17 @@ function SourcingHub() {
     }
   };
 
+  // const handleUserClickValidation1 = (gotoPath) => {
+  //   HandleUsersBtnAccess({
+  //     currentUserData,
+  //     isLogin,
+  //     navigate,
+  //     setModalShow,
+  //     setisLoggedReDirect,
+  //     gotoPath,
+  //   });
+  // };
+
   return (
     <>
       <IsLoggedIn
@@ -98,6 +110,8 @@ function SourcingHub() {
           }))
         }
         distination={`/signIn`}
+        // distination={isLoggedReDirect}
+
       />
 
       <UserNotAuthorized
@@ -169,13 +183,14 @@ function SourcingHub() {
           <SourcingRequest
             // apiStatus={apiStatus}
             allSourcingReqData={allSourcingRequest}
-            accessFormOffer={accessFormOffer}
+            accessFormSourcingRequest={accessFormSourcingRequest}
             datacompletelyLoaded={currentUserData?.datacompletelyLoaded}
           />
 
           <SourcingOffers
             allSourcingOffer={allSourcingOffer}
             apiStatus={offerStatus}
+            // assessFormOPAuth={HandleUsersBtnAccess}
           />
 
           <div className="mx-auto pt-60 w-fit-content">

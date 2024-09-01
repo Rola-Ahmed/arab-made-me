@@ -1,6 +1,6 @@
 import SourcingOfferCard from "./SourcingOfferCard";
 
-export default function SourcingOfferTable({ allSourcingReqData }) {
+export default function SourcingOfferTable({ allSourcingReqData ,assessFormOPAuth}) {
   return (
     <table className="table table-striped align-middle  ">
       <thead>
@@ -34,7 +34,7 @@ export default function SourcingOfferTable({ allSourcingReqData }) {
       </thead>
       <tbody>
         {allSourcingReqData?.map((item) => (
-          <SourcingOfferCard item={item} />
+          <SourcingOfferCard item={item} assessFormOPAuth={assessFormOPAuth}/>
         ))}
       </tbody>
     </table>
