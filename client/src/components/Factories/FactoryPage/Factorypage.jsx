@@ -17,7 +17,7 @@ import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/Imp
 import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
 
 import DescritionPopUp from "components/Helpers/DescritionPopUp";
-import DropdownActionBtnsFactory from "components/Shared/DropdownActionBtns/FactoryBtns/DropdownActionBtnsFactory";
+import DropdownActionBtnsFactory from "components/Shared/DropdownActionBtns/DropdownActionBtnsFactory";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -445,7 +445,7 @@ function Factorypage() {
                       );
                     }}
                   >
-                     Private Label Request
+                    Private Label Request
                   </div>
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0"
@@ -467,7 +467,7 @@ function Factorypage() {
                       );
                     }}
                   >
-                    Custom Product Request 
+                    Custom Product Request
                   </div>
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0"
@@ -489,7 +489,7 @@ function Factorypage() {
                       );
                     }}
                   >
-                     White Label Request
+                    White Label Request
                   </div>
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0"

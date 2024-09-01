@@ -1,21 +1,4 @@
-const DropdownMenuItem = ({
-  title,
-  onClick,
-  description,
-  handleQuestionMarkClick,
-}) => (
-  <div className="d-flex align-items-center gap-2">
-    <div className="text-container text-white fw-600 fs-15" onClick={onClick}>
-  {title}
-    </div>
-    <button
-      className="fa-solid fa-circle-question cursor bg-white border-0 p-0"
-      title={description}
-      onClick={() => handleQuestionMarkClick(description)}
-    ></button>
-  </div>
-);
-
+import DropdownMenuItem from "./DropdownMenuItem";
 const DropdownActionBtnsProducts = ({
   currentUserData,
   productItem,
@@ -32,7 +15,7 @@ const DropdownActionBtnsProducts = ({
     )}
     {/* if fa-spinner appears then the ul won't appear */}
     <ul className="dropdown-menu-top p-3 m-2">
-      <div className="parent-buttons-container cursor">
+      <div className="bg-info">
         <DropdownMenuItem
           title="Custom Product Request"
           onClick={() =>

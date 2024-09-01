@@ -2,7 +2,7 @@
   display: grid;
   gap: 29px;
   padding-top: 130px;
-  
+
 }
 
 
@@ -39,19 +39,53 @@
 
 
 
+/* .topProducts:has(.dropdown-menu-top) {
+  overflow: visible !important;
+} */
 
-.topFactory .dropdown-menu-top {
-  position: absolute;
-  top: 141px;
+
+/*----------------------- btns hover start ----------------------*/
+/* .topProducts .dropdown-menu-top, .topFactory .dropdown-menu-top, .all-products .dropdown-menu-top, .brant-cont .dropdown-menu-top { */
+.dropdown-menu-top {
   right: 0;
   border: 1px solid var(--Gray-300);
   background: white;
   border-radius: 6px;
-  z-index: 19;
+  transition: display 0.3s ease;
+  display: none;
+  position: absolute;
+  z-index: 50;
+  overflow: visible;
+}
 
+.topFactory .dropdown-menu-top {
+  top: 49px;
+}
+
+.topProducts .dropdown-menu-top {
+  top: 34px;
+}
+
+.all-products .dropdown-menu-top {
+  position: absolute;
+  top: 76px;
+}
+
+.brant-cont .dropdown-menu-top {
+  top: 79px;
+}
+
+.ellipsis.dropdown-toggle::after {
+  display: none;
 }
 
 
+.ellipsis:hover+.dropdown-menu-top, .dropdown-menu-top:hover, .ellipsis:active+.dropdown-menu-top, .dropdown-menu-top:active {
+  display: block;
+}
+
+
+/*----------------------- btns hover end ----------------------*/
 
 
 

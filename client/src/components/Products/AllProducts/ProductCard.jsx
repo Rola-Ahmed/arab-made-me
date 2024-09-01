@@ -148,7 +148,7 @@ export default function ProductCard(props) {
           </div>
         </div>
 
-        <div className=" d-flex justify-content-between align-items-center   w-100 px-3 bg-danger">
+        <div className=" d-flex justify-content-between align-items-center   w-100 px-3 ">
           <div className="call-btns d-flex justify-content-between  align-items-center w-100 pe-2 ">
             <button
               className="btn-call-1"
@@ -194,7 +194,7 @@ export default function ProductCard(props) {
               className="dropdown-menu-top 
                              p-3 m-2"
             >
-              <div className="parent-buttons-container cursor">
+              <div className="">
                 <div className="d-flex align-items-center gap-2">
                   <div
                     className="text-container text-white fw-600 fs-15 "

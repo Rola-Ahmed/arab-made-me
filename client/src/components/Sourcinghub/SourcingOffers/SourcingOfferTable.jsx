@@ -2,7 +2,7 @@ import SourcingOfferCard from "./SourcingOfferCard";
 
 export default function SourcingOfferTable({ allSourcingReqData }) {
   return (
-    <table className="table table-striped align-middle bg-danger ">
+    <table className="table table-striped align-middle  ">
       <thead>
         <tr className=" bg-header ">
           <th scope="col">

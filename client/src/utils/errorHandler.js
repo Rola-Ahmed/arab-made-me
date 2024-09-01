@@ -4,7 +4,9 @@ export function errorHandler(error) {
     const statusCode = error.response.status;
     switch (statusCode) {
       case 400:
-        return error?.response?.data?.errorMessage;
+        return (
+          error?.response?.data?.errorMessage ?? error?.response?.data?.message
+        );
       case 401:
         return "User is not Unauthorized";
 

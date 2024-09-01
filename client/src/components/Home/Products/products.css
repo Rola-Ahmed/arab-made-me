@@ -96,28 +96,12 @@
 }
 
 
-.topProducts .dropdown-menu-top {
-  display: none;
-  position: absolute;
-  /* top: 69px; */
-  top: 90px;
-  /* top: 101px; */
-
-  right: 0;
-  border: 1px solid var(--Gray-300);
-  background: white;
-  border-radius: 6px;
-  /* transition: display 0.5s ease-out; */
-}
 
 
 
 
 
-.topProducts .gKizIp {
-  overflow: hidden;
-  margin: 0 0;
-}
+
 
 @media (max-width:539px) {
 

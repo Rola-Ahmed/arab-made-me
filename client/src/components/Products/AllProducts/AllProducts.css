@@ -442,7 +442,7 @@
 .all-products .card-img-top {
     height: 194px;
     width: 100%;
-    object-fit: cover;
+    object-fit: contain;
 
 }
 
@@ -470,15 +470,6 @@
     box-shadow: transparent !important;
 }
 
-.all-products .dropdown-menu-top {
-    /* display: none; */
-    position: absolute;
-    top: 76px;
-    right: 0;
-    border: 1px solid var(--Gray-300);
-    background: white;
-    border-radius: 6px;
-}
 
 .all-products .form-select:focus {
     border-color: var(--Gray-300) !important;

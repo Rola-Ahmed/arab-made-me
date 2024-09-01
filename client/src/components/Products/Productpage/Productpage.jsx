@@ -251,7 +251,7 @@ function Productpage(props) {
               </div>
             </div>
             <div className="col-lg-2   h-100">
-              <div className="parent-buttons-container d-table-cell ">
+              <div className=" d-table-cell ">
                 <div className="d-flex align-items-center">
                   <div
                     className="text-container  text-white fw-600 fs-15"

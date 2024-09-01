@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import BannerSlider from "../BannerSlider/BannerSlider";
 import { handleImageError } from "utils/ImgNotFound";
 import { BtnDescription } from "constants/BtnDescription";
-import DropdownActionBtnsFactory from "components/Shared/DropdownActionBtns/FactoryBtns/DropdownActionBtnsFactory";
+import DropdownActionBtnsFactory from "components/Shared/DropdownActionBtns/DropdownActionBtnsFactory";
 import ProductCarousel from "components/Home/TopFactories/ProductCarousel/ProductCarousel";
 import FactoryCard from "components/Home/TopFactories/FactoryCard";
 
