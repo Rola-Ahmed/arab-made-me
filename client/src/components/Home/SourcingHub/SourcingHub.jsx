@@ -39,6 +39,7 @@ function SourcingHub() {
     BecomeAfactory: false,
   });
 
+
   const accessFormOffer = (directto) => {
     if (!isLogin) {
       setModalShow((prevVal) => ({
@@ -63,7 +64,6 @@ function SourcingHub() {
     }
 
     if (currentUserData?.userRole == "user") {
-      console.log("user");
       setModalShow((prevVal) => ({
         ...prevVal,
         isUser: true,
