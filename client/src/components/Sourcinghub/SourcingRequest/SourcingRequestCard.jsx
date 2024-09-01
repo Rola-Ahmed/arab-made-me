@@ -35,7 +35,7 @@ export default function SourcingRequestCard(props) {
             {/* </div> */}
             <p className="d-flex">
               <span className="fw-bold pe-1">Sourcing Countries</span>
-              <span className="sourcing horizontal-text-handler-1">
+              <span className=" title-text-handler">
                 {reqData?.preferredCountries?.length == 0
                   ? "All Countries"
                   : reqData?.preferredCountries?.join(", ")}
@@ -57,18 +57,15 @@ export default function SourcingRequestCard(props) {
         <div className="col-12 pe-0">
           <div className="d-flex mt-2">
             {datacompletelyLoaded ? (
-              <button
-                className="req-btn btn-color me-2 req-btn cursor"
-                type="button"
-              >
+              <button className="req-btn bg-main text-white me-2   " type="button">
                 <i className="fas fa-spinner fa-spin text-white"></i>
               </button>
             ) : (
               <button
-                className="req-btn btn-color me-2 req-btn cursor"
+                className="req-btn  me-2 cursor fs-14-med fw-600 bg-main text-white"
                 onClick={() => {
                   accessFormSourcingRequest(
-                    `/answerQuotation/SourcingReq?id=${reqData?.id}&productName=${reqData?.productName}&userId=${reqData?.importerId}`
+                    `answerQuotation/SourcingReq?id=${reqData?.id}&productName=${reqData?.productName}&userId=${reqData?.importerId}`
                   );
                 }}
               >
@@ -77,7 +74,7 @@ export default function SourcingRequestCard(props) {
             )}
 
             <button
-              className="req-btn cursor "
+              className="req-btn cursor fs-14-med fw-600 text-main-2 bg-white"
               type="button"
               onClick={() => {
                 accessFormSourcingRequest(

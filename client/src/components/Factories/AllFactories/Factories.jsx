@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import {  useState, useContext } from "react";
 import "../Factories.css";
 import { countriesMiddleEast } from "constants/countries";
 import Loading from "components/Loading/Loading";
@@ -7,11 +7,10 @@ import Modal from "react-bootstrap/Modal";
 import { useFetchSectors } from "hooks/useFetchSectors";
 import HandleUsersBtnAccess, {
   handleIsLoggedInBtn,
-  // handleButtonClick
 } from "utils/actionBtns/HandleUsersBtnAccess";
 
 import Header from "components/main/Header/Header";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate,  } from "react-router-dom";
 
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/ImporterUnVerifiedPopUpMsg";

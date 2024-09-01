@@ -6,6 +6,7 @@ import { userDetails } from "Context/userType";
 import { useAppTranslation } from "config.js";
 
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
+import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/ImporterUnVerifiedPopUpMsg";
 
 import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
 import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/FactoryUnVerifiedPopUpMsg";
@@ -15,7 +16,7 @@ import SourcingRequest from "./sourcingRequest/SourcingRequest";
 import { useNavigate } from "react-router-dom";
 import { useSourcingRequests } from "hooks/useSourcingRequests";
 import { useSourcingOffers } from "hooks/useSourcingOffers";
-import HandleUsersBtnAccess from "utils/actionBtns/HandleUsersBtnAccess";
+import HandleUsersBtnAccess,{accessFormSourcingRequest} from "utils/actionBtns/HandleUsersBtnAccess";
 
 const displayProductSize = 20;
 let displayProductSizeOffer = 100;
@@ -23,8 +24,8 @@ let displayProductSizeOffer = 100;
 function SourcingHub() {
   // utils function
   let { currentUserData } = useContext(userDetails);
-  let navigate = useNavigate();
   let { isLogin } = useContext(UserToken);
+  let navigate = useNavigate();
   const { trans: t, currentLang } = useAppTranslation();
   const [isLoggedReDirect, setisLoggedReDirect] = useState("");
 
@@ -46,63 +47,32 @@ function SourcingHub() {
     isLogin: false,
   });
 
-  const accessFormSourcingRequest = (directto) => {
-    if (!isLogin) {
-      setModalShow((prevVal) => ({
-        ...prevVal,
-        isLogin: true,
-      }));
-
-      setisLoggedReDirect(`/signIn${directto}`);
-      return;
-    }
-
-    switch (currentUserData?.userRole) {
-      case "importer":
-      case "admin":
-        setModalShow((prevVal) => ({
-          ...prevVal,
-          isUserNotAllowed: true,
-        }));
-        return;
-
-      case "user":
-        setModalShow((prevVal) => ({
-          ...prevVal,
-          isDefaultUserNotAllowed: true,
-        }));
-        return;
-
-      case "factory":
-        console.log("enretrttere");
-        if (currentUserData?.continueProfilePath != null) {
-          setModalShow((prevVal) => ({
-            ...prevVal,
-            isFactoryAllowedAndVerified: true,
-          }));
-          // return;
-          break;
-        }
-
-      default:
-        // console.log(currentUserData?.userRole);
-        navigate(directto);
-    }
+  const handleFactoryAccessForm = (directto) => {
+    accessFormSourcingRequest({
+      currentUserData,
+      isLogin,
+      navigate,
+      setModalShow,
+      setisLoggedReDirect,
+      directto,
+    });
   };
 
-  // const handleUserClickValidation1 = (gotoPath) => {
-  //   HandleUsersBtnAccess({
-  //     currentUserData,
-  //     isLogin,
-  //     navigate,
-  //     setModalShow,
-  //     setisLoggedReDirect,
-  //     gotoPath,
-  //   });
-  // };
+  const handleImporterAccessForms = (loginPath) => {
+    HandleUsersBtnAccess({
+      currentUserData,
+      isLogin,
+      navigate,
+      setModalShow,
+      setisLoggedReDirect,
+      loginPath,
+    });
+  };
 
   return (
     <>
+
+    {/* both button check */}
       <IsLoggedIn
         show={modalShow.isLogin}
         onHide={() =>
@@ -113,7 +83,7 @@ function SourcingHub() {
         }
         distination={isLoggedReDirect}
       />
-
+  {/* both button check */}
       <UserNotAuthorized
         show={modalShow.isUserNotAllowed}
         onHide={() =>
@@ -145,6 +115,30 @@ function SourcingHub() {
           }))
         }
         goToPath={currentUserData?.continueProfilePath}
+      />
+
+
+      {/* in case of accessing  */}
+
+      <ImporterUnVerified
+        show={modalShow.isImporterVerified}
+        onHide={() =>
+          setModalShow((prevVal) => ({
+            ...prevVal,
+            isImporterVerified: false,
+          }))
+        }
+      />
+
+      <UserNotAuthorized
+        show={modalShow.isFactoryVerified}
+        onHide={() =>
+          setModalShow((prevVal) => ({
+            ...prevVal,
+            isFactoryVerified: false,
+          }))
+        }
+        userType="Buyer"
       />
 
       <section className="margin-sm-screen">
@@ -183,14 +177,14 @@ function SourcingHub() {
           <SourcingRequest
             // apiStatus={apiStatus}
             allSourcingReqData={allSourcingRequest}
-            accessFormSourcingRequest={accessFormSourcingRequest}
+            accessFormSourcingRequest={handleFactoryAccessForm}
             datacompletelyLoaded={currentUserData?.datacompletelyLoaded}
           />
 
           <SourcingOffers
             allSourcingOffer={allSourcingOffer}
             apiStatus={offerStatus}
-            assessFormOPAuth={HandleUsersBtnAccess}
+            assessFormOPAuth={handleImporterAccessForms}
           />
 
           <div className="mx-auto pt-60 w-fit-content">

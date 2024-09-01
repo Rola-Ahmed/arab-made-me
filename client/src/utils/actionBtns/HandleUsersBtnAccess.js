@@ -49,7 +49,7 @@ const handleButtonClick = (params) => {
     if (currentUserData?.userRole == "user") {
       setModalShow((prevVal) => ({
         ...prevVal,
-        isUser: true,
+        isDefaultUserNotAllowed: true,
       }));
       return;
     }
@@ -82,5 +82,58 @@ const handleIsLoggedInBtn = (params) => {
   navigate(`/${loginPath}`);
 };
 
+const accessFormSourcingRequest = (params) => {
+  const {
+    currentUserData,
+    isLogin,
+    navigate,
+    setModalShow,
+    setisLoggedReDirect,
+    directto,
+  } = params;
+
+  if (!isLogin) {
+    setModalShow((prevVal) => ({
+      ...prevVal,
+      isLogin: true,
+    }));
+
+    setisLoggedReDirect(`/signIn/${directto}`);
+    return;
+  }
+
+  switch (currentUserData?.userRole) {
+    case "importer":
+    case "admin":
+      setModalShow((prevVal) => ({
+        ...prevVal,
+        isUserNotAllowed: true,
+      }));
+      return;
+
+    case "user":
+      setModalShow((prevVal) => ({
+        ...prevVal,
+        isDefaultUserNotAllowed: true,
+      }));
+      return;
+
+    case "factory":
+      console.log("enretrttere");
+      if (currentUserData?.continueProfilePath != null) {
+        setModalShow((prevVal) => ({
+          ...prevVal,
+          isFactoryAllowedAndVerified: true,
+        }));
+        // return;
+        break;
+      }
+
+    default:
+      // console.log(currentUserData?.userRole);
+      navigate(`/${directto}`);
+  }
+};
+
 export default handleButtonClick;
-export { handleIsLoggedInBtn };
+export { handleIsLoggedInBtn, accessFormSourcingRequest };

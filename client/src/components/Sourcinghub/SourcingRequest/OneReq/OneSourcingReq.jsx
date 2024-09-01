@@ -6,12 +6,12 @@ import Header from "components/main/Header/Header";
 import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
 import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/FactoryUnVerifiedPopUpMsg";
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
-import BecomomeAFactory from "components/ActionMessages/BecomeAFactory/BecomeAFactory";
 import { getOneSourcingReq } from "Services/sourcingReuqest";
 import Loading from "components/Loading/Loading";
 import ImporterInfo from "components/Shared/ImporterInfo";
 import SourcingRequestInfo from "components/Shared/Dashboards/Forms/SourcingRequestInfo";
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
+import { accessFormSourcingRequest } from "utils/actionBtns/HandleUsersBtnAccess";
 
 function OneSourcingReq() {
   let navigate = useNavigate();
@@ -64,9 +64,19 @@ function OneSourcingReq() {
     fetchReqData();
   }, [sourcingRequestId]);
 
+  const handleFactoryAccessForm = (directto) => {
+    accessFormSourcingRequest({
+      currentUserData,
+      isLogin,
+      navigate,
+      setModalShow,
+      setisLoggedReDirect,
+      directto,
+    });
+  };
+
   return (
     <>
-      <Header title="Sourcing Request " />
       {/* user not logged in */}
       <IsLoggedIn
         show={modalShow.isLogin}
@@ -81,38 +91,41 @@ function OneSourcingReq() {
 
       {/* user is importer */}
       <UserNotAuthorized
-        show={modalShow.isImporterVerified}
+        show={modalShow.isUserNotAllowed}
         onHide={() =>
           setModalShow((prevVal) => ({
             ...prevVal,
-            isImporterVerified: false,
+            isUserNotAllowed: false,
           }))
         }
         userType="Factory"
       />
       {/* factory  not verified*/}
 
-      <FactoryUnVerified
-        show={modalShow.isFactoryVerified}
+      <UserNotAuthorized
+        show={modalShow.isDefaultUserNotAllowed}
         onHide={() =>
           setModalShow((prevVal) => ({
             ...prevVal,
-            isFactoryVerified: false,
+            isDefaultUserNotAllowed: false,
           }))
         }
-        // userType="Factory"
+        userType="User"
+        goToPath="CompanyDetails"
       />
 
-      {/* defult user  */}
-      <BecomomeAFactory
-        show={modalShow.BecomeAfactory}
+      <FactoryUnVerified
+        show={modalShow.isFactoryAllowedAndVerified}
         onHide={() =>
           setModalShow((prevVal) => ({
             ...prevVal,
-            BecomeAfactory: false,
+            isFactoryAllowedAndVerified: false,
           }))
         }
+        goToPath={currentUserData?.continueProfilePath}
       />
+
+      <Header title="Sourcing Request " />
 
       {/* if data is not loaded */}
       {isLoading?.loading && (
@@ -138,7 +151,7 @@ function OneSourcingReq() {
             </div>
             {/* Grid  */}
             {/* col-xxl-6 col-xl-6   col-lg-6 col-md-6 col-sm-12  */}
-            <div className="container container-po bg-danger">
+            <div className="container container-po">
               <SourcingRequestInfo
                 requestedData={PosData}
                 handleImageClick={handleImageClick}
@@ -149,49 +162,7 @@ function OneSourcingReq() {
                   <button
                     className="action-btn btn-1 w-100 submitButton"
                     onClick={() => {
-                      if (currentUserData?.importerId !== null) {
-                        setModalShow((prevVal) => ({
-                          ...prevVal,
-                          isImporterVerified: true,
-                        }));
-
-                        return;
-                      }
-
-                      if (
-                        currentUserData?.factoryId !== null &&
-                        (currentUserData?.factoryVerified === "0" ||
-                          !currentUserData?.factoryEmailActivated)
-                      ) {
-                        setModalShow((prevVal) => ({
-                          ...prevVal,
-                          isFactoryVerified: true,
-                        }));
-
-                        return;
-                      } else if (!isLogin) {
-                        setModalShow((prevVal) => ({
-                          ...prevVal,
-                          isLogin: true,
-                        }));
-
-                        setisLoggedReDirect(`/signIn/${sendQuote}`);
-                        return;
-                      }
-
-                      if (
-                        currentUserData?.importerId == null &&
-                        currentUserData?.factoryId == null
-                      ) {
-                        setModalShow((prevVal) => ({
-                          ...prevVal,
-                          BecomeAfactory: true,
-                        }));
-
-                        return;
-                      } else {
-                        navigate(`/${sendQuote}`);
-                      }
+                      handleFactoryAccessForm(sendQuote);
                     }}
                   >
                     Send Quotation

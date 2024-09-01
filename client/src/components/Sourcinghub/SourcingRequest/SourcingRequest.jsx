@@ -12,6 +12,8 @@ import SourcingRequestCard from "./SourcingRequestCard";
 import PublicPaginate from "components/Shared/PublicPaginate";
 import { getSourcingReuqests } from "Services/sourcingReuqest";
 import Loading from "components/Loading/Loading";
+import { accessFormSourcingRequest } from "utils/actionBtns/HandleUsersBtnAccess";
+
 function Sourcinghub() {
   document.title = "Sourcing Hub";
   let { currentUserData } = useContext(userDetails);
@@ -68,51 +70,16 @@ function Sourcinghub() {
   useEffect(() => {
     fetchSourcingReqData();
   }, [pagination?.currentPage]);
-  // console.log("hiiiiiiiiiiiiiiiiii", currentUserData?.continueProfilePath);
-  // console.log("hiiiiiiiiiiiiiiiiii");
 
-  const accessFormSourcingRequest = (directto) => {
-    if (!isLogin) {
-      setModalShow((prevVal) => ({
-        ...prevVal,
-        isLogin: true,
-      }));
-
-      setisLoggedReDirect(`/signIn${directto}`);
-      return;
-    }
-
-    switch (currentUserData?.userRole) {
-      case "importer":
-      case "admin":
-        setModalShow((prevVal) => ({
-          ...prevVal,
-          isUserNotAllowed: true,
-        }));
-        return;
-
-      case "user":
-        setModalShow((prevVal) => ({
-          ...prevVal,
-          isDefaultUserNotAllowed: true,
-        }));
-        return;
-
-      case "factory":
-        console.log("enretrttere");
-        if (currentUserData?.continueProfilePath != null) {
-          setModalShow((prevVal) => ({
-            ...prevVal,
-            isFactoryAllowedAndVerified: true,
-          }));
-          // return;
-          break;
-        }
-
-      default:
-        // console.log(currentUserData?.userRole);
-        navigate(directto);
-    }
+  const handleFactoryAccessForm = (directto) => {
+    accessFormSourcingRequest({
+      currentUserData,
+      isLogin,
+      navigate,
+      setModalShow,
+      setisLoggedReDirect,
+      directto,
+    });
   };
   return (
     <>
@@ -163,20 +130,13 @@ function Sourcinghub() {
       <Header title="Sourcing Hub" />
 
       <div
-        className="container sourcing-hub-section-pg sourcing-pg"
-        id="sourcing-pg"
+        className="container  sourcing-pg"
       >
-        <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <ul className="nav  mb-3 mt-5" id="pills-tab" role="tablist">
           <li className="nav-item" role="presentation">
             <button
-              className={`btn-sourcing btn-warning`}
-              id="pills-home-tab"
-              data-bs-toggle="pill"
-              data-bs-target="#pills-home"
+              className="x-3 py-1 fw-600 rounded-2 bg-sec  border-0"
               type="button"
-              role="tab"
-              aria-controls="pills-home"
-              aria-selected="true"
               onClick={() => navigate(`/sourcinghub/sourcingRequests`)}
             >
               Requests
@@ -184,14 +144,9 @@ function Sourcinghub() {
           </li>
           <li className="nav-item" role="presentation">
             <button
-              id="pills-profile-tab"
-              data-bs-toggle="pill"
-              data-bs-target="#pills-profile"
               type="button"
               role="tab"
-              aria-controls="pills-profile"
-              aria-selected="false"
-              className={`btn-sourcing `}
+              className="px-3 py-1 fw-600 rounded-2 border-0 bg-0"
               onClick={() => navigate(`/sourcinghub/sourcingOffers`)}
             >
               Offers
@@ -217,11 +172,9 @@ function Sourcinghub() {
               {reqData?.map((item) => (
                 <div className="col-lg-4 sour-card gy-4">
                   <SourcingRequestCard
-                    item={item}
-                    setModalShow={setModalShow}
-                    isLogin={isLogin}
-                    currentUserData={currentUserData}
-                    accessFormSourcingRequest={accessFormSourcingRequest}
+                    reqData={item}
+                    accessFormSourcingRequest={handleFactoryAccessForm}
+                    datacompletelyLoaded={currentUserData?.datacompletelyLoaded}
                   />
                 </div>
               ))}

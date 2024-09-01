@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 
 import Header from "components/main/Header/Header";
 import { useNavigate } from "react-router-dom";
@@ -6,12 +6,23 @@ import PublicPaginate from "components/Shared/PublicPaginate";
 import { getSourcingOffers } from "Services/sourcingOffer";
 import SourcingOfferTable from "./SourcingOfferTable";
 import Loading from "components/Loading/Loading";
+import { UserToken } from "Context/userToken";
+import HandleUsersBtnAccess from "utils/actionBtns/HandleUsersBtnAccess";
+
+import { userDetails } from "Context/userType";
+import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
+import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/ImporterUnVerifiedPopUpMsg";
+import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
 
 function SourcingOffers() {
   let navigate = useNavigate();
+  let { currentUserData } = useContext(userDetails);
+  let { isLogin } = useContext(UserToken);
 
   document.title = "Sourcing Hub";
   const [allSourcingReqData, setAllSourcingReqData] = useState([]);
+  const [isLoggedReDirect, setisLoggedReDirect] = useState("");
+
   const [apiLoadingData, setapiLoadingData] = useState({
     laoding: true,
     errorMsg: "",
@@ -23,6 +34,16 @@ function SourcingOffers() {
     currentPage: 1,
     totalPage: 1,
   }));
+
+  const [modalShow, setModalShow] = useState({
+    //  Indicates that the factory user is allowed and verified.
+    isFactoryAllowedAndVerified: false,
+    // Indicates that a general user is not allowed.
+    isUserNotAllowed: false,
+    //Indicates that a default user is not allowed.
+    isDefaultUserNotAllowed: false,
+    isLogin: false,
+  });
 
   async function fetchSourcingReqData() {
     // setapiLoadingData(true);
@@ -54,23 +75,76 @@ function SourcingOffers() {
     fetchSourcingReqData();
   }, [pagination?.currentPage]);
 
+  const handleImporterAccessForms = (loginPath) => {
+    HandleUsersBtnAccess({
+      currentUserData,
+      isLogin,
+      navigate,
+      setModalShow,
+      setisLoggedReDirect,
+      loginPath,
+    });
+  };
+
   // utils function
 
   return (
     <>
+      <IsLoggedIn
+        show={modalShow.isLogin}
+        onHide={() =>
+          setModalShow((prevVal) => ({
+            ...prevVal,
+            isLogin: false,
+          }))
+        }
+        distination={isLoggedReDirect}
+      />
+      {/* both button check */}
+
+      <UserNotAuthorized
+        show={modalShow.isDefaultUserNotAllowed}
+        onHide={() =>
+          setModalShow((prevVal) => ({
+            ...prevVal,
+            isDefaultUserNotAllowed: false,
+          }))
+        }
+        userType="User"
+        goToPath="CompanyDetails"
+      />
+
+      {/* in case of accessing  */}
+
+      <ImporterUnVerified
+        show={modalShow.isImporterVerified}
+        onHide={() =>
+          setModalShow((prevVal) => ({
+            ...prevVal,
+            isImporterVerified: false,
+          }))
+        }
+      />
+
+      <UserNotAuthorized
+        show={modalShow.isFactoryVerified}
+        onHide={() =>
+          setModalShow((prevVal) => ({
+            ...prevVal,
+            isFactoryVerified: false,
+          }))
+        }
+        userType="Buyer"
+      />
+
       <Header title="Sourcing Hub" />
       <div className="container sourcing-hub-section-pg sourcing-pg">
-        <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <ul className="nav  mb-3 mt-5" id="pills-tab" role="tablist">
           <li className="nav-item" role="presentation">
             <button
-              className={`btn-sourcing `}
-              id="pills-home-tab"
-              data-bs-toggle="pill"
-              data-bs-target="#pills-home"
+              className={`px-3 py-1 fw-600 rounded-2 border-0 bg-0 `}
               type="button"
               role="tab"
-              aria-controls="pills-home"
-              aria-selected="true"
               onClick={() => navigate(`/sourcinghub/sourcingRequests`)}
             >
               Requests
@@ -78,14 +152,9 @@ function SourcingOffers() {
           </li>
           <li className="nav-item" role="presentation">
             <button
-              id="pills-profile-tab"
-              data-bs-toggle="pill"
-              data-bs-target="#pills-profile"
               type="button"
               role="tab"
-              aria-controls="pills-profile"
-              aria-selected="false"
-              className={`btn-sourcing btn-warning`}
+              className={`px-3 py-1 fw-600 rounded-2 bg-sec  border-0`}
               onClick={() => navigate(`/sourcinghub/sourcingOffers`)}
             >
               Offers
@@ -98,7 +167,7 @@ function SourcingOffers() {
             <div className="border-container-2">
               <SourcingOfferTable
                 allSourcingReqData={allSourcingReqData}
-                apiLoadingData={apiLoadingData}
+                assessFormOPAuth={handleImporterAccessForms}
               />
 
               {apiLoadingData?.laoding && (

@@ -224,20 +224,8 @@ th {
 
 }
 
-.horizontal-text-handler {
-  /* width: 160px; */
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
 
-.title-text-handler {
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
+
 
 .doc-download-color {
   color: blue;

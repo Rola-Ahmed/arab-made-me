@@ -1,18 +1,15 @@
 import { baseUrl_IMG } from "config.js";
-import { useNavigate } from "react-router-dom";
 import { handleProfileError } from "utils/ImgNotFound";
 import { getMonthName as getDate } from "utils/getMonthName";
 
-export default function SourcingOfferCard({ item,assessFormOPAuth }) {
+export default function SourcingOfferCard({ item, assessFormOPAuth }) {
   let getMonthName = getDate;
-  let navigate = useNavigate();
   return (
     <tr
       className="cursor"
       onClick={() => {
-        assessFormOPAuth()
-        navigate(
-          `/sourcingOffer/${item?.id}?factoryOffersId=${item?.id}&productName=${item?.productName}&factoryId=${item?.factoryId}`
+        assessFormOPAuth(
+          `sourcingOffer/${item?.id}?factoryOffersId=${item?.id}&productName=${item?.productName}&factoryId=${item?.factoryId}`
         );
       }}
     >

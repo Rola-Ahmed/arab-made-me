@@ -134,7 +134,6 @@ function Factorypage() {
     handleUserClickValidation(loginPath);
   };
 
-  // handleButtonClick
   const handleUserClickValidation = (loginPath) => {
     HandleUsersBtnAccess({
       currentUserData,

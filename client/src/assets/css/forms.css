@@ -226,9 +226,16 @@
   
  
 
-  .register-msg .img-text,.fo3 .title.fac ,.topFactory .text-expand ,.topFactory .title.fac {
+  .register-msg .img-text,.fo3 .title.fac ,.topFactory .text-expand ,.topFactory .title.fac,.title-text-handler  {
     display: -webkit-box;
     -webkit-line-clamp: 1 !important;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .horizontal-text-handler,.req.horizontal-text-handler {
+    /* width: 160px; */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
