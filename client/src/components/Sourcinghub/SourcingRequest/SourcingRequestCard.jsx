@@ -1,15 +1,18 @@
 import { getMonthName as getDate } from "utils/getMonthName";
 import { baseUrl_IMG } from "config.js";
 import { handleLogoTextError } from "utils/ImgNotFound";
+import { useAppTranslation } from "config.js";
 
 let getMonthName = getDate;
 export default function SourcingRequestCard(props) {
   let { reqData, datacompletelyLoaded, accessFormSourcingRequest } = props;
+  const { trans: t, currentLang } = useAppTranslation();
+  const isArabic = currentLang == "ar"; // Check if the language is Arabic
 
   return (
     // bg-success
     <div className="padding-card  pe-0  rounded-3 border">
-      <div className="row w-100">
+      <div className={`row w-100 ${isArabic && "ar-flex-reverse ar-text"}`}>
         <div className="col-9  ">
           <div className=" ">
             <p className="fs-22-semi  fs-600">{reqData?.productName} </p>
@@ -17,12 +20,12 @@ export default function SourcingRequestCard(props) {
               {reqData?.productDescription}
             </p>
             <p className="mb-1">
-              <span className="fw-bold">Requested by </span>
+              <span className="fw-bold" translate="no">Requested by </span>
               {reqData?.importer?.name}
             </p>
             {/* <div className="mb-1 d-flex"> */}
             <p className="mb-1 me-3">
-              <span className="fw-bold">Quantity </span>
+              <span className="fw-bold" translate="no">Quantity </span>
               {reqData?.quantity}
             </p>
             <p className="mb-1">
@@ -57,7 +60,10 @@ export default function SourcingRequestCard(props) {
         <div className="col-12 pe-0">
           <div className="d-flex mt-2">
             {datacompletelyLoaded ? (
-              <button className="req-btn bg-main text-white me-2   " type="button">
+              <button
+                className="req-btn bg-main text-white me-2   "
+                type="button"
+              >
                 <i className="fas fa-spinner fa-spin text-white"></i>
               </button>
             ) : (

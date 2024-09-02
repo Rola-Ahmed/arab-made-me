@@ -210,7 +210,7 @@ export default function TopFactories(props) {
               }}
               className="get-all-btn  fs-15-semi  rounded-3"
             >
-              All Factories
+              {t("translation:factories")}
             </button>
           </div>
         </div>

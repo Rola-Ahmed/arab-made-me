@@ -15,7 +15,7 @@ const DropdownActionBtnsProducts = ({
     )}
     {/* if fa-spinner appears then the ul won't appear */}
     <ul className="dropdown-menu-top p-3 m-2">
-      <div className="bg-info">
+      <div>
         <DropdownMenuItem
           title="Custom Product Request"
           onClick={() =>

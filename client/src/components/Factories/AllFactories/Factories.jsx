@@ -1,4 +1,4 @@
-import {  useState, useContext } from "react";
+import { useState, useContext } from "react";
 import "../Factories.css";
 import { countriesMiddleEast } from "constants/countries";
 import Loading from "components/Loading/Loading";
@@ -10,7 +10,7 @@ import HandleUsersBtnAccess, {
 } from "utils/actionBtns/HandleUsersBtnAccess";
 
 import Header from "components/main/Header/Header";
-import { useNavigate,  } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/ImporterUnVerifiedPopUpMsg";
@@ -19,6 +19,7 @@ import UserNotAuthorized from "components/ActionMessages/FormAccessControl/Popup
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
 import DescritionPopUp from "components/Helpers/DescritionPopUp";
+import { useAppTranslation } from "config.js";
 
 // static variabls
 import PublicPaginate from "components/Shared/PublicPaginate";
@@ -35,6 +36,7 @@ export default function TopFactories(props) {
   } = props;
   document.title = "Factory Gallery";
   let { allSectors } = useFetchSectors();
+  const { trans: t } = useAppTranslation();
 
   // let location = useLocation();
   let navigate = useNavigate();
@@ -206,7 +208,7 @@ export default function TopFactories(props) {
         userType="Buyer"
       />
 
-      <Header title="All Factories" />
+      <Header title={t("translation:factories")} />
 
       <section className="pt-5  margin-sm-screen">
         <div className="container mb-5   ">

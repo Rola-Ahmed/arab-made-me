@@ -1,14 +1,11 @@
 {
-  "welcome_message": "مرحبًا بكم في تطبيقنا",
-
   "home": "الرئيسية",
-  "marketPlace": "السوق التجاري",
-  "factoryGallery": "معرض المصنع",
+  "marketPlace": "المنتجات",
+  "factoryGallery": "المصانع",
   "aboutUs": "من نحن",
-  "sourcingHub": "مركز التوريد",
   "contactUs": "اتصل بنا",
   "LogOut": "تسجيل الخروج",
-  "logIn": "تسجيل الدخول",
+  "logIn": "ت سجيل الدخول",
   "register": "تسجيل",
   "becomeAFactory": "كن مصنعًا",
   "BecomeABuyer": "كن مشتريًا",
@@ -25,7 +22,7 @@
   "createNew": "إنشاء حساب جديد",
   "buyer": "مشتري",
   "factory": "مصنع",
-  "factories": "مصانع",
+  "factories": "المصانع",
   "product": "منتج",
   "products": "منتجات",
   "moreDetails": "مزيد من التفاصيل",
@@ -45,10 +42,10 @@
       "subTitle": "منصة B2B عربية لخدمات العلامات الخاصة"
     },
 
-    "factoryOffers": "عروض المصنع",
-    "SourcingHub": "مركز التوريد",
-    "buyerRequests": "طلبات التوريد",
-    "manufacturingSectors": "قطاعات التصنيع",
+    "factoryOffers": "العروض",
+    "SourcingHub": "أحدث المصادر",
+    "buyerRequests": "الطلبات",
+    "manufacturingSectors": "القطاعات الصناعية",
     "address": "العنوان",
 
     "subTitleProduct": "اعثر على المنتج المثالي لاحتياجاتك",

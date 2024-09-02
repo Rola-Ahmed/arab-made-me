@@ -10,7 +10,7 @@ import "swiper/css/thumbs";
 
 import { useNavigate } from "react-router-dom";
 
-import { baseUrl_IMG } from "config.js";
+import { baseUrl_IMG, useAppTranslation } from "config.js";
 
 import Header from "components/main/Header/Header";
 import "./product.css";
@@ -42,6 +42,7 @@ function Productpage(props) {
   let { currentUserData } = useContext(userDetails);
   let { isLogin } = useContext(UserToken);
   let navigate = useNavigate();
+  const { trans: t } = useAppTranslation();
 
   const [description, setDescription] = useState("");
 
@@ -164,7 +165,6 @@ function Productpage(props) {
                       />
                     )}
                   </div>
-                 
 
                   <div className="fs-14-med lh-normal fw-600">
                     {productData?.averageRate ?? 0} Rating
@@ -245,7 +245,7 @@ function Productpage(props) {
 
                 {productData?.discount && (
                   <p className="  fw-600 lh-normal fs-14-semi">
-                    {productData?.discount}  OFF
+                    {productData?.discount} OFF
                   </p>
                 )}
               </div>
@@ -261,13 +261,15 @@ function Productpage(props) {
                       );
                     }}
                   >
-                     Private Label Request
+                    Private Label Request
                   </div>
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0 ms-1"
-                    title={BtnDescription.privateLabelRequest}
+                    title={t("BtnsDescription:privateLabelRequest.description")}
                     onClick={() => {
-                      setDescription(BtnDescription.privateLabelRequest);
+                      setDescription(
+                        t("BtnsDescription:privateLabelRequest.description")
+                      );
                     }}
                   ></button>
                 </div>
@@ -300,7 +302,7 @@ function Productpage(props) {
                       );
                     }}
                   >
-                     White Label Request
+                    White Label Request
                   </div>
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0 ms-1"

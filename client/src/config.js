@@ -33,7 +33,7 @@ export const socket = io.connect(baseUrl_IMG, {
 
 // Custom function to use translation hook
 export const useAppTranslation = () => {
-  const { t: trans, i18n } = useTranslation();
+  const { t: trans, i18n } = useTranslation(["forms", "translation","BtnsDescription"]);
   const currentLang = i18n.language;
   return { trans, currentLang };
 };

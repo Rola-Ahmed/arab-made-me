@@ -1,6 +1,8 @@
 {
   "legalDocuments": "Legal Documents",
-  "companyName": "Company Name",
+  "exportingCountries": "Exporting Countries",
+  "details": "Details",
+  "date": "Date",
   "FactoryName": "Factory Name",
   "companyPhoneNumber": "Company Phone Number",
   "whatsappPhoneNumber": "Whatsapp Phone Number",
@@ -28,7 +30,7 @@
   "ciommercialRegisterationNumber": "Commercial Registeration Number",
   "ProductName": "Product Name",
   "packingConditions": "Packing Conditions",
-  "Quantity": "Quantity",
+  "quantity": "Quantity",
   "qualityConditions": "Quality Conditions",
   "shippingConditions": "Shipping Conditions",
   "paymentTerms": "Payment Terms",

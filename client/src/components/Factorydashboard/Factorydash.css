@@ -154,7 +154,6 @@
 /* profile img */
 .left-nav-fac-dashboard .profile-container {
 
-  /* background-color: red; */
   height: 90px;
   width: 15.5%;
   border-top: solid rgb(114, 4, 210) 2px;
@@ -193,7 +192,7 @@
 
 .left-nav-fac-dashboard .fa-solid.fa-arrow-right-from-bracket {
   color: var(--secondary-color);
-  /* background-color: red; */
+
   height: 45%;
 
 }

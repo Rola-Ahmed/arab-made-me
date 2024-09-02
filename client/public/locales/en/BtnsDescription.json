@@ -1,48 +1,35 @@
- {
-    "BtnDescription" :{
-    "privateLabelRequest":
-    {
-        "name": "private Label Request",
-        "description":
-      "A Private Label Request refers to a seller requesting a manufacturer to produce goods under the retailer's or company's own brand name, rather than the manufacturer's brand name. This means that the manufacturer produces the goods according to the specifications, design, and packaging provided by the retailer or company, allowing them to sell the products under their own branding."
-    },
-    
-    "whiteLabelRequest": {
-          "name": "White Label Request",
-          "description": "A White Label Request refers to a seller requesting a manufacturer to produce goods without specifying the brand name."
-    },
-    "customProductRequest": {
-          "name": "Custom Product Request",
-          "description": "A Custom Product Request refers to a buyer requesting a product that is specifically tailored or customized to their unique specifications, requirements, or preferences. Unlike standard products that are mass-produced and available off-the-shelf, custom products are designed, manufactured, and delivered according to the specific needs of the individual or organization making the request."
-    },
-    "RFQ": {
-          "name": "Request for Quote",
-          "shortCut": "RFQ",
-          "description": "A Request for Quote is when a company solicits suppliers or contractors to submit a price quote for what their product or service will cost for a particular task or project."
-    },
-    "PO": {
-          "name": "Purchase Order",
-          "shortCut": "PO",
-          "description": "A Purchase Order is a commercial document outlining the details of the products or services to be purchased, including quantities, prices, delivery dates, and terms of sale between a buyer and a factory."
-    },
-        "contactSupplier": {
-          "name": "Contact Supplier",
-          "description": "Users can reach out to the factory in order to inquire about the products, negotiate terms, place orders, or establish a business relationship."
-        },
-        "factoryVisitRequest": {
-          "name": "Factory Visit Request",
-          "description": "Visit a manufacturing facility or factory."
-        }
-      }
-    
-    
-  
-    
+{
+  "privateLabelRequest": {
+    "name": "private Label Request",
+    "description": "A Private Label Request refers to a seller requesting a manufacturer to produce goods under the retailer's or company's own brand name, rather than the manufacturer's brand name. This means that the manufacturer produces the goods according to the specifications, design, and packaging provided by the retailer or company, allowing them to sell the products under their own branding."
+  },
 
-
+  "whiteLabelRequest": {
+    "name": "White Label Request",
+    "description": "A White Label Request refers to a seller requesting a manufacturer to produce goods without specifying the brand name."
+  },
+  "customProductRequest": {
+    "name": "Custom Product Request",
+    "description": "A Custom Product Request refers to a buyer requesting a product that is specifically tailored or customized to their unique specifications, requirements, or preferences. Unlike standard products that are mass-produced and available off-the-shelf, custom products are designed, manufactured, and delivered according to the specific needs of the individual or organization making the request."
+  },
+  "RFQ": {
+    "name": "Request for Quote",
+    "sendRfq": "Send RFQ",
+    "shortCut": "RFQ",
+    "description": "A Request for Quote is when a company solicits suppliers or contractors to submit a price quote for what their product or service will cost for a particular task or project."
+  },
+  "PO": {
+    "name": "Purchase Order",
+    "shortCut": "PO",
+    "sendPo": "Send Po",
+    "description": "A Purchase Order is a commercial document outlining the details of the products or services to be purchased, including quantities, prices, delivery dates, and terms of sale between a buyer and a factory."
+  },
+  "contactSupplier": {
+    "name": "Contact Supplier",
+    "description": "Users can reach out to the factory in order to inquire about the products, negotiate terms, place orders, or establish a business relationship."
+  },
+  "factoryVisitRequest": {
+    "name": "Factory Visit Request",
+    "description": "Visit a manufacturing facility or factory."
   }
-  
-  
-
-
-    
+}

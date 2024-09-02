@@ -245,6 +245,7 @@ function FactoryRepInfoRegistration() {
                               onChange={formValidation.handleChange}
                               value={formValidation.values.repPhone}
                               onBlur={formValidation.handleBlur}
+                              inputMode="numeric"
                             />
                           </div>
                           <FormVlaidtionError

@@ -6,11 +6,10 @@ export default function DescritionPopUp(props) {
 
   return (
     // size="md"
-    <Modal show={show} onHide={onClose}  centered >
-      <Modal.Header closeButton className=" me-3 mt-3" >
-      </Modal.Header>
+    <Modal show={show} onHide={onClose} centered>
+      <Modal.Header closeButton className=" me-3 mt-3"></Modal.Header>
       <Modal.Body closeButton>
-        <p>{description}</p>
+        <p className="text-center">{description}</p>
       </Modal.Body>
     </Modal>
   );
