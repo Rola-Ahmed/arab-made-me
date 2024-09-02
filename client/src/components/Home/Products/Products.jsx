@@ -24,7 +24,6 @@ import StarRating from "components/Shared/stars";
 
 // const functions
 import { handleImageError, handleProfileError } from "utils/ImgNotFound";
-import { BtnDescription } from "constants/BtnDescription";
 
 // modals validation
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
@@ -377,10 +376,9 @@ function Products(title) {
                         <DropdownActionBtns
                           currentUserData={currentUserData}
                           productItem={productItem}
-                          BtnDescription={BtnDescription}
                           handleButtonClick={handleButtonClick}
                           handleQuestionMarkClick={handleQuestionMarkClick}
-                          handleIsLoggedInBtn={handleIsLoggedInBtn}
+                          // handleIsLoggedInBtn={handleIsLoggedInBtn}
                         />
                       </div>
                     </div>

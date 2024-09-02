@@ -12,6 +12,7 @@ export function UserTypeProvider({ children }) {
   let { isLogin, setIsLogin } = useContext(UserToken);
   const [loading, setLoading] = useState(true);
 
+
   // State for user data
   // const [currentUserData, setCurrentUserData] = useState(() => "");
 
@@ -195,6 +196,7 @@ export function UserTypeProvider({ children }) {
   //   currentUserData,
   //   currentUserData.continueProfilePath
   // );
+  console.log("currentUserData",currentUserData)
   return (
     <userDetails.Provider
       value={{

@@ -9,6 +9,7 @@ const handleButtonClick = (params) => {
     setisLoggedReDirect,
     loginPath,
   } = params;
+  console.log("currentUserData?.continueProfilePath",currentUserData)
 
   // return
 
@@ -28,7 +29,7 @@ const handleButtonClick = (params) => {
 
     if (
       currentUserData?.importerId !== null &&
-      currentUserData?.continueProfilePath != null
+      currentUserData?.continueProfilePath
     ) {
       setModalShow((prevVal) => ({
         ...prevVal,
@@ -79,7 +80,7 @@ const handleIsLoggedInBtn = (params) => {
     return;
   }
 
-  navigate(`/${loginPath}`);
+  navigate(`${loginPath}`);
 };
 
 const accessFormSourcingRequest = (params) => {

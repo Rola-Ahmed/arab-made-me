@@ -39,9 +39,6 @@
 
 
 
-/* .topProducts:has(.dropdown-menu-top) {
-  overflow: visible !important;
-} */
 
 
 /*----------------------- btns hover start ----------------------*/
@@ -56,6 +53,7 @@
   position: absolute;
   z-index: 50;
   overflow: visible;
+  top: 33px;
 }
 
 .topFactory .dropdown-menu-top {

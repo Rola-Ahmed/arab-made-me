@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { userDetails } from "Context/userType";
 import { UserToken } from "Context/userToken";
 import { baseUrl_IMG } from "config.js";
+import DropdownActionBtns from "components/Shared/DropdownActionBtns/DropdownActionBtnsProducts";
 
 // helpers
 import { handleImageError } from "utils/ImgNotFound";
@@ -158,7 +159,7 @@ export default function ProductCard(props) {
                 );
               }}
             >
-              <div className="btn-text text-white">Private Label Request</div>
+              <div className="btn-text text-white ">Private Label Request</div>
             </button>
             <button
               className="btn-call-3 cursor bg-white"
@@ -172,7 +173,15 @@ export default function ProductCard(props) {
             </button>
           </div>
 
-          <div className=" text-dark text-decoration-none cursor">
+          <DropdownActionBtns
+            currentUserData={currentUserData}
+            productItem={productItem}
+            handleButtonClick={handleUserClickValidation1}
+            handleQuestionMarkClick={handleQuestionMarkClick}
+            // handleIsLoggedInBtn={handleIsLoggedInBtn}
+          />
+
+          <div className=" text-dark text-decoration-none cursor bg-danger d-none">
             <i
               className=" ellipsis  fa-solid fa-ellipsis-vertical "
               onMouseEnter={() => {
@@ -204,7 +213,7 @@ export default function ProductCard(props) {
                       );
                     }}
                   >
-                   Custom Product Request
+                    Custom Product Request
                   </div>
 
                   <button
@@ -246,7 +255,7 @@ export default function ProductCard(props) {
                       );
                     }}
                   >
-                   Send PO
+                    Send PO
                   </button>
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0"
@@ -265,7 +274,7 @@ export default function ProductCard(props) {
                       );
                     }}
                   >
-                   White Label
+                    White Label
                   </button>
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0"

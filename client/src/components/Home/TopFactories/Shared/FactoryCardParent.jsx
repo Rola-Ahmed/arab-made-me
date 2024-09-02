@@ -1,7 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import BannerSlider from "../BannerSlider/BannerSlider";
 import { handleImageError } from "utils/ImgNotFound";
-import { BtnDescription } from "constants/BtnDescription";
 import DropdownActionBtnsFactory from "components/Shared/DropdownActionBtns/DropdownActionBtnsFactory";
 import ProductCarousel from "components/Home/TopFactories/ProductCarousel/ProductCarousel";
 import FactoryCard from "components/Home/TopFactories/FactoryCard";
@@ -124,11 +123,9 @@ export default function FactoryCardParent(props) {
             <DropdownActionBtnsFactory
               currentUserData={currentUserData}
               factoryitem={factoryitem}
-              BtnDescription={BtnDescription}
               handleBtnCheckIfProductExisit={handleBtnCheckIfProductExisit}
               handleUserClickValidation1={handleUserClickValidation1}
               handleQuestionMarkClick={handleQuestionMarkClick}
-              handleUserClickValidLogin={handleUserClickValidLogin}
             />
           </div>
         </div>

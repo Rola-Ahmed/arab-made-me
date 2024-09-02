@@ -47,7 +47,6 @@ function Sectors() {
             {t("titles.manufacturingSectorsSubtitle", { ns: "translation" })}
           </p>
         </div>
-        {/* <div className="sector-container bg-danger"> */}
         <div className="sec-r-container secrotr-row  w-100">
           {errormsg != "" ? (
             <div className=" text-center m-auto w-100 rounded-3 border-2 border-row fw-bold m-auto py-5 rounded-3 text-center text-muted w-100">
