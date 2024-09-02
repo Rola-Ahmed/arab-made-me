@@ -20,7 +20,7 @@ import { handleImageError } from "utils/ImgNotFound";
 import StarRating from "components/Shared/stars";
 import { userDetails } from "Context/userType";
 import { UserToken } from "Context/userToken";
-import { BtnDescription } from "constants/BtnDescription";
+// import { BtnDescription } from "constants/BtnDescription";
 
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/ImporterUnVerifiedPopUpMsg";
@@ -29,6 +29,8 @@ import UserNotAuthorized from "components/ActionMessages/FormAccessControl/Popup
 import HandleUsersBtnAccess, {
   handleIsLoggedInBtn,
 } from "utils/actionBtns/HandleUsersBtnAccess"; // handleIsLoggedInBtn,
+import DescritionPopUp from "components/Helpers/DescritionPopUp";
+import DefaultUserNotAuthorizedModal from "components/ActionMessages/FormAccessControl/DefaultUserNotAuthorizedModal";
 
 function Productpage(props) {
   let {
@@ -38,6 +40,7 @@ function Productpage(props) {
     setModalShow,
     isLoggedReDirect,
   } = props;
+
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   let { currentUserData } = useContext(userDetails);
   let { isLogin } = useContext(UserToken);
@@ -103,6 +106,16 @@ function Productpage(props) {
           }))
         }
         userType="Buyer"
+      />
+      <DefaultUserNotAuthorizedModal
+        show={modalShow.isDefaultUserNotAllowed}
+        onHide={() =>
+          setModalShow((prevVal) => ({
+            ...prevVal,
+            isDefaultUserNotAllowed: false,
+          }))
+        }
+        goToPath="userType"
       />
 
       <Header title="Product Page " />
@@ -251,8 +264,8 @@ function Productpage(props) {
               </div>
             </div>
             <div className="col-lg-2   h-100">
-              <div className=" d-table-cell ">
-                <div className="d-flex align-items-center">
+              <div className=" d-table-cell  ">
+                <div className={"d-flex align-items-center"}>
                   <div
                     className="text-container  text-white fw-600 fs-15"
                     onClick={() => {
@@ -261,7 +274,7 @@ function Productpage(props) {
                       );
                     }}
                   >
-                    Private Label Request
+                    {t("BtnsDescription:privateLabelRequest.name")}
                   </div>
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0 ms-1"
@@ -282,13 +295,17 @@ function Productpage(props) {
                       );
                     }}
                   >
-                    Custom Product Request
+                    {t("BtnsDescription:customProductRequest.name")}
                   </div>
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0 ms-1"
-                    title={BtnDescription.customProductRequest}
+                    title={t(
+                      "BtnsDescription:customProductRequest.description"
+                    )}
                     onClick={() => {
-                      setDescription(BtnDescription.customProductRequest);
+                      setDescription(
+                        t("BtnsDescription:customProductRequest.description")
+                      );
                     }}
                   ></button>
                 </div>
@@ -302,13 +319,15 @@ function Productpage(props) {
                       );
                     }}
                   >
-                    White Label Request
+                    {t("BtnsDescription:whiteLabelRequest.name")}
                   </div>
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0 ms-1"
-                    title={BtnDescription.whiteLabelRequest}
+                    title={t("BtnsDescription:whiteLabelRequest.description")}
                     onClick={() => {
-                      setDescription(BtnDescription.whiteLabelRequest);
+                      setDescription(
+                        t("BtnsDescription:whiteLabelRequest.description")
+                      );
                     }}
                   ></button>
                 </div>
@@ -322,13 +341,13 @@ function Productpage(props) {
                       );
                     }}
                   >
-                    Send RFQ
+                    {t("BtnsDescription:RFQ.sendRfq")}
                   </div>
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0 ms-1"
-                    title={BtnDescription.RFQ}
+                    title={t("BtnsDescription:RFQ.description")}
                     onClick={() => {
-                      setDescription(BtnDescription.RFQ);
+                      setDescription(t("BtnsDescription:RFQ.description"));
                     }}
                   ></button>
                 </div>
@@ -341,13 +360,13 @@ function Productpage(props) {
                       );
                     }}
                   >
-                    Send PO
+                    {t("BtnsDescription:PO.sendPo")}
                   </div>
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0 ms-1"
-                    title={BtnDescription.PO}
+                    title={t("BtnsDescription:PO.description")}
                     onClick={() => {
-                      setDescription(BtnDescription.PO);
+                      setDescription(t("BtnsDescription:PO.description"));
                     }}
                   ></button>
                 </div>
@@ -361,13 +380,15 @@ function Productpage(props) {
                       );
                     }}
                   >
-                    Contact Supplier
+                    {t("BtnsDescription:contactSupplier.name")}
                   </div>
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0 ms-1"
-                    title={BtnDescription.contactSupplier}
+                    title={t("BtnsDescription:contactSupplier.description")}
                     onClick={() => {
-                      setDescription(BtnDescription.contactSupplier);
+                      setDescription(
+                        t("BtnsDescription:contactSupplier.description")
+                      );
                     }}
                   ></button>
                 </div>
@@ -380,13 +401,15 @@ function Productpage(props) {
                       );
                     }}
                   >
-                    Factory Visit Request
+                    {t("BtnsDescription:factoryVisitRequest.name")}
                   </div>
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0 ms-1"
-                    title={BtnDescription.factoryVisitRequest}
+                    title={"BtnsDescription:factoryVisitRequest.description"}
                     onClick={() => {
-                      setDescription(BtnDescription.factoryVisitRequest);
+                      setDescription(
+                        "BtnsDescription:factoryVisitRequest.description"
+                      );
                     }}
                   ></button>
                 </div>
@@ -430,6 +453,13 @@ function Productpage(props) {
       </section>
 
       <Products title={"Related Products"} />
+      <DescritionPopUp
+        show={description != ""}
+        description={description}
+        onClose={() => {
+          setDescription("");
+        }}
+      />
     </>
   );
 }

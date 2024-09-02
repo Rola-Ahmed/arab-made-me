@@ -12,6 +12,7 @@ import LeftSideFilter from "./LeftSideFilter";
 import SearchSortFilter from "./SearchSortFilter";
 import ProductCard from "./ProductCard";
 import PublicPaginate from "components/Shared/PublicPaginate";
+import DefaultUserNotAuthorizedModal from "components/ActionMessages/FormAccessControl/DefaultUserNotAuthorizedModal";
 
 function AllProducts(props) {
   let {
@@ -63,6 +64,19 @@ function AllProducts(props) {
           }))
         }
         userType="Buyer"
+      />
+
+      <DefaultUserNotAuthorizedModal
+        show={modalShow.isDefaultUserNotAllowed}
+        onHide={() =>
+          setModalShow((prevVal) => ({
+            ...prevVal,
+            isDefaultUserNotAllowed: false,
+          }))
+        }
+        // userType="User"
+        // goToPath="CompanyDetails"
+        goToPath="userType"
       />
 
       <Header title={headerTitle} />

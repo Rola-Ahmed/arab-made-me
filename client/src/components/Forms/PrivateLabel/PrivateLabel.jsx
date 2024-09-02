@@ -4,6 +4,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 
 import { UserToken } from "Context/userToken";
+import Header from "components/main/Header/Header";
 
 import FactoryInfo from "../Shared/FactoryInfo";
 import ProductDetails from "../Shared/SelectedProductDetails";
@@ -13,7 +14,7 @@ import {
   otherTextAreaValidate,
   requiredStringValidate,
   reqQualityValidate,
-  requiredDateValidate
+  requiredDateValidate,
 } from "utils/validationUtils";
 
 import useFormSubmission from "./hooks/useFormSubmission";
@@ -38,8 +39,12 @@ export default function PrivateLabel(props) {
   // Context variables
   const { isLogin } = useContext(UserToken);
 
-  let { submitForm, privateLabelAdded, submitDocs, handleSubmitMsg } =
-    useFormSubmission(isLogin, setErrorMsg, setIsLoading);
+  let {
+    submitForm,
+    privateLabelAdded,
+    submitDocs,
+    handleSubmitMsg,
+  } = useFormSubmission(isLogin, setErrorMsg, setIsLoading);
 
   // ------------------------Form Validation
 
@@ -139,7 +144,7 @@ export default function PrivateLabel(props) {
 
   return (
     <>
-      <header title="Private Label" />
+      <Header title="Private Label" />
       <section className="req-visit">
         {/* Factory Details */}
         <div className="container container-req ">

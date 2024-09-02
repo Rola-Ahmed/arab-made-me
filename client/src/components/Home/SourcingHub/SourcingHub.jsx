@@ -16,7 +16,10 @@ import SourcingRequest from "./sourcingRequest/SourcingRequest";
 import { useNavigate } from "react-router-dom";
 import { useSourcingRequests } from "hooks/useSourcingRequests";
 import { useSourcingOffers } from "hooks/useSourcingOffers";
-import HandleUsersBtnAccess,{accessFormSourcingRequest} from "utils/actionBtns/HandleUsersBtnAccess";
+import HandleUsersBtnAccess, {
+  accessFormSourcingRequest,
+} from "utils/actionBtns/HandleUsersBtnAccess";
+import DefaultUserNotAuthorizedModal from "components/ActionMessages/FormAccessControl/DefaultUserNotAuthorizedModal";
 
 const displayProductSize = 20;
 let displayProductSizeOffer = 100;
@@ -46,6 +49,7 @@ function SourcingHub() {
     isDefaultUserNotAllowed: false,
     isLogin: false,
   });
+  console.log("modalShow", modalShow);
 
   const handleFactoryAccessForm = (directto) => {
     accessFormSourcingRequest({
@@ -71,8 +75,7 @@ function SourcingHub() {
 
   return (
     <>
-
-    {/* both button check */}
+      {/* both button check */}
       <IsLoggedIn
         show={modalShow.isLogin}
         onHide={() =>
@@ -83,7 +86,7 @@ function SourcingHub() {
         }
         distination={isLoggedReDirect}
       />
-  {/* both button check */}
+      {/* both button check */}
       <UserNotAuthorized
         show={modalShow.isUserNotAllowed}
         onHide={() =>
@@ -94,7 +97,7 @@ function SourcingHub() {
         }
         userType="Factory"
       />
-      <UserNotAuthorized
+      <DefaultUserNotAuthorizedModal
         show={modalShow.isDefaultUserNotAllowed}
         onHide={() =>
           setModalShow((prevVal) => ({
@@ -102,8 +105,8 @@ function SourcingHub() {
             isDefaultUserNotAllowed: false,
           }))
         }
-        userType="User"
-        goToPath="CompanyDetails"
+        // goToPath="CompanyDetails"
+        goToPath="userType"
       />
 
       <FactoryUnVerified
@@ -116,7 +119,6 @@ function SourcingHub() {
         }
         goToPath={currentUserData?.continueProfilePath}
       />
-
 
       {/* in case of accessing  */}
 

@@ -31,7 +31,10 @@ import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/Imp
 import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
 import DescritionPopUp from "components/Helpers/DescritionPopUp";
 import DropdownActionBtns from "components/Shared/DropdownActionBtns/DropdownActionBtnsProducts";
-
+import HandleUsersBtnAccess, {
+  handleIsLoggedInBtn,
+} from "utils/actionBtns/HandleUsersBtnAccess";
+import DefaultUserNotAuthorizedModal from "components/ActionMessages/FormAccessControl/DefaultUserNotAuthorizedModal";
 function Products(title) {
   let { isLogin } = useContext(UserToken);
   let { currentUserData } = useContext(userDetails);
@@ -43,8 +46,9 @@ function Products(title) {
     isLogin: false,
     isImporterVerified: false,
     isFactoryVerified: false,
-    displayDescr: false,
+    isDefaultUserNotAllowed: false,
   });
+  console.log("modalShow", modalShow);
   const [isLoggedReDirect, setisLoggedReDirect] = useState("");
 
   const [allProductsData, setAllProductsData] = useState();
@@ -68,111 +72,76 @@ function Products(title) {
     navigate(`/productpage/${productId}-${productName}-${factoryName}`);
   }
 
-  function handleButtonClick(loginPath) {
-    if (
-      currentUserData?.importerId !== null &&
-      (currentUserData?.importerVerified === "0" ||
-        !currentUserData?.importerEmailActivated)
-    ) {
-      setModalShow((prevVal) => ({
-        ...prevVal,
-        isImporterVerified: true,
-      }));
-      // setisLoggedReDirect(
-      //   `signIn/${loginPath}`
-      // );
-      return;
-    }
+  const handleUserClickValidation1 = (loginPath) => {
+    HandleUsersBtnAccess({
+      currentUserData,
+      isLogin,
+      navigate,
+      setModalShow,
+      setisLoggedReDirect,
+      loginPath,
+    });
+  };
 
-    if (currentUserData?.factoryId !== null) {
-      setModalShow((prevVal) => ({
-        ...prevVal,
-        isFactoryVerified: true,
-      }));
-      return;
-    }
-
-    if (
-      currentUserData?.importerId == null &&
-      currentUserData?.factoryId == null
-    ) {
-      setModalShow((prevVal) => ({
-        ...prevVal,
-        isFactoryVerified: true,
-      }));
-      return;
-    }
-
-    if (!isLogin) {
-      setModalShow((prevVal) => ({
-        ...prevVal,
-        isLogin: true,
-      }));
-
-      setisLoggedReDirect(`/signIn/${loginPath}`);
-      return;
-    }
-
-    navigate(`${loginPath}`);
-  }
-
-  function handleIsLoggedInBtn(loginPath) {
-    if (!isLogin) {
-      setModalShow((prevVal) => ({
-        ...prevVal,
-        isLogin: true,
-      }));
-
-      setisLoggedReDirect(`/signIn/${loginPath}`);
-      return;
-    }
-
-    navigate(`/${loginPath}`);
-  }
+  const handleUserClickValidLogin = (loginPath) => {
+    handleIsLoggedInBtn({
+      isLogin,
+      navigate,
+      setModalShow,
+      setisLoggedReDirect,
+      loginPath,
+    });
+  };
 
   const handleQuestionMarkClick = (desc) => {
     setDescription(desc);
-    setModalShow((prevVal) => ({
-      ...prevVal,
-      displayDescr: true,
-    }));
   };
 
   return (
     <>
+      <IsLoggedIn
+        show={modalShow.isLogin}
+        onHide={() =>
+          setModalShow((prevVal) => ({
+            ...prevVal,
+            isLogin: false,
+          }))
+        }
+        distination={isLoggedReDirect}
+      />
+
+      <ImporterUnVerified
+        show={modalShow.isImporterVerified}
+        onHide={() =>
+          setModalShow((prevVal) => ({
+            ...prevVal,
+            isImporterVerified: false,
+          }))
+        }
+      />
+
+      <UserNotAuthorized
+        show={modalShow.isFactoryVerified}
+        onHide={() =>
+          setModalShow((prevVal) => ({
+            ...prevVal,
+            isFactoryVerified: false,
+          }))
+        }
+        userType="Buyer"
+      />
+      <DefaultUserNotAuthorizedModal
+        show={modalShow.isDefaultUserNotAllowed}
+        onHide={() =>
+          setModalShow((prevVal) => ({
+            ...prevVal,
+            isDefaultUserNotAllowed: false,
+          }))
+        }
+        goToPath="userType"
+      />
+
       <section className=" home-padding-y  margin-sm-screen ">
-        <IsLoggedIn
-          show={modalShow.isLogin}
-          onHide={() =>
-            setModalShow((prevVal) => ({
-              ...prevVal,
-              isLogin: false,
-            }))
-          }
-          distination={isLoggedReDirect}
-        />
-
-        <ImporterUnVerified
-          show={modalShow.isImporterVerified}
-          onHide={() =>
-            setModalShow((prevVal) => ({
-              ...prevVal,
-              isImporterVerified: false,
-            }))
-          }
-        />
-
-        <UserNotAuthorized
-          show={modalShow.isFactoryVerified}
-          onHide={() =>
-            setModalShow((prevVal) => ({
-              ...prevVal,
-              isFactoryVerified: false,
-            }))
-          }
-          userType="Buyer"
-        />
-
         <div className="container topProducts">
           <div
             className={` d-flex justify-content-between align-content-end ${
@@ -338,7 +307,7 @@ function Products(title) {
                             <button
                               className="btn-call-1"
                               onClick={() => {
-                                handleButtonClick(
+                                handleUserClickValidation1(
                                   `/privatelabel?factoryId=${productItem?.factoryId}&factoryName=${productItem?.factory?.name}&productId=${productItem?.id}&productName=${productItem?.name}`
                                 );
                               }}
@@ -360,7 +329,7 @@ function Products(title) {
                               className="btn-call-2 cursor bg-white"
                               onClick={() => {
                                 // fixed----------------------------------
-                                handleIsLoggedInBtn(
+                                handleUserClickValidLogin(
                                   `contactsupplier?userId=${productItem?.factory?.userId}&factoryName=${productItem?.factory?.name}`
                                 );
                               }}
@@ -376,9 +345,8 @@ function Products(title) {
                         <DropdownActionBtns
                           currentUserData={currentUserData}
                           productItem={productItem}
-                          handleButtonClick={handleButtonClick}
+                          handleButtonClick={handleUserClickValidation1}
                           handleQuestionMarkClick={handleQuestionMarkClick}
-                          // handleIsLoggedInBtn={handleIsLoggedInBtn}
                         />
                       </div>
                     </div>
@@ -401,18 +369,13 @@ function Products(title) {
         </div>
       </section>
 
-      {modalShow.displayDescr && (
-        <DescritionPopUp
-          show={modalShow.displayDescr}
-          description={description}
-          onClose={() => {
-            setModalShow((prevVal) => ({
-              ...prevVal,
-              displayDescr: false,
-            }));
-          }}
-        />
-      )}
+      <DescritionPopUp
+        show={description != ""}
+        description={description}
+        onClose={() => {
+          handleQuestionMarkClick("");
+        }}
+      />
     </>
   );
 }

@@ -12,6 +12,7 @@ import ImporterInfo from "components/Shared/ImporterInfo";
 import SourcingRequestInfo from "components/Shared/Dashboards/Forms/SourcingRequestInfo";
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
 import { accessFormSourcingRequest } from "utils/actionBtns/HandleUsersBtnAccess";
+import DefaultUserNotAuthorizedModal from "components/ActionMessages/FormAccessControl/DefaultUserNotAuthorizedModal";
 
 function OneSourcingReq() {
   let navigate = useNavigate();
@@ -102,7 +103,7 @@ function OneSourcingReq() {
       />
       {/* factory  not verified*/}
 
-      <UserNotAuthorized
+      <DefaultUserNotAuthorizedModal
         show={modalShow.isDefaultUserNotAllowed}
         onHide={() =>
           setModalShow((prevVal) => ({
@@ -110,8 +111,9 @@ function OneSourcingReq() {
             isDefaultUserNotAllowed: false,
           }))
         }
-        userType="User"
-        goToPath="CompanyDetails"
+        // userType="User"
+        // goToPath="CompanyDetails"
+        goToPath="userType"
       />
 
       <FactoryUnVerified

@@ -36,6 +36,7 @@ import HandleUsersBtnAccess, {
 import FactoryTeam from "./subComponents/FactoryTeam";
 import { useFetchData } from "./useFetchData";
 import HeaderSlider from "./subComponents/HeaderSlider";
+import DefaultUserNotAuthorizedModal from "components/ActionMessages/FormAccessControl/DefaultUserNotAuthorizedModal";
 
 function Factorypage() {
   const { trans: t } = useAppTranslation();
@@ -48,10 +49,6 @@ function Factorypage() {
 
   const handleQuestionMarkClick = (desc) => {
     setDescription(desc);
-    setModalShow((prevVal) => ({
-      ...prevVal,
-      displayDescr: true,
-    }));
   };
 
   let navigate = useNavigate();
@@ -82,7 +79,6 @@ function Factorypage() {
     isLogin: false,
     isImporterVerified: false,
     isFactoryVerified: false,
-    displayDescr: false,
   });
   let { factoryDetails, factoryProduct, factoryIdName } = useFetchData();
   const [isLoggedReDirect, setisLoggedReDirect] = useState("");
@@ -219,6 +215,18 @@ function Factorypage() {
           }))
         }
         userType="Buyer"
+      />
+      <DefaultUserNotAuthorizedModal
+        show={modalShow.isDefaultUserNotAllowed}
+        onHide={() =>
+          setModalShow((prevVal) => ({
+            ...prevVal,
+            isDefaultUserNotAllowed: false,
+          }))
+        }
+        // userType="User"
+        // goToPath="CompanyDetails"
+        goToPath="userType"
       />
 
       {/* header section */}

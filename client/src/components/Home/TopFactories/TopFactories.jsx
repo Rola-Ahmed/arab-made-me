@@ -27,6 +27,7 @@ import { userDetails } from "Context/userType";
 // static variabls
 
 import FactoryCardParent from "./Shared/FactoryCardParent";
+import DefaultUserNotAuthorizedModal from "components/ActionMessages/FormAccessControl/DefaultUserNotAuthorizedModal";
 
 export default function TopFactories(props) {
   let { allFactoriesData } = props;
@@ -113,6 +114,18 @@ export default function TopFactories(props) {
               isImporterVerified: false,
             }))
           }
+        />
+        <DefaultUserNotAuthorizedModal
+          show={modalShow.isDefaultUserNotAllowed}
+          onHide={() =>
+            setModalShow((prevVal) => ({
+              ...prevVal,
+              isDefaultUserNotAllowed: false,
+            }))
+          }
+          // userType="User"
+          // goToPath="CompanyDetails"
+          goToPath="userType"
         />
 
         <UserNotAuthorized

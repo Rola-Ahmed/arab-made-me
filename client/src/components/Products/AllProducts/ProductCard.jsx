@@ -18,7 +18,6 @@ import HandleUsersBtnAccess, {
 } from "utils/actionBtns/HandleUsersBtnAccess";
 
 // static variabls
-import { BtnDescription } from "constants/BtnDescription";
 
 export default function ProductCard(props) {
   let { productItem, productIndex, setModalShow, setisLoggedReDirect } = props;
@@ -181,135 +180,7 @@ export default function ProductCard(props) {
             // handleIsLoggedInBtn={handleIsLoggedInBtn}
           />
 
-          <div className=" text-dark text-decoration-none cursor bg-danger d-none">
-            <i
-              className=" ellipsis  fa-solid fa-ellipsis-vertical "
-              onMouseEnter={() => {
-                document
-                  .getElementById(productItem?.id)
-                  .classList.toggle("d-block");
-              }}
-            ></i>
-
-            <ul
-              onMouseLeave={() => {
-                setTimeout(() => {
-                  document
-                    .getElementById(productItem?.id)
-                    .classList.toggle("d-block");
-                }, 500); // Adjust the delay time as needed
-              }}
-              id={productItem?.id}
-              className="dropdown-menu-top 
-                             p-3 m-2"
-            >
-              <div className="">
-                <div className="d-flex align-items-center gap-2">
-                  <div
-                    className="text-container text-white fw-600 fs-15 "
-                    onClick={() => {
-                      handleUserClickValidation1(
-                        `CustomerProductReq?factoryId=${productItem?.factoryId}&factoryName=${productItem?.factory?.name}&productId=${productItem?.id}&productName=${productItem?.name}`
-                      );
-                    }}
-                  >
-                    Custom Product Request
-                  </div>
-
-                  <button
-                    className="fa-solid fa-circle-question cursor bg-white border-0 p-0"
-                    title={BtnDescription.customProductRequest}
-                    onClick={() => {
-                      handleQuestionMarkClick(
-                        BtnDescription.customProductRequest
-                      );
-                    }}
-                  ></button>
-                </div>
-
-                <div className="d-flex align-items-center gap-2">
-                  <button
-                    className="text-container text-white fw-600 fs-15 "
-                    onClick={() => {
-                      handleUserClickValidation1(
-                        `sendrfq?factoryId=${productItem?.factoryId}&factoryName=${productItem?.factory?.name}&productId=${productItem?.id}&productName=${productItem?.name}`
-                      );
-                    }}
-                  >
-                    Send RFQ
-                  </button>
-                  <button
-                    className="fa-solid fa-circle-question cursor bg-white border-0 p-0"
-                    title={BtnDescription.RFQ}
-                    onClick={() => {
-                      handleQuestionMarkClick(BtnDescription.RFQ);
-                    }}
-                  ></button>
-                </div>
-                <div className="d-flex align-items-center gap-2">
-                  <button
-                    className="text-container text-white fw-600 fs-15 "
-                    onClick={() => {
-                      handleUserClickValidation1(
-                        `purchasingOrder/fromSelectedProduct?factoryId=${productItem?.factoryId}&factoryName=${productItem?.factory?.name}&productId=${productItem?.id}&productName=${productItem?.name}`
-                      );
-                    }}
-                  >
-                    Send PO
-                  </button>
-                  <button
-                    className="fa-solid fa-circle-question cursor bg-white border-0 p-0"
-                    title={BtnDescription.PO}
-                    onClick={() => {
-                      handleQuestionMarkClick(BtnDescription.PO);
-                    }}
-                  ></button>
-                </div>
-                <div className="d-flex align-items-center gap-2">
-                  <button
-                    className="text-container text-white fw-600 fs-15 "
-                    onClick={() => {
-                      handleUserClickValidation1(
-                        `whiteLabelings/form?factoryId=${productItem?.factoryId}&factoryName=${productItem?.factory?.name}&productId=${productItem?.id}&productName=${productItem?.name}`
-                      );
-                    }}
-                  >
-                    White Label
-                  </button>
-                  <button
-                    className="fa-solid fa-circle-question cursor bg-white border-0 p-0"
-                    title={BtnDescription.whiteLabelRequest}
-                    onClick={() => {
-                      handleQuestionMarkClick(BtnDescription.whiteLabelRequest);
-                    }}
-                  ></button>
-                </div>
-                <div className="d-flex align-items-center gap-2">
-                  <div
-                    className="text-container text-white fw-600 fs-15 "
-                    onClick={() => {
-                      handleUserClickValidation1(
-                        `requestVisit?factoryId=${productItem?.factoryId}&factoryName=${productItem?.factory?.name}`
-                      );
-                    }}
-                  >
-                    Factory Visit Request
-                  </div>
-                  <button
-                    className="fa-solid fa-circle-question cursor bg-white border-0 p-0"
-                    title={BtnDescription.factoryVisitRequest}
-                    onClick={() => {
-                      handleQuestionMarkClick(
-                        BtnDescription.factoryVisitRequest
-                      );
-                    }}
-                  ></button>
-                </div>
-              </div>
-            </ul>
-
-            {/*  */}
-          </div>
+          
         </div>
       </button>
       {/* </div> */}

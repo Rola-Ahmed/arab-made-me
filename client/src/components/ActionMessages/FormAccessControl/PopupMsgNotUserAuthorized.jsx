@@ -25,6 +25,10 @@ export default function UserNotAuthorized(directTo) {
               <label className="w-100">
                 To gain access, please register as a {directTo.userType}.
               </label>
+              <p className="text-sub my-3 text-start">
+                By clicking "Sign In," you will be signed out of your current
+                account and redirected to the Sign In page.
+              </p>
             </div>
             <div className="col-12 d-flex justify-content-start btn-modal-gap">
               <Button

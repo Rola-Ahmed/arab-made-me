@@ -11,8 +11,10 @@ import HandleUsersBtnAccess from "utils/actionBtns/HandleUsersBtnAccess";
 
 import { userDetails } from "Context/userType";
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
+
 import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/ImporterUnVerifiedPopUpMsg";
 import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
+import DefaultUserNotAuthorizedModal from "components/ActionMessages/FormAccessControl/DefaultUserNotAuthorizedModal";
 
 function SourcingOffers() {
   let navigate = useNavigate();
@@ -45,6 +47,7 @@ function SourcingOffers() {
     isLogin: false,
   });
 
+  console.log("modalShow", modalShow);
   async function fetchSourcingReqData() {
     // setapiLoadingData(true);
 
@@ -102,7 +105,7 @@ function SourcingOffers() {
       />
       {/* both button check */}
 
-      <UserNotAuthorized
+      <DefaultUserNotAuthorizedModal
         show={modalShow.isDefaultUserNotAllowed}
         onHide={() =>
           setModalShow((prevVal) => ({
@@ -110,8 +113,9 @@ function SourcingOffers() {
             isDefaultUserNotAllowed: false,
           }))
         }
-        userType="User"
-        goToPath="CompanyDetails"
+        // userType="User"
+        // goToPath="CompanyDetails"
+        goToPath="userType"
       />
 
       {/* in case of accessing  */}

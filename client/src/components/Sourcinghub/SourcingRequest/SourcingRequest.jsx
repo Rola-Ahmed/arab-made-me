@@ -13,6 +13,7 @@ import PublicPaginate from "components/Shared/PublicPaginate";
 import { getSourcingReuqests } from "Services/sourcingReuqest";
 import Loading from "components/Loading/Loading";
 import { accessFormSourcingRequest } from "utils/actionBtns/HandleUsersBtnAccess";
+import DefaultUserNotAuthorizedModal from "components/ActionMessages/FormAccessControl/DefaultUserNotAuthorizedModal";
 
 function Sourcinghub() {
   document.title = "Sourcing Hub";
@@ -104,7 +105,8 @@ function Sourcinghub() {
         }
         userType="Factory"
       />
-      <UserNotAuthorized
+
+      <DefaultUserNotAuthorizedModal
         show={modalShow.isDefaultUserNotAllowed}
         onHide={() =>
           setModalShow((prevVal) => ({
@@ -112,8 +114,9 @@ function Sourcinghub() {
             isDefaultUserNotAllowed: false,
           }))
         }
-        userType="User"
-        goToPath="CompanyDetails"
+        // userType="User"
+        // goToPath="CompanyDetails"
+        goToPath="userType"
       />
 
       <FactoryUnVerified
@@ -129,9 +132,7 @@ function Sourcinghub() {
 
       <Header title="Sourcing Hub" />
 
-      <div
-        className="container  sourcing-pg"
-      >
+      <div className="container  sourcing-pg">
         <ul className="nav  mb-3 mt-5" id="pills-tab" role="tablist">
           <li className="nav-item" role="presentation">
             <button
