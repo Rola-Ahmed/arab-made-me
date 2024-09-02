@@ -43,12 +43,14 @@ function Hero() {
                 {/* <h2 className="text-2">Top Arabic Platform for Trading</h2> */}
                 {/* <h3 className="text-2">Leading Arab Factories B2B Private Label Sourcing Platform</h3> */}
                 <h3 className="text-2">
-                  Arab B2B platform for Private Label services
+                  {/* Arab B2B platform for Private Label services */}
+                  {t("translation:titles.hero.title")}
                 </h3>
 
                 <p className="text-3">
-                  Powerful, self-serve product and growth analytics to help
-                  launch you product, and retain more buyers.
+                  {/* Powerful, self-serve product and growth analytics to help
+                  launch you product, and retain more buyers. */}
+                  {t("translation:titles.hero.subTitle")}
                 </p>
               </div>
               <div className="w-100 mb-3 cont-5">

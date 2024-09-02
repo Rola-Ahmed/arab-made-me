@@ -1,5 +1,4 @@
 {
-
   "home": "Home",
   "aboutUs": "About Us",
   "contactUs": "Contact Us",
@@ -37,20 +36,20 @@
   "documents": "Documents",
 
   "titles": {
-      "hero": {
-        "title": "Powerful, self-serve product and growth analytics to help launch you product, and retain more buyers.",
-        "subTitle": "Arab B2B platform for Private Label services"
-      },
+    "hero": {
+      "title": "Arab B2B platform for Private Label services",
+      "subTitle": "Powerful, self-serve product and growth analytics to help launch you product, and retain more buyers."
+    },
 
-      "factoryOffers": "Factory Offers",
-      "SourcingHub": "Sourcing Hub",
-      "buyerRequests": "Buyer Requests",
-      "manufacturingSectors": "Manufacturing Sectors",
-      "address": "Address",
+    "factoryOffers": "Factory Offers",
+    "SourcingHub": "Sourcing Hub",
+    "buyerRequests": "Buyer Requests",
+    "manufacturingSectors": "Manufacturing Sectors",
+    "address": "Address",
 
-      "subTitleSector":"Find the Perfect Product for Your Needs",
-      "subTitleFactories":"Driving Excellence in Manufacturing: Your Trusted Partner in Production",
-       "manufacturingSectorsSubtitle": "Explore all the sectors we offer."
+    "subTitleSector": "Find the Perfect Product for Your Needs",
+    "subTitleFactories": "Driving Excellence in Manufacturing: Your Trusted Partner in Production",
+    "manufacturingSectorsSubtitle": "Explore all the sectors we offer."
   },
   "texts": [
     {
