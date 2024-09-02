@@ -1,15 +1,17 @@
 import PropTypes from "prop-types";
 import DropdownMenuItem from "./DropdownMenuItem";
+import { useAppTranslation } from "config.js";
 
 const DropdownActionBtnsFactory = ({
   currentUserData,
   factoryitem,
-  BtnDescription,
+  // BtnDescription,
   handleQuestionMarkClick,
   handleBtnCheckIfProductExisit,
   handleUserClickValidation1,
-  handleUserClickValidLogin,
+  // handleUserClickValidLogin,
 }) => {
+  const { trans: t } = useAppTranslation();
   return (
     <div className="text-dark text-decoration-none cursor">
       {currentUserData?.datacompletelyLoaded ? (
@@ -20,29 +22,31 @@ const DropdownActionBtnsFactory = ({
       )}
       {!currentUserData?.datacompletelyLoaded && (
         <ul className="dropdown-menu-top p-3 m-2">
-          <div className="bg-success">
+          <div>
             <DropdownMenuItem
-              title="Custom Product Request"
+              title={t("BtnsDescription:customProductRequest.name")}
               onClick={() =>
                 handleUserClickValidation1(
                   `CustomerProductReq?factoryId=${factoryitem?.id}&factoryName=${factoryitem?.name}`
                 )
               }
-              description={BtnDescription.customProductRequest}
+              description={t(
+                "BtnsDescription:customProductRequest.description"
+              )}
               handleQuestionMarkClick={handleQuestionMarkClick}
             />
             <DropdownMenuItem
-              title="White Label Request"
+              title={t("BtnsDescription:whiteLabelRequest.name")}
               onClick={() =>
                 handleUserClickValidation1(
                   `whiteLabelings/form?factoryId=${factoryitem?.id}&factoryName=${factoryitem?.name}`
                 )
               }
-              description={BtnDescription.whiteLabelRequest}
+              description={t("BtnsDescription:whiteLabelRequest.description")}
               handleQuestionMarkClick={handleQuestionMarkClick}
             />
             <DropdownMenuItem
-              title="Send RFQ"
+              title={t("BtnsDescription:RFQ.sendRfq")}
               onClick={() =>
                 handleBtnCheckIfProductExisit(
                   `sendrfq?factoryId=${factoryitem?.id}&factoryName=${factoryitem?.name}`,
@@ -51,11 +55,11 @@ const DropdownActionBtnsFactory = ({
                   factoryitem?.name
                 )
               }
-              description={BtnDescription.RFQ}
+              description={t("BtnsDescription:RFQ.description")}
               handleQuestionMarkClick={handleQuestionMarkClick}
             />
             <DropdownMenuItem
-              title="Send PO"
+              title={t("BtnsDescription:PO.sendPo")}
               onClick={() =>
                 handleBtnCheckIfProductExisit(
                   `purchasingOrder/fromfactory?factoryId=${factoryitem?.id}&factoryName=${factoryitem?.name}`,
@@ -64,17 +68,17 @@ const DropdownActionBtnsFactory = ({
                   factoryitem?.name
                 )
               }
-              description={BtnDescription.PO}
+              description={t("BtnsDescription:PO.description")}
               handleQuestionMarkClick={handleQuestionMarkClick}
             />
             <DropdownMenuItem
-              title="Factory Visit Request"
+              title={t("BtnsDescription:factoryVisitRequest.name")}
               onClick={() =>
                 handleUserClickValidation1(
                   `requestVisit?factoryId=${factoryitem?.id}&factoryName=${factoryitem?.name}`
                 )
               }
-              description={BtnDescription.factoryVisitRequest}
+              description={t("BtnsDescription:factoryVisitRequest.description")}
               handleQuestionMarkClick={handleQuestionMarkClick}
             />
           </div>
@@ -87,27 +91,27 @@ const DropdownActionBtnsFactory = ({
 DropdownActionBtnsFactory.propTypes = {
   currentUserData: PropTypes.object.isRequired,
   factoryitem: PropTypes.object.isRequired,
-  BtnDescription: PropTypes.object.isRequired,
+  // BtnDescription: PropTypes.object.isRequired,
   handleQuestionMarkClick: PropTypes.func.isRequired,
   handleBtnCheckIfProductExisit: PropTypes.func.isRequired,
   handleUserClickValidation1: PropTypes.func.isRequired,
-  handleUserClickValidLogin: PropTypes.func.isRequired,
+  // handleUserClickValidLogin: PropTypes.func.isRequired,
 };
 
 DropdownActionBtnsFactory.defaultProps = {
   currentUserData: {},
   factoryitem: {},
-  BtnDescription: {
-    customProductRequest: "",
-    whiteLabelRequest: "",
-    RFQ: "",
-    PO: "",
-    factoryVisitRequest: "",
-  },
+  // BtnDescription: {
+  //   customProductRequest: "",
+  //   whiteLabelRequest: "",
+  //   RFQ: "",
+  //   PO: "",
+  //   factoryVisitRequest: "",
+  // },
   handleQuestionMarkClick: () => {},
   handleBtnCheckIfProductExisit: () => {},
   handleUserClickValidation1: () => {},
-  handleUserClickValidLogin: () => {},
+  // handleUserClickValidLogin: () => {},
 };
 
 export default DropdownActionBtnsFactory;

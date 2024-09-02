@@ -2,7 +2,6 @@ import { useState, useContext, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import "./Factorypage.css";
-import { BtnDescription } from "constants/BtnDescription";
 import { useNavigate } from "react-router-dom";
 import SuccessToast from "components/SuccessToast";
 import ErrorToast from "components/ErrorToast";
@@ -10,7 +9,7 @@ import { useFetchSectors } from "hooks/useFetchSectors";
 import { handleImageError, handleVedioError } from "utils/ImgNotFound";
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
-import { baseUrl_IMG } from "config.js";
+import { baseUrl_IMG, useAppTranslation } from "config.js";
 import { countriesMiddleEast } from "constants/countries";
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/ImporterUnVerifiedPopUpMsg";
@@ -39,6 +38,8 @@ import { useFetchData } from "./useFetchData";
 import HeaderSlider from "./subComponents/HeaderSlider";
 
 function Factorypage() {
+  const { trans: t } = useAppTranslation();
+
   let { currentUserData } = useContext(userDetails);
   document.title = "Factory Page";
   let { allSectors } = useFetchSectors();
@@ -383,7 +384,6 @@ function Factorypage() {
                         <DropdownActionBtnsFactory
                           currentUserData={currentUserData}
                           factoryitem={factoryDetails}
-                          BtnDescription={BtnDescription}
                           handleBtnCheckIfProductExisit={
                             handleBtnCheckIfProductExisit
                           }
@@ -444,14 +444,14 @@ function Factorypage() {
                       );
                     }}
                   >
-                    Private Label Request
+                    {t("BtnsDescription:privateLabelRequest.name")}
                   </div>
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0"
-                    title={BtnDescription.privateLabelRequest}
+                    title={t("BtnsDescription:privateLabelRequest.description")}
                     onClick={() => {
                       handleQuestionMarkClick(
-                        BtnDescription.privateLabelRequest
+                        t("BtnsDescription:privateLabelRequest.description")
                       );
                     }}
                   ></button>
@@ -466,14 +466,16 @@ function Factorypage() {
                       );
                     }}
                   >
-                    Custom Product Request
+                    {t("BtnsDescription:customProductRequest.name")}
                   </div>
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0"
-                    title={BtnDescription.customProductRequest}
+                    title={t(
+                      "BtnsDescription:customProductRequest.description"
+                    )}
                     onClick={() => {
                       handleQuestionMarkClick(
-                        BtnDescription.customProductRequest
+                        t("BtnsDescription:customProductRequest.description")
                       );
                     }}
                   ></button>
@@ -488,13 +490,15 @@ function Factorypage() {
                       );
                     }}
                   >
-                    White Label Request
+                    {t("BtnsDescription:whiteLabelRequest.name")}
                   </div>
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0"
-                    title={BtnDescription.whiteLabelRequest}
+                    title={t("BtnsDescription:whiteLabelRequest.description")}
                     onClick={() => {
-                      handleQuestionMarkClick(BtnDescription.whiteLabelRequest);
+                      handleQuestionMarkClick(
+                        t("BtnsDescription:whiteLabelRequest.description")
+                      );
                     }}
                   ></button>
                 </div>
@@ -512,13 +516,15 @@ function Factorypage() {
                       );
                     }}
                   >
-                    Send RFQ
+                    {t("BtnsDescription:RFQ.sendRfq")}
                   </button>
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0"
-                    title={BtnDescription.RFQ}
+                    title={t("BtnsDescription:RFQ.description")}
                     onClick={() => {
-                      handleQuestionMarkClick(BtnDescription.RFQ);
+                      handleQuestionMarkClick(
+                        t("BtnsDescription:RFQ.description")
+                      );
                     }}
                   ></button>
                 </div>
@@ -536,13 +542,15 @@ function Factorypage() {
                       );
                     }}
                   >
-                    Send PO
+                    {t("BtnsDescription:PO.sendPo")}
                   </button>
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0"
-                    title={BtnDescription.PO}
+                    title={t("BtnsDescription:PO.description")}
                     onClick={() => {
-                      handleQuestionMarkClick(BtnDescription.PO);
+                      handleQuestionMarkClick(
+                        t("BtnsDescription:PO.description")
+                      );
                     }}
                   ></button>
                 </div>
@@ -556,14 +564,16 @@ function Factorypage() {
                       );
                     }}
                   >
-                    Contact Supplier
+                    {t("BtnsDescription:contactSupplier.name")}
                   </button>
 
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0"
-                    title={BtnDescription.contactSupplier}
+                    title={t("BtnsDescription:contactSupplier.description")}
                     onClick={() => {
-                      handleQuestionMarkClick(BtnDescription.contactSupplier);
+                      handleQuestionMarkClick(
+                        t("BtnsDescription:contactSupplier.description")
+                      );
                     }}
                   ></button>
                 </div>
@@ -577,15 +587,15 @@ function Factorypage() {
                       );
                     }}
                   >
-                    Factory Visit Request
+                    {t("BtnsDescription:factoryVisitRequest.name")}
                   </div>
 
                   <button
                     className="fa-solid fa-circle-question cursor bg-white border-0 p-0"
-                    title={BtnDescription.factoryVisitRequest}
+                    title={t("BtnsDescription:factoryVisitRequest.description")}
                     onClick={() => {
                       handleQuestionMarkClick(
-                        BtnDescription.factoryVisitRequest
+                        t("BtnsDescription:factoryVisitRequest.description")
                       );
                     }}
                   ></button>
