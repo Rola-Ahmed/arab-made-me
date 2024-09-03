@@ -1,5 +1,4 @@
 import Loading from "./Loading";
-import "./Loading.css";
 import Header from "components/main/Header/Header";
 export default function LoadingForm2(props) {
   return (

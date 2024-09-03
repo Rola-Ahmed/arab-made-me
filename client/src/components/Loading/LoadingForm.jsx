@@ -1,4 +1,3 @@
-import "./Loading.css";
 import Footer from "components/main/Footer/Footer";
 import Header from "components/main/Header/Header";
 import Navbar from "components/main/Navbar/Navbar";

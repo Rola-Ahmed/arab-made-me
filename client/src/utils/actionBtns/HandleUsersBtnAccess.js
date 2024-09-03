@@ -9,7 +9,6 @@ const handleButtonClick = (params) => {
     setisLoggedReDirect,
     loginPath,
   } = params;
-  console.log("currentUserData?.continueProfilePath",currentUserData)
 
   // return
 

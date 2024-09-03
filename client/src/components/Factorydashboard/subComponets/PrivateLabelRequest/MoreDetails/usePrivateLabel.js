@@ -40,10 +40,7 @@ export function usePrivateLabel() {
           ...prevData,
           ...result.data.privatelabelings,
         }));
-      //   setApiLoadingData((prevVal) => ({
-      //     ...prevVal,
-      //     reqData: false,
-      //   }));
+    
       }
       //  else {
         setApiLoadingData((prevVal) => ({
