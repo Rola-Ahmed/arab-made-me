@@ -232,7 +232,7 @@ function Contact() {
                 </div>
                 <div className="one-card-text">
                   <h6>Visit us</h6>
-                  <p>Cairo, Egypt</p>
+                  <p>Maadi, Cairo, Egypt</p>
                 </div>
               </div>
               <div className="one-card">
@@ -252,7 +252,7 @@ function Contact() {
                 </div>
                 <div className="one-card-text">
                   <h6>Call us</h6>
-                  <p>(319) 555-0115</p>
+                  <p>+20 103 340 0444</p>
                 </div>
               </div>
               <div className="one-card">
@@ -272,7 +272,7 @@ function Contact() {
                 </div>
                 <div className="one-card-text">
                   <h6>Talk to us</h6>
-                  <p>arab_made@gmail.com</p>
+                  <p>info@arabmade.com</p>
                 </div>
               </div>
               <div className="one-card">
