@@ -100,6 +100,7 @@ function Sign() {
 
                 <div className="col-12">
                   <button
+                    type="button"
                     className=" border-0 py-0 mx-0 bg-0 small-note w-100 text-decoration-underline cursor mb-2"
                     onClick={() => {
                       navigate("/login/identify?action=forgotPassowrd");

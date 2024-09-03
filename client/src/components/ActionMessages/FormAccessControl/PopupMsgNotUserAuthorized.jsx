@@ -4,7 +4,6 @@ import { userDetails } from "Context/userType";
 import { useContext } from "react";
 
 export default function UserNotAuthorized(directTo) {
-  // let { clearSession } = useContext(UserToken);
   let { clearSession } = useContext(userDetails);
 
   let navigate = useNavigate();
@@ -41,15 +40,12 @@ export default function UserNotAuthorized(directTo) {
 
               <button
                 className="btn-edit submitButton"
-                // onClick={() => {
-                //   clearSession();
-                //   navigate("/signin");
-                // }}
+              
                 onClick={() => {
                   if (directTo?.goToPath) {
                     navigate(`/${directTo?.goToPath}`);
                   } else {
-                    clearSession(); // Note the correct spelling
+                    clearSession(); 
                     navigate("/signin");
                   }
                 }}

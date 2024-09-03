@@ -2,11 +2,13 @@ import Footer from "components/main/Footer/Footer";
 import Navbar from "components/main/Navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 import { Modal } from "react-bootstrap";
-// import { UserToken } from "Context/userToken";
+import { UserToken } from "Context/userToken";
+import { useContext } from "react";
+
 // {/* user it not buyer */}
 // displayed in forms only
 export default function FormValidation(props) {
-  // let { setIsLogin } = useContext(UserToken);
+  let { clearSession } = useContext(UserToken);
 
   let navigate = useNavigate();
 
@@ -35,7 +37,8 @@ export default function FormValidation(props) {
                     Kindly register as a {props.userType} to obtain access.
                   </p>
                   <p className="text-sub m-auto">
-                  By clicking "Sign In," you will be signed out of your current account and redirected to the Sign In page.
+                    By clicking "Sign In" or "Sign Up", you will be signed out
+                    of your current account and redirected to the Sign In page.
                   </p>
 
                   <div className="row gap-12">
@@ -43,9 +46,7 @@ export default function FormValidation(props) {
                       <button
                         className="action-btn btn-1 w-100 submitButton"
                         onClick={() => {
-                          // setIsLogin("");
-                          // localStorage.clear();
-
+                          clearSession();
                           navigate("/signup");
                         }}
                       >
@@ -60,6 +61,7 @@ export default function FormValidation(props) {
                       <span
                         className="fw-bolder"
                         onClick={() => {
+                          clearSession();
                           navigate("/signIn");
                         }}
                       >
