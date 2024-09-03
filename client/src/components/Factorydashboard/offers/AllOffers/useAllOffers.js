@@ -1,22 +1,20 @@
 import ErrorToast from "components/ErrorToast";
 import SuccessToast from "components/SuccessToast";
-import { useEffect, useState ,useContext} from "react";
+import { useEffect, useState, useContext } from "react";
 import { UserToken } from "Context/userToken";
+import { userDetails } from "Context/userType";
 
-import {
-  getOffers,
-  deleteOfferUser,
-} from "Services/FactoryRequests/offers";
+import { getOffers, deleteOfferUser } from "Services/FactoryRequests/offers";
 
-const useAllOffers = ( filter) => {
+const useAllOffers = (filter) => {
   let { isLogin } = useContext(UserToken);
+  const { currentUserData } = useContext(userDetails);
 
   const [pagination, setPagination] = useState({
     currentPage: 1,
     displayProductSize: 8,
     totalPage: 1,
   });
-
 
   const [apiLoadingData, setApiLoadingData] = useState({
     reqData: true,
@@ -52,13 +50,13 @@ const useAllOffers = ( filter) => {
       setTimeout(() => {
         setReqData(result?.data?.offers);
       }, 50);
-    } 
+    }
 
     setTimeout(() => {
       setApiLoadingData((prevVal) => ({
         ...prevVal,
         reqData: result?.loadingStatus,
-          errorWhileLoading: result?.error,
+        errorWhileLoading: result?.error,
       }));
     }, 50);
   };
@@ -69,8 +67,6 @@ const useAllOffers = ( filter) => {
 
   useEffect(() => {
     fetchReqData();
-
-    
   }, [pagination.currentPage, pagination?.totalPage, filter, isLogin]);
 
   const deleteData = async (itemId) => {
@@ -92,6 +88,7 @@ const useAllOffers = ( filter) => {
     apiLoadingData,
     setPagination,
     deleteData,
+    continueProfilePath: currentUserData?.continueProfilePath,
   };
 };
 

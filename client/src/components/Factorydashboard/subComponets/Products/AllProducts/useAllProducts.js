@@ -93,6 +93,7 @@ const useAllProducts = ( filter) => {
     apiLoadingData,
     setPagination,
     deleteData,
+    continueProfilePath: currentUserData?.continueProfilePath,
   };
 };
 

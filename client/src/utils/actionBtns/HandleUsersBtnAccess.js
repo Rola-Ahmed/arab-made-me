@@ -120,7 +120,6 @@ const accessFormSourcingRequest = (params) => {
       return;
 
     case "factory":
-      console.log("enretrttere");
       if (currentUserData?.continueProfilePath != null) {
         setModalShow((prevVal) => ({
           ...prevVal,

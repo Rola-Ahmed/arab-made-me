@@ -2,13 +2,8 @@
   background: var(--primary-color);
 }
 
-/* .static-navbar{
-  position: sticky;
-  top:0
-} */
 
 .factory-dashboard .img-icon {
-  /* padding: 16px 8px; */
   padding: 10px 16px;
 }
 
@@ -55,11 +50,7 @@
 
 }
 
-/* .factory-dashboard .page-sub-menu .sub-menu-item{
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-} */
+
 .factory-dashboard .row.remove-x {
   --bs-gutter-x: 0 !important
 }
@@ -223,13 +214,6 @@
 }
 
 
-/* @media screen and (max-width:1303px) {
-  .factory-dashboard .sub-title{
-    font-size: 1px ;
-  }
-   */
-/* } */
-
 
 
 .sub-profile-cont {
@@ -260,9 +244,3 @@
 
 
 
-
-
-/* .factory-scroll-padding{
-  display: flex;
-  flex-direction: column
-} */
