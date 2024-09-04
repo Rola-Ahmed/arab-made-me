@@ -34,10 +34,10 @@ export default function FactoryProfile() {
     factoryProfile
   );
 
-  const modalIdNames={
-    editAccountInfo:'editAccountInfo',
-    addLegalDocs:'addLegalDocs'
-  }
+  const modalIdNames = {
+    editAccountInfo: "editAccountInfo",
+    addLegalDocs: "addLegalDocs",
+  };
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -72,9 +72,8 @@ export default function FactoryProfile() {
     return formData;
   };
 
-  async function updateLegalDocs(e) {
-    setIsLoading(true);
-
+  async function addLegalDocs(e) {
+    let actionType = "add";
     e.preventDefault();
 
     let data = handleSingleFileUpload(
@@ -82,6 +81,19 @@ export default function FactoryProfile() {
       selectedDocs?.[0]?.pdfFile,
       factoryProfile?.legalDocs?.length
     );
+
+    updateLegalDocs(data, actionType);
+  }
+
+  async function deleteLegalDocs(index) {
+    let actionType = "delete";
+    let data = handleSingleFileUpload("legalDocs", null, index);
+
+    updateLegalDocs(data, actionType);
+  }
+
+  async function updateLegalDocs(data, actionType) {
+    setIsLoading(true);
 
     let result = await updateFactoryLegalDocs(
       {
@@ -101,39 +113,17 @@ export default function FactoryProfile() {
         ...result?.data?.factory?.legalDocs,
         legalDocs: result?.data?.factory?.legalDocs,
       }));
-
-      console.log("factoryProfile", factoryProfile);
     } else {
-      setErrorMsg((prevErrors) => ({
-        ...prevErrors,
-        response: result?.error,
-      }));
+      if (actionType == "delete") {
+        ErrorToast("someThing went Wrong");
+      } else {
+        setErrorMsg((prevErrors) => ({
+          ...prevErrors,
+          response: result?.error,
+        }));
+      }
     }
     setIsLoading(false);
-  }
-
-  async function deleteLegalDocs(index) {
-    document.body.style.cursor = "await";
-    let data = handleSingleFileUpload("legalDocs", null, index);
-
-    let result = await updateFactoryLegalDocs(
-      {
-        Authorization: isLogin,
-      },
-      data
-    );
-
-    if (result?.success) {
-      SuccessToast("Data Updated Successfully");
-      setFactoryProfile((prevErrors) => ({
-        ...prevErrors,
-        ...result?.data?.factories?.legalDocs,
-      }));
-    } else {
-      ErrorToast("someThing went Wrong");
-    }
-    // Reset cursor back to default after operation completes
-    // document.body.style.cursor = "default";
   }
 
   useEffect(() => {
@@ -180,9 +170,9 @@ export default function FactoryProfile() {
 
     if (result?.success) {
       // ModalClose();
-      // const modal = document.getElementById("addLegalDocs");
-      // modal.classList.remove("show"); // Remove the 'show' class
-      // modal.classList.add("d-none"); // Remove the 'show' class
+      const modal = document.getElementById(modalIdNames.editAccountInfo);
+      modal.classList.remove("show"); // Remove the 'show' class
+      modal.classList.add("d-none"); // Remove the 'show' class
       SuccessToast("data updated succcfully");
 
       setFactoryProfile((prevErrors) => ({
@@ -245,6 +235,7 @@ export default function FactoryProfile() {
                 AccountInfoValidation={AccountInfoValidation}
                 isLoading={isLoading}
                 countriesMiddleEast={countriesMiddleEast}
+                modalId={modalIdNames.editAccountInfo}
               />
 
               {/*Password change container 2 */}
@@ -328,7 +319,7 @@ export default function FactoryProfile() {
               )}
               <div className="w-100 ">
                 <form
-                  onSubmit={(e) => updateLegalDocs(e, "legalDocs")}
+                  onSubmit={(e) => addLegalDocs(e)}
                   encType="multipart/form-data"
                 >
                   {/* legalDocs */}
