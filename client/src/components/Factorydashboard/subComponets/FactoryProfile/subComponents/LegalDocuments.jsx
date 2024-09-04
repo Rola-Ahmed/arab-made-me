@@ -3,7 +3,7 @@ import DisplayMultiImages from "components/Shared/Dashboards/DisplayMultiImages"
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
 
 export default function LegalDocuments(props) {
-  let { legalDocs } = props;
+  let { legalDocs, deleteLegalDocs } = props;
 
   const [showImagePop, setShowImagePop] = useState({
     display: false,
@@ -24,7 +24,7 @@ export default function LegalDocuments(props) {
           <DisplayMultiImages
             handleImageClick={handleImageClick}
             images={legalDocs}
-            // deleteButton={}
+            deleteLegalDocs={deleteLegalDocs}
           />
 
           <div className="w-100">

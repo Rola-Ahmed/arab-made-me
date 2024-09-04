@@ -566,6 +566,20 @@ small {
   align-content: center;
 }
 
+.delete-img {
+  z-index: 10000;
+  right: 5%;
+  top: 4%;
+  border-width: 0.5px !important;
+  /* top: 4%;
+  right: 11%; */
+}
+
+.zoom-icon {
+  top: 4%;
+  right: 11%;
+  border-width: 0.5px !important;
+}
 
 /* --------------------------------------------------------- */
 @media (max-width:539px) {

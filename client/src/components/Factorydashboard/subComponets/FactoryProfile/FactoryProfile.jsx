@@ -1,5 +1,4 @@
 import { useEffect, useState, useContext } from "react";
-import Modal from "react-bootstrap/Modal";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 
 import { UserToken } from "Context/userToken";
@@ -9,6 +8,7 @@ import "./FactoryProfile.css";
 import { handleImageError } from "utils/ImgNotFound";
 import { countriesMiddleEast } from "constants/countries";
 import SuccessToast from "components/SuccessToast";
+import ErrorToast from "components/ErrorToast";
 
 import UploadDocument from "components/Forms/Shared/UploadDocument";
 
@@ -88,17 +88,28 @@ export default function FactoryProfile() {
     setIsLoading(false);
   }
 
+  const handleSingleFileUpload = (fileKeyword, fileValue, index) => {
+    const formData = new FormData();
+
+    // Append the file with the keyWord as the field name
+    formData.append(fileKeyword, fileValue);
+
+    // Optionally append additional data such as the index
+    formData.append("index", index);
+
+    return formData;
+  };
+
   async function updateLegalDocs(e) {
     setIsLoading(true);
 
     e.preventDefault();
 
-    const data = new FormData();
-
-    data.append(selectedDocs?.[0]?.keyWord, selectedDocs?.[0]?.pdfFile);
-
-    // Optionally append additional data such as the index
-    data.append("index", factoryProfile?.legalDocs?.length);
+    let data = handleSingleFileUpload(
+      selectedDocs?.[0]?.keyWord,
+      selectedDocs?.[0]?.pdfFile,
+      factoryProfile?.legalDocs?.length
+    );
 
     let result = await updateFactoryLegalDocs(
       {
@@ -106,7 +117,7 @@ export default function FactoryProfile() {
       },
       data
     );
-    console.log("resultresultresultresult", result);
+    console.log("resultresultresultresult", result?.data?.factory);
 
     if (result?.success) {
       ModalClose();
@@ -114,8 +125,11 @@ export default function FactoryProfile() {
       SuccessToast("Data Updated Successfully");
       setFactoryProfile((prevErrors) => ({
         ...prevErrors,
-        ...result?.data?.factories?.legalDocs,
+        ...result?.data?.factory?.legalDocs,
+        legalDocs: result?.data?.factory?.legalDocs,
       }));
+
+      console.log("factoryProfile", factoryProfile);
     } else {
       setErrorMsg((prevErrors) => ({
         ...prevErrors,
@@ -123,6 +137,30 @@ export default function FactoryProfile() {
       }));
     }
     setIsLoading(false);
+  }
+
+  async function deleteLegalDocs(index) {
+    document.body.style.cursor = "await";
+    let data = handleSingleFileUpload("legalDocs", null, index);
+
+    let result = await updateFactoryLegalDocs(
+      {
+        Authorization: isLogin,
+      },
+      data
+    );
+
+    if (result?.success) {
+      SuccessToast("Data Updated Successfully");
+      setFactoryProfile((prevErrors) => ({
+        ...prevErrors,
+        ...result?.data?.factories?.legalDocs,
+      }));
+    } else {
+      ErrorToast("someThing went Wrong");
+    }
+    // Reset cursor back to default after operation completes
+    // document.body.style.cursor = "default";
   }
 
   useEffect(() => {
@@ -288,6 +326,7 @@ export default function FactoryProfile() {
                 legalDocs={factoryProfile?.legalDocs}
                 handleImageError={handleImageError}
                 handleShow={handleShow}
+                deleteLegalDocs={deleteLegalDocs}
               />
 
               {/*subscriptionPlan*/}

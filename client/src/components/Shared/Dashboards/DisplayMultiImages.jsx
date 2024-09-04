@@ -6,7 +6,7 @@ import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 export default function DisplayMultiImages(props) {
-  let { handleImageClick, images } = props;
+  let { handleImageClick, images, deleteLegalDocs } = props;
   return (
     <>
       {" "}
@@ -18,13 +18,13 @@ export default function DisplayMultiImages(props) {
             slidesPerView={2}
             gap={20}
           >
-            {images?.map((item) => (
+            {images?.map((item, index) => (
               <SwiperSlide className="pe-3">
                 <div
-                  className="dots-slider-img w-100  cursor "
-                  onClick={() => {
-                    handleImageClick(`${baseUrl_IMG}/${item}`);
-                  }}
+                  className="dots-slider-img w-100  cursor  position-relative"
+                  // onClick={() => {
+                  //   handleImageClick(`${baseUrl_IMG}/${item}`);
+                  // }}
                 >
                   <img
                     className="h-100 w-100     object-fit-contain  "
@@ -37,6 +37,27 @@ export default function DisplayMultiImages(props) {
                     }
                     onError={handleImageError}
                   />
+                  <button
+                    className="position-absolute zoom-icon   bg-0  border-0 "
+                    onClick={() => {
+                      handleImageClick(`${baseUrl_IMG}/${item}`);
+                    }}
+                    type="button"
+                  >
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                  </button>
+
+                  {deleteLegalDocs && (
+                    <button
+                      className="position-absolute delete-img   bg-white rounded-3  border-1 border-danger "
+                      type="button"
+                      onClick={() => {
+                        deleteLegalDocs(index);
+                      }}
+                    >
+                      <i class="fa-solid fa-trash  text-danger "></i>
+                    </button>
+                  )}
                 </div>
               </SwiperSlide>
             ))}
