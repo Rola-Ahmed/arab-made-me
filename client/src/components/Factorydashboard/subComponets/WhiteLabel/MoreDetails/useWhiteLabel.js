@@ -4,9 +4,12 @@ import { UserToken } from "Context/userToken";
 import { getOneWhiteLabel } from "Services/whiteLabel";
 import { updateWhiteLabel } from "Services/FactoryRequests/whiteLabel";
 import { getQuotes } from "Services/FactoryRequests/quotations";
+import { userDetails } from "Context/userType";
 
 export function useWhiteLabel() {
   const { isLogin } = useContext(UserToken);
+  const { currentUserData } = useContext(userDetails);
+
   const [searchParams] = useSearchParams();
   const whiteLabelId = searchParams.get("whiteLabelId");
 
@@ -100,5 +103,6 @@ export function useWhiteLabel() {
     isLogin,
     requestedData,
     apiLoadingData,
+    continueProfilePath: currentUserData?.continueProfilePath,
   };
 }

@@ -11,16 +11,23 @@ import ContactBtn from "components/Factorydashboard/Shared/ContactBtn";
 import { useWhiteLabel } from "./useWhiteLabel";
 import WhiteLabelInfo from "components/Shared/Dashboards/Forms/WhiteLabelInfo";
 import StatusMessagetwo from "components/Shared/Dashboards/StatusMessagetwo";
+import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/FactoryUnVerifiedPopUpMsg";
 
 // utils function
 export default function OneWhiteLabelReq() {
-  let { isLogin, requestedData, apiLoadingData } = useWhiteLabel();
+  let {
+    isLogin,
+    requestedData,
+    apiLoadingData,
+    continueProfilePath,
+  } = useWhiteLabel();
   let navigate = useNavigate();
 
   // utils function
   // let getMonthName = getDate;
 
   // popup image( used to see a bigger verison of the requested media )
+  const [modalShow, setModalShow] = useState(false);
   const [showImagePop, setShowImagePop] = useState({
     display: false,
     imagePath: "",
@@ -33,8 +40,33 @@ export default function OneWhiteLabelReq() {
     });
   };
 
+  const navigateTo = (path) => {
+    if (continueProfilePath) {
+      setModalShow(true);
+    } else {
+      navigate(path);
+    }
+  };
+
+  const handleSendQuoteBnt = () => {
+    navigateTo(
+      `/answerQuotation/WhiteLabel?id=${requestedData?.id}&productName=${requestedData?.productName}&userId=${requestedData?.importerId}`
+    );
+  };
+  const handleEditQuoteBnt = () => {
+    navigateTo(
+      `/factorydashboard/editQuote/${requestedData?.quoteId}?privateLabelingId=${requestedData?.id}&productName=${requestedData?.productName}`
+    );
+  };
+
   return (
     <>
+      <FactoryUnVerified
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        goToPath={continueProfilePath}
+      />
+
       <HeaderSection />
 
       <div className="section factory-profile m-5 ">
@@ -42,7 +74,9 @@ export default function OneWhiteLabelReq() {
           <div className="row">
             <div className="col-12  container-2-gap  p-0">
               {apiLoadingData?.reqData ? (
-             <StatusMessagetwo errorMsg={apiLoadingData?.errorWhileLoading}/>
+                <StatusMessagetwo
+                  errorMsg={apiLoadingData?.errorWhileLoading}
+                />
               ) : (
                 <>
                   <ImporterInfo importerData={requestedData?.importer} />
@@ -65,9 +99,7 @@ export default function OneWhiteLabelReq() {
                     className="btn-edit "
                     type="button"
                     onClick={() => {
-                      navigate(
-                        `/answerQuotation/WhiteLabel?id=${requestedData?.id}&productName=${requestedData?.productName}&userId=${requestedData?.importerId}`
-                      );
+                      handleSendQuoteBnt();
                     }}
                   >
                     <p className="cursor">send Quote</p>
@@ -77,9 +109,7 @@ export default function OneWhiteLabelReq() {
                     className="btn-edit "
                     type="button"
                     onClick={() => {
-                      navigate(
-                        `/factorydashboard/editQuote/${requestedData?.quoteId}?privateLabelingId=${requestedData?.id}&productName=${requestedData?.productName}`
-                      );
+                      handleEditQuoteBnt();
                     }}
                   >
                     <p className="cursor">Edit Quote</p>

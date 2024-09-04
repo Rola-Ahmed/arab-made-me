@@ -3,7 +3,8 @@ import Loading from "components/Loading/Loading";
 export default function StatusMessagetwo(props) {
   let { errorMsg } = props;
   return (
-    <div className="section factory-profile m-5 ">
+    // <div className="section factory-profile m-5 mx-auto">
+    <div className="m-5 mx-auto">
       <div className="container gap-container">
         <div className="row">
           <div className="col-12  container-2-gap  p-0">

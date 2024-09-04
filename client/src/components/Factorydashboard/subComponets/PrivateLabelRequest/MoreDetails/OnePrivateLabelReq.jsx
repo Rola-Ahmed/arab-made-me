@@ -43,6 +43,25 @@ export default function EtcPrivateLabelReq() {
     });
   };
 
+  const navigateTo = (path) => {
+    if (continueProfilePath) {
+      setModalShow(true);
+    } else {
+      navigate(path);
+    }
+  };
+
+  const handleSendQuoteBnt = () => {
+    navigateTo(
+      `/answerQuotation/PrivateLabel?id=${requestedData?.id}&productName=${requestedData?.productName}&userId=${requestedData?.importerId}`
+    );
+  };
+  const handleEditQuoteBnt = () => {
+    navigateTo(
+      `/factorydashboard/editQuote/${requestedData?.quoteId}?privateLabelingId=${requestedData?.id}&productName=${requestedData?.productName}`
+    );
+  };
+
   return (
     <>
       <FactoryUnVerified
@@ -82,13 +101,14 @@ export default function EtcPrivateLabelReq() {
                         className="btn-edit "
                         type="button"
                         onClick={() => {
-                          if (continueProfilePath) {
-                            setModalShow(true);
-                            return;
-                          }
-                          navigate(
-                            `/answerQuotation/PrivateLabel?id=${requestedData?.id}&productName=${requestedData?.productName}&userId=${requestedData?.importerId}`
-                          );
+                          handleSendQuoteBnt();
+                          // if (continueProfilePath) {
+                          //   setModalShow(true);
+                          //   return;
+                          // }
+                          // navigate(
+                          //   `/answerQuotation/PrivateLabel?id=${requestedData?.id}&productName=${requestedData?.productName}&userId=${requestedData?.importerId}`
+                          // );
                         }}
                       >
                         <p className="cursor">Send Quote</p>
@@ -98,14 +118,15 @@ export default function EtcPrivateLabelReq() {
                         className="btn-edit "
                         type="button"
                         onClick={() => {
-                          if (continueProfilePath) {
-                            setModalShow(true);
-                            return;
-                          }
+                          handleEditQuoteBnt();
+                          // if (continueProfilePath) {
+                          //   setModalShow(true);
+                          //   return;
+                          // }
 
-                          navigate(
-                            `/factorydashboard/editQuote/${requestedData?.quoteId}?privateLabelingId=${requestedData?.id}&productName=${requestedData?.productName}`
-                          );
+                          // navigate(
+                          //   `/factorydashboard/editQuote/${requestedData?.quoteId}?privateLabelingId=${requestedData?.id}&productName=${requestedData?.productName}`
+                          // );
                         }}
                       >
                         <p className="cursor">Edit Quote</p>
