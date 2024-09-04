@@ -18,7 +18,6 @@ import SubscriptionPlan from "./subComponents/SubscriptionPlan";
 import LegalDocuments from "./subComponents/LegalDocuments";
 import {
   fetchOneFactory,
-  addFactoryMedia,
   updateFactoryFromUser,
   updateFactoryLegalDocs,
 } from "Services/factory";
@@ -34,6 +33,11 @@ export default function FactoryProfile() {
     submitAccInfo,
     factoryProfile
   );
+
+  const modalIdNames={
+    editAccountInfo:'editAccountInfo',
+    addLegalDocs:'addLegalDocs'
+  }
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -55,38 +59,6 @@ export default function FactoryProfile() {
   }
 
   // Cover IMage Profile -----------------------------------------------------
-  async function updateMedia(e) {
-    setIsLoading(true);
-
-    e.preventDefault();
-
-    const data = new FormData();
-
-    selectedDocs?.map((item) => data.append(item.keyWord, item.pdfFile));
-
-    let result = await addFactoryMedia(
-      {
-        Authorization: isLogin,
-      },
-      data
-    );
-
-    if (result?.success) {
-      ModalClose();
-      setSelectedDocs([]);
-      SuccessToast("Data Updated Successfully");
-      setFactoryProfile((prevErrors) => ({
-        ...prevErrors,
-        ...result?.data?.factories?.legalDocs,
-      }));
-    } else {
-      setErrorMsg((prevErrors) => ({
-        ...prevErrors,
-        response: result?.error,
-      }));
-    }
-    setIsLoading(false);
-  }
 
   const handleSingleFileUpload = (fileKeyword, fileValue, index) => {
     const formData = new FormData();
@@ -117,10 +89,11 @@ export default function FactoryProfile() {
       },
       data
     );
-    console.log("resultresultresultresult", result?.data?.factory);
 
     if (result?.success) {
-      ModalClose();
+      const modal = document.getElementById("addLegalDocs");
+      modal.classList.remove("show"); // Remove the 'show' class
+      modal.classList.add("d-none"); // Remove the 'show' class
       setSelectedDocs([]);
       SuccessToast("Data Updated Successfully");
       setFactoryProfile((prevErrors) => ({
@@ -167,22 +140,6 @@ export default function FactoryProfile() {
     fetchFactoryPage();
   }, [currentUserData?.factoryId]);
 
-  const [show, setShow] = useState({
-    legalDocsReadOnly: false,
-  });
-  function ModalClose() {
-    setShow((prevVal) => {
-      const newState = { ...prevVal }; // Create a copy of the previous state
-
-      // Iterate through the keys in the state
-      Object.keys(newState).forEach((key) => {
-        newState[key] = false; // Set each property to false
-      });
-
-      return newState; // Return the updated state
-    });
-  }
-
   const EmailNotificationUpdate2 = async (e) => {
     e.preventDefault();
     let data = {
@@ -191,8 +148,6 @@ export default function FactoryProfile() {
 
     submitForm(data);
   };
-
-  console.log("AccountInfoValidation", AccountInfoValidation);
 
   function submitAccInfo(values) {
     let data = {};
@@ -224,7 +179,10 @@ export default function FactoryProfile() {
     );
 
     if (result?.success) {
-      ModalClose();
+      // ModalClose();
+      // const modal = document.getElementById("addLegalDocs");
+      // modal.classList.remove("show"); // Remove the 'show' class
+      // modal.classList.add("d-none"); // Remove the 'show' class
       SuccessToast("data updated succcfully");
 
       setFactoryProfile((prevErrors) => ({
@@ -250,10 +208,6 @@ export default function FactoryProfile() {
       AccountInfoValidation.setValues(initialAccountInfo);
     }
   }, [factoryProfile]);
-
-  function handleShow(value) {
-    setShow((prevValue) => ({ ...prevValue, [value]: true }));
-  }
 
   function handleClose2() {
     setErrorMsg((prevErrors) => {
@@ -325,7 +279,7 @@ export default function FactoryProfile() {
               <LegalDocuments
                 legalDocs={factoryProfile?.legalDocs}
                 handleImageError={handleImageError}
-                handleShow={handleShow}
+                // handleShow={handleShow}
                 deleteLegalDocs={deleteLegalDocs}
               />
 
