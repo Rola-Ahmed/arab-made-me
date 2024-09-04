@@ -35,6 +35,10 @@ export default function FactoryProfile() {
   );
 
   const [isLoading, setIsLoading] = useState(false);
+  const [modalShow, setModalShow] = useState({
+    accountInfo: false,
+    legalDocs: false,
+  });
   const [errorMsg, setErrorMsg] = useState({});
   const [selectedDocs, setSelectedDocs] = useState([]);
 
@@ -137,16 +141,7 @@ export default function FactoryProfile() {
 
     if (result?.success) {
       SuccessToast("Data updated successfully");
-      // const modal = document.getElementById("editAccountInfo");
-      // modal?.classList.remove("show");
-      // modal?.classList.add("d-none");
-
-      // // const backdrops = document.querySelectorAll(".modal-backdrop");
-
-      // // Iterate over each element and remove the 'show' class
-      // backdrops?.forEach((backdrop) => {
-      //   backdrop?.classList?.remove("show");
-      // });
+      handleClose();
 
       setFactoryProfile((prev) => ({ ...prev, ...values }));
     } else {
@@ -163,6 +158,10 @@ export default function FactoryProfile() {
   }, [factoryProfile]);
 
   function handleClose() {
+    setModalShow({
+      accountInfo: false,
+      legalDocs: false,
+    });
     setErrorMsg({});
     AccountInfoValidation.resetForm();
     setSelectedDocs([]);
@@ -185,6 +184,8 @@ export default function FactoryProfile() {
                 isLoading={isLoading}
                 countriesMiddleEast={countriesMiddleEast}
                 modalId={modalIdNames.editAccountInfo}
+                setModalShow={setModalShow}
+                modalShow={modalShow}
               />
 
               {/*Password change container 2 */}

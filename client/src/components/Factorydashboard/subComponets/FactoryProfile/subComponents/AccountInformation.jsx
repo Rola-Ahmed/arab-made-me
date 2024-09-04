@@ -1,4 +1,5 @@
 import InputField from "components/Forms/Shared/InputField";
+import Modal from "react-bootstrap/Modal";
 
 export default function editAccountInfoAccountInformation(props) {
   let {
@@ -8,7 +9,10 @@ export default function editAccountInfoAccountInformation(props) {
     AccountInfoValidation,
     isLoading,
     countriesMiddleEast,
+    modalShow,
+    setModalShow,
   } = props;
+
   return (
     <>
       <div id="accountInformation"></div>
@@ -95,9 +99,12 @@ export default function editAccountInfoAccountInformation(props) {
                   className="btn-edit"
                   type="button"
                   // variant="primary"
-                  // onClick={() => handleShow("accountInfoReadOnly")}
-                  data-bs-toggle="modal"
-                  data-bs-target="#editAccountInfo"
+                  onClick={() =>
+                    setModalShow({
+                      accountInfo: true,
+                      legalDocs: false,
+                    })
+                  }
                 >
                   <p className="cursor">Change Account Information </p>
                 </button>
@@ -108,17 +115,15 @@ export default function editAccountInfoAccountInformation(props) {
       </div>
 
       {/* Account setting Info Chnage  update form*/}
-      <div
-        className="modal fade "
-        id="editAccountInfo"
-        tabindex="-1"
-        role="dialog"
-        aria-hidden="true"
+      <Modal
+        show={modalShow?.accountInfo}
+        onHide={() => handleClose()}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        className="factory-profile"
       >
-        <div
-          className="modal-dialog  modal-dialog-centered modal-lg rounded-3"
-          role="document"
-        >
+        <Modal.Body closeButton>
           <div className="modal-content   px-4 py-4">
             <div className="modal-header mb-3">
               <h4 className="modal-title fw-normal">Account Inforamtions</h4>
@@ -242,8 +247,8 @@ export default function editAccountInfoAccountInformation(props) {
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </Modal.Body>
+      </Modal>
     </>
   );
 }

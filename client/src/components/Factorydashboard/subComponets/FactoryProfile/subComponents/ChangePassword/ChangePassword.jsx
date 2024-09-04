@@ -24,7 +24,6 @@ export default function ChangePassword(props) {
   });
 
   let [show, setModalPassword] = useState(false);
-  // once use update the password i should let log him out again
   const logOuut = () => {
     clearSession();
     navigate("/");
