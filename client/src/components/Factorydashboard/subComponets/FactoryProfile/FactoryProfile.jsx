@@ -137,16 +137,16 @@ export default function FactoryProfile() {
 
     if (result?.success) {
       SuccessToast("Data updated successfully");
-      const modal = document.getElementById("editAccountInfo");
-      modal?.classList.remove("show");
-      modal?.classList.add("d-none");
+      // const modal = document.getElementById("editAccountInfo");
+      // modal?.classList.remove("show");
+      // modal?.classList.add("d-none");
 
-      const backdrops = document.querySelectorAll(".modal-backdrop");
+      // // const backdrops = document.querySelectorAll(".modal-backdrop");
 
-      // Iterate over each element and remove the 'show' class
-      backdrops?.forEach((backdrop) => {
-        backdrop?.classList?.remove("show");
-      });
+      // // Iterate over each element and remove the 'show' class
+      // backdrops?.forEach((backdrop) => {
+      //   backdrop?.classList?.remove("show");
+      // });
 
       setFactoryProfile((prev) => ({ ...prev, ...values }));
     } else {

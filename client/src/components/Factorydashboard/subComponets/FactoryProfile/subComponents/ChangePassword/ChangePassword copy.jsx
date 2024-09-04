@@ -23,7 +23,7 @@ export default function ChangePassword(props) {
     oldPassword: false,
   });
 
-  let [show, setModalPassword] = useState(false);
+  let [modalPassword, setModalPassword] = useState(false);
   // once use update the password i should let log him out again
   const logOuut = () => {
     clearSession();
@@ -87,7 +87,6 @@ export default function ChangePassword(props) {
     //   return restErrors;
     // });
 
-    setModalPassword(false);
     setErrorMsg((prevErrors) => {
       const { response, ...restErrors } = prevErrors || {};
       return Object.keys(restErrors).length ? JSON.stringify(restErrors) : null;
@@ -144,15 +143,16 @@ export default function ChangePassword(props) {
               </div>
 
               <div className="col-12">
-                <Button
+                <button
                   className="btn-edit"
                   type="button"
-                  onClick={() => {
+                  data-bs-toggle="modal"
+                  click={() => {
                     setModalPassword(true);
                   }}
                 >
-                  change Password
-                </Button>
+                  <p className="cursor">Change Password </p>
+                </button>
               </div>
             </div>
           </div>
@@ -160,28 +160,50 @@ export default function ChangePassword(props) {
       </div>
 
       <Modal
-        show={show == true}
-        onHide={() => handleClose()}
-        size="lg"
+        // className="modal fade "
+        // id="changePassword"
+        // tabindex="-1"
+        // role="dialog"
+        // // aria-labelledby="exampleModalLabel"
+        // aria-hidden="true"
+
+        show={modalPassword}
+        onHide={() => setModalPassword(false)}
+        size="md-down"
         aria-labelledby="contained-modal-title-vcenter"
         centered
-        className="factory-profile"
+        className={`factory-profile  `}
       >
-        <Modal.Body closeButton>
-          {/* Account Info container 1 */}
-
-          <div className="container-profile-input w-100">
-            <div className="title-contianer-input w-100">
-              <Modal.Header closeButton>
-                <Modal.Title>
-                  <p>Change Password</p>
-                </Modal.Title>
-              </Modal.Header>
+        <div
+        // className="modal-dialog  modal-dialog-centered modal-lg rounded-3"
+        // role="document"
+        >
+          <div className="modal-content   px-4 py-4">
+            <div className="modal-header mb-3">
+              <h4 className="modal-title fw-normal">
+                {/* <h4 className="modal-title fw-normal" id="exampleModalLabel"> */}
+                Change Password
+              </h4>
+              <Button
+                type="button"
+                className="close bg-0 border-0"
+                aria-label="Close"
+                onClick={() => {
+                  setModalPassword(false);
+                  handleClose();
+                }}
+              >
+                <i className="fa-solid fa-xmark fs-24"></i>
+              </Button>
+            </div>
+            <div className="modal-body p-0 ">
+              {" "}
               {errorMsg?.response && (
                 <div className="alert mt-3 p-2 alert-danger form-control text-dark">
                   {errorMsg?.response}
                 </div>
               )}
+              {/* <div className="w-100  "> */}
               <form
                 className="w-100"
                 onSubmit={formPasswordValidation.handleSubmit}
@@ -354,9 +376,10 @@ export default function ChangePassword(props) {
                   </div>
                 </div>
               </form>
+              {/* </div> */}
             </div>
           </div>
-        </Modal.Body>
+        </div>
       </Modal>
     </>
   );
