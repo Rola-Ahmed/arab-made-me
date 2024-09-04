@@ -3,7 +3,7 @@ import DisplayMultiImages from "components/Shared/Dashboards/DisplayMultiImages"
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
 
 export default function LegalDocuments(props) {
-  let { legalDocs, deleteLegalDocs } = props;
+  let { legalDocs, deleteLegalDocs, setModalShow } = props;
 
   const [showImagePop, setShowImagePop] = useState({
     display: false,
@@ -31,8 +31,12 @@ export default function LegalDocuments(props) {
             <button
               type="button"
               className="btn-edit"
-              data-bs-toggle="modal"
-              data-bs-target="#addLegalDocs"
+              onClick={() =>
+                setModalShow({
+                  accountInfo: false,
+                  legalDocs: true,
+                })
+              }
             >
               <p className="cursor">Upload </p>
             </button>

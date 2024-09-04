@@ -11,6 +11,7 @@ import useFormValidation from "./hooks/useFormValidation";
 import useFactoryProfile from "./hooks/useFactoryProfile";
 import { handleImageError } from "utils/ImgNotFound";
 import { countriesMiddleEast } from "constants/countries";
+import Modal from "react-bootstrap/Modal";
 
 import {
   updateFactoryFromUser,
@@ -222,6 +223,7 @@ export default function FactoryProfile() {
                 handleImageError={handleImageError}
                 // handleShow={handleShow}
                 deleteLegalDocs={handleDeleteLegalDocs}
+                setModalShow={setModalShow}
               />
 
               {/*subscriptionPlan*/}
@@ -304,6 +306,7 @@ export default function FactoryProfile() {
                             className="rounded-3 border-0 bg-main text-white px-3 py-2 fs-14 fw-bolder"
                             type="submit"
                             disabled={!(selectedDocs?.length > 0)}
+                            
                           >
                             Submit New Images
                           </button>
@@ -320,17 +323,15 @@ export default function FactoryProfile() {
 
       {/*  legal docs */}
 
-      <div
-        className="modal fade "
-        id="addLegalDocs"
-        tabindex="-1"
-        role="dialog"
-        aria-hidden="true"
+      <Modal
+        show={modalShow?.legalDocs}
+        onHide={() => handleClose()}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        className="factory-profile"
       >
-        <div
-          className="modal-dialog  modal-dialog-centered modal-lg rounded-3"
-          role="document"
-        >
+        <Modal.Body closeButton>
           <div className="modal-content   px-4 py-4">
             <div className="modal-header mb-3">
               <h4 className="modal-title fw-normal">
@@ -405,8 +406,8 @@ export default function FactoryProfile() {
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </Modal.Body>
+      </Modal>
     </>
   );
 }
