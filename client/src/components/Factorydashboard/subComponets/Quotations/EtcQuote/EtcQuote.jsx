@@ -20,11 +20,19 @@ import WhiteLabelInfo from "components/Shared/Dashboards/Forms/WhiteLabelInfo";
 import SourcingRequestInfo from "components/Shared/Dashboards/Forms/SourcingRequestInfo";
 import ExtractPdf from "./ExtractPdf";
 import StatusMessagetwo from "components/Shared/Dashboards/StatusMessagetwo";
+import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/FactoryUnVerifiedPopUpMsg";
 
 export default function EtcQuote() {
   let navigate = useNavigate();
 
-  let { isLogin, requestedData, apiLoadingData, qouteOn } = useOneQuote();
+  let {
+    isLogin,
+    requestedData,
+    apiLoadingData,
+    qouteOn,
+    continueProfilePath,
+  } = useOneQuote();
+  const [modalShow, setModalShow] = useState(false);
 
   const [showImagePop, setShowImagePop] = useState({
     display: false,
@@ -39,36 +47,53 @@ export default function EtcQuote() {
     });
   };
 
+  const navigateTo = (path) => {
+    if (continueProfilePath) {
+      setModalShow(true);
+    } else {
+      navigate(path);
+    }
+  };
 
- 
-  
-
-
+  const handleSendQuoteBnt = () => {
+    navigateTo(
+      `/answerQuotation/PrivateLabel?id=${requestedData?.id}&productName=${requestedData?.productName}&userId=${requestedData?.importerId}`
+    );
+  };
+  const handleEditQuoteBnt = () => {
+    navigateTo(
+      `/factorydashboard/editQuote/${requestedData?.quoteId}?privateLabelingId=${requestedData?.id}&productName=${requestedData?.productName}`
+    );
+  };
 
   return (
     <>
-   
-   
-      
+      <FactoryUnVerified
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        goToPath={continueProfilePath}
+      />
+
       <div id="view" className="m-4 order-section  ">
         <SubPageUtility currentPage="More Details" PrevPage="Quotations" />
 
         <div>
           <div className=" d-flex justify-content-between align-items-center w-100 ">
-            <h2>Quotations Details on {requestedData?.title}
-              
-            </h2>
-          
-          
+            <h2>Quotations Details on {requestedData?.title}</h2>
 
             <div className="btn-container">
-            
-              
-             <ExtractPdf requestedData={requestedData} qouteOn={qouteOn}/>
+              <ExtractPdf requestedData={requestedData} qouteOn={qouteOn} />
 
-        
-           
-          <button className="fs-10 d-block cursor border-0 bg-main text-white" type="button" onClick={()=>{setDescription(true)}} > <p className="cursor">Quote brief</p></button>
+              <button
+                className="fs-10 d-block cursor border-0 bg-main text-white"
+                type="button"
+                onClick={() => {
+                  setDescription(true);
+                }}
+              >
+                {" "}
+                <p className="cursor">Quote brief</p>
+              </button>
 
               <button
                 type="button"
@@ -78,7 +103,6 @@ export default function EtcQuote() {
                 }}
               >
                 <p className="cursor">Quotations</p>
-               
               </button>
             </div>
           </div>
@@ -87,7 +111,7 @@ export default function EtcQuote() {
 
       {/* error occured Or Loading data */}
       {apiLoadingData?.reqData ? (
-      <StatusMessagetwo  errorMsg={apiLoadingData?.errorWhileLoading}/>
+        <StatusMessagetwo errorMsg={apiLoadingData?.errorWhileLoading} />
       ) : (
         <div className="section factory-profile m-5">
           <div className="container gap-container">
@@ -145,7 +169,6 @@ export default function EtcQuote() {
                     <p className="cursor">Edit Quote</p>
                   </button>
 
-               
                   <ContactBtn
                     isLogin={isLogin}
                     // handleIsLoggedInBtn={handleIsLoggedInBtn}
@@ -170,34 +193,61 @@ export default function EtcQuote() {
         showImagePop={showImagePop.imagePath}
       />
 
-
- <DescritionPopUp
+      <DescritionPopUp
         show={description}
-        description={<>
-        <div className="row gap-3">
-          <div className="col-12 border-bottom">
-            <p className="fs-14  fw-normal border-bottom mb-2"><span className="fw-bold me-1">buyer name:</span>{requestedData?.importer?.repName}</p>
-          
-            <p className="fs-14  fw-normal border-bottom mb-2"><span className="fw-bold me-1">buyer email:</span>{requestedData?.importer?.repEmail}</p>
-         
-            <p className="fs-14  fw-normal border-bottom mb-2"><span className="fw-bold me-1">Quotation</span>{requestedData?.title}</p>
-            <p className="fs-14  fw-normal border-bottom mb-2"><span className="fw-bold me-1">Quotation Status</span>{requestedData?.status}</p>
-          
-            <p className="fs-14  fw-normal border-bottom mb-2"><span className="fw-bold me-1">product name</span>{requestedData?.productName}</p>
-            <p className="fs-14  fw-normal border-bottom mb-2"><span className="fw-bold me-1">Total Quantity</span>{requestedData?.minQuantity}</p>
+        description={
+          <>
+            <div className="row gap-3">
+              <div className="col-12 border-bottom">
+                <p className="fs-14  fw-normal border-bottom mb-2">
+                  <span className="fw-bold me-1">buyer name:</span>
+                  {requestedData?.importer?.repName}
+                </p>
 
-            <p className="fs-14  fw-normal border-bottom mb-2"><span className="fw-bold me-1">Form Deadline</span>{requestedData?.deadline?.split("T")?.[0]}</p>
-         
-            <p className="fs-14  fw-normal border-bottom mb-2"><span className="fw-bold me-1">Price</span>{requestedData?.price}</p>
-            <p className="fs-14  fw-normal border-bottom mb-2"><span className="fw-bold me-1">Location</span>{requestedData?.supplyLocation}</p>
-          </div>
-          
-        
-        </div>
-        </>}
-        onClose={()=>{setDescription(false)}}
-  />
+                <p className="fs-14  fw-normal border-bottom mb-2">
+                  <span className="fw-bold me-1">buyer email:</span>
+                  {requestedData?.importer?.repEmail}
+                </p>
+
+                <p className="fs-14  fw-normal border-bottom mb-2">
+                  <span className="fw-bold me-1">Quotation</span>
+                  {requestedData?.title}
+                </p>
+                <p className="fs-14  fw-normal border-bottom mb-2">
+                  <span className="fw-bold me-1">Quotation Status</span>
+                  {requestedData?.status}
+                </p>
+
+                <p className="fs-14  fw-normal border-bottom mb-2">
+                  <span className="fw-bold me-1">product name</span>
+                  {requestedData?.productName}
+                </p>
+                <p className="fs-14  fw-normal border-bottom mb-2">
+                  <span className="fw-bold me-1">Total Quantity</span>
+                  {requestedData?.minQuantity}
+                </p>
+
+                <p className="fs-14  fw-normal border-bottom mb-2">
+                  <span className="fw-bold me-1">Form Deadline</span>
+                  {requestedData?.deadline?.split("T")?.[0]}
+                </p>
+
+                <p className="fs-14  fw-normal border-bottom mb-2">
+                  <span className="fw-bold me-1">Price</span>
+                  {requestedData?.price}
+                </p>
+                <p className="fs-14  fw-normal border-bottom mb-2">
+                  <span className="fw-bold me-1">Location</span>
+                  {requestedData?.supplyLocation}
+                </p>
+              </div>
+            </div>
+          </>
+        }
+        onClose={() => {
+          setDescription(false);
+        }}
+      />
     </>
-
   );
 }

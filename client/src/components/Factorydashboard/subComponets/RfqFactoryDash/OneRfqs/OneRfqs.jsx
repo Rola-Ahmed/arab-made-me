@@ -1,34 +1,22 @@
-import { useEffect, useState, useContext } from "react";
-
-import { UserToken } from "Context/userToken";
-import { userDetails } from "Context/userType";
-
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
-// import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
-// utils function
 import SubPageUtility from "components/Shared/Dashboards/SubPageUtility";
-
 import ImporterInfo from "components/Shared/ImporterInfo";
 import ContactBtn from "components/Factorydashboard/Shared/ContactBtn";
-
-import { getOneRFQ } from "Services/rfq";
-import { getQuotes } from "Services/FactoryRequests/quotations";
-import { updateRFQ } from "Services/FactoryRequests/rfq";
-
 import RFQinfo from "components/Shared/Dashboards/Forms/RFQinfo";
+import { useOneRfq } from "./useOneRfq";
+import StatusMessagetwo from "components/Shared/Dashboards/StatusMessagetwo";
+import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/FactoryUnVerifiedPopUpMsg";
 
 export default function OneRfqs() {
+  let {
+    isLogin,
+    requestedData,
+    apiLoadingData,
+    continueProfilePath,
+  } = useOneRfq();
   let navigate = useNavigate();
-
-  let { isLogin } = useContext(UserToken);
-  let { currentUserData } = useContext(userDetails);
-
-  const [searchParams] = useSearchParams();
-  const rfqReqId = searchParams.get("rfqReqId");
-
-  const [apiLoadingData, setApiLoadingData] = useState(true);
-  const [error, setError] = useState(true);
 
   const [showImagePop, setShowImagePop] = useState({
     display: false,
@@ -40,78 +28,35 @@ export default function OneRfqs() {
       imagePath,
     });
   };
+  const [modalShow, setModalShow] = useState(false);
 
-  const [requestedData, setRequestedData] = useState({ quoteId: null });
-
-  async function fetchReqData() {
-    setApiLoadingData(true);
-
-    let result = await getOneRFQ(rfqReqId, "include=importer&include=product");
-
-    if (result?.success) {
-      setRequestedData((prevData) => ({
-        ...prevData,
-        ...result.data.quotationrequests,
-      }));
+  const navigateTo = (path) => {
+    if (continueProfilePath) {
+      setModalShow(true);
     } else {
-      setError(result?.error);
+      navigate(path);
     }
-    setApiLoadingData(false);
+  };
 
-    const QouteIdConfigResp = await getQuotes(
-      {},
-      {
-        authorization: isLogin,
-      }
+  const handleSendQuoteBnt = () => {
+    navigateTo(
+      `/answerQuotation/rfq?id=${requestedData?.id}&productName=${requestedData?.productName}&userId=${requestedData?.importerId}&productId=${requestedData?.productId}`
     );
-
-    if (QouteIdConfigResp?.success) {
-      // Extract the quotations array from the response
-      const { quotations } = QouteIdConfigResp.data;
-
-      quotations.forEach((item) => {
-        if (item.quotationRequestId == rfqReqId) {
-          // Use item.id to match with privateLabelId
-          setRequestedData((prevData) => ({
-            ...prevData,
-            quoteId: item.id, // Use item.id directly
-          }));
-        }
-      });
-    }
-  }
-
-  async function UpdateData(status) {
-    setApiLoadingData(true);
-
-    let response = await updateRFQ(
-      rfqReqId,
-      { authorization: isLogin },
-      { status: status }
+  };
+  const handleEditQuoteBnt = () => {
+    navigateTo(
+      `/factorydashboard/editQuote/${requestedData?.quoteId}?quotationRequestId=${requestedData?.id}&productName=${requestedData?.productName}`
     );
-    if (response?.success) {
-      setRequestedData((prevVal) => ({
-        ...prevVal,
-        status: status,
-      }));
-    }
-  }
-
-  useEffect(() => {
-    // fetch inial data
-    fetchReqData();
-    // Check if data is being opened for the first time
-    // call if once the page is loaded
-
-    if (requestedData && requestedData.status === "open") {
-      UpdateData("seen");
-    }
-  }, [rfqReqId, isLogin]);
-
-  // utils function
+  };
 
   return (
     <>
+      <FactoryUnVerified
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        goToPath={continueProfilePath}
+      />
+
       <div id="view" className="m-4 order-section  ">
         <SubPageUtility currentPage="More Details" PrevPage="RFQs" />
 
@@ -138,48 +83,50 @@ export default function OneRfqs() {
         <div className="container gap-container">
           <div className="row">
             <div className="col-12  container-2-gap  p-0">
-              <ImporterInfo importerData={requestedData?.importer} />
-
-              <RFQinfo
-                requestedData={requestedData}
-                handleImageClick={handleImageClick}
-              />
-
-              {/* <Link>View Quotation on FRQ</Link> */}
-
-              <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                {requestedData && requestedData?.quoteId == null ? (
-                  <button
-                    className="btn-edit "
-                    type="button"
-                    onClick={() => {
-                      navigate(
-                        `/answerQuotation/rfq?id=${requestedData?.id}&productName=${requestedData?.productName}&userId=${requestedData?.importerId}&productId=${requestedData?.productId}`
-                      );
-                    }}
-                  >
-                    <p className="cursor">send Quote</p>
-                  </button>
-                ) : (
-                  <button
-                    className="btn-edit "
-                    type="button"
-                    onClick={() => {
-                      navigate(
-                        `/factorydashboard/editQuote/${requestedData?.quoteId}?quotationRequestId=${requestedData?.id}&productName=${requestedData?.productName}`
-                      );
-                    }}
-                  >
-                    <p className="cursor">Edit Quote</p>
-                  </button>
-                )}
-
-              
-                <ContactBtn
-                  isLogin={isLogin}
-                  recieverUserId={requestedData?.importer?.userId}
+              {apiLoadingData?.reqData && (
+                <StatusMessagetwo
+                  errorMsg={apiLoadingData?.errorWhileLoading}
                 />
-              </div>
+              )}
+              {!apiLoadingData?.reqData && (
+                <>
+                  <ImporterInfo importerData={requestedData?.importer} />
+
+                  <RFQinfo
+                    requestedData={requestedData}
+                    handleImageClick={handleImageClick}
+                  />
+
+                  <div className="col-12 d-flex justify-content-start btn-modal-gap">
+                    {requestedData && requestedData?.quoteId == null ? (
+                      <button
+                        className="btn-edit "
+                        type="button"
+                        onClick={() => {
+                          handleSendQuoteBnt();
+                        }}
+                      >
+                        <p className="cursor">send Quote</p>
+                      </button>
+                    ) : (
+                      <button
+                        className="btn-edit "
+                        type="button"
+                        onClick={() => {
+                          handleEditQuoteBnt();
+                        }}
+                      >
+                        <p className="cursor">Edit Quote</p>
+                      </button>
+                    )}
+
+                    <ContactBtn
+                      isLogin={isLogin}
+                      recieverUserId={requestedData?.importer?.userId}
+                    />
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>

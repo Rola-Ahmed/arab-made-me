@@ -1,15 +1,13 @@
 import WhiteLabelNotification from "components/Factorydashboard/subComponets/WhiteLabel/Index/WhiteLabelNotificationList";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 
-export default function HeaderSection(props) {
-  let { reqData } = props;
-
+export default function HeaderSection() {
   return (
     <>
       <PageUtility currentPage="White Labels" />
       <div>
         <div className=" d-flex justify-content-between align-items-center ">
-          <h2>Private Labels</h2>
+          <h2>White Labels</h2>
 
           <div className="btn-container">
             <div>

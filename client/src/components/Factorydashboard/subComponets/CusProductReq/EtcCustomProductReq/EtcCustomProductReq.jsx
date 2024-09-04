@@ -11,12 +11,14 @@ import DisplayMultiImages from "components/Shared/Dashboards/DisplayMultiImages"
 import DisplayOneImage from "components/Shared/Dashboards/DisplayOneImage";
 import CustomProductInfo from "components/Shared/Dashboards/Forms/CustomProductInfo";
 import StatusMessagetwo from "components/Shared/Dashboards/StatusMessagetwo";
+import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/FactoryUnVerifiedPopUpMsg";
 
 export default function EtcCustomProductReq() {
   let navigate = useNavigate();
 
   let getMonthName = getDate;
-  let { isLogin, requestedData, apiLoadingData } = useSpmf();
+  let { isLogin, requestedData, apiLoadingData,continueProfilePath } = useSpmf();
+  const [modalShow, setModalShow] = useState(false);
 
   const [showImagePop, setShowImagePop] = useState({
     display: false,
@@ -29,9 +31,36 @@ export default function EtcCustomProductReq() {
     });
   };
 
+ 
+
+  const navigateTo = (path) => {
+    if (continueProfilePath) {
+      setModalShow(true);
+    } else {
+      navigate(path);
+    }
+  };
+
+  const handleSendQuoteBnt = () => {
+    navigateTo(
+     `/answerQuotation/spmf?id=${requestedData?.id}&productName=${requestedData?.productName}&userId=${requestedData?.importerId}`
+    );
+  };
+  const handleEditQuoteBnt = () => {
+    navigateTo(
+       `/factorydashboard/editQuote/${requestedData?.quoteId}?specialManufacturingRequestId=${requestedData?.id}&productName=${requestedData?.productName}`
+    );
+  };
+
   return (
     <>
      
+     <FactoryUnVerified
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        goToPath={continueProfilePath}
+      />
+
 
       <HeaderSection />
 
@@ -195,9 +224,8 @@ export default function EtcCustomProductReq() {
                       className="btn-edit "
                       type="button"
                       onClick={() => {
-                        navigate(
-                          `/answerQuotation/spmf?id=${requestedData?.id}&productName=${requestedData?.productName}&userId=${requestedData?.importerId}`
-                        );
+                        handleSendQuoteBnt()
+                      
                       }}
                     >
                       <p className="cursor">send Quote</p>
@@ -207,9 +235,8 @@ export default function EtcCustomProductReq() {
                       className="btn-edit "
                       type="button"
                       onClick={() => {
-                        navigate(
-                          `/factorydashboard/editQuote/${requestedData?.quoteId}?specialManufacturingRequestId=${requestedData?.id}&productName=${requestedData?.productName}`
-                        );
+                        handleEditQuoteBnt()
+                       
                       }}
                     >
                       <p className="cursor">Edit Quote</p>

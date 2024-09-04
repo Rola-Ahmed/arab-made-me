@@ -73,7 +73,6 @@ export function usePrivateLabel() {
     }
 
     async function UpdateData(status) {
-      setApiLoadingData(true);
 
       let response = await updatePrivateLabel(
         privateLabelId,

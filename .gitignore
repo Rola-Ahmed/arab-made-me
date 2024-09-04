@@ -49,3 +49,4 @@ EtcVisitRequest copy.jsx
 ignoore/BecomomeAFactoryFullScreenDelete.jsx
 /ignoore
 client/src/Context/userType copy.js
+client/src/components/Shared/Dashboards/StatusMessage copy.jsx

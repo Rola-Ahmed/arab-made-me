@@ -1,36 +1,30 @@
 import { useEffect, useState, useContext } from "react";
 import { useSearchParams } from "react-router-dom";
 import { UserToken } from "Context/userToken";
-import { getOneSpmf } from "Services/customProduct";
-import { updateSpmf } from "Services/FactoryRequests/spmf";
+import { getOneRFQ } from "Services/rfq";
+import { updateRFQ } from "Services/FactoryRequests/rfq";
 import { getQuotes } from "Services/FactoryRequests/quotations";
 import { userDetails } from "Context/userType";
 
-export function useSpmf() {
+export function useOneRfq() {
   const { isLogin } = useContext(UserToken);
-  const { currentUserData } = useContext(userDetails);
-
   const [searchParams] = useSearchParams();
-  const customProductId = searchParams.get("customProductId");
-
+  const rfqReqId = searchParams.get("rfqReqId");
+  const { currentUserData } = useContext(userDetails);
+  const [requestedData, setRequestedData] = useState({ quoteId: null });
   const [apiLoadingData, setApiLoadingData] = useState({
     reqData: true,
     errorWhileLoading: null,
     findQuotation: true,
   });
 
-  const [requestedData, setRequestedData] = useState({ quoteId: null });
-
   useEffect(() => {
     async function fetchReqData() {
-      setApiLoadingData((prevVal) => ({
-        ...prevVal,
-        reqData: true,
-        findQuotation: true,
-      }));
-
       // get private label data
-      let result = await getOneSpmf(customProductId, "include=importer");
+      let result = await getOneRFQ(
+        rfqReqId,
+        "include=importer&include=product"
+      );
 
       // check if private label has quotations
       const QouteIdConfigResp = await getQuotes(
@@ -43,21 +37,23 @@ export function useSpmf() {
       if (result?.success) {
         setRequestedData((prevData) => ({
           ...prevData,
-          ...result.data.specialmanufacturingrequests,
+          ...result.data.privatelabelings,
         }));
       }
+      //  else {
       setApiLoadingData((prevVal) => ({
         ...prevVal,
         reqData: result?.loadingStatus,
         errorWhileLoading: result?.error,
       }));
+      // }
 
       if (QouteIdConfigResp?.success) {
         // Extract the quotations array from the response
         const { quotations } = QouteIdConfigResp.data;
 
         quotations.forEach((item) => {
-          if (item.specialManufacturingRequestId == customProductId) {
+          if (item.quotationRequestId == rfqReqId) {
             // Use item.id to match with privateLabelId
             setRequestedData((prevData) => ({
               ...prevData,
@@ -73,10 +69,8 @@ export function useSpmf() {
     }
 
     async function UpdateData(status) {
-      // setApiLoadingData(true);
-
-      let response = await updateSpmf(
-        customProductId,
+      let response = await updateRFQ(
+        rfqReqId,
         { authorization: isLogin },
         { status: status }
       );
@@ -93,11 +87,7 @@ export function useSpmf() {
     if (requestedData && requestedData.status === "open") {
       UpdateData("seen");
     }
-  }, [
-    customProductId,
-    isLogin,
-    requestedData && requestedData.status === "open",
-  ]);
+  }, [rfqReqId, isLogin]);
 
   return {
     isLogin,

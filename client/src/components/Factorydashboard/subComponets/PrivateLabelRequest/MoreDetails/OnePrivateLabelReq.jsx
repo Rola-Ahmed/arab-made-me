@@ -102,13 +102,7 @@ export default function EtcPrivateLabelReq() {
                         type="button"
                         onClick={() => {
                           handleSendQuoteBnt();
-                          // if (continueProfilePath) {
-                          //   setModalShow(true);
-                          //   return;
-                          // }
-                          // navigate(
-                          //   `/answerQuotation/PrivateLabel?id=${requestedData?.id}&productName=${requestedData?.productName}&userId=${requestedData?.importerId}`
-                          // );
+                        
                         }}
                       >
                         <p className="cursor">Send Quote</p>
@@ -119,14 +113,7 @@ export default function EtcPrivateLabelReq() {
                         type="button"
                         onClick={() => {
                           handleEditQuoteBnt();
-                          // if (continueProfilePath) {
-                          //   setModalShow(true);
-                          //   return;
-                          // }
-
-                          // navigate(
-                          //   `/factorydashboard/editQuote/${requestedData?.quoteId}?privateLabelingId=${requestedData?.id}&productName=${requestedData?.productName}`
-                          // );
+                          
                         }}
                       >
                         <p className="cursor">Edit Quote</p>

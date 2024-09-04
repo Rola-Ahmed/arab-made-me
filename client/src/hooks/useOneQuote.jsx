@@ -8,11 +8,13 @@ import { getOneRFQ } from "Services/rfq";
 import { getOneWhiteLabel } from "Services/whiteLabel";
 import { getOneSpmf } from "Services/customProduct";
 import { getOneSourcingReq } from "Services/sourcingReuqest";
+import { userDetails } from "Context/userType";
 
 export function useOneQuote() {
   const { isLogin } = useContext(UserToken);
   const [searchParams] = useSearchParams();
   const quotationsId = searchParams.get("quotationsId");
+  const { currentUserData } = useContext(userDetails);
 
   const [apiLoadingData, setApiLoadingData] = useState({
     loading: true,
@@ -159,5 +161,6 @@ export function useOneQuote() {
     requestedData,
     apiLoadingData,
     qouteOn,
+    continueProfilePath: currentUserData?.continueProfilePath,
   };
 }
