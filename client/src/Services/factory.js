@@ -1,4 +1,9 @@
-import { getRequest, putRequest, postRequest } from "./authServices";
+import {
+  getRequest,
+  putRequest,
+  postRequest,
+  patchRequest,
+} from "./authServices";
 
 // Service for fetching all products of a specific factory
 //------------------------------------- factory products------------------------------------------
@@ -32,6 +37,10 @@ export const addFactoryMedia = async (header, data) => {
   return await putRequest(`/factories/media`, header, data);
 };
 
+export const updateFactoryLegalDocs = async (header, data) => {
+  return await patchRequest(`/factories/update/legalDoc`, header, data);
+};
+
 // factories
 export const addFactory = async (header, data) => {
   return await postRequest(`/factories/add`, header, data);
@@ -40,12 +49,9 @@ export const updateFactoryFromUser = async (header, data) => {
   return await putRequest(`/factories/update/fromUser`, header, data);
 };
 
-
-
 export const getFactoryTeam = async (factoryId, params) => {
   return await getRequest(`/teams/factory/${factoryId}?${params}`);
 };
-
 
 export const getEndorse = async (factoryId, params) => {
   return await getRequest(`/endorsements/factory/${factoryId}?${params}`);

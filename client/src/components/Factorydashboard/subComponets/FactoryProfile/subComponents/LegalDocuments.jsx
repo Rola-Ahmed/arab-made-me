@@ -24,6 +24,7 @@ export default function LegalDocuments(props) {
           <DisplayMultiImages
             handleImageClick={handleImageClick}
             images={legalDocs}
+            // deleteButton={}
           />
 
           <div className="w-100">

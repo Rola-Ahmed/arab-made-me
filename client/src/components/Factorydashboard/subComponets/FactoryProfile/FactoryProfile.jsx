@@ -20,6 +20,7 @@ import {
   fetchOneFactory,
   addFactoryMedia,
   updateFactoryFromUser,
+  updateFactoryLegalDocs,
 } from "Services/factory";
 import useFormValidation from "./hooks/useFormValidation";
 export default function FactoryProfile() {
@@ -69,6 +70,43 @@ export default function FactoryProfile() {
       },
       data
     );
+
+    if (result?.success) {
+      ModalClose();
+      setSelectedDocs([]);
+      SuccessToast("Data Updated Successfully");
+      setFactoryProfile((prevErrors) => ({
+        ...prevErrors,
+        ...result?.data?.factories?.legalDocs,
+      }));
+    } else {
+      setErrorMsg((prevErrors) => ({
+        ...prevErrors,
+        response: result?.error,
+      }));
+    }
+    setIsLoading(false);
+  }
+
+  async function updateLegalDocs(e) {
+    setIsLoading(true);
+
+    e.preventDefault();
+
+    const data = new FormData();
+
+    data.append(selectedDocs?.[0]?.keyWord, selectedDocs?.[0]?.pdfFile);
+
+    // Optionally append additional data such as the index
+    data.append("index", factoryProfile?.legalDocs?.length);
+
+    let result = await updateFactoryLegalDocs(
+      {
+        Authorization: isLogin,
+      },
+      data
+    );
+    console.log("resultresultresultresult", result);
 
     if (result?.success) {
       ModalClose();
@@ -297,7 +335,7 @@ export default function FactoryProfile() {
               )}
               <div className="w-100 ">
                 <form
-                  onSubmit={(e) => updateMedia(e, "legalDocs")}
+                  onSubmit={(e) => updateLegalDocs(e, "legalDocs")}
                   encType="multipart/form-data"
                 >
                   {/* legalDocs */}
@@ -307,7 +345,7 @@ export default function FactoryProfile() {
                       errorMsg={errorMsg}
                       setSelectedDocs={setSelectedDocs}
                       MediaName="legalDocs"
-                      mediaMaxLen="3"
+                      mediaMaxLen="1"
                       meidaAcceptedExtensions={["pdf", "png", "jpeg", "jpg"]}
                       setErrorMsg={setErrorMsg}
                       title="Upload Documents"
