@@ -49,6 +49,13 @@ export default function ChangePassword(props) {
     if (result?.success) {
       logOuut();
       SuccessToast("Password updated Successfully");
+      const backdrops = document.querySelectorAll(".modal-backdrop");
+
+      // Iterate over each element and remove the 'show' class
+      backdrops?.forEach((backdrop) => {
+        backdrop?.classList?.remove("show");
+        backdrop?.classList?.add("hide");
+      });
     } else {
       setErrorMsg((prevErrors) => ({
         ...prevErrors,

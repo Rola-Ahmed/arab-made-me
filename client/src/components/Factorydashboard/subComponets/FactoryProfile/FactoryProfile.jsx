@@ -1,118 +1,92 @@
-import { useEffect, useState, useContext } from "react";
+import { useState, useEffect } from "react";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
-
-import { UserToken } from "Context/userToken";
-import { userDetails } from "Context/userType";
-
-import "./FactoryProfile.css";
-import { handleImageError } from "utils/ImgNotFound";
-import { countriesMiddleEast } from "constants/countries";
 import SuccessToast from "components/SuccessToast";
 import ErrorToast from "components/ErrorToast";
-
 import UploadDocument from "components/Forms/Shared/UploadDocument";
-
 import ChangePassword from "./subComponents/ChangePassword/ChangePassword";
 import AccountInformation from "./subComponents/AccountInformation";
 import SubscriptionPlan from "./subComponents/SubscriptionPlan";
 import LegalDocuments from "./subComponents/LegalDocuments";
+import useFormValidation from "./hooks/useFormValidation";
+import useFactoryProfile from "./hooks/useFactoryProfile";
+import { handleImageError } from "utils/ImgNotFound";
+import { countriesMiddleEast } from "constants/countries";
+
 import {
-  fetchOneFactory,
   updateFactoryFromUser,
   updateFactoryLegalDocs,
 } from "Services/factory";
-import useFormValidation from "./hooks/useFormValidation";
+import "./FactoryProfile.css";
+
 export default function FactoryProfile() {
   document.title = "Factory Profile";
-  let { currentUserData, clearSession } = useContext(userDetails);
 
-  let { isLogin } = useContext(UserToken);
-  let [factoryProfile, setFactoryProfile] = useState();
+  const {
+    factoryProfile,
+    errorloadingProfile,
+    setFactoryProfile,
+    clearSession,
+    isLogin,
+  } = useFactoryProfile();
 
-  let { initialAccountInfo, AccountInfoValidation } = useFormValidation(
-    submitAccInfo,
+  const { initialAccountInfo, AccountInfoValidation } = useFormValidation(
+    handleSubmitAccInfo,
     factoryProfile
   );
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState({});
+  const [selectedDocs, setSelectedDocs] = useState([]);
 
   const modalIdNames = {
     editAccountInfo: "editAccountInfo",
     addLegalDocs: "addLegalDocs",
   };
 
-  const [isLoading, setIsLoading] = useState(false);
-
-  const [errorMsg, setErrorMsg] = useState();
-
-  // slider setting
-
-  const [selectedDocs, setSelectedDocs] = useState([]);
-
-  // api
-  async function fetchFactoryPage() {
-    let result = await fetchOneFactory(currentUserData?.factoryId);
-    if (result?.success) {
-      setFactoryProfile((prevErrors) => ({
-        ...prevErrors,
-        ...result?.data?.factories,
-      }));
-    }
+  async function handleSingleFileUpload(fileKeyword, fileValue, index) {
+    const formData = new FormData();
+    formData.append(fileKeyword, fileValue);
+    formData.append("index", index);
+    return formData;
   }
 
-  // Cover IMage Profile -----------------------------------------------------
-
-  const handleSingleFileUpload = (fileKeyword, fileValue, index) => {
-    const formData = new FormData();
-
-    // Append the file with the keyWord as the field name
-    formData.append(fileKeyword, fileValue);
-
-    // Optionally append additional data such as the index
-    formData.append("index", index);
-
-    return formData;
-  };
-
-  async function addLegalDocs(e) {
-    let actionType = "add";
+  async function handleAddLegalDocs(e) {
+    document.body.style.cursor = "wait";
     e.preventDefault();
-
-    let data = handleSingleFileUpload(
+    let data = await handleSingleFileUpload(
       selectedDocs?.[0]?.keyWord,
       selectedDocs?.[0]?.pdfFile,
       factoryProfile?.legalDocs?.length
     );
-
-    updateLegalDocs(data, actionType);
+    console.log("data-----", data);
+    await handleLegalDocs(data, "add");
   }
 
-  async function deleteLegalDocs(index) {
-    let actionType = "delete";
-    let data = handleSingleFileUpload("legalDocs", null, index);
-
-    updateLegalDocs(data, actionType);
+  async function handleDeleteLegalDocs(index) {
+    document.body.style.cursor = "wait";
+    const data = await handleSingleFileUpload("legalDocs", null, index);
+    await handleLegalDocs(data, "delete");
   }
 
-  async function updateLegalDocs(data, actionType) {
+  async function handleLegalDocs(data, actionType) {
+    console.log("datam", data);
     setIsLoading(true);
-
-    let result = await updateFactoryLegalDocs(
-      {
-        Authorization: isLogin,
-      },
+    const result = await updateFactoryLegalDocs(
+      { Authorization: isLogin },
       data
     );
 
     if (result?.success) {
-      const modal = document.getElementById("addLegalDocs");
-      modal.classList.remove("show"); // Remove the 'show' class
-      modal.classList.add("d-none"); // Remove the 'show' class
-      setSelectedDocs([]);
-      SuccessToast("Data Updated Successfully");
-      setFactoryProfile((prevErrors) => ({
-        ...prevErrors,
-        ...result?.data?.factory?.legalDocs,
+      setFactoryProfile((prev) => ({
+        ...prev,
         legalDocs: result?.data?.factory?.legalDocs,
       }));
+      SuccessToast("data updated succcfully");
+
+      handleClose();
+      // const closeButton = document.getElementsByTagName("addLegalDocs");
+      // closeButton.setAttribute("data-bs-dismiss", "modal");
+      // console.log("closeButton", closeButton);
     } else {
       if (actionType == "delete") {
         ErrorToast("someThing went Wrong");
@@ -124,11 +98,10 @@ export default function FactoryProfile() {
       }
     }
     setIsLoading(false);
+    setTimeout(() => {
+      document.body.style.cursor = "default";
+    }, 5000); // 5000 milliseconds = 5 seconds
   }
-
-  useEffect(() => {
-    fetchFactoryPage();
-  }, [currentUserData?.factoryId]);
 
   const EmailNotificationUpdate2 = async (e) => {
     e.preventDefault();
@@ -136,85 +109,62 @@ export default function FactoryProfile() {
       allowEmailNotification: !factoryProfile?.allowEmailNotification,
     };
 
-    submitForm(data);
+    handleSubmitForm(data);
   };
 
-  function submitAccInfo(values) {
-    let data = {};
-    data.repName = [values.repFirstName, values.repLastName];
-    if (factoryProfile?.repEmail !== values.repEmail) {
-      data.repEmail = values.repEmail;
-    }
-    if (
-      factoryProfile?.repPhone != `${values.repPhoneCode}${values.repPhone}`
-    ) {
-      data.repPhone = `${values.repPhoneCode}${values.repPhone}`;
-    }
-    submitForm(data);
+  async function handleSubmitAccInfo(values) {
+    const data = {
+      repName: [values.repFirstName, values.repLastName],
+      ...(factoryProfile?.repEmail !== values.repEmail && {
+        repEmail: values.repEmail,
+      }),
+      ...(factoryProfile?.repPhone !==
+        `${values.repPhoneCode}${values.repPhone}` && {
+        repPhone: `${values.repPhoneCode}${values.repPhone}`,
+      }),
+    };
+    await handleSubmitForm(data);
   }
 
-  async function submitForm(values) {
-    let data = values;
+  async function handleSubmitForm(values) {
     setIsLoading(true);
-    setErrorMsg((prevErrors) => {
-      const { response, ...restErrors } = prevErrors || {};
-      return restErrors;
-    });
+    setErrorMsg({});
 
     const result = await updateFactoryFromUser(
-      {
-        authorization: isLogin,
-      },
-      data
+      { authorization: isLogin },
+      values
     );
 
     if (result?.success) {
-      // ModalClose();
-      const modal = document.getElementById(modalIdNames.editAccountInfo);
-      modal.classList.remove("show"); // Remove the 'show' class
-      modal.classList.add("d-none"); // Remove the 'show' class
-      SuccessToast("data updated succcfully");
+      SuccessToast("Data updated successfully");
+      const modal = document.getElementById("editAccountInfo");
+      modal?.classList.remove("show");
+      modal?.classList.add("d-none");
 
-      setFactoryProfile((prevErrors) => ({
-        ...prevErrors,
-        ...data,
-      }));
+      const backdrops = document.querySelectorAll(".modal-backdrop");
+
+      // Iterate over each element and remove the 'show' class
+      backdrops?.forEach((backdrop) => {
+        backdrop?.classList?.remove("show");
+      });
+
+      setFactoryProfile((prev) => ({ ...prev, ...values }));
     } else {
-      setErrorMsg((prevErrors) => ({
-        ...prevErrors,
-        response: result?.error,
-      }));
+      setErrorMsg({ response: result?.error });
     }
 
     setIsLoading(false);
-
-    const modal = document.getElementById("editAccountInfo");
-    modal.classList.remove("show"); // Remove the 'show' class
-    modal.classList.add("d-none"); // Remove the 'show' class
   }
 
   useEffect(() => {
-    if (factoryProfile && factoryProfile.length !== 0) {
+    if (factoryProfile) {
       AccountInfoValidation.setValues(initialAccountInfo);
     }
   }, [factoryProfile]);
 
-  function handleClose2() {
-    setErrorMsg((prevErrors) => {
-      const { response, ...restErrors } = prevErrors || {};
-      return restErrors;
-    });
-
-    AccountInfoValidation.resetForm({
-      values: initialAccountInfo,
-      errors: {},
-      touched: {},
-      status: undefined,
-      isSubmitting: false,
-      isValidating: false,
-      submitCount: 0,
-    });
-
+  function handleClose() {
+    setErrorMsg({});
+    AccountInfoValidation.resetForm();
     setSelectedDocs([]);
   }
 
@@ -228,9 +178,8 @@ export default function FactoryProfile() {
             <div className="col-12  container-2-gap  p-0">
               {/* Account Info container 1 */}
               <AccountInformation
-                currentUserData={currentUserData}
                 factoryProfile={factoryProfile}
-                handleClose={handleClose2}
+                handleClose={handleClose}
                 errorMsg={errorMsg?.response}
                 AccountInfoValidation={AccountInfoValidation}
                 isLoading={isLoading}
@@ -271,11 +220,98 @@ export default function FactoryProfile() {
                 legalDocs={factoryProfile?.legalDocs}
                 handleImageError={handleImageError}
                 // handleShow={handleShow}
-                deleteLegalDocs={deleteLegalDocs}
+                deleteLegalDocs={handleDeleteLegalDocs}
               />
 
               {/*subscriptionPlan*/}
               <SubscriptionPlan />
+            </div>
+          </div>
+        </div>
+
+        <div
+          className="modal fade "
+          id="addLegalDocs"
+          tabindex="-1"
+          role="dialog"
+          aria-hidden="true"
+        >
+          <div
+            className="modal-dialog  modal-dialog-centered modal-lg rounded-3"
+            role="document"
+          >
+            <div className="modal-content   px-4 py-4">
+              <div className="modal-header mb-3">
+                <h4 className="modal-title fw-normal">
+                  Upload New Legal Documents
+                </h4>
+
+                <button
+                  type="button"
+                  className="close bg-0 border-0"
+                  aria-label="Close"
+                  data-bs-dismiss="modal"
+                  onClick={() => handleClose()}
+                >
+                  <i className="fa-solid fa-xmark fs-24"></i>
+                </button>
+              </div>
+              {/* <small>you can only add one image at a time</small> */}
+              <div className="modal-body p-0 ">
+                {" "}
+                {errorMsg?.response && (
+                  <div className="alert mt-3 p-2 alert-danger form-control text-dark">
+                    {errorMsg?.response}
+                  </div>
+                )}
+                <div className="w-100 ">
+                  <form
+                    onSubmit={(e) => handleAddLegalDocs(e)}
+                    encType="multipart/form-data"
+                  >
+                    {/* legalDocs */}
+                    <div className="row  row-gap">
+                      <UploadDocument
+                        selectedDocs={selectedDocs}
+                        errorMsg={errorMsg}
+                        setSelectedDocs={setSelectedDocs}
+                        MediaName="legalDocs"
+                        mediaMaxLen="1"
+                        meidaAcceptedExtensions={["pdf", "png", "jpeg", "jpg"]}
+                        setErrorMsg={setErrorMsg}
+                        title="Upload Documents"
+                      />
+
+                      <div className="col-12 d-flex justify-content-start btn-modal-gap mt-3">
+                        <button
+                          className="border-0 rounded-3 bg-header fs-14 fw-600 px-3 py-2"
+                          type="button"
+                          data-bs-dismiss="modal"
+                          onClick={() => handleClose()}
+                        >
+                          Close
+                        </button>
+                        {isLoading ? (
+                          <button
+                            type="button"
+                            className="rounded-3 bg-main text-white px-4 py-2 border-0"
+                          >
+                            <i className="fas fa-spinner fa-spin text-white px-5"></i>
+                          </button>
+                        ) : (
+                          <button
+                            className="rounded-3 border-0 bg-main text-white px-3 py-2 fs-14 fw-bolder"
+                            type="submit"
+                            disabled={!(selectedDocs?.length > 0)}
+                          >
+                            Submit New Images
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -299,17 +335,18 @@ export default function FactoryProfile() {
               <h4 className="modal-title fw-normal">
                 Upload New Legal Documents
               </h4>
+
               <button
                 type="button"
                 className="close bg-0 border-0"
-                data-dismiss="modal"
                 aria-label="Close"
                 data-bs-dismiss="modal"
-                onClick={() => handleClose2()}
+                onClick={() => handleClose()}
               >
                 <i className="fa-solid fa-xmark fs-24"></i>
               </button>
             </div>
+            {/* <small>you can only add one image at a time</small> */}
             <div className="modal-body p-0 ">
               {" "}
               {errorMsg?.response && (
@@ -319,7 +356,7 @@ export default function FactoryProfile() {
               )}
               <div className="w-100 ">
                 <form
-                  onSubmit={(e) => addLegalDocs(e)}
+                  onSubmit={(e) => handleAddLegalDocs(e)}
                   encType="multipart/form-data"
                 >
                   {/* legalDocs */}
@@ -340,7 +377,7 @@ export default function FactoryProfile() {
                         className="border-0 rounded-3 bg-header fs-14 fw-600 px-3 py-2"
                         type="button"
                         data-bs-dismiss="modal"
-                        onClick={() => handleClose2()}
+                        onClick={() => handleClose()}
                       >
                         Close
                       </button>
@@ -356,6 +393,7 @@ export default function FactoryProfile() {
                           className="rounded-3 border-0 bg-main text-white px-3 py-2 fs-14 fw-bolder"
                           type="submit"
                           disabled={!(selectedDocs?.length > 0)}
+                          id="saveLegalDocs"
                         >
                           Submit New Images
                         </button>

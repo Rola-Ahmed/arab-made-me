@@ -25,7 +25,7 @@ const useFormValidation = (submitAccInfo, factoryProfile) => {
 
     repEmail: factoryProfile?.repEmail || "",
 
-    repPhoneCode: 
+    repPhoneCode:
       factoryProfile?.repPhone?.slice(0, 4) ||
       countriesMiddleEast?.[0]?.phoneCode,
     repPhone: factoryProfile?.repPhone?.slice(4) || "",
@@ -45,7 +45,6 @@ const useFormValidation = (submitAccInfo, factoryProfile) => {
     onSubmit: submitAccInfo,
   });
 
-  console.log("initialAccountInfo",initialAccountInfo)
   return {
     initialAccountInfo,
     AccountInfoValidation,

@@ -50,3 +50,7 @@ ignoore/BecomomeAFactoryFullScreenDelete.jsx
 /ignoore
 client/src/Context/userType copy.js
 client/src/components/Shared/Dashboards/StatusMessage copy.jsx
+client/src/components/Factorydashboard/subComponets/FactoryProfile/hooks/useFactoryProfile copy.js
+client/src/components/Factorydashboard/subComponets/FactoryProfile/FactoryProfile copy.jsx
+client/src/components/Factorydashboard/subComponets/FactoryProfile/FactoryProfile copy 3.jsx
+client/src/components/Factorydashboard/subComponets/FactoryProfile/FactoryProfile copy 2.jsx

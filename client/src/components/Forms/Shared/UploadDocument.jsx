@@ -72,10 +72,22 @@ function handleMultiMediaValidation(
     });
 
     setSelectedDocs(updatedDocs);
-    const coverImgInput = document?.getElementById(MediaName);
-    if (coverImgInput) {
-      coverImgInput.value = "";
+    const inputElement = document.querySelector(
+      `input[file-id="${MediaName}"]`
+    );
+
+    console.log("inputElement",inputElement)
+    // Perform actions on the selected element
+    if (inputElement) {
+    console.log("inputElement enter",inputElement)
+
+      inputElement.value = "";
     }
+
+    // const coverImgInput = document?.getElementById(MediaName);
+    // if (coverImgInput) {
+    //   coverImgInput.value = "";
+    // }
   };
 
   reader.onprogress = (event) => {
@@ -191,6 +203,7 @@ export default function UploadDocument(props) {
             className="border-0 mx-auto"
             type="file"
             id={MediaName}
+            file-id={MediaName}
             // hidden
             onChange={(e) =>
               handleFileChange(

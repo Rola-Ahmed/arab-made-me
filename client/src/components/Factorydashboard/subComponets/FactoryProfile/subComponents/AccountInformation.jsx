@@ -1,8 +1,7 @@
 import InputField from "components/Forms/Shared/InputField";
 
-export default function AccountInformation(props) {
+export default function editAccountInfoAccountInformation(props) {
   let {
-    currentUserData,
     factoryProfile,
     handleClose,
     errorMsg,
@@ -25,7 +24,7 @@ export default function AccountInformation(props) {
                     <label>Business Account</label>
                     <input
                       className="form-control"
-                      value={currentUserData?.userEmail || ""}
+                      value={factoryProfile?.businessEmail || ""}
                       readOnly
                     />
                   </div>
