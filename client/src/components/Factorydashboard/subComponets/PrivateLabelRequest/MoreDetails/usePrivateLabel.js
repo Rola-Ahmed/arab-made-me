@@ -4,11 +4,13 @@ import { UserToken } from "Context/userToken";
 import { getOnePrivateLabel } from "Services/privateLabel";
 import { updatePrivateLabel } from "Services/FactoryRequests/privateLabel";
 import { getQuotes } from "Services/FactoryRequests/quotations";
+import { userDetails } from "Context/userType";
 
 export function usePrivateLabel() {
   const { isLogin } = useContext(UserToken);
   const [searchParams] = useSearchParams();
   const privateLabelId = searchParams.get("privateLabelId");
+  const { currentUserData } = useContext(userDetails);
 
   const [apiLoadingData, setApiLoadingData] = useState({
     reqData: true,
@@ -97,5 +99,6 @@ export function usePrivateLabel() {
     isLogin,
     requestedData,
     apiLoadingData,
+    continueProfilePath: currentUserData?.continueProfilePath,
   };
 }

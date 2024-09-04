@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
 import ProductDetails from "components/Forms/Shared/SelectedProductDetails";
 
@@ -14,16 +13,24 @@ import ContactBtn from "components/Factorydashboard/Shared/ContactBtn";
 import { usePrivateLabel } from "./usePrivateLabel";
 import PrivateLabelInfo from "components/Shared/Dashboards/Forms/PrivateLabelInfo";
 import StatusMessagetwo from "components/Shared/Dashboards/StatusMessagetwo";
+import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/FactoryUnVerifiedPopUpMsg";
 
 // utils function
 export default function EtcPrivateLabelReq() {
-  let { isLogin, requestedData, apiLoadingData } = usePrivateLabel();
+  let {
+    isLogin,
+    requestedData,
+    apiLoadingData,
+    continueProfilePath,
+  } = usePrivateLabel();
   let navigate = useNavigate();
 
   // utils function
   // let getMonthName = getDate;
 
   // popup image( used to see a bigger verison of the requested media )
+  const [modalShow, setModalShow] = useState(false);
+
   const [showImagePop, setShowImagePop] = useState({
     display: false,
     imagePath: "",
@@ -38,6 +45,12 @@ export default function EtcPrivateLabelReq() {
 
   return (
     <>
+      <FactoryUnVerified
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        goToPath={continueProfilePath}
+      />
+
       <HeaderSection />
 
       <div className="section factory-profile m-5 ">
@@ -45,7 +58,9 @@ export default function EtcPrivateLabelReq() {
           <div className="row">
             <div className="col-12  container-2-gap  p-0">
               {apiLoadingData?.reqData ? (
-                <StatusMessagetwo  errorMsg={apiLoadingData?.errorWhileLoading}/>
+                <StatusMessagetwo
+                  errorMsg={apiLoadingData?.errorWhileLoading}
+                />
               ) : (
                 <>
                   <ImporterInfo importerData={requestedData?.importer} />
@@ -60,42 +75,52 @@ export default function EtcPrivateLabelReq() {
                       <ProductDetails productDetails={requestedData?.product} />
                     </div>
                   )}
+
+                  <div className="col-12 d-flex justify-content-start btn-modal-gap ">
+                    {requestedData && requestedData?.quoteId == null ? (
+                      <button
+                        className="btn-edit "
+                        type="button"
+                        onClick={() => {
+                          if (continueProfilePath) {
+                            setModalShow(true);
+                            return;
+                          }
+                          navigate(
+                            `/answerQuotation/PrivateLabel?id=${requestedData?.id}&productName=${requestedData?.productName}&userId=${requestedData?.importerId}`
+                          );
+                        }}
+                      >
+                        <p className="cursor">Send Quote</p>
+                      </button>
+                    ) : (
+                      <button
+                        className="btn-edit "
+                        type="button"
+                        onClick={() => {
+                          if (continueProfilePath) {
+                            setModalShow(true);
+                            return;
+                          }
+
+                          navigate(
+                            `/factorydashboard/editQuote/${requestedData?.quoteId}?privateLabelingId=${requestedData?.id}&productName=${requestedData?.productName}`
+                          );
+                        }}
+                      >
+                        <p className="cursor">Edit Quote</p>
+                      </button>
+                    )}
+
+                    <ContactBtn
+                      isLogin={isLogin}
+                      // handleIsLoggedInBtn={handleIsLoggedInBtn}
+                      recieverUserId={requestedData?.importer?.userId}
+                      // baseUrl={baseUrl}
+                    />
+                  </div>
                 </>
               )}
-              <div className="col-12 d-flex justify-content-start btn-modal-gap ">
-                {requestedData && requestedData?.quoteId == null ? (
-                  <button
-                    className="btn-edit "
-                    type="button"
-                    onClick={() => {
-                      navigate(
-                        `/answerQuotation/PrivateLabel?id=${requestedData?.id}&productName=${requestedData?.productName}&userId=${requestedData?.importerId}`
-                      );
-                    }}
-                  >
-                    <p className="cursor">send Quote</p>
-                  </button>
-                ) : (
-                  <button
-                    className="btn-edit "
-                    type="button"
-                    onClick={() => {
-                      navigate(
-                        `/factorydashboard/editQuote/${requestedData?.quoteId}?privateLabelingId=${requestedData?.id}&productName=${requestedData?.productName}`
-                      );
-                    }}
-                  >
-                    <p className="cursor">Edit Quote</p>
-                  </button>
-                )}
-
-                <ContactBtn
-                  isLogin={isLogin}
-                  // handleIsLoggedInBtn={handleIsLoggedInBtn}
-                  recieverUserId={requestedData?.importer?.userId}
-                  // baseUrl={baseUrl}
-                />
-              </div>
             </div>
           </div>
         </div>
