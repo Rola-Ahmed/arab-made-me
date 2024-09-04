@@ -1,15 +1,13 @@
 import { useEffect, useState, useContext } from "react";
 import { fetchOneImporter } from "Services/importer";
-import {  baseUrl_IMG } from "config.js";
+import { baseUrl_IMG } from "config.js";
 import SuccessToast from "components/SuccessToast";
 import ErrorToast from "components/ErrorToast";
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
-import ReadOnly from  'components/Forms/Shared/ReadOnly'
-
+import ReadOnly from "components/Forms/Shared/ReadOnly";
 
 import DisplayMultiImages from "components/Shared/Dashboards/DisplayMultiImages";
 import Modal from "react-bootstrap/Modal";
-
 
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
@@ -20,31 +18,43 @@ import { countriesMiddleEast } from "constants/countries";
 import { useOutletContext } from "react-router-dom";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 import UploadDocument from "components/Forms/Shared/UploadDocument";
-import {useFetchSectors} from 'hooks/useFetchSectors'
-import {addImporterMedia,updateImporterFromUser} from 'Services/importer';
-import ChangePassword from "components/Factorydashboard/subComponets/FactoryProfile/subComponents/ChangePassword/ChangePassword"
-import InputField from 'components/Forms/Shared/InputField'
+import { useFetchSectors } from "hooks/useFetchSectors";
+import { addImporterMedia, updateImporterFromUser } from "Services/importer";
+import ChangePassword from "components/Factorydashboard/subComponets/FactoryProfile/subComponents/ChangePassword/ChangePassword";
+import InputField from "components/Forms/Shared/InputField";
 
-import useFormValidation from './hooks/useFormValidation'
-function successMsg(){
+import useFormValidation from "./hooks/useFormValidation";
+function successMsg() {
   SuccessToast("Changes updated successfully");
 }
 
 export default function ImporterProfile() {
   document.title = "Importer Profile";
 
-  let { isLogin ,setIsLogin} = useContext(UserToken);
-  let { currentUserData } = useContext(userDetails);
+  let { isLogin } = useContext(UserToken);
+  let { currentUserData, clearSession } = useContext(userDetails);
   const [activeMenu] = useOutletContext();
 
   const [ImporterProfile, setImporterProfile] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState();
-  let {allSectors}=useFetchSectors()
+  let { allSectors } = useFetchSectors();
 
   // slider setting
   const [selectedDocs, setSelectedDocs] = useState([]);
-  let {initalAccInfo,AccountInfoValidation,initalSocialAcc,SocialAccountValidation,ImporterInfoValidation,initalImporterInfo}=useFormValidation(submitAccInfo,onSubmitSocial,onSubmitfactoryInfo,ImporterProfile)
+  let {
+    initalAccInfo,
+    AccountInfoValidation,
+    initalSocialAcc,
+    SocialAccountValidation,
+    ImporterInfoValidation,
+    initalImporterInfo,
+  } = useFormValidation(
+    submitAccInfo,
+    onSubmitSocial,
+    onSubmitfactoryInfo,
+    ImporterProfile
+  );
 
   const [showImagePop, setShowImagePop] = useState({
     display: false,
@@ -62,9 +72,8 @@ export default function ImporterProfile() {
 
     if (result?.success) {
       setImporterProfile(result?.data?.importers);
-    } 
+    }
   }
-
 
   async function updateMedia(e) {
     setIsLoading(true);
@@ -75,29 +84,25 @@ export default function ImporterProfile() {
 
     selectedDocs?.map((item) => data.append(item.keyWord, item.pdfFile));
 
-  
-    let result = await addImporterMedia({Authorization: isLogin},data)
+    let result = await addImporterMedia({ Authorization: isLogin }, data);
 
-        if (result?.success) {
-          ModalClose();
-          successMsg()
+    if (result?.success) {
+      ModalClose();
+      successMsg();
 
-          setImporterProfile((prevErrors) => ({
-            ...prevErrors,
-            ...result?.data?.importer
-          }))
-          //
-          setSelectedDocs([]);
-        } else {
-
-          setErrorMsg((prevErrors) => ({
-            ...prevErrors,
-            response: result?.error,
-          }));
-        }
-        setIsLoading(false);
-
-     
+      setImporterProfile((prevErrors) => ({
+        ...prevErrors,
+        ...result?.data?.importer,
+      }));
+      //
+      setSelectedDocs([]);
+    } else {
+      setErrorMsg((prevErrors) => ({
+        ...prevErrors,
+        response: result?.error,
+      }));
+    }
+    setIsLoading(false);
   }
 
   useEffect(() => {
@@ -105,8 +110,6 @@ export default function ImporterProfile() {
       fetchImporterData();
     }
   }, [currentUserData?.importerId]);
-
-
 
   const [show, setShow] = useState({
     accountInfoReadOnly: false,
@@ -129,89 +132,96 @@ export default function ImporterProfile() {
     });
   }
 
-
-function submitAccInfo(values){
-  let  data = {
-    repPhone: values.repPhone,
-    repName: values.repFullName,
-    name : values.name,
-    ...(values.repEmail !== ImporterProfile.repEmail && { repEmail : values.repEmail }),
+  function submitAccInfo(values) {
+    let data = {
+      repPhone: values.repPhone,
+      repName: values.repFullName,
+      name: values.name,
+      ...(values.repEmail !== ImporterProfile.repEmail && {
+        repEmail: values.repEmail,
+      }),
+    };
+    submitForm(data);
   }
-  submitForm(data)
-}
 
-function onSubmitSocial(values){
-  let data = {
-    socialLinks: {},
-    website: values.website,
-  };
+  function onSubmitSocial(values) {
+    let data = {
+      socialLinks: {},
+      website: values.website,
+    };
 
-  if (values.facebookLink != "") {
-    data.socialLinks["facebook"] = values.facebookLink;
+    if (values.facebookLink != "") {
+      data.socialLinks["facebook"] = values.facebookLink;
+    }
+    if (values.instgramLink != "") {
+      data.socialLinks["instagram"] = values.instgramLink;
+    }
+    submitForm(data);
   }
-  if (values.instgramLink != "") {
-    data.socialLinks["instagram"] = values.instgramLink;
+  function onSubmitfactoryInfo(values) {
+    let {
+      country,
+      address,
+      description,
+      commercialRegisterationNumber,
+      city,
+      exportingCountries,
+      sectorId,
+      vatNumber,
+      importerLicenseNumber,
+    } = values;
+    let data = {
+      country,
+      address: [address],
+      description,
+      ...(city && { city: city }),
+      ...(sectorId && { sectorId: sectorId }),
+      ...(exportingCountries?.length !== 0 && {
+        exportingCountries: exportingCountries,
+      }),
+      vatNumber,
+      importerLicenseNumber,
+      commercialRegisterationNumber,
+    };
+
+    submitForm(data);
   }
-  submitForm(data)
-}
-function onSubmitfactoryInfo(values){
-
-  let {country,address,description,commercialRegisterationNumber,city,exportingCountries,sectorId, vatNumber,
-    importerLicenseNumber}=values;
-let  data = {
-    country,
-    address:[address],
-    description,
-    ...(city && {  city :city }),
-    ...(sectorId && {  sectorId :sectorId }),
-    ...(exportingCountries?.length!== 0 && {  exportingCountries :exportingCountries }),
-    vatNumber,
-    importerLicenseNumber,
-    commercialRegisterationNumber,
-  };
-
-  submitForm(data)
-
-}
 
   async function submitForm(values) {
-    let data =values
+    let data = values;
     setIsLoading(true);
     setErrorMsg((prevErrors) => {
       const { response, ...restErrors } = prevErrors || {};
       return restErrors;
     });
-    
 
+    const result = await updateImporterFromUser(
+      {
+        authorization: isLogin,
+      },
+      data
+    );
 
-    const result = await  updateImporterFromUser({
-      authorization: isLogin,
-    },data)
-    
-      if (result?.success) {
-        ModalClose();
-        successMsg()
-        setImporterProfile((prevErrors) => ({
-          ...prevErrors,
-          ...data
-        }))
-      } else {
-        setErrorMsg((prevErrors) => ({
-          ...prevErrors,
-          response: result?.error,
-        }));
+    if (result?.success) {
+      ModalClose();
+      successMsg();
+      setImporterProfile((prevErrors) => ({
+        ...prevErrors,
+        ...data,
+      }));
+    } else {
+      setErrorMsg((prevErrors) => ({
+        ...prevErrors,
+        response: result?.error,
+      }));
 
-        if(data?.allowEmailNotification!=null){
-          ErrorToast(result?.error)
-        }
+      if (data?.allowEmailNotification != null) {
+        ErrorToast(result?.error);
       }
-    
+    }
+
     setIsLoading(false);
   }
-
-
-
- 
 
   useEffect(() => {
     if (ImporterProfile && ImporterProfile.length !== 0) {
@@ -223,12 +233,10 @@ let  data = {
     }
   }, [ImporterProfile]);
 
- 
   function resetFormVal() {
-
-    SocialAccountValidation.resetForm({values: initalSocialAcc})
-    AccountInfoValidation.resetForm({values: initalAccInfo});
-    ImporterInfoValidation.resetForm({ values: initalImporterInfo});
+    SocialAccountValidation.resetForm({ values: initalSocialAcc });
+    AccountInfoValidation.resetForm({ values: initalAccInfo });
+    ImporterInfoValidation.resetForm({ values: initalImporterInfo });
     setSelectedDocs([]);
   }
   function handleClose(value) {
@@ -254,15 +262,12 @@ let  data = {
 
   const EmailNotificationUpdate2 = async (e) => {
     e.preventDefault();
-        let data= {
-          allowEmailNotification: !ImporterProfile?.allowEmailNotification,
-        }
+    let data = {
+      allowEmailNotification: !ImporterProfile?.allowEmailNotification,
+    };
 
-        submitForm(data) 
-   
+    submitForm(data);
   };
-
-
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -301,30 +306,29 @@ let  data = {
                 <div className="title-contianer-input w-100 ">
                   <p>Profile Image</p>
                   <div className="w-100 ">
-                      <div className="row  row-gap">
-                        <div className="col-12">
-                  
-                          <div className="grid-gap-col position-relative">
-                            <div className="factory-logo  edit-img ">
-                              <img
-                                className="w-100 h-100 "
-                                src={`${baseUrl_IMG}/${ImporterProfile?.image}`}
-                                alt="buyer profile image"
-                                onError={handleImageError}
-                              />
-                            </div>
-                            <small className="form-text text-danger">
-                              {errorMsg?.image}
-                            </small>
-                            <div className="edit-icon-profile-btn position-absolute  cursor">
-                              <i
-                                onClick={() => handleShow("profilePicReadOnly")}
-                                className=" imgupload fa-solid fa-pen-to-square  cursor"
-                              ></i>
-                            </div>
+                    <div className="row  row-gap">
+                      <div className="col-12">
+                        <div className="grid-gap-col position-relative">
+                          <div className="factory-logo  edit-img ">
+                            <img
+                              className="w-100 h-100 "
+                              src={`${baseUrl_IMG}/${ImporterProfile?.image}`}
+                              alt="buyer profile image"
+                              onError={handleImageError}
+                            />
+                          </div>
+                          <small className="form-text text-danger">
+                            {errorMsg?.image}
+                          </small>
+                          <div className="edit-icon-profile-btn position-absolute  cursor">
+                            <i
+                              onClick={() => handleShow("profilePicReadOnly")}
+                              className=" imgupload fa-solid fa-pen-to-square  cursor"
+                            ></i>
                           </div>
                         </div>
                       </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -336,67 +340,60 @@ let  data = {
                   <div className="w-100 ">
                     <div className="row  row-gap">
                       <div className="col-6">
-                      <ReadOnly
-                title='Business Account'
-                value={currentUserData?.userEmail}
-                />
-                      
+                        <ReadOnly
+                          title="Business Account"
+                          value={currentUserData?.userEmail}
+                        />
                       </div>
 
                       <div className="col-6">
-                      <ReadOnly
-                title="representive Full Name"
-                value={ImporterProfile?.repName}
-                />
-                      
+                        <ReadOnly
+                          title="representive Full Name"
+                          value={ImporterProfile?.repName}
+                        />
                       </div>
 
                       <div className="col-6">
-                      <ReadOnly
-                title="Importer Name"
-                value={ImporterProfile?.name}
-                />
+                        <ReadOnly
+                          title="Importer Name"
+                          value={ImporterProfile?.name}
+                        />
                       </div>
 
                       <div className="col-6">
-                      <ReadOnly
-                title="Representive Email"
-                value={ImporterProfile?.repEmail}
-                />
-                      
+                        <ReadOnly
+                          title="Representive Email"
+                          value={ImporterProfile?.repEmail}
+                        />
                       </div>
 
                       <div className="col-6">
-                      <ReadOnly
-                title="Representive  Phone Number"
-                value={ImporterProfile?.repPhone}
-                />
-                       
-                      </div>
-
-
-                      <div className="col-6">
-                      <ReadOnly
-                title="commercial Registeration Number"
-                value={ImporterProfile?.commercialRegisterationNumber}
-                />
-                      </div>
-
-                      
-                      <div className="col-6">
-                      <ReadOnly
-                title="vat Number"
-                value={ImporterProfile?.vatNumber}
-                />
+                        <ReadOnly
+                          title="Representive  Phone Number"
+                          value={ImporterProfile?.repPhone}
+                        />
                       </div>
 
                       <div className="col-6">
-                      <ReadOnly
-                title="importer License Number"
-                value={ImporterProfile?.importerLicenseNumber}
-                />
+                        <ReadOnly
+                          title="commercial Registeration Number"
+                          value={ImporterProfile?.commercialRegisterationNumber}
+                        />
                       </div>
 
+                      <div className="col-6">
+                        <ReadOnly
+                          title="vat Number"
+                          value={ImporterProfile?.vatNumber}
+                        />
+                      </div>
+
+                      <div className="col-6">
+                        <ReadOnly
+                          title="importer License Number"
+                          value={ImporterProfile?.importerLicenseNumber}
+                        />
+                      </div>
 
                       <div className="col-12">
                         <button
@@ -414,17 +411,23 @@ let  data = {
 
               {/*Password change container 2 */}
 
-{/* <ChangePassword
-                handleShow={handleShow}
-                handleClose={handleClose}
-                show={show}
+              <ChangePassword
+                // handleShow={handleShow}
+                // handleClose={handleClose}
+                // show={show}
+                // errorMsg={errorMsg}
+                // setIsLogin={setIsLogin}
+                // ModalClose={ModalClose}
+                // setErrorMsg={setErrorMsg}
+                // isLogin={isLogin}
+                // isLoading={isLoading}
+
                 errorMsg={errorMsg}
-                setIsLogin={setIsLogin}
-                ModalClose={ModalClose}
                 setErrorMsg={setErrorMsg}
                 isLogin={isLogin}
                 isLoading={isLoading}
-              /> */}
+                clearSession={clearSession}
+              />
 
               {/*Social Accounts container 2 */}
               <div id="socialAccount"></div>
@@ -511,7 +514,6 @@ let  data = {
                               type="checkbox"
                               checked={ImporterProfile?.allowEmailNotification}
                               onClick={EmailNotificationUpdate2}
-                           
                             />
                           </div>
                         </div>
@@ -529,18 +531,19 @@ let  data = {
                 <div className="title-contianer-input w-100">
                   <p>Legal Documents</p>
 
-
-                  <DisplayMultiImages  images={ImporterProfile?.legalDocs} handleImageClick={handleImageClick}/>
+                  <DisplayMultiImages
+                    images={ImporterProfile?.legalDocs}
+                    handleImageClick={handleImageClick}
+                  />
                   <div className="w-100">
-                        <button
-                          className="btn-edit"
-                          variant="primary"
-                          onClick={() => handleShow("legalDocsReadOnly")}
-                        >
-                          <p className="cursor">Upload </p>
-                        </button>
-                      </div>
-                  
+                    <button
+                      className="btn-edit"
+                      variant="primary"
+                      onClick={() => handleShow("legalDocsReadOnly")}
+                    >
+                      <p className="cursor">Upload </p>
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -553,96 +556,78 @@ let  data = {
                     <form>
                       <div className="row  row-gap">
                         <div className="col-6">
-
-                        <ReadOnly
-                title='Importer Name'
-                value={ImporterProfile?.name}
-                />
+                          <ReadOnly
+                            title="Importer Name"
+                            value={ImporterProfile?.name}
+                          />
                         </div>
 
                         <div className="col-6">
-
-                        <ReadOnly
-                title='Sector'
-                value={
-                  allSectors?.some(
-                    (item) =>
-                      item.id === ImporterProfile?.sectorId
-                  )
-                    ? allSectors?.find(
-                        (item) =>
-                          item.id === ImporterProfile?.sectorId
-                      ).name
-                    : ""
-                }
-                />
-
-                       
+                          <ReadOnly
+                            title="Sector"
+                            value={
+                              allSectors?.some(
+                                (item) => item.id === ImporterProfile?.sectorId
+                              )
+                                ? allSectors?.find(
+                                    (item) =>
+                                      item.id === ImporterProfile?.sectorId
+                                  ).name
+                                : ""
+                            }
+                          />
                         </div>
                         <div className="col-6">
-
-
-                        <ReadOnly
-                title='Country'
-                value={ImporterProfile?.country}
-                />
-                
-                          
+                          <ReadOnly
+                            title="Country"
+                            value={ImporterProfile?.country}
+                          />
                         </div>
 
                         <div className="col-6">
-
-                        <ReadOnly
-                title='City'
-                value={ImporterProfile?.city}
-                />
-                
-                        
+                          <ReadOnly
+                            title="City"
+                            value={ImporterProfile?.city}
+                          />
                         </div>
 
                         <div className="col-6">
-
-                        <ReadOnly
-                title='Yearly Sales Income'
-                value={ImporterProfile?.yearlySalesIncome}
-                />
-
-                        
+                          <ReadOnly
+                            title="Yearly Sales Income"
+                            value={ImporterProfile?.yearlySalesIncome}
+                          />
                         </div>
 
                         <div className="col-6">
-
-                        <ReadOnly
-                title='commercial Registeration Number'
-                value={ImporterProfile?.commercialRegisterationNumber}
-                />
-
-
-                        
+                          <ReadOnly
+                            title="commercial Registeration Number"
+                            value={
+                              ImporterProfile?.commercialRegisterationNumber
+                            }
+                          />
                         </div>
 
                         <div className="col-6">
-                        <ReadOnly
-                title='Importer Location'
-                value={ImporterProfile?.address?.[0]}
-                />
+                          <ReadOnly
+                            title="Importer Location"
+                            value={ImporterProfile?.address?.[0]}
+                          />
                         </div>
 
                         <div className="col-6">
-                        <ReadOnly
-                title='exporting Countries'
-                value={ImporterProfile?.exportingCountries?.join(", ")}
-                />
-                         
+                          <ReadOnly
+                            title="exporting Countries"
+                            value={ImporterProfile?.exportingCountries?.join(
+                              ", "
+                            )}
+                          />
                         </div>
 
                         <div className="col-12">
-
-                        <ReadOnly
-                title='Importer description'
-                value={ImporterProfile?.description}
-                />
-                       
+                          <ReadOnly
+                            title="Importer description"
+                            value={ImporterProfile?.description}
+                          />
                         </div>
 
                         <div className="col-12">
@@ -695,94 +680,77 @@ let  data = {
                 <div className="w-100 ">
                   <div className="row  row-gap">
                     <div className="col-6">
-                    <InputField
-                       formValidation={AccountInfoValidation}
-                       vlaidationName='repFullName'
-                       isRequired={true}
-                       title="representive full Name"
-                       />
-
-                 
+                      <InputField
+                        formValidation={AccountInfoValidation}
+                        vlaidationName="repFullName"
+                        isRequired={true}
+                        title="representive full Name"
+                      />
                     </div>
 
                     <div className="col-6">
-
-
-                    <InputField
-                       formValidation={AccountInfoValidation}
-                       vlaidationName='name'
-                       isRequired={true}
-                       title="Importer Name"
-                       />
-
-                   
+                      <InputField
+                        formValidation={AccountInfoValidation}
+                        vlaidationName="name"
+                        isRequired={true}
+                        title="Importer Name"
+                      />
                     </div>
 
                     <div className="col-6">
-
-
-                    <InputField
-                       formValidation={AccountInfoValidation}
-                       vlaidationName='repEmail'
-                       isRequired={true}
-                       title=" Representive Email"
-                       />
-                    
+                      <InputField
+                        formValidation={AccountInfoValidation}
+                        vlaidationName="repEmail"
+                        isRequired={true}
+                        title=" Representive Email"
+                      />
                     </div>
 
                     <div className="col-6">
-
-
-                    <InputField
-                       formValidation={AccountInfoValidation}
-                       vlaidationName='repPhone'
-                       isRequired={true}
-                       title="Representive Phone Number"
-                       />
-               
-
+                      <InputField
+                        formValidation={AccountInfoValidation}
+                        vlaidationName="repPhone"
+                        isRequired={true}
+                        title="Representive Phone Number"
+                      />
                     </div>
 
                     <div className="col-6">
-                    <InputField
-                      isRequired={false}
-                      title={"website"}
-                      formValidation={AccountInfoValidation}
-                      vlaidationName={"website"}
-                    />
-                  </div>
+                      <InputField
+                        isRequired={false}
+                        title={"website"}
+                        formValidation={AccountInfoValidation}
+                        vlaidationName={"website"}
+                      />
+                    </div>
 
-                  <div className="col-6">
-                    <InputField
-                      isRequired={true}
-                      title="importer License Number"
-                      formValidation={AccountInfoValidation}
-                      vlaidationName="importerLicenseNumber"
-                    />
-                  </div>
+                    <div className="col-6">
+                      <InputField
+                        isRequired={true}
+                        title="importer License Number"
+                        formValidation={AccountInfoValidation}
+                        vlaidationName="importerLicenseNumber"
+                      />
+                    </div>
 
+                    {/*  */}
 
-                  {/*  */}
-
-                  <div className="col-6">
-                    <InputField
-                      isRequired={true}
-                      title={"commercial Registeration Number"}
-                      formValidation={AccountInfoValidation}
-                      vlaidationName={"commercialRegisterationNumber"}
-                    />
-                  </div>
-                  <div className="col-6">
-                    <InputField
-                      isRequired={true}
-                      title="Vat Number"
-                      formValidation={AccountInfoValidation}
-                      vlaidationName="vatNumber"
-                    />
-                  </div>
-
-
-
+                    <div className="col-6">
+                      <InputField
+                        isRequired={true}
+                        title={"commercial Registeration Number"}
+                        formValidation={AccountInfoValidation}
+                        vlaidationName={"commercialRegisterationNumber"}
+                      />
+                    </div>
+                    <div className="col-6">
+                      <InputField
+                        isRequired={true}
+                        title="Vat Number"
+                        formValidation={AccountInfoValidation}
+                        vlaidationName="vatNumber"
+                      />
+                    </div>
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
                       <button
@@ -809,8 +777,6 @@ let  data = {
           </div>
         </Modal.Body>
       </Modal>
-
-  
 
       {/* -------------------------------------------------------------------------------------------------- */}
       {/* Factory Info Modal update form */}
@@ -886,82 +852,62 @@ let  data = {
                     </div>
 
                     <div className="col-6">
-
-                    <InputField
-                       formValidation={ImporterInfoValidation}
-                       vlaidationName='city'
-                       isRequired={true}
-                       title="city"
-                       />
-                      
-                    </div>
-
-
-                    <div className="col-6">
-
-<InputField
-   formValidation={ImporterInfoValidation}
-   vlaidationName='commercialRegisterationNumber'
-   isRequired={true}
-   title="commercial Registeration Number"
-   />
-  
-</div>
-
-<div className="col-6">
-
-<InputField
-   formValidation={ImporterInfoValidation}
-   vlaidationName='vatNumber'
-   isRequired={true}
-   title="vat Number"
-   />
-  
-</div>
-
-<div className="col-6">
-
-<InputField
-   formValidation={ImporterInfoValidation}
-   vlaidationName='importerLicenseNumber'
-   isRequired={true}
-   title="importer License Number"
-   />
-  
-</div>
-
-                    <div className="col-6">
-
-                    <InputField
-                       formValidation={ImporterInfoValidation}
-                       vlaidationName='commercialRegisterationNumber'
-                       isRequired={true}
-                       title="commercial Registeration Number"
-                       />
-
-                    
+                      <InputField
+                        formValidation={ImporterInfoValidation}
+                        vlaidationName="city"
+                        isRequired={true}
+                        title="city"
+                      />
                     </div>
 
                     <div className="col-6">
+                      <InputField
+                        formValidation={ImporterInfoValidation}
+                        vlaidationName="commercialRegisterationNumber"
+                        isRequired={true}
+                        title="commercial Registeration Number"
+                      />
+                    </div>
 
+                    <div className="col-6">
+                      <InputField
+                        formValidation={ImporterInfoValidation}
+                        vlaidationName="vatNumber"
+                        isRequired={true}
+                        title="vat Number"
+                      />
+                    </div>
 
+                    <div className="col-6">
+                      <InputField
+                        formValidation={ImporterInfoValidation}
+                        vlaidationName="importerLicenseNumber"
+                        isRequired={true}
+                        title="importer License Number"
+                      />
+                    </div>
 
-                      
-                    <InputField
-                       formValidation={ImporterInfoValidation}
-                       vlaidationName='address'
-                       isRequired={true}
-                       title="Location"
-                       />
+                    <div className="col-6">
+                      <InputField
+                        formValidation={ImporterInfoValidation}
+                        vlaidationName="commercialRegisterationNumber"
+                        isRequired={true}
+                        title="commercial Registeration Number"
+                      />
+                    </div>
 
-                      
+                    <div className="col-6">
+                      <InputField
+                        formValidation={ImporterInfoValidation}
+                        vlaidationName="address"
+                        isRequired={true}
+                        title="Location"
+                      />
                     </div>
 
                     <div className="col-6">
                       <div className="form-group">
-                        <label >
-                          exporting Countries
-                        </label>
+                        <label>exporting Countries</label>
 
                         {/*  */}
                         <button
@@ -1007,7 +953,6 @@ let  data = {
                     </div>
 
                     <div className="col-12">
-                      
                       <div className="form-group">
                         <label> description</label>
                         <textarea
@@ -1070,7 +1015,7 @@ let  data = {
             <div className="title-contianer-input w-100">
               <Modal.Header closeButton>
                 <Modal.Title>
-                  <p>Social Links  </p>
+                  <p>Social Links </p>
                 </Modal.Title>
               </Modal.Header>
               {errorMsg?.response ? (
@@ -1234,18 +1179,16 @@ let  data = {
               >
                 <div className="w-100 ">
                   <div className="row  row-gap">
-
-                  <UploadDocument
-                  selectedDocs={selectedDocs}
-                  errorMsg={errorMsg}
-                  setSelectedDocs={setSelectedDocs}
-                  MediaName="legalDocs"
-                  mediaMaxLen="3"
-                  meidaAcceptedExtensions={["pdf", "png", "jpeg", "jpg"]}
-                  setErrorMsg={setErrorMsg}
-                  // title="Upload Documents"
-                />
-
+                    <UploadDocument
+                      selectedDocs={selectedDocs}
+                      errorMsg={errorMsg}
+                      setSelectedDocs={setSelectedDocs}
+                      MediaName="legalDocs"
+                      mediaMaxLen="3"
+                      meidaAcceptedExtensions={["pdf", "png", "jpeg", "jpg"]}
+                      setErrorMsg={setErrorMsg}
+                      // title="Upload Documents"
+                    />
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
                       <button
@@ -1300,23 +1243,23 @@ let  data = {
                 <div className="alert mt-3 p-2 alert-danger form-control text-dark">
                   {errorMsg?.response}
                 </div>
-              ) }
+              )}
               <div className="w-100 ">
                 <form
                   onSubmit={(e) => updateMedia(e)}
                   encType="multipart/form-data"
                 >
                   <div className="row  row-gap">
-                  <UploadDocument
-                  selectedDocs={selectedDocs}
-                  errorMsg={errorMsg}
-                  setSelectedDocs={setSelectedDocs}
-                  MediaName="image"
-                  mediaMaxLen="1"
-                  meidaAcceptedExtensions={[ "png", "jpeg", "jpg"]}
-                  setErrorMsg={setErrorMsg}
-                  // title="Upload Documents"
-                />
+                    <UploadDocument
+                      selectedDocs={selectedDocs}
+                      errorMsg={errorMsg}
+                      setSelectedDocs={setSelectedDocs}
+                      MediaName="image"
+                      mediaMaxLen="1"
+                      meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
+                      setErrorMsg={setErrorMsg}
+                      // title="Upload Documents"
+                    />
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
                       <button
@@ -1348,10 +1291,6 @@ let  data = {
         </Modal.Body>
       </Modal>
 
-
-
-
-
       <MediaPopUp
         show={showImagePop.display}
         onHide={() =>
@@ -1363,7 +1302,5 @@ let  data = {
         showImagePop={showImagePop.imagePath}
       />
     </>
-
-
   );
 }
