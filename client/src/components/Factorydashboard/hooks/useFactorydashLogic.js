@@ -5,7 +5,7 @@ import { userDetails } from "Context/userType";
 import useFactoryNotification from "./useFactoryNotification";
 import { UserToken } from "Context/userToken";
 
-const useFactorydashLogic = (pathname) => {
+const useFactorydashLogic = (pathname, hash) => {
   const currentNavPage = pathname?.split("/")?.pop()?.toLowerCase();
   const { isLogin } = useContext(UserToken);
   const { currentUserData, clearSession } = useContext(userDetails);
@@ -13,15 +13,28 @@ const useFactorydashLogic = (pathname) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const scrollElement = document.getElementById("scollTOTop");
+    let scrollElement = document.getElementById("scollTOTop");
+    if (hash) {
+      console.log("hash", hash);
+      scrollElement = document.querySelector(hash);
+      scrollElement.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+
+      return;
+    }
+    console.log("scrollElement", scrollElement);
     if (scrollElement) {
       scrollElement.scrollTo({
         top: 0,
         left: 0,
         behavior: "instant",
       });
+
+      console.log("pathnamepathname", pathname);
     }
-  }, [pathname]);
+  }, [pathname, hash]);
 
   const handleLogout = () => {
     clearSession();
