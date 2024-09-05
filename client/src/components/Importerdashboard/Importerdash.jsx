@@ -16,19 +16,30 @@ import ErrorToast from "components/ErrorToast";
 
 function Importerdash() {
   document.title = "Importer Dashboard";
-  let { setIsLogin, isLogin } = useContext(UserToken);
-  let { currentUserData } = useContext(userDetails);
+  let { isLogin } = useContext(UserToken);
+  let { currentUserData, clearSession } = useContext(userDetails);
 
   // global message appearing "used pop up message"
 
   let navigate = useNavigate();
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
   // Determine current active page for navigation highlight
   const currentNavPage = pathname.split("/").pop().toLowerCase();
   const [activeMenu, setActiveMenu] = useState("");
 
   useEffect(() => {
     let scroll = document.getElementById("scollTOTop");
+    if (hash) {
+      scroll = document.querySelector(hash);
+      if (scroll) {
+        scroll.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+
+      return;
+    }
 
     if (scroll) {
       scroll.scrollTo({
@@ -37,11 +48,10 @@ function Importerdash() {
         behavior: "instant",
       });
     }
-  }, [pathname]);
+  }, [pathname, hash]);
 
   const logOuut = () => {
-    setIsLogin("");
-    localStorage.clear();
+    clearSession();
     navigate("/");
   };
 

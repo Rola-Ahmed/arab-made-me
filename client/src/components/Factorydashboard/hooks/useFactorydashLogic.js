@@ -54,7 +54,6 @@ const useFactorydashLogic = (pathname, hash) => {
     handleLogout,
     handleDropdownToggle,
     notification,
-
     currentUserData,
     isLogin,
     currentNavPage,
