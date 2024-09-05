@@ -14,25 +14,26 @@ const useFactorydashLogic = (pathname, hash) => {
 
   useEffect(() => {
     let scrollElement = document.getElementById("scollTOTop");
+    // If there's a hash, try to scroll to that element
     if (hash) {
-      console.log("hash", hash);
       scrollElement = document.querySelector(hash);
-      scrollElement.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
+      if (scrollElement) {
+        scrollElement.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
 
       return;
     }
-    console.log("scrollElement", scrollElement);
+
+    // Scroll to the top if no hash is present
     if (scrollElement) {
       scrollElement.scrollTo({
         top: 0,
         left: 0,
         behavior: "instant",
       });
-
-      console.log("pathnamepathname", pathname);
     }
   }, [pathname, hash]);
 
