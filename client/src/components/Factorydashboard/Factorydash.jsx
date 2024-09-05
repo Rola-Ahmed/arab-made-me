@@ -1,6 +1,5 @@
 import "./Factorydash.css";
 import { Link, Outlet, useLocation } from "react-router-dom";
-// import { userDetails } from "Context/userType";
 import DashLogo from "components/Shared/Dashboards/DashLogo";
 import BottomDashMenu from "components/Shared/Dashboards/BottomDashMenu";
 import DashNavBtn from "components/Shared/Dashboards/DashNavBtn";

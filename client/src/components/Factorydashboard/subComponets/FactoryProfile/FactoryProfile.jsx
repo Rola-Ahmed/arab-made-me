@@ -56,14 +56,13 @@ export default function FactoryProfile() {
   }
 
   async function handleAddLegalDocs(e) {
-    document.body.style.cursor = "wait";
+    // document.body.style.cursor = "wait";
     e.preventDefault();
     let data = await handleSingleFileUpload(
       selectedDocs?.[0]?.keyWord,
       selectedDocs?.[0]?.pdfFile,
       factoryProfile?.legalDocs?.length
     );
-    console.log("data-----", data);
     await handleLegalDocs(data, "add");
   }
 

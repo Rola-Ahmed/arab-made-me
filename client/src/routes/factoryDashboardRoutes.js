@@ -18,8 +18,8 @@ import ReqVisitFactDash from "components/Factorydashboard/subComponets/ReqVisitF
 import GetAllFactoryProduct from "components/Factorydashboard/subComponets/Products/AllProducts/AllProducts";
 import EditProduct from "components/Factorydashboard/subComponets/Products/EditProduct/EditProduct";
 import AddProduct from "components/Factorydashboard/subComponets/Products/AddProduct/AddProduct";
-import AddSourcingOffer from "components/Factorydashboard/offers/AddOffer/AddOffer";
-import AllOffers from "components/Factorydashboard/offers/AllOffers/AllOffers";
+import AddSourcingOffer from "components/Factorydashboard/subComponets/offers/AddOffer/AddOffer";
+import AllOffers from "components/Factorydashboard/subComponets/offers/AllOffers/AllOffers";
 import MircoSiteDash from "components/Factorydashboard/subComponets/MircoSiteDash/MircoSiteDash";
 import EditQuote from "components/Factorydashboard/subComponets/Quotations/EditQuote/EditQuote";
 
@@ -36,7 +36,7 @@ import RfqRequestFacEtc from "components/Factorydashboard/subComponets/RfqFactor
 
 // factory only
 import ProductsFacEtc from "components/Factorydashboard/subComponets/Products/OneProduct/OneProduct";
-import OffersFacEtc from "components/Factorydashboard/offers/OneOffer/OneOffer";
+import OffersFacEtc from "components/Factorydashboard/subComponets/offers/OneOffer/OneOffer";
 
 // Quote data Container
 import ViewQuotations from "components/Factorydashboard/subComponets/Quotations/AllQuotes/AllQuotes";
