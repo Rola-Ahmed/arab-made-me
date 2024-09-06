@@ -10,7 +10,8 @@ import {
 export const useFormValidations = (
   factoryProfile,
   countriesMiddleEast,
-  submitForm,
+  HandleUpdateFactoryInfo,
+  handleUpdateSocialAccounts,
   submitTeam
 ) => {
   const initialFactoryInfoValidation = {
@@ -93,7 +94,7 @@ export const useFormValidations = (
       factoryPhone: phoneValidation,
       importingCountries: Yup.array().of(Yup.string()).nullable(),
     }),
-    onSubmit: submitForm,
+    onSubmit: HandleUpdateFactoryInfo,
   });
 
   const initialSocialAccount = {
@@ -110,7 +111,7 @@ export const useFormValidations = (
       instagramLink: websiteValidation,
       facebookLink: websiteValidation,
     }),
-    onSubmit: submitForm,
+    onSubmit: handleUpdateSocialAccounts,
   });
 
   const initialTeamValues = {

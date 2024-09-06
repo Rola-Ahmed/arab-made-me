@@ -130,8 +130,7 @@ export default function MircoSiteDash() {
   } = useFormValidations(
     factoryProfile,
     countriesMiddleEast,
-    HandleUpdateFactoryInfo,
-    handleUpdateSocialAccounts,
+    submitForm,
     submitTeam
   );
   // Cover IMage Profile -----------------------------------------------------
@@ -311,58 +310,58 @@ export default function MircoSiteDash() {
     }
   }
 
-  async function HandleUpdateFactoryInfo(values) {
-    const data = {
-      name: values.factoryName,
-      country: values.country,
-      // /optional
-      yearOfEstablishmint: values.yearOfEstablishmint,
-      city: values.city,
-      numberOfEmployees: values.numberOfEmployees,
-      commercialRegisterationNumber: values.commercialRegisterationNumber,
-      taxRegisterationNumber: values.taxRegisterationNumber,
-      IndustrialLicenseNumber: values.IndustrialLicenseNumber,
-
-      IndustrialRegistrationNumber: values.IndustrialRegistrationNumber,
-      BusinessRegistrationNumber: values.BusinessRegistrationNumber,
-
-      description: values.description,
-      address: [values.address],
-    };
-
-    if (values.whyUs !== "") {
-      data.whyUs = `${values.whyUs}`;
-    }
-    if (values.importingCountries.length !== 0) {
-      data.importingCountries = values.importingCountries;
-    }
-
-    if (values.factoryPhone !== "") {
-      data.phone = `${values.factoryPhoneCode}${values.factoryPhone}`;
-    }
-
-    if (values.yearlySalesIncome !== "") {
-      data.yearlySalesIncome = values.yearlySalesIncome;
-    }
-    await submitForm(data);
-  }
-  async function handleUpdateSocialAccounts(values){
-    const  data = {
-      socialLinks: {},
-      website: values.website,
-    };
-
-    data.socialLinks["facebook"] = values.facebookLink;
-    data.socialLinks["instagram"] = values.instagramLink;
-    await submitForm(data)
-
-  }
-  async function submitForm(data) {
+  async function submitForm(values) {
     //
     setErrorMsg((prevErrors) => {
       const { response, ...restErrors } = prevErrors || {};
       return restErrors;
     });
+    let data = {};
+    // cotinue
+
+    if (show?.factoryInfoChangeReadOnly) {
+      data = {
+        name: values.factoryName,
+        country: values.country,
+        // /optional
+        yearOfEstablishmint: values.yearOfEstablishmint,
+        city: values.city,
+        numberOfEmployees: values.numberOfEmployees,
+        commercialRegisterationNumber: values.commercialRegisterationNumber,
+        taxRegisterationNumber: values.taxRegisterationNumber,
+        IndustrialLicenseNumber: values.IndustrialLicenseNumber,
+
+        IndustrialRegistrationNumber: values.IndustrialRegistrationNumber,
+        BusinessRegistrationNumber: values.BusinessRegistrationNumber,
+
+        description: values.description,
+        address: [values.address],
+      };
+      if (values.whyUs !== "") {
+        data.whyUs = `${values.whyUs}`;
+      }
+      if (values.importingCountries.length !== 0) {
+        data.importingCountries = values.importingCountries;
+      }
+
+      if (values.factoryPhone !== "") {
+        data.phone = `${values.factoryPhoneCode}${values.factoryPhone}`;
+      }
+
+      if (values.yearlySalesIncome !== "") {
+        data.yearlySalesIncome = values.yearlySalesIncome;
+      }
+    }
+
+    if (show?.socialAccountsReadOnly) {
+      data = {
+        socialLinks: {},
+        website: values.website,
+      };
+
+      data.socialLinks["facebook"] = values.facebookLink;
+      data.socialLinks["instagram"] = values.instagramLink;
+    }
 
     setIsLoading(true);
     let response = await updateFactoryFromUser(
@@ -375,13 +374,19 @@ export default function MircoSiteDash() {
     if (response?.success) {
       ModalClose();
       successMsg();
+
       update(data);
+      // dispatch({
+      //   type: "fetched_update_data",
+      //   value: data,
+      // });
     } else {
       setErrorMsg((prevErrors) => ({
         ...prevErrors,
         response: response?.error,
       }));
     }
+
     setIsLoading(false);
   }
 
