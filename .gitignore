@@ -95,3 +95,5 @@ server/src/database/models/factory.model copy.js
 server/src/utils/crud_ops copy.js
 /dont-delete-ignore
 client/src/components/Factorydashboard/subComponets/MircoSiteDash/MircoSiteDashOriginalllllll.jsx
+client/src/components/Factorydashboard/subComponets/MircoSiteDash/MircoSiteDash copy.jsx
+client/src/components/Factorydashboard/subComponets/MircoSiteDash/eddd.js

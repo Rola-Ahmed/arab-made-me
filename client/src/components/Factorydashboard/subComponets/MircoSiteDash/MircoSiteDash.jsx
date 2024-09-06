@@ -3,18 +3,12 @@ import { baseUrl_IMG } from "config.js";
 import UploadDocument, {
   UploadVedio,
 } from "components/Forms/Shared/UploadDocument";
-
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-
 import DisplayMultiImages from "components/Shared/Dashboards/DisplayMultiImages";
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
-
-import { UserToken } from "Context/userToken";
-import { userDetails } from "Context/userType";
-
 import { handleImageError } from "utils/ImgNotFound";
 import { countriesMiddleEast } from "constants/countries";
 import SuccessToast from "components/SuccessToast";
@@ -25,8 +19,9 @@ import FactoryInforamtion from "./subComponents/FactoryInforamtion";
 import Team from "./subComponents/Team";
 import SocialAccounts from "./subComponents/SocialAccounts";
 import FactoryLogo from "./subComponents/FactoryLogo";
+import {useMircoData} from './hooks/useMircoData'
 import {
-  getFactoryTeam,
+  // getFactoryTeam,
   addFactoryMedia,
   updateFactoryFromUser,
 } from "Services/factory";
@@ -41,7 +36,6 @@ import {
   phoneValidation,
   websiteValidation,
 } from "utils/validationUtils";
-import { useFetchFactoryById } from "hooks/useFetchFactoryById";
 
 function successMsg() {
   SuccessToast("Changes updated successfully");
@@ -49,10 +43,10 @@ function successMsg() {
 export default function MircoSiteDash() {
   document.title = "Factory Profile";
 
-  let { isLogin } = useContext(UserToken);
+  // let { isLogin } = useContext(UserToken);
   const [errorMsg, setErrorMsg] = useState();
 
-  let { currentUserData } = useContext(userDetails);
+  // let { currentUserData } = useContext(userDetails);
   const setFactoryProfile = [];
   const reducer = (state, action) => {
     switch (action.type) {
@@ -97,7 +91,6 @@ export default function MircoSiteDash() {
 
   const [factoryProfile, dispatch] = useReducer(reducer, setFactoryProfile);
 
-  const { data, errorMessage } = useFetchFactoryById( currentUserData?.factoryId);
   function deleteTeam(data) {
     dispatch({ type: "delete_Team", index: data });
   }
@@ -117,35 +110,22 @@ export default function MircoSiteDash() {
 
   const [selectedDocs, setSelectedDocs] = useState([]);
 
-    useEffect(() => {
-      const fetchData = async () => {
-        if (data) {
-            // Dispatch an action with the fetched data
-            dispatch({
-              type: "fetched_update_data",
-              value: data,
-            });
+  function update(data){
+    dispatch({
+      type: "fetched_update_data",
+      value: data,
+    });
+  }
+
+  function fetch_team(data){
+    dispatch({
+      type: "fetch_team_data",
+      value: data,
+    });
+  }
   
-            // Fetch the team data
-            const result = await getFactoryTeam(currentUserData?.factoryId);
-  
-            // Check if the result is successful and dispatch the team data
-            if (result?.success) {
-              dispatch({
-                type: "fetch_team_data",
-                value: result?.data?.teamMembers,
-              });
-            }
-         
-        }
-      };
-  
-      fetchData();
-    }, [data, currentUserData?.factoryId, dispatch]); 
-
-
-
-
+let {  isLogin,
+  errorloadingData: errorMessage,}=useMircoData(update,fetch_team)
 
   // Cover IMage Profile -----------------------------------------------------
 
@@ -163,10 +143,11 @@ export default function MircoSiteDash() {
       ModalClose();
       successMsg();
 
-      dispatch({
-        type: "fetched_update_data",
-        value: result?.data?.factory,
-      });
+      update(result?.data?.factory)
+      // dispatch({
+      //   type: "fetched_update_data",
+      //   value: result?.data?.factory,
+      // });
 
       //
       setSelectedDocs([]);
@@ -504,10 +485,11 @@ export default function MircoSiteDash() {
       ModalClose();
       successMsg();
 
-      dispatch({
-        type: "fetched_update_data",
-        value: data,
-      });
+      update(data)
+      // dispatch({
+      //   type: "fetched_update_data",
+      //   value: data,
+      // });
     } else {
       setErrorMsg((prevErrors) => ({
         ...prevErrors,
