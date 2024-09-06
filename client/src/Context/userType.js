@@ -60,7 +60,6 @@ export function UserTypeProvider({ children }) {
 
     let result = await getUser(decodedToken);
 
-    console.log("result user", result);
 
     if (result?.success) {
       let output = result?.data?.users;
@@ -100,7 +99,6 @@ export function UserTypeProvider({ children }) {
   async function getFactory() {
     let result = await fetchOneFactory(currentUserData?.factoryId);
 
-    console.log("result fetchOneFactory", result);
     if (result?.success) {
       let path = null;
 
@@ -184,18 +182,7 @@ export function UserTypeProvider({ children }) {
     setCurrentUserData(newValue);
   };
 
-  // const logOuut = () => {
-  //   setIsLogin("");
-  //   localStorage.clear();
-  // };
-
-  // console.log("currentUserData", currentUserData);
-
-  // console.log(
-  //   "currentUserData",
-  //   currentUserData,
-  //   currentUserData.continueProfilePath
-  // );
+ 
   console.log("currentUserData",currentUserData)
   return (
     <userDetails.Provider

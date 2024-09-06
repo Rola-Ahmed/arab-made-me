@@ -71,5 +71,5 @@ export const emailValidation = Yup.string()
   export const websiteValidation=Yup.string()
   .matches(
     /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,63}([/?#]\S*)?$/,
-    "Invalid URL"
+    "Invalid URL format"
   )

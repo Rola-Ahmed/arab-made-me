@@ -8,8 +8,8 @@ import useFactorydashLogic from "./hooks/useFactorydashLogic";
 import { checkFactorydashAuthorization } from "roles/factorydashRoles";
 function Factorydash() {
   document.title = "Factory Dashboard";
-  const { pathname,hash  } = useLocation();
-  console.log("pathname",pathname,hash )
+  const { pathname, hash } = useLocation();
+
   const {
     isLogin,
     notification,
@@ -17,7 +17,7 @@ function Factorydash() {
     handleLogout,
     handleDropdownToggle,
     currentNavPage,
-  } = useFactorydashLogic(pathname,hash);
+  } = useFactorydashLogic(pathname, hash);
 
   // Use the authorization check function
   const authorizationResult = checkFactorydashAuthorization(
@@ -28,7 +28,6 @@ function Factorydash() {
 
   return (
     <section className="factory-dashboard vh-100 overflow-hidden  vw-100">
-      
       <div className="row h-100 w-100 remove-x">
         <div className="col-2 left-nav-fac-dashboard h-100 d-grid">
           <div className="static-navbar">

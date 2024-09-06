@@ -1,6 +1,8 @@
 import { useEffect, useState, useContext, useReducer } from "react";
-import {baseUrl_IMG} from "config.js";
-import UploadDocument ,{UploadVedio} from "components/Forms/Shared/UploadDocument";
+import { baseUrl_IMG } from "config.js";
+import UploadDocument, {
+  UploadVedio,
+} from "components/Forms/Shared/UploadDocument";
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -9,7 +11,6 @@ import Modal from "react-bootstrap/Modal";
 
 import DisplayMultiImages from "components/Shared/Dashboards/DisplayMultiImages";
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
-
 
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
@@ -24,10 +25,25 @@ import FactoryInforamtion from "./subComponents/FactoryInforamtion";
 import Team from "./subComponents/Team";
 import SocialAccounts from "./subComponents/SocialAccounts";
 import FactoryLogo from "./subComponents/FactoryLogo";
-import {fetchOneFactory,getFactoryTeam,addFactoryMedia,updateFactoryFromUser} from 'Services/factory'
-import {deleteTeam as deleteMember,addTeam,addTeamMedia} from 'Services/team'
+import {
+  getFactoryTeam,
+  addFactoryMedia,
+  updateFactoryFromUser,
+} from "Services/factory";
+import {
+  deleteTeam as deleteMember,
+  addTeam,
+  addTeamMedia,
+} from "Services/team";
+import {
+  RegisterationNumbers,
+  requiredStringMax255,
+  phoneValidation,
+  websiteValidation,
+} from "utils/validationUtils";
+import { useFetchFactoryById } from "hooks/useFetchFactoryById";
 
-function successMsg(){
+function successMsg() {
   SuccessToast("Changes updated successfully");
 }
 export default function MircoSiteDash() {
@@ -81,6 +97,7 @@ export default function MircoSiteDash() {
 
   const [factoryProfile, dispatch] = useReducer(reducer, setFactoryProfile);
 
+  const { data, errorMessage } = useFetchFactoryById( currentUserData?.factoryId);
   function deleteTeam(data) {
     dispatch({ type: "delete_Team", index: data });
   }
@@ -98,41 +115,37 @@ export default function MircoSiteDash() {
 
   // slider setting
 
-  const [selectedDocs, setSelectedDocs] = useState([
-   
-  ]);
+  const [selectedDocs, setSelectedDocs] = useState([]);
 
- 
+    useEffect(() => {
+      const fetchData = async () => {
+        if (data) {
+            // Dispatch an action with the fetched data
+            dispatch({
+              type: "fetched_update_data",
+              value: data,
+            });
+  
+            // Fetch the team data
+            const result = await getFactoryTeam(currentUserData?.factoryId);
+  
+            // Check if the result is successful and dispatch the team data
+            if (result?.success) {
+              dispatch({
+                type: "fetch_team_data",
+                value: result?.data?.teamMembers,
+              });
+            }
+         
+        }
+      };
+  
+      fetchData();
+    }, [data, currentUserData?.factoryId, dispatch]); 
 
 
 
-  // api
-  async function fetchFactoryPage() {
-    
-let result = await fetchOneFactory(currentUserData?.factoryId)
 
-      if (result?.success) {
-        dispatch({
-          type: "fetched_update_data",
-          value: result?.data?.factories,
-        });
-        fetchTeamData();
-      }else{
-
-      }
-  }
-
-  async function fetchTeamData() {
-     
-     let result= await getFactoryTeam(currentUserData?.factoryId)
-
-      if (result?.success) {
-        dispatch({
-          type: "fetch_team_data",
-          value: result?.data?.teamMembers,
-        });
-      } 
-  }
 
   // Cover IMage Profile -----------------------------------------------------
 
@@ -145,60 +158,46 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
 
     selectedDocs?.map((item) => data.append(item.keyWord, item.pdfFile));
 
-    let result = await addFactoryMedia({Authorization: isLogin},data)
-        if (result?.success) {
-          ModalClose();
-          successMsg()
-      
-          dispatch({
-            type: "fetched_update_data",
-            value: result?.data?.factory,
-          });
+    let result = await addFactoryMedia({ Authorization: isLogin }, data);
+    if (result?.success) {
+      ModalClose();
+      successMsg();
 
-          //
-          setSelectedDocs([]);
-          setTeamIsAdded({
-            status: false,
-            id: "",
-          });
-        } else {
-          setErrorMsg((prevErrors) => ({
-            ...prevErrors,
-            response: result?.error,
-          }));
-       
-        }
-        setIsLoading(false);
+      dispatch({
+        type: "fetched_update_data",
+        value: result?.data?.factory,
+      });
 
-    
+      //
+      setSelectedDocs([]);
+      setTeamIsAdded({
+        status: false,
+        id: "",
+      });
+    } else {
+      setErrorMsg((prevErrors) => ({
+        ...prevErrors,
+        response: result?.error,
+      }));
+    }
+    setIsLoading(false);
   }
 
-  useEffect(() => {
-    fetchFactoryPage();
-  }, [currentUserData?.factoryId]);
+ 
 
   const deleteData = async (itemId, indexArr) => {
-      let result = await deleteMember(itemId,{
-        authorization: isLogin
-      })
-     if(result?.success){
+    let result = await deleteMember(itemId, {
+      authorization: isLogin,
+    });
+    if (result?.success) {
       deleteTeam(indexArr);
-      successMsg()
-     }else{
-      ErrorToast(result?.error)
-     }
+      successMsg();
+    } else {
+      ErrorToast(result?.error);
+    }
   };
 
   // update data
-
-  let nameValidation = Yup.string()
-    .required("Input Field is Required")
-    .max(25, "max length is 25");
-  let phoneValidation = Yup.string()
-    .required("Input Field is Required")
-    .matches(/^[0-9]+$/, "Input Field should contain numbers only")
-    .min(6, "min length is 6")
-    .max(15, "max length is 15");
 
   const [show, setShow] = useState({
     factoryInfoChangeReadOnly: false,
@@ -225,11 +224,11 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
     commercialRegisterationNumber:
       factoryProfile?.commercialRegisterationNumber || "",
 
-     
-      IndustrialLicenseNumber: factoryProfile?.IndustrialLicenseNumber || "",
-      IndustrialRegistrationNumber: factoryProfile?.IndustrialRegistrationNumber || "",
-      BusinessRegistrationNumber:factoryProfile?.BusinessRegistrationNumber ||  "",
-
+    IndustrialLicenseNumber: factoryProfile?.IndustrialLicenseNumber || "",
+    IndustrialRegistrationNumber:
+      factoryProfile?.IndustrialRegistrationNumber || "",
+    BusinessRegistrationNumber:
+      factoryProfile?.BusinessRegistrationNumber || "",
 
     address: factoryProfile?.address?.[0] || "",
     description: factoryProfile?.description || "",
@@ -244,55 +243,49 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
   let factoryInfoValidation = useFormik({
     initialValues: initialFactoryInfoValidation,
     validationSchema: Yup.object().shape({
-      factoryName: nameValidation,
+      factoryName: requiredStringMax255,
       yearOfEstablishmint: Yup.string()
         .required("Input Field is Required")
         .matches(/^[0-9]+$/, "Input Field should contain numbers only")
         .min(4, "min length is 4")
         .max(4, "max length is 4"),
 
-      taxRegisterationNumber: Yup.string()
-        .required("Input Field is Required")
-        .matches(/^[0-9]+$/, "Input Field should contain numbers only")
-        .min(8, "min length is 8")
-        .max(16, "max length is 16"),
+      taxRegisterationNumber: RegisterationNumbers([
+        Yup.ref("commercialRegisterationNumber"),
+        Yup.ref("IndustrialRegistrationNumber"),
+        Yup.ref("IndustrialLicenseNumber"),
+        Yup.ref("BusinessRegistrationNumber"),
+      ]),
 
-      commercialRegisterationNumber: Yup.string()
-        .required("Input Field is Required")
-        .matches(/^[0-9]+$/, "Input Field should contain numbers only")
-        .min(8, "min length is 8")
-        .max(16, "max length is 16"),
+      commercialRegisterationNumber: RegisterationNumbers([
+        Yup.ref("taxRegisterationNumber"),
+        Yup.ref("IndustrialRegistrationNumber"),
+        Yup.ref("IndustrialLicenseNumber"),
+        Yup.ref("BusinessRegistrationNumber"),
+      ]),
+      IndustrialRegistrationNumber: RegisterationNumbers([
+        Yup.ref("taxRegisterationNumber"),
+        Yup.ref("commercialRegisterationNumber"),
+        Yup.ref("IndustrialLicenseNumber"),
+        Yup.ref("BusinessRegistrationNumber"),
+      ]),
+      IndustrialLicenseNumber: RegisterationNumbers([
+        Yup.ref("taxRegisterationNumber"),
+        Yup.ref("commercialRegisterationNumber"),
+        Yup.ref("IndustrialRegistrationNumber"),
+        Yup.ref("BusinessRegistrationNumber"),
+      ]),
+      BusinessRegistrationNumber: RegisterationNumbers([
+        Yup.ref("taxRegisterationNumber"),
+        Yup.ref("commercialRegisterationNumber"),
+        Yup.ref("IndustrialRegistrationNumber"),
+        Yup.ref("IndustrialLicenseNumber"),
+      ]),
 
-        IndustrialLicenseNumber:  Yup.string()
-        .required("Input Field is Required")
-        .matches(/^[0-9]+$/, "Input Field should contain numbers only")
-        .min(8, "min length is 8")
-        .max(16, "max length is 16"),
-      IndustrialRegistrationNumber:  Yup.string()
-        .required("Input Field is Required")
-        .matches(/^[0-9]+$/, "Input Field should contain numbers only")
-        .min(8, "min length is 8")
-        .max(16, "max length is 16"),
-      BusinessRegistrationNumber:  Yup.string()
-        .required("Input Field is Required")
-        .matches(/^[0-9]+$/, "Input Field should contain numbers only")
-        .min(8, "min length is 8")
-        .max(16, "max length is 16"),
+      address: requiredStringMax255,
 
-
-      address: Yup.string()
-        .required("Input Field is Required")
-        .min(6, "min length is 6")
-        .max(255, "max length is 255"),
-
-      description: Yup.string()
-        .required("Input Field is Required")
-        .min(6, "min length is 6")
-        .max(255, "max length is 255"),
-      whyUs: Yup.string()
-        .required("Input Field is Required")
-        .min(6, "min length is 6")
-        .max(255, "max length is 255"),
+      description: requiredStringMax255,
+      whyUs: requiredStringMax255,
       factoryPhone: phoneValidation,
       importingCountries: Yup.array().of(Yup.string()).nullable(),
     }),
@@ -310,9 +303,9 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
   let SocialAccountValidation = useFormik({
     initialValues: initialSocialAccount,
     validationSchema: Yup.object().shape({
-      website: Yup.string().url("Invalid URL format"),
-      instagramLink: Yup.string().url("Invalid URL format"),
-      facebookLink: Yup.string().url("Invalid URL format"),
+      website: websiteValidation,
+      instagramLink: websiteValidation,
+      facebookLink: websiteValidation,
     }),
     onSubmit: submitForm,
   });
@@ -325,8 +318,8 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
   let teamValidation = useFormik({
     initialValues: initialTeamValues,
     validationSchema: Yup.object().shape({
-      teamName: nameValidation,
-      teamRole: nameValidation,
+      teamName: requiredStringMax255,
+      teamRole: requiredStringMax255,
     }),
     onSubmit: submitTeam,
   });
@@ -344,7 +337,6 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
   });
 
   async function submitTeam(values) {
-  
     setErrorMsg((prevErrors) => {
       const { response, ...restErrors } = prevErrors || {};
       return restErrors;
@@ -353,50 +345,48 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
       name: values.teamName,
       role: values.teamRole,
     };
-    let reuslt= await addTeam({
-      authorization: isLogin
-    },
-    data);
+    let reuslt = await addTeam(
+      {
+        authorization: isLogin,
+      },
+      data
+    );
     if (!teamIsAdded.status) {
-        setIsLoading(true);
-       
-       
+      setIsLoading(true);
 
+      if (reuslt?.success) {
+        // check if the inputs contain meida then call media api & pass the member team id
+        // else inputs doesnt contain meida so display successs message
+        if (selectedDocs.length > 0) {
+          setTeamIsAdded({
+            status: true,
+            id: reuslt?.data?.teamMember?.id,
+          });
 
-        if (reuslt?.success) {
-          // check if the inputs contain meida then call media api & pass the member team id
-          // else inputs doesnt contain meida so display successs message
-          if (selectedDocs.length > 0) {
-            setTeamIsAdded({
-              status: true,
-              id: reuslt?.data?.teamMember?.id,
-            });
-
-            await SubmitDocs(reuslt?.data?.teamMember?.id);
-          } else {
-            setIsLoading(false);
-            setTeamIsAdded({
-              status: false,
-              id: "",
-            });
-
-            teamValidation.resetForm({
-              values: initialTeamValues,
-            });
-
-            successMsg()
-
-            ModalClose();
-            dispatch({ type: "add_Team", value: reuslt?.data?.teamMember });
-          }
+          await SubmitDocs(reuslt?.data?.teamMember?.id);
         } else {
           setIsLoading(false);
-          setErrorMsg((prevErrors) => ({
-            ...prevErrors,
-            response: reuslt?.error,
-          }));
+          setTeamIsAdded({
+            status: false,
+            id: "",
+          });
+
+          teamValidation.resetForm({
+            values: initialTeamValues,
+          });
+
+          successMsg();
+
+          ModalClose();
+          dispatch({ type: "add_Team", value: reuslt?.data?.teamMember });
         }
-      
+      } else {
+        setIsLoading(false);
+        setErrorMsg((prevErrors) => ({
+          ...prevErrors,
+          response: reuslt?.error,
+        }));
+      }
     }
 
     if (teamIsAdded.status && selectedDocs?.length > 0) {
@@ -408,7 +398,7 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
     }
   }
 
- async function SubmitDocs(id) {
+  async function SubmitDocs(id) {
     // e.preventDefault();
     setIsLoading(true);
 
@@ -416,38 +406,37 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
 
     selectedDocs?.map((item) => data.append("image", item.pdfFile));
 
- 
-    let rueslt = await addTeamMedia(id,{
-      Authorization: isLogin
-    },data)
+    let rueslt = await addTeamMedia(
+      id,
+      {
+        Authorization: isLogin,
+      },
+      data
+    );
 
-     
-        if (rueslt?.success) {
-          teamValidation.resetForm({
-            values: initialTeamValues,
-          });
-          setTeamIsAdded({
-            status: false,
-            id: "",
-          });
-          successMsg()
+    if (rueslt?.success) {
+      teamValidation.resetForm({
+        values: initialTeamValues,
+      });
+      setTeamIsAdded({
+        status: false,
+        id: "",
+      });
+      successMsg();
 
-          dispatch({ type: "add_Team", value: rueslt?.data?.teamMember });
+      dispatch({ type: "add_Team", value: rueslt?.data?.teamMember });
 
-          setIsLoading(false);
-          setSelectedDocs([]);
-          ModalClose();
-        } else {
-          setIsLoading(false);
+      setIsLoading(false);
+      setSelectedDocs([]);
+      ModalClose();
+    } else {
+      setIsLoading(false);
 
-          setErrorMsg((prevErrors) => ({
-            ...prevErrors,
-            response: rueslt?.error,
-          }));
-       
-        }
-      
-
+      setErrorMsg((prevErrors) => ({
+        ...prevErrors,
+        response: rueslt?.error,
+      }));
+    }
   }
 
   async function submitForm(values) {
@@ -469,9 +458,8 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
         numberOfEmployees: values.numberOfEmployees,
         commercialRegisterationNumber: values.commercialRegisterationNumber,
         taxRegisterationNumber: values.taxRegisterationNumber,
-        IndustrialLicenseNumber:values.IndustrialLicenseNumber,
+        IndustrialLicenseNumber: values.IndustrialLicenseNumber,
 
-     
         IndustrialRegistrationNumber: values.IndustrialRegistrationNumber,
         BusinessRegistrationNumber: values.BusinessRegistrationNumber,
 
@@ -504,26 +492,29 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
       data.socialLinks["instagram"] = values.instagramLink;
     }
 
-      setIsLoading(true);
-      let response= await updateFactoryFromUser({
+    setIsLoading(true);
+    let response = await updateFactoryFromUser(
+      {
         authorization: isLogin,
-      },data)
+      },
+      data
+    );
 
-      if (response?.success) {
-        ModalClose();
-        successMsg()
+    if (response?.success) {
+      ModalClose();
+      successMsg();
 
-        dispatch({
-          type: "fetched_update_data",
-          value: data,
-        });
-      } else {
-        setErrorMsg((prevErrors) => ({
-          ...prevErrors,
-          response: response?.error
-        }));
-      }
- 
+      dispatch({
+        type: "fetched_update_data",
+        value: data,
+      });
+    } else {
+      setErrorMsg((prevErrors) => ({
+        ...prevErrors,
+        response: response?.error,
+      }));
+    }
+
     setIsLoading(false);
   }
 
@@ -534,8 +525,6 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
       teamValidation.setValues(initialTeamValues);
     }
   }, [factoryProfile]);
-
-
 
   function handleClose(value) {
     setShow((preValue) => ({
@@ -553,7 +542,7 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
     SocialAccountValidation.resetForm({
       values: initialSocialAccount,
     });
-    factoryInfoValidation.resetForm({values: initialFactoryInfoValidation});
+    factoryInfoValidation.resetForm({ values: initialFactoryInfoValidation });
     setSelectedDocs([]);
   }
 
@@ -574,7 +563,6 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
 
       return newState; // Return the updated state
     });
-
   }
 
   return (
@@ -592,26 +580,24 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
                 handleImageError={handleImageError}
                 handleShow={handleShow}
                 coverImage={factoryProfile?.coverImage}
-              show={show}
-              errorMsg={errorMsg}
-              setErrorMsg={setErrorMsg}
-              updateMedia={updateMedia}
-              setSelectedDocs={setSelectedDocs}
-              isLoading={isLoading}
-
-
+                show={show}
+                errorMsg={errorMsg}
+                setErrorMsg={setErrorMsg}
+                updateMedia={updateMedia}
+                setSelectedDocs={setSelectedDocs}
+                isLoading={isLoading}
               />
 
               {/*Social Accounts container 2 */}
-              <SocialAccounts 
-              handleShow={handleShow} 
-                  show={show}
-                  errorMsg={errorMsg}
-                  handleClose={handleClose}
-                  isLoading={isLoading}
-                  SocialAccountValidation={SocialAccountValidation}
-                  socialLinks={factoryProfile?.socialLinks}
-                  />
+              <SocialAccounts
+                handleShow={handleShow}
+                show={show}
+                errorMsg={errorMsg}
+                handleClose={handleClose}
+                isLoading={isLoading}
+                SocialAccountValidation={SocialAccountValidation}
+                socialLinks={factoryProfile?.socialLinks}
+              />
 
               {/* Factory Banners */}
 
@@ -623,21 +609,20 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
                     handleImageClick={handleImageClick}
                     images={factoryProfile?.images}
                   />
-                     {/* <div className="col-12"> */}
-                        <Button
-                          className="btn-edit w-fit-content"
-                          variant="primary"
-                          onClick={() => handleShow("imagesReadOnly")}
-                        >
-                          <p className="cursor">Upload </p>
-                        </Button>
-                      {/* </div> */}
+                  {/* <div className="col-12"> */}
+                  <Button
+                    className="btn-edit w-fit-content"
+                    variant="primary"
+                    onClick={() => handleShow("imagesReadOnly")}
+                  >
+                    <p className="cursor">Upload </p>
+                  </Button>
+                  {/* </div> */}
                 </div>
               </div>
 
-
-  {/*Certificats  */}
-  <div id="certificates"></div>
+              {/*Certificats  */}
+              <div id="certificates"></div>
               <div className="container-profile-input w-100">
                 <div className="title-contianer-input w-100">
                   <p> Certificates</p>
@@ -645,20 +630,15 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
                     handleImageClick={handleImageClick}
                     images={factoryProfile?.qualityCertificates}
                   />
-                   <Button
-                          className="btn-edit w-fit-content"
-                          variant="primary"
-                          onClick={() =>
-                            handleShow("qualityCertificatesReadOnly")
-                          }
-                        >
-                          <p className="cursor">Upload </p>
-                        </Button>
+                  <Button
+                    className="btn-edit w-fit-content"
+                    variant="primary"
+                    onClick={() => handleShow("qualityCertificatesReadOnly")}
+                  >
+                    <p className="cursor">Upload </p>
+                  </Button>
                 </div>
               </div>
-             
-
-          
 
               {/* Cover Video  */}
               <div id="CoverVideo"></div>
@@ -706,16 +686,14 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
                 Button={Button}
                 factoryProfile={factoryProfile}
                 handleShow={handleShow}
-                  show={show}
+                show={show}
                 errorMsg={errorMsg}
                 factoryInfoValidation={factoryInfoValidation}
                 handleClose={handleClose}
                 isLoading={isLoading}
-             
               />
 
-
-               {/*  team iNFO*/}
+              {/*  team iNFO*/}
               {/* read and update data */}
               <Team
                 handleShow={handleShow}
@@ -734,11 +712,6 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
           </div>
         </div>
       </div>
-
-      
-
-
-
 
       {/* Factory Banners */}
       <Modal
@@ -771,17 +744,16 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
                 >
                   <div className="row  row-gap">
                     <div className="col-12">
-                    <UploadDocument
-                    selectedDocs={selectedDocs}
-                    errorMsg={errorMsg}
-                    setSelectedDocs={setSelectedDocs}
-                    MediaName="images"
-                    mediaMaxLen="8"
-                    meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
-                    setErrorMsg={setErrorMsg}
-                    // title="Factory Banners"
-                  />
-
+                      <UploadDocument
+                        selectedDocs={selectedDocs}
+                        errorMsg={errorMsg}
+                        setSelectedDocs={setSelectedDocs}
+                        MediaName="images"
+                        mediaMaxLen="8"
+                        meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
+                        setErrorMsg={setErrorMsg}
+                        // title="Factory Banners"
+                      />
                     </div>
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
@@ -846,17 +818,16 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
                   encType="multipart/form-data"
                 >
                   <div className="row  row-gap">
-
-                  <UploadDocument
-                    selectedDocs={selectedDocs}
-                    errorMsg={errorMsg}
-                    setSelectedDocs={setSelectedDocs}
-                    MediaName="coverImage"
-                    mediaMaxLen="1"
-                    meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
-                    setErrorMsg={setErrorMsg}
-                    // title="Factory Banners"
-                  />
+                    <UploadDocument
+                      selectedDocs={selectedDocs}
+                      errorMsg={errorMsg}
+                      setSelectedDocs={setSelectedDocs}
+                      MediaName="coverImage"
+                      mediaMaxLen="1"
+                      meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
+                      setErrorMsg={setErrorMsg}
+                      // title="Factory Banners"
+                    />
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
                       <Button
@@ -921,17 +892,24 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
                   encType="multipart/form-data"
                 >
                   <div className="row  row-gap">
-                  <UploadDocument
-                    selectedDocs={selectedDocs}
-                    errorMsg={errorMsg}
-                    setSelectedDocs={setSelectedDocs}
-                    MediaName="qualityCertificates"
-                    mediaMaxLen="3"
-                    meidaAcceptedExtensions={["pdf", "png", "jpeg", "jpg","psd",'webp']}
-                    setErrorMsg={setErrorMsg}
-                    // title="Certificates"
-                  />
-                   
+                    <UploadDocument
+                      selectedDocs={selectedDocs}
+                      errorMsg={errorMsg}
+                      setSelectedDocs={setSelectedDocs}
+                      MediaName="qualityCertificates"
+                      mediaMaxLen="3"
+                      meidaAcceptedExtensions={[
+                        "pdf",
+                        "png",
+                        "jpeg",
+                        "jpg",
+                        "psd",
+                        "webp",
+                      ]}
+                      setErrorMsg={setErrorMsg}
+                      // title="Certificates"
+                    />
+
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
                       <Button
                         variant="secondary"
@@ -998,17 +976,15 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
                 >
                   <div className="row  row-gap">
                     <UploadVedio
-                    selectedDocs={selectedDocs}
-                    errorMsg={errorMsg}
-                    setSelectedDocs={setSelectedDocs}
-                    MediaName="coverVideo"
-                    mediaMaxLen="1"
-                    meidaAcceptedExtensions={["mp4", "mkv",'x-matroska']}
-                    setErrorMsg={setErrorMsg}
-                    // title="Certificates"
-                  />
-
-                     
+                      selectedDocs={selectedDocs}
+                      errorMsg={errorMsg}
+                      setSelectedDocs={setSelectedDocs}
+                      MediaName="coverVideo"
+                      mediaMaxLen="1"
+                      meidaAcceptedExtensions={["mp4", "mkv", "x-matroska"]}
+                      setErrorMsg={setErrorMsg}
+                      // title="Certificates"
+                    />
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
                       <Button
@@ -1114,19 +1090,16 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
                       </div>
                     </div>
 
-
                     <UploadDocument
-                    selectedDocs={selectedDocs}
-                    errorMsg={errorMsg}
-                    setSelectedDocs={setSelectedDocs}
-                    MediaName="image"
-                    mediaMaxLen="1"
-                    meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
-                    setErrorMsg={setErrorMsg}
-                    // title="Company Banners"
-                  />
-
-                   
+                      selectedDocs={selectedDocs}
+                      errorMsg={errorMsg}
+                      setSelectedDocs={setSelectedDocs}
+                      MediaName="image"
+                      mediaMaxLen="1"
+                      meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
+                      setErrorMsg={setErrorMsg}
+                      // title="Company Banners"
+                    />
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
                       <Button
@@ -1168,7 +1141,6 @@ let result = await fetchOneFactory(currentUserData?.factoryId)
         }
         showImagePop={showImagePop.imagePath}
       />
- 
     </>
   );
 }
