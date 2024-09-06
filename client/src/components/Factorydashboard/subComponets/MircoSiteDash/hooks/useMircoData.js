@@ -23,6 +23,7 @@ export const useMircoData = (update, fetch_team) => {
         // Check if the result is successful and dispatch the team data
         if (result?.success) {
           fetch_team(result?.data?.teamMembers);
+          // update(result?.data?.teamMembers);
         }
       }
     };
