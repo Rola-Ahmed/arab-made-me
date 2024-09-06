@@ -17,6 +17,8 @@ import FactoryInforamtion from "./subComponents/FactoryInforamtion";
 import Team from "./subComponents/Team";
 import SocialAccounts from "./subComponents/SocialAccounts";
 import FactoryLogo from "./subComponents/FactoryLogo";
+import CoverVideo from "./subComponents/CoverVideo";
+import Certificates from "./subComponents/Certificates";
 import { useMircoData } from "./hooks/useMircoData";
 import { useFormValidations } from "./hooks/useFormValidations";
 import {
@@ -152,17 +154,12 @@ export default function MircoSiteDash() {
       successMsg();
 
       update(result?.data?.factory);
-      // dispatch({
-      //   type: "fetched_update_data",
-      //   value: result?.data?.factory,
-      // });
-
       //
       setSelectedDocs([]);
-      setTeamIsAdded({
-        status: false,
-        id: "",
-      });
+      // setTeamIsAdded({
+      //   status: false,
+      //   id: "",
+      // });
     } else {
       setErrorMsg((prevErrors) => ({
         ...prevErrors,
@@ -346,16 +343,15 @@ export default function MircoSiteDash() {
     }
     await submitForm(data);
   }
-  async function handleUpdateSocialAccounts(values){
-    const  data = {
+  async function handleUpdateSocialAccounts(values) {
+    const data = {
       socialLinks: {},
       website: values.website,
     };
 
     data.socialLinks["facebook"] = values.facebookLink;
     data.socialLinks["instagram"] = values.instagramLink;
-    await submitForm(data)
-
+    await submitForm(data);
   }
   async function submitForm(data) {
     //
@@ -442,10 +438,9 @@ export default function MircoSiteDash() {
             <div className="col-12  container-2-gap  p-0">
               {/* factory logo  container 1 */}
               <FactoryLogo
-                baseUrl_IMG={baseUrl_IMG}
                 handleImageError={handleImageError}
                 handleShow={handleShow}
-                coverImage={factoryProfile?.coverImage}
+                coverImage={`${baseUrl_IMG}/${factoryProfile?.coverImage}`}
                 show={show}
                 errorMsg={errorMsg}
                 setErrorMsg={setErrorMsg}
@@ -478,7 +473,6 @@ export default function MircoSiteDash() {
                   {/* <div className="col-12"> */}
                   <Button
                     className="btn-edit w-fit-content"
-                    variant="primary"
                     onClick={() => handleShow("imagesReadOnly")}
                   >
                     <p className="cursor">Upload </p>
@@ -498,7 +492,6 @@ export default function MircoSiteDash() {
                   />
                   <Button
                     className="btn-edit w-fit-content"
-                    variant="primary"
                     onClick={() => handleShow("qualityCertificatesReadOnly")}
                   >
                     <p className="cursor">Upload </p>
@@ -506,44 +499,35 @@ export default function MircoSiteDash() {
                 </div>
               </div>
 
-              {/* Cover Video  */}
-              <div id="CoverVideo"></div>
-              <div className="container-profile-input w-100">
-                <div className="title-contianer-input w-100">
-                  <p>Cover Video</p>
-                  <div className="w-100 ">
-                    {/* ----------------------- */}
-                    <div className="row grid-gap-col">
-                      <div className="col-12 h-fit-content">
-                        {factoryProfile?.coverVideo ? (
-                          <video
-                            controls="controls"
-                            autoPlay={false}
-                            muted={true}
-                            className="h-75 w-100  "
-                            id={handleImageError}
-                            src={`${baseUrl_IMG}/${factoryProfile?.coverVideo}`}
-                            alt="Cover Video"
-                            onError={handleImageError}
-                          />
-                        ) : (
-                          <h5 className="text-muted text-center py-3">Empty</h5>
-                        )}
-                      </div>
+              <Certificates
+                handleImageError={handleImageError}
+                handleShow={handleShow}
+                show={show}
+                errorMsg={errorMsg}
+                handleClose={handleClose}
+                isLoading={isLoading}
+                updateMedia={updateMedia}
+                setErrorMsg={setErrorMsg}
+                setSelectedDocs={setSelectedDocs}
+                selectedDocs={selectedDocs}
+                qualityCertificates={factoryProfile?.qualityCertificates}
+              />
 
-                      <div className="col-12">
-                        <Button
-                          className="btn-edit"
-                          variant="primary"
-                          onClick={() => handleShow("coverVideo")}
-                        >
-                          <p className="cursor">Upload </p>
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              {/* Cover Video  */}
+              <CoverVideo
+                handleImageError={handleImageError}
+                coverVideo={`${baseUrl_IMG}/${factoryProfile?.coverVideo}`}
+                notEmpty={factoryProfile?.coverVideo}
+                handleShow={handleShow}
+                show={show}
+                errorMsg={errorMsg}
+                handleClose={handleClose}
+                isLoading={isLoading}
+                updateMedia={updateMedia}
+                setErrorMsg={setErrorMsg}
+                setSelectedDocs={setSelectedDocs}
+                selectedDocs={selectedDocs}
+              />
               {/* end new */}
 
               {/*  FACTORY iNFO*/}
@@ -580,150 +564,9 @@ export default function MircoSiteDash() {
       </div>
 
       {/* Factory Banners */}
-      <Modal
-        show={show.imagesReadOnly}
-        onHide={() => handleClose("imagesReadOnly")}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-        className="factory-profile"
-      >
-        <Modal.Body closeButton>
-          {/* Account Info container 1 */}
-
-          <div className="container-profile-input w-100">
-            <div className="title-contianer-input w-100">
-              <Modal.Header closeButton>
-                <Modal.Title>
-                  <p>Factory Banners</p>
-                </Modal.Title>
-              </Modal.Header>
-              {errorMsg?.response && (
-                <div className="alert mt-3 p-2 alert-danger form-control text-dark">
-                  {errorMsg?.response}
-                </div>
-              )}
-              <div className="w-100 ">
-                <form
-                  onSubmit={(e) => updateMedia(e, "images")}
-                  encType="multipart/form-data"
-                >
-                  <div className="row  row-gap">
-                    <div className="col-12">
-                      <UploadDocument
-                        selectedDocs={selectedDocs}
-                        errorMsg={errorMsg}
-                        setSelectedDocs={setSelectedDocs}
-                        MediaName="images"
-                        mediaMaxLen="8"
-                        meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
-                        setErrorMsg={setErrorMsg}
-                        // title="Factory Banners"
-                      />
-                    </div>
-
-                    <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                      <Button
-                        variant="secondary"
-                        type="button"
-                        onClick={() => handleClose("imagesReadOnly")}
-                      >
-                        Close
-                      </Button>
-                      {isLoading ? (
-                        <button type="button" className="btn-edit">
-                          <i className="fas fa-spinner fa-spin text-white px-5"></i>
-                        </button>
-                      ) : (
-                        <button
-                          className="btn-edit submitButton"
-                          type="submit"
-                          disabled={!(selectedDocs?.length > 0)}
-                        >
-                          <p className="cursor">Submit</p>
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </Modal.Body>
-      </Modal>
+   
 
       {/* Factory Banners */}
-      <Modal
-        show={show.coverImgReadOnly}
-        onHide={() => handleClose("coverImgReadOnly")}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-        className="factory-profile"
-      >
-        <Modal.Body closeButton>
-          {/* Account Info container 1 */}
-
-          <div className="container-profile-input w-100">
-            <div className="title-contianer-input w-100">
-              <Modal.Header closeButton>
-                <Modal.Title>
-                  <p>Factory Logo</p>
-                </Modal.Title>
-              </Modal.Header>
-              {errorMsg?.response ? (
-                <div className="alert mt-3 p-2 alert-danger form-control text-dark">
-                  {errorMsg?.response}
-                </div>
-              ) : (
-                ""
-              )}
-              <div className="w-100 ">
-                <form
-                  onSubmit={(e) => updateMedia(e, "coverImage")}
-                  encType="multipart/form-data"
-                >
-                  <div className="row  row-gap">
-                    <UploadDocument
-                      selectedDocs={selectedDocs}
-                      errorMsg={errorMsg}
-                      setSelectedDocs={setSelectedDocs}
-                      MediaName="coverImage"
-                      mediaMaxLen="1"
-                      meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
-                      setErrorMsg={setErrorMsg}
-                      // title="Factory Banners"
-                    />
-
-                    <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                      <Button
-                        variant="secondary"
-                        type="button"
-                        onClick={() => handleClose("coverImgReadOnly")}
-                      >
-                        Close
-                      </Button>
-                      {isLoading ? (
-                        <button type="button" className="btn-edit">
-                          <i className="fas fa-spinner fa-spin text-white px-5"></i>
-                        </button>
-                      ) : (
-                        <button
-                          className="btn-edit submitButton"
-                          type="submit"
-                          disabled={!(selectedDocs?.length > 0)}
-                        >
-                          <p className="cursor">Submit</p>
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </Modal.Body>
-      </Modal>
 
       {/* Certificaets qualityCertificates */}
 

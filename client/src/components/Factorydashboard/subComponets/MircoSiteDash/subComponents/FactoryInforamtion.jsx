@@ -123,7 +123,6 @@ export default function FactoryInforamtion(props) {
         </div>
         <Button
           className="btn-edit mt-2"
-          variant="primary"
           onClick={() => handleShow("factoryInfoChangeReadOnly")}
         >
           <p className="cursor">Change Factory Information </p>

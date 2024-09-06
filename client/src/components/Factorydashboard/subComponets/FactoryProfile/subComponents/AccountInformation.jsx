@@ -98,7 +98,7 @@ export default function editAccountInfoAccountInformation(props) {
                 <button
                   className="btn-edit"
                   type="button"
-                  // variant="primary"
+                  //
                   onClick={() =>
                     setModalShow({
                       accountInfo: true,

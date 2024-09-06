@@ -1,52 +1,45 @@
 import Modal from "react-bootstrap/Modal";
-import UploadDocument from "components/Forms/Shared/UploadDocument";
+import DisplayMultiImages from "components/Shared/Dashboards/DisplayMultiImages";
 
-export default function FactoryLogo(props) {
+import UploadDocument from "components/Forms/Shared/UploadDocument";
+export default function Certificates(props) {
   let {
-    handleImageError,
+    handleImageClick,
+    qualityCertificates,
     handleShow,
     show,
-    coverImage,
     handleClose,
-    updateMedia,
-    setSelectedDocs,
     errorMsg,
     selectedDocs,
-    setErrorMsg,
     isLoading,
+    updateMedia,
+    setErrorMsg,
+    setSelectedDocs,
   } = props;
   return (
     <>
-      <div id="factorylogo"></div>
-
-      <div className="container-profile-input w-100 gap-16  ">
-        <p className="fs-24-semi">factory logo </p>
-        <div className="grid-gap-col position-relative ">
-          <div className="factory-logo  edit-img border  ">
-            <img
-              className="w-100 h-100 "
-              src={coverImage}
-              alt="factory coverImage"
-              onError={handleImageError}
-            />
-          </div>
-
-          {/* icon */}
-          <div className="edit-icon-profile-btn position-absolute  cursor">
-            <label
-              htmlFor="imgupload"
-              onClick={() => handleShow("coverImgReadOnly")}
-            >
-              <i className="fa-solid fa-pen-to-square  cursor"></i>
-            </label>
-          </div>
+      <div id="certificates"></div>
+      <div className="container-profile-input w-100">
+        <div className="title-contianer-input w-100">
+          <p> Certificates</p>
+          <DisplayMultiImages
+            handleImageClick={handleImageClick}
+            images={qualityCertificates}
+          />
+          <button
+            className="btn-edit w-fit-content"
+            onClick={() => handleShow("qualityCertificatesReadOnly")}
+          >
+            <p className="cursor">Upload </p>
+          </button>
         </div>
       </div>
 
-      {/* Factory Banners */}
+      {/* update factory banner */}
+
       <Modal
-        show={show.coverImgReadOnly}
-        onHide={() => handleClose("coverImgReadOnly")}
+        show={show.imagesReadOnly}
+        onHide={() => handleClose("imagesReadOnly")}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
@@ -59,7 +52,7 @@ export default function FactoryLogo(props) {
             <div className="title-contianer-input w-100">
               <Modal.Header closeButton>
                 <Modal.Title>
-                  <p>Factory Logo</p>
+                  <p>Factory Banners</p>
                 </Modal.Title>
               </Modal.Header>
               {errorMsg?.response && (
@@ -69,25 +62,28 @@ export default function FactoryLogo(props) {
               )}
               <div className="w-100 ">
                 <form
-                  onSubmit={(e) => updateMedia(e)}
+                  onSubmit={(e) => updateMedia(e, "images")}
                   encType="multipart/form-data"
                 >
                   <div className="row  row-gap">
-                    <UploadDocument
-                      selectedDocs={selectedDocs}
-                      errorMsg={errorMsg}
-                      setSelectedDocs={setSelectedDocs}
-                      MediaName="coverImage"
-                      mediaMaxLen="1"
-                      meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
-                      setErrorMsg={setErrorMsg}
-                      // title="Factory Banners"
-                    />
+                    <div className="col-12">
+                      <UploadDocument
+                        selectedDocs={selectedDocs}
+                        errorMsg={errorMsg}
+                        setSelectedDocs={setSelectedDocs}
+                        MediaName="images"
+                        mediaMaxLen="8"
+                        meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
+                        setErrorMsg={setErrorMsg}
+                        // title="Factory Banners"
+                      />
+                    </div>
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
                       <button
+                        variant="secondary"
                         type="button"
-                        onClick={() => handleClose("coverImgReadOnly")}
+                        onClick={() => handleClose("imagesReadOnly")}
                       >
                         Close
                       </button>

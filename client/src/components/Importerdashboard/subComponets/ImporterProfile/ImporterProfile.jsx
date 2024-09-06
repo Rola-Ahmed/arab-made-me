@@ -398,7 +398,6 @@ export default function ImporterProfile() {
                       <div className="col-12">
                         <button
                           className="btn-edit"
-                          variant="primary"
                           onClick={() => handleShow("accountInfoReadOnly")}
                         >
                           <p className="cursor">Change Account Information </p>
@@ -447,7 +446,6 @@ export default function ImporterProfile() {
 
                           <button
                             className="btn-edit"
-                            variant="primary"
                             onClick={() => handleShow("socialAccountsReadOnly")}
                           >
                             <p className="cursor">attach Link</p>
@@ -464,7 +462,6 @@ export default function ImporterProfile() {
                           </div>
                           <button
                             className="btn-edit"
-                            variant="primary"
                             onClick={() => handleShow("socialAccountsReadOnly")}
                           >
                             <p className="cursor">attach Link</p>
@@ -482,7 +479,6 @@ export default function ImporterProfile() {
                           </div>
                           <button
                             className="btn-edit"
-                            variant="primary"
                             onClick={() => handleShow("socialAccountsReadOnly")}
                           >
                             <p className="cursor">attach Link</p>
@@ -538,7 +534,6 @@ export default function ImporterProfile() {
                   <div className="w-100">
                     <button
                       className="btn-edit"
-                      variant="primary"
                       onClick={() => handleShow("legalDocsReadOnly")}
                     >
                       <p className="cursor">Upload </p>
@@ -633,7 +628,6 @@ export default function ImporterProfile() {
                         <div className="col-12">
                           <button
                             className="btn-edit"
-                            variant="primary"
                             onClick={() =>
                               handleShow("factoryInfoChangeReadOnly")
                             }
