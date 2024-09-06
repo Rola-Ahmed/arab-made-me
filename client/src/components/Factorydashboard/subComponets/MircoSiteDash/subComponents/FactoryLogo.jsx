@@ -1,51 +1,51 @@
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import UploadDocument from "components/Forms/Shared/UploadDocument";
 
 export default function FactoryLogo(props) {
-  let { baseUrl_IMG, handleImageError, handleShow, show,coverImage,handleClose,updateMedia,setSelectedDocs,errorMsg,selectedDocs,setErrorMsg,isLoading } = props;
+  let {
+    baseUrl_IMG,
+    handleImageError,
+    handleShow,
+    show,
+    coverImage,
+    handleClose,
+    updateMedia,
+    setSelectedDocs,
+    errorMsg,
+    selectedDocs,
+    setErrorMsg,
+    isLoading,
+  } = props;
   return (
     <>
       <div id="factorylogo"></div>
-      <div className="container-profile-input w-100 ">
-        <div className="title-contianer-input w-100">
-          <p>factory logo </p>
-          <div className="w-100 ">
-            <div className="row  row-gap">
-              <div className="col-12">
-                <div className="grid-gap-col position-relative ">
-                  <div className="factory-logo  edit-img border  ">
-                    <img
-                      className="w-100 h-100 "
-                      src={`${baseUrl_IMG}/${coverImage}`}
-                      alt="factory image coverImage"
-                      onError={handleImageError}
-                    />
-                  </div>
 
-                  {/* icon */}
-                  <div className="edit-icon-profile-btn position-absolute  cursor">
-                    <label
-                      htmlFor="imgupload"
-                      onClick={() => handleShow("coverImgReadOnly")}
-                    >
-                      <i className="fa-solid fa-pen-to-square  cursor"></i>
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
+      <div className="container-profile-input w-100 gap-16  ">
+        <p className="fs-24-semi">factory logo </p>
+        <div className="grid-gap-col position-relative ">
+          <div className="factory-logo  edit-img border  ">
+            <img
+              className="w-100 h-100 "
+              src={`${baseUrl_IMG}/${coverImage}`}
+              alt="factory coverImage"
+              onError={handleImageError}
+            />
+          </div>
+
+          {/* icon */}
+          <div className="edit-icon-profile-btn position-absolute  cursor">
+            <label
+              htmlFor="imgupload"
+              onClick={() => handleShow("coverImgReadOnly")}
+            >
+              <i className="fa-solid fa-pen-to-square  cursor"></i>
+            </label>
           </div>
         </div>
       </div>
 
-
-
-
-
-
- {/* Factory Banners */}
- <Modal
+      {/* Factory Banners */}
+      <Modal
         show={show.coverImgReadOnly}
         onHide={() => handleClose("coverImgReadOnly")}
         size="lg"
@@ -67,33 +67,31 @@ export default function FactoryLogo(props) {
                 <div className="alert mt-3 p-2 alert-danger form-control text-dark">
                   {errorMsg?.response}
                 </div>
-              ) }
+              )}
               <div className="w-100 ">
                 <form
                   onSubmit={(e) => updateMedia(e)}
                   encType="multipart/form-data"
                 >
                   <div className="row  row-gap">
-
-                  <UploadDocument
-                    selectedDocs={selectedDocs}
-                    errorMsg={errorMsg}
-                    setSelectedDocs={setSelectedDocs}
-                    MediaName="coverImage"
-                    mediaMaxLen="1"
-                    meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
-                    setErrorMsg={setErrorMsg}
-                    // title="Factory Banners"
-                  />
+                    <UploadDocument
+                      selectedDocs={selectedDocs}
+                      errorMsg={errorMsg}
+                      setSelectedDocs={setSelectedDocs}
+                      MediaName="coverImage"
+                      mediaMaxLen="1"
+                      meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
+                      setErrorMsg={setErrorMsg}
+                      // title="Factory Banners"
+                    />
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                      <Button
-                        variant="secondary"
+                      <button
                         type="button"
                         onClick={() => handleClose("coverImgReadOnly")}
                       >
                         Close
-                      </Button>
+                      </button>
                       {isLoading ? (
                         <button type="button" className="btn-edit">
                           <i className="fas fa-spinner fa-spin text-white px-5"></i>
@@ -115,9 +113,6 @@ export default function FactoryLogo(props) {
           </div>
         </Modal.Body>
       </Modal>
-
-
-      
     </>
   );
 }

@@ -9,7 +9,7 @@ export default function DashListsDropDown(props) {
       }`}
       to={`${path}#${urlHashValue}`}
     >
-      <div className="d-grid  align-items-center sub-profile-cont  ms-2 ps-4 icon-text-gap ">
+      <div className="d-grid  align-items-center  ms-2 ps-4 icon-text-gap ">
         <i className={`${icon}  text-white `}></i>
         <p className="sub-text cursor ">{title}</p>
       </div>

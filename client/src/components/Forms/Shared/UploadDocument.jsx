@@ -352,10 +352,10 @@ export function UploadVedio(props) {
                 <div className="w-100">
                   <div className="d-flex justify-content-between align-items-center">
                     <div>
-                      <p className="img-name text-tarute">
+                      <p className=" lh-nomral fw-500 fs-14 text-tarute">
                         {item?.pdfFile?.name}
                       </p>
-                      <p className="img-name">
+                      <p className=" lh-nomral fw-500 fs-14">
                         {(item?.pdfFile?.size / 1024)?.toFixed(2)} KB
                       </p>
                     </div>

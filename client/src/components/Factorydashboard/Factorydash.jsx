@@ -42,7 +42,7 @@ function Factorydash() {
                   to=""
                 >
                   <i className="fa-solid fa-box-open"></i>
-                  <p className="sub-title cursor">Dashboard</p>
+                  <p className="sub-title cursor ">Dashboard</p>
                 </Link>
 
                 {/* pprofile */}
