@@ -1,9 +1,12 @@
-import { useCallback, useContext } from "react";
+// import { useCallback, useContext } from "react";
+import { useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { GlobalMsgContext } from "Context/globalMessage";
+// import { GlobalMsgContext } from "Context/globalMessage";
+import SuccessToast from "components/SuccessToast";
 
 const useSubmitFormMsg = () => {
-  let { setGlobalMsg } = useContext(GlobalMsgContext);
+  
+  // let { setGlobalMsg } = useContext(GlobalMsgContext);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -12,7 +15,8 @@ const useSubmitFormMsg = () => {
     (message) => {
       const hasPreviousState = location.key !== "default";
 
-      setGlobalMsg(`Your ${message} Form has been successfully submitted`);
+      SuccessToast(`Your ${message} Form has been successfully submitted`);
+      // setGlobalMsg(`Your ${message} Form has been successfully submitted`);
 
       if (hasPreviousState) {
         navigate(-1); // Navigate back
@@ -20,7 +24,7 @@ const useSubmitFormMsg = () => {
         navigate("/");
       }
     },
-    [setGlobalMsg, navigate]
+    [navigate]
   );
 
   return handleSubmit;

@@ -2,17 +2,19 @@ import { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import useSubmitFormMsg from "hooks/useSubmitFormMsg";
+import { contactUs } from "Services/contactUs";
 
-import axios from "axios";
-import { baseUrl } from "config.js";
 import { contact1, contact2 } from "constants/Images";
 
 import Header from "components/main/Header/Header";
+import {
+  requiredStringMax255,
+  emailValidation,
+  websiteValidation,
+} from "utils/validationUtils";
 import "./contact.css";
-import { useNavigate } from "react-router-dom";
 
 function Contact() {
-  let navigate = useNavigate();
   const handleSubmitMsg = useSubmitFormMsg();
 
   const [errorMsg, setErrorMsg] = useState(null);
@@ -21,42 +23,27 @@ function Contact() {
   let validationSchema = Yup.object().shape({
     // userType: Yup.string(),
 
-    firstName: Yup.string()
-
-      .max(50, "max length is 50")
-      .required("Input field is Required"),
-    lastName: Yup.string()
-
-      .max(50, "max length is 50")
-      .required("Input field is Required"),
+    firstName: requiredStringMax255,
+    lastName: requiredStringMax255,
 
     company: Yup.string().max(50, "max length is 50"),
-    // .required("Input field is Required"),
 
-    email: Yup.string()
-      .email("Invalid email")
-      .required("Input Field is Required")
-      .max(255, "max length is 255"),
+    email: emailValidation,
 
     repPhone: Yup.string()
       .required("Input Field is Required")
-      // .matches(/^[0-9]+$/, "Input Field should contain numbers only")
       .min(6, "min length is 6")
       .max(15, "max length is 15"),
 
-    website: Yup.string().url("Invalid Url"),
+    website: websiteValidation,
 
-    description: Yup.string()
-      .required("Input Field is Required")
-
-      .max(255, "max legnth is 255"),
+    description: requiredStringMax255,
   });
 
   let formValidation = useFormik({
     initialValues: {
       firstName: "",
       lastName: "",
-
       email: "",
       repPhone: "",
       description: "",
@@ -74,127 +61,40 @@ function Contact() {
       return restErrors;
     });
 
-    try {
-      // ;
-      let data = {
-        name: `${values.firstName} ${values.lastName}`,
-        phone: `${values.repPhone}`,
-        email: values.email,
-        message: values.description,
-      };
+    let data = {
+      name: `${values.firstName} ${values.lastName}`,
+      phone: `${values.repPhone}`,
+      email: values.email,
+      message: values.description,
+    };
 
-      // if (values.address !== "") {
-      //   data.company = [values.company];
-      // }
+    // if (values.address !== "") {
+    //   data.company = [values.company];
+    // }
 
-      // if (values.website !== "") {
-      //   data.website = values.website;
-      // }
+    // if (values.website !== "") {
+    //   data.website = values.website;
+    // }
 
-      let config = {
-        method: "post",
-        url: `${baseUrl}/contactUs/add`,
+    let result = await contactUs(data);
 
-        data: data,
-      };
-
-      const response = await axios.request(config);
-      //   setErrorMsg("");
-      setErrorMsg((prevErrors) => {
-        const { response, ...restErrors } = prevErrors || {};
-        return restErrors;
-      });
-
-      if (response?.data?.message === "done") {
-        handleSubmitMsg("Custom product Request");
-        setIsLoading(true);
-      } else {
-        setErrorMsg((prevErrors) => ({
-          ...prevErrors,
-          response: response?.data?.message,
-        }));
-        const targetElement = document.getElementById("view");
+    if (result?.success) {
+      handleSubmitMsg("Contact Request");
+      setIsLoading(true);
+    } else {
+      setErrorMsg((prevErrors) => ({
+        ...prevErrors,
+        response: result?.error,
+      }));
+      const targetElement = document.getElementById("view");
+      if (targetElement) {
         targetElement.scrollIntoView({
           behavior: "smooth",
           block: "start",
         });
-        setIsLoading(false);
       }
-    } catch (error) {
-      setIsLoading(false);
-      if (error.response) {
-        const statusCode = error.response.status;
-        switch (statusCode) {
-          case 400:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.errorMessage,
-            }));
-            break;
-          case 401:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: "User is not Unauthorized ",
-            }));
-            break;
-          case 403:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response:
-                "Forbidden, You do not have permission to access this resource.",
-            }));
-            break;
-          case 404:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response:
-                "Not Found (404). The requested resource was not found.",
-            }));
-            break;
-
-          case 500:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.errorMessage,
-            }));
-            break;
-
-          //  429 Too Many Requests
-          // The user has sent too many requests in a given amount of time ("rate limiting").
-          case 429:
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: " Too Many Requests , Please try again later.",
-            }));
-            break;
-          case 402:
-            // 402
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.message,
-            }));
-            break;
-          default:
-            // case message== error
-            setErrorMsg((prevErrors) => ({
-              ...prevErrors,
-              response: error?.response?.data?.errorMessage,
-            }));
-            break;
-        }
-      } else {
-        setErrorMsg((prevErrors) => ({
-          ...prevErrors,
-          response: "An unexpected error occurred. Please try again later.",
-        }));
-      }
-
-      const targetElement = document.getElementById("view");
-      targetElement.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
     }
+    setIsLoading(false);
   }
 
   return (
@@ -305,7 +205,9 @@ function Contact() {
                 onSubmit={formValidation.handleSubmit}
                 className="w-100 contact-card-2 "
               >
-                <h3 className="contact-text-head py-1 px-2">Ready To Get Started?</h3>
+                <h3 className="contact-text-head py-1 px-2">
+                  Ready To Get Started?
+                </h3>
                 {errorMsg?.response && (
                   <p className="text-sub m-auto alert  alert-danger  text-dark w-100">
                     {errorMsg.response}

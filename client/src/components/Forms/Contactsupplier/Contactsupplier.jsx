@@ -8,16 +8,16 @@ import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
 
 import Header from "components/main/Header/Header";
-import { GlobalMsgContext } from "Context/globalMessage";
 import { addChat } from "Services/chat";
 import { fetchOneFactory } from "Services/factory";
 import { fetchOneImporter } from "Services/importer";
+import useSubmitFormMsg from "hooks/useSubmitFormMsg";
 
 function Contactsupplier() {
+  const handleSubmitMsg = useSubmitFormMsg();
   let navigate = useNavigate();
   let { isLogin } = useContext(UserToken);
   let { currentUserData } = useContext(userDetails);
-  let { setGlobalMsg } = useContext(GlobalMsgContext);
 
   const [searchParams] = useSearchParams();
   const factoryId = searchParams.get("userId");
@@ -113,9 +113,9 @@ function Contactsupplier() {
       socket.emit("socketAuth", isLogin);
       socket.emit("newMessage", data);
 
-
-      setGlobalMsg("Your form has been successfully submitted.");
-      navigate(-1);
+      handleSubmitMsg("");
+      // setGlobalMsg("Your form has been successfully submitted.");
+      // navigate(-1);
     } else {
       setErrorMsg((prevErrors) => ({
         ...prevErrors,
@@ -136,7 +136,6 @@ function Contactsupplier() {
       return;
     }
   }, [currentUserData, navigate]);
-
 
   return (
     <>
