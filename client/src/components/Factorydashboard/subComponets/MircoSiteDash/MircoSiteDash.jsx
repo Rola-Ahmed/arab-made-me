@@ -19,7 +19,8 @@ import FactoryInforamtion from "./subComponents/FactoryInforamtion";
 import Team from "./subComponents/Team";
 import SocialAccounts from "./subComponents/SocialAccounts";
 import FactoryLogo from "./subComponents/FactoryLogo";
-import {useMircoData} from './hooks/useMircoData'
+import { useMircoData } from "./hooks/useMircoData";
+import { useFormValidations } from "./hooks/useFormValidations";
 import {
   // getFactoryTeam,
   addFactoryMedia,
@@ -65,6 +66,7 @@ export default function MircoSiteDash() {
       case "delete_Team":
         let updateTeam = state?.teamMembers;
         updateTeam.splice(action.index, 1);
+
         return {
           ...state,
           teamMembers: updateTeam,
@@ -110,23 +112,35 @@ export default function MircoSiteDash() {
 
   const [selectedDocs, setSelectedDocs] = useState([]);
 
-  function update(data){
+  function update(data) {
     dispatch({
       type: "fetched_update_data",
       value: data,
     });
   }
 
-  function fetch_team(data){
+  function fetch_team(data) {
+    console.log("fetch_teamfetch_team",data)
     dispatch({
       type: "fetch_team_data",
       value: data,
     });
   }
-  
-let {  isLogin,
-  errorloadingData: errorMessage,}=useMircoData(update,fetch_team)
 
+  let { isLogin, errorloadingData } = useMircoData(update, fetch_team);
+  let {
+    factoryInfoValidation,
+    SocialAccountValidation,
+    teamValidation,
+    initialTeamValues,
+    initialSocialAccount,
+    initialFactoryInfoValidation,
+  } = useFormValidations(
+    factoryProfile,
+    countriesMiddleEast,
+    submitForm,
+    submitTeam
+  );
   // Cover IMage Profile -----------------------------------------------------
 
   async function updateMedia(e) {
@@ -141,9 +155,10 @@ let {  isLogin,
     let result = await addFactoryMedia({ Authorization: isLogin }, data);
     if (result?.success) {
       ModalClose();
+      handleClose()
       successMsg();
 
-      update(result?.data?.factory)
+      update(result?.data?.factory);
       // dispatch({
       //   type: "fetched_update_data",
       //   value: result?.data?.factory,
@@ -163,8 +178,6 @@ let {  isLogin,
     }
     setIsLoading(false);
   }
-
- 
 
   const deleteData = async (itemId, indexArr) => {
     let result = await deleteMember(itemId, {
@@ -188,121 +201,6 @@ let {  isLogin,
     coverImgReadOnly: false,
     newTeamReadOnly: false,
     coverVideo: false,
-  });
-
-  const initialFactoryInfoValidation = {
-    //---------------------- Factory Info
-    factoryName: factoryProfile?.name || "",
-    yearOfEstablishmint: factoryProfile?.yearOfEstablishmint || "",
-    city: factoryProfile?.city || "",
-    country: factoryProfile?.country || countriesMiddleEast?.[0].code,
-    yearlySalesIncome: factoryProfile?.yearlySalesIncome || "",
-
-    // YearlyIncome:factoryProfile?.YearlyIncome ||"",
-    // phone number
-    numberOfEmployees: factoryProfile?.numberOfEmployees || "", //select optiton
-    taxRegisterationNumber: factoryProfile?.taxRegisterationNumber || "",
-    commercialRegisterationNumber:
-      factoryProfile?.commercialRegisterationNumber || "",
-
-    IndustrialLicenseNumber: factoryProfile?.IndustrialLicenseNumber || "",
-    IndustrialRegistrationNumber:
-      factoryProfile?.IndustrialRegistrationNumber || "",
-    BusinessRegistrationNumber:
-      factoryProfile?.BusinessRegistrationNumber || "",
-
-    address: factoryProfile?.address?.[0] || "",
-    description: factoryProfile?.description || "",
-    whyUs: factoryProfile?.whyUs || "",
-
-    factoryPhoneCode:
-      factoryProfile?.phone?.slice(0, 3) || countriesMiddleEast?.[0]?.phoneCode,
-    factoryPhone: factoryProfile?.phone?.slice(3) || "",
-    importingCountries: factoryProfile?.importingCountries || [],
-  };
-
-  let factoryInfoValidation = useFormik({
-    initialValues: initialFactoryInfoValidation,
-    validationSchema: Yup.object().shape({
-      factoryName: requiredStringMax255,
-      yearOfEstablishmint: Yup.string()
-        .required("Input Field is Required")
-        .matches(/^[0-9]+$/, "Input Field should contain numbers only")
-        .min(4, "min length is 4")
-        .max(4, "max length is 4"),
-
-      taxRegisterationNumber: RegisterationNumbers([
-        Yup.ref("commercialRegisterationNumber"),
-        Yup.ref("IndustrialRegistrationNumber"),
-        Yup.ref("IndustrialLicenseNumber"),
-        Yup.ref("BusinessRegistrationNumber"),
-      ]),
-
-      commercialRegisterationNumber: RegisterationNumbers([
-        Yup.ref("taxRegisterationNumber"),
-        Yup.ref("IndustrialRegistrationNumber"),
-        Yup.ref("IndustrialLicenseNumber"),
-        Yup.ref("BusinessRegistrationNumber"),
-      ]),
-      IndustrialRegistrationNumber: RegisterationNumbers([
-        Yup.ref("taxRegisterationNumber"),
-        Yup.ref("commercialRegisterationNumber"),
-        Yup.ref("IndustrialLicenseNumber"),
-        Yup.ref("BusinessRegistrationNumber"),
-      ]),
-      IndustrialLicenseNumber: RegisterationNumbers([
-        Yup.ref("taxRegisterationNumber"),
-        Yup.ref("commercialRegisterationNumber"),
-        Yup.ref("IndustrialRegistrationNumber"),
-        Yup.ref("BusinessRegistrationNumber"),
-      ]),
-      BusinessRegistrationNumber: RegisterationNumbers([
-        Yup.ref("taxRegisterationNumber"),
-        Yup.ref("commercialRegisterationNumber"),
-        Yup.ref("IndustrialRegistrationNumber"),
-        Yup.ref("IndustrialLicenseNumber"),
-      ]),
-
-      address: requiredStringMax255,
-
-      description: requiredStringMax255,
-      whyUs: requiredStringMax255,
-      factoryPhone: phoneValidation,
-      importingCountries: Yup.array().of(Yup.string()).nullable(),
-    }),
-    onSubmit: submitForm,
-  });
-
-  // social links
-  const initialSocialAccount = {
-    // social links
-    instagramLink: factoryProfile?.socialLinks?.instagram || "",
-    facebookLink: factoryProfile?.socialLinks?.facebook || "",
-    website: factoryProfile?.website || "",
-    whatsapp: factoryProfile?.whatsapp || "",
-  };
-  let SocialAccountValidation = useFormik({
-    initialValues: initialSocialAccount,
-    validationSchema: Yup.object().shape({
-      website: websiteValidation,
-      instagramLink: websiteValidation,
-      facebookLink: websiteValidation,
-    }),
-    onSubmit: submitForm,
-  });
-
-  const initialTeamValues = {
-    //---------------------- Factory Info
-    teamName: "",
-    teamRole: "",
-  };
-  let teamValidation = useFormik({
-    initialValues: initialTeamValues,
-    validationSchema: Yup.object().shape({
-      teamName: requiredStringMax255,
-      teamRole: requiredStringMax255,
-    }),
-    onSubmit: submitTeam,
   });
 
   // there is 2 apis that i update
@@ -485,7 +383,7 @@ let {  isLogin,
       ModalClose();
       successMsg();
 
-      update(data)
+      update(data);
       // dispatch({
       //   type: "fetched_update_data",
       //   value: data,
@@ -525,6 +423,8 @@ let {  isLogin,
       values: initialSocialAccount,
     });
     factoryInfoValidation.resetForm({ values: initialFactoryInfoValidation });
+    // teamValidation.setValues(initialTeamValues);
+
     setSelectedDocs([]);
   }
 

@@ -20,10 +20,9 @@ export const useMircoData = (update, fetch_team) => {
 
         // Fetch the team data
         const result = await getFactoryTeam(currentUserData?.factoryId);
-
         // Check if the result is successful and dispatch the team data
         if (result?.success) {
-          fetch_team(data);
+          fetch_team(result?.data?.teamMembers);
         }
       }
     };
