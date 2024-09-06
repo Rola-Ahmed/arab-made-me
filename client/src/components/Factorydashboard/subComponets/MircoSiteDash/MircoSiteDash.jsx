@@ -1,10 +1,8 @@
-import { useEffect, useState, useContext, useReducer } from "react";
+import { useEffect, useState, useReducer } from "react";
 import { baseUrl_IMG } from "config.js";
 import UploadDocument, {
   UploadVedio,
 } from "components/Forms/Shared/UploadDocument";
-import { useFormik } from "formik";
-import * as Yup from "yup";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import DisplayMultiImages from "components/Shared/Dashboards/DisplayMultiImages";
@@ -31,12 +29,6 @@ import {
   addTeam,
   addTeamMedia,
 } from "Services/team";
-import {
-  RegisterationNumbers,
-  requiredStringMax255,
-  phoneValidation,
-  websiteValidation,
-} from "utils/validationUtils";
 
 function successMsg() {
   SuccessToast("Changes updated successfully");
