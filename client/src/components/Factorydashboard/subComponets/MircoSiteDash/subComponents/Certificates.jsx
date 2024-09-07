@@ -54,12 +54,10 @@ export default function Certificates(props) {
                   <p>Certificates</p>
                 </Modal.Title>
               </Modal.Header>
-              {errorMsg?.response ? (
+              {errorMsg?.response && (
                 <div className="alert mt-3 p-2 alert-danger form-control text-dark">
                   {errorMsg?.response}
                 </div>
-              ) : (
-                ""
               )}
               <div className="w-100 ">
                 <form
@@ -72,7 +70,7 @@ export default function Certificates(props) {
                       errorMsg={errorMsg}
                       setSelectedDocs={setSelectedDocs}
                       MediaName="qualityCertificates"
-                      mediaMaxLen="3"
+                      mediaMaxLen="1"
                       meidaAcceptedExtensions={[
                         "pdf",
                         "png",
@@ -82,7 +80,7 @@ export default function Certificates(props) {
                         "webp",
                       ]}
                       setErrorMsg={setErrorMsg}
-                      // title="Certificates"
+                      smallNote="you can upload up to 3 images, but only one image at a time."
                     />
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">

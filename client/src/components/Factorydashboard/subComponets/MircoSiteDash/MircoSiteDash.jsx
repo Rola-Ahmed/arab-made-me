@@ -443,16 +443,16 @@ export default function MircoSiteDash() {
       selectedDocs?.[0]?.pdfFile,
       index
     );
-    await handleLegalDocs(data, "add");
+    await handleBannerUploads(data, "add");
   }
 
   async function handleDeleteBanner(index) {
     document.body.style.cursor = "wait";
     const data = await handleSingleFileUpload("images", null, index);
-    await handleLegalDocs(data, "delete");
+    await handleBannerUploads(data, "delete");
   }
 
-  async function handleLegalDocs(data, actionType) {
+  async function handleBannerUploads(data, actionType) {
     setIsLoading(true);
     const result = await updateFactoryBanner({ Authorization: isLogin }, data);
 
@@ -539,22 +539,7 @@ export default function MircoSiteDash() {
               </div>
 
               {/*Certificats  */}
-              <div id="certificates"></div>
-              <div className="container-profile-input w-100">
-                <div className="title-contianer-input w-100">
-                  <p> Certificates</p>
-                  <DisplayMultiImages
-                    handleImageClick={handleImageClick}
-                    images={factoryProfile?.qualityCertificates}
-                  />
-                  <Button
-                    className="btn-edit w-fit-content"
-                    onClick={() => handleShow("qualityCertificatesReadOnly")}
-                  >
-                    <p className="cursor">Upload </p>
-                  </Button>
-                </div>
-              </div>
+             
 
               <Certificates
                 handleImageError={handleImageError}
