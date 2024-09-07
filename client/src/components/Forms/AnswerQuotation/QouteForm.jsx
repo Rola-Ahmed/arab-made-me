@@ -10,11 +10,17 @@ import { shippingConditionsArr } from "constants/shippingConditionsArr";
 import { packingConditionsArr } from "constants/packingConditionsArr";
 import { qualityConditionsArr } from "constants/qualityConditionsArr";
 import { paymentTypeArr } from "constants/paymentTypeArr";
+import CurrentAcccountInfo from "../Shared/CurrentAcccountInfo";
 export default function QouteForm(props) {
   let { formValidation, errorMsg, isLoading } = props;
   return (
     <form onSubmit={formValidation.handleSubmit}>
       <section id="view" className="req-visit">
+        <div className="container container-req ">
+          <CurrentAcccountInfo />
+        </div>
+        
+
         {/* Grid  */}
         <div className="container container-req ">
           <div className="input-content ">
