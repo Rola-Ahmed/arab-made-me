@@ -36,10 +36,9 @@ export default function Certificates(props) {
       </div>
 
       {/* update factory banner */}
-
       <Modal
-        show={show.imagesReadOnly}
-        onHide={() => handleClose("imagesReadOnly")}
+        show={show.qualityCertificatesReadOnly}
+        onHide={() => handleClose("qualityCertificatesReadOnly")}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
@@ -52,38 +51,47 @@ export default function Certificates(props) {
             <div className="title-contianer-input w-100">
               <Modal.Header closeButton>
                 <Modal.Title>
-                  <p>Factory Banners</p>
+                  <p>Certificates</p>
                 </Modal.Title>
               </Modal.Header>
-              {errorMsg?.response && (
+              {errorMsg?.response ? (
                 <div className="alert mt-3 p-2 alert-danger form-control text-dark">
                   {errorMsg?.response}
                 </div>
+              ) : (
+                ""
               )}
               <div className="w-100 ">
                 <form
-                  onSubmit={(e) => updateMedia(e, "images")}
+                  onSubmit={(e) => updateMedia(e, "qualityCertificates")}
                   encType="multipart/form-data"
                 >
                   <div className="row  row-gap">
-                    <div className="col-12">
-                      <UploadDocument
-                        selectedDocs={selectedDocs}
-                        errorMsg={errorMsg}
-                        setSelectedDocs={setSelectedDocs}
-                        MediaName="images"
-                        mediaMaxLen="8"
-                        meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
-                        setErrorMsg={setErrorMsg}
-                        // title="Factory Banners"
-                      />
-                    </div>
+                    <UploadDocument
+                      selectedDocs={selectedDocs}
+                      errorMsg={errorMsg}
+                      setSelectedDocs={setSelectedDocs}
+                      MediaName="qualityCertificates"
+                      mediaMaxLen="3"
+                      meidaAcceptedExtensions={[
+                        "pdf",
+                        "png",
+                        "jpeg",
+                        "jpg",
+                        "psd",
+                        "webp",
+                      ]}
+                      setErrorMsg={setErrorMsg}
+                      // title="Certificates"
+                    />
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
                       <button
                         variant="secondary"
                         type="button"
-                        onClick={() => handleClose("imagesReadOnly")}
+                        onClick={() =>
+                          handleClose("qualityCertificatesReadOnly")
+                        }
                       >
                         Close
                       </button>
@@ -97,7 +105,7 @@ export default function Certificates(props) {
                           type="submit"
                           disabled={!(selectedDocs?.length > 0)}
                         >
-                          <p className="cursor">Submit</p>
+                          <p className="cursor">Submit for review</p>
                         </button>
                       )}
                     </div>

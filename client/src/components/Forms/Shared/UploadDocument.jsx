@@ -76,10 +76,10 @@ function handleMultiMediaValidation(
       `input[file-id="${MediaName}"]`
     );
 
-    console.log("inputElement",inputElement)
+    console.log("inputElement", inputElement);
     // Perform actions on the selected element
     if (inputElement) {
-    console.log("inputElement enter",inputElement)
+      console.log("inputElement enter", inputElement);
 
       inputElement.value = "";
     }
@@ -174,6 +174,7 @@ export default function UploadDocument(props) {
     meidaAcceptedExtensions,
     setErrorMsg,
     title,
+    smallNote,
   } = props;
 
   return (
@@ -218,11 +219,18 @@ export default function UploadDocument(props) {
             }
           />
         </button>
-        <small className="form-text small-note d-block">
-          Only {meidaAcceptedExtensions.join(" ")} are allowed. A maximum of{" "}
-          {mediaMaxLen} pictures is permitted.
-        </small>
-        <small className="text-danger">{errorMsg?.[MediaName]}</small>
+        <div>
+          <small className="form-text small-note d-block">
+            Only {meidaAcceptedExtensions.join(" ")} are allowed. A maximum of{" "}
+            {mediaMaxLen} pictures is permitted.
+          </small>
+          {smallNote && (
+            <small className="form-text small-note d-block lh-normal">
+              {smallNote}
+            </small>
+          )}
+        </div>
+        <small className="text-danger lh-normal">{errorMsg?.[MediaName]}</small>
 
         {selectedDocs?.map(
           (item, index) =>

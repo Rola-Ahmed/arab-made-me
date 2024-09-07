@@ -6,7 +6,7 @@ import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 export default function DisplayMultiImages(props) {
-  let { handleImageClick, images, deleteLegalDocs } = props;
+  let { handleImageClick, images, deleteDocs } = props;
   return (
     <>
       {" "}
@@ -47,12 +47,12 @@ export default function DisplayMultiImages(props) {
                     <i class="fa-solid fa-magnifying-glass"></i>
                   </button>
 
-                  {deleteLegalDocs && (
+                  {deleteDocs && (
                     <button
                       className="position-absolute delete-img   bg-white rounded-3  border-1 border-danger "
                       type="button"
                       onClick={() => {
-                        deleteLegalDocs(index);
+                        deleteDocs(index);
                       }}
                     >
                       <i class="fa-solid fa-trash  text-danger "></i>

@@ -25,6 +25,7 @@ import {
   // getFactoryTeam,
   addFactoryMedia,
   updateFactoryFromUser,
+  updateFactoryBanner,
 } from "Services/factory";
 import {
   deleteTeam as deleteMember,
@@ -427,6 +428,61 @@ export default function MircoSiteDash() {
     });
   }
 
+  async function handleSingleFileUpload(fileKeyword, fileValue, index) {
+    const formData = new FormData();
+    formData.append(fileKeyword, fileValue);
+    formData.append("index", index);
+    return formData;
+  }
+
+  async function handleAddBanner(e, index) {
+    // document.body.style.cursor = "wait";
+    e.preventDefault();
+    let data = await handleSingleFileUpload(
+      selectedDocs?.[0]?.keyWord,
+      selectedDocs?.[0]?.pdfFile,
+      index
+    );
+    await handleLegalDocs(data, "add");
+  }
+
+  async function handleDeleteBanner(index) {
+    document.body.style.cursor = "wait";
+    const data = await handleSingleFileUpload("images", null, index);
+    await handleLegalDocs(data, "delete");
+  }
+
+  async function handleLegalDocs(data, actionType) {
+    setIsLoading(true);
+    const result = await updateFactoryBanner({ Authorization: isLogin }, data);
+
+    if (result?.success) {
+      update(result?.data?.factory);
+      // setFactoryProfile((prev) => ({
+      //   ...prev,
+      //   ...result?.data?.factory
+      // }));
+      SuccessToast("data updated succcfully");
+
+      handleClose();
+      // const closeButton = document.getElementsByTagName("addLegalDocs");
+      // closeButton.setAttribute("data-bs-dismiss", "modal");
+      // console.log("closeButton", closeButton);
+    } else {
+      if (actionType == "delete") {
+        ErrorToast("someThing went Wrong");
+      } else {
+        setErrorMsg((prevErrors) => ({
+          ...prevErrors,
+          response: result?.error,
+        }));
+      }
+    }
+    setIsLoading(false);
+    setTimeout(() => {
+      document.body.style.cursor = "default";
+    }, 5000); // 5000 milliseconds = 5 seconds
+  }
   return (
     <>
       <div className="section factory-profile  ms-5 me-5 mb-5 mt-2">
@@ -469,6 +525,7 @@ export default function MircoSiteDash() {
                   <DisplayMultiImages
                     handleImageClick={handleImageClick}
                     images={factoryProfile?.images}
+                    deleteDocs={handleDeleteBanner}
                   />
                   {/* <div className="col-12"> */}
                   <Button
@@ -564,15 +621,14 @@ export default function MircoSiteDash() {
       </div>
 
       {/* Factory Banners */}
-   
 
       {/* Factory Banners */}
 
       {/* Certificaets qualityCertificates */}
 
       <Modal
-        show={show.qualityCertificatesReadOnly}
-        onHide={() => handleClose("qualityCertificatesReadOnly")}
+        show={show.imagesReadOnly}
+        onHide={() => handleClose("imagesReadOnly")}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
@@ -585,50 +641,44 @@ export default function MircoSiteDash() {
             <div className="title-contianer-input w-100">
               <Modal.Header closeButton>
                 <Modal.Title>
-                  <p>Certificates</p>
+                  <p>Factory Banners</p>
                 </Modal.Title>
               </Modal.Header>
-              {errorMsg?.response ? (
+              {errorMsg?.response && (
                 <div className="alert mt-3 p-2 alert-danger form-control text-dark">
                   {errorMsg?.response}
                 </div>
-              ) : (
-                ""
               )}
               <div className="w-100 ">
                 <form
-                  onSubmit={(e) => updateMedia(e, "qualityCertificates")}
+                  onSubmit={(e) =>
+                    handleAddBanner(e, factoryProfile?.images?.length)
+                  }
                   encType="multipart/form-data"
                 >
                   <div className="row  row-gap">
-                    <UploadDocument
-                      selectedDocs={selectedDocs}
-                      errorMsg={errorMsg}
-                      setSelectedDocs={setSelectedDocs}
-                      MediaName="qualityCertificates"
-                      mediaMaxLen="3"
-                      meidaAcceptedExtensions={[
-                        "pdf",
-                        "png",
-                        "jpeg",
-                        "jpg",
-                        "psd",
-                        "webp",
-                      ]}
-                      setErrorMsg={setErrorMsg}
-                      // title="Certificates"
-                    />
+                    <div className="col-12">
+                      <UploadDocument
+                        selectedDocs={selectedDocs}
+                        errorMsg={errorMsg}
+                        setSelectedDocs={setSelectedDocs}
+                        MediaName="images"
+                        mediaMaxLen="1"
+                        meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
+                        setErrorMsg={setErrorMsg}
+                        smallNote="you can upload up to 8 images, but only one image at a time."
+                        // title="Factory Banners"
+                      />
+                    </div>
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                      <Button
+                      <button
                         variant="secondary"
                         type="button"
-                        onClick={() =>
-                          handleClose("qualityCertificatesReadOnly")
-                        }
+                        onClick={() => handleClose("imagesReadOnly")}
                       >
                         Close
-                      </Button>
+                      </button>
                       {isLoading ? (
                         <button type="button" className="btn-edit">
                           <i className="fas fa-spinner fa-spin text-white px-5"></i>
@@ -639,7 +689,7 @@ export default function MircoSiteDash() {
                           type="submit"
                           disabled={!(selectedDocs?.length > 0)}
                         >
-                          <p className="cursor">Submit for review</p>
+                          <p className="cursor">Submit</p>
                         </button>
                       )}
                     </div>

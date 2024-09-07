@@ -73,7 +73,6 @@ export default function FactoryProfile() {
   }
 
   async function handleLegalDocs(data, actionType) {
-    console.log("datam", data);
     setIsLoading(true);
     const result = await updateFactoryLegalDocs(
       { Authorization: isLogin },
@@ -221,100 +220,12 @@ export default function FactoryProfile() {
                 legalDocs={factoryProfile?.legalDocs}
                 handleImageError={handleImageError}
                 // handleShow={handleShow}
-                deleteLegalDocs={handleDeleteLegalDocs}
+                deleteDocs={handleDeleteLegalDocs}
                 setModalShow={setModalShow}
               />
 
               {/*subscriptionPlan*/}
               <SubscriptionPlan />
-            </div>
-          </div>
-        </div>
-
-        <div
-          className="modal fade "
-          id="addLegalDocs"
-          tabindex="-1"
-          role="dialog"
-          aria-hidden="true"
-        >
-          <div
-            className="modal-dialog  modal-dialog-centered modal-lg rounded-3"
-            role="document"
-          >
-            <div className="modal-content   px-4 py-4">
-              <div className="modal-header mb-3">
-                <h4 className="modal-title fw-normal">
-                  Upload New Legal Documents
-                </h4>
-
-                <button
-                  type="button"
-                  className="close bg-0 border-0"
-                  aria-label="Close"
-                  data-bs-dismiss="modal"
-                  onClick={() => handleClose()}
-                >
-                  <i className="fa-solid fa-xmark fs-24"></i>
-                </button>
-              </div>
-              {/* <small>you can only add one image at a time</small> */}
-              <div className="modal-body p-0 ">
-                {" "}
-                {errorMsg?.response && (
-                  <div className="alert mt-3 p-2 alert-danger form-control text-dark">
-                    {errorMsg?.response}
-                  </div>
-                )}
-                <div className="w-100 ">
-                  <form
-                    onSubmit={(e) => handleAddLegalDocs(e)}
-                    encType="multipart/form-data"
-                  >
-                    {/* legalDocs */}
-                    <div className="row  row-gap">
-                      <UploadDocument
-                        selectedDocs={selectedDocs}
-                        errorMsg={errorMsg}
-                        setSelectedDocs={setSelectedDocs}
-                        MediaName="legalDocs"
-                        mediaMaxLen="1"
-                        meidaAcceptedExtensions={["pdf", "png", "jpeg", "jpg"]}
-                        setErrorMsg={setErrorMsg}
-                        title="Upload Documents"
-                      />
-
-                      <div className="col-12 d-flex justify-content-start btn-modal-gap mt-3">
-                        <button
-                          className="border-0 rounded-3 bg-header fs-14 fw-600 px-3 py-2"
-                          type="button"
-                          data-bs-dismiss="modal"
-                          onClick={() => handleClose()}
-                        >
-                          Close
-                        </button>
-                        {isLoading ? (
-                          <button
-                            type="button"
-                            className="rounded-3 bg-main text-white px-4 py-2 border-0"
-                          >
-                            <i className="fas fa-spinner fa-spin text-white px-5"></i>
-                          </button>
-                        ) : (
-                          <button
-                            className="rounded-3 border-0 bg-main text-white px-3 py-2 fs-14 fw-bolder"
-                            type="submit"
-                            disabled={!(selectedDocs?.length > 0)}
-                            
-                          >
-                            Submit New Images
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -371,6 +282,7 @@ export default function FactoryProfile() {
                       meidaAcceptedExtensions={["pdf", "png", "jpeg", "jpg"]}
                       setErrorMsg={setErrorMsg}
                       title="Upload Documents"
+                      smallNote="you can upload up to 5 images, but only one image at a time."
                     />
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap mt-3">

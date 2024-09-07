@@ -41,6 +41,10 @@ export const updateFactoryLegalDocs = async (header, data) => {
   return await patchRequest(`/factories/update/legalDoc`, header, data);
 };
 
+export const updateFactoryBanner = async (header, data) => {
+  return await patchRequest(`/factories/update/image`, header, data);
+};
+
 // factories
 export const addFactory = async (header, data) => {
   return await postRequest(`/factories/add`, header, data);
