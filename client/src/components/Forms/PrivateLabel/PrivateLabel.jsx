@@ -18,6 +18,7 @@ import {
 } from "utils/validationUtils";
 
 import useFormSubmission from "./hooks/useFormSubmission";
+import CurrentAcccountInfo from "../Shared/CurrentAcccountInfo";
 
 export default function PrivateLabel(props) {
   let {
@@ -146,6 +147,10 @@ export default function PrivateLabel(props) {
     <>
       <Header title="Private Label" />
       <section className="req-visit">
+        <div className="container container-req ">
+          <CurrentAcccountInfo />
+        </div>
+
         {/* Factory Details */}
         <div className="container container-req ">
           <FactoryInfo productDetails={factoryData} />

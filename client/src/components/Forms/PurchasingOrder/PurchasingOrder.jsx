@@ -5,7 +5,6 @@ import Header from "components/main/Header/Header";
 
 import FactoryInfo from "../Shared/FactoryInfo";
 
-
 import {
   textAreaValidate,
   otherTextAreaValidate,
@@ -182,6 +181,10 @@ function PurchasingOrder(props) {
       <Header title={`Send PO  ${sourcingOfferId && "on Sourcing Offer"}`} />
 
       <section id="view" className="send-po">
+        <div className="container container-po ">
+          <CurrentAcccountInfo />
+        </div>
+
         {/* Factory description */}
         <div className="container container-po ">
           <FactoryInfo productDetails={factoryData} />
@@ -195,9 +198,6 @@ function PurchasingOrder(props) {
         )}
 
         {/* stand alone function */}
-        <div className="container container-po  d-none">
-          <CurrentAcccountInfo />
-        </div>
 
         {/* Grid  */}
         <PurchasingOrderForm

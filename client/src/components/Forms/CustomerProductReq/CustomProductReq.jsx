@@ -14,6 +14,7 @@ import {
   requiredStringMax255,
   requiredDateValidate,
 } from "utils/validationUtils";
+import CurrentAcccountInfo from "../Shared/CurrentAcccountInfo";
 function CustomerProductReq(props) {
   let { factoryDetails, isLoading, setIsLoading, factoryId } = props;
 
@@ -166,6 +167,10 @@ function CustomerProductReq(props) {
   }
   return (
     <section id="view" className="req-visit">
+      <div className="container container-req ">
+        <CurrentAcccountInfo />
+      </div>
+
       {/* Factory Details */}
 
       <div className="container container-req ">

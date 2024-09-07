@@ -16,6 +16,7 @@ import FactoryInfo from "../Shared/FactoryInfo";
 import ProductDetails from "../Shared/SelectedProductDetails";
 import Header from "components/main/Header/Header";
 import WhiteLabelForm from "./WhiteLabelForm";
+import CurrentAcccountInfo from "../Shared/CurrentAcccountInfo";
 
 export default function WhiteLabel(props) {
   let {
@@ -162,6 +163,10 @@ export default function WhiteLabel(props) {
       <Header title="White Label" />
 
       <section className="req-visit">
+        <div className="container container-req ">
+          <CurrentAcccountInfo />
+        </div>
+
         {/* Factory Details */}
         <div className="container container-req ">
           <FactoryInfo productDetails={factoryData} />

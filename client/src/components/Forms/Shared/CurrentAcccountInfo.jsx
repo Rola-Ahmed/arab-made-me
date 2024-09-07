@@ -61,23 +61,13 @@ export default function CurrentAcccountInfo() {
       <div className="input-content ">
         <div className="d-flex justify-content-between w-100">
           <h5>Current Account Inforamtion</h5>
-          {/* <button
-            class="btn btn-primary"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapseExample"
-            aria-expanded="false"
-            aria-controls="collapseExample"
-          >
-            Button with data-target
-          </button> */}
 
           <i
             data-bs-toggle="collapse"
             data-bs-target="#collapseExample"
             aria-expanded="false"
             aria-controls="collapseExample"
-            class="fa-solid fa-chevron-down"
+            class="fa-solid fa-chevron-down cursor"
           ></i>
         </div>
         <div id="collapseExample" className="row row-container w-100 collapse">
