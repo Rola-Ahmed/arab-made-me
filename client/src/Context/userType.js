@@ -183,7 +183,7 @@ export function UserTypeProvider({ children }) {
   };
 
  
-  console.log("currentUserData",currentUserData)
+  // console.log("currentUserData",currentUserData)
   return (
     <userDetails.Provider
       value={{

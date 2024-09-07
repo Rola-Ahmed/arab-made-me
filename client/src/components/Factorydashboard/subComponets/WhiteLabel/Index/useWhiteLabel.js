@@ -31,7 +31,6 @@ const useWhiteLabel = (isLogin, filter) => {
     setReqData([]);
     const params = `size=${pagination.displayProductSize}&page=${pagination.currentPage}&formsFilter=${filter?.formsFilter}&sort=${filter?.sort}&include=importer&include=product`;
     const result = await getWhiteLables(params);
-    console.log("result",result)
     if (result?.success) {
       setReqData(result?.data?.whitelabelings);
       setTimeout(() => {
