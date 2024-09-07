@@ -9,7 +9,7 @@
 /coverage
 
 # production
-/build
+# /build
 
 # misc
 .DS_Store
@@ -66,7 +66,7 @@ client/src/components/Factorydashboard/subComponets/FactoryProfile/FactoryProfil
 /coverage
 
 # production
-/client/build
+# /client/build
 
 # misc
 .DS_Store
