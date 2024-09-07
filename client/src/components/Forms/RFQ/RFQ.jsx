@@ -15,6 +15,7 @@ import {
   requiredDateValidate,
   reqQualityValidate,
 } from "utils/validationUtils";
+import CurrentAcccountInfo from "../Shared/CurrentAcccountInfo";
 
 function SendRfq(props) {
   let {
@@ -132,6 +133,11 @@ function SendRfq(props) {
     <>
       <section id="view" className="send-rfq">
         {/* Factory Details */}
+
+        <div className="container container-rfq">
+          <CurrentAcccountInfo />
+        </div>
+
         <div className="container container-rfq ">
           <FactoryInfo productDetails={factoryData} />
         </div>

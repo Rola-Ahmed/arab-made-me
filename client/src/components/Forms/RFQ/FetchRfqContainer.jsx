@@ -31,31 +31,29 @@ function FetchRfqContainer() {
   // product data
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        let result;
-        if (productId) {
-          result = await fetchProductData(productId);
-        } else if (!productId) {
-          result = await fetchFactoryProducts(factoryId);
-        }
+      let result;
+      if (productId) {
+        result = await fetchProductData(productId);
+      } else if (!productId) {
+        result = await fetchFactoryProducts(factoryId);
+      }
 
-        // if there is error
-        if (result?.success) {
-          //  state is success
-          if (result.data.message == "done") {
-            if (productId) {
-              setProductDetails(result.data.products);
-            } else {
-              setProductDetailsArr(result.data.products);
-            }
+      // if there is error
+      if (result?.success) {
+        //  state is success
+        if (result.data.message == "done") {
+          if (productId) {
+            setProductDetails(result.data.products);
+          } else {
+            setProductDetailsArr(result.data.products);
           }
         }
-        setIsLoading((prev) => ({
-          ...prev,
-          pageLoading: result.loadingStatus,
-          errorPageLoading: result.error,
-        }));
-      } catch (error) {}
+      }
+      setIsLoading((prev) => ({
+        ...prev,
+        pageLoading: result.loadingStatus,
+        errorPageLoading: result.error,
+      }));
     };
 
     fetchData();

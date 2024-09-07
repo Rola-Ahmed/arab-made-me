@@ -41,19 +41,17 @@ function RequestVisit() {
   }
 
   async function fetchFactoryData() {
-    try {
-      const result = await fetchOneFactory(factoryId);
+    const result = await fetchOneFactory(factoryId);
 
-      if (result?.success) {
-        setFactoryDetails(result?.data?.factories);
-      }
+    if (result?.success) {
+      setFactoryDetails(result?.data?.factories);
+    }
 
-      setIsLoading((prev) => ({
-        ...prev,
-        pageLoading: result?.loadingStatus,
-        errorPageLoading: result?.error,
-      }));
-    } catch (error) {}
+    setIsLoading((prev) => ({
+      ...prev,
+      pageLoading: result?.loadingStatus,
+      errorPageLoading: result?.error,
+    }));
   }
 
   useEffect(() => {
@@ -96,11 +94,11 @@ function RequestVisit() {
       {/* <form id="view" onSubmit={formValidation.handleSubmit}> */}
       <section className="req-visit">
         <div className="container container-req ">
-          <FactoryInfo productDetails={factoryDetails} />
+          <CurrentAcccountInfo />
         </div>
 
         <div className="container container-req ">
-          <CurrentAcccountInfo />
+          <FactoryInfo productDetails={factoryDetails} />
         </div>
 
         <form

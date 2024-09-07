@@ -15,8 +15,8 @@
 .factory-profile .factory-logo {
     overflow: hidden;
     border-radius: 6px;
-    width: 109px;
-    height: 100.056px;
+    /* width: 109px;
+    height: 100.056px; */
     flex-shrink: 0;
 
 }
@@ -32,56 +32,16 @@
 }
 
 
-/* .factory-profile .ar-texts {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 2px;
-} */
-
-/* .factory-profile .ar-texts .factory-title-text {
-    color: var(--gray-900, #111928);
-    font-family: "Inter-reg";
-    font-size: 36px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 125%;
-} */
-
-/* .ar-texts .factory-Subtitle-text {
-
-    color: var(--gray-500);
-    font-family: "Inter-reg";
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 150%;
-} */
 
 
-/* row section */
+
 
 
 .factory-profile .page-sub-menu {
-    /* border-radius: 20px; */
-    /* border: 1px solid var(--tag-border, #E3E3E3); */
-    /* background: var(--Light-Background-Paper, #FFF); */
-    /* display: flex; */
-    /* width: 290px; */
-    /* padding: 16px 8px; */
-    /* flex-direction: column; */
-    /* align-items: center; */
-
     position: sticky;
     top: 119px;
 
 }
-
-/* .factory-profile .page-sub-menu .sub-menu-item {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-} */
 
 /* not used  btn-container*/
 .factory-profile .btn-container {
@@ -111,7 +71,7 @@
     gap: 16px;
 }
 
-.factory-profile .base-btn.active {
+.factory-profile .c.active {
     background: var(--secondary-5-workd-light);
 }
 
@@ -124,17 +84,7 @@
     align-items: center;
 }
 
-.factory-profile .sub-title {
-    color: var(--primary-color);
-    font-family: "Inter-semi";
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 28px;
-    letter-spacing: 0.36px;
-    text-transform: capitalize;
-    flex: 1 0 0;
-}
+
 
 /* second colum  */
 .factory-profile .container-2-gap {
@@ -168,13 +118,13 @@
     font-size: 24px;
 }
 
-.factory-profile .img-name {
+/* .factory-profile .img-name {
 
     font-family: "Inter-reg" !important;
     font-size: 14px !important;
     font-style: normal ! important;
     font-weight: 500;
-}
+} */
 
 
 

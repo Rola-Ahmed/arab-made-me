@@ -5,7 +5,6 @@ import Header from "components/main/Header/Header";
 
 import FactoryInfo from "../Shared/FactoryInfo";
 
-// import CurrentAcccountInfo from "../Shared/CurrentAcccountInfo";
 
 import {
   textAreaValidate,
@@ -19,6 +18,7 @@ import PurchasingOrderForm from "./PurchasingOrderForm";
 
 import useFormSubmission from "./hooks/useFormSubmission";
 import { UserToken } from "Context/userToken";
+import CurrentAcccountInfo from "../Shared/CurrentAcccountInfo";
 function PurchasingOrder(props) {
   let {
     productDetails,
@@ -194,9 +194,10 @@ function PurchasingOrder(props) {
           </div>
         )}
 
-        {/* <div className="container container-po  d-none">
+        {/* stand alone function */}
+        <div className="container container-po  d-none">
           <CurrentAcccountInfo />
-        </div> */}
+        </div>
 
         {/* Grid  */}
         <PurchasingOrderForm

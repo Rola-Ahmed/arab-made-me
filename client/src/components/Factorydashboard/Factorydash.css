@@ -138,6 +138,7 @@
   letter-spacing: 0.36px;
   text-transform: capitalize;
   flex: 1 0 0;
+  /* background: #ac2bac !important; */
 }
 
 
@@ -216,11 +217,7 @@
 
 
 
-.sub-profile-cont {
-  /* margin-left: 2.4rem; */
-  margin-left: 2.4rem;
 
-}
 
 
 

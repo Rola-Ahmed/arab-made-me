@@ -64,63 +64,6 @@ export default function SendMsg(props) {
     }
   }
 
-  // useEffect(() => {
-  //   if (isLogin) {
-  //     // socket.emit("socketAuth", isLogin);
-
-  //     const connectSocket = () => {
-
-  //       socket.connect();
-
-  //       socket.on("connect", () => {
-  //       });
-
-  //       socket.on("newMessage", (data) => {
-  //         // Update state or perform actions based on the new message
-  //         console.log("newMessage",data)
-  //       });
-
-  //       socket.on("socketAuth", (data) => {
-  //         SetNewMessageSuccess((prev) => !prev);
-  //       });
-
-  //       socket.on("connect_error", (err) => {
-  //       });
-
-  //       socket.on("connect_timeout", (err) => {
-  //       });
-
-  //       socket.on("error", (err) => {
-  //       });
-
-  //       socket.on("reconnect_error", (err) => {
-  //       });
-
-  //       socket.on("reconnect_failed", () => {
-  //       });
-
-  //       // Cleanup on unmount or dependency change
-  //       return () => {
-  //         // socket.off("connect");
-  //         // socket.off("newMessage");
-  //         // socket.off("socketAuth");
-  //         // socket.off("connect_error");
-  //         // socket.off("connect_timeout");
-  //         // socket.off("error");
-  //         // socket.off("reconnect_error");
-  //         // socket.off("reconnect_failed");
-  //         socket.disconnect();
-  //       };
-  //     };
-
-  //     const cleanup = connectSocket();
-
-  //     return () => {
-  //       cleanup();
-  //     };
-  //   }
-  // }, [isLogin, dataSent]);
-
   return (
     <form
       className="text-area-2 position-relative"
