@@ -21,7 +21,7 @@ export default function DisplayMultiImages(props) {
             {images?.map((item, index) => (
               <SwiperSlide className="pe-3">
                 <div
-                  className="dots-slider-img w-100  cursor  position-relative"
+                  className="dots-slider-img w-100    position-relative"
                   // onClick={() => {
                   //   handleImageClick(`${baseUrl_IMG}/${item}`);
                   // }}
