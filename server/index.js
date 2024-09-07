@@ -2,9 +2,7 @@ import dotenv from "dotenv"
 import cors from "cors"
 import helmet from "helmet";
 dotenv.config()
-// const port = process.env.MODE === 'PROD' ? process.env.PORT :  parseInt(process.env.PORT) + 1000 || 5555
-const port = process.env.MODE === 'PROD' ? 5500 : process.env.DEV_PORT || 5000
-
+const port = process.env.MODE === 'PROD' ? process.env.PORT :  parseInt(process.env.PORT) + 1000 || 5555
 import express from "express"
 import { bootstrap } from "./src/index.router.js"
 // import { Server } from "socket.io"
@@ -12,7 +10,7 @@ import { initIo, socketAuth } from "./src/utils/socket_server.js"
 import { Server } from "socket.io"
 const app = express()
 
-// app.use(helmet())
+app.use(helmet())
 app.use('/uploads', express.static('uploads'))
 app.use(express.json())
 
@@ -39,18 +37,18 @@ var whitelist = ['arab-made.com']
 
 app.use(cors())
 
-// app.use((req,res,nxt)=>{
-//     if(process.env.MODE=='DEV') nxt();
-//     else if(whitelist.includes(req.hostname)) nxt();
-//     else if(req.headers["api-key"]==process.env.PASSWORD_API) nxt();
-//     else return res.status(403).json({message:"error"})
-// })
+app.use((req,res,nxt)=>{
+    if(process.env.MODE=='DEV') nxt();
+    else if(whitelist.includes(req.hostname)) nxt();
+    else if(req.headers["api-key"]==process.env.PASSWORD_API) nxt();
+    else return res.status(403).json({message:"error"})
+})
 
 
 bootstrap(app)
 
 const server = app.listen(port, () => {
-    console.log("Server is ON  ", port);
+    console.log("Server is ON ", port);
 })
 
 const io = initIo(server)
