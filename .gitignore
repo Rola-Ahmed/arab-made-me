@@ -36,7 +36,6 @@ src/node_modules.zip
 
 
 # General files and directories
-uploads/
 node_modules/
 
 
@@ -85,7 +84,7 @@ src/node_modules.zip
 .env
 
 # General files and directories
-uploads/
+
 node_modules/
 
 .vercel
