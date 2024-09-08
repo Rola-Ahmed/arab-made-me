@@ -17,6 +17,7 @@ export default function FactoryBanner(props) {
     setSelectedDocs,
     isLoading,
   } = props;
+  console.log("imagesimagesimages", images?.length, images, images ? images?.length : 1);
   return (
     <>
       {" "}
@@ -64,7 +65,9 @@ export default function FactoryBanner(props) {
               )}
               <div className="w-100 ">
                 <form
-                  onSubmit={(e) => handleAddBanner(e, images?.length)}
+                  onSubmit={(e) =>
+                    handleAddBanner(e, images ? images?.length : 0)
+                  }
                   encType="multipart/form-data"
                 >
                   <div className="row  row-gap">

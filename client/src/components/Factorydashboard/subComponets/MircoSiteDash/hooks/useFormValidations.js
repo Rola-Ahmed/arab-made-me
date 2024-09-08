@@ -40,15 +40,40 @@ export const useFormValidations = (
     description: factoryProfile?.description || "",
     whyUs: factoryProfile?.whyUs || "",
 
-    factoryPhoneCode:
-      factoryProfile?.phone?.slice(0, 3) == countriesMiddleEast?.[0]?.phoneCode
-        ? factoryProfile?.phone?.slice(0, 3)
-        : factoryProfile?.phone?.slice(0, 4),
+    // factoryPhoneCode: factoryProfile?.phone
+    //   ? factoryProfile?.phone?.slice(0, 3) ==
+    //     countriesMiddleEast?.[0]?.phoneCode
+    //     ? factoryProfile?.phone?.slice(0, 3)
+    //     : factoryProfile?.phone?.slice(0, 4)
+    //   : countriesMiddleEast?.[0]?.phoneCode,
 
-    factoryPhone:
-      factoryProfile?.phone?.slice(0, 3) == countriesMiddleEast?.[0]?.phoneCode
-        ? factoryProfile?.phone?.slice(3)
-        : factoryProfile?.phone?.slice(4),
+    // factoryPhone: factoryProfile?.phone
+    //   ? factoryProfile?.phone?.slice(0, 3) ==
+    //     countriesMiddleEast?.[0]?.phoneCode
+    //     ? factoryProfile?.phone?.slice(3)
+    //     : factoryProfile?.phone?.slice(4)
+    //   : countriesMiddleEast?.[0]?.phoneCode,
+
+
+      factoryPhoneCode: (() => {
+        const phoneCode = countriesMiddleEast?.[0]?.phoneCode;
+        if (!factoryProfile?.phone) return phoneCode;
+    
+        const phonePrefix = factoryProfile?.phone.slice(0, 4);
+        return phonePrefix.startsWith(phoneCode) 
+          ? phonePrefix.slice(0, phoneCode.length) 
+          : phonePrefix.slice(0, 3);
+      })(),
+    
+      factoryPhone: (() => {
+        const phoneCode = countriesMiddleEast?.[0]?.phoneCode;
+        if (!factoryProfile?.phone) return "";
+    
+        const phonePrefix = factoryProfile?.phone.slice(0, 4);
+        return phonePrefix.startsWith(phoneCode) 
+          ? factoryProfile?.phone.slice(phoneCode.length) 
+          : factoryProfile?.phone.slice(3);
+      })(),
     importingCountries: factoryProfile?.importingCountries || [],
   };
 
@@ -109,7 +134,8 @@ export const useFormValidations = (
     instagramLink: factoryProfile?.socialLinks?.instagram || "",
     facebookLink: factoryProfile?.socialLinks?.facebook || "",
     website: factoryProfile?.website || "",
-    whatsapp: factoryProfile?.whatsapp || "",
+    whatsapp: factoryProfile?.socialLinks?.whatsapp || "",
+    whatsappPhoneCode: factoryProfile?.socialLinks?.whatsapp || "",
   };
   let SocialAccountValidation = useFormik({
     initialValues: initialSocialAccount,

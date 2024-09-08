@@ -1,8 +1,8 @@
 import { useEffect, useState, useReducer } from "react";
 import { baseUrl_IMG } from "config.js";
-import UploadDocument from "components/Forms/Shared/UploadDocument";
+// import UploadDocument from "components/Forms/Shared/UploadDocument";
 import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
+// import Modal from "react-bootstrap/Modal";
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
 import { handleImageError } from "utils/ImgNotFound";
 import { countriesMiddleEast } from "constants/countries";
@@ -431,6 +431,8 @@ export default function MircoSiteDash() {
     const formData = new FormData();
     formData.append(fileKeyword, fileValue);
     formData.append("index", index);
+    console.log("datadatadata", formData);
+
     return formData;
   }
 
@@ -440,8 +442,10 @@ export default function MircoSiteDash() {
     let data = await handleSingleFileUpload(
       selectedDocs?.[0]?.keyWord,
       selectedDocs?.[0]?.pdfFile,
-      index
+      // index
+      factoryProfile?.images ? factoryProfile?.images?.length : 0
     );
+    console.log("datadatadata", data, index);
     await handleBannerUploads(data, "add");
   }
 
@@ -561,7 +565,11 @@ export default function MircoSiteDash() {
                 handleClose={handleClose}
                 isLoading={isLoading}
                 SocialAccountValidation={SocialAccountValidation}
-                socialLinks={factoryProfile?.socialLinks}
+                socialLinks={{
+                  ...factoryProfile?.socialLinks,
+                  website: factoryProfile?.website,
+                }}
+                countriesMiddleEast={countriesMiddleEast}
               />
 
               {/* Factory Banners */}
@@ -648,10 +656,6 @@ export default function MircoSiteDash() {
           </div>
         </div>
       </div>
-
-   
-
-    
 
       <MediaPopUp
         show={showImagePop.display}
