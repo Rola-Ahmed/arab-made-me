@@ -1,11 +1,8 @@
 import { useEffect, useState, useReducer } from "react";
 import { baseUrl_IMG } from "config.js";
-import UploadDocument, {
-  UploadVedio,
-} from "components/Forms/Shared/UploadDocument";
+import UploadDocument from "components/Forms/Shared/UploadDocument";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import DisplayMultiImages from "components/Shared/Dashboards/DisplayMultiImages";
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
 import { handleImageError } from "utils/ImgNotFound";
 import { countriesMiddleEast } from "constants/countries";
@@ -19,6 +16,7 @@ import SocialAccounts from "./subComponents/SocialAccounts";
 import FactoryLogo from "./subComponents/FactoryLogo";
 import CoverVideo from "./subComponents/CoverVideo";
 import Certificates from "./subComponents/Certificates";
+import FactoryBanner from "./subComponents/FactoryBanner";
 import { useMircoData } from "./hooks/useMircoData";
 import { useFormValidations } from "./hooks/useFormValidations";
 import {
@@ -26,6 +24,7 @@ import {
   addFactoryMedia,
   updateFactoryFromUser,
   updateFactoryBanner,
+  updateFactoryCertificate,
 } from "Services/factory";
 import {
   deleteTeam as deleteMember,
@@ -483,13 +482,61 @@ export default function MircoSiteDash() {
       document.body.style.cursor = "default";
     }, 5000); // 5000 milliseconds = 5 seconds
   }
+  async function handleCertificateUploads(data, actionType) {
+    setIsLoading(true);
+    const result = await updateFactoryCertificate(
+      { Authorization: isLogin },
+      data
+    );
+
+    if (result?.success) {
+      update(result?.data?.factory);
+
+      SuccessToast("data updated succcfully");
+
+      handleClose();
+    } else {
+      if (actionType == "delete") {
+        ErrorToast("someThing went Wrong");
+      } else {
+        setErrorMsg((prevErrors) => ({
+          ...prevErrors,
+          response: result?.error,
+        }));
+      }
+    }
+    setIsLoading(false);
+    setTimeout(() => {
+      document.body.style.cursor = "default";
+    }, 5000); // 5000 milliseconds = 5 seconds
+  }
+
+  async function handleDeleteCertificate(index) {
+    document.body.style.cursor = "wait";
+    const data = await handleSingleFileUpload(
+      "qualityCertificate",
+      null,
+      index
+    );
+    await handleCertificateUploads(data, "delete");
+  }
+  async function handleAddCertificate(e, index) {
+    // document.body.style.cursor = "wait";
+    e.preventDefault();
+    let data = await handleSingleFileUpload(
+      selectedDocs?.[0]?.keyWord,
+      selectedDocs?.[0]?.pdfFile,
+      index
+    );
+    await handleCertificateUploads(data, "add");
+  }
   return (
     <>
       <div className="section factory-profile  ms-5 me-5 mb-5 mt-2">
         <PageUtility currentPage="Mirco Site" />
         {/*  */}
 
-        <div className="container gap-container">
+        <div className="container gap-container  w-100">
           <div className="row">
             <div className="col-12  container-2-gap  p-0">
               {/* factory logo  container 1 */}
@@ -517,29 +564,23 @@ export default function MircoSiteDash() {
               />
 
               {/* Factory Banners */}
-
-              <div id="factoryimages"></div>
-              <div className="container-profile-input w-100">
-                <div className="title-contianer-input w-100">
-                  <p> Factory Banners</p>
-                  <DisplayMultiImages
-                    handleImageClick={handleImageClick}
-                    images={factoryProfile?.images}
-                    deleteDocs={handleDeleteBanner}
-                  />
-                  {/* <div className="col-12"> */}
-                  <Button
-                    className="btn-edit w-fit-content"
-                    onClick={() => handleShow("imagesReadOnly")}
-                  >
-                    <p className="cursor">Upload </p>
-                  </Button>
-                  {/* </div> */}
-                </div>
-              </div>
+              <FactoryBanner
+                handleImageError={handleImageError}
+                handleShow={handleShow}
+                show={show}
+                errorMsg={errorMsg}
+                handleClose={handleClose}
+                isLoading={isLoading}
+                setErrorMsg={setErrorMsg}
+                setSelectedDocs={setSelectedDocs}
+                selectedDocs={selectedDocs}
+                images={factoryProfile?.images}
+                handleAddBanner={handleAddBanner}
+                handleDeleteBanner={handleDeleteBanner}
+                handleImageClick={handleImageClick}
+              />
 
               {/*Certificats  */}
-             
 
               <Certificates
                 handleImageError={handleImageError}
@@ -548,11 +589,13 @@ export default function MircoSiteDash() {
                 errorMsg={errorMsg}
                 handleClose={handleClose}
                 isLoading={isLoading}
-                updateMedia={updateMedia}
                 setErrorMsg={setErrorMsg}
                 setSelectedDocs={setSelectedDocs}
                 selectedDocs={selectedDocs}
                 qualityCertificates={factoryProfile?.qualityCertificates}
+                handleDeleteCertificate={handleDeleteCertificate}
+                handleAddCertificate={handleAddCertificate}
+                handleImageClick={handleImageClick}
               />
 
               {/* Cover Video  */}
@@ -605,275 +648,9 @@ export default function MircoSiteDash() {
         </div>
       </div>
 
-      {/* Factory Banners */}
+   
 
-      {/* Factory Banners */}
-
-      {/* Certificaets qualityCertificates */}
-
-      <Modal
-        show={show.imagesReadOnly}
-        onHide={() => handleClose("imagesReadOnly")}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-        className="factory-profile"
-      >
-        <Modal.Body closeButton>
-          {/* Account Info container 1 */}
-
-          <div className="container-profile-input w-100">
-            <div className="title-contianer-input w-100">
-              <Modal.Header closeButton>
-                <Modal.Title>
-                  <p>Factory Banners</p>
-                </Modal.Title>
-              </Modal.Header>
-              {errorMsg?.response && (
-                <div className="alert mt-3 p-2 alert-danger form-control text-dark">
-                  {errorMsg?.response}
-                </div>
-              )}
-              <div className="w-100 ">
-                <form
-                  onSubmit={(e) =>
-                    handleAddBanner(e, factoryProfile?.images?.length)
-                  }
-                  encType="multipart/form-data"
-                >
-                  <div className="row  row-gap">
-                    <div className="col-12">
-                      <UploadDocument
-                        selectedDocs={selectedDocs}
-                        errorMsg={errorMsg}
-                        setSelectedDocs={setSelectedDocs}
-                        MediaName="images"
-                        mediaMaxLen="1"
-                        meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
-                        setErrorMsg={setErrorMsg}
-                        smallNote="you can upload up to 8 images, but only one image at a time."
-                        // title="Factory Banners"
-                      />
-                    </div>
-
-                    <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                      <button
-                        variant="secondary"
-                        type="button"
-                        onClick={() => handleClose("imagesReadOnly")}
-                      >
-                        Close
-                      </button>
-                      {isLoading ? (
-                        <button type="button" className="btn-edit">
-                          <i className="fas fa-spinner fa-spin text-white px-5"></i>
-                        </button>
-                      ) : (
-                        <button
-                          className="btn-edit submitButton"
-                          type="submit"
-                          disabled={!(selectedDocs?.length > 0)}
-                        >
-                          <p className="cursor">Submit</p>
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </Modal.Body>
-      </Modal>
-
-      {/* Cover Video  */}
-
-      <Modal
-        show={show.coverVideo}
-        onHide={() => handleClose("coverVideo")}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-        className="factory-profile"
-      >
-        <Modal.Body closeButton>
-          {/* Account Info container 1 */}
-
-          <div className="container-profile-input w-100">
-            <div className="title-contianer-input w-100">
-              <Modal.Header closeButton>
-                <Modal.Title>
-                  <p>Cover Video</p>
-                </Modal.Title>
-              </Modal.Header>
-              {errorMsg?.response ? (
-                <div className="alert mt-3 p-2 alert-danger form-control text-dark">
-                  {errorMsg?.response}
-                </div>
-              ) : (
-                ""
-              )}
-              <div className="w-100 ">
-                <form
-                  onSubmit={(e) => updateMedia(e, "coverVideo")}
-                  encType="multipart/form-data"
-                >
-                  <div className="row  row-gap">
-                    <UploadVedio
-                      selectedDocs={selectedDocs}
-                      errorMsg={errorMsg}
-                      setSelectedDocs={setSelectedDocs}
-                      MediaName="coverVideo"
-                      mediaMaxLen="1"
-                      meidaAcceptedExtensions={["mp4", "mkv", "x-matroska"]}
-                      setErrorMsg={setErrorMsg}
-                      // title="Certificates"
-                    />
-
-                    <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                      <Button
-                        variant="secondary"
-                        type="button"
-                        onClick={() => handleClose("coverVideo")}
-                      >
-                        Close
-                      </Button>
-                      {isLoading ? (
-                        <button type="button" className="btn-edit">
-                          <i className="fas fa-spinner fa-spin text-white px-5"></i>
-                        </button>
-                      ) : (
-                        <button
-                          className="btn-edit submitButton"
-                          type="submit"
-                          disabled={!(selectedDocs?.length > 0)}
-                        >
-                          <p className="cursor">Submit Video</p>
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </Modal.Body>
-      </Modal>
-
-      {/* new team */}
-
-      <Modal
-        show={show.newTeamReadOnly}
-        onHide={() => handleClose("newTeamReadOnly")}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-        className="factory-profile"
-      >
-        <Modal.Body closeButton>
-          {/* Account Info container 1 */}
-
-          <div className="container-profile-input w-100">
-            <div className="title-contianer-input w-100">
-              <Modal.Header closeButton>
-                <Modal.Title>
-                  <p>Add New Team </p>
-                </Modal.Title>
-              </Modal.Header>
-              {errorMsg?.response ? (
-                <div className="alert mt-3 p-2 alert-danger form-control text-dark">
-                  {errorMsg?.response}
-                </div>
-              ) : (
-                ""
-              )}
-              <div className="w-100 ">
-                <form
-                  onSubmit={teamValidation.handleSubmit}
-                  encType="multipart/form-data"
-                >
-                  <div className="row  row-gap">
-                    <div className="col-6">
-                      <div className="form-group">
-                        <label>Member Name</label>
-                        <input
-                          className="form-control"
-                          id="teamName"
-                          onChange={teamValidation.handleChange}
-                          onBlur={teamValidation.handleBlur}
-                          value={teamValidation.values.teamName}
-                        />
-                        {teamValidation.errors.teamName &&
-                        teamValidation.touched.teamName ? (
-                          <small className="text-danger">
-                            {teamValidation.errors.teamName}
-                          </small>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                    </div>
-                    <div className="col-6">
-                      <div className="form-group">
-                        <label>Member Role</label>
-                        <input
-                          className="form-control"
-                          id="teamRole"
-                          onChange={teamValidation.handleChange}
-                          onBlur={teamValidation.handleBlur}
-                          value={teamValidation.values.teamRole}
-                        />
-                        {teamValidation.errors.teamRole &&
-                        teamValidation.touched.teamRole ? (
-                          <small className="text-danger">
-                            {teamValidation.errors.teamRole}
-                          </small>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                    </div>
-
-                    <UploadDocument
-                      selectedDocs={selectedDocs}
-                      errorMsg={errorMsg}
-                      setSelectedDocs={setSelectedDocs}
-                      MediaName="image"
-                      mediaMaxLen="1"
-                      meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
-                      setErrorMsg={setErrorMsg}
-                      // title="Company Banners"
-                    />
-
-                    <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                      <Button
-                        variant="secondary"
-                        type="button"
-                        onClick={() => handleClose("newTeamReadOnly")}
-                      >
-                        Close
-                      </Button>
-                      {isLoading ? (
-                        <button type="button" className="btn-edit">
-                          <i className="fas fa-spinner fa-spin text-white px-5"></i>
-                        </button>
-                      ) : (
-                        <button
-                          className="btn-edit submitButton"
-                          type="submit"
-                          // disabled={!(selectedDocs?.length > 0)}
-                        >
-                          <p className="cursor">Add</p>
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </Modal.Body>
-      </Modal>
+    
 
       <MediaPopUp
         show={showImagePop.display}

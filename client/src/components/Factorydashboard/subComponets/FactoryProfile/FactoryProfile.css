@@ -521,7 +521,12 @@
     border: 1px solid var(--gray-200);
     border-radius: 8px;
     padding: 12px;
-    max-width: 294px;
+    /* max-width: 294px; */
+}
+
+.swiperSlide-Team {
+    /* width: 1vw !important; */
+    /* width: 297px !important; */
 }
 
 .member-cont {

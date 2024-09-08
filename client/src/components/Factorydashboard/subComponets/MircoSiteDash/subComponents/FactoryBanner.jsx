@@ -1,48 +1,47 @@
 import Modal from "react-bootstrap/Modal";
 import DisplayMultiImages from "components/Shared/Dashboards/DisplayMultiImages";
-
 import UploadDocument from "components/Forms/Shared/UploadDocument";
-export default function Certificates(props) {
+
+export default function FactoryBanner(props) {
   let {
-    handleImageClick,
-    qualityCertificates,
-    handleShow,
-    show,
-    handleClose,
     errorMsg,
-    selectedDocs,
-    isLoading,
-    // updateMedia,
+    handleImageClick,
+    handleDeleteBanner,
+    images,
+    handleShow,
+    handleClose,
+    show,
+    handleAddBanner,
     setErrorMsg,
+    selectedDocs,
     setSelectedDocs,
-    // new
-    handleDeleteCertificate,
-    handleAddCertificate,
+    isLoading,
   } = props;
   return (
     <>
-      <div id="certificates"></div>
+      {" "}
+      <div id="factoryimages"></div>
       <div className="container-profile-input w-100">
         <div className="title-contianer-input w-100">
-          <p> Certificates</p>
+          <p> Factory Banners</p>
           <DisplayMultiImages
             handleImageClick={handleImageClick}
-            images={qualityCertificates}
-            deleteDocs={handleDeleteCertificate}
+            images={images}
+            deleteDocs={handleDeleteBanner}
           />
+          {/* <div className="col-12"> */}
           <button
             className="btn-edit w-fit-content"
-            onClick={() => handleShow("qualityCertificatesReadOnly")}
+            onClick={() => handleShow("imagesReadOnly")}
           >
             <p className="cursor">Upload </p>
           </button>
+          {/* </div> */}
         </div>
       </div>
-
-      {/* update factory banner */}
       <Modal
-        show={show.qualityCertificatesReadOnly}
-        onHide={() => handleClose("qualityCertificatesReadOnly")}
+        show={show.imagesReadOnly}
+        onHide={() => handleClose("imagesReadOnly")}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
@@ -55,7 +54,7 @@ export default function Certificates(props) {
             <div className="title-contianer-input w-100">
               <Modal.Header closeButton>
                 <Modal.Title>
-                  <p>Certificates</p>
+                  <p>Factory Banners</p>
                 </Modal.Title>
               </Modal.Header>
               {errorMsg?.response && (
@@ -65,37 +64,29 @@ export default function Certificates(props) {
               )}
               <div className="w-100 ">
                 <form
-                  onSubmit={(e) =>
-                    handleAddCertificate(e, qualityCertificates?.length)
-                  }
+                  onSubmit={(e) => handleAddBanner(e, images?.length)}
                   encType="multipart/form-data"
                 >
                   <div className="row  row-gap">
-                    <UploadDocument
-                      selectedDocs={selectedDocs}
-                      errorMsg={errorMsg}
-                      setSelectedDocs={setSelectedDocs}
-                      MediaName="qualityCertificates"
-                      mediaMaxLen="1"
-                      meidaAcceptedExtensions={[
-                        "pdf",
-                        "png",
-                        "jpeg",
-                        "jpg",
-                        "psd",
-                        "webp",
-                      ]}
-                      setErrorMsg={setErrorMsg}
-                      smallNote="you can upload up to 3 images, but only one image at a time."
-                    />
+                    <div className="col-12">
+                      <UploadDocument
+                        selectedDocs={selectedDocs}
+                        errorMsg={errorMsg}
+                        setSelectedDocs={setSelectedDocs}
+                        MediaName="images"
+                        mediaMaxLen="1"
+                        meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
+                        setErrorMsg={setErrorMsg}
+                        smallNote="you can upload up to 8 images, but only one image at a time."
+                        // title="Factory Banners"
+                      />
+                    </div>
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
                       <button
                         variant="secondary"
                         type="button"
-                        onClick={() =>
-                          handleClose("qualityCertificatesReadOnly")
-                        }
+                        onClick={() => handleClose("imagesReadOnly")}
                       >
                         Close
                       </button>
@@ -109,7 +100,7 @@ export default function Certificates(props) {
                           type="submit"
                           disabled={!(selectedDocs?.length > 0)}
                         >
-                          <p className="cursor">Submit for review</p>
+                          <p className="cursor">Submit</p>
                         </button>
                       )}
                     </div>

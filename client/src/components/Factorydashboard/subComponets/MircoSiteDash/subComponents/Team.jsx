@@ -27,16 +27,20 @@ export default function Team(props) {
   return (
     <>
       <div id="team"></div>
-      <div className="container-profile-input w-100 gap-16">
+      <div
+        className="container-profile-input  gap-16"
+        style={{ width: "76vw" }}
+      >
         <p className="fs-24-semi">Team</p>
         {/* ----------------------- */}
-        <div className="  overflow-hidden w-100">
+        <div className="overflow-hidden w-100">
           {teamMembers?.length > 0 ? (
             <Swiper
               modules={[Navigation]}
               navigation={true}
               slidesPerView={1.3}
               spaceBetween={10}
+              loop={false}
               breakpoints={{
                 541: {
                   slidesPerView: 2,
@@ -48,13 +52,21 @@ export default function Team(props) {
                   slidesPerView: 4,
                 },
               }}
-              className="swiper  w-100 "
+              // className="swiper w-fit-content bg-success"
+              // className=" w-100 bg-success"
             >
               <>
                 {teamMembers?.map((item, index) => (
-                  <SwiperSlide>
+                  // w-fit-content
+                  <SwiperSlide
+                    className=" swiperSlide-Team "
+                    // style={{ width: "297px !important" }}
+                  >
                     {/* <div className="col-3 " key={index}> */}
-                    <div className="parent-team">
+                    <div
+                      className="parent-team  "
+                      // style={{ width: "297px" }}
+                    >
                       <i
                         className="fa-solid fa-trash-can d-flex justify-content-end cursor"
                         onClick={() => {

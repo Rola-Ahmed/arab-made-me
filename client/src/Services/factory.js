@@ -44,6 +44,9 @@ export const updateFactoryLegalDocs = async (header, data) => {
 export const updateFactoryBanner = async (header, data) => {
   return await patchRequest(`/factories/update/image`, header, data);
 };
+export const updateFactoryCertificate = async (header, data) => {
+  return await patchRequest(`/factories/update/qualityCertificate`, header, data);
+};
 
 // factories
 export const addFactory = async (header, data) => {

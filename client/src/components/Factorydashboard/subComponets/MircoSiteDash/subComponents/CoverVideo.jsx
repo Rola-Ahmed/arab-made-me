@@ -1,6 +1,5 @@
 import Modal from "react-bootstrap/Modal";
-import UploadDocument from "components/Forms/Shared/UploadDocument";
-
+import { UploadVedio } from "components/Forms/Shared/UploadDocument";
 export default function CoverVideo(props) {
   let {
     coverVideo,
@@ -44,7 +43,7 @@ export default function CoverVideo(props) {
           <div className="col-12">
             <button
               className="btn-edit fs-15 fw-600 text-white"
-              onClick={() => handleShow("coverVideo")}
+              onClick={() => handleShow("coverImgReadOnly")}
             >
               Upload
             </button>
@@ -62,56 +61,63 @@ export default function CoverVideo(props) {
         <Modal.Body closeButton>
           {/* Account Info container 1 */}
 
-          <div className="container-profile-input w-100 gap-16">
-            <Modal.Header closeButton>
-              <Modal.Title>
-                <p className="fs-24-semi">Factory Logo</p>
-              </Modal.Title>
-            </Modal.Header>
-            {errorMsg?.response && (
-              <div className="alert mt-3 p-2 alert-danger form-control text-dark">
-                {errorMsg?.response}
-              </div>
-            )}
-            <form
-              className="w-100 "
-              onSubmit={(e) => updateMedia(e, "coverImage")}
-              encType="multipart/form-data"
-            >
-              <div className="row row-gap-16">
-                <UploadDocument
-                  selectedDocs={selectedDocs}
-                  errorMsg={errorMsg}
-                  setSelectedDocs={setSelectedDocs}
-                  MediaName="coverImage"
-                  mediaMaxLen="1"
-                  meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
-                  setErrorMsg={setErrorMsg}
-                  // title="Factory Banners"
-                />
-
-                <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                  <button
-                    type="button"
-                    onClick={() => handleClose("coverImgReadOnly")}
-                  >
-                    Close
-                  </button>
-
-                  <button
-                    className="btn-edit submitButton text-white fs-15"
-                    type="submit"
-                    disabled={!(selectedDocs?.length > 0) || isLoading}
-                  >
-                    {isLoading ? (
-                      <i className="fas fa-spinner fa-spin text-white px-5"></i>
-                    ) : (
-                      <>Submit</>
-                    )}
-                  </button>
+          <div className="container-profile-input w-100">
+            <div className="title-contianer-input w-100">
+              <Modal.Header closeButton>
+                <Modal.Title>
+                  <p>Cover Video</p>
+                </Modal.Title>
+              </Modal.Header>
+              {errorMsg?.response ? (
+                <div className="alert mt-3 p-2 alert-danger form-control text-dark">
+                  {errorMsg?.response}
                 </div>
+              ) : (
+                ""
+              )}
+              <div className="w-100 ">
+                <form
+                  onSubmit={(e) => updateMedia(e, "coverImgReadOnly")}
+                  encType="multipart/form-data"
+                >
+                  <div className="row  row-gap">
+                    <UploadVedio
+                      selectedDocs={selectedDocs}
+                      errorMsg={errorMsg}
+                      setSelectedDocs={setSelectedDocs}
+                      MediaName="coverVideo"
+                      mediaMaxLen="1"
+                      meidaAcceptedExtensions={["mp4", "mkv", "x-matroska"]}
+                      setErrorMsg={setErrorMsg}
+                      // title="Certificates"
+                    />
+
+                    <div className="col-12 d-flex justify-content-start btn-modal-gap">
+                      <button
+                        variant="secondary"
+                        type="button"
+                        onClick={() => handleClose("coverVideo")}
+                      >
+                        Close
+                      </button>
+                      {isLoading ? (
+                        <button type="button" className="btn-edit">
+                          <i className="fas fa-spinner fa-spin text-white px-5"></i>
+                        </button>
+                      ) : (
+                        <button
+                          className="btn-edit submitButton"
+                          type="submit"
+                          disabled={!(selectedDocs?.length > 0)}
+                        >
+                          <p className="cursor">Submit Video</p>
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </form>
               </div>
-            </form>
+            </div>
           </div>
         </Modal.Body>
       </Modal>
