@@ -170,7 +170,7 @@ function CompanyMircoSiteDocs() {
                     errorMsg={errorMsg}
                     setSelectedDocs={setSelectedDocs}
                     MediaName="coverVideo"
-                    mediaMaxLen="3"
+                    mediaMaxLen="1"
                     meidaAcceptedExtensions={["mkv", "mp4", "x-matroska"]}
                     setErrorMsg={setErrorMsg}
                     title="Factory Cover video *"

@@ -550,6 +550,7 @@ export default function MircoSiteDash() {
                 updateMedia={updateMedia}
                 setSelectedDocs={setSelectedDocs}
                 isLoading={isLoading}
+                handleClose={handleClose}
               />
 
               {/*Social Accounts container 2 */}

@@ -119,7 +119,13 @@ export function UserTypeProvider({ children }) {
         output?.repEmail == null
       ) {
         path = "CompanyDetails/RepresentiveDetails";
-      } else if (output?.legalDocs == null) {
+      } else if (output?.legalDocs == null || 
+        output?.taxRegisterationNumber == null ||
+        output?.commercialRegisterationNumber == null||
+        output?.IndustrialLicenseNumber == null||
+        output?.IndustrialRegistrationNumber == null ||
+        output?.BusinessRegistrationNumber == null
+      ) {
         path = "CompanyDetails/LegalDocuments";
       }
 

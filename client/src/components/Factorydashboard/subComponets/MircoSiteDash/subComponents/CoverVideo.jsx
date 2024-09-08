@@ -43,7 +43,7 @@ export default function CoverVideo(props) {
           <div className="col-12">
             <button
               className="btn-edit fs-15 fw-600 text-white"
-              onClick={() => handleShow("coverImgReadOnly")}
+              onClick={() => handleShow("coverVedioReadOnly")}
             >
               Upload
             </button>
@@ -51,8 +51,8 @@ export default function CoverVideo(props) {
         </div>
       </div>
       <Modal
-        show={show.coverImgReadOnly}
-        onHide={() => handleClose("coverImgReadOnly")}
+        show={show.coverVedioReadOnly}
+        onHide={() => handleClose("coverVedioReadOnly")}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered

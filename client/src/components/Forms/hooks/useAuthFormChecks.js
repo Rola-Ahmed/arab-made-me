@@ -26,9 +26,8 @@ function useAuthFormChecks(isLoading, headerTitle, pagePath) {
     }
 
     if (
-      currentUserData.importerId != null &&
-      (currentUserData.importerVerified === "0" ||
-        !currentUserData.importerEmailActivated)
+      currentUserData?.importerId != null &&
+      currentUserData?.continueProfilePath
     ) {
       return <ImporterUnVerifiedFullScreen show={true} />;
     }

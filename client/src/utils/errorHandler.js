@@ -15,6 +15,8 @@ export function errorHandler(error) {
 
       case 404:
         return "Not Found (404). Something went wrong please try again later";
+      case 413:
+        return "The request is too large for the server to process. Please reduce the file size or the amount of data you're sending and try again.";
 
       case 500:
         // media error

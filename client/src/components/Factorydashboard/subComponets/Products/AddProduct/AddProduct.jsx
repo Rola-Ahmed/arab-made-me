@@ -240,7 +240,7 @@ export default function AddProduct() {
 
               <div className="col-4">
                 <InputField
-                  isRequired={true}
+                  isRequired={false}
                   title={"guarantee"}
                   formValidation={formValidation}
                   vlaidationName={"guarantee"}
@@ -267,7 +267,7 @@ export default function AddProduct() {
 
               {/* ---------------------------- */}
               <div className="col-12 ms-3 ">
-                <div className="border-row row">
+                <div className="border-row row   add-prod">
                   <div>
                     <label className="pb-2">Product Characteristics</label>
                   </div>
