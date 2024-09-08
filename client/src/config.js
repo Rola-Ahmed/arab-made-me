@@ -2,15 +2,15 @@ import io from "socket.io-client";
 import { useTranslation } from "react-i18next";
 
 
-export const baseUrl =
-  process.env.REACT_APP_NODE_ENV == "production"
-    ? process.env.REACT_APP_BASE_URL
-    : process.env.REACT_APP_DEV_BASE_URL;
+export const baseUrl ='https://arab-made.com/api/v1'
+  // process.env.REACT_APP_NODE_ENV == "production"
+  //   ? process.env.REACT_APP_BASE_URL
+  //   : process.env.REACT_APP_DEV_BASE_URL;
 
-export const baseUrl_IMG =
-  process.env.REACT_APP_NODE_ENV == "production"
-    ? process.env.REACT_APP_IMAGE_URL
-    : process.env.REACT_APP_DEV_IMAGE_URL;
+export const baseUrl_IMG ='https://arab-made.com'
+  // process.env.REACT_APP_NODE_ENV == "production"
+  //   ? process.env.REACT_APP_IMAGE_URL
+  //   : process.env.REACT_APP_DEV_IMAGE_URL;
 
 
 export const map_api_Key = "gqEosgdSKdu6kLxXYi6ubsnOdssVsZL4EV8K60I7Xr4";
