@@ -9,16 +9,6 @@ import {
 
 const useFormValidation = (submitAccInfo,onSubmitSocial,onSubmitfactoryInfo,ImporterProfile) => {
 
-
-  // valirable validations   // update data
-  // let emailValidation = Yup.string()
-  // .email("Invalid email")
-  // .required("Input Field is Required")
-  // .max(255, "max length is 255");
-
-// let nameValidation = Yup.string()
-//   .required("Input Field is Required")
-//   .max(25, "max length is 25");
 let phoneValidation = Yup.string()
   .required("Input Field is Required")
   // .matches(/^[0-9]+$/, "Input Field should contain numbers only")

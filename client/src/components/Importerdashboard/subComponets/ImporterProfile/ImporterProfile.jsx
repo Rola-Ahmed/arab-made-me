@@ -22,6 +22,7 @@ import { useFetchSectors } from "hooks/useFetchSectors";
 import { addImporterMedia, updateImporterFromUser } from "Services/importer";
 import ChangePassword from "components/Factorydashboard/subComponets/FactoryProfile/subComponents/ChangePassword/ChangePassword";
 import InputField from "components/Forms/Shared/InputField";
+import {useFetchImporterById} from "hooks/useFetchImporterById"
 
 import useFormValidation from "./hooks/useFormValidation";
 function successMsg() {
@@ -36,6 +37,8 @@ export default function ImporterProfile() {
   const [activeMenu] = useOutletContext();
 
   const [ImporterProfile, setImporterProfile] = useState([]);
+
+  const { data: fetchedImporterData, errorMessage }=useFetchImporterById(currentUserData?.importerId)
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState();
   let { allSectors } = useFetchSectors();
@@ -67,13 +70,7 @@ export default function ImporterProfile() {
     });
   };
 
-  async function fetchImporterData() {
-    const result = await fetchOneImporter(currentUserData?.importerId, {});
 
-    if (result?.success) {
-      setImporterProfile(result?.data?.importers);
-    }
-  }
 
   async function updateMedia(e) {
     setIsLoading(true);
@@ -106,10 +103,10 @@ export default function ImporterProfile() {
   }
 
   useEffect(() => {
-    if (currentUserData && currentUserData?.importerId) {
-      fetchImporterData();
+    if (currentUserData && currentUserData?.importerId && fetchedImporterData) {
+      setImporterProfile({...fetchedImporterData,businessAccount:currentUserData?.userEmail});
     }
-  }, [currentUserData?.importerId]);
+  }, [currentUserData,fetchedImporterData]);
 
   const [show, setShow] = useState({
     accountInfoReadOnly: false,
@@ -411,15 +408,7 @@ export default function ImporterProfile() {
               {/*Password change container 2 */}
 
               <ChangePassword
-                // handleShow={handleShow}
-                // handleClose={handleClose}
-                // show={show}
-                // errorMsg={errorMsg}
-                // setIsLogin={setIsLogin}
-                // ModalClose={ModalClose}
-                // setErrorMsg={setErrorMsg}
-                // isLogin={isLogin}
-                // isLoading={isLoading}
+              
 
                 errorMsg={errorMsg}
                 setErrorMsg={setErrorMsg}
@@ -748,7 +737,6 @@ export default function ImporterProfile() {
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
                       <button
-                        variant="secondary"
                         type="button"
                         onClick={() => handleClose("accountInfoReadOnly")}
                       >
@@ -970,7 +958,7 @@ export default function ImporterProfile() {
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
                       <button
-                        variant="btn- btn-secondary"
+                       className="btn btn-secondary"
                         type="button"
                         onClick={() => handleClose("factoryInfoChangeReadOnly")}
                       >
@@ -1120,7 +1108,7 @@ export default function ImporterProfile() {
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
                       <button
-                        variant="btn btn-secondary "
+                        className="btn btn-secondary"
                         type="button"
                         onClick={() => handleClose("socialAccountsReadOnly")}
                       >
@@ -1186,7 +1174,7 @@ export default function ImporterProfile() {
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
                       <button
-                        variant="secondary"
+                        className="btn btn-secondary"
                         type="button"
                         onClick={() => handleClose("legalDocsReadOnly")}
                       >
@@ -1257,7 +1245,7 @@ export default function ImporterProfile() {
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
                       <button
-                        variant="secondary"
+                       className="btn btn-secondary"
                         type="button"
                         onClick={() => handleClose("profilePicReadOnly")}
                       >

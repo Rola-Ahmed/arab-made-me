@@ -9,7 +9,6 @@ export const useFetchImporterById = (importerId) => {
   useEffect(() => {
     const fetchData = async (id) => {
       const result = await fetchOneImporter(id,{});
-      console.log("resultresultresultresult",result)
       if (result?.success) {
         setData(result?.data?.importers);
       } else {
