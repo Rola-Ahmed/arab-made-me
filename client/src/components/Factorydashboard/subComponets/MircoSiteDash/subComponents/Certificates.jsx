@@ -96,6 +96,7 @@ export default function Certificates(props) {
                         onClick={() =>
                           handleClose("qualityCertificatesReadOnly")
                         }
+                        className="btn btn-secondary"
                       >
                         Close
                       </button>

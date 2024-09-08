@@ -94,7 +94,7 @@ export default function CoverVideo(props) {
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
                       <button
-                        variant="secondary"
+                        className="btn btn-secondary"
                         type="button"
                         onClick={() => handleClose("coverVideo")}
                       >

@@ -351,6 +351,9 @@ export default function MircoSiteDash() {
 
     data.socialLinks["facebook"] = values.facebookLink;
     data.socialLinks["instagram"] = values.instagramLink;
+    data.socialLinks[
+      "whatsapp"
+    ] = `${values.whatsappPhoneCode}${values.whatsapp}`;
     await submitForm(data);
   }
   async function submitForm(data) {
@@ -392,10 +395,11 @@ export default function MircoSiteDash() {
   function handleClose(value) {
     ModalClose();
 
-    setErrorMsg((prevErrors) => {
-      const { response, ...restErrors } = prevErrors || {};
-      return restErrors;
-    });
+    // setErrorMsg((prevErrors) => {
+    //   const { response, ...restErrors } = prevErrors || {};
+    //   return restErrors;
+    // });
+    setErrorMsg({});
 
     // Reset the form and clear validation errors
     // reset to initaliz the values
@@ -431,7 +435,6 @@ export default function MircoSiteDash() {
     const formData = new FormData();
     formData.append(fileKeyword, fileValue);
     formData.append("index", index);
-    console.log("datadatadata", formData);
 
     return formData;
   }
@@ -442,8 +445,8 @@ export default function MircoSiteDash() {
     let data = await handleSingleFileUpload(
       selectedDocs?.[0]?.keyWord,
       selectedDocs?.[0]?.pdfFile,
-      // index
-      factoryProfile?.images ? factoryProfile?.images?.length : 0
+      index
+      // factoryProfile?.images ? factoryProfile?.images?.length : 0
     );
     console.log("datadatadata", data, index);
     await handleBannerUploads(data, "add");

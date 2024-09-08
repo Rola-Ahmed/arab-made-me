@@ -6,7 +6,6 @@ import {
   websiteValidation,
   RegisterationNumbers,
 } from "utils/validationUtils";
-import { useEffect } from "react";
 
 export const useFormValidations = (
   factoryProfile,
@@ -40,40 +39,33 @@ export const useFormValidations = (
     description: factoryProfile?.description || "",
     whyUs: factoryProfile?.whyUs || "",
 
-    // factoryPhoneCode: factoryProfile?.phone
-    //   ? factoryProfile?.phone?.slice(0, 3) ==
-    //     countriesMiddleEast?.[0]?.phoneCode
-    //     ? factoryProfile?.phone?.slice(0, 3)
-    //     : factoryProfile?.phone?.slice(0, 4)
-    //   : countriesMiddleEast?.[0]?.phoneCode,
+    factoryPhoneCode: (() => {
+      const phoneCode = countriesMiddleEast?.[0]?.phoneCode;
+      let phone = factoryProfile?.socialLinks?.whatsapp;
+      if (!phone) return phoneCode;
+      const country = countriesMiddleEast?.find((values) => {
+        return phone.startsWith(values?.phoneCode);
+      });
+      if (country) {
+        return phone.slice(0, country.phoneCode.length); // Slice off the country code if found
+      }
+      return phone; // Return the full phone if no match found
+    })(),
 
-    // factoryPhone: factoryProfile?.phone
-    //   ? factoryProfile?.phone?.slice(0, 3) ==
-    //     countriesMiddleEast?.[0]?.phoneCode
-    //     ? factoryProfile?.phone?.slice(3)
-    //     : factoryProfile?.phone?.slice(4)
-    //   : countriesMiddleEast?.[0]?.phoneCode,
+    factoryPhone: (() => {
+      let phone = factoryProfile?.socialLinks?.whatsapp;
+      if (!phone) return "";
 
+      const country = countriesMiddleEast?.find((values) => {
+        return phone.startsWith(values?.phoneCode);
+      });
 
-      factoryPhoneCode: (() => {
-        const phoneCode = countriesMiddleEast?.[0]?.phoneCode;
-        if (!factoryProfile?.phone) return phoneCode;
-    
-        const phonePrefix = factoryProfile?.phone.slice(0, 4);
-        return phonePrefix.startsWith(phoneCode) 
-          ? phonePrefix.slice(0, phoneCode.length) 
-          : phonePrefix.slice(0, 3);
-      })(),
-    
-      factoryPhone: (() => {
-        const phoneCode = countriesMiddleEast?.[0]?.phoneCode;
-        if (!factoryProfile?.phone) return "";
-    
-        const phonePrefix = factoryProfile?.phone.slice(0, 4);
-        return phonePrefix.startsWith(phoneCode) 
-          ? factoryProfile?.phone.slice(phoneCode.length) 
-          : factoryProfile?.phone.slice(3);
-      })(),
+      if (country) {
+        return phone.slice(country.phoneCode.length); // Slice off the country code if found
+      }
+
+      return phone; // Return the full phone if no match found
+    })(),
     importingCountries: factoryProfile?.importingCountries || [],
   };
 
@@ -134,8 +126,34 @@ export const useFormValidations = (
     instagramLink: factoryProfile?.socialLinks?.instagram || "",
     facebookLink: factoryProfile?.socialLinks?.facebook || "",
     website: factoryProfile?.website || "",
-    whatsapp: factoryProfile?.socialLinks?.whatsapp || "",
-    whatsappPhoneCode: factoryProfile?.socialLinks?.whatsapp || "",
+
+    whatsappPhoneCode: (() => {
+      const phoneCode = countriesMiddleEast?.[0]?.phoneCode;
+      let phone = factoryProfile?.socialLinks?.whatsapp;
+      if (!phone) return phoneCode;
+      const country = countriesMiddleEast?.find((values) => {
+        return phone.startsWith(values?.phoneCode);
+      });
+      if (country) {
+        return phone.slice(0, country.phoneCode.length); // Slice off the country code if found
+      }
+      return phone; // Return the full phone if no match found
+    })(),
+
+    whatsapp: (() => {
+      let phone = factoryProfile?.socialLinks?.whatsapp;
+      if (!phone) return "";
+
+      const country = countriesMiddleEast?.find((values) => {
+        return phone.startsWith(values?.phoneCode);
+      });
+
+      if (country) {
+        return phone.slice(country.phoneCode.length); // Slice off the country code if found
+      }
+
+      return phone; // Return the full phone if no match found
+    })(),
   };
   let SocialAccountValidation = useFormik({
     initialValues: initialSocialAccount,
@@ -143,10 +161,12 @@ export const useFormValidations = (
       website: websiteValidation,
       instagramLink: websiteValidation,
       facebookLink: websiteValidation,
+      whatsapp:phoneValidation
     }),
     onSubmit: handleUpdateSocialAccounts,
   });
 
+  // console.log("SocialAccountValidation", SocialAccountValidation);
   const initialTeamValues = {
     //---------------------- Factory Info
     teamName: "",
@@ -160,74 +180,6 @@ export const useFormValidations = (
     }),
     onSubmit: submitTeam,
   });
-
-  console.log(
-    "factoryInfoValidation",
-    factoryInfoValidation,
-    factoryProfile?.phone
-  );
-
-  useEffect(() => {
-    // if (factoryProfile) {
-    countriesMiddleEast?.map((values) => {
-      if (factoryProfile?.phone?.startsWith(values?.phoneCode)) {
-        console.log(
-          "yessssssss",
-          values?.phoneCode,
-          values?.phoneCode?.length,
-          factoryProfile?.phone?.slice(0, values?.phoneCode?.length),
-          factoryProfile?.phone?.slice(values?.phoneCode?.length)
-        );
-
-        factoryInfoValidation?.setValues((prev) => ({
-          ...prev,
-          factoryPhoneCode: factoryProfile?.phone?.slice(0, 5),
-          factoryPhone: factoryProfile?.phone?.slice(5) || "",
-        }));
-      }
-    });
-
-    factoryInfoValidation?.setValues((prev) => ({
-      ...prev,
-      factoryPhoneCode: factoryProfile?.phone?.slice(0, 5),
-      factoryPhone: factoryProfile?.phone?.slice(5) || "",
-    }));
-    // }
-  }, [factoryProfile && factoryProfile?.phone, countriesMiddleEast]);
-
-  useEffect(() => {
-    if (factoryProfile && factoryProfile.phone) {
-      const matched = countriesMiddleEast?.some((values) => {
-        if (factoryProfile.phone.startsWith(values?.phoneCode)) {
-          const phoneCodeLength = values.phoneCode.length;
-
-          console.log(
-            "Matched phone code:",
-            values.phoneCode,
-            "Sliced factoryPhoneCode:",
-            factoryProfile.phone.slice(0, phoneCodeLength),
-            "Sliced factoryPhone:",
-            factoryProfile.phone.slice(phoneCodeLength)
-          );
-
-          // Set values in Formik
-          factoryInfoValidation?.setValues((prev) => ({
-            ...prev,
-            factoryPhoneCode: factoryProfile.phone.slice(0, phoneCodeLength),
-            factoryPhone: factoryProfile.phone.slice(phoneCodeLength) || "",
-          }));
-
-          // Stop iterating after match is found
-          return true;
-        }
-        return false;
-      });
-
-      if (!matched) {
-        console.log("No matching phone code found");
-      }
-    }
-  }, [factoryProfile, countriesMiddleEast]);
 
   return {
     factoryInfoValidation,

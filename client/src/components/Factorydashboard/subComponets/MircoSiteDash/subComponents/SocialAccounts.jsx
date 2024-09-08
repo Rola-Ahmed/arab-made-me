@@ -12,7 +12,6 @@ export default function SocialAccounts(props) {
     isLoading,
     countriesMiddleEast,
   } = props;
-  console.log("socialLinks", SocialAccountValidation);
   return (
     <>
       <div id="socialAccount"></div>
@@ -168,45 +167,6 @@ export default function SocialAccounts(props) {
                   </div>
                 </div>
 
-                <div className="col-6">
-                  <div className="form-group">
-                    <label className="form-title">Facatory Phone Number</label>
-                    <div className="input-group  h-100">
-                      <div className="input-group-prepend">
-                        <select
-                          className="input-group-text h-100 p-2 m-0 phone-borders"
-                          id="whatsappPhoneCode"
-                          placeholder="1113534343"
-                          onChange={SocialAccountValidation.handleChange}
-                          value={
-                            SocialAccountValidation.values.whatsappPhoneCode
-                          }
-                          onBlur={SocialAccountValidation.handleBlur}
-                        >
-                          {countriesMiddleEast.map((phoneItem) => (
-                            <option value={phoneItem.phoneCode}>
-                              {phoneItem.phoneCode}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                      <input
-                        type="text"
-                        className="form-control phone-border"
-                        id="whatsapp"
-                        placeholder="1113534343"
-                        onChange={SocialAccountValidation.handleChange}
-                        value={SocialAccountValidation.values.whatsapp}
-                        onBlur={SocialAccountValidation.handleBlur}
-                      />
-                    </div>
-                    <FormVlaidtionError
-                      formValidation={SocialAccountValidation}
-                      vlaidationName="whatsapp"
-                    />
-                  </div>
-                </div>
-
                 <div className="col-12">
                   <div className="d-flex justify-content-between align-items-center form-control">
                     <div
@@ -224,10 +184,58 @@ export default function SocialAccounts(props) {
                   </div>
                 </div>
 
+                <div className="col-12">
+                  <div className="d-flex justify-content-between align-items-center form-control">
+                    <div
+                      className="social-accounts-icon-conainer border-success "
+                      // title="attach website link to the website"
+                    >
+                      <i className="fa-brands fa-whatsapp fa-2x text-success"></i>
+                    </div>
+                    <div className="form-group">
+                      <label className="form-title">Whatsapp Number</label>
+                      <div className="input-group  h-100">
+                        <div className="input-group-prepend">
+                          <select
+                            className="input-group-text h-100 p-2 m-0 phone-borders"
+                            id="whatsappPhoneCode"
+                            placeholder="1113534343"
+                            onChange={SocialAccountValidation.handleChange}
+                            value={
+                              SocialAccountValidation.values.whatsappPhoneCode
+                            }
+                            onBlur={SocialAccountValidation.handleBlur}
+                          >
+                            {countriesMiddleEast.map((phoneItem) => (
+                              <option value={phoneItem.phoneCode}>
+                                {phoneItem.phoneCode}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        <input
+                          type="text"
+                          className="form-control phone-border"
+                          id="whatsapp"
+                          placeholder="1113534343"
+                          onChange={SocialAccountValidation.handleChange}
+                          value={SocialAccountValidation.values.whatsapp}
+                          onBlur={SocialAccountValidation.handleBlur}
+                        />
+                      </div>
+                      <FormVlaidtionError
+                        formValidation={SocialAccountValidation}
+                        vlaidationName="whatsapp"
+                      />
+                    </div>
+                  </div>
+                </div>
+
                 <div className="col-12 d-flex justify-content-start btn-modal-gap">
                   <button
                     type="button"
                     onClick={() => handleClose("socialAccountsReadOnly")}
+                    className="btn btn-secondary"
                   >
                     Close
                   </button>

@@ -17,7 +17,7 @@ export default function FactoryBanner(props) {
     setSelectedDocs,
     isLoading,
   } = props;
-  console.log("imagesimagesimages", images?.length, images, images ? images?.length : 1);
+
   return (
     <>
       {" "}
@@ -87,9 +87,9 @@ export default function FactoryBanner(props) {
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
                       <button
-                        variant="secondary"
                         type="button"
                         onClick={() => handleClose("imagesReadOnly")}
+                        className="btn btn-secondary"
                       >
                         Close
                       </button>

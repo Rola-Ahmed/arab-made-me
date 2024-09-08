@@ -171,6 +171,7 @@ export default function Team(props) {
                   <Button
                     type="button"
                     onClick={() => handleClose("newTeamReadOnly")}
+                    className="btn btn-secondary"
                   >
                     Close
                   </Button>

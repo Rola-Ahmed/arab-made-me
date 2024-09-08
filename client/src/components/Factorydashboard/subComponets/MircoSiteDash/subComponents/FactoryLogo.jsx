@@ -88,6 +88,7 @@ export default function FactoryLogo(props) {
                       <button
                         type="button"
                         onClick={() => handleClose("coverImgReadOnly")}
+                        className="btn btn-secondary"
                       >
                         Close
                       </button>
