@@ -1,5 +1,4 @@
 import { useEffect, useState, useContext } from "react";
-import { fetchOneImporter } from "Services/importer";
 import { baseUrl_IMG } from "config.js";
 import SuccessToast from "components/SuccessToast";
 import ErrorToast from "components/ErrorToast";
@@ -15,7 +14,6 @@ import { userDetails } from "Context/userType";
 import { handleImageError } from "utils/ImgNotFound";
 
 import { countriesMiddleEast } from "constants/countries";
-import { useOutletContext } from "react-router-dom";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 import UploadDocument from "components/Forms/Shared/UploadDocument";
 import { useFetchSectors } from "hooks/useFetchSectors";
@@ -36,7 +34,6 @@ export default function ImporterProfile() {
 
   let { isLogin } = useContext(UserToken);
   let { currentUserData, clearSession } = useContext(userDetails);
-  const [activeMenu] = useOutletContext();
 
   const [ImporterProfile, setImporterProfile] = useState([]);
 
@@ -239,10 +236,7 @@ export default function ImporterProfile() {
     setSelectedDocs([]);
   }
   function handleClose(value) {
-    setShow((preValue) => ({
-      ...preValue,
-      [value]: false,
-    }));
+    setShow({});
     // reset message
     setErrorMsg((prevErrors) => {
       const { response, ...restErrors } = prevErrors || {};
@@ -288,9 +282,9 @@ export default function ImporterProfile() {
     await handleLegalDocsUploads(data, "add");
   }
 
-  async function handleDeleteLegalDoc(index) {
+  async function handleDeleteLegalDocs(index) {
     document.body.style.cursor = "wait";
-    const data = await handleSingleFileUpload("images", null, index);
+    const data = await handleSingleFileUpload("legalDocs", null, index);
     await handleLegalDocsUploads(data, "delete");
   }
 
@@ -560,6 +554,7 @@ export default function ImporterProfile() {
                   <DisplayMultiImages
                     images={ImporterProfile?.legalDocs}
                     handleImageClick={handleImageClick}
+                    deleteDocs={handleDeleteLegalDocs}
                   />
                   <div className="w-100">
                     <button
