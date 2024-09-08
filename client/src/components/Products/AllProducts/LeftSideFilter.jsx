@@ -1,10 +1,8 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { baseUrl } from "config.js";
-
+import { useFetchSectors } from "hooks/useFetchSectors";
 import { countriesMiddleEast } from "constants/countries";
 export default function LeftSideFilter(props) {
   let { setFilter, filter } = props;
+  const { allSectors, errormsg } = useFetchSectors();
   // filter by country or sector
   function filterSection(e) {
     if (e.target.name == "sector") {
@@ -33,19 +31,6 @@ export default function LeftSideFilter(props) {
     }
   }
 
-  const [allsSectors, setAllSectors] = useState([]);
-  async function fetchSectors() {
-    try {
-      const response = await axios.get(`${baseUrl}/sectors?size=10`);
-
-      if (response.data.message === "done") {
-        setAllSectors(response.data.sectors);
-      }
-    } catch (error) {}
-  }
-  useEffect(() => {
-    fetchSectors();
-  }, []);
   return (
     <div className="filters">
       <div className="filter-country">
@@ -64,7 +49,7 @@ export default function LeftSideFilter(props) {
             <label className="form-check-label">{`All`}</label>
           </div>
 
-          {countriesMiddleEast.map((item) => (
+          {countriesMiddleEast?.map((item) => (
             <div className="form-check">
               <input
                 onClick={(e) => filterSection(e)}
@@ -85,7 +70,7 @@ export default function LeftSideFilter(props) {
       <div className="filter-country scroll">
         <p className="filter-text">Sector</p>
         <div className="country-filters sectors ">
-          {allsSectors.map((sectorItem) => (
+          {allSectors?.map((sectorItem) => (
             <div className="form-check ">
               <input
                 className="form-check-input"
@@ -94,6 +79,9 @@ export default function LeftSideFilter(props) {
                 id="sector"
                 value={sectorItem.id}
                 onClick={(e) => filterSection(e)}
+                defaultChecked={filter?.filterBySector?.includes(
+                  sectorItem?.id
+                )}
               />
               <label className="form-check-label w-100">
                 {sectorItem.name.replace(/\bIndustry\b/gi, "")}

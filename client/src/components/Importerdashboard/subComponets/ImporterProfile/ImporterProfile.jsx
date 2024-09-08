@@ -23,6 +23,8 @@ import { addImporterMedia, updateImporterFromUser } from "Services/importer";
 import ChangePassword from "components/Factorydashboard/subComponets/FactoryProfile/subComponents/ChangePassword/ChangePassword";
 import InputField from "components/Forms/Shared/InputField";
 import {useFetchImporterById} from "hooks/useFetchImporterById"
+import { updateImporterLegalDocs } from "Services/importer";
+
 
 import useFormValidation from "./hooks/useFormValidation";
 function successMsg() {
@@ -266,23 +268,62 @@ export default function ImporterProfile() {
     submitForm(data);
   };
 
-  useEffect(() => {
-    const hash = window.location.hash;
-    if (hash) {
-      // Remove the '#' character to get the ID
-      const targetId = hash.substring(1);
+ 
+  async function handleSingleFileUpload(fileKeyword, fileValue, index) {
+    const formData = new FormData();
+    formData.append(fileKeyword, fileValue);
+    formData.append("index", index);
 
-      // Get the target element by ID
-      const targetElement = document.getElementById(targetId);
+    return formData;
+  }
 
-      if (targetElement) {
-        targetElement.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
+  async function handleAddLegalDoc(e, index) {
+    // document.body.style.cursor = "wait";
+    e.preventDefault();
+    let data = await handleSingleFileUpload(
+      selectedDocs?.[0]?.keyWord,
+      selectedDocs?.[0]?.pdfFile,
+      index
+    );
+    await handleLegalDocsUploads(data, "add");
+  }
+
+  async function handleDeleteLegalDoc(index) {
+    document.body.style.cursor = "wait";
+    const data = await handleSingleFileUpload("images", null, index);
+    await handleLegalDocsUploads(data, "delete");
+  }
+
+  async function handleLegalDocsUploads(data, actionType) {
+    setIsLoading(true);
+    const result = await updateImporterLegalDocs({ Authorization: isLogin }, data);
+
+    if (result?.success) {
+      setImporterProfile((prevErrors) => ({
+        ...prevErrors,
+        ...result?.data?.importer,
+      }));
+      SuccessToast("data updated succcfully");
+
+      handleClose();
+      // const closeButton = document.getElementsByTagName("addLegalDocs");
+      // closeButton.setAttribute("data-bs-dismiss", "modal");
+      // console.log("closeButton", closeButton);
+    } else {
+      if (actionType == "delete") {
+        ErrorToast("someThing went Wrong");
+      } else {
+        setErrorMsg((prevErrors) => ({
+          ...prevErrors,
+          response: result?.error,
+        }));
       }
     }
-  }, [activeMenu]);
+    setIsLoading(false);
+    setTimeout(() => {
+      document.body.style.cursor = "default";
+    }, 5000); // 5000 milliseconds = 5 seconds
+  }
   return (
     <>
       <div
@@ -1156,7 +1197,7 @@ export default function ImporterProfile() {
                 </div>
               )}
               <form
-                onSubmit={(e) => updateMedia(e)}
+                onSubmit={(e) => handleAddLegalDoc(e,ImporterProfile?.legalDocs?.length)}
                 encType="multipart/form-data"
               >
                 <div className="w-100 ">
@@ -1166,10 +1207,11 @@ export default function ImporterProfile() {
                       errorMsg={errorMsg}
                       setSelectedDocs={setSelectedDocs}
                       MediaName="legalDocs"
-                      mediaMaxLen="3"
+                      mediaMaxLen="1"
                       meidaAcceptedExtensions={["pdf", "png", "jpeg", "jpg"]}
                       setErrorMsg={setErrorMsg}
-                      // title="Upload Documents"
+                      smallNote="you can upload up to 5 images, but only one image at a time."
+
                     />
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">

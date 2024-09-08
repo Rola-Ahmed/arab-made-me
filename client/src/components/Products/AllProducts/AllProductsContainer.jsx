@@ -11,6 +11,7 @@ export default function AllProductsContainer() {
 
   const [searchParams] = useSearchParams();
   const filterSearch = searchParams.get("filterSearch");
+  const filterBySector = searchParams.get("filterBySector");
 
   const [allProductsData, setAllProductsData] = useState();
   const [apiLoadingData, setapiLoadingData] = useState({
@@ -26,13 +27,20 @@ export default function AllProductsContainer() {
   const [filter, setFilter] = useState({
     filterBySort: "",
     filterByCountry: "",
-    filterBySector:
-      sectorID?.slice("-")?.[0] !== undefined
-        ? [sectorID?.slice("-")?.[0]]
-        : [],
+    filterBySector: (() => {
+      if (filterBySector) {
+        return filterBySector?.split(",")?.map(Number);
+      }
+      if (sectorID?.slice("-")?.[0] !== undefined) {
+        return [sectorID?.slice("-")?.[0]];
+      }
+
+      return []; // Return the full phone if no match found
+    })(),
 
     filterBySearch: filterSearch ?? "",
   });
+  console.log("filterfilterfilter",filter)
 
   const [modalShow, setModalShow] = useState({
     isLogin: false,
@@ -68,6 +76,10 @@ export default function AllProductsContainer() {
         url1 += `&sort=${filter?.filterBySort}`;
       }
 
+      if (filter?.filterBySector?.length > 0) {
+        url2 += `&sectors=${filter?.filterBySector.join(",")}`;
+        url1 += `&sectors=${filter?.filterBySector.join(",")}`;
+      }
       const response1 = await getAllProducts(url1);
 
       if (response1?.success) {
@@ -102,12 +114,18 @@ export default function AllProductsContainer() {
 
     fetchData();
 
-    const updateUrl = (filterSeacrh = "") => {
+    const updateUrl = (filterSeacrh = "", filterBySector) => {
       const queryParams = new URLSearchParams();
       const oldUrl = `${window.location.pathname}`;
 
       if (filterSeacrh != "") {
         queryParams.set("filterSearch", filterSeacrh);
+      } else {
+        window.history.replaceState(null, "", oldUrl);
+      }
+
+      if (filterBySector?.length > 0) {
+        queryParams.set("filterBySector", filterBySector?.join(","));
       } else {
         window.history.replaceState(null, "", oldUrl);
       }
@@ -123,7 +141,7 @@ export default function AllProductsContainer() {
       window.history.replaceState(null, "", newUrl);
     };
 
-    updateUrl(filter?.filterBySearch);
+    updateUrl(filter?.filterBySearch, filter?.filterBySector);
   }, [pagination?.currentPage, filter]);
 
   return (

@@ -11,7 +11,7 @@ export default function FetchFactories() {
   const [searchParams] = useSearchParams();
   const filterSearch = searchParams.get("filterSearch");
   // const filterByCountry = searchParams.get("filterByCountry");
-  // const filterBySector = searchParams.get("filterBySector");
+  const filterBySector = searchParams.get("filterBySector");
   // const filterByCategory = searchParams.get("filterByCategory");
 
   const numOfProductsFetch = 20;
@@ -29,10 +29,15 @@ export default function FetchFactories() {
   const [filter, setFilter] = useState({
     filterSearch: filterSearch || "",
     filterByCountry: "",
-    filterBySector: [],
+    filterBySector: (() => {
+      if (filterBySector) {
+        return filterBySector?.split(",")?.map(Number);
+      }
+
+      return []; // Return the full phone if no match found
+    })(),
     // filterBySector: filterBySector?.split(",")?.map(String) ?? [],
   });
-
 
   const [apiLoadingData, setApiLoadingData] = useState({
     loadingPage: true,
@@ -43,7 +48,7 @@ export default function FetchFactories() {
     try {
       let params = `location=${filter?.filterByCountry}&filter=${
         filter?.filterSearch
-      }&sectors=${filter?.filterBySector.join(",")}`;
+      }&sector=${filter?.filterBySector.join(",")}`;
 
       let result = await fetchFactorieswithParam(params);
 

@@ -448,7 +448,6 @@ export default function MircoSiteDash() {
       index
       // factoryProfile?.images ? factoryProfile?.images?.length : 0
     );
-    console.log("datadatadata", data, index);
     await handleBannerUploads(data, "add");
   }
 
