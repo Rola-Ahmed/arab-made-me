@@ -14,7 +14,7 @@ import { Server } from "socket.io";
 const app = express();
 var whitelist = ["arab-made.com"];
 var imgAllow = "https://arab-made.com";
-// app.use(helmet())
+app.use(helmet())
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
