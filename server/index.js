@@ -1,20 +1,32 @@
-import dotenv from "dotenv"
-import cors from "cors"
+import dotenv from "dotenv";
+import cors from "cors";
 import helmet from "helmet";
-dotenv.config()
-const port = process.env.MODE === 'PROD' ? process.env.PORT :  parseInt(process.env.PORT) + 1000 || 5555
-import express from "express"
-import { bootstrap } from "./src/index.router.js"
+dotenv.config();
+const port =
+  process.env.MODE === "PROD"
+    ? process.env.PORT
+    : parseInt(process.env.PORT) + 1000 || 5555;
+import express from "express";
+import { bootstrap } from "./src/index.router.js";
 // import { Server } from "socket.io"
-import { initIo, socketAuth } from "./src/utils/socket_server.js"
-import { Server } from "socket.io"
-const app = express()
+import { initIo, socketAuth } from "./src/utils/socket_server.js";
+import { Server } from "socket.io";
+const app = express();
+var whitelist = ["arab-made.com"];
+var imgAllow = "https://arab-made.com";
+// app.use(helmet())
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      imgSrc: ["'self'", "data:", imgAllow], // Correct usage
+    },
+  })
+);
 
-app.use(helmet())
-app.use('/uploads', express.static('uploads'))
-app.use(express.json())
+app.use("/uploads", express.static("uploads"));
+app.use(express.json());
 
-var whitelist = ['arab-made.com']
 // var corsOptions = {
 //     origin: function (origin, callback) {
 //         if (process.env.MODE == 'DEV') {
@@ -34,32 +46,30 @@ var whitelist = ['arab-made.com']
 //     }
 // }
 
+app.use(cors());
 
-app.use(cors())
+app.use((req, res, nxt) => {
+  if (process.env.MODE == "DEV") nxt();
+  else if (whitelist.includes(req.hostname)) nxt();
+  else if (req.headers["api-key"] == process.env.PASSWORD_API) nxt();
+  else return res.status(403).json({ message: "error" });
+});
 
-app.use((req,res,nxt)=>{
-    if(process.env.MODE=='DEV') nxt();
-    else if(whitelist.includes(req.hostname)) nxt();
-    else if(req.headers["api-key"]==process.env.PASSWORD_API) nxt();
-    else return res.status(403).json({message:"error"})
-})
-
-
-bootstrap(app)
+bootstrap(app);
 
 const server = app.listen(port, () => {
-    console.log("Server is ON ", port);
-})
+  console.log("Server is ON ", port);
+});
 
-const io = initIo(server)
+const io = initIo(server);
 
 io.on("connection", (socket) => {
-    socket.on("socketAuth", async (authorization) => {
-        const auth = await socketAuth(authorization, socket.id)
-        if (auth == true) {
-            socket.emit("socketAuth", "done")
-        }
-    })
-})
+  socket.on("socketAuth", async (authorization) => {
+    const auth = await socketAuth(authorization, socket.id);
+    if (auth == true) {
+      socket.emit("socketAuth", "done");
+    }
+  });
+});
 // test
 //test 2
