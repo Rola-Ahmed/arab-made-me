@@ -177,7 +177,7 @@ function SourcingOffers() {
               {apiLoadingData?.laoding && (
                 <div className="d-flex justify-content-center py-5">
                   {apiLoadingData?.errorMsg ? (
-                    <p className="fs-5 text-muted fw-bolder text-5 mt-5 pt-5 mx-auto">
+                    <p className="fs-15 text-muted fw-bolder text-5 mt-5 pt-3 mx-auto">
                       {apiLoadingData?.errorMsg}
                     </p>
                   ) : (
@@ -189,7 +189,7 @@ function SourcingOffers() {
               )}
               {allSourcingReqData?.length == 0 && !apiLoadingData?.laoding && (
                 <div className="d-flex justify-content-center py-5">
-                  <p className="fs-5 text-muted fw-bolder text-5 mb-5 pt-3 mx-auto">
+                  <p className="fs-15 text-muted fw-bolder text-5 mb-5 pt-3 mx-auto">
                     No Records Found
                   </p>
                 </div>

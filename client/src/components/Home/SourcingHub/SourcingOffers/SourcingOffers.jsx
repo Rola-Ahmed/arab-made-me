@@ -29,7 +29,7 @@ export default function SourcingOffers({ allSourcingOffer, apiStatus,assessFormO
           <>
             <div className="position-absolute error-float">
               {apiStatus?.errorMsg ? (
-                <p className="fs-5 text-muted fw-bolder text-5 mt-5 pt-5 mx-auto">
+                <p className="fs-15 text-muted fw-bolder  mt-5 pt-3 mx-auto w-fit-content">
                   {apiStatus?.errorMsg || "something went wrong"}
                 </p>
               ) : (
@@ -45,7 +45,7 @@ export default function SourcingOffers({ allSourcingOffer, apiStatus,assessFormO
 
         {allSourcingOffer?.length == 0 && !apiStatus?.laoding && (
           <div className="position-absolute error-float">
-            <p className="fs-5 text-muted fw-bolder text-5 mt-5 pt-5 mx-auto w-fit-content">
+            <p className="fs-15 text-muted fw-bolder  mt-5 pt-3 mx-auto w-fit-content">
               No records
             </p>
           </div>

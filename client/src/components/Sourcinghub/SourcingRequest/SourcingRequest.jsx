@@ -156,7 +156,7 @@ function Sourcinghub() {
         </ul>
 
         {apiLoadingData?.laoding == false && reqData?.length == 0 && (
-          <p className="fs-5 text-muted fw-bolder text-5 mt-5 pt-5 mx-auto w-fit-content">
+          <p className="fs-15 text-muted fw-bolder text-5 mt-5 pt-5 mx-auto w-fit-content">
             No Record
           </p>
         )}
@@ -164,7 +164,7 @@ function Sourcinghub() {
         {reqData?.length == 0 && apiLoadingData?.laoding == true ? (
           <>
             {apiLoadingData?.errorMsg ? (
-              <p className="fs-5 text-muted fw-bolder text-5 mt-5 pt-5 mx-auto w-fit-content">
+              <p className="fs-15 text-muted fw-bolder text-5 mt-5 pt-5 mx-auto w-fit-content">
                 {apiLoadingData?.errorMsg}
               </p>
             ) : (
