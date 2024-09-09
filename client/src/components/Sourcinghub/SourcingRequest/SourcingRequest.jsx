@@ -67,7 +67,7 @@ function Sourcinghub() {
       errorMsg: result?.error,
     });
   }
-
+  console.log("apiLoadingData?.laoding", apiLoadingData?.laoding);
   useEffect(() => {
     fetchSourcingReqData();
   }, [pagination?.currentPage]);
@@ -155,11 +155,17 @@ function Sourcinghub() {
           </li>
         </ul>
 
-        {reqData?.length == 0 ? (
+        {apiLoadingData?.laoding == false && reqData?.length == 0 && (
+          <p className="fs-5 text-muted fw-bolder text-5 mt-5 pt-5 mx-auto w-fit-content">
+            No Record
+          </p>
+        )}
+
+        {reqData?.length == 0 && apiLoadingData?.laoding == true ? (
           <>
             {apiLoadingData?.errorMsg ? (
-              <p className="fs-5 text-muted fw-bolder text-5 mt-5 pt-5 mx-auto">
-                {apiLoadingData?.errorMsg || "No records Found"}
+              <p className="fs-5 text-muted fw-bolder text-5 mt-5 pt-5 mx-auto w-fit-content">
+                {apiLoadingData?.errorMsg}
               </p>
             ) : (
               <div className="d-flex justify-content-center">
