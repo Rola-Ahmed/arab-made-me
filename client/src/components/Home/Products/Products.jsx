@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import { Swiper, SwiperSlide } from "swiper/react";
+import ProductCard from "components/Products/AllProducts/ProductCard";
 import { Navigation } from "swiper/modules";
 
 // Import Swiper styles
@@ -198,173 +199,13 @@ function Products(title) {
             >
               {allProductsData?.map((productItem, productIndex) => (
                 <SwiperSlide>
-                  <div
-                    className="card  text-decoration-none   "
-                    // style={{ width: "308px" }}
-                  >
-                    <img
-                      onClick={() => {
-                        navProductpage(
-                          productItem?.id,
-                          productItem?.name,
-                          productItem?.factory?.name
-                        );
-                      }}
-                      className="card-img-top cursor img-size object-fit-contain"
-                      src={`${baseUrl_IMG}/${productItem?.coverImage}`}
-                      alt={`${baseUrl_IMG}/${productIndex}`}
-                      onError={handleImageError}
-                    />
-
-                    <div className="card-body ">
-                      <div
-                        className="sub-container-1  cursor "
-                        onClick={() => {
-                          navProductpage(
-                            productItem?.id,
-                            productItem?.name,
-                            productItem?.factory?.name
-                          );
-                        }}
-                      >
-                        <h5 className="card-title product-card-text1 m-0 cursor title-text-handler">
-                          {productItem?.name}
-                        </h5>
-
-                        <div className="rating-conatiner cursor ">
-                          <div className="sub-rating-container ">
-                            {productItem?.productAverageRate ? (
-                              <StarRating
-                                averageRating={productItem?.productAverageRate}
-                              />
-                            ) : (
-                              ""
-                            )}
-                            <div className="rating-text">
-                              <p className="cursor">
-                                {productItem?.averageRate} Rating
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-
-                        <p className="price-title cursor">
-                          <span>Price</span> {productItem?.price}
-                        </p>
-                      </div>
-
-                      <div className="parent-profile-conatiner w-100">
-                        <div className="heading-text">
-                          <div className="sub-profile-conatiner w-100">
-                            <img
-                              className="cursor"
-                              src={`${baseUrl_IMG}/${productItem?.factory?.coverImage}`}
-                              alt="factory cover image"
-                              onError={handleProfileError}
-                              onClick={() => {
-                                navigate(
-                                  `/factoryPage/${productItem?.factoryId}-${productItem?.factory?.name}`
-                                );
-                              }}
-                            />
-
-                            <div
-                              className="profile-title w-100  cursor"
-                              onClick={() => {
-                                navProductpage(
-                                  productItem?.id,
-                                  productItem?.name,
-                                  productItem?.factory?.name
-                                );
-                              }}
-                            >
-                              <p className="title w-100 cursor">
-                                {productItem?.factory?.name}
-                              </p>
-                              <p className="sub-title w-100 cursor">
-                                {/* city, country */}
-                                {`${
-                                  productItem?.city
-                                    ? productItem?.city + ", "
-                                    : ""
-                                }`}
-                                {productItem?.country ?? ""}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="d-flex justify-content-between align-items-center   w-100">
-                        <div className="call-btns justify-content-between  align-items-center w-100 pe-2">
-                          {currentUserData?.datacompletelyLoaded ? (
-                            <button className="btn-call-1  cursor px-5 ">
-                              <div className="btn-text text-decoration-none cursor text-white">
-                                <i className="fas fa-spinner fa-spin text-white"></i>
-                              </div>
-                            </button>
-                          ) : (
-                            // -----------will use it again Dont remove------------------------
-
-                            // <button
-                            //   className="btn-call-1"
-                            //   onClick={() => {
-                            //     handleUserClickValidation1(
-                            //       `/privatelabel?factoryId=${productItem?.factoryId}&factoryName=${productItem?.factory?.name}&productId=${productItem?.id}&productName=${productItem?.name}`
-                            //     );
-                            //   }}
-                            // >
-                            //   <div className="btn-text text-white">
-                            //     Private Label Request
-                            //   </div>
-                            // </button>
-
-                            <button
-                              className="btn-call-1 px-4"
-                              onClick={() => {
-                                handleUserClickValidation1(
-                                  `sendrfq?factoryId=${productItem?.factoryId}&factoryName=${productItem?.factory?.name}&productId=${productItem?.id}&productName=${productItem?.name}`
-                                );
-                              }}
-                            >
-                              <div className="btn-text text-white">
-                                {t("BtnsDescription:RFQ.sendRfq")}
-                              </div>
-                            </button>
-                          )}
-
-                          {currentUserData?.datacompletelyLoaded ? (
-                            <button className="btn-call-2  cursor px-5 bg-white ">
-                              <div className="btn-text text-decoration-none cursor ">
-                                <i className="fas fa-spinner fa-spin text-dark"></i>
-                              </div>
-                            </button>
-                          ) : (
-                            <button
-                              className="btn-call-2 cursor bg-white"
-                              onClick={() => {
-                                // fixed----------------------------------
-                                handleUserClickValidLogin(
-                                  `contactsupplier?userId=${productItem?.factory?.userId}&factoryName=${productItem?.factory?.name}`
-                                );
-                              }}
-                            >
-                              <i
-                                className="fa-regular fa-comments fa-2x"
-                                style={{ fontSize: "1.5rem" }}
-                              ></i>
-                            </button>
-                          )}
-                        </div>
-
-                        <DropdownActionBtns
-                          currentUserData={currentUserData}
-                          productItem={productItem}
-                          handleButtonClick={handleUserClickValidation1}
-                          handleQuestionMarkClick={handleQuestionMarkClick}
-                        />
-                      </div>
-                    </div>
-                  </div>
+                  <ProductCard
+                    productItem={productItem}
+                    productIndex={productIndex}
+                    setisLoggedReDirect={setisLoggedReDirect}
+                    setModalShow={setModalShow}
+                    modalShow={modalShow}
+                  />
                 </SwiperSlide>
               ))}
             </Swiper>

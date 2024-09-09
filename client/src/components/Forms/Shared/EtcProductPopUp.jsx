@@ -80,7 +80,8 @@ export default function EtcProductPopUp(directTo) {
 
 
 
-      {/* <MediaPopUp
+
+      <MediaPopUp
         show={showImagePop.display}
         onHide={() =>
           setShowImagePop({
@@ -89,7 +90,7 @@ export default function EtcProductPopUp(directTo) {
           })
         }
         showImagePop={showImagePop.imagePath}
-      /> */}
+      />
     </>
   );
 }

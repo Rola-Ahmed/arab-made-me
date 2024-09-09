@@ -7,21 +7,23 @@ import "swiper/css";
 import "swiper/css/navigation";
 export default function DisplayMultiImages(props) {
   let { handleImageClick, images, deleteDocs } = props;
+  console.log("imagesimages",images)
   return (
     <>
       {" "}
       {images?.length > 0 ? (
-        <div className="overflow-hidden w-100">
+        <div className="overflow-hidden w-100 h-100">
           <Swiper
             modules={[Navigation]}
             navigation={true}
             slidesPerView={2}
             gap={20}
+            className="h-100"
           >
             {images?.map((item, index) => (
-              <SwiperSlide className="pe-3">
+              <SwiperSlide className="pe-3 h-100">
                 <div
-                  className="dots-slider-img w-100    position-relative"
+                  className="dots-slider-img w-100  h-100   position-relative"
                   // onClick={() => {
                   //   handleImageClick(`${baseUrl_IMG}/${item}`);
                   // }}

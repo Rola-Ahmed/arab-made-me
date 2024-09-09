@@ -127,13 +127,15 @@ export default function SourcingRequestInfo({
         </div>
       </div>
 
-      <div className="container-profile-input w-100">
+      <div className="container-profile-input w-100 ">
         <div className="title-contianer-input w-100">
-          <p className="h5 fw-bolder title-header"> Documents</p>
-          <DisplayMultiImages
-            handleImageClick={handleImageClick}
-            images={requestedData?.docs}
-          />
+          <div className="input-content ">
+            <p className="h5 fw-bolder title-header"> Documents</p>
+            <DisplayMultiImages
+              handleImageClick={handleImageClick}
+              images={requestedData?.docs}
+            />
+          </div>
         </div>
       </div>
     </>

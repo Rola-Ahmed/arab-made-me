@@ -25,34 +25,32 @@ export default function PrivateLabelContainerAPI() {
   const [factoryDataOnly, setFactoryDataOnly] = useState({});
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        let result;
-        if (productId) {
-          result = await fetchProductData(productId);
-        } else {
-          result = await fetchFactoryProducts(factoryId);
-        }
+      let result;
+      if (productId) {
+        result = await fetchProductData(productId);
+      } else {
+        result = await fetchFactoryProducts(factoryId);
+      }
 
-        // if there is error
-        if (result?.success) {
-          //  state is success
-          if (productId) {
-            setProductDetails(result.data.products);
+      // if there is error
+      if (result?.success) {
+        //  state is success
+        if (productId) {
+          setProductDetails(result.data.products);
+        } else {
+          if (result?.data?.products?.length > 0) {
+            setProductDetailsArr(result.data.products);
           } else {
-            if (result?.data?.products?.length > 0) {
-              setProductDetailsArr(result.data.products);
-            } else {
-              result = await fetchOneFactory(factoryId);
-              setFactoryDataOnly(result?.data?.factories);
-            }
+            result = await fetchOneFactory(factoryId);
+            setFactoryDataOnly(result?.data?.factories);
           }
         }
-        setIsLoading((prev) => ({
-          ...prev,
-          pageLoading: result.loadingStatus,
-          errorPageLoading: result.error,
-        }));
-      } catch (error) {}
+      }
+      setIsLoading((prev) => ({
+        ...prev,
+        pageLoading: result.loadingStatus,
+        errorPageLoading: result.error,
+      }));
     };
 
     fetchData();

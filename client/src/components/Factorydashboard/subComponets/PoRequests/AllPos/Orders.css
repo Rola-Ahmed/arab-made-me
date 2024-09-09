@@ -12,6 +12,7 @@
   background-color: white;
   position: sticky;
   top: 4px;
+  z-index: 12;
 }
 
 .order-section .btn-container {

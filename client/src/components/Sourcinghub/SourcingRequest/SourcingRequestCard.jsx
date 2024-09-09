@@ -20,12 +20,16 @@ export default function SourcingRequestCard(props) {
               {reqData?.productDescription}
             </p>
             <p className="mb-1">
-              <span className="fw-bold" translate="no">Requested by </span>
+              <span className="fw-bold" translate="no">
+                Requested by{" "}
+              </span>
               {reqData?.importer?.name}
             </p>
             {/* <div className="mb-1 d-flex"> */}
             <p className="mb-1 me-3">
-              <span className="fw-bold" translate="no">Quantity </span>
+              <span className="fw-bold" translate="no">
+                Quantity{" "}
+              </span>
               {reqData?.quantity}
             </p>
             <p className="mb-1">
@@ -84,7 +88,7 @@ export default function SourcingRequestCard(props) {
               type="button"
               onClick={() => {
                 accessFormSourcingRequest(
-                  `/SourcingRequest?sourcingRequestId=${reqData?.id}&productName=${reqData?.productName}`
+                  `SourcingRequest?sourcingRequestId=${reqData?.id}&productName=${reqData?.productName}`
                 );
               }}
             >

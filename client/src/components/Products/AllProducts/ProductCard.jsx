@@ -66,7 +66,7 @@ export default function ProductCard(props) {
       > */}
       <button className="card  w-100 p-0 ">
         <img
-          className="card-img-top"
+          className="card-img-top object-fit-contain"
           src={`${baseUrl_IMG}/${productItem?.coverImage}`}
           alt={`${baseUrl_IMG}/${productIndex}`}
           onError={handleImageError}

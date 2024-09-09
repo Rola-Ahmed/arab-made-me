@@ -191,8 +191,9 @@ export default function PrivateLabelForm(props) {
                               block: "center",
                             });
                           } else {
-                            const targetElement =
-                              document.getElementById("view");
+                            const targetElement = document.getElementById(
+                              "view"
+                            );
                             if (targetElement) {
                               targetElement?.scrollIntoView({
                                 behavior: "smooth",

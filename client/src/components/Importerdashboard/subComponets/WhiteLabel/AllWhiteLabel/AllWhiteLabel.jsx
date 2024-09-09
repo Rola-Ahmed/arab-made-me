@@ -163,7 +163,6 @@ export default function AllWhiteLabel() {
                       }}
                     >
                       {/* view */}
-                      {poItem?.id}
                       <i className="fa-regular fa-trash-can"></i>
                     </p>
                   </th>

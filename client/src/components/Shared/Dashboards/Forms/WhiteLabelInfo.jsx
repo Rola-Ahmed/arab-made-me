@@ -4,6 +4,7 @@ import { getMonthName as getDate } from "utils/getMonthName";
 
 export default function WhiteLabelInfo(props) {
   let { requestedData, handleImageClick } = props;
+  console.log("requestedData", requestedData?.docs);
   let getMonthName = getDate;
   return (
     <>
@@ -92,12 +93,12 @@ export default function WhiteLabelInfo(props) {
         </div>
       </div>
       {/* {requestedData?.docs?.length > 0 ? ( */}
-      <div className="container-profile-input w-100">
+      <div className="container-profile-input w-100 ">
         <div className="title-contianer-input w-100">
           <p> Documents</p>
           <DisplayMultiImages
             handleImageClick={handleImageClick}
-            image={requestedData?.requestedData?.docs}
+            images={requestedData?.docs}
           />
         </div>
       </div>

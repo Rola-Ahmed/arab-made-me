@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import "./Sign.css";
@@ -7,11 +7,21 @@ import { useNavigate } from "react-router-dom";
 import InputField from "components/Forms/Shared/InputField";
 import FormVlaidtionError from "components/Forms/Shared/FormVlaidtionError";
 import useSignIn from "./useSignIn";
+import { UserToken } from "Context/userToken";
 
 function Sign() {
+  let { isLogin } = useContext(UserToken);
+  let navigate = useNavigate();
+
+  useEffect(() => {
+    if (isLogin) {
+      navigate("/");
+    }
+
+    // }
+  }, [isLogin]);
   document.title = "Sign In";
 
-  let navigate = useNavigate();
   let { submitForm, isLoading, errorMsg } = useSignIn();
 
   const [toggleSeePassword, settoggleSeePassword] = useState(false);

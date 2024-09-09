@@ -42,6 +42,7 @@ function Factorypage() {
   const { trans: t } = useAppTranslation();
 
   let { currentUserData } = useContext(userDetails);
+  let { isLogin } = useContext(UserToken);
   document.title = "Factory Page";
   let { allSectors } = useFetchSectors();
 
@@ -52,7 +53,6 @@ function Factorypage() {
   };
 
   let navigate = useNavigate();
-  let { isLogin } = useContext(UserToken);
 
   let [factoryHasProduct, setFactoryHasProduct] = useState(false);
 
