@@ -47,7 +47,7 @@ function Hero() {
                   {t("translation:titles.hero.title")}
                 </h3>
 
-                <p className="text-3">
+                <p className="text-3 hero-subText">
                   {/* Powerful, self-serve product and growth analytics to help
                   launch you product, and retain more buyers. */}
                   {t("translation:titles.hero.subTitle")}
