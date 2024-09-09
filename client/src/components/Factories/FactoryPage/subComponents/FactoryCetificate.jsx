@@ -13,7 +13,7 @@ export default function FactoryCetificate({
     <>
       <h3 className="text-fac-4">Certificates</h3>
 
-      <div className="row justify-content-between">
+      <div className="row justify-content-between vh-75">
         <div className="col-12">
           <Swiper
             modules={[Navigation, Pagination]}
@@ -24,9 +24,12 @@ export default function FactoryCetificate({
           >
             {qualityCertificates?.map((item) => (
               <SwiperSlide>
-                <div className="dots-slider-img w-100">
+                <div
+                  className="dots-slider-img w-100 vh-80 "
+                  // style={{ height: "75vh" }}
+                >
                   <img
-                    className="h-100 w-100 "
+                    className="h-100 w-100 object-fit-contain "
                     src={`${baseUrl_IMG}/${item}`}
                     alt="Img"
                     onError={handleImageError}

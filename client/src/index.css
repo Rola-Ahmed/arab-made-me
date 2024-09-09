@@ -200,6 +200,13 @@ small {
 
   height: fit-content;
 }
+.vh-75 {
+  height: 75vh;
+}
+.vh-80{
+  height: 80vh;
+
+}
 
 .lh-normal {
   line-height: normal;

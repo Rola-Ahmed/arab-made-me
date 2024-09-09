@@ -152,11 +152,11 @@ function Factorypage() {
   };
 
   useEffect(() => {
-    const targetElements = document.querySelectorAll(".fac-cert");
+    const targetElements = document?.querySelectorAll(".fac-cert");
     const observerCallback = (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          console.log(entry.target.id); // Set active section based on ID
+          // console.log(entry.target.id); // Set active section based on ID
           setActiveMenu(entry.target.id);
         }
       });
@@ -179,10 +179,7 @@ function Factorypage() {
     };
   }, []);
 
-  console.log(
-    "factoryDetails?.importingCountries?.length",
-    factoryDetails?.importingCountries?.length
-  );
+ 
   return (
     <>
       <IsLoggedIn

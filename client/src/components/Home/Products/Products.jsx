@@ -48,7 +48,6 @@ function Products(title) {
     isFactoryVerified: false,
     isDefaultUserNotAllowed: false,
   });
-  console.log("modalShow", modalShow);
   const [isLoggedReDirect, setisLoggedReDirect] = useState("");
 
   const [allProductsData, setAllProductsData] = useState();
@@ -304,16 +303,31 @@ function Products(title) {
                               </div>
                             </button>
                           ) : (
+                            // -----------will use it again Dont remove------------------------
+
+                            // <button
+                            //   className="btn-call-1"
+                            //   onClick={() => {
+                            //     handleUserClickValidation1(
+                            //       `/privatelabel?factoryId=${productItem?.factoryId}&factoryName=${productItem?.factory?.name}&productId=${productItem?.id}&productName=${productItem?.name}`
+                            //     );
+                            //   }}
+                            // >
+                            //   <div className="btn-text text-white">
+                            //     Private Label Request
+                            //   </div>
+                            // </button>
+
                             <button
-                              className="btn-call-1"
+                              className="btn-call-1 px-4"
                               onClick={() => {
                                 handleUserClickValidation1(
-                                  `/privatelabel?factoryId=${productItem?.factoryId}&factoryName=${productItem?.factory?.name}&productId=${productItem?.id}&productName=${productItem?.name}`
+                                  `sendrfq?factoryId=${productItem?.factoryId}&factoryName=${productItem?.factory?.name}&productId=${productItem?.id}&productName=${productItem?.name}`
                                 );
                               }}
                             >
                               <div className="btn-text text-white">
-                                Private Label Request
+                                {t("BtnsDescription:RFQ.sendRfq")}
                               </div>
                             </button>
                           )}

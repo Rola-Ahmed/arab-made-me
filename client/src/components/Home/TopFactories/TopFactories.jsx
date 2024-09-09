@@ -196,22 +196,20 @@ export default function TopFactories(props) {
                 },
               }}
             >
-              {allFactoriesData.map((factoryitem, factoryindex) => (
+              {allFactoriesData?.map((factoryitem, factoryindex) => (
                 // <div className="col-sm-12 col-xl-4 col-xxl-3  col-lg-4  col-md-6 m-0  px-1"
-                <>
-                  <SwiperSlide>
-                    <FactoryCardParent
-                      factoryitem={factoryitem}
-                      currentUserData={currentUserData}
-                      handleUserClickValidation1={handleUserClickValidation1}
-                      handleUserClickValidLogin={handleUserClickValidLogin}
-                      handleQuestionMarkClick={handleQuestionMarkClick}
-                      handleBtnCheckIfProductExisit={
-                        handleBtnCheckIfProductExisit
-                      }
-                    />
-                  </SwiperSlide>
-                </>
+                <SwiperSlide>
+                  <FactoryCardParent
+                    factoryitem={factoryitem}
+                    currentUserData={currentUserData}
+                    handleUserClickValidation1={handleUserClickValidation1}
+                    handleUserClickValidLogin={handleUserClickValidLogin}
+                    handleQuestionMarkClick={handleQuestionMarkClick}
+                    handleBtnCheckIfProductExisit={
+                      handleBtnCheckIfProductExisit
+                    }
+                  />
+                </SwiperSlide>
               ))}
             </Swiper>
           </div>

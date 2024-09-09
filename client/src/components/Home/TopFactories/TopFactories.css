@@ -55,6 +55,17 @@
   overflow: visible;
   top: 33px;
 }
+.factories .dropdown-menu-top {
+  /* position: absolute; */
+  /* top: 159px; */
+  top: 47px;
+  /* right: 0;
+  border: 1px solid var(--Gray-300);
+  background: white;
+  border-radius: 6px; */
+
+}
+
 
 .topFactory .dropdown-menu-top {
   top: 49px;

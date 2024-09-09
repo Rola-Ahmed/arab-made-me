@@ -1,10 +1,10 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { baseUrl_IMG, useAppTranslation } from "config.js";
 
 // config
 import { userDetails } from "Context/userType";
 import { UserToken } from "Context/userToken";
-import { baseUrl_IMG } from "config.js";
 import DropdownActionBtns from "components/Shared/DropdownActionBtns/DropdownActionBtnsProducts";
 
 // helpers
@@ -24,6 +24,7 @@ export default function ProductCard(props) {
   let { isLogin } = useContext(UserToken);
 
   let { currentUserData } = useContext(userDetails);
+  const { trans: t, currentLang } = useAppTranslation();
 
   const navigate = useNavigate();
   const [description, setDescription] = useState("");
@@ -150,7 +151,7 @@ export default function ProductCard(props) {
 
         <div className=" d-flex justify-content-between align-items-center   w-100 px-3 ">
           <div className="call-btns d-flex justify-content-between  align-items-center w-100 pe-2 ">
-            <button
+            {/* <button
               className="btn-call-1"
               onClick={() => {
                 handleUserClickValidation1(
@@ -159,6 +160,19 @@ export default function ProductCard(props) {
               }}
             >
               <div className="btn-text text-white ">Private Label Request</div>
+            </button> */}
+            <button
+              className="btn-call-1 px-4"
+              onClick={() => {
+                handleUserClickValidation1(
+                  `sendrfq?factoryId=${productItem?.factoryId}&factoryName=${productItem?.factory?.name}&productId=${productItem?.id}&productName=${productItem?.name}`
+                );
+              }}
+            >
+              <div className="btn-text text-white ">
+                {" "}
+                {t("BtnsDescription:RFQ.sendRfq")}
+              </div>
             </button>
             <button
               className="btn-call-3 cursor bg-white"
@@ -179,8 +193,6 @@ export default function ProductCard(props) {
             handleQuestionMarkClick={handleQuestionMarkClick}
             // handleIsLoggedInBtn={handleIsLoggedInBtn}
           />
-
-          
         </div>
       </button>
       {/* </div> */}

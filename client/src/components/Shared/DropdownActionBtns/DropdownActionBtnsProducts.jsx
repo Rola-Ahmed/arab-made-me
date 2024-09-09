@@ -40,7 +40,8 @@ const DropdownActionBtnsProducts = ({
             description={t("BtnsDescription:whiteLabelRequest.description")}
             handleQuestionMarkClick={handleQuestionMarkClick}
           />
-          <DropdownMenuItem
+          {/* dont remove will use it again */}
+          {/* <DropdownMenuItem
             title={t("BtnsDescription:RFQ.sendRfq")}
             onClick={() =>
               handleButtonClick(
@@ -48,6 +49,17 @@ const DropdownActionBtnsProducts = ({
               )
             }
             description={t("BtnsDescription:RFQ.description")}
+            handleQuestionMarkClick={handleQuestionMarkClick}
+          />*/}
+
+          <DropdownMenuItem
+            title={t("BtnsDescription:privateLabelRequest.name")}
+            onClick={() =>
+              handleButtonClick(
+                `/privatelabel?factoryId=${productItem?.factoryId}&factoryName=${productItem?.factory?.name}&productId=${productItem?.id}&productName=${productItem?.name}`
+              )
+            }
+            description={t("BtnsDescription:privateLabelRequest.description")}
             handleQuestionMarkClick={handleQuestionMarkClick}
           />
           <DropdownMenuItem

@@ -12,11 +12,12 @@ export default function SpecialCharList(props) {
 
   return (
     <div
-      className="col-12 ms-3"
+      className="col-12 ms-3 mb-2"
       id={formValidation.values["productCharacteristic"]}
       key={index}
     >
-      <div className="border-row row">
+      {/* <div className="border-row row"> */}
+      <div className="row row-gap-16">
         <div
           className={`form-group   col-lg-6 col-md-12"
                             `}

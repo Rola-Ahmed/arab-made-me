@@ -66,7 +66,7 @@
 }
 
 
-.fo3 .btn-container,.topFactory .btn-container  {
+.fo3 .btn-container, .topFactory .btn-container {
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -121,15 +121,6 @@
     padding: 10px 13px;
 }
 
-.factories .dropdown-menu-top {
-    position: absolute;
-    top: 159px;
-    right: 0;
-    border: 1px solid var(--Gray-300);
-    background: white;
-    border-radius: 6px;
-
-}
 
 .factories .fa-regular.fa-comments {
 

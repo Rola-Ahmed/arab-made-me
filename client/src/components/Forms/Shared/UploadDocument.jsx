@@ -201,7 +201,7 @@ export default function UploadDocument(props) {
         >
           Drag and drop files here or click to select files
           <input
-            className="border-0 mx-auto"
+            className="border-0 mx-auto d-block"
             type="file"
             id={MediaName}
             file-id={MediaName}

@@ -45,7 +45,8 @@ const DropdownActionBtnsFactory = ({
               description={t("BtnsDescription:whiteLabelRequest.description")}
               handleQuestionMarkClick={handleQuestionMarkClick}
             />
-            <DropdownMenuItem
+            {/* // ---------------------DONT REMOVE IT WILL USE IT AGAIN--------------- */}
+            {/* <DropdownMenuItem
               title={t("BtnsDescription:RFQ.sendRfq")}
               onClick={() =>
                 handleBtnCheckIfProductExisit(
@@ -56,6 +57,16 @@ const DropdownActionBtnsFactory = ({
                 )
               }
               description={t("BtnsDescription:RFQ.description")}
+              handleQuestionMarkClick={handleQuestionMarkClick}
+            /> */}
+            <DropdownMenuItem
+              title={t("BtnsDescription:privateLabelRequest.name")}
+              onClick={() =>
+                handleUserClickValidation1(
+                  `privatelabel?factoryId=${factoryitem?.id}&factoryName=${factoryitem?.name} `
+                )
+              }
+              description={t("BtnsDescription:privateLabelRequest.description")}
               handleQuestionMarkClick={handleQuestionMarkClick}
             />
             <DropdownMenuItem

@@ -17,64 +17,55 @@ export default function FetchTopFactories() {
 
   useEffect(() => {
     const fetchFactoriesData = async () => {
-      try {
-        let result = await fetchFactorieswithParam(
-          `size=${numOfFactoriesFetch}`
+      let result = await fetchFactorieswithParam(`size=${numOfFactoriesFetch}`);
+
+      if (result?.success) {
+        setAllFactoriesData(
+          result?.data?.factories?.filter((item) => item?.factoryId !== null)
         );
+        const uniqueIds = [
+          ...new Set(
+            result.data.factories
+              .map((obj) => obj.id) // Extract all factoryIds
+              .filter((id) => id !== null) // Filter out null values
+          ),
+        ];
 
-        if (result?.success) {
-          setAllFactoriesData(
-            result.data.factories.filter((item) => item?.factoryId !== null)
-          );
-          const uniqueIds = [
-            ...new Set(
-              result.data.factories
-                .map((obj) => obj.id) // Extract all factoryIds
-                .filter((id) => id !== null) // Filter out null values
-            ),
-          ];
-
-          setUniqueFactoryIDofProducts(uniqueIds);
-        }
-      } catch (error) {}
+        setUniqueFactoryIDofProducts(uniqueIds);
+      }
     };
 
     fetchFactoriesData();
   }, []);
 
   const getFactoryProduct = async (factoryId) => {
-    try {
-      let result = await fetchFactoryProductsSize(
-        factoryId,
-        numOfProductsFetch
+    let result = await fetchFactoryProductsSize(factoryId, numOfProductsFetch);
+
+    if (result?.success) {
+      // Extract specific attributes (id, name, coverImage) and filter out the rest
+      const filteredAttributes = result?.data?.products?.map((item) => {
+        // Extract specific attributes
+        const { id, name, coverImage } = item;
+
+        return {
+          id,
+          name,
+          coverImage,
+        };
+      });
+
+      setAllFactoriesData((prevData) =>
+        prevData?.map((item) =>
+          item?.id === factoryId
+            ? {
+                ...item,
+                productLength: result?.data?.products?.length,
+                productData: filteredAttributes,
+              }
+            : item
+        )
       );
-
-      if (result?.success) {
-        // Extract specific attributes (id, name, coverImage) and filter out the rest
-        const filteredAttributes = result.data.products.map((item) => {
-          // Extract specific attributes
-          const { id, name, coverImage } = item;
-
-          return {
-            id,
-            name,
-            coverImage,
-          };
-        });
-
-        setAllFactoriesData((prevData) =>
-          prevData?.map((item) =>
-            item?.id === factoryId
-              ? {
-                  ...item,
-                  productLength: result.data.products?.length,
-                  productData: filteredAttributes,
-                }
-              : item
-          )
-        );
-      }
-    } catch (error) {}
+    }
   };
 
   useEffect(() => {

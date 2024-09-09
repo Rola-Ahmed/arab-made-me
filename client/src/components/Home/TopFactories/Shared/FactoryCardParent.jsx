@@ -4,6 +4,7 @@ import { handleImageError } from "utils/ImgNotFound";
 import DropdownActionBtnsFactory from "components/Shared/DropdownActionBtns/DropdownActionBtnsFactory";
 import ProductCarousel from "components/Home/TopFactories/ProductCarousel/ProductCarousel";
 import FactoryCard from "components/Home/TopFactories/FactoryCard";
+import { useAppTranslation } from "config.js";
 
 export default function FactoryCardParent(props) {
   let {
@@ -15,6 +16,7 @@ export default function FactoryCardParent(props) {
     handleBtnCheckIfProductExisit,
   } = props;
   let navigate = useNavigate();
+  const { trans: t } = useAppTranslation();
 
   function DirectToFactoryPage(factoryId, factoryName) {
     navigate(`/factoryPage/${factoryId}-${factoryName}`);
@@ -80,18 +82,33 @@ export default function FactoryCardParent(props) {
                   </div>
                 </button>
               ) : (
-                <button
-                  className="btn-call-1  cursor "
-                  onClick={() => {
-                    handleUserClickValidation1(
-                      `privatelabel?factoryId=${factoryitem?.id}&factoryName=${factoryitem?.name} `
-                    );
+                // ---------------------DONT REMOVE IT WILL USE IT AGAIN---------------
+                // <button
+                //   className="btn-call-1  cursor "
+                //   onClick={() => {
+                //     handleUserClickValidation1(
+                //       `privatelabel?factoryId=${factoryitem?.id}&factoryName=${factoryitem?.name} `
+                //     );
+                //   }}
+                // >
+                //   <div className="btn-text text-decoration-none cursor text-white">
+                //     Private Label Request
+                //   </div>
+                // </button>
 
-                    // return
+                <button
+                  className="btn-call-1  cursor px-4"
+                  onClick={() => {
+                    handleBtnCheckIfProductExisit(
+                      `sendrfq?factoryId=${factoryitem?.id}&factoryName=${factoryitem?.name}`,
+                      factoryitem?.productLength,
+                      factoryitem?.id,
+                      factoryitem?.name
+                    );
                   }}
                 >
                   <div className="btn-text text-decoration-none cursor text-white">
-                    Private Label Request
+                    {t("BtnsDescription:RFQ.sendRfq")}
                   </div>
                 </button>
               )}
