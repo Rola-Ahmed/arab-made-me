@@ -20,9 +20,8 @@ import { useFetchSectors } from "hooks/useFetchSectors";
 import { addImporterMedia, updateImporterFromUser } from "Services/importer";
 import ChangePassword from "components/Factorydashboard/subComponets/FactoryProfile/subComponents/ChangePassword/ChangePassword";
 import InputField from "components/Forms/Shared/InputField";
-import {useFetchImporterById} from "hooks/useFetchImporterById"
+import { useFetchImporterById } from "hooks/useFetchImporterById";
 import { updateImporterLegalDocs } from "Services/importer";
-
 
 import useFormValidation from "./hooks/useFormValidation";
 function successMsg() {
@@ -37,7 +36,9 @@ export default function ImporterProfile() {
 
   const [ImporterProfile, setImporterProfile] = useState([]);
 
-  const { data: fetchedImporterData, errorMessage }=useFetchImporterById(currentUserData?.importerId)
+  const { data: fetchedImporterData, errorMessage } = useFetchImporterById(
+    currentUserData?.importerId
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState();
   let { allSectors } = useFetchSectors();
@@ -68,8 +69,6 @@ export default function ImporterProfile() {
       imagePath,
     });
   };
-
-
 
   async function updateMedia(e) {
     setIsLoading(true);
@@ -103,9 +102,12 @@ export default function ImporterProfile() {
 
   useEffect(() => {
     if (currentUserData && currentUserData?.importerId && fetchedImporterData) {
-      setImporterProfile({...fetchedImporterData,businessAccount:currentUserData?.userEmail});
+      setImporterProfile({
+        ...fetchedImporterData,
+        businessAccount: currentUserData?.userEmail,
+      });
     }
-  }, [currentUserData,fetchedImporterData]);
+  }, [currentUserData, fetchedImporterData]);
 
   const [show, setShow] = useState({
     accountInfoReadOnly: false,
@@ -152,6 +154,9 @@ export default function ImporterProfile() {
     if (values.instgramLink != "") {
       data.socialLinks["instagram"] = values.instgramLink;
     }
+    data.socialLinks[
+      "whatsapp"
+    ] = values.whatsapp;
     submitForm(data);
   }
   function onSubmitfactoryInfo(values) {
@@ -160,11 +165,11 @@ export default function ImporterProfile() {
       address,
       description,
       commercialRegisterationNumber,
+      vatNumber,
+      importerLicenseNumber,
       city,
       exportingCountries,
       sectorId,
-      vatNumber,
-      importerLicenseNumber,
     } = values;
     let data = {
       country,
@@ -262,7 +267,6 @@ export default function ImporterProfile() {
     submitForm(data);
   };
 
- 
   async function handleSingleFileUpload(fileKeyword, fileValue, index) {
     const formData = new FormData();
     formData.append(fileKeyword, fileValue);
@@ -290,7 +294,10 @@ export default function ImporterProfile() {
 
   async function handleLegalDocsUploads(data, actionType) {
     setIsLoading(true);
-    const result = await updateImporterLegalDocs({ Authorization: isLogin }, data);
+    const result = await updateImporterLegalDocs(
+      { Authorization: isLogin },
+      data
+    );
 
     if (result?.success) {
       setImporterProfile((prevErrors) => ({
@@ -406,27 +413,9 @@ export default function ImporterProfile() {
                         />
                       </div>
 
-                      <div className="col-6">
-                        <ReadOnly
-                          title="commercial Registeration Number"
-                          value={ImporterProfile?.commercialRegisterationNumber}
-                        />
-                      </div>
+                     
 
-                      <div className="col-6">
-                        <ReadOnly
-                          title="vat Number"
-                          value={ImporterProfile?.vatNumber}
-                        />
-                      </div>
-
-                      <div className="col-6">
-                        <ReadOnly
-                          title="importer License Number"
-                          value={ImporterProfile?.importerLicenseNumber}
-                        />
-                      </div>
-
+                     
                       <div className="col-12">
                         <button
                           className="btn-edit"
@@ -443,8 +432,6 @@ export default function ImporterProfile() {
               {/*Password change container 2 */}
 
               <ChangePassword
-              
-
                 errorMsg={errorMsg}
                 setErrorMsg={setErrorMsg}
                 isLogin={isLogin}
@@ -484,6 +471,7 @@ export default function ImporterProfile() {
                           >
                             <i className="fab fa-instagram fa-2x"></i>
                           </div>
+                          
                           <button
                             className="btn-edit"
                             onClick={() => handleShow("socialAccountsReadOnly")}
@@ -501,6 +489,8 @@ export default function ImporterProfile() {
                           >
                             <i className="fa-solid fa-link fa-2x"></i>
                           </div>
+                {/* <p className="my-auto readOnly"> {ImporterProfile?.website}</p> */}
+
                           <button
                             className="btn-edit"
                             onClick={() => handleShow("socialAccountsReadOnly")}
@@ -509,6 +499,26 @@ export default function ImporterProfile() {
                           </button>
                         </div>
                       </div>
+                      <div className="col-12">
+            <div className="d-flex justify-content-between align-items-center form-control">
+              <div className="d-flex gap-2 ">
+                <div
+                  className="social-accounts-icon-conainer border-success "
+                  // title="attach website link to the website"
+                >
+                  <i className="fa-brands fa-whatsapp fa-2x text-success"></i>
+                </div>
+
+                <p className="my-auto readOnly"> {ImporterProfile?.socialLinks?.whatsapp}</p>
+              </div>
+              <button
+                className="btn-edit"
+                onClick={() => handleShow("socialAccountsReadOnly")}
+              >
+                <p className="cursor">attach Link</p>
+              </button>
+            </div>
+          </div>
                     </div>
                     {/* </form> */}
                   </div>
@@ -613,16 +623,25 @@ export default function ImporterProfile() {
 
                         <div className="col-6">
                           <ReadOnly
-                            title="Yearly Sales Income"
-                            value={ImporterProfile?.yearlySalesIncome}
-                          />
-                        </div>
-
-                        <div className="col-6">
-                          <ReadOnly
                             title="commercial Registeration Number"
                             value={
                               ImporterProfile?.commercialRegisterationNumber
+                            }
+                          />
+                        </div>
+                        <div className="col-6">
+                          <ReadOnly
+                            title="vat Number"
+                            value={
+                              ImporterProfile?.vatNumber
+                            }
+                          />
+                        </div>
+                        <div className="col-6">
+                          <ReadOnly
+                            title="mporter License Number"
+                            value={
+                              ImporterProfile?.importerLicenseNumber
                             }
                           />
                         </div>
@@ -731,43 +750,6 @@ export default function ImporterProfile() {
                         vlaidationName="repPhone"
                         isRequired={true}
                         title="Representive Phone Number"
-                      />
-                    </div>
-
-                    <div className="col-6">
-                      <InputField
-                        isRequired={false}
-                        title={"website"}
-                        formValidation={AccountInfoValidation}
-                        vlaidationName={"website"}
-                      />
-                    </div>
-
-                    <div className="col-6">
-                      <InputField
-                        isRequired={true}
-                        title="importer License Number"
-                        formValidation={AccountInfoValidation}
-                        vlaidationName="importerLicenseNumber"
-                      />
-                    </div>
-
-                    {/*  */}
-
-                    <div className="col-6">
-                      <InputField
-                        isRequired={true}
-                        title={"commercial Registeration Number"}
-                        formValidation={AccountInfoValidation}
-                        vlaidationName={"commercialRegisterationNumber"}
-                      />
-                    </div>
-                    <div className="col-6">
-                      <InputField
-                        isRequired={true}
-                        title="Vat Number"
-                        formValidation={AccountInfoValidation}
-                        vlaidationName="vatNumber"
                       />
                     </div>
 
@@ -908,15 +890,6 @@ export default function ImporterProfile() {
                     <div className="col-6">
                       <InputField
                         formValidation={ImporterInfoValidation}
-                        vlaidationName="commercialRegisterationNumber"
-                        isRequired={true}
-                        title="commercial Registeration Number"
-                      />
-                    </div>
-
-                    <div className="col-6">
-                      <InputField
-                        formValidation={ImporterInfoValidation}
                         vlaidationName="address"
                         isRequired={true}
                         title="Location"
@@ -994,7 +967,7 @@ export default function ImporterProfile() {
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
                       <button
-                       className="btn btn-secondary"
+                        className="btn btn-secondary"
                         type="button"
                         onClick={() => handleClose("factoryInfoChangeReadOnly")}
                       >
@@ -1033,7 +1006,7 @@ export default function ImporterProfile() {
             <div className="title-contianer-input w-100">
               <Modal.Header closeButton>
                 <Modal.Title>
-                  <p>Social Links </p>
+                  <p>Social Accounts </p>
                 </Modal.Title>
               </Modal.Header>
               {errorMsg?.response ? (
@@ -1110,6 +1083,26 @@ export default function ImporterProfile() {
                           </div>
                         </div>
                       </div>
+
+
+
+                      <div className="col-12">
+                        <div className="d-flex justify-content-between align-items-center form-control">
+                        <div
+                  className="social-accounts-icon-conainer border-success "
+                >
+                  <i className="fa-brands fa-whatsapp fa-2x text-success"></i>
+                </div>
+                      <InputField
+                        formValidation={SocialAccountValidation}
+                        vlaidationName="whatsapp"
+                        isRequired={true}
+                        title="whatsapp"
+                      />
+                        </div>
+                      </div>
+
+
 
                       <div className="col-12">
                         <div className="d-flex justify-content-between align-items-center form-control">
@@ -1192,7 +1185,9 @@ export default function ImporterProfile() {
                 </div>
               )}
               <form
-                onSubmit={(e) => handleAddLegalDoc(e,ImporterProfile?.legalDocs?.length)}
+                onSubmit={(e) =>
+                  handleAddLegalDoc(e, ImporterProfile?.legalDocs?.length)
+                }
                 encType="multipart/form-data"
               >
                 <div className="w-100 ">
@@ -1206,7 +1201,6 @@ export default function ImporterProfile() {
                       meidaAcceptedExtensions={["pdf", "png", "jpeg", "jpg"]}
                       setErrorMsg={setErrorMsg}
                       smallNote="you can upload up to 5 images, but only one image at a time."
-
                     />
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
@@ -1282,7 +1276,7 @@ export default function ImporterProfile() {
 
                     <div className="col-12 d-flex justify-content-start btn-modal-gap">
                       <button
-                       className="btn btn-secondary"
+                        className="btn btn-secondary"
                         type="button"
                         onClick={() => handleClose("profilePicReadOnly")}
                       >

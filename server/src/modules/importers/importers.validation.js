@@ -47,6 +47,7 @@ export const updateImporterValidation = Joi.object({
     facebook: Joi.string().uri(),
     linkedin: Joi.string().uri(),
     instagram: Joi.string().uri(),
+    whatsapp: Joi.string(),
   }),
 });
 
