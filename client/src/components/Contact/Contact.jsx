@@ -375,7 +375,16 @@ function Contact() {
       <section className="contact-map">
         <div className="container">
           <div>
-            <img className="map-contact" src={contact2} alt="map" />
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3456.2044235680846!2d31.31298037555101!3d29.973554574959365!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjnCsDU4JzI0LjgiTiAzMcKwMTgnNTYuMCJF!5e0!3m2!1sen!2seg!4v1726319120924!5m2!1sen!2seg&q=Space+Needle"
+              width="100%"
+              height="500"
+              style={{ border: "0" }}
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="description"
+            ></iframe>
           </div>
         </div>
       </section>
