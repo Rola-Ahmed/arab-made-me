@@ -15,6 +15,7 @@ export default function FactoryLogo(props) {
     setErrorMsg,
     isLoading,
   } = props;
+
   return (
     <>
       <div id="factorylogo"></div>

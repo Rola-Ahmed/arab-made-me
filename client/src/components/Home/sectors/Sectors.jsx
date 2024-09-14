@@ -14,7 +14,6 @@ function Sectors() {
   const { trans: t, currentLang } = useAppTranslation();
 
   const navigate = useNavigate();
-  console.log(":allSectors",allSectors)
 
   useEffect(() => {
     const fetchProductData = async () => {

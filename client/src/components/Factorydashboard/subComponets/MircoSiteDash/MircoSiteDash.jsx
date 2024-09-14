@@ -114,7 +114,6 @@ export default function MircoSiteDash() {
   }
 
   function fetch_team(data) {
-    console.log("fetch_teamfetch_team", data);
     dispatch({
       type: "fetch_team_data",
       value: data,
@@ -555,6 +554,7 @@ export default function MircoSiteDash() {
                 setErrorMsg={setErrorMsg}
                 updateMedia={updateMedia}
                 setSelectedDocs={setSelectedDocs}
+                selectedDocs={selectedDocs}
                 isLoading={isLoading}
                 handleClose={handleClose}
               />

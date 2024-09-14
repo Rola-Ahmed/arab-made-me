@@ -7,7 +7,6 @@ import "swiper/css";
 import "swiper/css/navigation";
 export default function DisplayMultiImages(props) {
   let { handleImageClick, images, deleteDocs } = props;
-  console.log("imagesimages",images)
   return (
     <>
       {" "}
