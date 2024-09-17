@@ -178,7 +178,9 @@ function PurchasingOrder(props) {
 
   return (
     <>
-      <Header title={`Send PO  ${sourcingOfferId && "on Sourcing Offer"}`} />
+      <Header
+        title={`Send PO  ${sourcingOfferId ? "on Sourcing Offer" : ""}`}
+      />
 
       <section id="view" className="send-po">
         <div className="container container-po ">

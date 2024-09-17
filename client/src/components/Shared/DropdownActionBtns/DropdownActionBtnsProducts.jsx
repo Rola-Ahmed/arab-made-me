@@ -56,7 +56,7 @@ const DropdownActionBtnsProducts = ({
             title={t("BtnsDescription:privateLabelRequest.name")}
             onClick={() =>
               handleButtonClick(
-                `/privatelabel?factoryId=${productItem?.factoryId}&factoryName=${productItem?.factory?.name}&productId=${productItem?.id}&productName=${productItem?.name}`
+                `privatelabel?factoryId=${productItem?.factoryId}&factoryName=${productItem?.factory?.name}&productId=${productItem?.id}&productName=${productItem?.name}`
               )
             }
             description={t("BtnsDescription:privateLabelRequest.description")}

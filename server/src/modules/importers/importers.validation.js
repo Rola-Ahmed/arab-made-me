@@ -2,7 +2,7 @@ import Joi from "joi";
 
 export const addImporterSchema = Joi.object({
   name: Joi.string().required(),
-  description: Joi.string().min(10).required(),
+  description: Joi.string().required(),
   repName: Joi.string(),
   repEmail: Joi.string().email(),
   repPhone: Joi.string(),
@@ -28,7 +28,7 @@ export const addImporterSchema = Joi.object({
 export const updateImporterValidation = Joi.object({
   id: Joi.number(),
   name: Joi.string(),
-  description: Joi.string().min(10),
+  description: Joi.string(),
   repName: Joi.string(),
   repEmail: Joi.string().email(),
   repPhone: Joi.string(),
@@ -54,7 +54,7 @@ export const updateImporterValidation = Joi.object({
 export const updateImporterValidationAdmin = Joi.object({
   id: Joi.number(),
   name: Joi.string(),
-  description: Joi.string().min(10),
+  description: Joi.string(),
   repName: Joi.string(),
   repEmail: Joi.string().email(),
   repPhone: Joi.string(),

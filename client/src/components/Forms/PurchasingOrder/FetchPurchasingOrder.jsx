@@ -56,7 +56,7 @@ function FetchPurchasingOrder() {
             "&include=factory&include=product"
           );
         }
-        console.log("result----------", result);
+        // console.log("result----------", result);
 
         if (result && result?.success) {
           if (normalizedRequestType == requestTypeValues.fromFactory) {
