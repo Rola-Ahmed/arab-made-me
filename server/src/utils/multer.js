@@ -9,7 +9,6 @@ export const multerUploader = (path, types) => {
   const storage = multer.diskStorage({
     destination: function (req, file, cb) {
 
-      console.log("efedfedede",req,"--------------------------" ,file)
       if (!fs.existsSync(`uploads`)) {
         fs.mkdirSync(`uploads`, { recursive: true })
       }
