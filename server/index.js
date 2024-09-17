@@ -13,16 +13,6 @@ import { initIo, socketAuth } from "./src/utils/socket_server.js";
 // import { Server } from "socket.io";
 const app = express();
 var whitelist = ["arab-made.com"];
-// var imgAllow = "https://arab-made.com";
-// app.use(helmet())
-// app.use(
-//   helmet.contentSecurityPolicy({
-//     directives: {
-//       defaultSrc: ["'self'"],
-//       imgSrc: ["'self'", "data:", imgAllow], // Correct usage
-//     },
-//   })
-// );
 
 app.use("/uploads", express.static("uploads"));
 app.use(express.json());
