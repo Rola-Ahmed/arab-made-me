@@ -2,10 +2,12 @@ import { useEffect, useState, useContext } from "react";
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
 import { useFetchFactoryById } from "hooks/useFetchFactoryById";
-import { determinePathAndData } from "utils/factoryUtils";
+import { determinePathAndData } from "utils/factoryContinueProfile";
 
 const useFactoryProfile = () => {
-  const { currentUserData, clearSession,setCurrentUserData } = useContext(userDetails);
+  const { currentUserData, clearSession, setCurrentUserData } = useContext(
+    userDetails
+  );
   const { isLogin } = useContext(UserToken);
 
   //  const { data, errorMessage } = useFetchFactoryById(16);
@@ -21,7 +23,6 @@ const useFactoryProfile = () => {
         ...data,
         businessEmail: currentUserData?.userEmail,
       });
-      
     }
   }, [data, currentUserData?.userEmail]);
 
@@ -40,7 +41,7 @@ const useFactoryProfile = () => {
     setFactoryProfile,
     clearSession,
     isLogin,
-    updateCurrentUser
+    updateCurrentUser,
   };
 };
 

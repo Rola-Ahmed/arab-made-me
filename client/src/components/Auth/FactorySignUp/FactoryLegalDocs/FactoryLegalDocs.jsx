@@ -14,7 +14,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import InputField from "components/Forms/Shared/InputField";
 import { RegisterationNumbers } from "utils/validationUtils";
-import { determinePathAndData } from "utils/factoryUtils";
+import { determinePathAndData } from "utils/factoryContinueProfile";
 
 function FactoryLegalDocs() {
   let { isLogin } = useContext(UserToken);

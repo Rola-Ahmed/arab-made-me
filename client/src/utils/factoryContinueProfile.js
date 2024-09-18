@@ -2,18 +2,18 @@
 export const determinePathAndData = (result) => {
   // const output = result?.data?.factories;
   const output = result;
-  console.log(
-    "output",
-    output,
-    // Array.isArray(output?.legalDocs) && output?.legalDocs?.length == 0,
-    // output?.legalDocs == null,
-    output?.legalDocs == null ||
-      (Array.isArray(output?.legalDocs) && output?.legalDocs?.length == 0)
+  // console.log(
+  //   "output",
+  //   output,
+  //   // Array.isArray(output?.legalDocs) && output?.legalDocs?.length == 0,
+  //   // output?.legalDocs == null,
+  //   output?.legalDocs == null ||
+  //     (Array.isArray(output?.legalDocs) && output?.legalDocs?.length == 0)
 
-    // output?.legalDocs?.length == 0,
-    // output?.coverImage?.length == 0,
-    // output?.coverVideo?.length == 0
-  );
+  //   // output?.legalDocs?.length == 0,
+  //   // output?.coverImage?.length == 0,
+  //   // output?.coverVideo?.length == 0
+  // );
 
   let path = null;
 

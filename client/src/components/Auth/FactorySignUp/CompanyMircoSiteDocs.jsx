@@ -14,7 +14,7 @@ import SelectRole from "./TimeLineHeader/SelectRole";
 import Nextpoint from "./TimeLineHeader/NextPoint";
 import LastPointStatus from "./TimeLineHeader/LastPointStatus";
 import { userDetails } from "Context/userType";
-import { determinePathAndData } from "utils/factoryUtils";
+import { determinePathAndData } from "utils/factoryContinueProfile";
 
 function CompanyMircoSiteDocs() {
   let { isLogin } = useContext(UserToken);

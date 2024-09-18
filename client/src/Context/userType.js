@@ -4,7 +4,7 @@ import { jwtDecode } from "jwt-decode";
 import { getUser } from "Services/UserAuth";
 import { fetchOneFactory } from "Services/factory";
 import { fetchOneImporter } from "Services/importer";
-import { determinePathAndData } from "utils/factoryUtils";
+import { determinePathAndData } from "utils/factoryContinueProfile";
 
 // Create the user context
 export const userDetails = createContext("");
