@@ -192,12 +192,7 @@ function Productpage(props) {
               </div>
               <div className="sku w-100">
                 <div className="avail">
-                  <p className="fw-400 fs-14-med text-muted-2">
-                    Sku:
-                    <span className="fw-600 text-black">
-                      {productData?.sku}
-                    </span>
-                  </p>
+                 
                   <p className="fw-400 fs-14-med text-muted-2 paddig-ava">
                     Availability:
                     <span
