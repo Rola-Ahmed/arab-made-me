@@ -351,7 +351,7 @@ export function UploadVedio(props) {
                     controls="controls"
                     autoPlay={false}
                     muted={true}
-                    className="w-100"
+                    className="w-100 display-video"
                   />
                 </div>
                 <div className="w-100">

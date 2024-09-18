@@ -224,6 +224,10 @@
   border-bottom: 1px solid rgb(230, 233, 236);
 }
 
+.display-video {
+  height: 55vh;
+}
+
 .img-uploaded p {
   /* padding: 8px 0px; */
   display: flex;
