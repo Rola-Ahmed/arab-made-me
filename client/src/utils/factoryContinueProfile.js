@@ -57,6 +57,7 @@ export const determinePathAndData = (result) => {
     //   factoryEmailActivated: output?.emailActivated,
     //   datacompletelyLoaded: false,
     //   profile: output?.coverImage,
-    continueProfilePath: path,
+    // continueProfilePath: path,
+    path
   };
 };

@@ -76,11 +76,8 @@ function handleMultiMediaValidation(
       `input[file-id="${MediaName}"]`
     );
 
-    console.log("inputElement", inputElement);
     // Perform actions on the selected element
     if (inputElement) {
-      console.log("inputElement enter", inputElement);
-
       inputElement.value = "";
     }
 

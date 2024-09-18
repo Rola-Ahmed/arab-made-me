@@ -65,9 +65,7 @@ export default function FactoryBanner(props) {
               )}
               <div className="w-100 ">
                 <form
-                  onSubmit={(e) =>
-                    handleAddBanner(e, images ? images?.length : 0)
-                  }
+                  onSubmit={(e) => handleAddBanner(e, images?.length)}
                   encType="multipart/form-data"
                 >
                   <div className="row  row-gap">

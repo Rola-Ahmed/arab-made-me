@@ -92,6 +92,7 @@ function CompanyMircoSiteDocs() {
     let result = await addFactoryMedia({ authorization: isLogin }, data);
     if (result?.success) {
       let { path } = determinePathAndData(result?.data?.factory);
+
       setCurrentUserData((prevUserData) => ({
         ...prevUserData,
         factoryId: result?.data?.factory?.id,

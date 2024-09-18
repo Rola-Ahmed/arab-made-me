@@ -438,15 +438,22 @@ export default function MircoSiteDash() {
   }
 
   async function handleAddBanner(e, index) {
-    // document.body.style.cursor = "wait";
-    e.preventDefault();
-    let data = await handleSingleFileUpload(
-      selectedDocs?.[0]?.keyWord,
-      selectedDocs?.[0]?.pdfFile,
-      index
-      // factoryProfile?.images ? factoryProfile?.images?.length : 0
-    );
-    await handleBannerUploads(data, "add");
+
+    // temporary  option the will remove it
+    if (factoryProfile?.images && factoryProfile?.images?.length != 0) {
+      console.log("entered consdiotns 1")
+      // document.body.style.cursor = "wait";
+      e.preventDefault();
+      let data = await handleSingleFileUpload(
+        selectedDocs?.[0]?.keyWord,
+        selectedDocs?.[0]?.pdfFile,
+        index
+      );
+      await handleBannerUploads(data, "add");
+    } else {
+      console.log("entered consdiotns 2")
+      updateMedia(e);
+    }
   }
 
   async function handleDeleteBanner(index) {
@@ -520,14 +527,34 @@ export default function MircoSiteDash() {
     await handleCertificateUploads(data, "delete");
   }
   async function handleAddCertificate(e, index) {
-    // document.body.style.cursor = "wait";
-    e.preventDefault();
-    let data = await handleSingleFileUpload(
-      selectedDocs?.[0]?.keyWord,
-      selectedDocs?.[0]?.pdfFile,
-      index
-    );
+
+
+
+    if (factoryProfile?.qualityCertificates && factoryProfile?.qualityCertificates?.length != 0) {
+      console.log("entered consdiotns 1")
+      // document.body.style.cursor = "wait";
+      e.preventDefault();
+      let data = await handleSingleFileUpload(
+        selectedDocs?.[0]?.keyWord,
+        selectedDocs?.[0]?.pdfFile,
+        index
+      );
+      // await handleBannerUploads(data, "add");
     await handleCertificateUploads(data, "add");
+
+    } else {
+      console.log("entered consdiotns 2")
+      updateMedia(e);
+    }
+
+    // document.body.style.cursor = "wait";
+    // e.preventDefault();
+    // let data = await handleSingleFileUpload(
+    //   selectedDocs?.[0]?.keyWord,
+    //   selectedDocs?.[0]?.pdfFile,
+    //   index
+    // );
+    // await handleCertificateUploads(data, "add");
   }
   return (
     <>

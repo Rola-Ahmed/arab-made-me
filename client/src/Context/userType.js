@@ -104,9 +104,7 @@ export function UserTypeProvider({ children }) {
       let output = result?.data?.factories;
 
       // returns the results of path and validation of the factory
-      let { continueProfilePath: path } = determinePathAndData(
-        result?.data?.factories
-      );
+      let { path } = determinePathAndData(result?.data?.factories);
 
       setAndStoreData((prevVal) => ({
         ...prevVal,
@@ -167,7 +165,7 @@ export function UserTypeProvider({ children }) {
     setCurrentUserData(newValue);
   };
 
-  console.log("currentUserData", currentUserData);
+  // console.log("currentUserData", currentUserData);
   return (
     <userDetails.Provider
       value={{
