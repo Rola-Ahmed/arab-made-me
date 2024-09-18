@@ -34,6 +34,10 @@ factoriesRouter.get(
 factoriesRouter.get("/", factoriesController.getFactories);
 
 factoriesRouter.get("/products/:id", factoriesController.productsOfFactory);
+factoriesRouter.get(
+  "/factorieswithProducts",
+  factoriesController.getFactoriesWithProducts
+);
 
 factoriesRouter.put(
   "/verify/:id",

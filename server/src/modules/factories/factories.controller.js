@@ -136,7 +136,6 @@ export const updateFactory = asyncHandler(async (req, res, nxt) => {
   //   }
   // }
 
- 
   // if (unuqiueVlaitation.length!=0) return res.json({ message: `The ${unuqiueVlaitation.join(", ")} already exisit and it must be unique values ` });
 
   await req.factory.update(req.body);
@@ -273,3 +272,52 @@ export const getSPMF = crudOps.getAllForFactory(
 );
 
 export const getVisits = crudOps.getAllForFactory(Visit, "visits");
+
+export const getFactoriesWithProducts = asyncHandler(async (req, res, next) => {
+  let filter;
+  if (req.query.filter) {
+    filter = {
+      [Op.or]: [
+        sequelize.where(
+          sequelize.fn("LOWER", sequelize.col("products.name")),
+          "LIKE",
+          sequelize.fn("LOWER", `%${req.query.filter}%`)
+        ),
+        sequelize.where(
+          sequelize.fn("LOWER", sequelize.col("products.description")),
+          "LIKE",
+          sequelize.fn("LOWER", `%${req.query.filter}%`)
+        ),
+      ],
+    };
+    req.query.filter = null;
+  }
+
+  const searchFilters = searchFiltering(req.query);
+
+
+  if (filter) {
+    searchFilters.whereConditions.push(filter);
+  }
+
+  // Fetch factories along with their associated products
+  const factories = await Factory.findAll({
+    where: searchFilters.whereConditions,
+    offset: searchFilters.offset,
+    limit: searchFilters.limit,
+    order:
+      searchFilters.order.length > 0
+        ? searchFilters.order
+        : [["createdAt", "DESC"]],
+    include: [
+      {
+        model: Product,
+        as: "products",
+        attributes: ["id", "name", "description", "price"], // Product attributes to include
+      },
+      
+    ],
+  });
+
+  return res.status(200).json({ message: "done", factories });
+});
