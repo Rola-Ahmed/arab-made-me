@@ -1,6 +1,7 @@
-import { useEffect, useState, useContext } from "react";
-import axios from "axios";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+import { getAllProducts } from "Services/products";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import ProductCard from "components/Products/AllProducts/ProductCard";
@@ -11,34 +12,21 @@ import "swiper/css";
 import "swiper/css/navigation";
 
 // css
-import "../Products/products.css";
+import "assets/css/products.css";
 
 // context
-import { UserToken } from "Context/userToken";
-import { userDetails } from "Context/userType";
 
 // api url
-import { baseUrl, baseUrl_IMG, useAppTranslation } from "config.js";
-
-// sub components
-import StarRating from "components/Shared/stars";
-
-// const functions
-import { handleImageError, handleProfileError } from "utils/ImgNotFound";
+import { useAppTranslation } from "config.js";
 
 // modals validation
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/ImporterUnVerifiedPopUpMsg";
 import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
 import DescritionPopUp from "components/Helpers/DescritionPopUp";
-import DropdownActionBtns from "components/Shared/DropdownActionBtns/DropdownActionBtnsProducts";
-import HandleUsersBtnAccess, {
-  handleIsLoggedInBtn,
-} from "utils/actionBtns/HandleUsersBtnAccess";
+
 import DefaultUserNotAuthorizedModal from "components/ActionMessages/FormAccessControl/DefaultUserNotAuthorizedModal";
 function Products(title) {
-  let { isLogin } = useContext(UserToken);
-  let { currentUserData } = useContext(userDetails);
   let navigate = useNavigate();
 
   // action verification
@@ -55,43 +43,14 @@ function Products(title) {
   const { trans: t, currentLang } = useAppTranslation();
 
   useEffect(() => {
-    axios
-      .get(`${baseUrl}/products?size=20&include=factory`)
-      .then((response2) => {
-        if (response2?.data?.message === "done") {
-          setAllProductsData(
-            response2.data.products.filter((item) => item?.factoryId !== null)
-          );
-        }
-      })
-
-      .catch((error) => {});
+    async function products() {
+      const result = await getAllProducts("size=20&include=factory");
+      if (result?.success) {
+        setAllProductsData(result.data.products);
+      }
+    }
+    products();
   }, []);
-
-  function navProductpage(productId, productName, factoryName) {
-    navigate(`/productpage/${productId}-${productName}-${factoryName}`);
-  }
-
-  const handleUserClickValidation1 = (loginPath) => {
-    HandleUsersBtnAccess({
-      currentUserData,
-      isLogin,
-      navigate,
-      setModalShow,
-      setisLoggedReDirect,
-      loginPath,
-    });
-  };
-
-  const handleUserClickValidLogin = (loginPath) => {
-    handleIsLoggedInBtn({
-      isLogin,
-      navigate,
-      setModalShow,
-      setisLoggedReDirect,
-      loginPath,
-    });
-  };
 
   const handleQuestionMarkClick = (desc) => {
     setDescription(desc);
@@ -180,20 +139,16 @@ function Products(title) {
               breakpoints={{
                 687: {
                   slidesPerView: 1,
-                  // slidesPerGroup: 4,
                 },
                 765: {
                   slidesPerView: 2,
-                  // slidesPerGroup: 4,
                 },
                 994: {
                   slidesPerView: 3,
-                  // slidesPerGroup: 4,
                 },
 
                 1253: {
                   slidesPerView: 4,
-                  // slidesPerGroup: 4,
                 },
               }}
             >

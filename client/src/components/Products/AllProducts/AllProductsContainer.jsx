@@ -87,7 +87,7 @@ export default function AllProductsContainer() {
           setPagination((prevValue) => ({
             ...prevValue,
             totalPage: Math.ceil(
-              (response1.data.products.length || 0) /
+              (response1?.data?.products?.length || 0) /
                 prevValue.displayProductSize
             ),
           }));

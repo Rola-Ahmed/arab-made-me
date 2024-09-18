@@ -1,0 +1,124 @@
+/* home factories */
+.topFactory {
+  display: grid;
+  gap: 29px;
+  padding-top: 130px;
+
+}
+
+
+.topFactory .factoryCard {
+  align-items: flex-start;
+  grid-template-columns: repeat(4, 1fr);
+  width: 100%;
+}
+
+.topFactory .factoryCard .card {
+  width: 96% !important;
+
+
+}
+
+.factoryCard .sliderImg, .fo3 .sliderImg {
+  height: 192px;
+  object-fit: contain;
+
+}
+
+.cardBody {
+  padding: 20px;
+}
+
+
+
+.imgLogo {
+  width: 55.559px;
+  height: 51px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+
+
+
+
+/*----------------------- btns hover start ----------------------*/
+/* .topProducts .dropdown-menu-top, .topFactory .dropdown-menu-top, .all-products .dropdown-menu-top, .brant-cont .dropdown-menu-top { */
+.dropdown-menu-top {
+  right: 0;
+  border: 1px solid var(--Gray-300);
+  background: white;
+  border-radius: 6px;
+  transition: display 0.3s ease;
+  display: none;
+  position: absolute;
+  z-index: 50;
+  overflow: visible;
+  top: 33px;
+}
+.factories .dropdown-menu-top {
+  /* position: absolute; */
+  /* top: 159px; */
+  top: 47px;
+  /* right: 0;
+  border: 1px solid var(--Gray-300);
+  background: white;
+  border-radius: 6px; */
+
+}
+
+
+.topFactory .dropdown-menu-top {
+  top: 49px;
+}
+
+.topProducts .dropdown-menu-top {
+  top: 34px;
+}
+
+.all-products .dropdown-menu-top {
+  position: absolute;
+  top: 76px;
+}
+
+.brant-cont .dropdown-menu-top {
+  top: 79px;
+}
+
+.ellipsis.dropdown-toggle::after {
+  display: none;
+}
+
+
+.ellipsis:hover+.dropdown-menu-top, .dropdown-menu-top:hover, .ellipsis:active+.dropdown-menu-top, .dropdown-menu-top:active {
+  display: block;
+}
+
+
+/*----------------------- btns hover end ----------------------*/
+
+
+
+
+/* @media (max-width: 765px) {
+
+
+
+  .topFactory .factoryCard .card {
+    width: 514px !important;
+  }
+}
+
+@media (max-width: 624px) {
+
+
+  .topFactory .factoryCard .card {
+    width: 89vw !important;
+  }
+}
+
+@media (max-width: 539px) {
+  .topFactory .factoryCard .card {
+    width: 82vw !important;
+  }
+} */
