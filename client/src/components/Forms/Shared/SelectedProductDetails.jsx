@@ -29,17 +29,7 @@ export default function ProductDetails(props) {
             </div>
           </div>
 
-          <div className="col-md-6 col-sm-12">
-            <div className="form-group">
-              <label>Sku</label>
-              <input
-                type="text"
-                className="form-control"
-                value={productDetails?.Sku || ""}
-                readOnly
-              />
-            </div>
-          </div>
+        
           <div className="col-md-6 col-sm-12">
             <div className="form-group">
               <label>hsnCode</label>

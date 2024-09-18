@@ -68,11 +68,11 @@ const useAllProducts = ( filter) => {
 
   useEffect(() => {
     fetchReqLeng();
-  }, [filter, isLogin]);
+  }, [filter, isLogin,currentUserData?.factoryId]);
 
   useEffect(() => {
     fetchReqData();
-  }, [pagination?.currentPage, pagination?.totalPage, filter, isLogin]);
+  }, [pagination?.currentPage, pagination?.totalPage, filter, isLogin,currentUserData?.factoryId]);
 
   const deleteData = async (itemId) => {
     let result = await deleteProductUser(itemId, {

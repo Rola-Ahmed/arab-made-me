@@ -98,12 +98,7 @@ export default function EditProduct() {
       .min(6, "Minimum  length is 6")
       .max(15, "Maximum 15  is legnth"),
 
-    //   SKU (Stock Keeping Unit)
-    sku: Yup.string()
-      .required("Input Field is Required")
-      .min(6, "Minimum  length is 6")
-      .max(15, "Maximum 15  is legnth"),
-
+    
     // guarantee\\\" is not allowed to be em
 
     guarantee: Yup.string().max(255, "max 255 is legnth"),
@@ -159,7 +154,6 @@ export default function EditProduct() {
 
     price: productDetails?.price || "",
     hsnCode: productDetails?.hsnCode || "",
-    sku: productDetails?.sku || "",
     guarantee: productDetails?.guarantee || "",
     minOrderQuantity: productDetails?.minOrderQuantity || "",
     maxOrderQuantity: productDetails?.maxOrderQuantity || "",
@@ -240,7 +234,6 @@ export default function EditProduct() {
           description: values.description,
           price: values.price,
           hsnCode: values.hsnCode,
-          sku: values.sku,
           minOrderQuantity: values.minOrderQuantity,
 
           specialCharacteristics: {},
@@ -762,27 +755,7 @@ export default function EditProduct() {
                 </div>
               </div>
 
-              <div className="col-4">
-                <div className="form-group">
-                  <label>
-                    Sku <span className="text-danger">*</span>
-                  </label>
-                  <input
-                    className="form-control"
-                    id="sku"
-                    onChange={formValidation.handleChange}
-                    onBlur={formValidation.handleBlur}
-                    value={formValidation.values.sku}
-                  />
-                  {formValidation.errors.sku && formValidation.touched.sku ? (
-                    <small className="text-danger">
-                      {formValidation.errors.sku}
-                    </small>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              </div>
+             
 
               <div className="col-4">
                 <div className="form-group">
