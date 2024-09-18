@@ -1,0 +1,15 @@
+{
+    "SECTOR": {
+      "Electronic": "إلكترونيات",
+      "Medical Supplies": "اللوازم الطبية",
+      "Agricultural": "الزراعة",
+      "Engineer": "هندسة",
+      "Automotive": "السيارات",
+      "Chemical": "الكيمياء",
+      "Garment": "الملابس",
+      "Pharmaceutical": "الصيدلة",
+      "Building Materials": "مواد البناء",
+      "Food": "الأغذية"
+    }
+  }
+  
