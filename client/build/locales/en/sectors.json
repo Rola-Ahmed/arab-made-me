@@ -1,0 +1,14 @@
+{
+  "SECTOR": {
+    "Electronic": "Electronics",
+    "Medical Supplies": "Medical Supplies",
+    "Agricultural": "Agricultural",
+    "Engineer": "Engineering",
+    "Automotive": "Automotive",
+    "Chemical": "Chemical",
+    "Garment": "Garment",
+    "Pharmaceutical": "Pharmaceutical",
+    "Building Materials": "Building Materials",
+    "Food": "Food"
+  }
+}
