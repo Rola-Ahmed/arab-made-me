@@ -2,7 +2,7 @@ import Joi from "joi";
 
 export const addFactorySchema = Joi.object({
   name: Joi.string().trim().required(),
-  description: Joi.string().min(10).required(),
+  description: Joi.string().required(),
   whyUs: Joi.string(),
   repName: Joi.array().items(Joi.string().max(50).trim()).optional(),
   // repName:Joi.string().required(),
@@ -53,7 +53,7 @@ export const addFactorySchema = Joi.object({
 export const updateFactorySchema = Joi.object({
   id: Joi.number(),
   name: Joi.string().trim().optional(),
-  description: Joi.string().min(10).optional(),
+  description: Joi.string().optional(),
   whyUs: Joi.string(),
   repName: Joi.array().items(Joi.string().max(50).trim()).optional(),
   // repName:Joi.string().required(),

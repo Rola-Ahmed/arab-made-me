@@ -3,10 +3,11 @@ import { useFetchFactoryById } from "hooks/useFetchFactoryById";
 import { getFactoryTeam } from "Services/factory";
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
+import { determinePathAndData } from "utils/factoryUtils";
 
 export const useMircoData = (update, fetch_team) => {
   let { isLogin } = useContext(UserToken);
-  let { currentUserData } = useContext(userDetails);
+  let { currentUserData, setCurrentUserData} = useContext(userDetails);
 
   const { data, errorMessage } = useFetchFactoryById(
     currentUserData?.factoryId
@@ -30,9 +31,17 @@ export const useMircoData = (update, fetch_team) => {
 
     fetchData();
   }, [data, currentUserData?.factoryId]);
-
+  const updateCurrentUser = (factoryDatat) => {
+    let { path } = determinePathAndData(factoryDatat);
+    setCurrentUserData((prevUserData) => ({
+      ...prevUserData,
+      // continueProfilePath: null,
+      continueProfilePath: path,
+    }));
+  };
   return {
     isLogin,
     errorloadingData: errorMessage,
+    updateCurrentUser,
   };
 };

@@ -120,7 +120,11 @@ export default function MircoSiteDash() {
     });
   }
 
-  let { isLogin, errorloadingData } = useMircoData(update, fetch_team);
+  // update this later
+  let { isLogin, errorloadingData, updateCurrentUser } = useMircoData(
+    update,
+    fetch_team
+  );
   let {
     factoryInfoValidation,
     SocialAccountValidation,
@@ -151,14 +155,9 @@ export default function MircoSiteDash() {
       ModalClose();
       handleClose();
       successMsg();
-
+      updateCurrentUser(result?.data?.factory);
       update(result?.data?.factory);
-      //
       setSelectedDocs([]);
-      // setTeamIsAdded({
-      //   status: false,
-      //   id: "",
-      // });
     } else {
       setErrorMsg((prevErrors) => ({
         ...prevErrors,
@@ -462,16 +461,10 @@ export default function MircoSiteDash() {
 
     if (result?.success) {
       update(result?.data?.factory);
-      // setFactoryProfile((prev) => ({
-      //   ...prev,
-      //   ...result?.data?.factory
-      // }));
+      updateCurrentUser(result?.data?.factory);
       SuccessToast("data updated succcfully");
 
       handleClose();
-      // const closeButton = document.getElementsByTagName("addLegalDocs");
-      // closeButton.setAttribute("data-bs-dismiss", "modal");
-      // console.log("closeButton", closeButton);
     } else {
       if (actionType == "delete") {
         ErrorToast("someThing went Wrong");
@@ -500,6 +493,7 @@ export default function MircoSiteDash() {
       SuccessToast("data updated succcfully");
 
       handleClose();
+      updateCurrentUser(result?.data?.factory);
     } else {
       if (actionType == "delete") {
         ErrorToast("someThing went Wrong");

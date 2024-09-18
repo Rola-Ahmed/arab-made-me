@@ -4,6 +4,7 @@ import { jwtDecode } from "jwt-decode";
 import { getUser } from "Services/UserAuth";
 import { fetchOneFactory } from "Services/factory";
 import { fetchOneImporter } from "Services/importer";
+import { determinePathAndData } from "utils/factoryUtils";
 
 // Create the user context
 export const userDetails = createContext("");
@@ -11,7 +12,6 @@ export const userDetails = createContext("");
 export function UserTypeProvider({ children }) {
   let { isLogin, setIsLogin } = useContext(UserToken);
   const [loading, setLoading] = useState(true);
-
 
   // State for user data
   // const [currentUserData, setCurrentUserData] = useState(() => "");
@@ -60,7 +60,6 @@ export function UserTypeProvider({ children }) {
 
     let result = await getUser(decodedToken);
 
-
     if (result?.success) {
       let output = result?.data?.users;
       setAndStoreData((prevVal) => ({
@@ -100,34 +99,14 @@ export function UserTypeProvider({ children }) {
     let result = await fetchOneFactory(currentUserData?.factoryId);
 
     if (result?.success) {
-      let path = null;
+      // let path = null;
 
       let output = result?.data?.factories;
 
-      if (output?.name == null) {
-        path = "CompanyDetails";
-      } else if (
-        output?.qualityCertificates == null ||
-        output?.coverVideo == null ||
-        output?.images == null ||
-        output?.coverImage == null
-      ) {
-        path = "CompanyDetails/MircoSiteDocs";
-      } else if (
-        output?.repName == null ||
-        output?.repPhone == null ||
-        output?.repEmail == null
-      ) {
-        path = "CompanyDetails/RepresentiveDetails";
-      } else if (output?.legalDocs == null || 
-        output?.taxRegisterationNumber == null ||
-        output?.commercialRegisterationNumber == null||
-        output?.IndustrialLicenseNumber == null||
-        output?.IndustrialRegistrationNumber == null ||
-        output?.BusinessRegistrationNumber == null
-      ) {
-        path = "CompanyDetails/LegalDocuments";
-      }
+      // returns the results of path and validation of the factory
+      let { continueProfilePath: path } = determinePathAndData(
+        result?.data?.factories
+      );
 
       setAndStoreData((prevVal) => ({
         ...prevVal,
@@ -188,8 +167,7 @@ export function UserTypeProvider({ children }) {
     setCurrentUserData(newValue);
   };
 
- 
-  // console.log("currentUserData",currentUserData)
+  console.log("currentUserData", currentUserData);
   return (
     <userDetails.Provider
       value={{

@@ -14,6 +14,7 @@ import SelectRole from "./TimeLineHeader/SelectRole";
 import Nextpoint from "./TimeLineHeader/NextPoint";
 import LastPointStatus from "./TimeLineHeader/LastPointStatus";
 import { userDetails } from "Context/userType";
+import { determinePathAndData } from "utils/factoryUtils";
 
 function CompanyMircoSiteDocs() {
   let { isLogin } = useContext(UserToken);
@@ -36,17 +37,66 @@ function CompanyMircoSiteDocs() {
   const [isLoading, setIsLoading] = useState("");
 
   // ------------------------------------------------new
+
+  function checkRequriedFeilds(selectedDocs) {
+    let missingRequriemtns = null;
+
+    if (selectedDocs?.length == 0) {
+      missingRequriemtns = "please fill all the requirmetns";
+    }
+
+    // all requried keys
+    const requiredKeywords = ["images", "coverImage", "qualityCertificates"];
+
+    // Extract all keyWord values from the documents
+    const allKeywords = selectedDocs?.map((doc) => doc?.keyWord);
+
+    // Check if all required keywords are present in the extracted keyWord values
+    const result = requiredKeywords?.every((keyword) =>
+      allKeywords.includes(keyword)
+    );
+    // if true all requriments exisit
+    if (!result) {
+      missingRequriemtns = "please fill all the requirmetns";
+    }
+
+    return missingRequriemtns;
+  }
   async function UploadDocs(e) {
     setIsLoading(true);
     e.preventDefault();
     let data = new FormData();
+
+    let missingRequriemtns = checkRequriedFeilds(selectedDocs);
+    // console.log("missingRequriemtns", missingRequriemtns);
+    // return;
+    if (missingRequriemtns) {
+      setIsLoading(false);
+      setErrorMsg((prevErrors) => ({
+        ...prevErrors,
+        response: missingRequriemtns,
+      }));
+
+      const targetElement = document.getElementById("view");
+      if (targetElement) {
+        targetElement.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+
+      return;
+    }
+
     selectedDocs?.map((item) => data.append(item.keyWord, item.pdfFile));
     let result = await addFactoryMedia({ authorization: isLogin }, data);
     if (result?.success) {
+      let { path } = determinePathAndData(result?.data?.factory);
       setCurrentUserData((prevUserData) => ({
         ...prevUserData,
         factoryId: result?.data?.factory?.id,
-        continueProfilePath: "CompanyDetails/RepresentiveDetails",
+        // continueProfilePath: "CompanyDetails/RepresentiveDetails",
+        continueProfilePath: path,
       }));
 
       setIsLoading(true);
@@ -173,7 +223,7 @@ function CompanyMircoSiteDocs() {
                     mediaMaxLen="1"
                     meidaAcceptedExtensions={["mkv", "mp4", "x-matroska"]}
                     setErrorMsg={setErrorMsg}
-                    title="Factory Cover video *"
+                    title="Factory Cover video"
                   />
 
                   <div className="col-12 action">

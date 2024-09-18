@@ -10,7 +10,7 @@ const object = Joi.object();
 
 export const addProductValidation = Joi.object({
     name: string.required(),
-    description: stringMin16.required(),
+    description: Joi.string().required(),
     // coverImage: string,
     hsnCode: stringMin6.required(),
     // images: arrayString,
@@ -33,7 +33,7 @@ export const addProductValidation = Joi.object({
 export const updateProductValidation = Joi.object({
     id:number,
     name: string,
-    description: stringMin16,
+    description: Joi.string(),
     // coverImage: string,
     hsnCode: stringMin6,
     // images: arrayString,

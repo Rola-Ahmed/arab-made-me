@@ -28,6 +28,7 @@ export default function FactoryProfile() {
     setFactoryProfile,
     clearSession,
     isLogin,
+    updateCurrentUser
   } = useFactoryProfile();
 
   const { initialAccountInfo, AccountInfoValidation } = useFormValidation(
@@ -84,12 +85,10 @@ export default function FactoryProfile() {
         ...prev,
         legalDocs: result?.data?.factory?.legalDocs,
       }));
+      updateCurrentUser(result?.data?.factory);
       SuccessToast("data updated succcfully");
 
       handleClose();
-      // const closeButton = document.getElementsByTagName("addLegalDocs");
-      // closeButton.setAttribute("data-bs-dismiss", "modal");
-      // console.log("closeButton", closeButton);
     } else {
       if (actionType == "delete") {
         ErrorToast("someThing went Wrong");
@@ -162,7 +161,10 @@ export default function FactoryProfile() {
       legalDocs: false,
     });
     setErrorMsg({});
-    AccountInfoValidation.resetForm();
+
+    AccountInfoValidation.resetForm({
+      values: initialAccountInfo,
+    });
     setSelectedDocs([]);
   }
 

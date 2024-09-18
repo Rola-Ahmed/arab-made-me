@@ -9,7 +9,7 @@ export default function ProductPageContainer() {
   let { ProductIdProductNameFactoryName } = useParams();
 
   const [productData, setProductData] = useState();
-  const [apiLoadingData, setapiLoadingData] = useState(true);
+  // const [apiLoadingData, setapiLoadingData] = useState(true);
 
   const [modalShow, setModalShow] = useState({
     isLogin: false,
@@ -19,7 +19,7 @@ export default function ProductPageContainer() {
   const [isLoggedReDirect, setisLoggedReDirect] = useState("");
 
   useEffect(() => {
-    setapiLoadingData(true);
+    // setapiLoadingData(true);
     axios
       .get(
         `${baseUrl}/products/${
@@ -47,11 +47,11 @@ export default function ProductPageContainer() {
             ...response.data.products,
             productSlider: updatedImages,
           });
-          setapiLoadingData(false);
+          // setapiLoadingData(false);
         }
       })
       .catch((error) => {
-        setapiLoadingData(true);
+        // setapiLoadingData(true);
       });
   }, [ProductIdProductNameFactoryName]);
 

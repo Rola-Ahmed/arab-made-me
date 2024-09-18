@@ -179,7 +179,6 @@ function Factorypage() {
     };
   }, []);
 
- 
   return (
     <>
       <IsLoggedIn
@@ -441,6 +440,32 @@ function Factorypage() {
             <div className="col-lg-2 col-md-4 col-12  mx-auto w-sm-fit-content">
               <div className="parent-buttons-container  d-table-cell ">
                 <div className="d-flex align-items-center">
+                  <button
+                    className="text-container text-white fw-600 fs-15"
+                    onClick={() => {
+                      if (factoryProduct?.length == 0) {
+                        setFactoryHasProduct(true);
+                        return;
+                      }
+                      handleUserClickValidation(
+                        `sendrfq?factoryId=${factoryDetails?.id}&factoryName=${factoryDetails?.name}`
+                      );
+                    }}
+                  >
+                    {t("BtnsDescription:RFQ.sendRfq")}
+                  </button>
+                  <button
+                    className="fa-solid fa-circle-question cursor bg-white border-0 p-0"
+                    title={t("BtnsDescription:RFQ.description")}
+                    onClick={() => {
+                      handleQuestionMarkClick(
+                        t("BtnsDescription:RFQ.description")
+                      );
+                    }}
+                  ></button>
+                </div>
+
+                <div className="d-flex align-items-center">
                   <div
                     className="text-container text-white fw-600 fs-15"
                     onClick={() => {
@@ -503,32 +528,6 @@ function Factorypage() {
                     onClick={() => {
                       handleQuestionMarkClick(
                         t("BtnsDescription:whiteLabelRequest.description")
-                      );
-                    }}
-                  ></button>
-                </div>
-
-                <div className="d-flex align-items-center">
-                  <button
-                    className="text-container text-white fw-600 fs-15"
-                    onClick={() => {
-                      if (factoryProduct?.length == 0) {
-                        setFactoryHasProduct(true);
-                        return;
-                      }
-                      handleUserClickValidation(
-                        `sendrfq?factoryId=${factoryDetails?.id}&factoryName=${factoryDetails?.name}`
-                      );
-                    }}
-                  >
-                    {t("BtnsDescription:RFQ.sendRfq")}
-                  </button>
-                  <button
-                    className="fa-solid fa-circle-question cursor bg-white border-0 p-0"
-                    title={t("BtnsDescription:RFQ.description")}
-                    onClick={() => {
-                      handleQuestionMarkClick(
-                        t("BtnsDescription:RFQ.description")
                       );
                     }}
                   ></button>

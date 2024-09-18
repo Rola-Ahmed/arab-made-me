@@ -192,7 +192,6 @@ function Productpage(props) {
               </div>
               <div className="sku w-100">
                 <div className="avail">
-                 
                   <p className="fw-400 fs-14-med text-muted-2 paddig-ava">
                     Availability:
                     <span
@@ -260,6 +259,26 @@ function Productpage(props) {
             </div>
             <div className="col-lg-2   h-100">
               <div className=" d-table-cell  ">
+                <div className="d-flex align-items-center">
+                  <div
+                    className="text-container text-white fw-600 fs-15"
+                    onClick={() => {
+                      handleUserClickValidation1(
+                        `sendrfq?factoryId=${productData?.factoryId}&factoryName=${productData?.factory?.name}&productId=${productData?.id}&productName=${productData?.name} `
+                      );
+                    }}
+                  >
+                    {t("BtnsDescription:RFQ.sendRfq")}
+                  </div>
+                  <button
+                    className="fa-solid fa-circle-question cursor bg-white border-0 p-0 ms-1"
+                    title={t("BtnsDescription:RFQ.description")}
+                    onClick={() => {
+                      setDescription(t("BtnsDescription:RFQ.description"));
+                    }}
+                  ></button>
+                </div>
+
                 <div className={"d-flex align-items-center"}>
                   <div
                     className="text-container  text-white fw-600 fs-15"
@@ -327,25 +346,6 @@ function Productpage(props) {
                   ></button>
                 </div>
 
-                <div className="d-flex align-items-center">
-                  <div
-                    className="text-container text-white fw-600 fs-15"
-                    onClick={() => {
-                      handleUserClickValidation1(
-                        `sendrfq?factoryId=${productData?.factoryId}&factoryName=${productData?.factory?.name}&productId=${productData?.id}&productName=${productData?.name} `
-                      );
-                    }}
-                  >
-                    {t("BtnsDescription:RFQ.sendRfq")}
-                  </div>
-                  <button
-                    className="fa-solid fa-circle-question cursor bg-white border-0 p-0 ms-1"
-                    title={t("BtnsDescription:RFQ.description")}
-                    onClick={() => {
-                      setDescription(t("BtnsDescription:RFQ.description"));
-                    }}
-                  ></button>
-                </div>
                 <div className="d-flex align-items-center">
                   <div
                     className="text-container text-white fw-600 fs-15"

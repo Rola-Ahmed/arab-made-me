@@ -40,6 +40,12 @@ const useFormSubmission = (
     selectedDocs
     // specialCharacteristicsArr
   ) => {
+    if (selectedDocs?.length == 0) {
+      setLoadingState(false);
+      handleResponseError("Legal Documents is requried");
+      return;
+    }
+
     setLoadingState(true);
     clearResponseError();
 
@@ -66,13 +72,7 @@ const useFormSubmission = (
 
     if (result?.success) {
       setRequestAddedText(true);
-      if (selectedDocs.length > 0) {
-        await submitDocs(selectedDocs);
-      } else {
-        // display  successfully submitted message
-        navigate(`/factorydashboard`);
-        updateCurrentUser();
-      }
+      await submitDocs(selectedDocs);
     } else {
       setLoadingState(false);
       handleResponseError(result.error);
@@ -81,6 +81,11 @@ const useFormSubmission = (
 
   const submitDocs = async (selectedDocs) => {
     setLoadingState(true);
+    if (selectedDocs?.length == 0) {
+      setLoadingState(false);
+      handleResponseError("Legal Documents is requried");
+      return;
+    }
 
     clearResponseError();
     let data = new FormData();
@@ -93,7 +98,7 @@ const useFormSubmission = (
       if (result?.success) {
         setLoadingState(true);
         navigate(`/factorydashboard`);
-        updateCurrentUser();
+        updateCurrentUser(result?.data?.factory);
       } else {
         handleResponseError(result.error);
         setLoadingState(false);

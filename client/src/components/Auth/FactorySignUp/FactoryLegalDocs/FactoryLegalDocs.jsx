@@ -14,6 +14,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import InputField from "components/Forms/Shared/InputField";
 import { RegisterationNumbers } from "utils/validationUtils";
+import { determinePathAndData } from "utils/factoryUtils";
 
 function FactoryLegalDocs() {
   let { isLogin } = useContext(UserToken);
@@ -22,10 +23,12 @@ function FactoryLegalDocs() {
   let currentUrl = window.location.pathname;
   document.title = "Company Registration";
 
-  const updateCurrentUser = () => {
+  const updateCurrentUser = (factoryDatat) => {
+    let { path } = determinePathAndData(factoryDatat);
     setCurrentUserData((prevUserData) => ({
       ...prevUserData,
-      continueProfilePath: null,
+      // continueProfilePath: null,
+      continueProfilePath: path,
     }));
   };
 
@@ -100,6 +103,7 @@ function FactoryLegalDocs() {
 
   function submit(values) {
     // if data is not added yet
+
     if (!requestAddedText) {
       submitForm(values, selectedDocs);
     }
@@ -108,11 +112,8 @@ function FactoryLegalDocs() {
     // this case means that error ouccured in meidaApi so i need only to call media api
     // else
     // if (privateLabelAdded.status && selectedDocs?.length > 0) {
-    else if (selectedDocs?.length > 0) {
+    else {
       submitDocs(selectedDocs);
-    } else {
-      updateCurrentUser();
-      navigate(`/factorydashboard`);
     }
   }
   return (
