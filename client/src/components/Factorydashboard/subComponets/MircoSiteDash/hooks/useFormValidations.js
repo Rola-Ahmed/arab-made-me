@@ -41,7 +41,7 @@ export const useFormValidations = (
 
     factoryPhoneCode: (() => {
       const phoneCode = countriesMiddleEast?.[0]?.phoneCode;
-      let phone = factoryProfile?.socialLinks?.whatsapp;
+      let phone = factoryProfile?.phone;
       if (!phone) return phoneCode;
       const country = countriesMiddleEast?.find((values) => {
         return phone.startsWith(values?.phoneCode);
@@ -53,7 +53,7 @@ export const useFormValidations = (
     })(),
 
     factoryPhone: (() => {
-      let phone = factoryProfile?.socialLinks?.whatsapp;
+      let phone = factoryProfile?.phone;
       if (!phone) return "";
 
       const country = countriesMiddleEast?.find((values) => {
@@ -161,7 +161,7 @@ export const useFormValidations = (
       website: websiteValidation,
       instagramLink: websiteValidation,
       facebookLink: websiteValidation,
-      whatsapp:phoneValidation
+      whatsapp: phoneValidation,
     }),
     onSubmit: handleUpdateSocialAccounts,
   });

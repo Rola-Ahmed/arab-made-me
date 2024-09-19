@@ -20,7 +20,7 @@ export let requiredStringValidate = Yup.string().required(
 
 export let requiredStringMax255 = Yup.string()
   .required("Input field is Required")
-  .max(255, "max legnth is 255");
+  // .max(255, "max legnth is 255");
 
 // Utility to validate a date field that must be in the future
 const now = new Date();
