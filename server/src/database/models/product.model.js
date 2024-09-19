@@ -104,3 +104,4 @@ export const Product =sequelize.define('products',{
     Product.belongsTo(Sector)
     Product.belongsTo(Factory,{onDelete:'CASCADE'})
     Factory.hasMany(Product)
+    Sector.hasMany(Product)

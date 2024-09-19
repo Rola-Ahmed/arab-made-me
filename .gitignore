@@ -102,3 +102,6 @@ server/src/database/connection copy.js
 client/src/components/Importerdashboard/subComponets/ImporterProfile/ImporterProfile copy.jsx
 client/src/components/Factories/AllFactories/FetchFactories copy.jsx
 client/src/components/Home/TopFactories/FetchTopFactories copy.jsx
+client/src/components/Home/sectors/Sectors copy.jsx
+server/src/modules/sectors/sectors.controller copy.js
+server/src/modules/sectors/sectors.routes copy.js

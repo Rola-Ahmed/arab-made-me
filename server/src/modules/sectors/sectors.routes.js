@@ -25,6 +25,7 @@ sectorsController.addSector
 sectorsRoute.put("/image/:id",checkUserToken,allowedTo(['admin']),multerUploader('sectors',types).fields(fields),sectorsController.uploadMedia)
 
 sectorsRoute.get("/",sectorsController.getSectors)
+sectorsRoute.get("/getAllWithProductLength",sectorsController.getAllWithProductLength)
 
 sectorsRoute.get("/:id",sectorsController.getSector)
 

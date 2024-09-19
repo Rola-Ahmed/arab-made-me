@@ -5,37 +5,29 @@ import { baseUrl_IMG, useAppTranslation } from "config.js";
 
 import { handleLogoTextError } from "utils/ImgNotFound";
 import { useNavigate } from "react-router-dom";
-import { useFetchSectors } from "hooks/useFetchSectors";
-import { fetchSectorProducts } from "Services/sector";
+import { fetchSectorswithProductsLength } from "Services/sector";
 
 function Sectors() {
-  let { allSectors, errormsg } = useFetchSectors();
+  // let { allSectors, errormsg } = useFetchSectors();
   const [allsSectors, setAllSectors] = useState([]);
+  const [errormsg, setErrormsg] = useState();
   const { trans: t, currentLang } = useAppTranslation();
-
+  // sectors/getAllWithProductLength?size=10
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProductData = async () => {
-      if (Array.isArray(allSectors) && allSectors.length > 0) {
-        const updatedSectors = await Promise.all(
-          allSectors?.map(async (item) => {
-            let result = await fetchSectorProducts(item?.id);
-            if (result?.success) {
-              return {
-                ...item,
-                productQuntity: result?.data?.products?.length,
-              };
-            }
-            return item;
-          })
-        );
-        setAllSectors(updatedSectors);
+      let result = await fetchSectorswithProductsLength("size=10");
+
+      if (result?.success) {
+        setAllSectors(result?.data?.sectors);
+      } else {
+        setErrormsg(result?.error);
       }
     };
 
     fetchProductData();
-  }, [allSectors]);
+  }, []);
   return (
     <section className=" margin-sm-screen home-padding-t">
       <div className="container container-1 p-0 d-flex gap-48">
