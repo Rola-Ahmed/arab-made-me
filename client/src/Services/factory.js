@@ -14,9 +14,9 @@ export const fetchFactoryProducts = async (factoryId) => {
 };
 
 // remove this later
-export const fetchFactoryProductsSize = async (factoryId, size) => {
-  return await getRequest(`/factories/products/${factoryId}?size=${size}`);
-};
+// export const fetchFactoryProductsSize = async (factoryId, size) => {
+  // return await getRequest(`/factories/products/${factoryId}?size=${size}`);
+// };
 
 // and will keep this one
 export const fetchFactoryProducts2 = async (factoryId, params) => {
@@ -25,8 +25,12 @@ export const fetchFactoryProducts2 = async (factoryId, params) => {
 
 //------------------------------------- factory data------------------------------------------
 
-export const fetchFactorieswithParam = async (param) => {
-  return await getRequest(`/factories?${param}`);
+// export const fetchFactorieswithParam = async (param) => {
+//   return await getRequest(`/factories?${param}`);
+// };
+
+export const factorieswithProducts = async (param) => {
+  return await getRequest(`/factories/factorieswithProducts?${param}`);
 };
 
 export const fetchOneFactory = async (id) => {

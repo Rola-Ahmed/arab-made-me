@@ -295,7 +295,6 @@ export const getFactoriesWithProducts = asyncHandler(async (req, res, next) => {
 
   const searchFilters = searchFiltering(req.query);
 
-
   if (filter) {
     searchFilters.whereConditions.push(filter);
   }
@@ -313,9 +312,10 @@ export const getFactoriesWithProducts = asyncHandler(async (req, res, next) => {
       {
         model: Product,
         as: "products",
-        attributes: ["id", "name", "description", "price"], // Product attributes to include
+        limit: 20,
+        separate: true, // Fetch products in a separate query to support limit
+        attributes: ["id", "name", "coverImage"], // Product attributes to include
       },
-      
     ],
   });
 

@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import "../Factories.css";
 import { countriesMiddleEast } from "constants/countries";
 import Loading from "components/Loading/Loading";
@@ -16,8 +16,7 @@ import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/ImporterUnVerifiedPopUpMsg";
 import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
 
-import { UserToken } from "Context/userToken";
-import { userDetails } from "Context/userType";
+
 import DescritionPopUp from "components/Helpers/DescritionPopUp";
 import { useAppTranslation } from "config.js";
 
@@ -33,6 +32,8 @@ export default function TopFactories(props) {
     filter,
     setPagination,
     apiLoadingData,
+    isLogin,
+    currentUserData,
   } = props;
   document.title = "Factory Gallery";
   let { allSectors } = useFetchSectors();
@@ -40,8 +41,7 @@ export default function TopFactories(props) {
 
   // let location = useLocation();
   let navigate = useNavigate();
-  let { isLogin } = useContext(UserToken);
-  let { currentUserData } = useContext(userDetails);
+
 
   const [modalShow, setModalShow] = useState({
     isLogin: false,
@@ -49,13 +49,12 @@ export default function TopFactories(props) {
     isFactoryVerified: false,
   });
   const [description, setDescription] = useState("");
+  const [isLoggedReDirect, setisLoggedReDirect] = useState([]);
 
   let [factoryHasProduct, setFactoryHasProduct] = useState({
     status: false,
     location: "",
   });
-
-  const [isLoggedReDirect, setisLoggedReDirect] = useState([]);
 
   function SelectedfFlters(value, keyword) {
     let sectorArr = filter.filterBySector;
@@ -162,10 +161,6 @@ export default function TopFactories(props) {
     } else {
       window.history.replaceState(null, "", oldUrl);
     }
-
-    // if (filters?.filterBypartner != "") {
-    //   queryParams.set("filter", filters.filterBypartner);
-    // }
 
     const queryString = queryParams.toString();
     const newUrl = `${window.location.pathname}?${queryString}`;

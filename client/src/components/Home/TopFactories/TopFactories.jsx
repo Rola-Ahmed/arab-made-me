@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import "assets/css/TopFactories.css";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -7,7 +7,6 @@ import { useAppTranslation } from "config.js";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 
@@ -16,27 +15,18 @@ import HandleUsersBtnAccess, {
 } from "utils/actionBtns/HandleUsersBtnAccess";
 
 import { useNavigate } from "react-router-dom";
-import { UserToken } from "Context/userToken";
-// modals
+
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/ImporterUnVerifiedPopUpMsg";
 import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
 import DescritionPopUp from "components/Helpers/DescritionPopUp";
 
-import { userDetails } from "Context/userType";
-// static variabls
-
 import FactoryCardParent from "./Shared/FactoryCardParent";
 import DefaultUserNotAuthorizedModal from "components/ActionMessages/FormAccessControl/DefaultUserNotAuthorizedModal";
 
 export default function TopFactories(props) {
-  let { allFactoriesData } = props;
-
-  let { isLogin } = useContext(UserToken);
-  let { currentUserData } = useContext(userDetails);
-
+  let { allFactoriesData, isLogin, currentUserData } = props;
   let navigate = useNavigate();
-
   const [description, setDescription] = useState("");
   const { trans: t, currentLang } = useAppTranslation();
 

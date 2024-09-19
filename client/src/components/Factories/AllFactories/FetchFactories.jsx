@@ -1,20 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Factories from "./Factories";
 import { useSearchParams } from "react-router-dom";
-
-import {
-  fetchFactorieswithParam,
-  fetchFactoryProductsSize,
-} from "Services/factory";
+import { UserToken } from "Context/userToken";
+import { userDetails } from "Context/userType";
+import { factorieswithProducts } from "Services/factory";
 
 export default function FetchFactories() {
+  let { isLogin } = useContext(UserToken);
+  let { currentUserData } = useContext(userDetails);
   const [searchParams] = useSearchParams();
   const filterSearch = searchParams.get("filterSearch");
   // const filterByCountry = searchParams.get("filterByCountry");
   const filterBySector = searchParams.get("filterBySector");
   // const filterByCategory = searchParams.get("filterByCategory");
 
-  const numOfProductsFetch = 20;
+  // const numOfProductsFetch = 20;
   const [pagination, setPagination] = useState(() => ({
     // i want to display 3 pdoructs in the 1st page
     displayProductSize: 9,
@@ -22,9 +22,6 @@ export default function FetchFactories() {
     totalPage: 1,
   }));
   const [allFactoriesData, setAllFactoriesData] = useState([]);
-  const [uniqueFactoryIDofProducts, setUniqueFactoryIDofProducts] = useState(
-    []
-  );
 
   const [filter, setFilter] = useState({
     filterSearch: filterSearch || "",
@@ -45,29 +42,27 @@ export default function FetchFactories() {
   });
 
   async function FetchTotalLen() {
-    try {
-      let params = `location=${filter?.filterByCountry}&filter=${
-        filter?.filterSearch
-      }&sector=${filter?.filterBySector.join(",")}`;
+    let params = `location=${filter?.filterByCountry}&filter=${
+      filter?.filterSearch
+    }&sector=${filter?.filterBySector.join(",")}`;
 
-      let result = await fetchFactorieswithParam(params);
+    let result = await factorieswithProducts(params);
 
-      if (result?.success) {
-        setPagination((prevValue) => ({
-          ...prevValue,
-          totalPage: Math.ceil(
-            (result.data.factories.length || 0) / prevValue.displayProductSize
-          ),
-        }));
-      }
-      //   } else {
+    if (result?.success) {
+      setPagination((prevValue) => ({
+        ...prevValue,
+        totalPage: Math.ceil(
+          (result.data.factories.length || 0) / prevValue.displayProductSize
+        ),
+      }));
+    }
+    //   } else {
 
-      setApiLoadingData({
-        loadingPage: result?.loadingStatus,
-        errorCausedMsg: result?.error,
-      });
-      //   }
-    } catch (error) {}
+    setApiLoadingData({
+      loadingPage: result?.loadingStatus,
+      errorCausedMsg: result?.error,
+    });
+    //   }
   }
 
   useEffect(() => {
@@ -80,7 +75,7 @@ export default function FetchFactories() {
         filter?.filterSearch
       }&sectors=${filter?.filterBySector.join(",")}`;
 
-      let result = await fetchFactorieswithParam(
+      let result = await factorieswithProducts(
         `size=${pagination?.displayProductSize}&page=${pagination?.currentPage}&${params}`
       );
 
@@ -88,71 +83,13 @@ export default function FetchFactories() {
 
       if (result?.success) {
         setAllFactoriesData(result.data.factories);
-        const uniqueIds = [
-          ...new Set(
-            result.data.factories
-              .map((obj) => obj.id) // Extract all factoryIds
-              .filter((id) => id !== null) // Filter out null values
-          ),
-        ];
-
-        setUniqueFactoryIDofProducts(uniqueIds);
       }
     };
+    
 
     fetchFactoriesData();
-
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "instant",
-    });
+    window.scrollTo({ top: 0, behavior: "instant" });
   }, [pagination, filter]);
-
-  //   factory products
-  const getFactoryProduct = async (factoryId) => {
-    try {
-      let result = await fetchFactoryProductsSize(
-        factoryId,
-        numOfProductsFetch
-      );
-
-      if (result?.success) {
-        // Extract specific attributes (id, name, coverImage) and filter out the rest
-        const filteredAttributes = result.data.products.map((item) => {
-          // Extract specific attributes
-          const { id, name, coverImage } = item;
-
-          return {
-            id,
-            name,
-            coverImage,
-          };
-        });
-
-        setAllFactoriesData((prevData) =>
-          prevData?.map((item) =>
-            item?.id === factoryId
-              ? {
-                  ...item,
-                  productLength: result.data.products?.length,
-                  productData: filteredAttributes,
-                }
-              : item
-          )
-        );
-      }
-    } catch (error) {}
-  };
-
-  //   loop on factory products
-  useEffect(() => {
-    if (uniqueFactoryIDofProducts !== null) {
-      uniqueFactoryIDofProducts?.map((factoryId) => (
-        <>{getFactoryProduct(factoryId)}</>
-      ));
-    }
-  }, [uniqueFactoryIDofProducts]);
 
   return (
     <Factories
@@ -162,6 +99,8 @@ export default function FetchFactories() {
       filter={filter}
       setPagination={setPagination}
       apiLoadingData={apiLoadingData}
+      currentUserData={currentUserData}
+      isLogin={isLogin}
     />
   );
 }

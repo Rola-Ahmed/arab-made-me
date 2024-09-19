@@ -100,3 +100,5 @@ server/uploads/docs-1725726230197-LvwoYWjP479mOOiYziADqCapture.PNG
 /server/uploads
 server/src/database/connection copy.js
 client/src/components/Importerdashboard/subComponets/ImporterProfile/ImporterProfile copy.jsx
+client/src/components/Factories/AllFactories/FetchFactories copy.jsx
+client/src/components/Home/TopFactories/FetchTopFactories copy.jsx

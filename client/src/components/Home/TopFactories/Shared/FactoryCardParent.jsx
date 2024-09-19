@@ -54,9 +54,9 @@ export default function FactoryCardParent(props) {
           />
 
           {/*  product slider*/}
-          <div className="profile-img w-100  ">
-            {factoryitem?.productLength > 0 && (
-              <ProductCarousel factoryitem={factoryitem} />
+          <div className="profile-img w-100 ">
+            {factoryitem?.products?.length > 0 && (
+              <ProductCarousel factoryProducts={factoryitem?.products} />
             )}
           </div>
 
@@ -65,8 +65,8 @@ export default function FactoryCardParent(props) {
           <p className="text-truncate fs-12 fw-600 mb-0 lh-normal w-100">
             products:
             <span className="fw-normal">
-              {factoryitem?.productLength > 0
-                ? factoryitem?.productData?.map((item) => ` ${item?.name} ,`)
+              {factoryitem?.products?.length > 0
+                ? factoryitem?.products?.map((item) => ` ${item?.name} ,`)
                 : " none"}
             </span>
           </p>
