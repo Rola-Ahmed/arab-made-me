@@ -40,14 +40,6 @@ export default function SourcingRequestCard(props) {
             </p>
 
             {/* </div> */}
-            <p className="d-flex">
-              <span className="fw-bold pe-1">Sourcing Countries</span>
-              <span className=" title-text-handler">
-                {reqData?.preferredCountries?.length == 0
-                  ? "All Countries"
-                  : reqData?.preferredCountries?.join(", ")}
-              </span>
-            </p>
           </div>
         </div>
 
@@ -59,6 +51,17 @@ export default function SourcingRequestCard(props) {
               onError={handleLogoTextError}
               alt="sourcing request img"
             />
+          </div>
+        </div>
+        <div className="col-12  ">
+          <div className=" w-100 d-flex">
+            <p className="fw-bold pe-1 w-fit-content">Sourcing Countries</p>
+            <p className="title-text-handler" style={{ flex: "1" }}>
+              {" "}
+              {reqData?.preferredCountries?.length == 0
+                ? "All Countries"
+                : reqData?.preferredCountries?.join(", ")}
+            </p>
           </div>
         </div>
         <div className="col-12 pe-0">

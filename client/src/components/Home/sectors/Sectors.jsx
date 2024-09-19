@@ -8,17 +8,15 @@ import { useNavigate } from "react-router-dom";
 import { fetchSectorswithProductsLength } from "Services/sector";
 
 function Sectors() {
-  // let { allSectors, errormsg } = useFetchSectors();
-  const [allsSectors, setAllSectors] = useState([]);
-  const [errormsg, setErrormsg] = useState();
+  const [allSectors, setAllSectors] = useState([]);
+  const [errormsg, setErrormsg] = useState("");
   const { trans: t, currentLang } = useAppTranslation();
-  // sectors/getAllWithProductLength?size=10
   const navigate = useNavigate();
-
   useEffect(() => {
     const fetchProductData = async () => {
       let result = await fetchSectorswithProductsLength("size=10");
 
+      console.log("result", result?.data?.sectors);
       if (result?.success) {
         setAllSectors(result?.data?.sectors);
       } else {
@@ -28,6 +26,8 @@ function Sectors() {
 
     fetchProductData();
   }, []);
+  console.log("allSectors", allSectors, errormsg);
+  // allSectors?.map((item, index) => (console.log("itemds",item)));
   return (
     <section className=" margin-sm-screen home-padding-t">
       <div className="container container-1 p-0 d-flex gap-48">
@@ -39,14 +39,14 @@ function Sectors() {
             {t("titles.manufacturingSectorsSubtitle", { ns: "translation" })}
           </p>
         </div>
-        <div className="sec-r-container secrotr-row  w-100">
+        <div className="sec-r-container secrotr-row  w-100 ">
           {errormsg != "" ? (
             <div className=" text-center m-auto w-100 rounded-3 border-2 border-row fw-bold m-auto py-5 rounded-3 text-center text-muted w-100">
               {errormsg}
             </div>
           ) : (
             <>
-              {allsSectors?.map((item, index) => (
+              {allSectors?.map((item, index) => (
                 <div className="sec-r-item">
                   <div
                     className="default-padding h-100 cursor bg-white border rounded-4 gap-16 d-flex align-items-center"
@@ -67,9 +67,9 @@ function Sectors() {
                       </p>
 
                       <p className="mb-0 fs-14  lh-normal">
-                        {item?.productQuntity == 0
+                        {item?.productscount == 0
                           ? "Comming soon"
-                          : `${item?.productQuntity} Products`}
+                          : `${item?.productscount} Products`}
                       </p>
                     </div>
                   </div>
