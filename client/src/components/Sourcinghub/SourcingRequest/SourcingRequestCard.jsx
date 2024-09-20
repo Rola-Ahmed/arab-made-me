@@ -20,16 +20,12 @@ export default function SourcingRequestCard(props) {
               {reqData?.productDescription}
             </p>
             <p className="mb-1">
-              <span className="fw-bold" translate="no">
-                Requested by{" "}
-              </span>
+              <span className="fw-bold">Requested by </span>
               {reqData?.importer?.name}
             </p>
             {/* <div className="mb-1 d-flex"> */}
             <p className="mb-1 me-3">
-              <span className="fw-bold" translate="no">
-                Quantity{" "}
-              </span>
+              <span className="fw-bold">Quantity </span>
               {reqData?.quantity}
             </p>
             <p className="mb-1">
@@ -54,7 +50,10 @@ export default function SourcingRequestCard(props) {
           </div>
         </div>
         <div className="col-12  ">
-          <div className=" w-100 d-flex">
+          <div
+            className=" w-100 d-flex"
+            style={{ flexDirection: "row-reverse" }}
+          >
             <p className="fw-bold pe-1 w-fit-content">Sourcing Countries</p>
             <p className="title-text-handler" style={{ flex: "1" }}>
               {" "}
@@ -75,6 +74,7 @@ export default function SourcingRequestCard(props) {
               </button>
             ) : (
               <button
+                translate="no"
                 className="req-btn  me-2 cursor fs-14-med fw-600 bg-main text-white"
                 onClick={() => {
                   accessFormSourcingRequest(
@@ -87,6 +87,7 @@ export default function SourcingRequestCard(props) {
             )}
 
             <button
+              translate="no"
               className="req-btn cursor fs-14-med fw-600 text-main-2 bg-white"
               type="button"
               onClick={() => {

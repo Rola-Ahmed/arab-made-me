@@ -13,3 +13,31 @@
 .Lang-cont #local-btns.dropdown-menu[data-bs-popper] {
   left: 0% !important;
 }
+
+
+
+iframe.VIpgJd-ZVi9od-xl07Ob-OEVmcd.skiptranslate {
+  box-shadow: none !important;
+
+  /* visibility: visible; */
+  /* box-sizing: revert; */
+  width: 84px !important;
+  /* height: 50px; */
+  /* left: 49px; */
+  /* top: 56.75px; */
+  left: 49px !important;
+  box-shadow: none !important;
+}
+
+.VIpgJd-ZVi9od-vH1Gmf {
+  width: 100%;
+}
+
+.VIpgJd-ZVi9od-vH1Gmf * {
+  font-size: 15px;
+
+}
+
+.VIpgJd-ZVi9od-vH1Gmf-ibnC6b .indicator, .VIpgJd-ZVi9od-vH1Gmf-ibnC6b-gk6SMd .indicator {
+  display: none !important;
+}

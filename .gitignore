@@ -105,3 +105,4 @@ client/src/components/Home/TopFactories/FetchTopFactories copy.jsx
 client/src/components/Home/sectors/Sectors copy.jsx
 server/src/modules/sectors/sectors.controller copy.js
 server/src/modules/sectors/sectors.routes copy.js
+client/src/config copy.js
