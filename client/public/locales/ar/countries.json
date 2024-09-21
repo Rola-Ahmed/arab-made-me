@@ -1,106 +1,41 @@
-[
-  {
-    "id": "eg",
-    "code": "Egypt",
-    "name": "مصر",
-    "phoneCode": "+20",
-    "mobileLength": "10",
-    "coordinates": [30, 30]
+{
+  "egypt": {
+    "name": "مصر"
   },
-  {
-    "id": "bh",
-    "code": "Bahrain",
-    "name": "البحرين",
-    "phoneCode": "+973",
-    "mobileLength": "8",
-    "coordinates": [52, 26]
+  "bahrain": {
+    "name": "البحرين"
   },
-  {
-    "id": "iq",
-    "code": "Iraq",
-    "name": "العراق",
-    "phoneCode": "+964",
-    "mobileLength": "",
-    "coordinates": [43, 33]
+  "iraq": {
+    "name": "العراق"
   },
-  {
-    "id": "sa",
-    "code": "Saudi Arabia",
-    "name": "السعودية",
-    "phoneCode": "+966",
-    "mobileLength": "9",
-    "coordinates": [45, 25.079162]
+  "saudiArabia": {
+    "name": "السعودية"
   },
-  {
-    "id": "ye",
-    "code": "Yemen",
-    "name": "اليمن",
-    "phoneCode": "+967",
-    "mobileLength": "9",
-    "coordinates": [45, 15]
+  "yemen": {
+    "name": "اليمن"
   },
-  {
-    "id": "sy",
-    "code": "Syria",
-    "name": "سوريا",
-    "phoneCode": "+963",
-    "mobileLength": "9",
-    "coordinates": [39, 35]
+  "syria": {
+    "name": "سوريا"
   },
-  {
-    "id": "jo",
-    "code": "Jordan",
-    "name": "الأردن",
-    "phoneCode": "+962",
-    "mobileLength": "9",
-    "coordinates": [36, 30]
+  "jordan": {
+    "name": "الأردن"
   },
-  {
-    "id": "ae",
-    "code": "United Arab Emirates",
-    "name": "الإمارات",
-    "phoneCode": "+971",
-    "mobileLength": "9",
-    "coordinates": [54, 24]
+  "unitedArabEmirates": {
+    "name": "الإمارات"
   },
-  {
-    "id": "lb",
-    "code": "Lebanon",
-    "name": "لبنان",
-    "phoneCode": "+961",
-    "mobileLength": "7",
-    "coordinates": [35, 33]
+  "lebanon": {
+    "name": "لبنان"
   },
-  {
-    "id": "om",
-    "code": "Oman",
-    "name": "عُمان",
-    "phoneCode": "+968",
-    "mobileLength": "8",
-    "coordinates": [57, 20]
+  "oman": {
+    "name": "عُمان"
   },
-  {
-    "id": "kw",
-    "code": "Kuwait",
-    "name": "الكويت",
-    "phoneCode": "+965",
-    "mobileLength": "8",
-    "coordinates": [48, 29]
+  "kuwait": {
+    "name": "الكويت"
   },
-  {
-    "id": "qa",
-    "code": "Qatar",
-    "name": "قطر",
-    "phoneCode": "+974",
-    "mobileLength": "8",
-    "coordinates": [51.5, 25]
+  "qatar": {
+    "name": "قطر"
   },
-  {
-    "id": "ps",
-    "code": "Palestine",
-    "name": "فلسطين",
-    "phoneCode": "+970",
-    "mobileLength": "",
-    "coordinates": [35, 32]
+  "palestine": {
+    "name": "فلسطين"
   }
-]
+}

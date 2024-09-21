@@ -106,3 +106,5 @@ client/src/components/Home/sectors/Sectors copy.jsx
 server/src/modules/sectors/sectors.controller copy.js
 server/src/modules/sectors/sectors.routes copy.js
 client/src/config copy.js
+client/src/components/LanguageSwitcher/LanguageSwitcher copy.jsx
+client/src/constants/countries copy.jsx
