@@ -109,7 +109,9 @@ function Products(title) {
           >
             <div className={` ${currentLang == "ar" && "ar-text"}`}>
               <p className="header-Title">
-                {title?.title ? title?.title : `${t("translation:products")}`}
+                {title?.title
+                  ? title?.title
+                  : `${t("translation:marketPlace")}`}
               </p>
               <p className="fs-16 text-muted">
                 {t("translation:titles.subTitleProduct")}
@@ -173,7 +175,8 @@ function Products(title) {
                 navigate("/productMarketPlace");
               }}
             >
-              All Products
+            
+              {t("translation:allProducts")}
             </button>
           </div>
         </div>

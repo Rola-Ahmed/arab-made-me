@@ -32,7 +32,7 @@ function SourcingHub() {
   const { trans: t, currentLang } = useAppTranslation();
   const [isLoggedReDirect, setisLoggedReDirect] = useState("");
 
-  let { allSourcingRequest, apiStatus } = useSourcingRequests(
+  let { allSourcingRequest, apiStatus:sourcingReqStatus } = useSourcingRequests(
     displayProductSize
   );
 
@@ -177,7 +177,7 @@ function SourcingHub() {
             </div>
           </div>
           <SourcingRequest
-            // apiStatus={apiStatus}
+            apiStatus={sourcingReqStatus}
             allSourcingReqData={allSourcingRequest}
             accessFormSourcingRequest={handleFactoryAccessForm}
             datacompletelyLoaded={currentUserData?.datacompletelyLoaded}

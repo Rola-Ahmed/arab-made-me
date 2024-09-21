@@ -3,8 +3,13 @@ import "./SourcingOffers.css";
 import SourcingOfferTable from "components/Sourcinghub/SourcingOffers/SourcingOfferTable";
 import Loading from "components/Loading/Loading";
 import { useAppTranslation } from "config.js";
-export default function SourcingOffers({ allSourcingOffer, apiStatus,assessFormOPAuth }) {
+export default function SourcingOffers({
+  allSourcingOffer,
+  apiStatus,
+  assessFormOPAuth,
+}) {
   const { trans: t, currentLang } = useAppTranslation();
+
 
   return (
     <>
@@ -20,7 +25,10 @@ export default function SourcingOffers({ allSourcingOffer, apiStatus,assessFormO
       <div className="row position-relative">
         <div className="col-12">
           <div className="border-container">
-            <SourcingOfferTable allSourcingReqData={allSourcingOffer}  assessFormOPAuth={assessFormOPAuth}/>
+            <SourcingOfferTable
+              allSourcingReqData={allSourcingOffer}
+              assessFormOPAuth={assessFormOPAuth}
+            />
           </div>
         </div>
 

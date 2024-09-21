@@ -6,9 +6,26 @@ import "swiper/css";
 import "swiper/css/navigation";
 
 function SourcingRequest(props) {
-  let { allSourcingReqData, accessFormSourcingRequest, datacompletelyLoaded } = props;
+  let {
+    allSourcingReqData,
+    accessFormSourcingRequest,
+    datacompletelyLoaded,
+    apiStatus,
+  } = props;
+  console.log(
+    "allSourcingOffer?.length",
+    allSourcingReqData?.length,
+    apiStatus
+  );
   return (
     <div className="row pt-3 w-100  m-0 ">
+      {allSourcingReqData?.length == 0 && !apiStatus?.laoding && (
+        <div className="">
+          <p className="fs-15 text-muted fw-bolder  mt-5 pt-3 mx-auto w-fit-content">
+            No records
+          </p>
+        </div>
+      )}
       <Swiper
         // modules={[Navigation]}
         modules={[Navigation]}
