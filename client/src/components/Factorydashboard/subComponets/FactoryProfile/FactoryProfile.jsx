@@ -10,7 +10,7 @@ import LegalDocuments from "./subComponents/LegalDocuments";
 import useFormValidation from "./hooks/useFormValidation";
 import useFactoryProfile from "./hooks/useFactoryProfile";
 import { handleImageError } from "utils/ImgNotFound";
-import { countriesMiddleEast } from "constants/countries";
+import useCountries from "hooks/useCountries";
 import Modal from "react-bootstrap/Modal";
 
 import {
@@ -22,7 +22,7 @@ import "./FactoryProfile.css";
 
 export default function FactoryProfile() {
   document.title = "Factory Profile";
-
+  const countriesMiddleEast = useCountries();
   const {
     factoryProfile,
     errorloadingProfile,
@@ -88,7 +88,11 @@ export default function FactoryProfile() {
   async function handleAddLegalDocs(e) {
     // document.body.style.cursor = "wait";
 
-     if (factoryProfile?.legalDocs == null ||(Array.isArray(factoryProfile?.legalDocs) && factoryProfile?.legalDocs?.length == 0)) {
+    if (
+      factoryProfile?.legalDocs == null ||
+      (Array.isArray(factoryProfile?.legalDocs) &&
+        factoryProfile?.legalDocs?.length == 0)
+    ) {
       console.log("entred condition 1");
       await updateMedia(e);
       return;

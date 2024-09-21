@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 // import Modal from "react-bootstrap/Modal";
 import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
 import { handleImageError } from "utils/ImgNotFound";
-import { countriesMiddleEast } from "constants/countries";
+import useCountries from "hooks/useCountries";
 import SuccessToast from "components/SuccessToast";
 import ErrorToast from "components/ErrorToast";
 
@@ -37,6 +37,7 @@ function successMsg() {
 }
 export default function MircoSiteDash() {
   document.title = "Factory Profile";
+  const countriesMiddleEast = useCountries();
 
   // let { isLogin } = useContext(UserToken);
   const [errorMsg, setErrorMsg] = useState();
@@ -438,10 +439,9 @@ export default function MircoSiteDash() {
   }
 
   async function handleAddBanner(e, index) {
-
     // temporary  option the will remove it
     if (factoryProfile?.images && factoryProfile?.images?.length != 0) {
-      console.log("entered consdiotns 1")
+      console.log("entered consdiotns 1");
       // document.body.style.cursor = "wait";
       e.preventDefault();
       let data = await handleSingleFileUpload(
@@ -451,7 +451,7 @@ export default function MircoSiteDash() {
       );
       await handleBannerUploads(data, "add");
     } else {
-      console.log("entered consdiotns 2")
+      console.log("entered consdiotns 2");
       updateMedia(e);
     }
   }
@@ -527,11 +527,11 @@ export default function MircoSiteDash() {
     await handleCertificateUploads(data, "delete");
   }
   async function handleAddCertificate(e, index) {
-
-
-
-    if (factoryProfile?.qualityCertificates && factoryProfile?.qualityCertificates?.length != 0) {
-      console.log("entered consdiotns 1")
+    if (
+      factoryProfile?.qualityCertificates &&
+      factoryProfile?.qualityCertificates?.length != 0
+    ) {
+      console.log("entered consdiotns 1");
       // document.body.style.cursor = "wait";
       e.preventDefault();
       let data = await handleSingleFileUpload(
@@ -540,10 +540,9 @@ export default function MircoSiteDash() {
         index
       );
       // await handleBannerUploads(data, "add");
-    await handleCertificateUploads(data, "add");
-
+      await handleCertificateUploads(data, "add");
     } else {
-      console.log("entered consdiotns 2")
+      console.log("entered consdiotns 2");
       updateMedia(e);
     }
 

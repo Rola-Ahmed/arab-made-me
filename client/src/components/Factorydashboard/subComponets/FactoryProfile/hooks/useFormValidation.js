@@ -1,9 +1,10 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { countriesMiddleEast } from "constants/countries";
+import useCountries from "hooks/useCountries";
 
 const useFormValidation = (submitAccInfo, factoryProfile) => {
   // valirable validations   // update data
+  const countriesMiddleEast = useCountries();
   let emailValidation = Yup.string()
     .email("Invalid email")
     .required("Input Field is Required")

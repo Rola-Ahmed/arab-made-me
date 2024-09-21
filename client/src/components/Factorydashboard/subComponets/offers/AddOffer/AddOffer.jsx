@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 
 import { userDetails } from "Context/userType";
-import { countriesMiddleEast } from "constants/countries";
+import useCountries from "hooks/useCountries";
 import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/FactoryUnVerifiedDash";
 
 import useFormSubmission from "./useFormSubmission";
@@ -34,7 +34,7 @@ import FormVlaidtionError from "components/Forms/Shared/FormVlaidtionError";
 export default function AddOffer() {
   let { currentUserData } = useContext(userDetails);
   let categories = useCategories();
-
+  const countriesMiddleEast = useCountries();
   let navigate = useNavigate();
 
   const [errorMsg, setErrorMsg] = useState();
@@ -65,9 +65,7 @@ export default function AddOffer() {
   let validationSchema = Yup.object().shape({
     productName: requiredStringMax255,
     // country: Yup.array().of(Yup.string()).nullable(),
-    country: Yup.array()
-      .of(Yup.string())
-      .nullable(),
+    country: Yup.array().of(Yup.string()).nullable(),
 
     price: reqQualityValidate,
 

@@ -15,7 +15,7 @@ import InputField from "components/Forms/Shared/InputField";
 
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
-import { countriesMiddleEast } from "constants/countries";
+import useCountries from "hooks/useCountries";
 import CurrentPoint from "./TimeLineHeader/CurrentPoint";
 
 function FactoryRepInfoRegistration() {
@@ -23,6 +23,7 @@ function FactoryRepInfoRegistration() {
   let { currentUserData, setCurrentUserData } = useContext(userDetails);
   let currentUrl = window.location.pathname;
   let navigate = useNavigate();
+  const countriesMiddleEast = useCountries();
 
   document.title = "Company RegistrationUser Type";
   useEffect(() => {

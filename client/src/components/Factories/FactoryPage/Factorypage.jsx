@@ -10,7 +10,7 @@ import { handleImageError, handleVedioError } from "utils/ImgNotFound";
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
 import { baseUrl_IMG, useAppTranslation } from "config.js";
-import { countriesMiddleEast } from "constants/countries";
+import useCountries from "hooks/useCountries";
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/ImporterUnVerifiedPopUpMsg";
 import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
@@ -40,6 +40,7 @@ import DefaultUserNotAuthorizedModal from "components/ActionMessages/FormAccessC
 
 function Factorypage() {
   const { trans: t } = useAppTranslation();
+  const countriesMiddleEast = useCountries();
 
   let { currentUserData } = useContext(userDetails);
   let { isLogin } = useContext(UserToken);

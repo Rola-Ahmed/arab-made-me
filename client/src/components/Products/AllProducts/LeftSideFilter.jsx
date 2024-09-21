@@ -1,6 +1,8 @@
 import { useFetchSectors } from "hooks/useFetchSectors";
-import { countriesMiddleEast } from "constants/countries";
+import useCountries from "hooks/useCountries";
 export default function LeftSideFilter(props) {
+  const countriesMiddleEast = useCountries();
+
   let { setFilter, filter } = props;
   const { allSectors, errormsg } = useFetchSectors();
   // filter by country or sector

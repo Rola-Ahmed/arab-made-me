@@ -1,6 +1,6 @@
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { countriesMiddleEast } from "constants/countries";
+import useCountries from "hooks/useCountries";
 import ReadOnly from "components/Forms/Shared/ReadOnly";
 import InputField from "components/Forms/Shared/InputField";
 import FormVlaidtionError from "components/Forms/Shared/FormVlaidtionError";
@@ -16,6 +16,8 @@ export default function FactoryInforamtion(props) {
     isLoading,
     handleClose,
   } = props;
+  const countriesMiddleEast = useCountries();
+
   return (
     <>
       <div id="FactoryInforamtion"></div>

@@ -13,7 +13,7 @@ import { userDetails } from "Context/userType";
 
 import { handleImageError } from "utils/ImgNotFound";
 
-import { countriesMiddleEast } from "constants/countries";
+import useCountries from "hooks/useCountries";
 import PageUtility from "components/Shared/Dashboards/PageUtility";
 import UploadDocument from "components/Forms/Shared/UploadDocument";
 import { useFetchSectors } from "hooks/useFetchSectors";
@@ -33,6 +33,7 @@ export default function ImporterProfile() {
 
   let { isLogin } = useContext(UserToken);
   let { currentUserData, clearSession } = useContext(userDetails);
+  const countriesMiddleEast = useCountries();
 
   const [ImporterProfile, setImporterProfile] = useState([]);
 
@@ -154,9 +155,7 @@ export default function ImporterProfile() {
     if (values.instgramLink != "") {
       data.socialLinks["instagram"] = values.instgramLink;
     }
-    data.socialLinks[
-      "whatsapp"
-    ] = values.whatsapp;
+    data.socialLinks["whatsapp"] = values.whatsapp;
     submitForm(data);
   }
   function onSubmitfactoryInfo(values) {
@@ -413,9 +412,6 @@ export default function ImporterProfile() {
                         />
                       </div>
 
-                     
-
-                     
                       <div className="col-12">
                         <button
                           className="btn-edit"
@@ -471,7 +467,7 @@ export default function ImporterProfile() {
                           >
                             <i className="fab fa-instagram fa-2x"></i>
                           </div>
-                          
+
                           <button
                             className="btn-edit"
                             onClick={() => handleShow("socialAccountsReadOnly")}
@@ -489,7 +485,7 @@ export default function ImporterProfile() {
                           >
                             <i className="fa-solid fa-link fa-2x"></i>
                           </div>
-                {/* <p className="my-auto readOnly"> {ImporterProfile?.website}</p> */}
+                          {/* <p className="my-auto readOnly"> {ImporterProfile?.website}</p> */}
 
                           <button
                             className="btn-edit"
@@ -500,25 +496,28 @@ export default function ImporterProfile() {
                         </div>
                       </div>
                       <div className="col-12">
-            <div className="d-flex justify-content-between align-items-center form-control">
-              <div className="d-flex gap-2 ">
-                <div
-                  className="social-accounts-icon-conainer border-success "
-                  // title="attach website link to the website"
-                >
-                  <i className="fa-brands fa-whatsapp fa-2x text-success"></i>
-                </div>
+                        <div className="d-flex justify-content-between align-items-center form-control">
+                          <div className="d-flex gap-2 ">
+                            <div
+                              className="social-accounts-icon-conainer border-success "
+                              // title="attach website link to the website"
+                            >
+                              <i className="fa-brands fa-whatsapp fa-2x text-success"></i>
+                            </div>
 
-                <p className="my-auto readOnly"> {ImporterProfile?.socialLinks?.whatsapp}</p>
-              </div>
-              <button
-                className="btn-edit"
-                onClick={() => handleShow("socialAccountsReadOnly")}
-              >
-                <p className="cursor">attach Link</p>
-              </button>
-            </div>
-          </div>
+                            <p className="my-auto readOnly">
+                              {" "}
+                              {ImporterProfile?.socialLinks?.whatsapp}
+                            </p>
+                          </div>
+                          <button
+                            className="btn-edit"
+                            onClick={() => handleShow("socialAccountsReadOnly")}
+                          >
+                            <p className="cursor">attach Link</p>
+                          </button>
+                        </div>
+                      </div>
                     </div>
                     {/* </form> */}
                   </div>
@@ -632,17 +631,13 @@ export default function ImporterProfile() {
                         <div className="col-6">
                           <ReadOnly
                             title="vat Number"
-                            value={
-                              ImporterProfile?.vatNumber
-                            }
+                            value={ImporterProfile?.vatNumber}
                           />
                         </div>
                         <div className="col-6">
                           <ReadOnly
                             title="mporter License Number"
-                            value={
-                              ImporterProfile?.importerLicenseNumber
-                            }
+                            value={ImporterProfile?.importerLicenseNumber}
                           />
                         </div>
 
@@ -1084,25 +1079,19 @@ export default function ImporterProfile() {
                         </div>
                       </div>
 
-
-
                       <div className="col-12">
                         <div className="d-flex justify-content-between align-items-center form-control">
-                        <div
-                  className="social-accounts-icon-conainer border-success "
-                >
-                  <i className="fa-brands fa-whatsapp fa-2x text-success"></i>
-                </div>
-                      <InputField
-                        formValidation={SocialAccountValidation}
-                        vlaidationName="whatsapp"
-                        isRequired={true}
-                        title="whatsapp"
-                      />
+                          <div className="social-accounts-icon-conainer border-success ">
+                            <i className="fa-brands fa-whatsapp fa-2x text-success"></i>
+                          </div>
+                          <InputField
+                            formValidation={SocialAccountValidation}
+                            vlaidationName="whatsapp"
+                            isRequired={true}
+                            title="whatsapp"
+                          />
                         </div>
                       </div>
-
-
 
                       <div className="col-12">
                         <div className="d-flex justify-content-between align-items-center form-control">

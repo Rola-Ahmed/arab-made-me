@@ -18,7 +18,7 @@ import { packingConditionsArr } from "constants/packingConditionsArr";
 import { useNavigate } from "react-router-dom";
 import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/ImporterUnVerifiedDash";
 
-import { countriesMiddleEast } from "constants/countries";
+import useCountries from "hooks/useCountries";
 import "./SourcingRequest.css";
 import { shippingConditionsArr } from "constants/shippingConditionsArr";
 import SpecialChar from "components/Forms/Shared/SpecialChar/SpecialChar";
@@ -30,6 +30,8 @@ import useFormSubmission from "./hooks/useFormSubmission";
 // import "./PurchasingOrder.css";
 function SourcingRequest() {
   let navigate = useNavigate();
+  const countriesMiddleEast = useCountries();
+
   let { currentUserData } = useContext(userDetails);
   const [errorMsg, setErrorMsg] = useState();
   const [isLoading, setIsLoading] = useState(false);
@@ -65,9 +67,7 @@ function SourcingRequest() {
 
     productDescription: requiredStringMax255,
 
-    country: Yup.array()
-      .of(Yup.string())
-      .nullable(),
+    country: Yup.array().of(Yup.string()).nullable(),
 
     productCharacteristic: Yup.array().of(
       Yup.object().shape({

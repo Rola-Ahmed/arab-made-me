@@ -7,7 +7,7 @@ import InputField from "components/Forms/Shared/InputField";
 
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
-import { countriesMiddleEast } from "constants/countries";
+import useCountries from "hooks/useCountries";
 import { useFetchSectors } from "hooks/useFetchSectors";
 import TextareaInput from "components/Forms/Shared/TextareaInput";
 import { addImporter } from "Services/importer";
@@ -24,6 +24,7 @@ export default function ImporterRepDetails() {
   let { isLogin } = useContext(UserToken);
   let { setCurrentUserData } = useContext(userDetails);
   let { allSectors } = useFetchSectors();
+  const countriesMiddleEast = useCountries();
 
   document.title = "Buyer Registration";
   useEffect(() => {

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "../Factories.css";
-import { countriesMiddleEast } from "constants/countries";
+import useCountries from "hooks/useCountries";
 import Loading from "components/Loading/Loading";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -38,6 +38,7 @@ export default function TopFactories(props) {
   document.title = "Factory Gallery";
   let { allSectors } = useFetchSectors();
   const { trans: t } = useAppTranslation();
+  const countriesMiddleEast = useCountries();
 
   // let location = useLocation();
   let navigate = useNavigate();
