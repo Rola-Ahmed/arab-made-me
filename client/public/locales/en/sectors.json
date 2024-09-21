@@ -2,14 +2,15 @@
   "sectors": {
     "Electronics": "Electronics",
     "Medical Supplies": "Medical Supplies",
-    "agricultural": "Agricultural",
+    "Agricultural": "Agricultural",
     "Engineering": "Engineering",
     "Engineering ": "Engineering",
-    "automotive": "Automotive",
+    "Automotive": "Automotive",
     "Chemicals": "Chemical",
+    "Chemical Industry": "Chemicals",
     "Garment": "Garment",
     "Pharmaceutical": "Pharmaceutical",
     "Building": "Building Materials",
-    "food": "Food"
+    "Food": "Food"
   }
 }

@@ -318,7 +318,7 @@ export default function TopFactories(props) {
                           )}
                         />
                         <label className="form-check-label w-100">
-                          {sectorItem.name.replace(/\bIndustry\b/gi, "")}
+                          {t(`sectors:sectors.${sectorItem?.name}`)}
                         </label>
                       </div>
                     ))}
