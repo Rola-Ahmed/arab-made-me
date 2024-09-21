@@ -108,3 +108,7 @@ server/src/modules/sectors/sectors.routes copy.js
 client/src/config copy.js
 client/src/components/LanguageSwitcher/LanguageSwitcher copy.jsx
 client/src/constants/countries copy.jsx
+server/src/database/models/factory.model.js
+server/src/database/models/factory.model.js
+server/src/modules/products/products.controller.js
+server/src/modules/products/products.routes.js
