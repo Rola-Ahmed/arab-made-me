@@ -6,7 +6,7 @@ export const sequelize = new Sequelize(
   {
     host: 'localhost',   // Database host
     dialect: "postgres",         // Specify the dialect (no "ql" in 'postgres')
-    operatorsAliases: false,     // Set this to false, as it's deprecated
+    // operatorsAliases: false,     // Set this to false, as it's deprecated
   }
 );
 export const connectDB = async () => {
