@@ -58,7 +58,7 @@ function Footer() {
                     href={`productMarketPlace/${item?.id}-${item?.name}`}
                     className="nav-link text-start  mb-2"
                   >
-                    {item?.name?.replace(/\bSupplies\b/gi, "")}
+                    {t(`sectors:sectors.${item?.name}`)}
                   </Link>
                 </p>
               ))}

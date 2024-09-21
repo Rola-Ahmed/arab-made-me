@@ -1,26 +1,15 @@
 {
-  "SECTOR": {
-    "Electronic": "إلكترونيات",
+  "sectors": {
+    "Electronics": "إلكترونيات",
     "Medical Supplies": "اللوازم الطبية",
-    "Agricultural": "الزراعة",
-    "Engineer": "هندسة",
-    "Automotive": "السيارات",
-    "Chemical": "الكيمياء",
+    "agricultural": "الزراعة",
+    "Engineering": "هندسة",
+    "Engineering ": "هندسة",
+    "automotive": "السيارات",
+    "Chemicals": "الكيمياء",
     "Garment": "الملابس",
     "Pharmaceutical": "الصيدلة",
-    "Building Materials": "مواد البناء",
-    "Food": "الأغذية"
-  },
-  "names": [
-    "Chemical Industry",
-    "Food",
-    "Pharmaceutical",
-    "Building",
-    "Garment",
-    "Medical Supplies",
-    "Agricultural",
-    "Engineering",
-    "Automotive",
-    "Electronics"
-  ]
+    "Building": "مواد البناء",
+    "food": "الأغذية"
+  }
 }

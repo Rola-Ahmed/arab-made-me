@@ -85,7 +85,7 @@ function AllProducts(props) {
         <section className="    home-padding-y all-products margin-sm-screen ">
           <div className="container p-0 ">
             <div className="d-flex justify-content-between  row  ">
-              <div className="col-xxl-3 col-xl-3  col-lg-5 col-md-5 col-sm-5 col-5  col-sm-d-none   ">
+              <div className="col-xxl-3 col-xl-3  col-lg-5 col-md-5 col-sm-5 col-5  col-sm-d-none ">
                 <LeftSideFilter setFilter={setFilter} filter={filter} />
               </div>
               <div className="col-xxl-9 col-xl-9 col-lg-7 col-md-7 col-sm-7 col-12 col-100 ">

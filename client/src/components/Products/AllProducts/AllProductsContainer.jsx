@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 
 import AllProducts from "components/Products/AllProducts/AllProducts";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { getAllProducts } from "Services/products";
-import { useSearchParams } from "react-router-dom";
 
 export default function AllProductsContainer() {
   // variables
@@ -40,7 +39,7 @@ export default function AllProductsContainer() {
 
     filterBySearch: filterSearch ?? "",
   });
-  console.log("filterfilterfilter",filter)
+  console.log("filterfilterfilter", filter);
 
   const [modalShow, setModalShow] = useState({
     isLogin: false,

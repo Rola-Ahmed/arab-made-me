@@ -16,7 +16,7 @@ function Sectors() {
     const fetchProductData = async () => {
       let result = await fetchSectorswithProductsLength("size=10");
 
-      console.log("result", result?.data?.sectors);
+      // console.log("result", result?.data?.sectors);
       if (result?.success) {
         setAllSectors(result?.data?.sectors);
       } else {
@@ -26,7 +26,7 @@ function Sectors() {
 
     fetchProductData();
   }, []);
-  console.log("allSectors", allSectors, errormsg);
+  // console.log("allSectors", allSectors, errormsg);
   // allSectors?.map((item, index) => (console.log("itemds",item)));
   return (
     <section className=" margin-sm-screen home-padding-t">
@@ -49,7 +49,7 @@ function Sectors() {
               {allSectors?.map((item, index) => (
                 <div className="sec-r-item">
                   <div
-                    className="default-padding h-100 cursor bg-white border rounded-4 gap-16 d-flex align-items-center"
+                    className="default-padding h-100 cursor bg-white border rounded-4 gap-16 d-flex align-items-center ar-direction"
                     onClick={() => {
                       navigate(`productMarketPlace/${item?.id}-${item?.name}`);
                     }}
@@ -63,13 +63,13 @@ function Sectors() {
                     />
                     <div className="sector-text">
                       <p className="fs-18-semi mb-2 lh-normal">
-                        {item?.name?.replace(/\bSupplies\b/gi, "")}
+                        {t(`sectors:sectors.${item?.name}`)}
                       </p>
 
                       <p className="mb-0 fs-14  lh-normal">
                         {item?.productscount == 0
-                          ? "Comming soon"
-                          : `${item?.productscount} Products`}
+                          ? `${t("translation:comingSoon")}`
+                          : `${item?.productscount} ${t('translation:products')}`}
                       </p>
                     </div>
                   </div>

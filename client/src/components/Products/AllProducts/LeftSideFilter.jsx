@@ -1,7 +1,10 @@
 import { useFetchSectors } from "hooks/useFetchSectors";
 import useCountries from "hooks/useCountries";
+import { useAppTranslation } from "config.js";
+
 export default function LeftSideFilter(props) {
   const countriesMiddleEast = useCountries();
+  const { trans: t, currentLang } = useAppTranslation();
 
   let { setFilter, filter } = props;
   const { allSectors, errormsg } = useFetchSectors();
@@ -66,9 +69,7 @@ export default function LeftSideFilter(props) {
           ))}
         </div>
       </div>
-
       <div className="h-line"></div>
-
       <div className="filter-country scroll">
         <p className="filter-text">Sector</p>
         <div className="country-filters sectors ">
@@ -86,13 +87,12 @@ export default function LeftSideFilter(props) {
                 )}
               />
               <label className="form-check-label w-100">
-                {sectorItem.name.replace(/\bIndustry\b/gi, "")}
+                {t(`sectors:sectors.${sectorItem?.name}`)}
               </label>
             </div>
           ))}
         </div>
       </div>
-
       <div className="h-line"></div>
     </div>
   );

@@ -52,7 +52,7 @@ export default function SourcingRequestCard(props) {
         <div className="col-12  ">
           <div
             className=" w-100 d-flex"
-            style={{ flexDirection: "row-reverse" }}
+            // style={{ flexDirection: "row-reverse" }}
           >
             <p className="fw-bold pe-1 w-fit-content">Sourcing Countries</p>
             <p className="title-text-handler" style={{ flex: "1" }}>
