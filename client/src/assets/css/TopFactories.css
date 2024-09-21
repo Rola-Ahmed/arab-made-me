@@ -56,14 +56,9 @@
   overflow: visible;
   top: 33px;
 }
+
 .factories .dropdown-menu-top {
-  /* position: absolute; */
-  /* top: 159px; */
   top: 47px;
-  /* right: 0;
-  border: 1px solid var(--Gray-300);
-  background: white;
-  border-radius: 6px; */
 
 }
 
@@ -78,7 +73,8 @@
 
 .all-products .dropdown-menu-top {
   position: absolute;
-  top: 76px;
+  /* top: 76px; */
+  top: 16px;
 }
 
 .brant-cont .dropdown-menu-top {
@@ -93,32 +89,3 @@
 .ellipsis:hover+.dropdown-menu-top, .dropdown-menu-top:hover, .ellipsis:active+.dropdown-menu-top, .dropdown-menu-top:active {
   display: block;
 }
-
-
-/*----------------------- btns hover end ----------------------*/
-
-
-
-
-/* @media (max-width: 765px) {
-
-
-
-  .topFactory .factoryCard .card {
-    width: 514px !important;
-  }
-}
-
-@media (max-width: 624px) {
-
-
-  .topFactory .factoryCard .card {
-    width: 89vw !important;
-  }
-}
-
-@media (max-width: 539px) {
-  .topFactory .factoryCard .card {
-    width: 82vw !important;
-  }
-} */

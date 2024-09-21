@@ -8,25 +8,22 @@ import { useFormValidation } from "./useFormValidation";
 import { useFetchSectors } from "hooks/useFetchSectors";
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
-import { countriesMiddleEast } from "constants/countries";
+import useCountries from "hooks/useCountries";
+
 import { addFactory } from "Services/factory";
 import LastPointStatus from "../TimeLineHeader/LastPointStatus";
 import SelectRole from "../TimeLineHeader/SelectRole";
 import NextPoint from "../TimeLineHeader/NextPoint";
-// import useMapsApi from "Services/mapsApi";
 
 export default function CompanyRegistration() {
   document.title = "Factory Registration";
   let currentUrl = window.location.pathname;
+  const countriesMiddleEast = useCountries();
 
   let { isLogin } = useContext(UserToken);
   let { setCurrentUserData, currentUserData } = useContext(userDetails);
   let formValidation = useFormValidation(countriesMiddleEast, submitForm);
   let { allSectors } = useFetchSectors();
-  // let {data, apiLoadingData } = useMapsApi(700, "EG");
-  // Ensure formValidation is not undefined
-  // if (!formValidation) formValidation = null;
-  // if (currentUserData?.factoryId)
 
   useEffect(() => {
     if (!isLogin) {
@@ -266,10 +263,6 @@ export default function CompanyRegistration() {
                     />
                   </div>
 
-                  
-
-                
-
                   <div className="col-12">
                     <div className="form-group gap">
                       <label className="form-title">Address</label>
@@ -320,7 +313,6 @@ export default function CompanyRegistration() {
                       </select>
                     </div>
                   </div>
-                  
 
                   <div className="col-12">
                     <TextareaInput
