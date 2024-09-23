@@ -1,7 +1,8 @@
 import Joi from "joi"
 
 const string = Joi.string();
-const stringMin16 = Joi.string().min(16);
+// const stringMin16 = Joi.string().min(16);
+const stringMin16 = Joi.string();
 const stringMin6 = Joi.string().min(6);
 const arrayString = Joi.array().items(Joi.string());
 const number = Joi.number();

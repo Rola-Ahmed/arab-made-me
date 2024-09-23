@@ -57,7 +57,7 @@ function CustomProductForm(props) {
                 <label className="pb-2">Product Characteristics</label>
               </div>
 
-              <SpecialChar formValidation={formValidation} />
+              <SpecialChar formValidation={formValidation} productCharacteristic='productCharacteristic'/>
             </div>
           </div>
 

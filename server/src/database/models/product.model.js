@@ -17,12 +17,12 @@ export const Product =sequelize.define('products',{
       description: {
         type: DataTypes.STRING,
         allowNull: false,
-        validate:{
-          isValid(value){
-            if(value.length<16)
-            throw(new Error("description is atleast 16"))
-          }
-        }
+        // validate:{
+        //   isValid(value){
+        //     if(value.length<16)
+        //     throw(new Error("description is atleast 16"))
+        //   }
+        // }
       },
       coverImage: {
         type: DataTypes.STRING, 

@@ -1,55 +1,33 @@
 import { useEffect, useState, useContext } from "react";
-import { useFormik } from "formik";
-import * as Yup from "yup";
 import axios from "axios";
 import { baseUrl } from "config.js";
+import useCategories from "hooks/useCategory";
 
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
 
 import { useNavigate, useParams } from "react-router-dom";
 import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/FactoryUnVerifiedDash";
+import { useFormValidation } from "./hooks/useFormValidation";
+import SpecialChar from "components/Forms/Shared/SpecialChar/SpecialChar";
 
 export default function EditProduct() {
   let { isLogin } = useContext(UserToken);
   let { currentUserData } = useContext(userDetails);
   let { productId } = useParams();
+  const categories = useCategories();
   let navigate = useNavigate();
 
   const [errorMsg, setErrorMsg] = useState();
   const [productDetails, setProductDetails] = useState();
   const [isLoading, setIsLoading] = useState(false);
-
-  let [allCategories, setAllCategories] = useState();
+  const { formValidation, initialValues } = useFormValidation(
+    productDetails,
+    submitForm
+  );
 
   const [selectedDocs, setSelectedDocs] = useState([]);
 
-  // get sectors and categrories
-  async function GetCategories() {
-    let config = {
-      method: "get",
-
-      url: `${baseUrl}/categories?include=sector`,
-    };
-
-    axios
-      .request(config)
-      .then((response) => {
-        if (response.data.message == "done") {
-          setAllCategories(response?.data?.categories);
-        } else {
-          //   setErrorMsg((prevErrors) => ({
-          //     ...prevErrors,
-          //     message: response.data.message,
-          //   }));
-        }
-      })
-      .catch((error) => {});
-  }
-
-  useEffect(() => {
-    GetCategories();
-  }, []);
   async function fetchProductData() {
     try {
       let config = {
@@ -80,111 +58,6 @@ export default function EditProduct() {
       behavior: "instant",
     });
   }, []);
-
-  let validationSchema = Yup.object().shape({
-    name: Yup.string()
-      .required("Input Field is Required")
-
-      .max(255, "max 255 legnth"),
-
-    price: Yup.string()
-      .matches(/^[0-9]+$/, "Input Field should contain numbers only")
-      .required("Price is required")
-      .min(1, "Minimum price length must  be greater than 1"),
-
-    //   HSN (Harmonized System of Nomenclature) code field i
-    hsnCode: Yup.string()
-      .required("Input Field is Required")
-      .min(6, "Minimum  length is 6")
-      .max(15, "Maximum 15  is legnth"),
-
-    
-    // guarantee\\\" is not allowed to be em
-
-    guarantee: Yup.string().max(255, "max 255 is legnth"),
-    minOrderQuantity: Yup.string()
-      .matches(/^[0-9]+$/, "Input Field should contain numbers only")
-      .required("Input Field is Required")
-      .min(1, "Minimum  length is 1"),
-    maxOrderQuantity: Yup.string()
-      .matches(/^[0-9]+$/, "Input Field should contain numbers only")
-      .min(1, "Maximum  length is 1"),
-
-    description: Yup.string()
-      .required(" Description is Requried")
-
-      .max(255, "max legnth is 255"),
-
-    specialCharKeyWord: Yup.string()
-      // .required("Input field is Required")
-
-      .max(50, "max legnth is 50"),
-
-    specialCharDesc: Yup.string().when("specialCharKeyWord", {
-      is: (schema) => !!schema,
-      then: (schema) =>
-        schema.required("Input field is Required").max(50, "max length is 50"),
-      otherwise: (schema) => schema.nullable(),
-    }),
-    specialCharacteristicsArr: Yup.array().of(
-      Yup.object().shape({
-        specialCharKeyWord: Yup.string()
-          // .required("Input field is Required")
-          //
-          .max(50, "max legnth is 50"),
-        specialCharDesc: Yup.string()
-          // .required("Input field is Required")
-          //
-          .max(50, "max legnth is 50"),
-      })
-    ),
-
-    friends: Yup.array().of(
-      Yup.object().shape({
-        name: Yup.string().required("Name is required"),
-        email: Yup.string()
-          .email("Invalid email")
-          .required("Email is required"),
-      })
-    ),
-  });
-
-  let initialValues = {
-    name: productDetails?.name || "",
-
-    price: productDetails?.price || "",
-    hsnCode: productDetails?.hsnCode || "",
-    guarantee: productDetails?.guarantee || "",
-    minOrderQuantity: productDetails?.minOrderQuantity || "",
-    maxOrderQuantity: productDetails?.maxOrderQuantity || "",
-    description: productDetails?.description || "",
-
-    //   coverImage: null,
-    //   images: null,
-
-    categoryId: productDetails?.categoryId || "",
-    sectorId: productDetails?.sectorId || "",
-
-    specialCharacteristicsArr:
-      productDetails?.specialCharacteristics &&
-      Object.keys(productDetails.specialCharacteristics).length !== 0
-        ? // [productDetails.specialCharacteristics]
-          Object.entries(productDetails.specialCharacteristics).map(
-            ([key, value], index) => ({
-              specialCharKeyWord: key,
-              specialCharDesc: value,
-            })
-          )
-        : [],
-  };
-
-  let formValidation = useFormik({
-    initialValues,
-
-    validationSchema,
-    // validate,
-    onSubmit: submitForm,
-  });
 
   let [productAdded, setProductAdded] = useState(false);
   let [productID, setProductID] = useState();
@@ -681,7 +554,7 @@ export default function EditProduct() {
                     value={formValidation.values.sectorId}
                     onClick={(e) => {
                       let selectedProductName = "";
-                      allCategories.find(
+                      categories?.find(
                         (item) =>
                           item.sectorId == e.target.value
                             ? (selectedProductName = item.id)
@@ -695,7 +568,7 @@ export default function EditProduct() {
                       ); // Assuming 'productName' is the field name for product name
                     }}
                   >
-                    {allCategories?.map((item) => (
+                    {categories?.map((item) => (
                       // <option value={item?.id}>{item?.name}</option>
 
                       <optgroup label={item?.name}>
@@ -754,8 +627,6 @@ export default function EditProduct() {
                   )}
                 </div>
               </div>
-
-             
 
               <div className="col-4">
                 <div className="form-group">
@@ -824,145 +695,19 @@ export default function EditProduct() {
 
               {/* ---------------------------- */}
 
-              <div className="col-12 ">
-                {/* <div className="form-group form-control "> */}
-                <div className="form-group form-control ">
-                  <div className="form-group timeline-container ">
-                    {/* <label> Timeline</label> */}
-
-                    <label forhtml="">
-                      Product Characteristics
-                      {
-                        formValidation?.values?.specialCharacteristicsArr[0]
-                          ?.specialCharKeyWord
-                      }
-                    </label>
-
-                    {formValidation?.values?.specialCharacteristicsArr?.length >
-                    0
-                      ? formValidation?.values?.specialCharacteristicsArr?.map(
-                          (dateSection, index) => (
-                            <>
-                              <div className="  timeline form-control checked d-flex justify-content-between align-content-center ">
-                                <div className="row w-100 ">
-                                  <div className="form-group  col-6 col-6-50  ">
-                                    <label forhtml="specialCharKeyWord">
-                                      Keyword {index + 1}*
-                                    </label>
-                                    <input
-                                      type="text"
-                                      className="form-control"
-                                      onChange={formValidation.handleChange}
-                                      onBlur={formValidation.handleBlur}
-                                      id={
-                                        formValidation.values
-                                          .specialCharacteristicsArr[index]
-                                          ?.specialCharKeyWord
-                                      }
-                                      value={
-                                        formValidation.values
-                                          .specialCharacteristicsArr[index]
-                                          ?.specialCharKeyWord
-                                      }
-                                    />
-                                    {formValidation.errors[
-                                      `specialCharKeyWord${index}`
-                                    ] &&
-                                    formValidation.touched[
-                                      `specialCharKeyWord${index}`
-                                    ] ? (
-                                      <small className="form-text text-danger">
-                                        {
-                                          formValidation.errors[
-                                            `specialCharKeyWord${index}`
-                                          ]
-                                        }
-                                      </small>
-                                    ) : (
-                                      ""
-                                    )}
-                                  </div>
-                                  <div
-                                    className={`form-group    ${
-                                      formValidation?.specialCharacteristicsArr
-                                        ?.length -
-                                        1 ===
-                                      index
-                                        ? "col-5"
-                                        : " col-6 col-6-50 "
-                                    }`}
-                                  >
-                                    <label forhtml="specialCharDesc">
-                                      description {index + 1}*
-                                    </label>
-                                    <input
-                                      type="text"
-                                      className="form-control"
-                                      id={`specialCharDesc${index}`}
-                                      placeholder="Enter Quantity"
-                                      onChange={formValidation.handleChange}
-                                      onBlur={formValidation.handleBlur}
-                                      value={
-                                        formValidation.values[
-                                          `specialCharDesc${index}`
-                                        ]
-                                      }
-                                    />
-                                    {formValidation.errors[
-                                      `specialCharDesc${index}`
-                                    ] &&
-                                    formValidation.touched[
-                                      `specialCharDesc${index}`
-                                    ] ? (
-                                      <small className="form-text text-danger">
-                                        {
-                                          formValidation.errors[
-                                            `specialCharDesc${index}`
-                                          ]
-                                        }
-                                      </small>
-                                    ) : (
-                                      ""
-                                    )}
-                                  </div>
-                                  {formValidation?.specialCharacteristicsArr
-                                    ?.length -
-                                    1 ===
-                                  index ? (
-                                    <div className=" col-1 h-100 justify-content-center align-items-center d-flex   pt-4">
-                                      <i
-                                        className=" cursor fa-solid fa-minus text-white px-3 py-2"
-                                        // onClick={() => removenewSepcialChar()}
-                                      ></i>
-                                      {/* {dateSection} */}
-                                    </div>
-                                  ) : (
-                                    ""
-                                  )}
-                                </div>
-                              </div>
-                            </>
-                          )
-                        )
-                      : ""}
-
-                    {formValidation?.specialCharacteristicsArr?.length < 4 ? (
-                      <div className="action ">
-                        <div
-                          className="cursor"
-                          // onClick={() => addnewSepcialChar()}
-                        >
-                          <button className="action-btn btn-1 " type="button">
-                            add
-                          </button>
-                        </div>
-                      </div>
-                    ) : (
-                      ""
-                    )}
+              <div className="col-12 ms-3 ">
+                <div className="border-row row">
+                  <div>
+                    <label className="pb-2">Product Characteristics</label>
                   </div>
+
+                  <SpecialChar
+                    formValidation={formValidation}
+                    productCharacteristic="productCharacteristic"
+                  />
                 </div>
               </div>
+
               {/* ----------------------------------------- */}
               <div className="col-12">
                 <div className="form-group gap">

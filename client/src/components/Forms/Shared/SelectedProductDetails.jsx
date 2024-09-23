@@ -1,5 +1,8 @@
+import ReadOnly from "./ReadOnly";
+
 export default function ProductDetails(props) {
   let { productDetails } = props;
+  
   return (
     <div className="container container-req ">
       <div className="input-content ">
@@ -29,7 +32,6 @@ export default function ProductDetails(props) {
             </div>
           </div>
 
-        
           <div className="col-md-6 col-sm-12">
             <div className="form-group">
               <label>hsnCode</label>
@@ -66,7 +68,7 @@ export default function ProductDetails(props) {
             </div>
           </div>
 
-          <div className="col-md-6 col-sm-12">
+          <div className="col-md-6 col-sm-12 ">
             <div className="form-group">
               <label>guarantee </label>
               <input
@@ -77,6 +79,26 @@ export default function ProductDetails(props) {
               />
             </div>
           </div>
+
+          {productDetails?.specialCharacteristics &&
+            Object.keys(productDetails?.specialCharacteristics)?.length > 0 &&
+            Object.keys(productDetails?.specialCharacteristics) != "" && (
+              <div className="col-12 ">
+                <label className="fw-600 mb-1">Product Characteristics</label>
+
+                <div className="form-group form-control p-4 ">
+                  <div className="row row-gap">
+                    {Object?.entries(
+                      productDetails?.specialCharacteristics
+                    )?.map(([key, value], index) => (
+                      <div className="col-6">
+                        <ReadOnly title={key} value={value} />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
 
           <div className="col-12">
             <div className="form-group">
