@@ -29,7 +29,7 @@ export default function CoverVideo(props) {
                 controls="controls"
                 autoPlay={false}
                 muted={true}
-                className="h-75 w-100  "
+                className="h-75 w-100"
                 // id={handleImageError}
                 src={coverVideo}
                 alt="Cover Video"
