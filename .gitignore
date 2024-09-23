@@ -114,3 +114,5 @@ server/src/modules/products/products.controller.js
 server/src/modules/products/products.routes.js
 client/src/components/LanguageSwitcher/LanguageSwitcher copy 2.jsx
 client/src/components/Factorydashboard/subComponets/Products/EditProduct/EditProduct copy.jsx
+/server/uploads
+/server/uploads
