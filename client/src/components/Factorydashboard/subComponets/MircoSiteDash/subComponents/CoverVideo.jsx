@@ -34,6 +34,7 @@ export default function CoverVideo(props) {
                 src={coverVideo}
                 alt="Cover Video"
                 onError={handleImageError}
+                style={{ maxHeight: "55vh" }}
               />
             ) : (
               <h5 className="text-muted text-center py-3">Empty</h5>

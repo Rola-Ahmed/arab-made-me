@@ -352,6 +352,7 @@ export function UploadVedio(props) {
                     autoPlay={false}
                     muted={true}
                     className="w-100 display-video"
+                    style={{ maxHeight: "55vh" }}
                   />
                 </div>
                 <div className="w-100">
