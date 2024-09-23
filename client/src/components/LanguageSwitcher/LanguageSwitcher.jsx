@@ -21,39 +21,39 @@ const LanguageSwitcher = () => {
     i18n.changeLanguage(language);
   };
 
-  useEffect(() => {
-    const googleTranslateElementInit = () => {
-      new window.google.translate.TranslateElement(
-        {
-          pageLanguage: "en",
-          includedLanguages: "en,ar",
-          layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-          // layout: window.google.translate.TranslateElement.InlineLayout.HORIZONTAL,
-          // layout: window.google.translate.TranslateElement.InlineLayout.VERTICAL,
-          autoDisplay: false,
-        },
-        "google_translate_element"
-      );
-    };
+  // useEffect(() => {
+  //   const googleTranslateElementInit = () => {
+  //     new window.google.translate.TranslateElement(
+  //       {
+  //         pageLanguage: "en",
+  //         includedLanguages: "en,ar",
+  //         layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+  //         // layout: window.google.translate.TranslateElement.InlineLayout.HORIZONTAL,
+  //         // layout: window.google.translate.TranslateElement.InlineLayout.VERTICAL,
+  //         autoDisplay: false,
+  //       },
+  //       "google_translate_element"
+  //     );
+  //   };
 
-    window.googleTranslateElementInit = googleTranslateElementInit; // Assign to global scope
+  //   window.googleTranslateElementInit = googleTranslateElementInit; // Assign to global scope
 
-    const addGoogleTranslateScript = () => {
-      const script = document.createElement("script");
-      //translate.google.com/translate_a/element.js?cb=googleTranslateElementInit
-      script.src =
-        "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-      script.async = true;
-      document.body.appendChild(script);
-    };
+  //   const addGoogleTranslateScript = () => {
+  //     const script = document.createElement("script");
+  //     //translate.google.com/translate_a/element.js?cb=googleTranslateElementInit
+  //     script.src =
+  //       "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+  //     script.async = true;
+  //     document.body.appendChild(script);
+  //   };
 
-    addGoogleTranslateScript();
-  }, []);
+  //   addGoogleTranslateScript();
+  // }, []);
 
   return (
     <div className="Lang-cont">
       <div className="dropdown w-fit-content mx-auto">
-        <div id="google_translate_element" className="d-none"></div>
+        {/* <div id="google_translate_element" className="d-none"></div> */}
         <button
           className=" show-lang btn btn-secondary dropdown-toggle  text-black fs-16 bg-transparent border-0"
           type="button"

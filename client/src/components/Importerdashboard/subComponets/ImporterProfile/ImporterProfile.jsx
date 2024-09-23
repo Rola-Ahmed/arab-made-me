@@ -22,6 +22,7 @@ import ChangePassword from "components/Factorydashboard/subComponets/FactoryProf
 import InputField from "components/Forms/Shared/InputField";
 import { useFetchImporterById } from "hooks/useFetchImporterById";
 import { updateImporterLegalDocs } from "Services/importer";
+import { determinePathAndData } from "utils/importerContinueProfile";
 
 import useFormValidation from "./hooks/useFormValidation";
 function successMsg() {
@@ -32,7 +33,9 @@ export default function ImporterProfile() {
   document.title = "Importer Profile";
 
   let { isLogin } = useContext(UserToken);
-  let { currentUserData, clearSession } = useContext(userDetails);
+  let { currentUserData, clearSession, setCurrentUserData } = useContext(
+    userDetails
+  );
   const countriesMiddleEast = useCountries();
 
   const [ImporterProfile, setImporterProfile] = useState([]);
@@ -71,6 +74,15 @@ export default function ImporterProfile() {
     });
   };
 
+  const updateCurrentUser = (data) => {
+    let { path } = determinePathAndData(data);
+    setCurrentUserData((prevUserData) => ({
+      ...prevUserData,
+      // continueProfilePath: null,
+      continueProfilePath: path,
+    }));
+  };
+
   async function updateMedia(e) {
     setIsLoading(true);
 
@@ -82,13 +94,16 @@ export default function ImporterProfile() {
 
     let result = await addImporterMedia({ Authorization: isLogin }, data);
 
+    // console.log("result updateMedia", result);
     if (result?.success) {
       ModalClose();
       successMsg();
-
+      updateCurrentUser(result?.data?.importer);
       setImporterProfile((prevErrors) => ({
         ...prevErrors,
-        ...result?.data?.importer,
+        // ...result?.data?.importer,
+        legalDocs: result?.data?.importer?.legalDocs,
+        image: result?.data?.importer?.image,
       }));
       //
       setSelectedDocs([]);
@@ -203,6 +218,7 @@ export default function ImporterProfile() {
     );
 
     if (result?.success) {
+      updateCurrentUser(result?.data?.importer);
       ModalClose();
       successMsg();
       setImporterProfile((prevErrors) => ({
@@ -298,11 +314,15 @@ export default function ImporterProfile() {
       data
     );
 
+    // console.log("result handleLegalDocsUploads", ...result?.data?.importer?.legalDocs);
     if (result?.success) {
       setImporterProfile((prevErrors) => ({
         ...prevErrors,
         ...result?.data?.importer,
+        legalDocs: result?.data?.importer?.legalDocs,
+        image: result?.data?.importer?.image,
       }));
+      updateCurrentUser(result?.data?.importer);
       SuccessToast("data updated succcfully");
 
       handleClose();

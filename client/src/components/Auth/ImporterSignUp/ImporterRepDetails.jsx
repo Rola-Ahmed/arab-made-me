@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import InputField from "components/Forms/Shared/InputField";
+import { determinePathAndData } from "utils/importerContinueProfile";
 
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
@@ -163,11 +164,14 @@ export default function ImporterRepDetails() {
     );
 
     if (result?.success) {
+      console.log("result", result);
+      let { path } = determinePathAndData(result?.data?.importer);
+
       navigate("/buyerRegistration/LegalDocuments");
       setCurrentUserData((prevUserData) => ({
         ...prevUserData,
         importerId: result?.data?.importer?.id,
-        continueProfilePath: "buyerRegistration/LegalDocuments",
+        continueProfilePath: path,
       }));
     } else {
       setErrorMsg((prevErrors) => ({

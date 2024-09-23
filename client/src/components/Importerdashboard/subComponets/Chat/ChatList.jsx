@@ -61,7 +61,6 @@ export default function ChatList() {
           <table className="table mb-0">
             {/* headers */}
 
-            {/* <thead className="d-none"></thead> */}
 
             <tbody>
               {/* row1 */}

@@ -5,6 +5,7 @@ import { getUser } from "Services/UserAuth";
 import { fetchOneFactory } from "Services/factory";
 import { fetchOneImporter } from "Services/importer";
 import { determinePathAndData } from "utils/factoryContinueProfile";
+import { determinePathAndData as importerDeterminePath } from "utils/importerContinueProfile";
 
 // Create the user context
 export const userDetails = createContext("");
@@ -121,12 +122,9 @@ export function UserTypeProvider({ children }) {
   async function getImporter() {
     const result = await fetchOneImporter(currentUserData?.importerId, {});
 
-    let path = "";
     if (result?.success) {
       let output = result?.data?.importers;
-      if (!output?.repName) {
-        path = "buyerRegistration";
-      }
+      let { path } = importerDeterminePath(output);
       setAndStoreData((prevData) => ({
         ...prevData,
         importerVerified: output?.verified,
