@@ -31,8 +31,6 @@ export default function ImporterRepDetails() {
     if (!isLogin) {
       navigate(`/signIn/buyerRegistration/LegalDocuments`);
     }
-
-    // }
   }, [isLogin]);
 
   let navigate = useNavigate();

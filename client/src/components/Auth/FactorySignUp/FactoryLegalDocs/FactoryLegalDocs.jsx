@@ -242,7 +242,7 @@ function FactoryLegalDocs() {
                     errorMsg={errorMsg}
                     setSelectedDocs={setSelectedDocs}
                     MediaName="legalDocs"
-                    mediaMaxLen="3"
+                    mediaMaxLen="5"
                     meidaAcceptedExtensions={["pdf", "png", "jpeg", "jpg"]}
                     setErrorMsg={setErrorMsg}
                     // title={`Legal Documents ${<i className="fa-solid fa-circle-info"></i>}`}

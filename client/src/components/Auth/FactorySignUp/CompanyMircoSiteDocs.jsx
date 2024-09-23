@@ -68,8 +68,6 @@ function CompanyMircoSiteDocs() {
     let data = new FormData();
 
     let missingRequriemtns = checkRequriedFeilds(selectedDocs);
-    // console.log("missingRequriemtns", missingRequriemtns);
-    // return;
     if (missingRequriemtns) {
       setIsLoading(false);
       setErrorMsg((prevErrors) => ({
