@@ -1,0 +1,41 @@
+{
+  "egypt": {
+    "name": "Egypt"
+  },
+  "bahrain": {
+    "name": "Bahrain"
+  },
+  "iraq": {
+    "name": "Iraq"
+  },
+  "saudiArabia": {
+    "name": "Saudi Arabia"
+  },
+  "yemen": {
+    "name": "Yemen"
+  },
+  "syria": {
+    "name": "Syria"
+  },
+  "jordan": {
+    "name": "Jordan"
+  },
+  "unitedArabEmirates": {
+    "name": "United Arab Emirates"
+  },
+  "lebanon": {
+    "name": "Lebanon"
+  },
+  "oman": {
+    "name": "Oman"
+  },
+  "kuwait": {
+    "name": "Kuwait"
+  },
+  "qatar": {
+    "name": "Qatar"
+  },
+  "palestine": {
+    "name": "Palestine"
+  }
+}
