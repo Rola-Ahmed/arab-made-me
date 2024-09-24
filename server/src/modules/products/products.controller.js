@@ -6,69 +6,102 @@ import { asyncHandler } from "../../utils/error_handling.js";
 import { Factory } from "../../database/models/factory.model.js";
 import { sequelize } from "../../database/connection.js";
 
-export const addProduct = asyncHandler(
-    async (req, res, nxt) => {
-        const factoryId = req.factory.id
-        const product = await Product.create({ ...req.body, factoryId })
-        return res.status(201).json({ message: "done", product })
-    }
-)
+export const addProduct = asyncHandler(async (req, res, nxt) => {
+  const factoryId = req.factory.id;
+  const product = await Product.create({ ...req.body, factoryId });
+  return res.status(201).json({ message: "done", product });
+});
 
-export const getProducts = asyncHandler(
-    async (req, res, nxt) => {
-        let filter
-        if (req.query.filter) {
-            filter = {
-                [Op.or]: [
-                    sequelize.where(sequelize.fn('LOWER', sequelize.col('products.name')), 'LIKE', sequelize.fn('LOWER', `%${req.query.filter}%`)),
-                    sequelize.where(sequelize.fn('LOWER', sequelize.col('products.description')), 'LIKE', sequelize.fn('LOWER', `%${req.query.filter}%`)),
-                ],
-            };
-            req.query.filter = null
-        }
-        const searchFilters = searchFiltering(req.query)
+export const getProducts = asyncHandler(async (req, res, nxt) => {
+  let filter;
+  if (req.query.filter) {
+    filter = {
+      [Op.or]: [
+        sequelize.where(
+          sequelize.fn("LOWER", sequelize.col("products.name")),
+          "LIKE",
+          sequelize.fn("LOWER", `%${req.query.filter}%`)
+        ),
+        sequelize.where(
+          sequelize.fn("LOWER", sequelize.col("products.description")),
+          "LIKE",
+          sequelize.fn("LOWER", `%${req.query.filter}%`)
+        ),
+      ],
+    };
+    req.query.filter = null;
+  }
+  const searchFilters = searchFiltering(req.query);
 
-        const { sectors } = req.query
-        let sectorsArr
-        if(sectors){
-            sectorsArr=sectors.split(',')
-        }
+  const { sectors } = req.query;
+  let sectorsArr;
+  if (sectors) {
+    sectorsArr = sectors.split(",");
+  }
 
-        if (sectors && sectorsArr != []) {
-            searchFilters.whereConditions.push({
-                sectorId: {
-                    [Op.in]: sectorsArr
-                }
-            })
-        }
+  if (sectors && sectorsArr != []) {
+    searchFilters.whereConditions.push({
+      sectorId: {
+        [Op.in]: sectorsArr,
+      },
+    });
+  }
 
+  // for resolving sequelize issues of same attributes in product and factory
 
-        // for resolving sequelize issues of same attributes in product and factory 
+  if (filter) {
+    searchFilters.whereConditions.push(filter);
+  }
+  console.log(searchFilters.whereConditions);
 
-        if (filter) {
-            searchFilters.whereConditions.push(filter)
-        }
-        console.log(searchFilters.whereConditions);
-        const products = await Product.findAll({
-            where: searchFilters.whereConditions,
-            offset: searchFilters.offset,
-            limit: searchFilters.limit,
-            order: searchFilters.order.length > 0 ? searchFilters.order : [['createdAt', 'DESC']],
-            include: ["factory","sector"]
-        });
+  const page = parseInt(req.query.page, 10) || 1; // Default to page 1
+  const limit = parseInt(req.query.size, 10) || 10; // Default limit to 10
+  //   const offset = (page - 1) * limit;
 
-        return res.status(200).json({ message: "done", products })
-    }
-)
+  const products = await Product.findAll({
+    where: searchFilters.whereConditions,
+    offset: searchFilters.offset,
+    limit: searchFilters.limit,
+    order:
+      searchFilters.order.length > 0
+        ? searchFilters.order
+        : [["createdAt", "DESC"]],
+    include: ["factory", "sector"],
+  });
+  // Get total count of products that match the filters
+  const totalProducts = await Product.count({
+    where: searchFilters.whereConditions,
+  });
 
-export const getProduct = crudOps.getOne(Product)
+  return res.status(200).json({
+    message: "done",
+    products,
+    pagination: {
+      totalProducts,
+      totalPages: Math.ceil(totalProducts / limit),
+      currentPage: page,
+    },
+  });
+});
 
-export const uploadMedia = crudOps.uploadMedia('product', { 'images': 'array', 'coverImage': 'file' })
+export const getProduct = crudOps.getOne(Product);
 
-export const updateProduct = crudOps.updateModel(Product)
+export const uploadMedia = crudOps.uploadMedia("product", {
+  images: "array",
+  coverImage: "file",
+});
 
-export const updateOneImage = crudOps.updateOneInMedia(Product, 'product', 'images', 8)
+export const updateProduct = crudOps.updateModel(Product);
 
+export const updateOneImage = crudOps.updateOneInMedia(
+  Product,
+  "product",
+  "images",
+  8
+);
 
-export const deleteProduct = crudOps.deleteModel(Product, { 'images': 'array', 'coverImage': 'file' })
-export const updateFromAdmin = crudOps.updateModel(Product)
+export const deleteProduct = crudOps.deleteModel(Product, {
+  images: "array",
+  coverImage: "file",
+});
+export const updateFromAdmin = crudOps.updateModel(Product);

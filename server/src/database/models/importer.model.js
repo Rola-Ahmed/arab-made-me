@@ -53,40 +53,40 @@ export const Importer = sequelize.define(
       type: DataTypes.BIGINT,
       //   allowNull: false,
       //unique: true,
-      validate: {
-        isValid(value) {
-          console.log(
-            value.toString().length >= 8 && value.toString().length <= 16
-          );
-          if (
-            !(value.toString().length >= 8 && value.toString().length <= 16)
-          ) {
-            console.log("here -- 1");
-            throw new Error(`The Vat Number should be (8:16) digits.`);
-          }
-        },
-      },
+      // validate: {
+      //   isValid(value) {
+      //     console.log(
+      //       value.toString().length >= 8 && value.toString().length <= 16
+      //     );
+      //     if (
+      //       !(value.toString().length >= 8 && value.toString().length <= 16)
+      //     ) {
+      //       console.log("here -- 1");
+      //       throw new Error(`The Vat Number should be (8:16) digits.`);
+      //     }
+      //   },
+      // },
     },
 
     importerLicenseNumber: {
       type: DataTypes.BIGINT,
       //   allowNull: false,
       //unique: true,
-      validate: {
-        isValid(value) {
-          console.log(
-            value.toString().length >= 8 && value.toString().length <= 16
-          );
-          if (
-            !(value.toString().length >= 8 && value.toString().length <= 16)
-          ) {
-            console.log("here -- 1");
-            throw new Error(
-              `The importer License Number should be (8:16) digits.`
-            );
-          }
-        },
-      },
+      // validate: {
+      //   isValid(value) {
+      //     console.log(
+      //       value.toString().length >= 8 && value.toString().length <= 16
+      //     );
+      //     if (
+      //       !(value.toString().length >= 8 && value.toString().length <= 16)
+      //     ) {
+      //       console.log("here -- 1");
+      //       throw new Error(
+      //         `The importer License Number should be (8:16) digits.`
+      //       );
+      //     }
+      //   },
+      // },
     },
 
     repPhone: {
@@ -96,12 +96,16 @@ export const Importer = sequelize.define(
     address: {
       type: DataTypes.ARRAY(DataTypes.STRING),
       // allowNull: false,
+      defaultValue: [],
     },
     // sector: {
     //     type: DataTypes.ENUM,
     //     values: ['electronics', 'chemicals', 'clothes']
     // },
-    exportingCountries: DataTypes.ARRAY(DataTypes.STRING),
+    exportingCountries: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      defaultValue: [],
+    },
     commercialRegisterationNumber: {
       type: DataTypes.BIGINT,
       //   allowNull: false,
@@ -136,6 +140,7 @@ export const Importer = sequelize.define(
         });
         this.setDataValue("legalDocs", paths);
       },
+      defaultValue: [],
     },
 
     yearOfEstablishmint: DataTypes.INTEGER,

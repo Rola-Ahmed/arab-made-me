@@ -1,3 +1,11 @@
+const showLoginModal = (setModalShow, setisLoggedReDirect, redirectPath) => {
+  setModalShow((prevVal) => ({
+    ...prevVal,
+    isLogin: true,
+  }));
+  setisLoggedReDirect(redirectPath);
+};
+
 // utils/navigationUtils.js
 // HandleUsersBtnAccess
 const handleButtonClick = (params) => {
@@ -13,12 +21,7 @@ const handleButtonClick = (params) => {
   // return
 
   if (!isLogin) {
-    setModalShow((prevVal) => ({
-      ...prevVal,
-      isLogin: true,
-    }));
-
-    setisLoggedReDirect(`/signIn/${loginPath}`);
+    showLoginModal(setModalShow, setisLoggedReDirect, `/signIn/${loginPath}`);
     return;
   }
 
@@ -70,12 +73,7 @@ const handleIsLoggedInBtn = (params) => {
   } = params;
 
   if (!isLogin) {
-    setModalShow((prevVal) => ({
-      ...prevVal,
-      isLogin: true,
-    }));
-
-    setisLoggedReDirect(`/signIn/${loginPath}`);
+    showLoginModal(setModalShow, setisLoggedReDirect, `/signIn/${loginPath}`);
     return;
   }
 
@@ -93,12 +91,7 @@ const accessFormSourcingRequest = (params) => {
   } = params;
 
   if (!isLogin) {
-    setModalShow((prevVal) => ({
-      ...prevVal,
-      isLogin: true,
-    }));
-
-    setisLoggedReDirect(`/signIn/${directto}`);
+    showLoginModal(setModalShow, setisLoggedReDirect, `/signIn/${directto}`);
     return;
   }
 

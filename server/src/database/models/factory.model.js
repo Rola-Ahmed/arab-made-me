@@ -36,11 +36,7 @@ export const Factory = sequelize.define(
     },
     whyUs: {
       type: DataTypes.TEXT,
-      // validate: {
-      //     isValid(value) {
-      //         if (value.length < 10) { throw new Error(`The description must be atleast 10 characters.`) }
-      //     }
-      // },
+     
     },
     repName: {
       type: DataTypes.ARRAY(DataTypes.STRING(50)),
@@ -56,10 +52,6 @@ export const Factory = sequelize.define(
       validate: {
         isEmail: true,
       },
-      // set(v) {
-      //     this.setDataValue('emailActivated', false)
-      //     this.setDataValue('repEmail', v)
-      // }
     },
     repPhone: {
       type: DataTypes.STRING,
@@ -67,69 +59,69 @@ export const Factory = sequelize.define(
     },
     address: {
       type: DataTypes.ARRAY(DataTypes.STRING),
-      // allowNull: false,
+      defaultValue: [],
+
     },
-    // sector: {
-    //     type: DataTypes.ENUM,
-    //     values: ['electronics', 'chemicals', 'clothes']
-    // },
-    importingCountries: DataTypes.ARRAY(DataTypes.STRING),
+
+    importingCountries: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      defaultValue: [],
+    },
     commercialRegisterationNumber: {
       type: DataTypes.BIGINT,
       //   allowNull: false,
       // unique: true,
-      validate: {
-        isValid(value) {
-          console.log(
-            value.toString().length > 8 && value.toString().length < 16
-          );
-          if (
-            !(value.toString().length >= 8 && value.toString().length <= 16)
-          ) {
-            console.log("here -- 1");
-            throw new Error(
-              `The commercial Registeration should be (8:16) digits.`
-            );
-          }
-        },
-      },
+      // validate: {
+      //   isValid(value) {
+      //     console.log(
+      //       value.toString().length > 8 && value.toString().length < 16
+      //     );
+      //     if (
+      //       !(value.toString().length >= 8 && value.toString().length <= 16)
+      //     ) {
+      //       console.log("here -- 1");
+      //       throw new Error(
+      //         `The commercial Registeration should be (8:16) digits.`
+      //       );
+      //     }
+      //   },
+      // },
     },
-    BusinessRegistrationNumber : {
+    BusinessRegistrationNumber: {
       type: DataTypes.BIGINT,
       //   allowNull: false,
       // unique: true,
-      validate: {
-        isValid(value) {
-         
-          if (
-            !(value.toString().length >= 8 && value.toString().length <= 16)
-          ) {
-            console.log("here -- 1");
-            throw new Error(
-              `The Business Registration Number should be (8:16) digits.`
-            );
-          }
-        },
-      },
+      // validate: {
+      //   isValid(value) {
+      //     if (
+      //       !(value.toString().length >= 8 && value.toString().length <= 16)
+      //     ) {
+      //       console.log("here -- 1");
+      //       throw new Error(
+      //         `The Business Registration Number should be (8:16) digits.`
+      //       );
+      //     }
+      //   },
+      // },
     },
 
     taxRegisterationNumber: {
       type: DataTypes.BIGINT,
       //   allowNull: false,
       //unique: true,
-      validate: {
-        isValid(value) {
-          console.log(
-            value.toString().length >= 8 && value.toString().length <= 16
-          );
-          if (
-            !(value.toString().length >= 8 && value.toString().length <= 16)
-          ) {
-            console.log("here -- 1");
-            throw new Error(`The tax Registeration should be (8:16) digits.`);
-          }
-        },
-      },
+      // validate: {
+      //   isValid(value) {
+      //     console.log(
+      //       value.toString().length >= 8 && value.toString().length <= 16
+      //     );
+      //     if (
+      //       !(value.toString().length >= 8 && value.toString().length <= 16)
+      //     ) {
+      //       console.log("here -- 1");
+      //       throw new Error(`The tax Registeration should be (8:16) digits.`);
+      //     }
+      //   },
+      // },
     },
     directorName: DataTypes.STRING,
     directorEmail: {
@@ -141,15 +133,15 @@ export const Factory = sequelize.define(
     numberOfProductonLines: { type: DataTypes.INTEGER },
     numberOfEmployees: { type: DataTypes.STRING },
     qualityCertificates: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
-        set(value) {
-          let paths = [];
-          value.forEach((element) => {
-            paths.push(element.finalPath);
-          });
-          this.setDataValue("qualityCertificates", paths);
-        },
-
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      set(value) {
+        let paths = [];
+        value.forEach((element) => {
+          paths.push(element.finalPath);
+        });
+        this.setDataValue("qualityCertificates", paths);
+      },
+      defaultValue: [],
     },
     testLaboratory: DataTypes.BOOLEAN,
     researchAndDevelopmentSection: DataTypes.BOOLEAN,
@@ -172,19 +164,20 @@ export const Factory = sequelize.define(
         });
         this.setDataValue("images", paths);
       },
+      defaultValue: [],
     },
     legalDocs: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
-        set(value) {
-            let paths = []
-            value.forEach(element => {
-                paths.push(element.finalPath)
-            });
-            this.setDataValue('legalDocs', paths)
-        }
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      set(value) {
+        let paths = [];
+        value.forEach((element) => {
+          paths.push(element.finalPath);
+        });
+        this.setDataValue("legalDocs", paths);
+      },
+      defaultValue: [],
     },
 
-  
     coverVideo: {
       type: DataTypes.STRING,
       set(value) {
@@ -205,7 +198,7 @@ export const Factory = sequelize.define(
         isUrl: true,
       },
     },
-  
+
     country: DataTypes.STRING,
     city: DataTypes.STRING,
     socialLinks: DataTypes.JSONB,
@@ -217,7 +210,7 @@ export const Factory = sequelize.define(
     IndustrialRegistrationNumber: {
       type: DataTypes.BIGINT,
     },
-    
+
     IndustrialLicenseNumber: {
       type: DataTypes.BIGINT,
     },
@@ -234,3 +227,5 @@ export const Factory = sequelize.define(
 Factory.belongsTo(User, { onDelete: "CASCADE" });
 Factory.belongsTo(Sector);
 Factory.belongsTo(Subscription, { foreignKey: { allowNull: true } });
+// Factory.hasMany(Product, { as: 'factoryproducts', foreignKey: 'factoryId' });
+// Product.belongsTo(Factory, { as: 'factory', foreignKey: 'factoryId' });

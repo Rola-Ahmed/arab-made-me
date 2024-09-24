@@ -8,6 +8,7 @@ import { useFetchSectors } from "hooks/useFetchSectors";
 import HandleUsersBtnAccess, {
   handleIsLoggedInBtn,
 } from "utils/actionBtns/HandleUsersBtnAccess";
+import { updateUrlParamString,UpdateUrlParamArray} from "utils/updateUrlParams";
 
 import Header from "components/main/Header/Header";
 import { useNavigate } from "react-router-dom";
@@ -16,16 +17,17 @@ import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/ImporterUnVerifiedPopUpMsg";
 import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
 
-
 import DescritionPopUp from "components/Helpers/DescritionPopUp";
 import { useAppTranslation } from "config.js";
 
 // static variabls
 import PublicPaginate from "components/Shared/PublicPaginate";
 import FactoryCardParent from "components/Home/TopFactories/Shared/FactoryCardParent";
+import { useFetchFactories } from "./useFetchFactories";
 
-export default function TopFactories(props) {
-  let {
+export default function TopFactories() {
+  document.title = "Factory Gallery";
+  const {
     allFactoriesData,
     setFilter,
     pagination,
@@ -34,15 +36,14 @@ export default function TopFactories(props) {
     apiLoadingData,
     isLogin,
     currentUserData,
-  } = props;
-  document.title = "Factory Gallery";
+  } = useFetchFactories();
+
   let { allSectors } = useFetchSectors();
   const { trans: t } = useAppTranslation();
   const countriesMiddleEast = useCountries();
 
   // let location = useLocation();
   let navigate = useNavigate();
-
 
   const [modalShow, setModalShow] = useState({
     isLogin: false,
@@ -57,62 +58,29 @@ export default function TopFactories(props) {
     location: "",
   });
 
-  function SelectedfFlters(value, keyword) {
-    let sectorArr = filter.filterBySector;
+  function updateSectorFilter(value, keyword) {
+    const sectorArr = [...filter.filterBySector];
+    // Ensure value is the correct type (e.g., number)
+    const numericValue = Number(value);
+    const index = sectorArr.indexOf(numericValue);
+    console.log("sectorArr defualt",sectorArr)
 
-    if (keyword == "filterBySector") {
-      // check if the value aleady exisit then remove it
-      // if not then add it to the array
-
-      const index = sectorArr.indexOf(value);
-      if (index > -1) {
-        sectorArr.splice(index, 1);
-      } else {
-        sectorArr.push(value);
-      }
-
-      setFilter((prevValue) => ({
-        ...prevValue,
-        [keyword]: sectorArr,
-      }));
+    if (index > -1) {
+      sectorArr.splice(index, 1);
     } else {
-      setFilter((prevValue) => ({
-        ...prevValue,
-        [keyword]: value,
-      }));
+      sectorArr.push(numericValue);
     }
 
-    let sectorVal = sectorArr.length > 0 ? sectorArr : "";
 
-    // Get the current URL
-    let currentUrl = window.location.href;
-    const paramName = keyword;
-    const paramValue = keyword == "filterBySector" ? sectorVal : value;
-
-    if (paramValue !== "" || filter?.filterBySector?.length > 0) {
-      // Create or update the parameter
-      const paramRegex = new RegExp(`([?&])${paramName}=.*?(&|$)`);
-      if (paramRegex.test(currentUrl)) {
-        // If the parameter already exists, update its value
-        currentUrl = currentUrl.replace(
-          paramRegex,
-          `$1${paramName}=${paramValue}$2`
-        );
-      } else {
-        // If the parameter doesn't exist, add it
-        currentUrl += currentUrl.includes("?")
-          ? `&${paramName}=${paramValue}`
-          : `?${paramName}=${paramValue}`;
-      }
-    } else {
-      // if value is empty then remove the parameter
-      const paramRegex = new RegExp(`([?&])${paramName}=.*?(&|$)`);
-      currentUrl = currentUrl.replace(paramRegex, "$2");
-    }
-    // Update the browser's address bar
-    window.history.replaceState({}, document.title, currentUrl);
+    setFilter((prev) => ({ ...prev, [keyword]: sectorArr }));
+    UpdateUrlParamArray(keyword, sectorArr);
   }
 
+  function updateOtherFilters(value, keyword) {
+    setFilter((prev) => ({ ...prev, [keyword]: value }));
+
+    updateUrlParamString(keyword, value);
+  }
   const handleQuestionMarkClick = (desc) => {
     setDescription(desc);
   };
@@ -153,56 +121,39 @@ export default function TopFactories(props) {
     });
   };
 
-  const updateUrl = (filterSeacrh = "") => {
-    const queryParams = new URLSearchParams();
-    const oldUrl = `${window.location.pathname}`;
-
-    if (filterSeacrh != "") {
-      queryParams.set("filterSearch", filterSeacrh);
-    } else {
-      window.history.replaceState(null, "", oldUrl);
-    }
-
-    const queryString = queryParams.toString();
-    const newUrl = `${window.location.pathname}?${queryString}`;
-    // Replace the current state in the history without triggering a navigation
-
-    window.history.replaceState(null, "", newUrl);
-  };
+ 
+  const renderModal = (Component, show, hideHandler, destination, userType) => (
+    <Component
+      show={show}
+      onHide={hideHandler}
+      {...(destination && { destination })}
+      {...(userType && { userType })}
+    />
+  );
 
   return (
     <>
-      <IsLoggedIn
-        show={modalShow.isLogin}
-        onHide={() =>
-          setModalShow((prevVal) => ({
-            ...prevVal,
-            isLogin: false,
-          }))
-        }
-        distination={isLoggedReDirect}
-      />
-
-      <ImporterUnVerified
-        show={modalShow.isImporterVerified}
-        onHide={() =>
-          setModalShow((prevVal) => ({
-            ...prevVal,
-            isImporterVerified: false,
-          }))
-        }
-      />
-
-      <UserNotAuthorized
-        show={modalShow.isFactoryVerified}
-        onHide={() =>
-          setModalShow((prevVal) => ({
-            ...prevVal,
-            isFactoryVerified: false,
-          }))
-        }
-        userType="Buyer"
-      />
+      {renderModal(
+        IsLoggedIn,
+        modalShow.isLogin,
+        () => setModalShow((prev) => ({ ...prev, isLogin: false })),
+        isLoggedReDirect,
+        ""
+      )}
+      {renderModal(
+        ImporterUnVerified,
+        modalShow.isImporterVerified,
+        () => setModalShow((prev) => ({ ...prev, isImporterVerified: false })),
+        "",
+        ""
+      )}
+      {renderModal(
+        UserNotAuthorized,
+        modalShow.isFactoryVerified,
+        () => setModalShow((prev) => ({ ...prev, isFactoryVerified: false })),
+        "",
+        "Buyer"
+      )}
 
       <Header title={t("translation:factories")} />
 
@@ -214,14 +165,12 @@ export default function TopFactories(props) {
                 type="text"
                 className="in h-25 overflow-hidden  w-100 rounded-3 border w-100"
                 placeholder="Search here"
-                // value={searchTermSecotr}
                 defaultValue={filter?.filterSearch}
                 id="searchTermSecotr"
                 name="searchTermSecotr"
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
-                    SelectedfFlters(e.target.value, "filterSearch");
-                    updateUrl(e.target.value);
+                    updateOtherFilters(e.target.value, "filterSearch");
                   }
                 }}
               />
@@ -230,17 +179,11 @@ export default function TopFactories(props) {
               <button
                 type="button"
                 className="filt-btn h-25 rounded-3 border-0 bg-main  text-white w-100 fs-16-semi  m-auto"
-                // onClick={() => clearFilters()}
-                onClick={(e) => {
-                  // if (e.key === "Enter") {
-
+                onClick={(_e) => {
                   let value = document?.getElementById("searchTermSecotr")
                     ?.value;
 
-                  SelectedfFlters(value, "filterSearch");
-                  updateUrl(value);
-                  //
-                  // }
+                  updateOtherFilters(value, "filterSearch");
                 }}
               >
                 Search
@@ -263,7 +206,10 @@ export default function TopFactories(props) {
                     <div className="form-check">
                       <input
                         onClick={(e) =>
-                          SelectedfFlters(e?.target?.value, "filterByCountry")
+                          updateOtherFilters(
+                            e?.target?.value,
+                            "filterByCountry"
+                          )
                         }
                         className="form-check-input "
                         type="radio"
@@ -271,7 +217,7 @@ export default function TopFactories(props) {
                         id="country"
                         value=""
                         defaultChecked
-                        checked={filter?.filterByCountry === ""}
+                        checked={filter?.filterByCountry == ""}
                       />
                       <label className="form-check-label w-100">{`All`}</label>
                     </div>
@@ -280,7 +226,10 @@ export default function TopFactories(props) {
                       <div className="form-check">
                         <input
                           onClick={(e) =>
-                            SelectedfFlters(e?.target?.value, "filterByCountry")
+                            updateOtherFilters(
+                              e?.target?.value,
+                              "filterByCountry"
+                            )
                           }
                           className="form-check-input cursor"
                           type="radio"
@@ -311,7 +260,10 @@ export default function TopFactories(props) {
                           id="sector"
                           value={sectorItem.id}
                           onClick={(e) =>
-                            SelectedfFlters(e?.target?.value, "filterBySector")
+                            updateSectorFilter(
+                              e?.target?.value,
+                              "filterBySector"
+                            )
                           }
                           defaultChecked={filter?.filterBySector?.find(
                             (element) => element == sectorItem.id
@@ -358,7 +310,7 @@ export default function TopFactories(props) {
                     </>
                   ) : (
                     <>
-                      {allFactoriesData?.map((factoryitem, factoryindex) => (
+                      {allFactoriesData?.map((factoryitem, _factoryindex) => (
                         <div
                           className="  
                         col-xxl-4 col-xl-4  col-lg-6 col-12 pe-0 "

@@ -60,10 +60,12 @@ export const emailValidation = Yup.string()
 
 
   export const RegisterationNumbers = (mustNotMatcharr) => {
+
+    // mustNotMatcharr is array
     return Yup.string()
       .matches(/^[0-9]+$/, "Input field should contain numbers only")
-      .min(8, "Min length is 8")
-      .max(16, "Max length is 16")
+      // .min(8, "Min length is 8")
+      // .max(16, "Max length is 16")
       .required("Input field is required")
       .notOneOf(mustNotMatcharr, 'input Field must be unquie');
   };

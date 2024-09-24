@@ -39,7 +39,6 @@ export default function AllProductsContainer() {
 
     filterBySearch: filterSearch ?? "",
   });
-  console.log("filterfilterfilter", filter);
 
   const [modalShow, setModalShow] = useState({
     isLogin: false,
@@ -57,58 +56,41 @@ export default function AllProductsContainer() {
       });
       setAllProductsData([]);
 
-      let url1 = ``;
+      // let url1 = ``;
       let url2 = `?size=${pagination?.displayProductSize}&page=${pagination?.currentPage}&include=factory`;
 
       if (filter?.filterBySearch !== "") {
         url2 += `&filter=${filter?.filterBySearch}`;
-        url1 += `&filter=${filter?.filterBySearch}`;
       }
 
       if (filter?.filterByCountry !== "") {
         url2 += `&location=${filter?.filterByCountry}`;
-        url1 += `&location=${filter?.filterByCountry}`;
       }
 
       if (filter?.filterBySort !== "") {
         url2 += `&sort=${filter?.filterBySort}`;
-        url1 += `&sort=${filter?.filterBySort}`;
       }
 
       if (filter?.filterBySector?.length > 0) {
         url2 += `&sectors=${filter?.filterBySector.join(",")}`;
-        url1 += `&sectors=${filter?.filterBySector.join(",")}`;
       }
-      const response1 = await getAllProducts(url1);
 
-      if (response1?.success) {
-        setTimeout(() => {
-          setPagination((prevValue) => ({
-            ...prevValue,
-            totalPage: Math.ceil(
-              (response1?.data?.products?.length || 0) /
-                prevValue.displayProductSize
-            ),
-          }));
-        }, 50);
+      const response2 = await getAllProducts(url2);
+      if (response2?.success) {
+        setPagination((prevValue) => ({
+          ...prevValue,
+          totalPage: response2?.data?.pagination,
+        }));
+
+        setAllProductsData(response2?.data?.products);
       }
 
       setTimeout(() => {
         setapiLoadingData({
-          loadingPage: response1?.loadingStatus,
-          errorCausedMsg: response1?.error,
+          loadingPage: response2?.loadingStatus,
+          errorCausedMsg: response2?.error,
         });
       }, 50);
-
-      // i display this page form two diffrent places either from secors of all products
-      // let response2 = "";
-      // display the products for specific sector
-      // if (sectorID !== null || sectorID !== undefined) {
-      const response2 = await getAllProducts(url2);
-
-      if (response2?.data?.message === "done") {
-        setAllProductsData(response2?.data?.products);
-      }
     };
 
     fetchData();

@@ -12,10 +12,12 @@ export const productsRouter = Router()
 const fields=[
     {name:'images',maxCount:8},
     {name:'coverImage',maxCount:1},
+    {name:'coverVideo',maxCount:1},
 ]
 const types={
     images:'image',
     coverImage:'image',
+    coverVideo:'video',
 }
 
 productsRouter.post("/add", checkUserToken, checkUserHasFactory,checkFactoryVerified,appValidator(validationSchemas.addProductValidation), productsController.addProduct)
