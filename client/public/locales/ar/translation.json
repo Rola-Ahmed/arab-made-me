@@ -39,8 +39,9 @@
 
   "titles": {
     "hero": {
-      "title": "Arab B2B Platform for RFQ Services",
-      "subTitle": "A powerful, self-serve platform offering product and growth analytics to help you efficiently manage RFQ requests, launch products, and retain more buyers."
+      "title1":"المنصة الرائدة لربط المصانع العربية بخدمات التصدير الرقمي",
+      "title":"التحول الرقمي الكامل لعمليات التصدير والاستيراد من المصانع العربية",
+      "subTitle": " نوفر ادوات رفميه مبتكره للتصدير لزيادة قاعليه جذب المشتراين"
     },
 
     "factoryOffers": "العروض",

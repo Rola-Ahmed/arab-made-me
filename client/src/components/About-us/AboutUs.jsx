@@ -24,12 +24,15 @@ function AboutUs(props) {
                   Arab-Made is a B2B platform
                 </h2>
                 <p className="about-text-2 about-text-3  w-100">
-                  Arab-Made is a pioneering B2B platform dedicated to
-                  transforming the way businesses across the Arab world connect
-                  and collaborate. We specialize in private label services,
-                  offering a comprehensive suite of solutions that empower
-                  manufacturers, suppliers, and buyers to streamline their
-                  operations and achieve their business goals.
+                  Arab-Made is a pioneering B2B platform revolutionizing
+                  business connections across the Arab world, specializing in
+                  private label services and comprehensive solutions that
+                  empower manufacturers, suppliers, and buyers to streamline
+                  operations and achieve their goals. With over 50 diverse
+                  employees based in Egypt, Arab-Made supports small and medium
+                  Arab businesses in expanding globally through an intuitive,
+                  easy-to-use platform that promotes scalability and creates
+                  value for shareholders.
                 </p>
                 <p className="about-text-2 w-100">
                   Arab-Made connects manufacturers, suppliers, and buyers,
@@ -37,7 +40,7 @@ function AboutUs(props) {
                   platform supports growth and efficiency for all parties
                   involved, ensuring a seamless experience.
                 </p>
-                <div className="about-nums">
+                <div className="about-nums d-none ">
                   <div className="about-num">
                     <h4>450</h4>
                     <p className="w-100">Happy Clients</p>
@@ -62,44 +65,24 @@ function AboutUs(props) {
             <div className="col-lg-6 ">
               <h2 className="about-text-1 w-100 ">Our Mission & Vision</h2>
               <p className=" about-text-4 w-100 word-break">
-                {/* We believe in creating technology that enhances the growth of
-                your business around the world. Our vision is to design and
-                deliver cutting-edge website solutions, E-commerce website &
-                Digital marketing that help businesses become more sustainable.
-                We understand the customized need of each client, and partner
-                with them to create superior value for their businesses. Our
-                team consists of highly skilled consultants, website developers,
-                digital marketers, and executives. We aim to exceed the
-                expectations of the clients by continually making our products
-                and services better */}
-                At Arab-Made, our mission is to empower businesses across the
-                Arab world by providing a comprehensive B2B platform that
-                connects manufacturers, suppliers, and buyers. We are dedicated
-                to facilitating seamless transactions and fostering strong
-                business relationships through our private label services. Our
-                goal is to support the growth and success of our partners by
-                offering innovative solutions, high-quality products, and
-                exceptional service.
+                At Arab Made, we are leading global growth for Arab factories
+                through a seamlessly integrated cross-border e-commerce
+                platform. Our tailored and technology-driven approach ensures a
+                secure and digitalized importing and exporting experience.
+                Committed to consistency, we provide comprehensive services and
+                foster a public image of ease and security. We strive to be the
+                trusted partner for Arab factories and worldwide by empowering
+                our employees and encouraging innovation.
               </p>
               <p className=" about-text-4 w-100 word-break">
-                {/* We believe in creating technology that enhances the growth of
-                your business around the world. Our vision is to design and
-                deliver cutting-edge website solutions, E-commerce website &
-                Digital marketing that help businesses become more sustainable.
-                We understand the customized need of each client, and partner
-                with them to create superior value for their businesses. Our
-                team consists of highly skilled consultants, website developers,
-                digital marketers, and executives. We aim to exceed the
-                expectations of the clients by continually making our products
-                and services better */}
-                Our vision is to be the leading B2B platform in the Arab region,
-                driving economic growth and industry advancement through our
-                robust network and expertise in private label services. We
-                aspire to create a dynamic marketplace where businesses can
-                thrive, collaborate, and expand their reach. By leveraging
-                cutting-edge technology and maintaining a commitment to
-                excellence, we aim to redefine the standards of B2B interactions
-                and contribute to the prosperity of the Arab business community.
+                Arab-Made aims "to shape a brighter exporting economic future
+                for Arab manufacturers" by upholding the highest standards of
+                honesty, transparency, and ethical conduct. The platform fosters
+                trust with customers, employees, and partners while ensuring
+                product quality through a rigorous seller vetting process. With
+                a commitment to convenience, Arab-Made allows buyers to easily
+                and efficiently find and source products from Arab manufacturers
+                through a variety of user-friendly features.
               </p>
             </div>
             <div className="col-lg-6 parent-about ">

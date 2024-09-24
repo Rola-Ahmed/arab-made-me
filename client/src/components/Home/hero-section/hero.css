@@ -132,23 +132,34 @@
 }
 
 .text-2 {
-  color: white;
+  /* color: white;
 
   text-align: center;
 
-  /* Display xl/Semibold */
   font-family: "Inter-semi";
-  /* font-size: 60px; */
   font-size: 50px;
 
   font-style: normal;
   font-weight: 600;
   line-height: 72px;
-  /* 120% */
   letter-spacing: -1.2px;
 
 
   font-size: 3.25vw;
+ */
+
+
+
+  color: white;
+  text-align: center;
+  font-family: "Inter-semi";
+  /* font-size: 60px; */
+  font-size: 50px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: -1.2px;
+  font-size: 37px;
 }
 
 .photo-logo {
