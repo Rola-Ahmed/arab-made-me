@@ -200,10 +200,12 @@ small {
 
   height: fit-content;
 }
+
 .vh-75 {
   height: 75vh;
 }
-.vh-80{
+
+.vh-80 {
   height: 80vh;
 
 }
@@ -586,6 +588,23 @@ small {
   top: 4%;
   right: 11%;
   border-width: 0.5px !important;
+}
+
+.defualt-btn {
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  border-radius: 8px;
+  padding: 10px 20px;
+  /* gap: 8px; */
+  /* cursor: point; */
+  /* border: none; */
+}
+
+.main {
+  color: white;
+  background: var(--primary-color);
+  border: none;
 }
 
 /* --------------------------------------------------------- */

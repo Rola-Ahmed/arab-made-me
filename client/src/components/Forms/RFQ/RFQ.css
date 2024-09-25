@@ -295,14 +295,15 @@ progress {
   padding: 12px 11px;
   display: block;
   width: 100%;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
+  /* font-size: 1rem; */
+  /* font-weight: 400; */
+  line-height: normal;
   color: var(--bs-body-color);
   appearance: none;
   border: var(--bs-border-width) solid var(--bs-border-color);
   border-radius: var(--bs-border-radius);
-  row-gap: 24px !important
+  /* row-gap: 24px !important */
+  row-gap: 12px !important
 }
 
 .add-prod .border-row {

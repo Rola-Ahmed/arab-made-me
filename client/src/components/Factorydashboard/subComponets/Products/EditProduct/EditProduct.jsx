@@ -92,20 +92,16 @@ export default function EditProduct() {
     );
 
     if (response?.success) {
-      // setErrorMsg((previousState) => {
-      //   const { message, ...rest } = previousState;
-      //   return rest;
-      // });
       setIsLoading(true);
-      SuccessToast('data updated successfuly')
+      SuccessToast("data updated successfuly");
       navigate(
-        `/factorydashboard/editProduct/${requestedData?.id}?productName=${requestedData?.name}`
+        `/factorydashboard/product/moreDetails?productId=${productDetails?.id}&productName=${data?.name}`
       );
     }
     //  else {
     setErrorMsg((prevErrors) => ({
       ...prevErrors,
-      message: response.data.message,
+      message: response?.error,
     }));
     const targetElement = document.getElementById("view");
     if (targetElement)
@@ -155,8 +151,8 @@ export default function EditProduct() {
           </div>
 
           {/* ------------ */}
-          <div className="container  add-product-dash">
-            <div className="row row-container w-100 ">
+          <div className="container  add-product-dash ">
+            <div className="row row-gap-12 w-100 ">
               {errorMsg?.message && (
                 <div className="alert mt-3 p-2 alert-danger form-control text-dark">
                   {errorMsg.message}
@@ -259,9 +255,7 @@ export default function EditProduct() {
 
               <div className="col-12 ms-3 ">
                 <div className="border-row row">
-                  <div>
-                    <label className="pb-2">Product Characteristics</label>
-                  </div>
+                  <label className="pb-2">Product Characteristics</label>
 
                   <SpecialChar
                     formValidation={formValidation}
@@ -279,12 +273,15 @@ export default function EditProduct() {
 
               <div className="col-12">
                 {isLoading ? (
-                  <button type="button" className="order-btn-2 px-5 mx-auto ">
+                  <button
+                    type="button"
+                    className="main mx-auto d-block px-5   rounded-3 border-0"
+                  >
                     <i className="fas fa-spinner fa-spin px-2"></i>
                   </button>
                 ) : (
                   <button
-                    className="order-btn-2 mx-auto"
+                    className="defualt-btn main d-block mx-auto"
                     type="submit"
                     onClick={() => {
                       if (formValidation.isValid == false) {
@@ -301,8 +298,8 @@ export default function EditProduct() {
                       }
                     }}
                   >
-                    <i className="fa-solid fa-plus"></i>
-                    <p className="cursor">Add product</p>
+                    <i className="fa-solid fa-plus me-1"></i>
+                    Add product
                   </button>
                 )}
               </div>

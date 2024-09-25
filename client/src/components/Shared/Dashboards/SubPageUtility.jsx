@@ -1,8 +1,11 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 export default function SubPageUtility(props) {
   let { currentPage, PrevPage } = props;
   let navigate = useNavigate();
+  const location = useLocation();
+  const hasPreviousState = location.key !== "default";
+
   return (
     <div className="page-utility  gap">
       <Link
@@ -18,6 +21,11 @@ export default function SubPageUtility(props) {
         className="back-btn-dash cursor text-decoration-none text-muted"
         onClick={() => {
           navigate(-1);
+          if (hasPreviousState) {
+            navigate(-1); // Navigate back
+          } else {
+            navigate("/");
+          }
         }}
       >
         {PrevPage}
