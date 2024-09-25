@@ -35,7 +35,7 @@ export default function FactoryLogo(props) {
           {/* icon */}
           <div className="edit-icon-profile-btn position-absolute  cursor">
             <label
-              htmlFor="imgupload"
+              // htmlFor="imgupload"
               onClick={() => handleShow("coverImgReadOnly")}
             >
               <i className="fa-solid fa-pen-to-square  cursor"></i>

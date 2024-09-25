@@ -114,8 +114,9 @@ server/src/modules/products/products.controller.js
 server/src/modules/products/products.routes.js
 client/src/components/LanguageSwitcher/LanguageSwitcher copy 2.jsx
 client/src/components/Factorydashboard/subComponets/Products/EditProduct/EditProduct copy.jsx
-/server/uploads
-/server/uploads
 /client/src/components/Factories/AllFactories copy
 client/src/components/About-us/AboutUs copy.jsx
 client/src/components/Factorydashboard/subComponets/RfqFactoryDash/OneRfqs/OneRfqs copy.jsx
+server/index - Copy.js
+server/indexOriginal copy.js
+server/indexOriginal.js

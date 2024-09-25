@@ -7,7 +7,7 @@ import DisplayOneImage from "components/Shared/Dashboards/DisplayOneImage";
 import ProductDetails from "components/Forms/Shared/SelectedProductDetails";
 import { UseOneProduct } from "./UseOneProduct";
 import StatusMessagetwo from "components/Shared/Dashboards/StatusMessagetwo";
-import UploadDocument from "components/Forms/Shared/UploadDocument";
+import UploadDocument, { UploadVedio } from "components/Forms/Shared/UploadDocument";
 
 // import { Modal } from "bootstrap/dist/js/bootstrap.bundle.min";
 // import { Modal } from "bootstrap/dist/js/bootstrap.bundle.min";
@@ -131,7 +131,8 @@ export default function OneProduct() {
     }, 5000); // 5000 milliseconds = 5 seconds
   }
 
-  async function updateMeida(selectedDocs) {
+  async function updateMeida(e, selectedDocs) {
+    e.preventDefault();
     const data = new FormData();
 
     selectedDocs?.map((item) => data.append(item.keyWord, item.pdfFile));
@@ -240,6 +241,12 @@ export default function OneProduct() {
                   handleImageClick={handleImageClick}
                   image={requestedData?.coverImage}
                 />
+                <button
+                  className="btn-edit w-fit-content"
+                  onClick={() => handleShow("coverImgReadOnly")}
+                >
+                  <p className="cursor">Upload </p>
+                </button>
               </div>
 
               <div className="container-profile-input w-100 gap-16 ">
@@ -277,7 +284,7 @@ export default function OneProduct() {
                   <div className="col-12">
                     <button
                       className="btn-edit fs-15 fw-600 text-white"
-                      // onClick={() => handleShow("coverVedioReadOnly")}
+                      onClick={() => handleShow("coverVedioReadOnly")}
                     >
                       Upload
                     </button>
@@ -378,6 +385,150 @@ export default function OneProduct() {
                           disabled={!(selectedDocs?.length > 0)}
                         >
                           <p className="cursor">Submit</p>
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
+
+      {/* Cover Image */}
+      <Modal
+        show={show.coverImgReadOnly}
+        onHide={() => handleClose("coverImgReadOnly")}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        className="factory-profile"
+      >
+        <Modal.Body closeButton>
+          {/* Account Info container 1 */}
+
+          <div className="container-profile-input w-100">
+            <div className="title-contianer-input w-100">
+              <Modal.Header closeButton>
+                <Modal.Title>
+                  <p>Factory Logo</p>
+                </Modal.Title>
+              </Modal.Header>
+              {errorMsg?.response && (
+                <div className="alert mt-3 p-2 alert-danger form-control text-dark">
+                  {errorMsg?.response}
+                </div>
+              )}
+              <div className="w-100 ">
+                <form
+                  onSubmit={(e) => updateMeida(e, selectedDocs)}
+                  encType="multipart/form-data"
+                >
+                  <div className="row  row-gap">
+                    <UploadDocument
+                      selectedDocs={selectedDocs}
+                      errorMsg={errorMsg}
+                      setSelectedDocs={setSelectedDocs}
+                      MediaName="coverImage"
+                      mediaMaxLen="1"
+                      meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
+                      setErrorMsg={setErrorMsg}
+                      // title="Factory Banners"
+                    />
+
+                    <div className="col-12 d-flex justify-content-start btn-modal-gap">
+                      <button
+                        type="button"
+                        onClick={() => handleClose("coverImgReadOnly")}
+                        className="btn btn-secondary"
+                      >
+                        Close
+                      </button>
+                      {isLoading ? (
+                        <button type="button" className="btn-edit">
+                          <i className="fas fa-spinner fa-spin text-white px-5"></i>
+                        </button>
+                      ) : (
+                        <button
+                          className="btn-edit submitButton"
+                          type="submit"
+                          disabled={!(selectedDocs?.length > 0)}
+                        >
+                          <p className="cursor">Submit</p>
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
+
+      {/* cover Vedio */}
+      <Modal
+        show={show.coverVedioReadOnly}
+        onHide={() => handleClose("coverVedioReadOnly")}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        className="factory-profile"
+      >
+        <Modal.Body closeButton>
+          {/* Account Info container 1 */}
+
+          <div className="container-profile-input w-100">
+            <div className="title-contianer-input w-100">
+              <Modal.Header closeButton>
+                <Modal.Title>
+                  <p>Cover Video</p>
+                </Modal.Title>
+              </Modal.Header>
+              {errorMsg?.response ? (
+                <div className="alert mt-3 p-2 alert-danger form-control text-dark">
+                  {errorMsg?.response}
+                </div>
+              ) : (
+                ""
+              )}
+              <div className="w-100 ">
+                <form
+                  onSubmit={(e) => updateMeida(e, selectedDocs)}
+                  encType="multipart/form-data"
+                >
+                  <div className="row  row-gap">
+                    <UploadVedio
+                      selectedDocs={selectedDocs}
+                      errorMsg={errorMsg}
+                      setSelectedDocs={setSelectedDocs}
+                      MediaName="coverVideo"
+                      mediaMaxLen="1"
+                      meidaAcceptedExtensions={["mp4", "mkv", "x-matroska"]}
+                      setErrorMsg={setErrorMsg}
+                      // title="Certificates"
+                    />
+
+                    <div className="col-12 d-flex justify-content-start btn-modal-gap">
+                      <button
+                        className="btn btn-secondary"
+                        type="button"
+                        onClick={() => handleClose("coverVideo")}
+                      >
+                        Close
+                      </button>
+                      {isLoading ? (
+                        <button type="button" className="btn-edit">
+                          <i className="fas fa-spinner fa-spin text-white px-5"></i>
+                        </button>
+                      ) : (
+                        <button
+                          className="btn-edit submitButton"
+                          type="submit"
+                          disabled={!(selectedDocs?.length > 0)}
+                        >
+                          <p className="cursor">Submit Video</p>
                         </button>
                       )}
                     </div>
