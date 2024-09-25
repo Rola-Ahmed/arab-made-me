@@ -20,24 +20,22 @@ export const useFormValidation = (productDetails, submitForm) => {
     sectorId: productDetails?.sectorId || "",
 
     // specialCharacteristicsArr:
-    //   productDetails?.specialCharacteristics &&
-    //   Object.keys(productDetails.specialCharacteristics).length !== 0
-    //     ? // [productDetails.specialCharacteristics]
-    //       Object.entries(productDetails.specialCharacteristics).map(
-    //         ([key, value], index) => ({
-    //           specialCharKeyWord: key,
-    //           specialCharDesc: value,
-    //         })
-    //       )
-    //     : [],
-
-
-        productCharacteristic: [
-          {
-            keyword: "",
-            value: "",
-          },
-        ],
+    productCharacteristic:
+      productDetails?.specialCharacteristics &&
+      Object.keys(productDetails.specialCharacteristics).length != 0
+        ? // [productDetails.specialCharacteristics]
+          Object.entries(productDetails.specialCharacteristics).map(
+            ([key, value], index) => ({
+              keyword: key,
+              value: value,
+            })
+          )
+        : [
+            {
+              keyword: "",
+              value: "",
+            },
+          ],
   };
   const validationSchema = Yup.object().shape({
     name: requiredStringMax255,
@@ -45,14 +43,12 @@ export const useFormValidation = (productDetails, submitForm) => {
     price: reqQualityValidate,
 
     hsnCode: Yup.string()
-      .required("Input Field is Required")
       .min(6, "Minimum  length is 6")
       .max(15, "Maximum 15  is legnth"),
     guarantee: textAreaValidate(),
-    minOrderQuantity: reqQualityValidate,
-    maxOrderQuantity: reqQualityValidate,
+    minOrderQuantity: requiredStringMax255,
+    maxOrderQuantity: requiredStringMax255,
     categoryId: Yup.string().required("Input Field is Required"),
-    // sectorId: Yup.string().required("Input Field is Required"),
 
     description: requiredStringMax255,
 

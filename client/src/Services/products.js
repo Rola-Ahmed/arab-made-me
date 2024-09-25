@@ -20,6 +20,10 @@ export const addProduct = async (header, data) => {
   return await postRequest(`/products/add`, header, data);
 };
 
+export const updateProduct = async (header, data) => {
+  return await postRequest(`/products/update/fromUser`, header, data);
+};
+
 export const addProductMedia = async (id, header, data) => {
   return await putRequest(`/products/uploadMedia/${id}`, header, data);
 };

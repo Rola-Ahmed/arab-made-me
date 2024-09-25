@@ -1,8 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import axios from "axios";
-import { baseUrl } from "config.js";
 import useCategories from "hooks/useCategory";
-
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
 
@@ -10,6 +7,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/FactoryUnVerifiedDash";
 import { useFormValidation } from "./hooks/useFormValidation";
 import SpecialChar from "components/Forms/Shared/SpecialChar/SpecialChar";
+import { useFetchOneProduct } from "hooks/useFetchOneProduct";
+import InputField from "components/Forms/Shared/InputField";
+import TextareaInput from "components/Forms/Shared/TextareaInput";
+import { updateProduct } from "Services/products";
 
 export default function EditProduct() {
   let { isLogin } = useContext(UserToken);
@@ -19,73 +20,18 @@ export default function EditProduct() {
   let navigate = useNavigate();
 
   const [errorMsg, setErrorMsg] = useState();
-  const [productDetails, setProductDetails] = useState();
+  // const [productDetails, setProductDetails] = useState();
+  let { productDetails, error: errorLoadingProducts } = useFetchOneProduct(
+    productId
+  );
   const [isLoading, setIsLoading] = useState(false);
   const { formValidation, initialValues } = useFormValidation(
     productDetails,
     submitForm
   );
 
-  const [selectedDocs, setSelectedDocs] = useState([]);
-
-  async function fetchProductData() {
-    try {
-      let config = {
-        method: "get",
-        url: `${baseUrl}/products/${productId}`,
-      };
-
-      const response = await axios.request(config);
-
-      if (response.data.message == "done") {
-        setProductDetails(response.data.products);
-      } else if (response.data.message == "404 Not Found") {
-        // errorsMsg("404");
-      }
-    } catch (error) {}
-  }
-
-  useEffect(() => {
-    if (productId !== undefined) {
-      fetchProductData();
-    }
-  }, [productId]);
-
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "instant",
-    });
-  }, []);
-
-  let [productAdded, setProductAdded] = useState(false);
-  let [productID, setProductID] = useState();
-
   async function submitForm(values) {
     setIsLoading(true);
-
-    const existingImageIndex = selectedDocs?.some(
-      (item) => item?.keyWord === "coverImage"
-    );
-
-    // The "coverImage" does not exist in the selectedDocs array
-    if (!existingImageIndex) {
-      setIsLoading(false);
-
-      // The "coverImage" exists in the selectedDocs array
-      setErrorMsg((prevErrors) => ({
-        ...prevErrors,
-        message: "Cover image is required",
-      }));
-      const targetElement = document.getElementById("view");
-      targetElement.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-
-      return setIsLoading(false);
-    }
 
     // clear error message
     setErrorMsg((prevErrors) => {
@@ -93,399 +39,89 @@ export default function EditProduct() {
       return restErrors;
     });
 
-    // check if the product already is added or no
-    if (!productAdded) {
-      try {
-        let data = {
-          country: values.country,
-          city: values.city,
-          name: values.name,
+    let {
+      country,
+      name,
+      sectorId,
+      categoryId,
+      description,
+      price,
+      hsnCode,
+      minOrderQuantity,
+      city,
+      guarantee,
+      maxOrderQuantity,
+    } = values;
 
-          categoryId: values.categoryId,
-          sectorId: values.sectorId,
+    let data = {
+      country: country,
+      name: name,
 
-          description: values.description,
-          price: values.price,
-          hsnCode: values.hsnCode,
-          minOrderQuantity: values.minOrderQuantity,
+      categoryId: categoryId,
+      sectorId: sectorId,
 
-          specialCharacteristics: {},
-        };
+      description: description,
+      price: price,
+      minOrderQuantity: minOrderQuantity,
 
-        if (values.guarantee !== "") {
-          data.guarantee = values.guarantee;
-        }
-
-        if (values.maxOrderQuantity !== "") {
-          data.maxOrderQuantity = values.maxOrderQuantity;
-        }
-
-        // if (specialCharacteristicsArr?.length > 0) {
-        //   specialCharacteristicsArr.forEach((index) => {
-        //     const key = values[`specialCharKeyWord${index}`];
-        //     const desc = values[`specialCharDesc${index}`];
-        //     data.specialCharacteristics[key] = desc;
-        //   });
-        // }
-
-        let config = {
-          method: "post",
-          maxBodyLength: Infinity,
-          url: `${baseUrl}/products/add`,
-
-          headers: {
-            authorization: isLogin,
-          },
-          data: data,
-        };
-
-        const response = await axios.request(config);
-
-        if (response.data.message == "done") {
-          setErrorMsg((previousState) => {
-            const { message, ...rest } = previousState;
-            return rest;
-          });
-          setProductID(response.data.product.id);
-          setProductAdded(true);
-          setIsLoading(true);
-
-          updateCoverImage(response.data.product.id);
-        } else {
-          setErrorMsg((prevErrors) => ({
-            ...prevErrors,
-            message: response.data.message,
-          }));
-          return;
-        }
-
-        const targetElement = document.getElementById("view");
-        targetElement.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-        setIsLoading(false);
-      } catch (error) {
-        setIsLoading(false);
-
-        if (error.response && error.response.status) {
-          const statusCode = error.response.status;
-          switch (statusCode) {
-            case 400:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message: error?.response?.data?.errorMessage,
-              }));
-              break;
-            case 401:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message: "User is not Unauthorized ",
-              }));
-              break;
-            case 403:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message:
-                  // "Forbidden, You do not have permission to access this resource.",
-                  // error?.response?.data?.message,
-                  "factory is not verified Yet or factory representive Email is not activated",
-              }));
-              break;
-            case 404:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message:
-                  "Not Found (404). The requested resource was not found.",
-              }));
-              break;
-
-            case 500:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message: error?.response?.data?.errorMessage,
-              }));
-              break;
-
-            //  429 Too Many Requests
-            // The user has sent too many requests in a given amount of time ("rate limiting").
-            case 429:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message: " Too Many Requests , Please try again later.",
-              }));
-              break;
-            case 402:
-              // 402
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message: error?.response?.data?.message,
-              }));
-              break;
-            default:
-              // case message== error
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message: error?.response?.data?.errorMessage,
-              }));
-              break;
-          }
-        } else {
-          setErrorMsg((prevErrors) => ({
-            ...prevErrors,
-            message: "An unexpected error occurred. Please try again later.",
-          }));
-        }
-
-        // setErrorMsg((prevErrors) => ({
-        //   ...prevErrors,
-        //   message: error.response.data.errorMessage,
-        // }));
-        // return;
-      }
-    }
-
-    if (productAdded && selectedDocs?.length > 0) {
-      setIsLoading(true);
-      updateCoverImage(productID);
-    }
-  }
-
-  function updateCoverImage(productId) {
-    // e.preventDefault();
-
-    const data = new FormData();
-
-    selectedDocs?.map((item) => data.append(item.keyWord, item.pdfFile));
-
-    const config = {
-      method: "put",
-      url: `${baseUrl}/products/uploadMedia/${productId}`,
-      headers: {
-        Authorization: isLogin,
-      },
-      data: data,
+      specialCharacteristics: {},
+      ...(hsnCode && { hsnCode: hsnCode }),
+      ...(guarantee && { guarantee: guarantee }),
+      ...(maxOrderQuantity && { maxOrderQuantity: maxOrderQuantity }),
+      ...(city && { city: city }),
     };
 
-    axios
-      .request(config)
-      .then((response) => {
-        if (response?.data?.message == "done") {
-          setIsLoading(true);
+    if (
+      Object.keys(values.productCharacteristic).length != 0 &&
+      Object.keys(values.productCharacteristic) != ""
+    ) {
+      // create an object with the keyword property as the key and the value property as the value.
+      const obj = Object.fromEntries(
+        values.productCharacteristic.map((obj) => [obj.keyword, obj.value])
+      );
+      data.specialCharacteristics = obj;
+    }
 
-          localStorage.setItem(
-            "ToFactoryDahboard",
-            "Product added Successfully"
-          );
+    const response = await updateProduct(
+      {
+        authorization: isLogin,
+      },
+      data
+    );
 
-          navigate("/factorydashboard/AllFactoryProducts");
-        } else {
-          setIsLoading(false);
-          setErrorMsg((prevErrors) => ({
-            ...prevErrors,
-            response: response?.data?.message,
-          }));
-          const targetElement = document.getElementById("view");
-          targetElement.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-          });
-        }
-      })
-
-      .catch((error) => {
-        setIsLoading(false);
-
-        if (error.response && error.response.status) {
-          const statusCode = error.response.status;
-          switch (statusCode) {
-            case 400:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message: error?.response?.data?.errorMessage,
-              }));
-              break;
-            case 401:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message: "User is not Unauthorized ",
-              }));
-              break;
-            case 403:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message:
-                  "Forbidden, You do not have permission to access this resource.",
-              }));
-              break;
-            case 404:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message:
-                  "Not Found (404). The requested resource was not found.",
-              }));
-              break;
-
-            case 500:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message: error?.response?.data?.errorMessage,
-              }));
-              break;
-
-            //  429 Too Many Requests
-            // The user has sent too many requests in a given amount of time ("rate limiting").
-            case 429:
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message: " Too Many Requests , Please try again later.",
-              }));
-              break;
-            case 402:
-              // 402
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message: error?.response?.data?.message,
-              }));
-              break;
-            default:
-              // case message== error
-              setErrorMsg((prevErrors) => ({
-                ...prevErrors,
-                message: error?.response?.data?.errorMessage,
-              }));
-              break;
-          }
-        } else {
-          setErrorMsg((prevErrors) => ({
-            ...prevErrors,
-            message: "An unexpected error occurred. Please try again later.",
-          }));
-        }
+    if (response?.success) {
+      setErrorMsg((previousState) => {
+        const { message, ...rest } = previousState;
+        return rest;
       });
+      setIsLoading(true);
+    }
+    //  else {
+    setErrorMsg((prevErrors) => ({
+      ...prevErrors,
+      message: response.data.message,
+    }));
+    const targetElement = document.getElementById("view");
+    if (targetElement)
+      targetElement.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+
+    setIsLoading(false);
   }
 
   useEffect(() => {
-    if (productDetails && productDetails.length !== 0) {
+    if (productDetails && productDetails?.length !== 0) {
       formValidation.setValues(initialValues);
     }
   }, [productDetails]);
-
-  function removeSelectedDoc(docId, keyWordDoc) {
-    // when removing
-    setSelectedDocs((prevValue) =>
-      prevValue?.filter(
-        (doc) => !(doc?.pdfFile?.name === docId && doc?.keyWord === keyWordDoc)
-      )
-    );
-  }
 
   if (
     currentUserData?.factoryVerified == "0" ||
     currentUserData?.factoryEmailActivated == false
   ) {
     return <FactoryUnVerified />;
-  }
-
-  function handleMultiMediaValidation(e, keyWordDoc) {
-    const count = selectedDocs?.filter((item) => item?.keyWord === "docs")
-      ?.length;
-
-    if (count >= 3) {
-      setErrorMsg((prevErrors) => ({
-        ...prevErrors,
-        [keyWordDoc]: `Max length is 3`,
-      }));
-      return;
-    }
-    // clear error message
-    setErrorMsg((prevErrors) => {
-      const newErrors = { ...prevErrors };
-      delete newErrors[keyWordDoc];
-      return newErrors;
-    });
-    const acceptedExtensions = ["png", "jpeg", "jpg"];
-    const fileType = e.type;
-
-    const isAcceptedType = acceptedExtensions?.some((extension) =>
-      fileType?.toLowerCase()?.includes(extension?.toLowerCase())
-    );
-
-    if (!isAcceptedType) {
-      setErrorMsg((prevErrors) => ({
-        ...prevErrors,
-        [keyWordDoc]:
-          // "Invalid file format. Only pdf, png, jpeg, jpg, mp4 allowed"
-          `Invalid file format. Only ${acceptedExtensions.join(
-            ", "
-          )} are allowed`,
-      }));
-      return;
-    }
-
-    const mediaNameExists = selectedDocs?.some(
-      (item) => item?.pdfFile?.name === e?.name && item?.keyWord === keyWordDoc
-    );
-
-    // if image aleady exisit
-    if (mediaNameExists) {
-      setErrorMsg((prevErrors) => ({
-        ...prevErrors,
-        [keyWordDoc]: "Media already exists",
-      }));
-      return;
-    } else {
-    }
-
-    let updatedDocs = [...selectedDocs];
-
-    // Image loaded successfully
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      updatedDocs.push({
-        keyWord: keyWordDoc,
-        pdfFile: e,
-        imageReaderURL: reader.result,
-        onprogress: 100,
-      });
-
-      setSelectedDocs(updatedDocs);
-      const coverImgInput = document?.getElementById("coverimginput");
-      if (coverImgInput) {
-        coverImgInput.value = "";
-      }
-    };
-
-    reader.onprogress = (event) => {
-      // Calculate and show the loading percentage
-      if (event.lengthComputable) {
-        const percentage = (event.loaded / event.total) * 100;
-
-        // if (updatedDocs.length > 0) {
-        //   // Adding a new attribute to the last object
-        //   // updatedDocs[updatedDocs.length - 1].onprogress = percentage?.toFixed(0);
-        //   // setSelectedDocs([...updatedDocs]);
-
-        //   // setSelectedDocs((prevDocs) => {
-        //   //   const updatedDocs = [...prevDocs];
-        //   //   if (updatedDocs.length > 0) {
-        //   //     updatedDocs[updatedDocs.length - 1].onprogress = percentage?.toFixed(0);
-        //   //   }
-        //   //   return updatedDocs;
-        //   // });
-        // }
-        // setimgloadin(percentage);
-      }
-    };
-
-    reader.onerror = () => {
-      setErrorMsg((prevErrors) => ({
-        ...prevErrors,
-        [keyWordDoc]: "Error loading image",
-      }));
-    };
-
-    reader.readAsDataURL(e);
   }
 
   return (
@@ -521,25 +157,12 @@ export default function EditProduct() {
                 </div>
               )}
               <div className="col-4">
-                <div className="form-group">
-                  <label>
-                    Product Name <span className="text-danger">*</span>
-                  </label>
-                  <input
-                    className="form-control"
-                    id="name"
-                    onChange={formValidation.handleChange}
-                    onBlur={formValidation.handleBlur}
-                    value={formValidation.values.name}
-                  />
-                  {formValidation.errors.name && formValidation.touched.name ? (
-                    <small className="text-danger">
-                      {formValidation.errors.name}
-                    </small>
-                  ) : (
-                    ""
-                  )}
-                </div>
+                <InputField
+                  isRequired={true}
+                  title="Product Name"
+                  formValidation={formValidation}
+                  vlaidationName={"name"}
+                />
               </div>
 
               <div className="col-4">
@@ -582,115 +205,48 @@ export default function EditProduct() {
               </div>
 
               <div className="col-4">
-                <div className="form-group">
-                  <label>
-                    Price <span className="text-danger">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control text-dark"
-                    id="price"
-                    onChange={formValidation.handleChange}
-                    onBlur={formValidation.handleBlur}
-                    value={formValidation.values.price}
-                  />
-                  {formValidation.errors.price &&
-                  formValidation.touched.price ? (
-                    <small className="text-danger">
-                      {formValidation.errors.price}
-                    </small>
-                  ) : (
-                    ""
-                  )}
-                </div>
+                <InputField
+                  isRequired={true}
+                  title="Price"
+                  formValidation={formValidation}
+                  vlaidationName="price"
+                />
               </div>
 
               <div className="col-4">
-                <div className="form-group">
-                  <label>
-                    hsn Code <span className="text-danger">*</span>
-                  </label>
-                  <input
-                    className="form-control"
-                    id="hsnCode"
-                    onChange={formValidation.handleChange}
-                    onBlur={formValidation.handleBlur}
-                    value={formValidation.values.hsnCode}
-                  />
-                  {formValidation.errors.hsnCode &&
-                  formValidation.touched.hsnCode ? (
-                    <small className="text-danger">
-                      {formValidation.errors.hsnCode}
-                    </small>
-                  ) : (
-                    ""
-                  )}
-                </div>
+                <InputField
+                  isRequired={false}
+                  title="hsn Code"
+                  formValidation={formValidation}
+                  vlaidationName="hsnCode"
+                />
               </div>
 
               <div className="col-4">
-                <div className="form-group">
-                  <label>guarantee </label>
-                  <input
-                    className="form-control"
-                    id="guarantee"
-                    onChange={formValidation.handleChange}
-                    onBlur={formValidation.handleBlur}
-                    value={formValidation.values.guarantee}
-                  />
-                  {formValidation.errors.guarantee &&
-                  formValidation.touched.guarantee ? (
-                    <small className="text-danger">
-                      {formValidation.errors.guarantee}
-                    </small>
-                  ) : (
-                    ""
-                  )}
-                </div>
+                <InputField
+                  isRequired={false}
+                  title="guarantee"
+                  formValidation={formValidation}
+                  vlaidationName="guarantee"
+                />
               </div>
 
               <div className="col-4">
-                <div className="form-group">
-                  <label>
-                    min Order Quantity <span className="text-danger">*</span>
-                  </label>
-                  <input
-                    className="form-control"
-                    id="minOrderQuantity"
-                    onChange={formValidation.handleChange}
-                    onBlur={formValidation.handleBlur}
-                    value={formValidation.values.minOrderQuantity}
-                  />
-                  {formValidation.errors.minOrderQuantity &&
-                  formValidation.touched.minOrderQuantity ? (
-                    <small className="text-danger">
-                      {formValidation.errors.minOrderQuantity}
-                    </small>
-                  ) : (
-                    ""
-                  )}
-                </div>
+                <InputField
+                  isRequired={true}
+                  title="min Order Quantity"
+                  formValidation={formValidation}
+                  vlaidationName="minOrderQuantity"
+                />
               </div>
 
               <div className="col-4">
-                <div className="form-group">
-                  <label>Max Order Quantity </label>
-                  <input
-                    className="form-control"
-                    id="maxOrderQuantity"
-                    onChange={formValidation.handleChange}
-                    onBlur={formValidation.handleBlur}
-                    value={formValidation.values.maxOrderQuantity}
-                  />
-                  {formValidation.errors.maxOrderQuantity &&
-                  formValidation.touched.maxOrderQuantity ? (
-                    <small className="text-danger">
-                      {formValidation.errors.maxOrderQuantity}
-                    </small>
-                  ) : (
-                    ""
-                  )}
-                </div>
+                <InputField
+                  isRequired={true}
+                  title="Ability To Production"
+                  formValidation={formValidation}
+                  vlaidationName="maxOrderQuantity"
+                />
               </div>
 
               {/* ---------------------------- */}
@@ -708,298 +264,41 @@ export default function EditProduct() {
                 </div>
               </div>
 
-              {/* ----------------------------------------- */}
-              <div className="col-12">
-                <div className="form-group gap">
-                  <label className="form-title">Upload Images </label>
-                  <label
-                    className="mb-0 drop-drag-area  p-5 text-center cursor w-100 "
-                    htmlFor="imagesInput"
-                    onDrop={(e) => {
-                      e.preventDefault();
-                      const files = e?.dataTransfer?.files;
-                      if (files && files.length > 0) {
-                        handleMultiMediaValidation(files?.[0], "images");
-                      }
-
-                      e.target.classList.remove("highlight");
-                    }}
-                    onDragOver={(e) => {
-                      e.target.classList.add("highlight");
-
-                      e.preventDefault();
-                    }}
-                    onDragLeave={(e) => {
-                      e.preventDefault();
-                      e.target.classList.remove("highlight");
-                    }}
-                    onChange={(e) => {
-                      const files = e.target.files;
-
-                      if (files && files?.length > 0) {
-                        handleMultiMediaValidation(files?.[0], "images");
-                      }
-                    }}
-                  >
-                    Drag and drop files here or click to select files
-                    <input
-                      type="file"
-                      id="imagesInput"
-                      // className="d-none"
-                      hidden
-                      onChange={(e) => {
-                        const files = e.target.files;
-
-                        if (files && files?.length > 0) {
-                          handleMultiMediaValidation(files?.[0], "images");
-                        }
-                      }}
-                      multiple
-                    />
-                  </label>
-                  <small className="form-text small-note">
-                    Only pdf, png, jpeg, and jpg are allowed. A maximum of 3
-                    pictures is permitted.
-                  </small>
-
-                  <small className="text-danger">{errorMsg?.images}</small>
-
-                  {/* <div className=" row w-100 "> */}
-                  {selectedDocs.map(
-                    (item, index) =>
-                      // <div className="col-12">
-                      item.keyWord === "images" && (
-                        <div key={index} className="col-12 img-uploaded">
-                          <div className="d-flex justify-content-between align-items-center  img-cont-file">
-                            {/* <div> */}
-
-                            <div className="d-flex justify-content-start align-items-center ">
-                              <img
-                                // src={item.imageReaderURL}
-                                src={item.imageReaderURL}
-                                className="image-upload-file me-3"
-                              />
-                            </div>
-
-                            <div className="w-100">
-                              <div className="d-flex justify-content-between align-items-center">
-                                <div>
-                                  <p>{item?.pdfFile?.name}</p>
-                                  <p className="">
-                                    {(item?.pdfFile?.size / 1024)?.toFixed(2)}
-                                    KB
-                                  </p>
-                                  {/* {imgloadin} */}
-                                </div>
-
-                                <div
-                                  onClick={() =>
-                                    removeSelectedDoc(
-                                      item?.pdfFile?.name,
-                                      "images",
-                                      index
-                                    )
-                                  }
-                                  className="cursor"
-                                >
-                                  <i className="fa-solid fa-trash-can"></i>
-                                </div>
-                              </div>
-
-                              <div className="d-flex  align-items-center">
-                                <progress
-                                  className="w-100"
-                                  id="progressBar"
-                                  max="100"
-                                  value={item?.onprogress || 0}
-                                  // value="30"
-                                  imgloadin
-                                ></progress>
-                                {item?.onprogress}%
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      )
-                    // </div>
-                  )}
-                </div>
-              </div>
-
-              {/* ------------------------------------------ */}
+              <TextareaInput
+                formValidation={formValidation}
+                vlaidationName="description"
+                isRequired="true"
+                title="description"
+              />
 
               <div className="col-12">
-                <div className="form-group gap">
-                  <label className="form-title">
-                    Upload coverImage <span className="text-danger">*</span>
-                  </label>
-                  <label
-                    className="mb-0 drop-drag-area  p-5 text-center cursor w-100 "
-                    htmlFor="coverImageInput"
-                    onDrop={(e) => {
-                      e.preventDefault();
-                      const files = e?.dataTransfer?.files;
-                      if (files && files.length > 0) {
-                        handleMultiMediaValidation(files?.[0], "coverImage");
-                      }
+                {isLoading ? (
+                  <button type="button" className="order-btn-2 px-5 mx-auto ">
+                    <i className="fas fa-spinner fa-spin px-2"></i>
+                  </button>
+                ) : (
+                  <button
+                    className="order-btn-2 mx-auto"
+                    type="submit"
+                    onClick={() => {
+                      if (formValidation.isValid == false) {
+                        const targetElement = document.getElementById(
+                          Object.keys(formValidation.errors)?.[0]
+                        );
 
-                      e.target.classList.remove("highlight");
-                    }}
-                    onDragOver={(e) => {
-                      e.target.classList.add("highlight");
-
-                      e.preventDefault();
-                    }}
-                    onDragLeave={(e) => {
-                      e.preventDefault();
-                      e.target.classList.remove("highlight");
-                    }}
-                    onChange={(e) => {
-                      const files = e.target.files;
-
-                      if (files && files?.length > 0) {
-                        handleMultiMediaValidation(files?.[0], "coverImage");
-                      }
-                    }}
-                  >
-                    Drag and drop files here or click to select files
-                    <input
-                      type="file"
-                      id="coverImageInput"
-                      // className="d-none"
-                      hidden
-                      onChange={(e) => {
-                        const files = e.target.files;
-
-                        if (files && files?.length > 0) {
-                          handleMultiMediaValidation(files?.[0], "coverImage");
-                        }
-                      }}
-                      multiple
-                    />
-                  </label>
-                  <small className="form-text small-note">
-                    Only pdf, png, jpeg, and jpg are allowed. A maximum of 3
-                    pictures is permitted.
-                  </small>
-
-                  <small className="text-danger">{errorMsg?.coverImage}</small>
-
-                  {/* <div className=" row w-100 "> */}
-                  {selectedDocs.map(
-                    (item, index) =>
-                      // <div className="col-12">
-                      item.keyWord === "coverImage" && (
-                        <div key={index} className="col-12 img-uploaded">
-                          <div className="d-flex justify-content-between align-items-center  img-cont-file">
-                            {/* <div> */}
-
-                            <div className="d-flex justify-content-start align-items-center ">
-                              <img
-                                // src={item.imageReaderURL}
-                                src={item.imageReaderURL}
-                                className="image-upload-file me-3"
-                              />
-                            </div>
-
-                            <div className="w-100">
-                              <div className="d-flex justify-content-between align-items-center">
-                                <div>
-                                  <p>{item?.pdfFile?.name}</p>
-                                  <p className="">
-                                    {(item?.pdfFile?.size / 1024)?.toFixed(2)}
-                                    KB
-                                  </p>
-                                  {/* {imgloadin} */}
-                                </div>
-
-                                <div
-                                  onClick={() =>
-                                    removeSelectedDoc(
-                                      item?.pdfFile?.name,
-                                      "coverImage",
-                                      index
-                                    )
-                                  }
-                                  className="cursor"
-                                >
-                                  <i className="fa-solid fa-trash-can"></i>
-                                </div>
-                              </div>
-
-                              <div className="d-flex  align-items-center">
-                                <progress
-                                  className="w-100"
-                                  id="progressBar"
-                                  max="100"
-                                  value={item?.onprogress || 0}
-                                  // value="30"
-                                  imgloadin
-                                ></progress>
-                                {item?.onprogress}%
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      )
-                    // </div>
-                  )}
-                </div>
-              </div>
-              {/* ------------------------------------------ */}
-
-              <div className="col-12">
-                <div className="form-group">
-                  <label>
-                    description <span className="text-danger">*</span>
-                  </label>
-                  <textarea
-                    type="text"
-                    className="form-control"
-                    id="description"
-                    onChange={formValidation.handleChange}
-                    onBlur={formValidation.handleBlur}
-                    value={formValidation.values.description}
-                  ></textarea>
-                  {formValidation.errors.description &&
-                  formValidation.touched.description ? (
-                    <small className="text-danger">
-                      {formValidation.errors.description}
-                    </small>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              </div>
-              <div className="col-12">
-                <div className="btn-container d-flex justify-content-center">
-                  {isLoading ? (
-                    <button type="button" className="order-btn-2 px-5 ">
-                      <i className="fas fa-spinner fa-spin px-2"></i>
-                    </button>
-                  ) : (
-                    <button
-                      className="order-btn-2"
-                      type="submit"
-                      onClick={() => {
-                        if (formValidation.isValid == false) {
-                          const targetElement = document.getElementById(
-                            Object.keys(formValidation.errors)?.[0]
-                          );
-
-                          // Scroll to the target element
+                        // Scroll to the target element
+                        if (targetElement)
                           targetElement.scrollIntoView({
                             behavior: "smooth",
                             block: "center",
                           });
-                        }
-                      }}
-                    >
-                      <i className="fa-solid fa-plus"></i>
-                      <p className="cursor">Add product</p>
-                    </button>
-                  )}
-                </div>
+                      }
+                    }}
+                  >
+                    <i className="fa-solid fa-plus"></i>
+                    <p className="cursor">Add product</p>
+                  </button>
+                )}
               </div>
             </div>
           </div>

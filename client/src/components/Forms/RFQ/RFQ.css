@@ -22,7 +22,8 @@
 
 /* TITLE TEXT */
 .send-rfq .title-text,
-.req-visit .title-text, .send-po .title-text {
+.req-visit .title-text, .send-po .title-text,
+.add-product-dash .title-text {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -31,7 +32,8 @@
 
 .send-rfq .title-text p,
 .req-visit .title-text p,
-.send-po .title-text p {
+.send-po .title-text p,
+.add-product-dash .title-text p {
   color: var(--Gray-900);
   font-family: "Inter-reg";
   font-size: 48px;
@@ -46,7 +48,8 @@
 
 .send-rfq .input-content,
 .req-visit .input-content,
-.send-po .input-content {
+.send-po .input-content,
+.add-product-dash .input-content {
   border-radius: 12px;
   display: flex;
   flex-direction: column;
@@ -57,7 +60,8 @@
 
 .send-rfq .row-container,
 .req-visit .row-container,
-.send-po .row-container {
+.send-po .row-container,
+.add-product-dash .row-container {
   row-gap: 24px;
 }
 
@@ -73,7 +77,8 @@
 
 .send-rfq .form-group,
 .req-visit .form-group,
-.send-po .form-group {
+.send-po .form-group,
+.add-product-dash .form-group {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -90,13 +95,16 @@
 .req-visit .form-group input[readOnly],
 .req-visit .form-group textarea[readOnly],
 .send-po .form-group input[readOnly],
-.send-po .form-group textarea[readOnly] {
+.send-po .form-group textarea[readOnly],
+.add-product-dash .form-group input[readOnly],
+.add-product-dash .form-group textarea[readOnly] {
   background-color: #8080802b;
 }
 
 .send-rfq .form-group small,
 .req-visit .form-group small,
-.send-po .form-group small {
+.send-po .form-group small,
+.add-product-dash .form-group small {
   color: var(--Gray-600, #475467);
 
   font-family: "Inter-reg";
@@ -107,7 +115,8 @@
 }
 
 .send-rfq .input-group-text,
-.req-visit .input-group-text {
+.req-visit .input-group-text,
+.add-product-dash .input-group-text {
   padding: 10px 14px !important;
   border-top-left-radius: 0 !important;
   border-bottom-left-radius: 0 !important;
@@ -128,7 +137,8 @@
 
 .send-rfq .action,
 .req-visit .action,
-.send-po .action {
+.send-po .action,
+.add-product-dash .action {
   display: flex;
   flex-direction: column;
   align-self: stretch;
@@ -140,7 +150,9 @@
 
 .send-rfq .action .action-btn,
 .req-visit .action .action-btn,
-.send-po .action .action-btn, .register-msg .action-btn {
+.send-po .action .action-btn,
+.register-msg .action-btn,
+.add-product-dash .action .action-btn {
   display: flex;
   padding: 10px 16px;
   justify-content: center;
@@ -162,7 +174,8 @@
 
 .send-rfq .action .action-btn.btn-1,
 .req-visit .action .action-btn.btn-1,
-.send-po .action .action-btn.btn-1 {
+.send-po .action .action-btn.btn-1,
+.add-product-dash .action .action-btn.btn-1 {
   border: 1px solid var(--primary-color);
   background: var(--primary-color);
   color: white;
@@ -170,7 +183,8 @@
 
 .send-rfq .action .action-btn.btn-2,
 .req-visit .action .action-btn.btn-2,
-.send-po .action .action-btn.btn-2 {
+.send-po .action .action-btn.btn-2,
+.add-product-dash .action .action-btn.btn-2 {
   border-radius: 8px;
   border: 1px solid var(--Gray-300);
   background: var(--white);
@@ -178,7 +192,8 @@
 }
 
 .send-rfq textarea,
-.req-visit textarea, .send-po textarea {
+.req-visit textarea, .send-po textarea,
+.add-product-dash textarea {
   display: flex;
   height: 160px;
   flex-direction: column;
@@ -189,9 +204,10 @@
 
 .send-rfq .CodeMirror-scroll,
 .req-visit .CodeMirror-scroll,
-.send-po .CodeMirror-scroll {
+.send-po .CodeMirror-scroll, .add-product-dash .CodeMirror-scroll {
   min-height: 135px !important;
   height: 135px !important;
+  background-color: red !important;
 }
 
 .input-group.uploadimg {
@@ -199,7 +215,7 @@
 }
 
 .send-rfq .dropdown-toggle,
-.send-po .dropdown-toggle {
+.send-po .dropdown-toggle, .add-product-dash .dropdown-toggle {
   padding: 10px 16px !important;
   border-radius: 0 !important;
 }

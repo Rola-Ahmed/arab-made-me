@@ -35,9 +35,11 @@ productsRouter.put("/update/fromAdmin/:id",checkUserToken,allowedTo(['admin']),a
 
 const fields2=[
     {name:'images',maxCount:1},
+    {name:'coverVideo',maxCount:1},
 ]
 const types2={
     images:'image',
+    coverVideo:'video',
 }
 
 
