@@ -3,7 +3,7 @@ import { baseUrl } from "config.js";
 
 import { useNavigate } from "react-router-dom";
 
-import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
+import MediaPopUp from "components/Shared/MediaPopUp/MediaPopUp";
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 
 // utils function

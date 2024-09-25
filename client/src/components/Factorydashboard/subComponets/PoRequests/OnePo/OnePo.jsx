@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
+import MediaPopUp from "components/Shared/MediaPopUp/MediaPopUp";
 
 import { useNavigate } from "react-router-dom";
 import { useOnePo } from "./useOnePo";
@@ -56,13 +56,11 @@ export default function OnePo() {
         </div>
       </div>
 
-       {/* error or loading section */}
-       {apiLoadingData?.reqData && (
+      {/* error or loading section */}
+      {apiLoadingData?.reqData && (
         <StatusMessagetwo errorMsg={apiLoadingData?.errorWhileLoading} />
       )}
 
-
-   
       {!apiLoadingData?.reqData && (
         <div className="section factory-profile m-5">
           <div className="container gap-container">
@@ -77,11 +75,10 @@ export default function OnePo() {
                   </div>
                 )}
 
-
-              
-              <PoInfo  requestedData={requestedData}
-    handleImageClick={handleImageClick}
-    />
+                <PoInfo
+                  requestedData={requestedData}
+                  handleImageClick={handleImageClick}
+                />
               </div>
             </div>
           </div>

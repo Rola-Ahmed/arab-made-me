@@ -16,8 +16,8 @@ export const getOneProduct = async (id,param) => {
   return await getRequestDataHeader(`/products/${id}?${param}`, {}, {});
 };
 
-export const addProduct = async (header, data) => {
-  return await postRequest(`/products/add`, header, data);
+export const addProduct = async (id,header, data) => {
+  return await postRequest(`/products/add/${id}`, header, data);
 };
 
 export const updateProduct = async (header, data) => {

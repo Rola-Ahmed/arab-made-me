@@ -23,7 +23,7 @@ import { useAppTranslation } from "config.js";
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/ImporterUnVerifiedPopUpMsg";
 import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
-import DescritionPopUp from "components/Helpers/DescritionPopUp";
+import DescritionPopUp from "components/Shared/DescritionPopUp";
 
 import DefaultUserNotAuthorizedModal from "components/ActionMessages/FormAccessControl/DefaultUserNotAuthorizedModal";
 function Products(title) {
@@ -175,7 +175,6 @@ function Products(title) {
                 navigate("/productMarketPlace");
               }}
             >
-            
               {t("translation:allProducts")}
             </button>
           </div>

@@ -10,7 +10,7 @@ import DropdownActionBtns from "components/Shared/DropdownActionBtns/DropdownAct
 // helpers
 import { handleImageError } from "utils/ImgNotFound";
 import StarRating from "components/Shared/stars";
-import DescritionPopUp from "components/Helpers/DescritionPopUp";
+import DescritionPopUp from "components/Shared/DescritionPopUp";
 
 // action btns
 import HandleUsersBtnAccess, {

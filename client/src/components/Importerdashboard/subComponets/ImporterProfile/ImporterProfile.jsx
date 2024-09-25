@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import { baseUrl_IMG } from "config.js";
 import SuccessToast from "components/SuccessToast";
 import ErrorToast from "components/ErrorToast";
-import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
+import MediaPopUp from "components/Shared/MediaPopUp/MediaPopUp";
 import ReadOnly from "components/Forms/Shared/ReadOnly";
 
 import DisplayMultiImages from "components/Shared/Dashboards/DisplayMultiImages";

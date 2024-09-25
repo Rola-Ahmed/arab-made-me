@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
+import MediaPopUp from "components/Shared/MediaPopUp/MediaPopUp";
 import SubPageUtility from "components/Shared/Dashboards/SubPageUtility";
 import ImporterInfo from "components/Shared/ImporterInfo";
 import ContactBtn from "components/Factorydashboard/Shared/ContactBtn";

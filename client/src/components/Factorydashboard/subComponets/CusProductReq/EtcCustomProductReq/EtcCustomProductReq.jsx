@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
+import MediaPopUp from "components/Shared/MediaPopUp/MediaPopUp";
 import ImporterInfo from "components/Shared/ImporterInfo";
 import HeaderSection from "./HeaderSection";
 import { getMonthName as getDate } from "utils/getMonthName";
@@ -17,7 +17,12 @@ export default function EtcCustomProductReq() {
   let navigate = useNavigate();
 
   let getMonthName = getDate;
-  let { isLogin, requestedData, apiLoadingData,continueProfilePath } = useSpmf();
+  let {
+    isLogin,
+    requestedData,
+    apiLoadingData,
+    continueProfilePath,
+  } = useSpmf();
   const [modalShow, setModalShow] = useState(false);
 
   const [showImagePop, setShowImagePop] = useState({
@@ -31,8 +36,6 @@ export default function EtcCustomProductReq() {
     });
   };
 
- 
-
   const navigateTo = (path) => {
     if (continueProfilePath) {
       setModalShow(true);
@@ -43,31 +46,27 @@ export default function EtcCustomProductReq() {
 
   const handleSendQuoteBnt = () => {
     navigateTo(
-     `/answerQuotation/spmf?id=${requestedData?.id}&productName=${requestedData?.productName}&userId=${requestedData?.importerId}`
+      `/answerQuotation/spmf?id=${requestedData?.id}&productName=${requestedData?.productName}&userId=${requestedData?.importerId}`
     );
   };
   const handleEditQuoteBnt = () => {
     navigateTo(
-       `/factorydashboard/editQuote/${requestedData?.quoteId}?specialManufacturingRequestId=${requestedData?.id}&productName=${requestedData?.productName}`
+      `/factorydashboard/editQuote/${requestedData?.quoteId}?specialManufacturingRequestId=${requestedData?.id}&productName=${requestedData?.productName}`
     );
   };
 
   return (
     <>
-     
-     <FactoryUnVerified
+      <FactoryUnVerified
         show={modalShow}
         onHide={() => setModalShow(false)}
         goToPath={continueProfilePath}
       />
 
-
       <HeaderSection />
 
       {apiLoadingData?.reqData && (
-        <StatusMessagetwo  errorMsg={apiLoadingData?.errorWhileLoading}/>
-
-      
+        <StatusMessagetwo errorMsg={apiLoadingData?.errorWhileLoading} />
       )}
 
       {!apiLoadingData?.reqData && (
@@ -77,7 +76,7 @@ export default function EtcCustomProductReq() {
               <div className="col-12  container-2-gap  p-0">
                 {/* contains its own fetch i just called it */}
                 <ImporterInfo importerData={requestedData?.importer} />
-                
+
                 <div className="container-profile-input w-100">
                   <div className="title-contianer-input w-100">
                     <p> Custom Product Details</p>
@@ -224,8 +223,7 @@ export default function EtcCustomProductReq() {
                       className="btn-edit "
                       type="button"
                       onClick={() => {
-                        handleSendQuoteBnt()
-                      
+                        handleSendQuoteBnt();
                       }}
                     >
                       <p className="cursor">send Quote</p>
@@ -235,15 +233,13 @@ export default function EtcCustomProductReq() {
                       className="btn-edit "
                       type="button"
                       onClick={() => {
-                        handleEditQuoteBnt()
-                       
+                        handleEditQuoteBnt();
                       }}
                     >
                       <p className="cursor">Edit Quote</p>
                     </button>
                   )}
 
-                  
                   <ContactBtn
                     isLogin={isLogin}
                     recieverUserId={requestedData?.importer?.userId}

@@ -8,7 +8,10 @@ import { useFetchSectors } from "hooks/useFetchSectors";
 import HandleUsersBtnAccess, {
   handleIsLoggedInBtn,
 } from "utils/actionBtns/HandleUsersBtnAccess";
-import { updateUrlParamString,UpdateUrlParamArray} from "utils/updateUrlParams";
+import {
+  updateUrlParamString,
+  UpdateUrlParamArray,
+} from "utils/updateUrlParams";
 
 import Header from "components/main/Header/Header";
 import { useNavigate } from "react-router-dom";
@@ -17,7 +20,7 @@ import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/ImporterUnVerifiedPopUpMsg";
 import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
 
-import DescritionPopUp from "components/Helpers/DescritionPopUp";
+import DescritionPopUp from "components/Shared/DescritionPopUp";
 import { useAppTranslation } from "config.js";
 
 // static variabls
@@ -63,14 +66,13 @@ export default function TopFactories() {
     // Ensure value is the correct type (e.g., number)
     const numericValue = Number(value);
     const index = sectorArr.indexOf(numericValue);
-    console.log("sectorArr defualt",sectorArr)
+    console.log("sectorArr defualt", sectorArr);
 
     if (index > -1) {
       sectorArr.splice(index, 1);
     } else {
       sectorArr.push(numericValue);
     }
-
 
     setFilter((prev) => ({ ...prev, [keyword]: sectorArr }));
     UpdateUrlParamArray(keyword, sectorArr);
@@ -121,7 +123,6 @@ export default function TopFactories() {
     });
   };
 
- 
   const renderModal = (Component, show, hideHandler, destination, userType) => (
     <Component
       show={show}

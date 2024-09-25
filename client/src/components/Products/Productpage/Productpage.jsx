@@ -29,7 +29,7 @@ import UserNotAuthorized from "components/ActionMessages/FormAccessControl/Popup
 import HandleUsersBtnAccess, {
   handleIsLoggedInBtn,
 } from "utils/actionBtns/HandleUsersBtnAccess"; // handleIsLoggedInBtn,
-import DescritionPopUp from "components/Helpers/DescritionPopUp";
+import DescritionPopUp from "components/Shared/DescritionPopUp";
 import DefaultUserNotAuthorizedModal from "components/ActionMessages/FormAccessControl/DefaultUserNotAuthorizedModal";
 
 function Productpage(props) {

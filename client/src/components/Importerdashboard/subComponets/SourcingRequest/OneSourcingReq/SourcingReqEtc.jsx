@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
+import MediaPopUp from "components/Shared/MediaPopUp/MediaPopUp";
 
 import SourcingRequestInfo from "components/Shared/Dashboards/Forms/SourcingRequestInfo";
 import { useFetchData } from "./useFetchData";

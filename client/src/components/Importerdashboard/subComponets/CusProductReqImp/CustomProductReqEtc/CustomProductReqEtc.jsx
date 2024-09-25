@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { baseUrl } from "config.js";
 
-import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
+import MediaPopUp from "components/Shared/MediaPopUp/MediaPopUp";
 
 import { useNavigate } from "react-router-dom";
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";

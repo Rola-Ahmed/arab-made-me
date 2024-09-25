@@ -1,6 +1,6 @@
 import { useState } from "react";
 import DisplayMultiImages from "components/Shared/Dashboards/DisplayMultiImages";
-import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
+import MediaPopUp from "components/Shared/MediaPopUp/MediaPopUp";
 
 export default function LegalDocuments(props) {
   let { legalDocs, deleteDocs, setModalShow } = props;

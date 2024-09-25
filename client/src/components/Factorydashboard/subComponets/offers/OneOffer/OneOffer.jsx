@@ -1,5 +1,5 @@
-import {  useState } from "react";
-import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
+import { useState } from "react";
+import MediaPopUp from "components/Shared/MediaPopUp/MediaPopUp";
 import { useNavigate } from "react-router-dom";
 // utils function
 import SubPageUtility from "components/Shared/Dashboards/SubPageUtility";
@@ -19,63 +19,53 @@ export default function OneOffer() {
       imagePath,
     });
   };
- let {
-    isLogin,
-    requestedData,
-    apiLoadingData,
-  }=UseOneOffer()
- 
+  let { isLogin, requestedData, apiLoadingData } = UseOneOffer();
 
   return (
     <>
-    
+      <div id="view" className="m-4 order-section  ">
+        <SubPageUtility currentPage="More Details" PrevPage="Offer Details" />
 
-   
-          <div id="view" className="m-4 order-section  ">
-            <SubPageUtility
-              currentPage="More Details"
-              PrevPage="Offer Details"
-            />
+        <div>
+          <div className=" d-flex justify-content-between align-items-center w-100 ">
+            <h2>Offer Details</h2>
 
-            <div>
-              <div className=" d-flex justify-content-between align-items-center w-100 ">
-                <h2>Offer Details</h2>
-
-                <div className="btn-container">
-                  <button
-                    type="button"
-                    className="order-btn-1"
-                    onClick={() => {
-                      navigate("/factorydashboard/AllFactoryOffers");
-                    }}
-                  >
-                    <p className="cursor"> Offers</p>
-                  </button>
-                </div>
-              </div>
+            <div className="btn-container">
+              <button
+                type="button"
+                className="order-btn-1"
+                onClick={() => {
+                  navigate("/factorydashboard/AllFactoryOffers");
+                }}
+              >
+                <p className="cursor"> Offers</p>
+              </button>
             </div>
           </div>
+        </div>
+      </div>
 
-{apiLoadingData?.reqData ?
-<StatusMessagetwo  errorMsg={apiLoadingData?.errorWhileLoading}/>
+      {apiLoadingData?.reqData ? (
+        <StatusMessagetwo errorMsg={apiLoadingData?.errorWhileLoading} />
+      ) : (
+        <div className="section factory-profile m-5">
+          <div className="container gap-container px-0">
+            <div className=" container-2-gap  p-0">
+              <OfferInfo
+                requestedData={requestedData}
+                handleImageClick={handleImageClick}
+              />
 
-:
-          <div className="section factory-profile m-5">
-            <div className="container gap-container px-0">
-                <div className=" container-2-gap  p-0">
-                <OfferInfo requestedData={requestedData} handleImageClick={handleImageClick} />
-
-                  {/* <div className="col-12 d-flex justify-content-start btn-modal-gap">
+              {/* <div className="col-12 d-flex justify-content-start btn-modal-gap">
                     
                     <button className="btn-edit " type="button">
                       <p className="cursor">Edit Offer</p>
                     </button>
                   </div> */}
-                </div>
             </div>
           </div>
-}
-      
+        </div>
+      )}
 
       <MediaPopUp
         show={showImagePop.display}

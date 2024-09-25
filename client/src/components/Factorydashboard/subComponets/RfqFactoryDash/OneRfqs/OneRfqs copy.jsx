@@ -5,7 +5,7 @@ import { userDetails } from "Context/userType";
 
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 // import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
-import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
+import MediaPopUp from "components/Shared/MediaPopUp/MediaPopUp";
 // utils function
 import SubPageUtility from "components/Shared/Dashboards/SubPageUtility";
 
@@ -174,7 +174,6 @@ export default function OneRfqs() {
                   </button>
                 )}
 
-              
                 <ContactBtn
                   isLogin={isLogin}
                   recieverUserId={requestedData?.importer?.userId}

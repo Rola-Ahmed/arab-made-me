@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 // validation popup modal
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
-import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
+import MediaPopUp from "components/Shared/MediaPopUp/MediaPopUp";
 
 // utils function
 import RFQinfo from "components/Shared/Dashboards/Forms/RFQinfo";
@@ -20,7 +20,7 @@ import { useOneRfq } from "./useOneRfq";
 export default function OneRfq() {
   let navigate = useNavigate();
   let { isLogin, requestedData, apiLoadingData } = useOneRfq();
-  console.log("requestedData",requestedData)
+  console.log("requestedData", requestedData);
   const [showImagePop, setShowImagePop] = useState({
     display: false,
     imagePath: "",

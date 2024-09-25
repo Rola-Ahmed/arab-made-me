@@ -11,6 +11,7 @@ import { useFetchOneProduct } from "hooks/useFetchOneProduct";
 import InputField from "components/Forms/Shared/InputField";
 import TextareaInput from "components/Forms/Shared/TextareaInput";
 import { updateProduct } from "Services/products";
+import SuccessToast from "components/SuccessToast";
 
 export default function EditProduct() {
   let { isLogin } = useContext(UserToken);
@@ -54,15 +55,15 @@ export default function EditProduct() {
     } = values;
 
     let data = {
-      country: country,
-      name: name,
+      country,
+      name,
 
-      categoryId: categoryId,
-      sectorId: sectorId,
+      categoryId,
+      sectorId,
 
-      description: description,
-      price: price,
-      minOrderQuantity: minOrderQuantity,
+      description,
+      price,
+      minOrderQuantity,
 
       specialCharacteristics: {},
       ...(hsnCode && { hsnCode: hsnCode }),
@@ -83,6 +84,7 @@ export default function EditProduct() {
     }
 
     const response = await updateProduct(
+      productDetails?.id,
       {
         authorization: isLogin,
       },
@@ -90,11 +92,15 @@ export default function EditProduct() {
     );
 
     if (response?.success) {
-      setErrorMsg((previousState) => {
-        const { message, ...rest } = previousState;
-        return rest;
-      });
+      // setErrorMsg((previousState) => {
+      //   const { message, ...rest } = previousState;
+      //   return rest;
+      // });
       setIsLoading(true);
+      SuccessToast('data updated successfuly')
+      navigate(
+        `/factorydashboard/editProduct/${requestedData?.id}?productName=${requestedData?.name}`
+      );
     }
     //  else {
     setErrorMsg((prevErrors) => ({

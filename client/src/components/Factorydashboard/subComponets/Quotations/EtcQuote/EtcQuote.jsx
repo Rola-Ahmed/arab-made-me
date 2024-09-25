@@ -4,12 +4,12 @@ import { useNavigate } from "react-router-dom";
 
 // utils function
 import SubPageUtility from "components/Shared/Dashboards/SubPageUtility";
-import DescritionPopUp from "components/Helpers/DescritionPopUp";
+import DescritionPopUp from "components/Shared/DescritionPopUp";
 
 // sub Components
 import ImporterInfo from "components/Shared/ImporterInfo";
 import ContactBtn from "components/Factorydashboard/Shared/ContactBtn";
-import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
+import MediaPopUp from "components/Shared/MediaPopUp/MediaPopUp";
 
 import RFQinfo from "components/Shared/Dashboards/Forms/RFQinfo";
 import Quote from "components/Shared/Dashboards/Forms/Quote";

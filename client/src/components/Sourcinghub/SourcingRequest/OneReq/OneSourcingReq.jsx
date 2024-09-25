@@ -10,7 +10,7 @@ import { getOneSourcingReq } from "Services/sourcingReuqest";
 import Loading from "components/Loading/Loading";
 import ImporterInfo from "components/Shared/ImporterInfo";
 import SourcingRequestInfo from "components/Shared/Dashboards/Forms/SourcingRequestInfo";
-import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
+import MediaPopUp from "components/Shared/MediaPopUp/MediaPopUp";
 import { accessFormSourcingRequest } from "utils/actionBtns/HandleUsersBtnAccess";
 import DefaultUserNotAuthorizedModal from "components/ActionMessages/FormAccessControl/DefaultUserNotAuthorizedModal";
 

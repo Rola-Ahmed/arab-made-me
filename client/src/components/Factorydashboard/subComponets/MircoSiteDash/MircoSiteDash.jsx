@@ -3,7 +3,7 @@ import { baseUrl_IMG } from "config.js";
 // import UploadDocument from "components/Forms/Shared/UploadDocument";
 import Button from "react-bootstrap/Button";
 // import Modal from "react-bootstrap/Modal";
-import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
+import MediaPopUp from "components/Shared/MediaPopUp/MediaPopUp";
 import { handleImageError } from "utils/ImgNotFound";
 import useCountries from "hooks/useCountries";
 import SuccessToast from "components/SuccessToast";

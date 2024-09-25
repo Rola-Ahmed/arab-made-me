@@ -1,7 +1,7 @@
-import {  useState } from "react";
+import { useState } from "react";
 import { useOnePo } from "./useOnePo";
 import { useNavigate } from "react-router-dom";
-import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
+import MediaPopUp from "components/Shared/MediaPopUp/MediaPopUp";
 import ContactBtn from "components/Importerdashboard/Shared/ContactBtn";
 import SubPageUtility from "components/Shared/Dashboards/SubPageUtility";
 import PoInfo from "components/Shared/Dashboards/Forms/PoInfo";
@@ -23,11 +23,9 @@ export default function OnePo() {
     });
   };
 
-
   return (
     <>
-
-{/* header */}
+      {/* header */}
       <div id="view" className="m-4 order-section   ">
         <SubPageUtility
           currentPage="More Details"
@@ -52,29 +50,25 @@ export default function OnePo() {
         </div>
       </div>
 
-
       {/* error or loading section */}
       {apiLoadingData?.reqData ? (
         <StatusMessagetwo errorMsg={apiLoadingData?.errorWhileLoading} />
-      ):
-      <div className="section factory-profile m-5">
-        <div className="container gap-container p-0">
+      ) : (
+        <div className="section factory-profile m-5">
+          <div className="container gap-container p-0">
             <div className="  container-2-gap  p-0">
-            
-
               <div className="container-profile-input w-100">
                 <div className="title-contianer-input w-100">
-                <FactoryInfo productDetails={requestedData?.factory} />
-
+                  <FactoryInfo productDetails={requestedData?.factory} />
                 </div>
               </div>
 
+              {/* PO INFO */}
+              <PoInfo
+                requestedData={requestedData}
+                handleImageClick={handleImageClick}
+              />
 
-{/* PO INFO */}
-              <PoInfo  requestedData={requestedData}
-    handleImageClick={handleImageClick}
-    />
-           
               <div className="col-12 d-flex justify-content-start btn-modal-gap">
                 <ContactBtn
                   isLogin={isLogin}
@@ -83,11 +77,9 @@ export default function OnePo() {
                 />
               </div>
             </div>
+          </div>
         </div>
-      </div>
-    }
-
-      
+      )}
 
       <MediaPopUp
         show={showImagePop.display}

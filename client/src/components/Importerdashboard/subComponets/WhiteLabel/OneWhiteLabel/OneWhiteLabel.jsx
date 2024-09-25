@@ -3,7 +3,7 @@ import { baseUrl } from "config.js";
 
 import { useNavigate } from "react-router-dom";
 
-import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
+import MediaPopUp from "components/Shared/MediaPopUp/MediaPopUp";
 
 // utils function
 import SubPageUtility from "components/Shared/Dashboards/SubPageUtility";
@@ -77,11 +77,11 @@ export default function OnePrivateLabel() {
                   requestedData={requestedData}
                   handleImageClick={handleImageClick}
                 />
-                 {requestedData?.productId && (
-                    <div className="container-profile-input w-100">
-                      <ProductDetails productDetails={requestedData?.product} />
-                    </div>
-                  )}
+                {requestedData?.productId && (
+                  <div className="container-profile-input w-100">
+                    <ProductDetails productDetails={requestedData?.product} />
+                  </div>
+                )}
 
                 <div className="col-12 d-flex justify-content-start btn-modal-gap mb-4">
                   <ContactBtn
