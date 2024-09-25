@@ -7,7 +7,10 @@ import DisplayOneImage from "components/Shared/Dashboards/DisplayOneImage";
 import ProductDetails from "components/Forms/Shared/SelectedProductDetails";
 import { UseOneProduct } from "./UseOneProduct";
 import StatusMessagetwo from "components/Shared/Dashboards/StatusMessagetwo";
-import UploadDocument, { UploadVedio } from "components/Forms/Shared/UploadDocument";
+import UploadDocument, {
+  UploadVedio,
+} from "components/Forms/Shared/UploadDocument";
+import { baseUrl_IMG } from "config.js";
 
 // import { Modal } from "bootstrap/dist/js/bootstrap.bundle.min";
 // import { Modal } from "bootstrap/dist/js/bootstrap.bundle.min";
@@ -261,7 +264,7 @@ export default function OneProduct() {
                           autoPlay={false}
                           muted={true}
                           className="h-75 w-100"
-                          src={requestedData?.coverVideo}
+                          src={`${baseUrl_IMG}/${requestedData?.coverVideo}`}
                           alt="Cover Video"
                           // onError={handleImageError}
                           style={{ maxHeight: "55vh" }}
