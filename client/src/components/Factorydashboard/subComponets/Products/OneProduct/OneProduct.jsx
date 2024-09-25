@@ -1,6 +1,5 @@
-
-import {  useState } from "react";
-import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
+import { useEffect, useState } from "react";
+import MediaPopUp from "components/Shared/MediaPopUp/MediaPopUp";
 import { useNavigate } from "react-router-dom";
 import SubPageUtility from "components/Shared/Dashboards/SubPageUtility";
 import DisplayMultiImages from "components/Shared/Dashboards/DisplayMultiImages";
@@ -8,28 +7,183 @@ import DisplayOneImage from "components/Shared/Dashboards/DisplayOneImage";
 import ProductDetails from "components/Forms/Shared/SelectedProductDetails";
 import { UseOneProduct } from "./UseOneProduct";
 import StatusMessagetwo from "components/Shared/Dashboards/StatusMessagetwo";
-export default function ProductsFacEtc() {
+import UploadDocument from "components/Forms/Shared/UploadDocument";
+
+// import { Modal } from "bootstrap/dist/js/bootstrap.bundle.min";
+// import { Modal } from "bootstrap/dist/js/bootstrap.bundle.min";
+import Modal from "react-bootstrap/Modal";
+
+import {
+  addProductMedia,
+  deleteCoverVideo,
+  updateProductBanner,
+} from "Services/products";
+import ErrorToast from "components/ErrorToast";
+import SuccessToast from "components/SuccessToast";
+export default function OneProduct() {
   let navigate = useNavigate();
 
   const [showImagePop, setShowImagePop] = useState({
     display: false,
     imagePath: "",
   });
+  const [selectedDocs, setSelectedDocs] = useState([]);
+
   const handleImageClick = (imagePath) => {
     setShowImagePop({
       display: true,
       imagePath,
     });
   };
+  const [errorMsg, setErrorMsg] = useState();
+  const [show, setShow] = useState({
+    imagesReadOnly: false,
+    coverImgReadOnly: false,
+    coverVideo: false,
+  });
+  const [isLoading, setIsLoading] = useState(false);
 
-  let  {
-    // isLogin,
-    requestedData,
-    apiLoadingData,
-  } =UseOneProduct()
- 
-  // utils function
+  let { isLogin, productDetails, apiLoadingData } = UseOneProduct();
+  const [requestedData, setRequestedData] = useState(productDetails);
+  console.log("productDetails", productDetails);
 
+  useEffect(() => {
+    setRequestedData(productDetails);
+  }, [productDetails]);
+
+  async function handleSingleFileUpload(fileKeyword, fileValue, index) {
+    const formData = new FormData();
+    formData.append(fileKeyword, fileValue);
+    formData.append("index", index);
+
+    return formData;
+  }
+
+  async function handleAddBanner(e, index) {
+    document.body.style.cursor = "wait";
+    e.preventDefault();
+    let data = await handleSingleFileUpload(
+      selectedDocs?.[0]?.keyWord,
+      selectedDocs?.[0]?.pdfFile,
+      index
+    );
+    await handleBannerUploads(data, "add");
+  }
+
+  async function handleDeleteBanner(index) {
+    document.body.style.cursor = "wait";
+    const data = await handleSingleFileUpload("images", null, index);
+    await handleBannerUploads(data, "delete");
+  }
+  async function handleBannerUploads(data, actionType) {
+    setIsLoading(true);
+    const result = await updateProductBanner(
+      requestedData?.id,
+      { Authorization: isLogin },
+      data
+    );
+
+    if (result?.success) {
+      SuccessToast("data updated succcfully");
+      handleClose();
+      setRequestedData((prev) => ({
+        ...prev,
+        ...result?.data?.product,
+      }));
+    } else {
+      if (actionType == "delete") {
+        ErrorToast("someThing went Wrong");
+      } else {
+        setErrorMsg((prevErrors) => ({
+          ...prevErrors,
+          response: result?.error,
+        }));
+      }
+    }
+    setIsLoading(false);
+    setTimeout(() => {
+      document.body.style.cursor = "default";
+    }, 5000); // 5000 milliseconds = 5 seconds
+  }
+  async function deleteMedia(keyword) {
+    setTimeout(() => {
+      document.body.style.cursor = "wait";
+    }, 5000); // 5000 milliseconds = 5 seconds
+    const data = new FormData();
+    data.append([keyword], "");
+    const result = await deleteCoverVideo(
+      requestedData?.id,
+      { Authorization: isLogin }
+      // data
+    );
+
+    if (result?.success) {
+      SuccessToast("data updated succcfully");
+      setRequestedData((prev) => ({
+        ...prev,
+        ...result?.data?.product,
+      }));
+    } else {
+      ErrorToast("someThing went Wrong");
+    }
+    setTimeout(() => {
+      document.body.style.cursor = "default";
+    }, 5000); // 5000 milliseconds = 5 seconds
+  }
+
+  async function updateMeida(selectedDocs) {
+    const data = new FormData();
+
+    selectedDocs?.map((item) => data.append(item.keyWord, item.pdfFile));
+
+    setIsLoading(true);
+    const result = await addProductMedia(
+      requestedData?.id,
+      { Authorization: isLogin },
+      data
+    );
+
+    if (result?.success) {
+      SuccessToast("data updated succcfully");
+      handleClose();
+      setRequestedData((prev) => ({
+        ...prev,
+        ...result?.data?.product,
+      }));
+    } else {
+      setErrorMsg((prevErrors) => ({
+        ...prevErrors,
+        response: result?.error,
+      }));
+    }
+    setIsLoading(false);
+  }
+
+  function handleClose() {
+    ModalClose();
+    setErrorMsg({});
+    setSelectedDocs([]);
+  }
+
+  function handleShow(value) {
+    setShow((preValue) => ({
+      ...preValue,
+      [value]: true,
+    }));
+  }
+
+  function ModalClose() {
+    setShow((prevVal) => {
+      const newState = { ...prevVal }; // Create a copy of the previous state
+
+      // Iterate through the keys in the state
+      Object.keys(newState).forEach((key) => {
+        newState[key] = false; // Set each property to false
+      });
+
+      return newState; // Return the updated state
+    });
+  }
   return (
     <>
       <div id="view" className="m-4 order-section  ">
@@ -53,45 +207,87 @@ export default function ProductsFacEtc() {
         </div>
       </div>
 
-
-      {apiLoadingData?.reqData ?
-        <StatusMessagetwo  errorMsg={apiLoadingData?.errorWhileLoading}/>
-        :
-
-      <div className="section factory-profile m-5">
-        <div className="container gap-container">
+      {/* is api loading is true that means error or loading */}
+      {apiLoadingData?.reqData ? (
+        // error message or loading
+        <StatusMessagetwo errorMsg={apiLoadingData?.errorWhileLoading} />
+      ) : (
+        <div className="section factory-profile m-5">
           <div className="row">
             <div className="col-12  container-2-gap  p-0">
-              <div className="container-profile-input w-100">
-                <div className="title-contianer-input w-100">
-                  <ProductDetails productDetails={requestedData} />
-                </div>
+              <div className="container-profile-input w-100 ">
+                <ProductDetails productDetails={requestedData} />
               </div>
 
-              <div className="container-profile-input w-100">
-                <div className="title-contianer-input w-100">
-                  <p> Product Banners</p>
-                  <DisplayMultiImages
-                    handleImageClick={handleImageClick}
-                    images={requestedData?.images}
-                  />
-                </div>
-              </div>
-
-              <div className="container-profile-input w-100">
-                <div className="title-contianer-input w-100">
-                  <p> Cover Image</p>
-
-                  <DisplayOneImage
-                    handleImageClick={handleImageClick}
-                    image={requestedData?.coverImage}
-                  />
-                </div>
-              </div>
-
-              <div className="col-12 d-flex justify-content-start btn-modal-gap">
+              <div className="container-profile-input w-100 gap-16">
+                <p className="fs-24-semi"> Product Banners</p>
+                <DisplayMultiImages
+                  handleImageClick={handleImageClick}
+                  images={requestedData?.images}
+                  deleteDocs={handleDeleteBanner}
+                />
                 <button
-                  className="btn-edit d-none"
+                  className="btn-edit w-fit-content"
+                  onClick={() => handleShow("imagesReadOnly")}
+                >
+                  <p className="cursor">Upload </p>
+                </button>
+              </div>
+
+              <div className="container-profile-input w-100  gap-16">
+                <p className="fs-24-semi"> Cover Image</p>
+                <DisplayOneImage
+                  handleImageClick={handleImageClick}
+                  image={requestedData?.coverImage}
+                />
+              </div>
+
+              <div className="container-profile-input w-100 gap-16 ">
+                <p className="fs-24-semi">Cover Video</p>
+                {/* ----------------------- */}
+                <div className="row row-gap-15 w-100">
+                  <div className="col-12 h-fit-content position-relative">
+                    {requestedData?.coverVideo ? (
+                      <>
+                        <video
+                          controls="controls"
+                          autoPlay={false}
+                          muted={true}
+                          className="h-75 w-100"
+                          src={requestedData?.coverVideo}
+                          alt="Cover Video"
+                          // onError={handleImageError}
+                          style={{ maxHeight: "55vh" }}
+                        />
+                        <button
+                          className="position-absolute delete-img   bg-white rounded-3  border-1 border-danger "
+                          type="button"
+                          onClick={() => {
+                            deleteMedia("coverVideo");
+                          }}
+                        >
+                          <i class="fa-solid fa-trash  text-danger cursor"></i>
+                        </button>
+                      </>
+                    ) : (
+                      <h5 className="text-muted text-center py-3">Empty</h5>
+                    )}
+                  </div>
+
+                  <div className="col-12">
+                    <button
+                      className="btn-edit fs-15 fw-600 text-white"
+                      // onClick={() => handleShow("coverVedioReadOnly")}
+                    >
+                      Upload
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-12 ">
+                <button
+                  className="defualt-btn main"
                   type="button"
                   onClick={() => {
                     navigate(
@@ -99,14 +295,13 @@ export default function ProductsFacEtc() {
                     );
                   }}
                 >
-                  <p className="cursor">Edit Product</p>
+                  Edit Product
                 </button>
               </div>
             </div>
           </div>
         </div>
-      </div>
-}
+      )}
 
       <MediaPopUp
         show={showImagePop.display}
@@ -118,6 +313,81 @@ export default function ProductsFacEtc() {
         }
         showImagePop={showImagePop.imagePath}
       />
+
+      <Modal
+        show={show.imagesReadOnly}
+        onHide={() => handleClose("imagesReadOnly")}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        className="factory-profile"
+      >
+        <Modal.Body closeButton>
+          {/* Account Info container 1 */}
+
+          <div className="container-profile-input w-100">
+            <div className="title-contianer-input w-100">
+              <Modal.Header closeButton>
+                <Modal.Title>
+                  <p>Factory Banners</p>
+                </Modal.Title>
+              </Modal.Header>
+              {errorMsg?.response && (
+                <div className="alert mt-3 p-2 alert-danger form-control text-dark">
+                  {errorMsg?.response}
+                </div>
+              )}
+              <div className="w-100 ">
+                <form
+                  onSubmit={(e) =>
+                    handleAddBanner(e, requestedData?.images?.length)
+                  }
+                  encType="multipart/form-data"
+                >
+                  <div className="row  row-gap">
+                    <div className="col-12">
+                      <UploadDocument
+                        selectedDocs={selectedDocs}
+                        errorMsg={errorMsg}
+                        setSelectedDocs={setSelectedDocs}
+                        MediaName="images"
+                        mediaMaxLen="1"
+                        meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
+                        setErrorMsg={setErrorMsg}
+                        smallNote="you can upload up to 8 images, but only one image at a time."
+                        // title="Factory Banners"
+                      />
+                    </div>
+
+                    <div className="col-12 d-flex justify-content-start btn-modal-gap">
+                      <button
+                        type="button"
+                        onClick={() => handleClose("imagesReadOnly")}
+                        className="btn btn-secondary"
+                      >
+                        Close
+                      </button>
+                      {isLoading ? (
+                        <button type="button" className="btn-edit">
+                          <i className="fas fa-spinner fa-spin text-white px-5"></i>
+                        </button>
+                      ) : (
+                        <button
+                          className="btn-edit submitButton"
+                          type="submit"
+                          disabled={!(selectedDocs?.length > 0)}
+                        >
+                          <p className="cursor">Submit</p>
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
     </>
   );
 }
