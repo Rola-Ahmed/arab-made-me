@@ -1,6 +1,7 @@
 import {
   getRequest,
   getRequestDataHeader,
+  patchRequest,
   postRequest,
   putRequest,
 } from "./authServices";
@@ -31,4 +32,13 @@ export const updateProduct = async (id, header, data) => {
 
 export const addProductMedia = async (id, header, data) => {
   return await putRequest(`/products/uploadMedia/${id}`, header, data);
+};
+
+// images attribute
+export const updateProductBanner = async (id, header, data) => {
+  return await patchRequest(`/products/update/image/${id}`, header, data);
+};
+
+export const deleteCoverVideo = async (id, header, data) => {
+  return await patchRequest(`products/update/coverVideo/${id}`, header, data);
 };

@@ -599,12 +599,15 @@ small {
   /* gap: 8px; */
   /* cursor: point; */
   /* border: none; */
+  font-family: "Inter-reg";
+  font-size: 16px;
 }
 
 .main {
   color: white;
   background: var(--primary-color);
   border: none;
+
 }
 
 /* --------------------------------------------------------- */

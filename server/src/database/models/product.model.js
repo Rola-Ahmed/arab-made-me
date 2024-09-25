@@ -34,9 +34,15 @@ export const Product = sequelize.define(
       },
     },
     coverVideo: {
+      allowNull: true,
+
       type: DataTypes.STRING,
       set(value) {
-        this.setDataValue("coverVideo", value[0].finalPath);
+        if (!value) {
+          this.setDataValue("coverVideo", "");
+        } else {
+          this.setDataValue("coverVideo", value[0].finalPath);
+        }
       },
     },
     hsnCode: {

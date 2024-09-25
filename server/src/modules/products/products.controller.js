@@ -89,6 +89,7 @@ export const getProduct = crudOps.getOne(Product);
 export const uploadMedia = crudOps.uploadMedia("product", {
   images: "array",
   coverImage: "file",
+  coverVideo: "file",
 });
 
 export const updateProduct = crudOps.updateModel(Product);
@@ -100,8 +101,15 @@ export const updateOneImage = crudOps.updateOneInMedia(
   8
 );
 
+export const deleteOneMedia = crudOps.deleteOneInMedia(
+  Product,
+  "product",
+  "coverVideo",
+  1
+);
 export const deleteProduct = crudOps.deleteModel(Product, {
   images: "array",
   coverImage: "file",
+  coverVideo: "file",
 });
 export const updateFromAdmin = crudOps.updateModel(Product);

@@ -1,46 +1,21 @@
-import { useEffect, useState } from "react";
+import { useFetchOneProduct } from "hooks/useFetchOneProduct";
+import { useContext } from "react";
 import { useSearchParams } from "react-router-dom";
-import { getOneProduct } from "Services/products";
+import { UserToken } from "Context/userToken";
+
 export function UseOneProduct() {
   const [searchParams] = useSearchParams();
   const productId = searchParams.get("productId");
-  const [requestedData, setRequestedData] = useState({  });
-
-  const [apiLoadingData, setApiLoadingData] = useState({
-    reqData: true,
-    errorWhileLoading: null,
-  });
-
-
-  useEffect(() => {
-    async function fetchReqData() {
-      let result = await getOneProduct(productId,{});
-      if (result?.success) {
-        setRequestedData((prevData) => ({
-          ...prevData,
-          ...result?.data?.products,
-        }));
-       
-      } 
-        setApiLoadingData((prevVal) => ({
-          ...prevVal,
-          reqData: result?.loadingStatus,
-          errorWhileLoading: result?.error,
-        }));
-
-   
-    }
-
-  
-
-    fetchReqData();
-
-  
-  }, [productId]);
+  let { productDetails, error } = useFetchOneProduct(productId, {});
+  let { isLogin } = useContext(UserToken);
 
   return {
-    // isLogin,
-    requestedData,
-    apiLoadingData,
+    isLogin,
+    // requestedData: productDetails,
+     productDetails,
+    apiLoadingData: {
+      reqData: error ? true : false,
+      errorWhileLoading: error,
+    },
   };
 }
