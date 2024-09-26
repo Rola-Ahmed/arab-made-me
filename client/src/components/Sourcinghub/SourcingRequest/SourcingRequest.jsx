@@ -140,7 +140,7 @@ function Sourcinghub() {
               type="button"
               onClick={() => navigate(`/sourcinghub/sourcingRequests`)}
             >
-              Requests
+              Buyer Requests
             </button>
           </li>
           <li className="nav-item" role="presentation">
@@ -150,7 +150,7 @@ function Sourcinghub() {
               className="px-3 py-1 fw-600 rounded-2 border-0 bg-0"
               onClick={() => navigate(`/sourcinghub/sourcingOffers`)}
             >
-              Offers
+              Factory Offers
             </button>
           </li>
         </ul>

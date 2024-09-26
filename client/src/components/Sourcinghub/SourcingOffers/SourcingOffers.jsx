@@ -151,7 +151,7 @@ function SourcingOffers() {
               role="tab"
               onClick={() => navigate(`/sourcinghub/sourcingRequests`)}
             >
-              Requests
+              Buyer Requests
             </button>
           </li>
           <li className="nav-item" role="presentation">
@@ -161,7 +161,7 @@ function SourcingOffers() {
               className={`px-3 py-1 fw-600 rounded-2 bg-sec  border-0`}
               onClick={() => navigate(`/sourcinghub/sourcingOffers`)}
             >
-              Offers
+              Factory Offers
             </button>
           </li>
         </ul>
