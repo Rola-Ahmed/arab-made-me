@@ -1,6 +1,7 @@
 import React from "react";
 
-export default function FactoryABout({ factoryDetails,allSectors }) {
+export default function FactoryABout({ factoryDetails, allSectors }) {
+  console.log("factoryDetails",factoryDetails)
   return (
     <>
       {" "}
@@ -132,6 +133,18 @@ export default function FactoryABout({ factoryDetails,allSectors }) {
         </div>
         <div className="col-9 ">
           <p>{factoryDetails?.description}</p>
+        </div>
+
+        <div className="col-3 ">
+          <p
+            className=" fw-bolder
+        "
+          >
+           Why Us
+          </p>
+        </div>
+        <div className="col-9 ">
+          <p>{factoryDetails?.whyUs}</p>
         </div>
       </div>
     </>

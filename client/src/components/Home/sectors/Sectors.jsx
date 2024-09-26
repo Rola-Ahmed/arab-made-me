@@ -51,7 +51,7 @@ function Sectors() {
                   <div
                     className="default-padding h-100 cursor bg-white border rounded-4 gap-16 d-flex align-items-center ar-direction"
                     onClick={() => {
-                      navigate(`productMarketPlace/${item?.id}-${item?.name}`);
+                      navigate(`productMarketPlace?filterBySector=${item?.id}`);
                     }}
                   >
                     <img
@@ -69,7 +69,9 @@ function Sectors() {
                       <p className="mb-0 fs-14  lh-normal">
                         {item?.productscount == 0
                           ? `${t("translation:comingSoon")}`
-                          : `${item?.productscount} ${t('translation:products')}`}
+                          : `${item?.productscount} ${t(
+                              "translation:products"
+                            )}`}
                       </p>
                     </div>
                   </div>
