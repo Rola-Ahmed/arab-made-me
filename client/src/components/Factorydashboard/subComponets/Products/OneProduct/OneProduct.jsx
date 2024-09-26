@@ -409,7 +409,7 @@ export default function OneProduct() {
             <div className="title-contianer-input w-100">
               <Modal.Header closeButton>
                 <Modal.Title>
-                  <p>Factory Logo</p>
+                  <p>product cover Image</p>
                 </Modal.Title>
               </Modal.Header>
               {errorMsg?.response && (
@@ -463,6 +463,9 @@ export default function OneProduct() {
           </div>
         </Modal.Body>
       </Modal>
+
+
+      
     </>
   );
 }
