@@ -77,7 +77,7 @@ const handleIsLoggedInBtn = (params) => {
     return;
   }
 
-  navigate(`${loginPath}`);
+  navigate(`/${loginPath}`);
 };
 
 const accessFormSourcingRequest = (params) => {
