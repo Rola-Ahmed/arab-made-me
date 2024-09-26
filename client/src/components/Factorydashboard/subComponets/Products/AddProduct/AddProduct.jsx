@@ -64,8 +64,8 @@ export default function AddProduct() {
       .min(6, "Minimum  length is 6")
       .max(15, "Maximum 15  is legnth"),
     guarantee: textAreaValidate(),
-    minOrderQuantity: reqQualityValidate,
-    maxOrderQuantity: reqQualityValidate,
+    minOrderQuantity: requiredStringMax255,
+    maxOrderQuantity: requiredStringMax255,
     categoryId: Yup.string().required("Input Field is Required"),
     // sectorId: Yup.string().required("Input Field is Required"),
 
@@ -259,7 +259,7 @@ export default function AddProduct() {
               <div className="col-4">
                 <InputField
                   isRequired={true}
-                  title={"Max Order Quantity "}
+                  title="Ability to Production"
                   formValidation={formValidation}
                   vlaidationName={"maxOrderQuantity"}
                 />
