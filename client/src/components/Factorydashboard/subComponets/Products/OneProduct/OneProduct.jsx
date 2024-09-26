@@ -2,15 +2,11 @@ import { useEffect, useState } from "react";
 import MediaPopUp from "components/Shared/MediaPopUp/MediaPopUp";
 import { useNavigate } from "react-router-dom";
 import SubPageUtility from "components/Shared/Dashboards/SubPageUtility";
-import DisplayOneImage from "components/Shared/Dashboards/DisplayOneImage";
 import ProductDetails from "components/Forms/Shared/SelectedProductDetails";
 import { UseOneProduct } from "./UseOneProduct";
 import StatusMessagetwo from "components/Shared/Dashboards/StatusMessagetwo";
-import UploadDocument, {
-  UploadVedio,
-} from "components/Forms/Shared/UploadDocument";
+
 import { baseUrl_IMG } from "config.js";
-import Modal from "react-bootstrap/Modal";
 import {
   addProductMedia,
   deleteCoverVideo,
@@ -20,6 +16,7 @@ import ErrorToast from "components/ErrorToast";
 import SuccessToast from "components/SuccessToast";
 import ProductBanner from "components/Shared/Dashboards/ProductBanner";
 import CoverImage from "../../../../Shared/Dashboards/CoverImage";
+import CoverVideo from "../../../../Shared/CoverVideo";
 export default function OneProduct() {
   let navigate = useNavigate();
 
@@ -248,48 +245,22 @@ export default function OneProduct() {
                 updateMeida={updateMeida}
               />
 
-              <div className="container-profile-input w-100 gap-16 ">
-                <p className="fs-24-semi">Cover Video</p>
-                {/* ----------------------- */}
-                <div className="row row-gap-15 w-100">
-                  <div className="col-12 h-fit-content position-relative">
-                    {requestedData?.coverVideo ? (
-                      <>
-                        <video
-                          controls="controls"
-                          autoPlay={false}
-                          muted={true}
-                          className="h-75 w-100"
-                          src={`${baseUrl_IMG}/${requestedData?.coverVideo}`}
-                          alt="Cover Video"
-                          // onError={handleImageError}
-                          style={{ maxHeight: "55vh" }}
-                        />
-                        <button
-                          className="position-absolute delete-img   bg-white rounded-3  border-1 border-danger "
-                          type="button"
-                          onClick={() => {
-                            deleteMedia("coverVideo");
-                          }}
-                        >
-                          <i class="fa-solid fa-trash  text-danger cursor"></i>
-                        </button>
-                      </>
-                    ) : (
-                      <h5 className="text-muted text-center py-3">Empty</h5>
-                    )}
-                  </div>
+              {/* Cover Video  */}
+              <CoverVideo
+                // handleImageError={handleImageError}
+                coverVideo={`${baseUrl_IMG}/${requestedData?.coverVideo}`}
+                notEmpty={requestedData?.coverVideo}
+                handleShow={handleShow}
+                show={show}
+                errorMsg={errorMsg}
+                handleClose={handleClose}
+                isLoading={isLoading}
+                updateMedia={updateMeida}
+                setErrorMsg={setErrorMsg}
+                setSelectedDocs={setSelectedDocs}
+                selectedDocs={selectedDocs}
+              />
 
-                  <div className="col-12">
-                    <button
-                      className="btn-edit fs-15 fw-600 text-white"
-                      onClick={() => handleShow("coverVedioReadOnly")}
-                    >
-                      Upload
-                    </button>
-                  </div>
-                </div>
-              </div>
 
               <div className="col-12 ">
                 <button
@@ -320,80 +291,6 @@ export default function OneProduct() {
         showImagePop={showImagePop.imagePath}
       />
 
-      {/* cover Vedio */}
-      <Modal
-        show={show.coverVedioReadOnly}
-        onHide={() => handleClose("coverVedioReadOnly")}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-        className="factory-profile"
-      >
-        <Modal.Body closeButton>
-          {/* Account Info container 1 */}
-
-          <div className="container-profile-input w-100">
-            <div className="title-contianer-input w-100">
-              <Modal.Header closeButton>
-                <Modal.Title>
-                  <p>Cover Video</p>
-                </Modal.Title>
-              </Modal.Header>
-              {errorMsg?.response ? (
-                <div className="alert mt-3 p-2 alert-danger form-control text-dark">
-                  {errorMsg?.response}
-                </div>
-              ) : (
-                ""
-              )}
-              <div className="w-100 ">
-                <form
-                  onSubmit={(e) => updateMeida(e, selectedDocs)}
-                  encType="multipart/form-data"
-                >
-                  <div className="row  row-gap">
-                    <UploadVedio
-                      selectedDocs={selectedDocs}
-                      errorMsg={errorMsg}
-                      setSelectedDocs={setSelectedDocs}
-                      MediaName="coverVideo"
-                      mediaMaxLen="1"
-                      meidaAcceptedExtensions={["mp4", "mkv", "x-matroska"]}
-                      setErrorMsg={setErrorMsg}
-                      // title="Certificates"
-                    />
-
-                    <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                      <button
-                        className="btn btn-secondary"
-                        type="button"
-                        onClick={() => handleClose("coverVideo")}
-                      >
-                        Close
-                      </button>
-                      {isLoading ? (
-                        <button type="button" className="btn-edit">
-                          <i className="fas fa-spinner fa-spin text-white px-5"></i>
-                        </button>
-                      ) : (
-                        <button
-                          className="btn-edit submitButton"
-                          type="submit"
-                          disabled={!(selectedDocs?.length > 0)}
-                        >
-                          <p className="cursor">Submit Video</p>
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </Modal.Body>
-      </Modal>
-
-      {/* Cover Image */}
     </>
   );
 }

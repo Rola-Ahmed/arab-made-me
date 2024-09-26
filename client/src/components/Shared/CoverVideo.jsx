@@ -60,8 +60,6 @@ export default function CoverVideo(props) {
         className="factory-profile"
       >
         <Modal.Body closeButton>
-          {/* Account Info container 1 */}
-
           <div className="container-profile-input w-100">
             <div className="title-contianer-input w-100">
               <Modal.Header closeButton>
@@ -78,7 +76,7 @@ export default function CoverVideo(props) {
               )}
               <div className="w-100 ">
                 <form
-                  onSubmit={(e) => updateMedia(e, "coverImgReadOnly")}
+                  onSubmit={(e) => updateMedia(e, selectedDocs)}
                   encType="multipart/form-data"
                 >
                   <div className="row  row-gap">

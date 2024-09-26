@@ -631,7 +631,7 @@ export default function MircoSiteDash() {
 
               {/* Cover Video  */}
               <CoverVideo
-                handleImageError={handleImageError}
+                // handleImageError={handleImageError}
                 coverVideo={`${baseUrl_IMG}/${factoryProfile?.coverVideo}`}
                 notEmpty={factoryProfile?.coverVideo}
                 handleShow={handleShow}
