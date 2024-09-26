@@ -18,7 +18,8 @@ import {
 } from "Services/products";
 import ErrorToast from "components/ErrorToast";
 import SuccessToast from "components/SuccessToast";
-import ProductBanner from "./subComonents/ProductBanner";
+import ProductBanner from "components/Shared/Dashboards/ProductBanner";
+import CoverImage from "../../../../Shared/Dashboards/CoverImage";
 export default function OneProduct() {
   let navigate = useNavigate();
 
@@ -44,7 +45,6 @@ export default function OneProduct() {
 
   let { isLogin, productDetails, apiLoadingData } = UseOneProduct();
   const [requestedData, setRequestedData] = useState(productDetails);
-  console.log("productDetails", productDetails);
 
   useEffect(() => {
     setRequestedData(productDetails);
@@ -234,19 +234,19 @@ export default function OneProduct() {
                 isLoading={isLoading}
               />
 
-              <div className="container-profile-input w-100  gap-16">
-                <p className="fs-24-semi"> Cover Image</p>
-                <DisplayOneImage
-                  handleImageClick={handleImageClick}
-                  image={requestedData?.coverImage}
-                />
-                <button
-                  className="btn-edit w-fit-content"
-                  onClick={() => handleShow("coverImgReadOnly")}
-                >
-                  <p className="cursor">Upload </p>
-                </button>
-              </div>
+              <CoverImage
+                handleImageClick={handleImageClick}
+                handleShow={handleShow}
+                coverImage={requestedData?.coverImage}
+                show={show}
+                handleClose={handleClose}
+                errorMsg={errorMsg}
+                setSelectedDocs={setSelectedDocs}
+                selectedDocs={selectedDocs}
+                setErrorMsg={setErrorMsg}
+                isLoading={isLoading}
+                updateMeida={updateMeida}
+              />
 
               <div className="container-profile-input w-100 gap-16 ">
                 <p className="fs-24-semi">Cover Video</p>
@@ -394,78 +394,6 @@ export default function OneProduct() {
       </Modal>
 
       {/* Cover Image */}
-      <Modal
-        show={show.coverImgReadOnly}
-        onHide={() => handleClose("coverImgReadOnly")}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-        className="factory-profile"
-      >
-        <Modal.Body closeButton>
-          {/* Account Info container 1 */}
-
-          <div className="container-profile-input w-100">
-            <div className="title-contianer-input w-100">
-              <Modal.Header closeButton>
-                <Modal.Title>
-                  <p>product cover Image</p>
-                </Modal.Title>
-              </Modal.Header>
-              {errorMsg?.response && (
-                <div className="alert mt-3 p-2 alert-danger form-control text-dark">
-                  {errorMsg?.response}
-                </div>
-              )}
-              <div className="w-100 ">
-                <form
-                  onSubmit={(e) => updateMeida(e, selectedDocs)}
-                  encType="multipart/form-data"
-                >
-                  <div className="row  row-gap">
-                    <UploadDocument
-                      selectedDocs={selectedDocs}
-                      errorMsg={errorMsg}
-                      setSelectedDocs={setSelectedDocs}
-                      MediaName="coverImage"
-                      mediaMaxLen="1"
-                      meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
-                      setErrorMsg={setErrorMsg}
-                      // title="Factory Banners"
-                    />
-
-                    <div className="col-12 d-flex justify-content-start btn-modal-gap">
-                      <button
-                        type="button"
-                        onClick={() => handleClose("coverImgReadOnly")}
-                        className="btn btn-secondary"
-                      >
-                        Close
-                      </button>
-                      {isLoading ? (
-                        <button type="button" className="btn-edit">
-                          <i className="fas fa-spinner fa-spin text-white px-5"></i>
-                        </button>
-                      ) : (
-                        <button
-                          className="btn-edit submitButton"
-                          type="submit"
-                          disabled={!(selectedDocs?.length > 0)}
-                        >
-                          <p className="cursor">Submit</p>
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </Modal.Body>
-      </Modal>
-
-
-      
     </>
   );
 }
