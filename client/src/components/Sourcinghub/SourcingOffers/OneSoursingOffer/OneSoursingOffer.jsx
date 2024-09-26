@@ -12,7 +12,7 @@ import { getMonthName as getDate } from "utils/getMonthName";
 import Loading from "components/Loading/Loading";
 import FactoryInfo from "components/Forms/Shared/FactoryInfo";
 import OfferInfo from "components/Shared/Dashboards/Forms/OfferInfo";
-import MediaPopUp from "components/Helpers/MediaPopUp/MediaPopUp";
+import MediaPopUp from "components/Shared/MediaPopUp/MediaPopUp";
 import ErrorToast from "components/ErrorToast";
 import useAuthFormChecks from "components/Forms/hooks/useAuthFormChecks";
 
