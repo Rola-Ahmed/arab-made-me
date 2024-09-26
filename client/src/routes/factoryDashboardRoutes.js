@@ -49,6 +49,7 @@ import ChatList from "components/Factorydashboard/subComponets/Chat/ChatList";
 import Conversation from "components/Factorydashboard/subComponets/Chat/Converstaion/Conversation";
 import NewConversation from "components/Factorydashboard/subComponets/Chat/NewConverstaion/NewConversation";
 import UnAuthPage from "components/UnAuthPage";
+import EditOffer from "components/Factorydashboard/subComponets/offers/editOffer/EditOffer";
 
 const factoryDashboardRoutes = [
   {
@@ -83,6 +84,7 @@ const factoryDashboardRoutes = [
       { path: "AllFactoryOffers", element: <AllOffers /> },
       { path: "mircoSite", element: <MircoSiteDash /> },
       { path: "editProduct/:productId", element: <EditProduct /> },
+      { path: "editOffer/:offerId", element: <EditOffer /> },
 
       {
         path: "factoryProfile/",

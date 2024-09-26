@@ -88,14 +88,17 @@ const useFormSubmission = (setErrorMsg, setIsLoading) => {
         shippingConditions == "other"
           ? shippingConditionsOther
           : shippingConditions,
-      packingConditions:
+      packingConditions://done
         packingConditions == "other"
           ? packingConditionsOther
           : packingConditions,
-      qualityConditions:
+      qualityConditions://done
         qualityConditions == "other"
           ? qualityConditionsOther
           : qualityConditions,
+
+         paymentType: //done
+        qualityConditions == "other" ? paymentTypeOther : paymentType,
     };
 
     let result = await addSourcingOffer({ authorization: isLogin }, data);

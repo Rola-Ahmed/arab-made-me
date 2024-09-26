@@ -62,6 +62,20 @@ export default function OneOffer() {
                       <p className="cursor">Edit Offer</p>
                     </button>
                   </div> */}
+
+              <div className="col-12 ">
+                <button
+                  className="defualt-btn main"
+                  type="button"
+                  onClick={() => {
+                    navigate(
+                      `/factorydashboard/editOffer/${requestedData?.id}?productName=${requestedData?.productName}`
+                    );
+                  }}
+                >
+                  Edit Product
+                </button>
+              </div>
             </div>
           </div>
         </div>

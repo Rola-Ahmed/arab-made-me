@@ -29,7 +29,7 @@ const useFormValidation = (apiDetails,submitForm,qualityConditionsArr,paymentTyp
   };
 
   useEffect(() => {
-    if (apiDetails && apiDetails.length !== 0) {
+    if (apiDetails && apiDetails?.length !== 0) {
       // quality
 
       const matchingItem = qualityConditionsArr?.find(

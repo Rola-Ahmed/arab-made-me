@@ -47,7 +47,6 @@ function SourcingOffers() {
     isLogin: false,
   });
 
-  console.log("modalShow", modalShow);
   async function fetchSourcingReqData() {
     // setapiLoadingData(true);
 

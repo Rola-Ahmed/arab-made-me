@@ -66,14 +66,12 @@ export default function AddOffer() {
     productName: requiredStringMax255,
     // country: Yup.array().of(Yup.string()).nullable(),
     country: Yup.array().of(Yup.string()).nullable(),
+    // preferredCountries: Yup.array().of(Yup.string()).nullable(),
 
     price: reqQualityValidate,
 
     //   HSN (Harmonized System of Nomenclature) code field i
-    productHSNCode: Yup.string()
-      .required("Input Field is Required")
-      .min(6, "Minimum  length is 6")
-      .max(15, "Maximum 15  is legnth"),
+    productHSNCode: requiredStringMax255,
 
     quantity: reqQualityValidate,
 
@@ -91,7 +89,7 @@ export default function AddOffer() {
     packingConditions: requiredStringValidate,
     packingConditionsOther: otherTextAreaValidate("packingConditions", "other"),
 
-    paymentType: Yup.string(),
+    paymentType: requiredStringValidate,
     paymentTypeOther: otherTextAreaValidate("paymentType", "other"),
   });
 
@@ -116,8 +114,8 @@ export default function AddOffer() {
 
       productId: "", //optional
       categoryId: "", //optioal
-      country: "",
-      preferredCountries: "",
+      country: [],
+      // preferredCountries: [],
     },
 
     validationSchema,
@@ -276,7 +274,7 @@ export default function AddOffer() {
 
               <div className="col-4">
                 <div className="form-group">
-                  <label forhtml="country">Select Countries</label>
+                  <label forhtml="country">Select preferred Countries</label>
 
                   {/*  */}
                   <button
