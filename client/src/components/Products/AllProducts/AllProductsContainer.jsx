@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 
 import AllProducts from "components/Products/AllProducts/AllProducts";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { getAllProducts } from "Services/products";
 
 export default function AllProductsContainer() {
   // variables
-  let { sectorID } = useParams();
 
   const [searchParams] = useSearchParams();
   const filterSearch = searchParams.get("filterSearch");
@@ -30,9 +29,7 @@ export default function AllProductsContainer() {
       if (filterBySector) {
         return filterBySector?.split(",")?.map(Number);
       }
-      if (sectorID?.slice("-")?.[0] !== undefined) {
-        return [sectorID?.slice("-")?.[0]];
-      }
+     
 
       return []; // Return the full phone if no match found
     })(),

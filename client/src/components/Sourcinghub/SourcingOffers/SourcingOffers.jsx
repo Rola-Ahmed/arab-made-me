@@ -1,6 +1,8 @@
 import { useEffect, useState, useContext } from "react";
 
 import Header from "components/main/Header/Header";
+import { useSearchParams } from "react-router-dom";
+
 import { useNavigate } from "react-router-dom";
 import PublicPaginate from "components/Shared/PublicPaginate";
 import { getSourcingOffers } from "Services/sourcingOffer";
@@ -15,11 +17,20 @@ import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/ImporterUnVerifiedPopUpMsg";
 import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
 import DefaultUserNotAuthorizedModal from "components/ActionMessages/FormAccessControl/DefaultUserNotAuthorizedModal";
+import { updateUrlParamString } from "utils/updateUrlParams";
 
+const filtersKeyword = {
+  byOffer: "searchOffer",
+  // byBuyerRequest: "searchBuyerRequest",
+};
 function SourcingOffers() {
   let navigate = useNavigate();
   let { currentUserData } = useContext(userDetails);
   let { isLogin } = useContext(UserToken);
+  const [searchParams] = useSearchParams();
+
+  const filterSearchOffer = searchParams.get("searchOffer");
+  // const filterSearchBuyerRequest = searchParams.get("filterSearchBuyerRequest");
 
   document.title = "Sourcing Hub";
   const [allSourcingReqData, setAllSourcingReqData] = useState([]);
@@ -36,6 +47,10 @@ function SourcingOffers() {
     currentPage: 1,
     totalPage: 1,
   }));
+  const [filter, setFilter] = useState({
+    [filtersKeyword.byOffer]: filterSearchOffer || "",
+    // [filtersKeyword.byBuyerRequest]: filterSearchBuyerRequest || "",
+  });
 
   const [modalShow, setModalShow] = useState({
     //  Indicates that the factory user is allowed and verified.
@@ -47,20 +62,22 @@ function SourcingOffers() {
     isLogin: false,
   });
 
-  async function fetchSourcingReqData() {
+  async function fetchSourcingReqData(params2) {
     // setapiLoadingData(true);
 
     let params = `size=${pagination?.displayProductSize}&page=${pagination?.currentPage}`;
+    if (params2) {
+      params += params2;
+    }
+
     let result = await getSourcingOffers(params);
+    console.log("params2",result,params2,filter)
 
     if (result?.success) {
       setAllSourcingReqData(result.data?.sourcingoffers);
       setPagination((prevValue) => ({
         ...prevValue,
-        totalPage: Math.ceil(
-          (result.data.sourcingoffers?.length || 1) /
-            prevValue.displayProductSize
-        ),
+        totalPage: result?.pagination?.totalPages,
       }));
     }
 
@@ -72,10 +89,11 @@ function SourcingOffers() {
       errorMsg: result?.error,
     }));
   }
+  console.log("params2 filter",filter)
 
   useEffect(() => {
-    fetchSourcingReqData();
-  }, [pagination?.currentPage]);
+    fetchSourcingReqData(`&sourcingFilter=${filter[filtersKeyword.byOffer]}`);
+  }, [pagination?.currentPage, filter]);
 
   const handleImporterAccessForms = (loginPath) => {
     HandleUsersBtnAccess({
@@ -89,6 +107,12 @@ function SourcingOffers() {
   };
 
   // utils function
+
+  function updateOtherFilters(value, keyword) {
+    setFilter((prev) => ({ ...prev, [keyword]: value }));
+
+    updateUrlParamString(keyword, value);
+  }
 
   return (
     <>
@@ -165,9 +189,40 @@ function SourcingOffers() {
           </li>
         </ul>
 
-        <div className="row pt-5">
+        <div
+          className="row 
+        "
+        >
+          <div className=" col-xxl-10 col-xl-10  col-lg-10  col-md-9  col-sm-9  col-9  ">
+            <input
+              type="text"
+              className="in h-25 overflow-hidden  w-100 rounded-3 border w-100"
+              placeholder="Search here product name"
+              defaultValue={filter[filtersKeyword.byOffer]}
+              id="searchTermSecotr"
+              name="searchTermSecotr"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  updateOtherFilters(e.target.value, [filtersKeyword.byOffer]);
+                }
+              }}
+            />
+          </div>
+          <div className=" col-xxl-2 col-xl-2 col-lg-2 col-md-3 col-sm-3 col-3 ">
+            <button
+              type="button"
+              className="filt-btn h-25 rounded-3 border-0 bg-main  text-white w-100 fs-16-semi  m-auto"
+              onClick={(_e) => {
+                let value = document?.getElementById("searchTermSecotr")?.value;
+
+                updateOtherFilters(value, [filtersKeyword.byOffer]);
+              }}
+            >
+              Search
+            </button>
+          </div>
           <div className="col-12">
-            <div className="border-container-2">
+            <div className="border-container-2 ">
               <SourcingOfferTable
                 allSourcingReqData={allSourcingReqData}
                 assessFormOPAuth={handleImporterAccessForms}

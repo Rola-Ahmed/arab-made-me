@@ -4,11 +4,18 @@ import { useState } from "react";
 import { logo } from "constants/Images";
 import { useAppTranslation } from "config.js";
 
+const searchType = {
+  byProduct: "translation:marketPlace",
+  byOffer: "translation:titles.factoryOffers",
+  byFactory: "translation:factoryGallery",
+  byBuyerRequest: "translation:titles.buyerRequests",
+};
 function Hero() {
   let navigate = useNavigate();
   const { trans: t, currentLang } = useAppTranslation();
-  let [dropdownValue, setDropdownValue] = useState(t("translation:product"));
+  let [dropdownValue, setDropdownValue] = useState(t(`${searchType?.byProduct}`));
 
+  console.log("dropdownValue",dropdownValue)
   const [searchTermSecotr, setsearchTermSecotr] = useState("");
 
   function filterSearchIcon(value) {
@@ -16,9 +23,16 @@ function Hero() {
       return;
     }
 
-    if (dropdownValue.toLowerCase() == "product") {
+  console.log("dropdownValue t(`${searchType?.byProduct}`)",dropdownValue,t(`${searchType?.byProduct}`))
+
+    if (dropdownValue == t(`${searchType?.byProduct}`)) {
       navigate(`productMarketPlace?filterSearch=${value}`);
-    } else {
+    }
+    if (dropdownValue == t(`${searchType?.byOffer}`)) {
+      navigate(`sourcinghub/sourcingOffers?searchOffer=${value}`);
+
+    }
+     else {
       navigate(`factoryGallery?filterSearch=${value}`, {
         state: {
           filterBy: value,
@@ -65,22 +79,17 @@ function Hero() {
                     {/* {Dropdown} */}
                   </button>
                   <ul className="dropdown-menu">
-                    <li
-                      className={`cursor dropdown-item hover-drop ${
-                        currentLang == "ar" && "ar-text-left fs-18"
-                      }`}
-                      onClick={() => setDropdownValue(t("translation:factory"))}
-                    >
-                      {t("translation:factory")}
-                    </li>
-                    <li
-                      className={`cursor dropdown-item hover-drop ${
-                        currentLang == "ar" && "ar-text-left fs-18"
-                      }`}
-                      onClick={() => setDropdownValue(t("translation:product"))}
-                    >
-                      {t("translation:product")}
-                    </li>
+                    {Object.entries(searchType).map(([key, value]) => (
+                      <li
+                        key={key}
+                        className={`cursor dropdown-item hover-drop ${
+                          currentLang == "ar" && "ar-text-left fs-18"
+                        }`}
+                        onClick={() => setDropdownValue(t(`${value}`))}
+                      >
+                        {t(`${value}`)}
+                      </li>
+                    ))}
                   </ul>
                   <input
                     type="text"
