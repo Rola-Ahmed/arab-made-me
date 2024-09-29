@@ -1,9 +1,8 @@
 import { useEffect, useState, useContext } from "react";
 
 import Header from "components/main/Header/Header";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams,useNavigate } from "react-router-dom";
 
-import { useNavigate } from "react-router-dom";
 import PublicPaginate from "components/Shared/PublicPaginate";
 import { getSourcingOffers } from "Services/sourcingOffer";
 import SourcingOfferTable from "./SourcingOfferTable";
@@ -71,7 +70,7 @@ function SourcingOffers() {
     }
 
     let result = await getSourcingOffers(params);
-    console.log("params2",result,params2,filter)
+    // console.log("params2",result,params2,filter)
 
     if (result?.success) {
       setAllSourcingReqData(result.data?.sourcingoffers);

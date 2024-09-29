@@ -13,9 +13,11 @@ const searchType = {
 function Hero() {
   let navigate = useNavigate();
   const { trans: t, currentLang } = useAppTranslation();
-  let [dropdownValue, setDropdownValue] = useState(t(`${searchType?.byProduct}`));
+  let [dropdownValue, setDropdownValue] = useState(
+    t(`${searchType?.byProduct}`)
+  );
 
-  console.log("dropdownValue",dropdownValue)
+  console.log("dropdownValue", dropdownValue);
   const [searchTermSecotr, setsearchTermSecotr] = useState("");
 
   function filterSearchIcon(value) {
@@ -23,16 +25,15 @@ function Hero() {
       return;
     }
 
-  console.log("dropdownValue t(`${searchType?.byProduct}`)",dropdownValue,t(`${searchType?.byProduct}`))
+   
 
     if (dropdownValue == t(`${searchType?.byProduct}`)) {
       navigate(`productMarketPlace?filterSearch=${value}`);
-    }
-    if (dropdownValue == t(`${searchType?.byOffer}`)) {
+    } else if (dropdownValue == t(`${searchType?.byOffer}`)) {
       navigate(`sourcinghub/sourcingOffers?searchOffer=${value}`);
-
-    }
-     else {
+    } else if (dropdownValue == t(`${searchType?.byBuyerRequest}`)) {
+      navigate(`sourcinghub/sourcingRequests?searchBuyerRequest=${value}`);
+    } else {
       navigate(`factoryGallery?filterSearch=${value}`, {
         state: {
           filterBy: value,

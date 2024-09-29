@@ -4,7 +4,7 @@ import Header from "components/main/Header/Header";
 import { userDetails } from "Context/userType";
 import "../source.css";
 import { UserToken } from "Context/userToken";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import IsLoggedIn from "components/ActionMessages/IsLoggedInMsg";
 import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
 import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/FactoryUnVerifiedPopUpMsg";
@@ -14,15 +14,28 @@ import { getSourcingReuqests } from "Services/sourcingReuqest";
 import Loading from "components/Loading/Loading";
 import { accessFormSourcingRequest } from "utils/actionBtns/HandleUsersBtnAccess";
 import DefaultUserNotAuthorizedModal from "components/ActionMessages/FormAccessControl/DefaultUserNotAuthorizedModal";
+import { updateUrlParamString } from "utils/updateUrlParams";
+import { useAppTranslation } from "config";
+
+const filtersKeyword = {
+  byBuyerRequest: "searchBuyerRequest",
+};
 
 function Sourcinghub() {
   document.title = "Sourcing Hub";
+  const [searchParams] = useSearchParams();
+
   let { currentUserData } = useContext(userDetails);
+  const filterSearchBuyerRequest = searchParams.get("searchBuyerRequest");
+  const { trans: t } = useAppTranslation();
+
   let { isLogin } = useContext(UserToken);
   let navigate = useNavigate();
 
   const [reqData, setReqData] = useState([]);
-
+  const [filter, setFilter] = useState({
+    [filtersKeyword.byBuyerRequest]: filterSearchBuyerRequest || "",
+  });
   const [isLoggedReDirect, setisLoggedReDirect] = useState("");
   const [modalShow, setModalShow] = useState({
     //  Indicates that the factory user is allowed and verified.
@@ -45,10 +58,12 @@ function Sourcinghub() {
     totalPage: 1,
   }));
 
-  async function fetchSourcingReqData() {
-    let result = await getSourcingReuqests(
-      `size=${pagination?.displayProductSize}&page=${pagination?.currentPage}&include=importer`
-    );
+  async function fetchSourcingReqData(params2) {
+    let params = `size=${pagination?.displayProductSize}&page=${pagination?.currentPage}&include=importer`;
+    if (params2) {
+      params += params2;
+    }
+    let result = await getSourcingReuqests(params);
 
     if (result?.success) {
       setReqData(result.data?.sourcingrequests);
@@ -67,10 +82,11 @@ function Sourcinghub() {
       errorMsg: result?.error,
     });
   }
-  console.log("apiLoadingData?.laoding", apiLoadingData?.laoding);
   useEffect(() => {
-    fetchSourcingReqData();
-  }, [pagination?.currentPage]);
+    fetchSourcingReqData(
+      `&sourcingFilter=${filter[filtersKeyword.byBuyerRequest]}`
+    );
+  }, [pagination?.currentPage, filter]);
 
   const handleFactoryAccessForm = (directto) => {
     accessFormSourcingRequest({
@@ -82,6 +98,13 @@ function Sourcinghub() {
       directto,
     });
   };
+
+  function updateOtherFilters(value, keyword) {
+    setFilter((prev) => ({ ...prev, [keyword]: value }));
+
+    updateUrlParamString(keyword, value);
+  }
+
   return (
     <>
       <IsLoggedIn
@@ -155,12 +178,6 @@ function Sourcinghub() {
           </li>
         </ul>
 
-        {apiLoadingData?.laoding == false && reqData?.length == 0 && (
-          <p className="fs-15 text-muted fw-bolder text-5 mt-5 pt-5 mx-auto w-fit-content">
-            No Record
-          </p>
-        )}
-
         {reqData?.length == 0 && apiLoadingData?.laoding == true ? (
           <>
             {apiLoadingData?.errorMsg ? (
@@ -176,6 +193,38 @@ function Sourcinghub() {
         ) : (
           <div className="tab-content mt-5" id="pills-tabContent">
             <div className=" row">
+              <div className=" col-xxl-10 col-xl-10  col-lg-10  col-md-9  col-sm-9  col-9  ">
+                <input
+                  type="text"
+                  className="in h-25 overflow-hidden  w-100 rounded-3 border w-100"
+                  placeholder="Search here product name"
+                  defaultValue={filter[filtersKeyword.byBuyerRequest]}
+                  id="searchTermSecotr"
+                  name="searchTermSecotr"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      updateOtherFilters(e.target.value, [
+                        filtersKeyword.byBuyerRequest,
+                      ]);
+                    }
+                  }}
+                />
+              </div>
+              <div className=" col-xxl-2 col-xl-2 col-lg-2 col-md-3 col-sm-3 col-3 ">
+                <button
+                  type="button"
+                  className="filt-btn h-25 rounded-3 border-0 bg-main  text-white w-100 fs-16-semi  m-auto"
+                  onClick={(_e) => {
+                    let value = document?.getElementById("searchTermSecotr")
+                      ?.value;
+
+                    updateOtherFilters(value, [filtersKeyword.byBuyerRequest]);
+                  }}
+                >
+                  Search
+                </button>
+              </div>
+
               {reqData?.map((item) => (
                 <div className="col-lg-4 sour-card gy-4">
                   <SourcingRequestCard
@@ -186,6 +235,15 @@ function Sourcinghub() {
                 </div>
               ))}
             </div>
+          </div>
+        )}
+
+        {apiLoadingData?.laoding == false && reqData?.length == 0 && (
+          <div>
+            <p dangerouslySetInnerHTML={{ __html: t('translation:searchResult.noItemsMessage') }} className="fs-15 text-muted text-center fw-bolder text-5 mt-5 pt-5 mx-auto w-fit-content" />
+              {/* {t("translation:searchResult.noItemsMessage")} */}
+            {/* </p> */}
+            
           </div>
         )}
 

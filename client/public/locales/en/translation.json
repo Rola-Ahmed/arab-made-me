@@ -62,5 +62,12 @@
       "Only pdf, png, jpeg, and jpg are allowed. A maximum of 3 pictures is permitted.": "Only pdf, png, jpeg, and jpg are allowed. A maximum of 3 pictures is permitted."
     }
   ],
-  "comingSoon": "Coming Soon"
+  "comingSoon": "Coming Soon",
+  "searchResult":{
+   
+      "noItemsMessage": "Coming soon! No items found. Please check back later.<br />Stay tuned to check the latest updates."
+    
+    
+  }
+
 }
