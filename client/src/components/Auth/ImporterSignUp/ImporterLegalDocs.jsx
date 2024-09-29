@@ -85,7 +85,7 @@ function ImporterRepDetails() {
       data
     );
 
-    // console.log("resultresult", result);
+    
 
     if (result?.success) {
       navigate(`/importerdashboard`);

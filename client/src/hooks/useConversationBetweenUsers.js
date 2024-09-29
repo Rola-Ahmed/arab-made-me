@@ -101,21 +101,21 @@ const useConversationBetweenUsers = () => {
 
   
       const handleNewMessage = (data) => {
-        console.log("Received newMessage:", data);
+        // console.log("Received newMessage:", data);
         
         fetchReqData();
       };
   
       const handleSocketAuth = (data) => {
-        console.log("Received socketAuth:", data);
+        // console.log("Received socketAuth:", data);
       };
   
       const handleError = (err) => {
-        console.error("Socket error:", err);
+        // console.error("Socket error:", err);
       };
   
       socket.on("connect", () => {
-        console.log("Connected to server", socket?.id);
+        // console.log("Connected to server", socket?.id);
   
         socket.on("newMessage", handleNewMessage);
         socket.on("socketAuth", handleSocketAuth);

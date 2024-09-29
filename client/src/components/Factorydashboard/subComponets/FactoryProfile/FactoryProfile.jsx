@@ -50,33 +50,7 @@ export default function FactoryProfile() {
     addLegalDocs: "addLegalDocs",
   };
 
-  async function updateMedia(e) {
-    setIsLoading(true);
-    e.preventDefault();
-    const data = new FormData();
-    selectedDocs?.map((item) => data.append(item.keyWord, item.pdfFile));
-
-    let result = await addFactoryMedia({ Authorization: isLogin }, data);
-    if (result?.success) {
-      setFactoryProfile((prev) => ({
-        ...prev,
-        legalDocs: result?.data?.factory?.legalDocs,
-      }));
-      updateCurrentUser(result?.data?.factory);
-      SuccessToast("data updated succcfully");
-
-      handleClose();
-    } else {
-      setErrorMsg((prevErrors) => ({
-        ...prevErrors,
-        response: result?.error,
-      }));
-    }
-    setIsLoading(false);
-    setTimeout(() => {
-      document.body.style.cursor = "default";
-    }, 5000); // 5000 milliseconds = 5 seconds
-  }
+ 
 
   async function handleSingleFileUpload(fileKeyword, fileValue, index) {
     const formData = new FormData();
@@ -88,16 +62,7 @@ export default function FactoryProfile() {
   async function handleAddLegalDocs(e) {
     // document.body.style.cursor = "wait";
 
-    if (
-      factoryProfile?.legalDocs == null ||
-      (Array.isArray(factoryProfile?.legalDocs) &&
-        factoryProfile?.legalDocs?.length == 0)
-    ) {
-      console.log("entred condition 1");
-      await updateMedia(e);
-      return;
-    }
-    console.log("entred condition 2");
+   
 
     e.preventDefault();
     let data = await handleSingleFileUpload(

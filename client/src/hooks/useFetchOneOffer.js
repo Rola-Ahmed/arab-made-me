@@ -9,7 +9,6 @@ export const useFetchOneOffer = (productId) => {
   useEffect(() => {
     const fetchData = async (id, params) => {
       const result = await getOneSourcingOffer(id, params);
-      console.log("data", result);
 
       if (result?.success) {
         setData(result?.data?.sourcingoffers);

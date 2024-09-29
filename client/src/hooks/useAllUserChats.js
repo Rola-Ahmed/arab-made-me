@@ -143,44 +143,44 @@ const useAllUserChats = (isLogin) => {
 
   useEffect(() => {
     if (isLogin) {
-      console.log("isLogin",isLogin)
+      // console.log("isLogin",isLogin)
       const connectSocket = () => {
         // socket.connect();
 
         socket.on("connect", () => {
-          console.log("Connected to server");
+          // console.log("Connected to server");
         });
 
         socket.on("newMessage", (data) => {
-          console.log(" newMessage data",data)
+          // console.log(" newMessage data",data)
           fetchReqData();
         });
 
         socket.on("socketAuth", (data) => {
-          console.log("socketAuth data",data)
+          // console.log("socketAuth data",data)
         });
 
         socket.on("connect_error", (err) => {
-          console.log(err);
+          // console.log(err);
         });
 
         socket.on("connect_timeout", (err) => {
-          console.log(err);
+          // console.log(err);
 
         });
 
         socket.on("error", (err) => {
-          console.log(err);
+          // console.log(err);
 
         });
 
         socket.on("reconnect_error", (err) => {
-          console.log(err);
+          // console.log(err);
 
         });
 
         socket.on("reconnect_failed", (err) => {
-          console.log(err);
+          // console.log(err);
 
         });
 

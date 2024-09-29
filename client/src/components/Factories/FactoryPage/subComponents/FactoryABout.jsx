@@ -1,7 +1,6 @@
 import React from "react";
 
 export default function FactoryABout({ factoryDetails, allSectors }) {
-  console.log("factoryDetails",factoryDetails)
   return (
     <>
       {" "}

@@ -20,7 +20,6 @@ import { useOneRfq } from "./useOneRfq";
 export default function OneRfq() {
   let navigate = useNavigate();
   let { isLogin, requestedData, apiLoadingData } = useOneRfq();
-  console.log("requestedData", requestedData);
   const [showImagePop, setShowImagePop] = useState({
     display: false,
     imagePath: "",

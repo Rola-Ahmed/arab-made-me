@@ -17,7 +17,6 @@ function Hero() {
     t(`${searchType?.byProduct}`)
   );
 
-  console.log("dropdownValue", dropdownValue);
   const [searchTermSecotr, setsearchTermSecotr] = useState("");
 
   function filterSearchIcon(value) {

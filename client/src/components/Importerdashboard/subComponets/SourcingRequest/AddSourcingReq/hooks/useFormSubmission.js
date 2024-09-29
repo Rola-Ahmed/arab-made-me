@@ -105,7 +105,6 @@ const useFormSubmission = (setErrorMsg, setIsLoading) => {
 
     let result = await addSourcingRequest({ authorization: isLogin }, data);
 
-    console.log("result addSourcingOffer", result);
     if (result?.success) {
       setIsLoading(true);
 

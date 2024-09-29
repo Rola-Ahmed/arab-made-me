@@ -66,7 +66,6 @@ export default function TopFactories() {
     // Ensure value is the correct type (e.g., number)
     const numericValue = Number(value);
     const index = sectorArr.indexOf(numericValue);
-    console.log("sectorArr defualt", sectorArr);
 
     if (index > -1) {
       sectorArr.splice(index, 1);

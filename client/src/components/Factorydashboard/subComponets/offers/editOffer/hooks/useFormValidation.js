@@ -14,7 +14,6 @@ import {
 import { useEffect } from "react";
 
 export const useFormValidation = (productDetails, submitForm) => {
-  console.log("productDetailsproductDetails",productDetails)
   let initialValues = {
     productName: productDetails?.productName || "",
     price: productDetails?.price || "",
@@ -152,7 +151,6 @@ export const useFormValidation = (productDetails, submitForm) => {
     }
   }, [productDetails]);
 
-  console.log("formValidation", formValidation);
   return {
     formValidation,
     initialValues,

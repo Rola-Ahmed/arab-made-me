@@ -164,7 +164,7 @@ export default function ImporterRepDetails() {
     );
 
     if (result?.success) {
-      console.log("result", result);
+      
       let { path } = determinePathAndData(result?.data?.importer);
 
       navigate("/buyerRegistration/LegalDocuments");

@@ -25,6 +25,12 @@ function SourcingRequest(props) {
             }}
             className="fs-15 text-muted fw-bolder  mt-5 pt-3 mx-auto w-fit-content text-center"
           />
+          <p
+            className="fs-15 text-muted fw-bolder  mt-5 pt-3 mx-auto w-fit-content text-center"
+            >
+               { t("translation:searchResult.noItemsMessage") }
+            </p>
+
         </div>
       )}
       <Swiper
