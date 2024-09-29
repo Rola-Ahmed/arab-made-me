@@ -1,0 +1,70 @@
+{
+  "home": "الرئيسية",
+  "marketPlace": "المنتجات",
+  "allProducts": "المنتجات",
+  "factoryGallery": "المصانع",
+  "aboutUs": "من نحن",
+  "contactUs": "اتصل بنا",
+  "LogOut": "تسجيل الخروج",
+  "logIn": "ت سجيل الدخول",
+  "register": "تسجيل",
+  "becomeAFactory": "كن مصنعًا",
+  "BecomeABuyer": "كن مشتريًا",
+  "send": "إرسال",
+  "selectYourRole": "اختر دورك",
+  "companyMicrositeDetails": "تفاصيل الموقع المصغر للشركة",
+  "representiveInformation": "معلومات الممثل",
+  "country": "الدولة",
+  "city": "المدينة",
+  "sector": "القطاع",
+  "email": "البريد الإلكتروني",
+  "forgotPassword": "نسيت كلمة المرور",
+  "don'tHaveAnAccount?": "ليس لديك حساب؟",
+  "createNew": "إنشاء حساب جديد",
+  "buyer": "مشتري",
+  "factory": "مصنع",
+  "factories": "المصانع",
+  "product": "منتج",
+  "products": "منتجات",
+  "moreDetails": "مزيد من التفاصيل",
+  "search": "بحث",
+  "alreadyHaveanAccount": "لديك حساب بالفعل؟",
+  "submit": "إرسال",
+  "countinue": "متابعة",
+  "certificates": "الشهادات",
+  "exit": "خروج",
+  "empty": "فارغ",
+  "requestDetails": "طلب التفاصيل",
+  "documents": "الوثائق",
+
+  "titles": {
+    "hero": {
+      "title1": "المنصة الرائدة لربط المصانع العربية بخدمات التصدير الرقمي",
+      "title": "التحول الرقمي الكامل لعمليات التصدير والاستيراد من المصانع العربية",
+      "subTitle": " نوفر ادوات رفميه مبتكره للتصدير لزيادة قاعليه جذب المشتراين"
+    },
+
+    "factoryOffers": "العروض",
+    "SourcingHub": "العروض والطلبات",
+    "buyerRequests": "الطلبات",
+    "manufacturingSectors": "القطاعات الصناعية",
+    "address": "العنوان",
+
+    "subTitleProduct": "اعثر على المنتج المثالي لاحتياجاتك",
+    "subTitleFactories": "دفع التميز في التصنيع: شريكك الموثوق في الإنتاج",
+    "manufacturingSectorsSubtitle": "استكشف جميع القطاعات التي نقدمها لك."
+  },
+  "texts": [
+    {
+      "UserDescription": "مرحبًا بكم في أسرع منصة B2B نموًا في مصر، تربط بين المشترين والموردين في صناعة السلع الاستهلاكية. يرجى اختيار نوع الحساب المفضل لديك للبدء.",
+      "Enter your email and we'll send you a link to reset your password": "أدخل بريدك الإلكتروني وسنرسل لك رابطًا لإعادة تعيين كلمة المرور.",
+      "BackToLogin": "العودة إلى تسجيل الدخول",
+      "Only pdf, png, jpeg, and jpg are allowed. A maximum of 3 pictures is permitted.": "يسمح فقط بملفات pdf وpng وjpeg وjpg. يُسمح بحد أقصى 3 صور."
+    }
+  ],
+
+  "comingSoon": "قريباً",
+  "searchResult": {
+    "noItemsMessage": "قريباً! لم يتم العثور على أي عناصر. يرجى التحقق مرة أخرى لاحقًا.<br />ترقبوا لمعرفة أحدث التحديثات."
+   }
+}
