@@ -36,7 +36,7 @@ import RfqRequestFacEtc from "components/Factorydashboard/subComponets/RfqFactor
 
 // factory only
 import ProductsFacEtc from "components/Factorydashboard/subComponets/Products/OneProduct/OneProduct";
-import OffersFacEtc from "components/Factorydashboard/subComponets/offers/OneOffer/OneOffer";
+import OffersFacEtc from "components/Factorydashboard/subComponets/offers/OneOffer/hooks/OneOffer";
 
 // Quote data Container
 import ViewQuotations from "components/Factorydashboard/subComponets/Quotations/AllQuotes/AllQuotes";
