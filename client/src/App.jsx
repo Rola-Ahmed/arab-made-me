@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import Home from "components/Home/home";
 import Loading from "components/Loading/Loading";
-import Factories from "components/Factories/AllFactories/FetchFactories";
+import Factories from "components/Factories/AllFactories/Factories";
 import AboutUs from "components/About-us/AboutUs";
 import Sourcinghub from "components/Sourcinghub/SourcingRequest/SourcingRequest";
 import Errorpage from "components/Errorpage";
@@ -14,13 +14,11 @@ import Errorpage from "components/Errorpage";
 // contact for arab-made itself
 import ContactArabMade from "components/Contact/Contact";
 
-
 // forms
 // OutSide Formsclean
 
 // forms
 import Contactsupplier from "components/Forms/Contactsupplier/Contactsupplier";
-
 
 // more details form
 
@@ -40,10 +38,8 @@ import factoryDashboardRoutes from "routes/factoryDashboardRoutes";
 import authRoutes from "routes/authRoutes";
 import formRoutes from "routes/FormRoutes";
 
-
-
 import UnAuthPage from "components/UnAuthPage";
-import FetchFactories from "components/Factories/AllFactories/FetchFactories";
+import FetchFactories from "components/Factories/AllFactories/Factories";
 
 const router = createBrowserRouter([
   {
@@ -60,7 +56,7 @@ const router = createBrowserRouter([
         element: <Factories />,
       },
       {
-        path: "productMarketPlace/:sectorID?",
+        path: "productMarketPlace",
         element: <AllProducts />,
       },
 
@@ -85,7 +81,6 @@ const router = createBrowserRouter([
         element: <Factorypage />,
       },
 
-      
       {
         // `contactsupplier?userId=${factoryDetails?.id}&importerName=${factoryDetails?.name}`,
         path: "/contactsupplier",
@@ -104,8 +99,6 @@ const router = createBrowserRouter([
 
       // formssssssssssssssssssssssssssssssss
 
-
-
       ...authRoutes,
       ...formRoutes,
     ],
@@ -113,17 +106,12 @@ const router = createBrowserRouter([
 
   // ---------------------------FORMS---------------
 
-  
-
   {
     path: "/fetchFactory",
     element: <FetchFactories />,
   },
- 
 
   // view More Details Home page
- 
- 
 
   {
     path: "loading",
@@ -146,10 +134,12 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <Suspense fallback={<div></div>}>
+    <>
+      <Suspense fallback={<div></div>}>
       <ToastContainer />
       <RouterProvider router={router} />
-    </Suspense>
+      </Suspense>
+    </>
   );
 }
 
