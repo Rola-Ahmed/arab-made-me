@@ -76,7 +76,7 @@ export default function AllProductsContainer() {
       if (response2?.success) {
         setPagination((prevValue) => ({
           ...prevValue,
-          totalPage: response2?.data?.pagination,
+          totalPage: response2?.data?.pagination?.totalPage,
         }));
 
         setAllProductsData(response2?.data?.products);

@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
+import { useAppTranslation } from "config";
 
 function SourcingRequest(props) {
   let {
@@ -12,18 +13,18 @@ function SourcingRequest(props) {
     datacompletelyLoaded,
     apiStatus,
   } = props;
-  console.log(
-    "allSourcingOffer?.length",
-    allSourcingReqData?.length,
-    apiStatus
-  );
+  const { trans: t } = useAppTranslation();
+
   return (
     <div className="row pt-3 w-100  m-0 ">
       {allSourcingReqData?.length == 0 && !apiStatus?.laoding && (
         <div className="">
-          <p className="fs-15 text-muted fw-bolder  mt-5 pt-3 mx-auto w-fit-content">
-            No records
-          </p>
+          <p
+            dangerouslySetInnerHTML={{
+              __html: t("translation:searchResult.noItemsMessage"),
+            }}
+            className="fs-15 text-muted fw-bolder  mt-5 pt-3 mx-auto w-fit-content text-center"
+          />
         </div>
       )}
       <Swiper

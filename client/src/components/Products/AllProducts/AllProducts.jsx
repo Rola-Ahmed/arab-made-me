@@ -13,6 +13,7 @@ import SearchSortFilter from "./SearchSortFilter";
 import ProductCard from "./ProductCard";
 import PublicPaginate from "components/Shared/PublicPaginate";
 import DefaultUserNotAuthorizedModal from "components/ActionMessages/FormAccessControl/DefaultUserNotAuthorizedModal";
+import { useAppTranslation } from "config";
 
 function AllProducts(props) {
   let {
@@ -29,6 +30,7 @@ function AllProducts(props) {
     headerTitle,
   } = props;
   document.title = "Product Marketplace";
+  const { trans: t } = useAppTranslation();
 
   return (
     <>
@@ -108,7 +110,15 @@ function AllProducts(props) {
                     {allProductsData?.length == 0 && (
                       <>
                         <span></span>
-                        <p className="h3 py-5 text-center ">No records</p>
+
+                        <p
+                          dangerouslySetInnerHTML={{
+                            __html: t(
+                              "translation:searchResult.noItemsMessage"
+                            ),
+                          }}
+                          className="f-15 py-5 text-center"
+                        />
                         <span></span>
                       </>
                     )}

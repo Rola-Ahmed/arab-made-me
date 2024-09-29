@@ -53,9 +53,14 @@ export default function SourcingOffers({
 
         {allSourcingOffer?.length == 0 && !apiStatus?.laoding && (
           <div className="position-absolute error-float">
-            <p className="fs-15 text-muted fw-bolder  mt-5 pt-3 mx-auto w-fit-content">
-              No records
-            </p>
+           
+
+            <p
+              dangerouslySetInnerHTML={{
+                __html: t("translation:searchResult.noItemsMessage"),
+              }}
+              className="fs-15 text-muted fw-bolder  mt-5 pt-3 mx-auto w-fit-content text-center"
+            />
           </div>
         )}
       </div>
