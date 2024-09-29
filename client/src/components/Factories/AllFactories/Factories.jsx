@@ -303,10 +303,12 @@ export default function TopFactories() {
                   {allFactoriesData?.length === 0 ? (
                     <>
                       <span></span>{" "}
-                      <p className="h3 text-center m-auto">
-                        {" "}
-                        No records Found{" "}
-                      </p>
+                      <p
+                        dangerouslySetInnerHTML={{
+                          __html: t("translation:searchResult.noItemsMessage"),
+                        }}
+                        className="fs-15 text-center m-auto"
+                      />
                       <span></span>
                     </>
                   ) : (

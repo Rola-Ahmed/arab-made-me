@@ -17,6 +17,7 @@ import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/Imp
 import UserNotAuthorized from "components/ActionMessages/FormAccessControl/PopupMsgNotUserAuthorized";
 import DefaultUserNotAuthorizedModal from "components/ActionMessages/FormAccessControl/DefaultUserNotAuthorizedModal";
 import { updateUrlParamString } from "utils/updateUrlParams";
+import { useAppTranslation } from "config";
 
 const filtersKeyword = {
   byOffer: "searchOffer",
@@ -27,6 +28,8 @@ function SourcingOffers() {
   let { currentUserData } = useContext(userDetails);
   let { isLogin } = useContext(UserToken);
   const [searchParams] = useSearchParams();
+  const { trans: t } = useAppTranslation();
+
 
   const filterSearchOffer = searchParams.get("searchOffer");
   // const filterSearchBuyerRequest = searchParams.get("filterSearchBuyerRequest");
@@ -242,9 +245,9 @@ function SourcingOffers() {
               )}
               {allSourcingReqData?.length == 0 && !apiLoadingData?.laoding && (
                 <div className="d-flex justify-content-center py-5">
-                  <p className="fs-15 text-muted fw-bolder text-5 mb-5 pt-3 mx-auto">
-                    No Records Found
-                  </p>
+                  
+            <p dangerouslySetInnerHTML={{ __html: t('translation:searchResult.noItemsMessage') }} className="fs-15 text-muted fw-bolder text-5 mb-5 pt-3 mx-auto text-center" />
+
                 </div>
               )}
             </div>

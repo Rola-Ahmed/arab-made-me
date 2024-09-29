@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 import axios from "axios";
-import { baseUrl } from "config.js";
+import { baseUrl, useAppTranslation } from "config.js";
 
 import { useNavigate, useSearchParams } from "react-router-dom";
 
@@ -19,6 +19,7 @@ import useAuthFormChecks from "components/Forms/hooks/useAuthFormChecks";
 function OneSoursingOffer() {
   let navigate = useNavigate();
   let currentUrl = window.location.pathname;
+  const { trans: t } = useAppTranslation();
 
   // utils function
   let getMonthName = getDate;
@@ -141,9 +142,10 @@ function OneSoursingOffer() {
       {isLoading?.loading && (
         <>
           {isLoading?.errorMsg ? (
-            <p className="fs-5 text-muted fw-bolder text-5 my-5 py-5 mx-auto">
-              {isLoading?.errorMsg || "No records Found"}
-            </p>
+            <p dangerouslySetInnerHTML={{
+              __html: isLoading?.errorMsg || t('translation:searchResult.noItemsMessage')
+            }} className="fs-5 text-muted fw-bolder text-5 my-5 py-5 mx-auto text-center"/>
+
           ) : (
             <div className=" d-flex justify-content-center py-5">
               <Loading title="Sourcing Offer Details" />
