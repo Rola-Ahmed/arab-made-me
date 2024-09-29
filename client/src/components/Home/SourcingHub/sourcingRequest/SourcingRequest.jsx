@@ -19,18 +19,11 @@ function SourcingRequest(props) {
     <div className="row pt-3 w-100  m-0 ">
       {allSourcingReqData?.length == 0 && !apiStatus?.laoding && (
         <div className="">
-          <p
-            dangerouslySetInnerHTML={{
-              __html: t("translation:searchResult.noItemsMessage"),
-            }}
-            className="fs-15 text-muted fw-bolder  mt-5 pt-3 mx-auto w-fit-content text-center"
-          />
-          <p
-            className="fs-15 text-muted fw-bolder  mt-5 pt-3 mx-auto w-fit-content text-center"
-            >
-               { t("translation:searchResult.noItemsMessage") }
-            </p>
-
+          <p className="fs-15 text-muted fw-bolder  mt-5 pt-3 mx-auto w-fit-content text-center">
+            {t("translation:searchResult.noItemsMessage1")}
+            <br />
+            {t("translation:searchResult.noItemsMessage2")}
+          </p>
         </div>
       )}
       <Swiper

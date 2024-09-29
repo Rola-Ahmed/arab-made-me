@@ -10,7 +10,6 @@ export default function SourcingOffers({
 }) {
   const { trans: t, currentLang } = useAppTranslation();
 
-
   return (
     <>
       {/* home page */}
@@ -53,14 +52,11 @@ export default function SourcingOffers({
 
         {allSourcingOffer?.length == 0 && !apiStatus?.laoding && (
           <div className="position-absolute error-float">
-           
-
-            <p
-              dangerouslySetInnerHTML={{
-                __html: t("translation:searchResult.noItemsMessage"),
-              }}
-              className="fs-15 text-muted fw-bolder  mt-5 pt-3 mx-auto w-fit-content text-center"
-            />
+            <p className="fs-15 text-muted fw-bolder  mt-5 pt-3 mx-auto w-fit-content text-center">
+              {t("translation:searchResult.noItemsMessage1")}
+              <br />
+              {t("translation:searchResult.noItemsMessage2")}
+            </p>{" "}
           </div>
         )}
       </div>

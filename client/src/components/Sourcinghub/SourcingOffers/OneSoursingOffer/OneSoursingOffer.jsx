@@ -142,10 +142,11 @@ function OneSoursingOffer() {
       {isLoading?.loading && (
         <>
           {isLoading?.errorMsg ? (
-            <p dangerouslySetInnerHTML={{
-              __html: isLoading?.errorMsg || t('translation:searchResult.noItemsMessage')
-            }} className="fs-5 text-muted fw-bolder text-5 my-5 py-5 mx-auto text-center"/>
-
+            <p className="fs-5 text-muted fw-bolder text-5 my-5 py-5 mx-auto text-center">
+              {t("translation:searchResult.noItemsMessage1")}
+              <br />
+              {t("translation:searchResult.noItemsMessage2")}
+            </p>
           ) : (
             <div className=" d-flex justify-content-center py-5">
               <Loading title="Sourcing Offer Details" />

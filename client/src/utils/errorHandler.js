@@ -63,14 +63,7 @@ export function errorHandler(error) {
     return error?.response?.data?.errorMessage;
   }
   if (error.message === "Network Error") {
-    // if (error.message.includes("ERR_CONNECTION_REFUSED")) {
-    //   return "Server Maintenance: Our server is currently under maintenance. Please try again later.";
-    // }
-    // if (error.message.includes("ERR_INTERNET_DISCONNECTED")) {
-    //   return "Internet Disconnected: Please check your internet connection.";
-    // }
-    // console.log("netwoerkk", error);
-    // // return "Something Went Wrong Please Try Again";
+   
     return "Server Maintenance: Our server is currently under maintenance. Please try again later.";
   } else {
     return "Something Went Wrong. Please try again later.";

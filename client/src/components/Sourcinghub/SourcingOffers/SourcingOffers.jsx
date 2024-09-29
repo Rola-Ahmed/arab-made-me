@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 
 import Header from "components/main/Header/Header";
-import { useSearchParams,useNavigate } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
 import PublicPaginate from "components/Shared/PublicPaginate";
 import { getSourcingOffers } from "Services/sourcingOffer";
@@ -29,7 +29,6 @@ function SourcingOffers() {
   let { isLogin } = useContext(UserToken);
   const [searchParams] = useSearchParams();
   const { trans: t } = useAppTranslation();
-
 
   const filterSearchOffer = searchParams.get("searchOffer");
   // const filterSearchBuyerRequest = searchParams.get("filterSearchBuyerRequest");
@@ -91,7 +90,7 @@ function SourcingOffers() {
       errorMsg: result?.error,
     }));
   }
-  console.log("params2 filter",filter)
+  console.log("params2 filter", filter);
 
   useEffect(() => {
     fetchSourcingReqData(`&sourcingFilter=${filter[filtersKeyword.byOffer]}`);
@@ -245,9 +244,11 @@ function SourcingOffers() {
               )}
               {allSourcingReqData?.length == 0 && !apiLoadingData?.laoding && (
                 <div className="d-flex justify-content-center py-5">
-                  
-            <p dangerouslySetInnerHTML={{ __html: t('translation:searchResult.noItemsMessage') }} className="fs-15 text-muted fw-bolder text-5 mb-5 pt-3 mx-auto text-center" />
-
+                  <p className="fs-15 text-muted fw-bolder text-5 mb-5 pt-3 mx-auto text-center">
+                    {t("translation:searchResult.noItemsMessage1")}
+                    <br />
+                    {t("translation:searchResult.noItemsMessage2")}
+                  </p>
                 </div>
               )}
             </div>

@@ -112,13 +112,13 @@ function AllProducts(props) {
                         <span></span>
 
                         <p
-                          dangerouslySetInnerHTML={{
-                            __html: t(
-                              "translation:searchResult.noItemsMessage"
-                            ),
-                          }}
+                         
                           className="f-15 py-5 text-center"
-                        />
+                        >
+                          {t("translation:searchResult.noItemsMessage1")}
+                          <br />
+                          {t("translation:searchResult.noItemsMessage2")}
+                        </p>
                         <span></span>
                       </>
                     )}

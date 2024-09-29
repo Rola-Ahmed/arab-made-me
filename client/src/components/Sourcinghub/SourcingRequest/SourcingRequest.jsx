@@ -240,12 +240,11 @@ function Sourcinghub() {
 
         {apiLoadingData?.laoding == false && reqData?.length == 0 && (
           <div>
-            <p
-              dangerouslySetInnerHTML={{
-                __html: t("translation:searchResult.noItemsMessage"),
-              }}
-              className="fs-15 text-muted text-center fw-bolder text-5 mt-5 pt-5 mx-auto w-fit-content"
-            />
+            <p className="fs-15 text-muted text-center fw-bolder text-5 mt-5 pt-5 mx-auto w-fit-content">
+              {t("translation:searchResult.noItemsMessage1")}
+              <br />
+              {t("translation:searchResult.noItemsMessage2")}
+            </p>
           </div>
         )}
 
