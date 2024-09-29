@@ -246,11 +246,12 @@ export default function AddOffer() {
                       <option value={item?.id}>{item?.name}</option>
                     ))}
 
-                    <FormVlaidtionError
-                      formValidation={formValidation}
-                      vlaidationName={"categoryId"}
-                    />
+                   
                   </select>
+                  <FormVlaidtionError
+                      formValidation={formValidation}
+                      vlaidationName="categoryId"
+                    />
                 </div>
               </div>
 

@@ -33,7 +33,6 @@ export default function EditOffer() {
     offerId,
     ""
   );
-  console.log("errorLoadingProducts", offerDetails, errorLoadingProducts);
 
   const [isLoading, setIsLoading] = useState(false);
   const { formValidation } = useFormValidation(offerDetails, submitForm);
@@ -43,9 +42,6 @@ export default function EditOffer() {
   );
 
   async function submitForm(values) {
-    console.log("values",values)
-    // setIsLoading(true);
-
     // clear error message
     setErrorMsg((prevErrors) => {
       const { response, ...restErrors } = prevErrors || {};
@@ -84,7 +80,9 @@ export default function EditOffer() {
       quantity,
 
       ...(productHSNCode && { productHSNCode: productHSNCode }),
-      ...(values.preferredCountries.length !== 0 && { preferredCountries: country }),
+      ...(values.preferredCountries.length !== 0 && {
+        preferredCountries: country,
+      }),
       ...(productId && { productId: productId }),
       shippingConditions:
         shippingConditions == "other"
@@ -102,8 +100,7 @@ export default function EditOffer() {
           : qualityConditions,
 
       //done
-      paymentType:
-        qualityConditions == "other" ? paymentTypeOther : paymentType,
+      paymentTerms: paymentType == "other" ? paymentTypeOther : paymentType,
     };
 
     const response = await updateSourcingOffer(
@@ -114,12 +111,11 @@ export default function EditOffer() {
       data
     );
 
-    console.log("response", response);
     if (response?.success) {
       setIsLoading(true);
       SuccessToast("data updated successfuly");
       navigate(
-        `/factorydashboard/offer/moreDetails?offerId=${offerDetails?.id}&productName=${data?.productName}`
+        `/factorydashboard/offers/moreDetails?factoryOffersId=${response?.data?.sourcingoffers?.id}&productName=${response?.data.sourcingoffers?.productName}`
       );
     }
     //  else {
@@ -137,11 +133,7 @@ export default function EditOffer() {
     setIsLoading(false);
   }
 
-  // useEffect(() => {
-  //   if (offerDetails && offerDetails?.length !== 0) {
-  //     formValidation.setValues(initialValues);
-  //   }
-  // }, [offerDetails]);
+
 
   if (
     currentUserData?.factoryVerified == "0" ||
@@ -260,15 +252,16 @@ export default function EditOffer() {
                   onBlur={formValidation.handleBlur}
                   value={formValidation.values.categoryId}
                 >
+                  <option value="">Select Category</option>
+
                   {categories?.map((item) => (
                     <option value={item?.id}>{item?.name}</option>
                   ))}
-
-                  <FormVlaidtionError
-                    formValidation={formValidation}
-                    vlaidationName={"categoryId"}
-                  />
                 </select>
+                <FormVlaidtionError
+                  formValidation={formValidation}
+                  vlaidationName="categoryId"
+                />
               </div>
             </div>
 

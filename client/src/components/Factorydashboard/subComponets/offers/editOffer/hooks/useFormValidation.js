@@ -14,6 +14,7 @@ import {
 import { useEffect } from "react";
 
 export const useFormValidation = (productDetails, submitForm) => {
+  console.log("productDetailsproductDetails",productDetails)
   let initialValues = {
     productName: productDetails?.productName || "",
     price: productDetails?.price || "",
@@ -29,6 +30,7 @@ export const useFormValidation = (productDetails, submitForm) => {
     preferredCountries: Yup.array().of(Yup.string()).nullable(),
 
     price: reqQualityValidate,
+    categoryId:requiredStringMax255,
 
     //   HSN (Harmonized System of Nomenclature) code field i
     productHSNCode: Yup.string()
@@ -123,11 +125,11 @@ export const useFormValidation = (productDetails, submitForm) => {
       // check if payment value is set to a option "value" || or option others
       // if option others: then set paymentType value to "other" && set paymentTypeOther to the paymentType value that is coming from the database
       const initalPaymentType = paymentTypeArr?.find(
-        (item) => item.value === productDetails?.paymentType
+        (item) => item.value === productDetails?.paymentTerms
       );
       let paymentVal = {
         // if packging condition is null   || value is not selection on option "others"
-        paymentType: productDetails?.paymentType || "",
+        paymentType: productDetails?.paymentTerms || "",
         paymentTypeOther: "",
       };
       if (!initalPaymentType) {

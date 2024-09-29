@@ -45,5 +45,6 @@ export function UseOneOffer() {
     isLogin,
     requestedData,
     apiLoadingData,
+    setRequestedData,
   };
 }

@@ -1,4 +1,4 @@
-import { getRequestDataHeader, postRequest, putRequest } from "./authServices";
+import { getRequestDataHeader, patchRequest, postRequest, putRequest } from "./authServices";
 
 export const getSourcingOffers = async (param) => {
   return await getRequestDataHeader(`sourcingOffers?${param}`, {}, {});
@@ -19,3 +19,8 @@ export const updateSourcingOffer = async (id, header, data) => {
 export const addSourcingOfferMedia = async (id, header, data) => {
   return await putRequest(`/sourcingOffers/uploadMedia/${id}`, header, data);
 };
+
+export const updateSourcingOfferMedia = async (id, header, data) => {
+  return await patchRequest(`/sourcingOffers/update/image/${id}`, header, data);
+};
+

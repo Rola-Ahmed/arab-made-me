@@ -101,31 +101,7 @@ export default function OneProduct() {
       document.body.style.cursor = "default";
     }, 5000); // 5000 milliseconds = 5 seconds
   }
-  async function deleteMedia(keyword) {
-    setTimeout(() => {
-      document.body.style.cursor = "wait";
-    }, 5000); // 5000 milliseconds = 5 seconds
-    const data = new FormData();
-    data.append([keyword], "");
-    const result = await deleteCoverVideo(
-      requestedData?.id,
-      { Authorization: isLogin }
-      // data
-    );
-
-    if (result?.success) {
-      SuccessToast("data updated succcfully");
-      setRequestedData((prev) => ({
-        ...prev,
-        ...result?.data?.product,
-      }));
-    } else {
-      ErrorToast("someThing went Wrong");
-    }
-    setTimeout(() => {
-      document.body.style.cursor = "default";
-    }, 5000); // 5000 milliseconds = 5 seconds
-  }
+ 
 
   async function updateMeida(e, selectedDocs) {
     e.preventDefault();

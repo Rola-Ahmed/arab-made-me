@@ -20,18 +20,20 @@ export default function ProductBanner({
     <>
       {" "}
       <div className="container-profile-input w-100 gap-16">
-        <p className="fs-24-semi"> Product Banners</p>
-        <DisplayMultiImages
-          handleImageClick={handleImageClick}
-          images={images}
-          deleteDocs={onDeleteBanner}
-        />
-        <button
-          className="btn-edit w-fit-content"
-          onClick={() => handleShow("imagesReadOnly")}
-        >
-          <p className="cursor">Upload </p>
-        </button>
+        <div className="title-contianer-input w-100">
+          <p className="fs-24-semi"> Product Banners</p>
+          <DisplayMultiImages
+            handleImageClick={handleImageClick}
+            images={images}
+            deleteDocs={onDeleteBanner}
+          />
+          <button
+            className="btn-edit w-fit-content"
+            onClick={() => handleShow("imagesReadOnly")}
+          >
+            <p className="cursor">Upload </p>
+          </button>
+        </div>
       </div>
       <Modal
         show={show.imagesReadOnly}
@@ -84,7 +86,7 @@ export default function ProductBanner({
                       >
                         Close
                       </button>
-                    
+
                       <button
                         className="defualt-btn main submitButton "
                         type="submit"
