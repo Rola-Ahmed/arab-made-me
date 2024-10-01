@@ -29,14 +29,14 @@ export const useFormValidation = (productDetails, submitForm) => {
     preferredCountries: Yup.array().of(Yup.string()).nullable(),
 
     price: reqQualityValidate,
-    categoryId:requiredStringMax255,
+    categoryId: requiredStringMax255,
 
     //   HSN (Harmonized System of Nomenclature) code field i
     productHSNCode: Yup.string()
       .min(6, "Minimum  length is 6")
       .max(15, "Maximum 15  is legnth"),
 
-    quantity: reqQualityValidate,
+    quantity: requiredStringMax255,
 
     productDescription: requiredStringMax255,
 

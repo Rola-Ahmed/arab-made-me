@@ -9,7 +9,7 @@ import {
   otherTextAreaValidate,
   requiredStringValidate,
   requiredDateValidate,
-  reqQualityValidate,
+  requiredStringMax255,
 } from "utils/validationUtils";
 
 import FactoryInfo from "../Shared/FactoryInfo";
@@ -57,7 +57,7 @@ export default function WhiteLabel(props) {
     //   }),
     // // .required("Input field is Required"),
     productId: Yup.string(),
-    quantity: reqQualityValidate,
+    quantity: requiredStringMax255,
 
     deadline: requiredDateValidate,
 
@@ -85,7 +85,7 @@ export default function WhiteLabel(props) {
       .of(
         Yup.object().shape({
           date: requiredDateValidate,
-          quantity: reqQualityValidate,
+          quantity: requiredStringMax255,
         })
       )
       .min("1", "minimum length is 1"),

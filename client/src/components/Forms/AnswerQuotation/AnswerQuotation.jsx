@@ -111,6 +111,7 @@ export default function AnswerQuotation() {
   }
   let formValidation = useQuotationFormValidation(formInfo?.extraData, submit);
 
+  console.log("formValidation",formValidation)
   return (
     <>
       <Header title={`Send Quotation on ${formInfo?.formTitle}`} />

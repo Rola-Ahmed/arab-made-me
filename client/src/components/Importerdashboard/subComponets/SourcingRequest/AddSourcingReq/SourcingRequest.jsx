@@ -47,7 +47,7 @@ function SourcingRequest() {
   let validationSchema = Yup.object().shape({
     productName: requiredStringMax255,
 
-    quantity: reqQualityValidate,
+    quantity: requiredStringMax255,
 
     shippingConditions: Yup.string(),
     shippingConditionsOther: otherTextAreaValidate(

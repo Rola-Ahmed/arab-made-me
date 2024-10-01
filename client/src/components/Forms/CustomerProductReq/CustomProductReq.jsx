@@ -51,7 +51,7 @@ function CustomerProductReq(props) {
     technicalSpecifications: requiredStringMax255,
     inqueries: requiredStringMax255,
 
-    quantity: reqQualityValidate,
+    quantity: requiredStringMax255,
 
     packingConditions: requiredStringValidate,
     packingConditionsOther: otherTextAreaValidate("packingConditions", "other"),
@@ -75,7 +75,7 @@ function CustomerProductReq(props) {
       .of(
         Yup.object().shape({
           date: requiredDateValidate,
-          quantity: reqQualityValidate,
+          quantity: requiredStringMax255,
         })
       )
       .min("1", "minimum length is 1"),

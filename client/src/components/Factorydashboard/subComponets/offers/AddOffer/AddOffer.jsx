@@ -73,7 +73,7 @@ export default function AddOffer() {
     //   HSN (Harmonized System of Nomenclature) code field i
     productHSNCode: requiredStringMax255,
 
-    quantity: reqQualityValidate,
+    quantity: requiredStringMax255,
 
     productDescription: requiredStringMax255,
 
@@ -245,13 +245,11 @@ export default function AddOffer() {
                     {categories?.map((item) => (
                       <option value={item?.id}>{item?.name}</option>
                     ))}
-
-                   
                   </select>
                   <FormVlaidtionError
-                      formValidation={formValidation}
-                      vlaidationName="categoryId"
-                    />
+                    formValidation={formValidation}
+                    vlaidationName="categoryId"
+                  />
                 </div>
               </div>
 

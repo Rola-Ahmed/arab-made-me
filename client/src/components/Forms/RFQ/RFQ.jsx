@@ -13,7 +13,7 @@ import {
   otherTextAreaValidate,
   requiredStringValidate,
   requiredDateValidate,
-  reqQualityValidate,
+  requiredStringMax255,
 } from "utils/validationUtils";
 import CurrentAcccountInfo from "../Shared/CurrentAcccountInfo";
 
@@ -49,7 +49,7 @@ function SendRfq(props) {
     //   }),
 
     productId: requiredStringValidate,
-    quantity: reqQualityValidate,
+    quantity: requiredStringMax255,
 
     shippingConditions: requiredStringValidate,
     shippingConditionsOther: otherTextAreaValidate(

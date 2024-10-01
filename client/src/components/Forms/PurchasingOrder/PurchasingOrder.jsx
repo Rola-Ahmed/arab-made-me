@@ -10,7 +10,8 @@ import {
   otherTextAreaValidate,
   requiredStringValidate,
   requiredDateValidate,
-  reqQualityValidate,
+  requiredStringMax255
+  ,
 } from "utils/validationUtils";
 import ProductDetails from "../Shared/SelectedProductDetails";
 import PurchasingOrderForm from "./PurchasingOrderForm";
@@ -51,7 +52,7 @@ function PurchasingOrder(props) {
   // Format the date as per the 'datetime-local' input type
   // ------------------------Form Validation
   let validationSchema = Yup.object().shape({
-    quantity: reqQualityValidate,
+    quantity: requiredStringMax255,
     deadline: requiredDateValidate,
 
     // productId: requiredStringValidate,
@@ -92,7 +93,7 @@ function PurchasingOrder(props) {
       .of(
         Yup.object().shape({
           date: requiredDateValidate,
-          quantity: reqQualityValidate,
+          quantity: requiredStringMax255,
         })
       )
       .min(1, "minimum length is 1"),

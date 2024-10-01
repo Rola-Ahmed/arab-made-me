@@ -13,7 +13,7 @@ import {
   textAreaValidate,
   otherTextAreaValidate,
   requiredStringValidate,
-  reqQualityValidate,
+  requiredStringMax255,
   requiredDateValidate,
 } from "utils/validationUtils";
 
@@ -58,7 +58,7 @@ export default function PrivateLabel(props) {
     // productId: Yup.string().required("Input field is Required"),
     productId: Yup.string(),
 
-    quantity: reqQualityValidate,
+    quantity: requiredStringMax255,
 
     packingConditions: requiredStringValidate,
     packingConditionsOther: otherTextAreaValidate("packingConditions", "other"),

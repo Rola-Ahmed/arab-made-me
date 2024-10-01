@@ -1,7 +1,6 @@
 import { useFormik } from "formik";
 import { useEffect } from "react";
 
-
 import * as Yup from "yup";
 import {
   requiredStringValidate,
@@ -9,23 +8,27 @@ import {
   requiredDateValidate,
   reqQualityValidate,
   textAreaValidate,
+  requiredStringMax255
 } from "utils/validationUtils";
 
-
-const useFormValidation = (apiDetails,submitForm,qualityConditionsArr,paymentTypeArr,ShippingTypeSizeArr,packingConditionsArr) => {
-
-
+const useFormValidation = (
+  apiDetails,
+  submitForm,
+  qualityConditionsArr,
+  paymentTypeArr,
+  ShippingTypeSizeArr,
+  packingConditionsArr
+) => {
   //-------------------------- initalization forms-----------------------------
   let initialValues = {
     price: apiDetails?.price || "",
     discounts: apiDetails?.discounts || 0,
     minQuantity: apiDetails?.minQuantity || "",
-  
+
     notes: apiDetails?.notes || "",
-    SupplyLocation:apiDetails?.supplyLocation,
-    deadline:apiDetails?.deadline?.split('.')?.[0]||"",
-    timeLine:apiDetails?.timeLine || [{date: "", quantity: ""}]
-   
+    SupplyLocation: apiDetails?.supplyLocation,
+    deadline: apiDetails?.deadline?.split(".")?.[0] || "",
+    timeLine: apiDetails?.timeLine || [{ date: "", quantity: "" }],
   };
 
   useEffect(() => {
@@ -36,7 +39,7 @@ const useFormValidation = (apiDetails,submitForm,qualityConditionsArr,paymentTyp
         (item) => item.value === apiDetails?.qualityConditions
       );
       // inital values
-      let nameIfValueIsTrue = { 
+      let nameIfValueIsTrue = {
         qualityConditions: apiDetails?.qualityConditions || "",
         qualityConditionsOther: "",
       };
@@ -84,11 +87,8 @@ const useFormValidation = (apiDetails,submitForm,qualityConditionsArr,paymentTyp
         };
       }
 
-
-
-
-       // shippingConditions condition
-       const initalShippingConditions = ShippingTypeSizeArr?.find(
+      // shippingConditions condition
+      const initalShippingConditions = ShippingTypeSizeArr?.find(
         (item) => item.value === apiDetails?.shippingSize
       );
       let ShippingCondVal = {
@@ -104,26 +104,22 @@ const useFormValidation = (apiDetails,submitForm,qualityConditionsArr,paymentTyp
         };
       }
 
-
-
-        // ShippingTypeSize condition
-        const initalShippingTypeSize = ShippingTypeSizeArr?.find(
-          (item) => item.value === apiDetails?.shippingSize
-        );
-        let ShippingTypeCondVal = {
-          // if packging condition is null   || value is not selection on option "others"
-          ShippingTypeSize: apiDetails?.shippingSize || "",
-          ShippingTypeSizeOther: "",
+      // ShippingTypeSize condition
+      const initalShippingTypeSize = ShippingTypeSizeArr?.find(
+        (item) => item.value === apiDetails?.shippingSize
+      );
+      let ShippingTypeCondVal = {
+        // if packging condition is null   || value is not selection on option "others"
+        ShippingTypeSize: apiDetails?.shippingSize || "",
+        ShippingTypeSizeOther: "",
+      };
+      if (!initalShippingTypeSize) {
+        // means that data is selected to option others
+        ShippingTypeCondVal = {
+          ShippingTypeSize: "other",
+          ShippingTypeSizeOther: apiDetails?.shippingSize || "",
         };
-        if (!initalShippingTypeSize) {
-          // means that data is selected to option others
-          ShippingTypeCondVal = {
-            ShippingTypeSize: "other",
-            ShippingTypeSizeOther: apiDetails?.shippingSize || "",
-          };
-        }
-
-
+      }
 
       initialValues = {
         ...initialValues,
@@ -131,20 +127,17 @@ const useFormValidation = (apiDetails,submitForm,qualityConditionsArr,paymentTyp
         ...paymentVal,
         ...nameIfValueIsTrue,
         ...ShippingTypeCondVal,
-        ...ShippingCondVal
+        ...ShippingCondVal,
       };
 
       formValidation.setValues(initialValues);
     }
   }, [apiDetails]);
 
-
-
-
   let validationSchema = Yup.object().shape({
     // from cilent
     // avialabe qunaitiy for user
-    minQuantity: reqQualityValidate,
+    minquantity: requiredStringMax255,
 
     price: reqQualityValidate,
 
@@ -162,11 +155,9 @@ const useFormValidation = (apiDetails,submitForm,qualityConditionsArr,paymentTyp
     qualityConditionsOther: otherTextAreaValidate("qualityConditions", "other"),
 
     ShippingTypeSize: requiredStringValidate,
-   ShippingTypeSizeOther: otherTextAreaValidate("ShippingTypeSize", "other"),
-    
-   
-   
-   SupplyLocation: requiredStringValidate,
+    ShippingTypeSizeOther: otherTextAreaValidate("ShippingTypeSize", "other"),
+
+    SupplyLocation: requiredStringValidate,
 
     shippingConditions: requiredStringValidate,
     shippingConditionsOther: otherTextAreaValidate(
@@ -180,7 +171,7 @@ const useFormValidation = (apiDetails,submitForm,qualityConditionsArr,paymentTyp
       .of(
         Yup.object().shape({
           date: requiredDateValidate,
-          quantity: reqQualityValidate,
+          quantity: requiredStringMax255,
         })
       )
       .min("1", "minimum length is 1"),
@@ -188,22 +179,15 @@ const useFormValidation = (apiDetails,submitForm,qualityConditionsArr,paymentTyp
     notes: textAreaValidate(),
   });
 
-
-// ----formik---------------------------------
-// account info
+  // ----formik---------------------------------
+  // account info
   let formValidation = useFormik({
     initialValues,
     validationSchema,
     onSubmit: submitForm,
   });
 
-
-
-
-
-
-
-  return {formValidation};
+  return { formValidation };
 };
 
 export default useFormValidation;
