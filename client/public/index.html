@@ -34,6 +34,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    
 
 
     <!-- You can use meta tags to prevent caching -->
@@ -49,16 +50,52 @@
     <script>
       AIDBASE_CHATBOT_ID = "Ug7MtEeBWGd69-VCJk3bL";
       let chatbot = document.getElementById("my-chatbot");
+
+
+
+
+      
     </script>
     <script
       async
       type="text/javascript"
       src="https://client.aidbase.ai/chat.ab.js"
     ></script>
+
+
+    <!-- <script>
+      document.getElementById('translateBtn').onclick = function() {
+          var pageUrl = window.location.href; // Get current page URL
+          var translateUrl = 'https://translate.google.com/translate?hl=en&sl=auto&tl=es&u=' + encodeURIComponent(pageUrl); // Construct translation URL
+          window.open(translateUrl, '_blank'); // Open in new tab
+      };
+  </script> -->
+  <div id="google_translate_element"></div>
+  <script>
+      function googleTranslateElementInit() {
+          new google.translate.TranslateElement(
+              {pageLanguage: 'en', 
+          // includedLanguages: "en,ar",
+          includedLanguages: "en,ar",
+          // layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+          // layout: window.google.translate.TranslateElement.InlineLayout.HORIZONTAL,
+          // layout: window.google.translate.TranslateElement.InlineLayout.VERTICAL,
+          // autoDisplay: false,
+          defaultLanguage: "en", // Set the dropdown to default to English
+          language: "en", // Set the dropdown to default to English
+          multilanguagePage:'false',
+        },
+              'google_translate_element'
+          );
+      }
+  </script>
+  <script src="http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <div id="translateBtn"></div>
   </body>
  
+  
 </html>
