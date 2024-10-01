@@ -63,12 +63,10 @@
     }
   ],
   "comingSoon": "Coming Soon",
-  "searchResult":{
-      "noItemsMessage1": "Coming soon! No items found. Please check back later",
-      "noItemsMessage2": " Stay tuned to check the latest updates."
-    
+  "searchResult": {
+    "noItemsMessage1": "Coming soon! No items found. Please check back later",
+    "noItemsMessage2":" Stay tuned to check the latest updates."
   }
-
 }
 
 
