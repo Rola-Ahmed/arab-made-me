@@ -17,7 +17,7 @@ const useQuotationFormValidation = (
     // from cilent
     // requestedquantity: requiredStringMax255,
     // avialabe qunaitiy for user
-    minquantity: textAreaValidate,
+    minquantity: Yup.string(),
     // minquantity: requiredStringMax255,
 
     price: reqQualityValidate,
