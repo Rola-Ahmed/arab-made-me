@@ -2,24 +2,6 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <!-- <div id="google_translate_element" ></div> 
-     <script type="text/javascript">
- function googleTranslateElementInit() {
-  new window.google.translate.TranslateElement({
-    pageLanguage: "en",
-          includedLanguages: "en,ar",
-          layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-          // layout: window.google.translate.TranslateElement.InlineLayout.HORIZONTAL,
-          // layout: window.google.translate.TranslateElement.InlineLayout.VERTICAL,
-          autoDisplay: false,
-          defaultLanguage: "en", // Set the dropdown to default to English
-          language: "en", // Set the dropdown to default to English
-          multilanguagePage:'false',
-          
-  }, 'google_translate_element');
-}
-</script> -->
-<!-- <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script> -->
 
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -61,35 +43,24 @@
       type="text/javascript"
       src="https://client.aidbase.ai/chat.ab.js"
     ></script>
-
-
-    <!-- <script>
-      document.getElementById('translateBtn').onclick = function() {
-          var pageUrl = window.location.href; // Get current page URL
-          var translateUrl = 'https://translate.google.com/translate?hl=en&sl=auto&tl=es&u=' + encodeURIComponent(pageUrl); // Construct translation URL
-          window.open(translateUrl, '_blank'); // Open in new tab
-      };
-  </script> -->
+<!-- 
   <div id="google_translate_element"></div>
-  <script>
+  <script type="text/javascript">
       function googleTranslateElementInit() {
-          new google.translate.TranslateElement(
-              {pageLanguage: 'en', 
-          // includedLanguages: "en,ar",
-          includedLanguages: "en,ar",
-          // layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-          // layout: window.google.translate.TranslateElement.InlineLayout.HORIZONTAL,
-          // layout: window.google.translate.TranslateElement.InlineLayout.VERTICAL,
-          // autoDisplay: false,
-          defaultLanguage: "en", // Set the dropdown to default to English
-          language: "en", // Set the dropdown to default to English
-          multilanguagePage:'false',
-        },
-              'google_translate_element'
-          );
+          new google.translate.TranslateElement({
+              pageLanguage: 'en', // The original language of your site
+              includedLanguages: 'ar', // Languages you want to include
+              layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+          }, 'google_translate_element');
       }
-  </script>
-  <script src="http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  
+      (function() {
+          var gt = document.createElement('script'); gt.type = 'text/javascript'; gt.async = true;
+          gt.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(gt, s);
+      })();
+  </script> -->
+  
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
