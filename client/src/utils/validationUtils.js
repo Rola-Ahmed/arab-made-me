@@ -53,6 +53,13 @@ export const phoneValidation = Yup.string()
   .min(6, "min length is 6")
   .max(15, "max length is 15");
 
+
+
+  export const priceCurrency = Yup.string()
+  .required("Input Field is Required")
+  .matches(/^\d+(\.\d{1,2})?\s+[A-Za-z]{3}$/, "Input Field should contain the price and the currency")
+  // .min(6, "min length is 6")
+  // .max(15, "max length is 15");
 export const emailValidation = Yup.string()
   .email("Invalid email")
   .required("Input Field is Required")

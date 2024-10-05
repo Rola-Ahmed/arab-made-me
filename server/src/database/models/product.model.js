@@ -1,8 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../connection.js";
 import { Factory } from "./factory.model.js";
-import { Sector } from "./sector.model.js";
-import { Category } from "./category.model.js";
 
 export const Product = sequelize.define(
   "products",
@@ -68,19 +66,14 @@ export const Product = sequelize.define(
       defaultValue: [],
     },
     price: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     //   factoryId: {
     //     type: DataTypes.INTEGER,
     //     allowNull: false,
     //   },
-    //   sectorId: {
-    //     type: DataTypes.INTEGER,
-    //   },
-    //   CategoryId: {
-    //     type: DataTypes.INTEGER,
-    //   },
+
     available: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
@@ -101,12 +94,7 @@ export const Product = sequelize.define(
       type: DataTypes.FLOAT,
       defaultValue: 0.0,
     },
-    country: {
-      type: DataTypes.STRING,
-    },
-    city: {
-      type: DataTypes.STRING,
-    },
+
     leadTime: DataTypes.STRING,
   },
   {
@@ -114,7 +102,13 @@ export const Product = sequelize.define(
   }
 );
 
-Product.belongsTo(Sector);
-Product.belongsTo(Factory, { onDelete: "CASCADE" });
+// Product.belongsTo(Sector);
+// Product.belongsTo(Factory, { onDelete: "CASCADE" });
 Factory.hasMany(Product);
-Sector.hasMany(Product);
+
+Product.belongsTo(
+  Factory,
+  { foreignKey: "factoryId" },
+  { onDelete: "CASCADE" }
+);
+Factory.hasMany(Product, { foreignKey: "factoryId" });

@@ -59,30 +59,22 @@ const useFormSubmission = (setErrorMsg, setIsLoading) => {
     }
 
     let {
-      country,
       name,
-      sectorId,
-      categoryId,
       description,
       price,
       hsnCode,
       minOrderQuantity,
-      city,
       guarantee,
       maxOrderQuantity,
     } = values;
 
     let data = {
-      country,
       name,
-      sectorId,
-      categoryId,
       description,
       price,
       hsnCode,
       minOrderQuantity,
       specialCharacteristics: {},
-      ...(city && { city: city }),
       ...(guarantee && { guarantee: guarantee }),
       ...(maxOrderQuantity && { maxOrderQuantity: maxOrderQuantity }),
     };
@@ -118,22 +110,20 @@ const useFormSubmission = (setErrorMsg, setIsLoading) => {
 
     selectedDocs?.forEach((item) => data.append(item.keyWord, item.pdfFile));
 
-    try {
-      let result = await addProductMedia(
-        qoute_id,
-        { authorization: isLogin },
-        data
-      );
+    let result = await addProductMedia(
+      qoute_id,
+      { authorization: isLogin },
+      data
+    );
 
-      if (result?.success) {
-        setLoadingState(true);
-        SuccessToast("Product added Successfully");
+    if (result?.success) {
+      setLoadingState(true);
+      SuccessToast("Product added Successfully");
 
-        navigate("/factorydashboard/AllFactoryProducts");
-      } else {
-        handleResponseError(result.error);
-      }
-    } catch (error) {}
+      navigate("/factorydashboard/AllFactoryProducts");
+    } else {
+      handleResponseError(result.error);
+    }
   };
 
   return { submitForm, productAdded, submitDocs };

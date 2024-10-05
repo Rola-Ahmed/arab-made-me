@@ -13,69 +13,91 @@ export const addProduct = asyncHandler(async (req, res, nxt) => {
 });
 
 export const getProducts = asyncHandler(async (req, res, nxt) => {
+  // Initialize filter for name and description search
   let filter;
-  if (req.query.filter) {
-    filter = {
-      [Op.or]: [
-        sequelize.where(
-          sequelize.fn("LOWER", sequelize.col("products.name")),
-          "LIKE",
-          sequelize.fn("LOWER", `%${req.query.filter}%`)
-        ),
-        sequelize.where(
-          sequelize.fn("LOWER", sequelize.col("products.description")),
-          "LIKE",
-          sequelize.fn("LOWER", `%${req.query.filter}%`)
-        ),
-      ],
-    };
-    req.query.filter = null;
-  }
+
+
+  // Initialize search filters from the request query
   const searchFilters = searchFiltering(req.query);
+  const { sectors, location ,include} = req.query;
 
-  const { sectors } = req.query;
-  let sectorsArr;
+  // Parse sectors into an array if present
+  let sectorsArr = [];
   if (sectors) {
-    sectorsArr = sectors.split(",");
+    sectorsArr = sectors.split(",").map((sector) => sector.trim());
+  }
+  
+
+  // Build the SQL query dynamically
+  // let sqlQuery = `
+  //   SELECT "products".*, "factories"."sectorId", "factories"."country","factories"."city"
+  //   FROM "products"
+  //   JOIN "factories" ON "factories"."id" = "products"."factoryId"
+  // `;
+
+  let sqlQuery = `
+  SELECT 
+    "products".*,
+    json_build_object(
+      'sectorId', "factories"."sectorId",
+      'country', "factories"."country",
+      'city', "factories"."city",
+      'name', "factories"."name",
+      'coverImage', "factories"."coverImage"
+    ) AS factories
+  FROM "products"
+  JOIN "factories" ON "factories"."id" = "products"."factoryId"
+`;
+
+  // if(include=='factory'){
+    
+  // }
+
+  // console.log("req.query.filter",req.query.filter)
+  if (req.query.filter) {
+    const filterValue = req.query.filter.toLowerCase();
+    console.log("filterValue",req.query.filter,filterValue)
+    sqlQuery += ` WHERE LOWER("products"."name") LIKE '%${filterValue}%' OR LOWER("products"."description") LIKE '%${filterValue}%'`;
   }
 
-  if (sectors && sectorsArr != []) {
-    searchFilters.whereConditions.push({
-      sectorId: {
-        [Op.in]: sectorsArr,
-      },
-    });
+  if (location) {
+    // If the previous WHERE condition exists, use AND; otherwise, use WHERE
+    sqlQuery += req.query.filter
+      ? ` AND LOWER("factories"."country") = LOWER('${location}')`
+      : ` WHERE LOWER("factories"."country") = LOWER('${location}')`;
   }
 
-  // for resolving sequelize issues of same attributes in product and factory
-
-  if (filter) {
-    searchFilters.whereConditions.push(filter);
+  // Handle the sectors filter
+  if (sectorsArr.length > 0) {
+    // Adjust WHERE condition based on existing filters
+    sqlQuery +=
+      req.query.filter || location
+        ? ` AND "factories"."sectorId" IN (${sectors})`
+        : ` WHERE "factories"."sectorId" IN (${sectors})`;
   }
-  console.log(searchFilters.whereConditions);
 
+  console.log("Executing SQL Query: ", sqlQuery);
+
+  // Fetch products based on the constructed SQL query
+  const [productss] = await sequelize.query(sqlQuery);
+
+  console.log("Filtered Products: ", productss);
+
+  // Pagination setup
   const page = parseInt(req.query.page, 10) || 1; // Default to page 1
   const limit = parseInt(req.query.size, 10) || 10; // Default limit to 10
-  //   const offset = (page - 1) * limit;
+  const offset = (page - 1) * limit; // Calculate offset for pagination
 
-  const products = await Product.findAll({
-    where: searchFilters.whereConditions,
-    offset: searchFilters.offset,
-    limit: searchFilters.limit,
-    order:
-      searchFilters.order.length > 0
-        ? searchFilters.order
-        : [["createdAt", "DESC"]],
-    include: ["factory", "sector"],
-  });
+  // Slice the products for pagination
+  const paginatedProducts = productss.slice(offset, offset + limit);
+
   // Get total count of products that match the filters
-  const totalProducts = await Product.count({
-    where: searchFilters.whereConditions,
-  });
+  const totalProducts = productss.length; // Total count after filtering
 
+  // Send response back to client
   return res.status(200).json({
     message: "done",
-    products,
+    products: paginatedProducts,
     pagination: {
       totalProducts,
       totalPages: Math.ceil(totalProducts / limit),

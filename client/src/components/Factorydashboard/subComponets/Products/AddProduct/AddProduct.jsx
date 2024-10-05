@@ -1,7 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import useCategories from "hooks/useCategory";
 import "./AddProduct.css";
 import { userDetails } from "Context/userType";
 import LoadingProccess from "components/Shared/Dashboards/LoadingProccess";
@@ -14,18 +13,12 @@ import TextareaInput from "components/Forms/Shared/TextareaInput";
 import SpecialChar from "components/Forms/Shared/SpecialChar/SpecialChar";
 import {
   requiredStringMax255,
-  reqQualityValidate,
+  priceCurrency,
   textAreaValidate,
 } from "utils/validationUtils";
-import { fetchOneFactory } from "Services/factory";
 import InputField from "components/Forms/Shared/InputField";
-import FormVlaidtionError from "components/Forms/Shared/FormVlaidtionError";
 export default function AddProduct() {
-  let { currentUserData } = useContext(userDetails);
-  let categories = useCategories();
-
   let navigate = useNavigate();
-
   const [errorMsg, setErrorMsg] = useState();
   const [isLoading, setIsLoading] = useState({
     submitLoading: false,
@@ -33,31 +26,17 @@ export default function AddProduct() {
     // errorPageLoading: true,
   });
 
-  let [factoryDetails, setFactoryDetails] = useState();
   const [selectedDocs, setSelectedDocs] = useState([]);
   let { submitForm, productAdded, submitDocs } = useFormSubmission(
     setErrorMsg,
     setIsLoading
   );
 
-  // get sectors and categrories
-
-  async function fetchFactoryData() {
-    let result = await fetchOneFactory(currentUserData.factoryId);
-    if (result?.success) {
-      setFactoryDetails(result?.data?.factories);
-    }
-  }
-  useEffect(() => {
-    if (currentUserData.factoryId !== undefined) {
-      fetchFactoryData();
-    }
-  }, [currentUserData?.factoryId]);
-
+ 
   let validationSchema = Yup.object().shape({
     name: requiredStringMax255,
 
-    price: reqQualityValidate,
+    price: priceCurrency,
 
     hsnCode: Yup.string()
       .required("Input Field is Required")
@@ -66,8 +45,6 @@ export default function AddProduct() {
     guarantee: textAreaValidate(),
     minOrderQuantity: requiredStringMax255,
     maxOrderQuantity: requiredStringMax255,
-    categoryId: Yup.string().required("Input Field is Required"),
-    // sectorId: Yup.string().required("Input Field is Required"),
 
     description: requiredStringMax255,
 
@@ -81,19 +58,12 @@ export default function AddProduct() {
 
   let initialValues = {
     name: "",
-
     price: "",
     hsnCode: "",
     guarantee: "",
     minOrderQuantity: "",
     maxOrderQuantity: "",
     description: "",
-
-    categoryId: "",
-    sectorId: "",
-    city: factoryDetails?.city || "",
-    country: factoryDetails?.country || "",
-
     productCharacteristic: [
       {
         keyword: "",
@@ -124,15 +94,7 @@ export default function AddProduct() {
     }
   }
 
-  useEffect(() => {
-    if (factoryDetails && factoryDetails.length !== 0) {
-      formValidation.setValues((prevValues) => ({
-        ...prevValues,
-        city: factoryDetails?.city || "",
-        country: factoryDetails?.country || "",
-      }));
-    }
-  }, [factoryDetails]);
+ 
 
   return (
     <>
@@ -177,48 +139,7 @@ export default function AddProduct() {
                 />
               </div>
 
-              <div className="col-4">
-                <div className="form-group">
-                  <label>Sector *</label>
-
-                  <select
-                    className="form-select form-control py-2"
-                    onChange={formValidation.handleChange}
-                    id="sectorId"
-                    onBlur={formValidation.handleBlur}
-                    value={formValidation.values.sectorId}
-                    onClick={(e) => {
-                      let selectedProductName = "";
-                      categories?.find(
-                        (item) =>
-                          item.sectorId == e.target.value
-                            ? (selectedProductName = item.id)
-                            : ""
-                        // )
-                      );
-
-                      formValidation.setFieldValue(
-                        "categoryId",
-                        selectedProductName
-                      ); // Assuming 'productName' is the field name for product name
-                    }}
-                  >
-                    <option value="">select</option>
-                    {categories?.map((item) => (
-                      <optgroup label={item?.name}>
-                        <option value={item?.sector?.id}>
-                          {item?.sector?.name}
-                        </option>
-                      </optgroup>
-                    ))}
-                  </select>
-
-                  <FormVlaidtionError
-                    formValidation={formValidation}
-                    vlaidationName={"categoryId"}
-                  />
-                </div>
-              </div>
+             
 
               <div className="col-4">
                 <InputField
