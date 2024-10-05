@@ -1,8 +1,8 @@
-import { useEffect, useState, useContext } from "react";
+import { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import "./AddProduct.css";
-import { userDetails } from "Context/userType";
+// import { userDetails } from "Context/userType";
 import LoadingProccess from "components/Shared/Dashboards/LoadingProccess";
 
 import { useNavigate } from "react-router-dom";
@@ -17,6 +17,22 @@ import {
   textAreaValidate,
 } from "utils/validationUtils";
 import InputField from "components/Forms/Shared/InputField";
+
+const uploadConfigs = [
+  {
+    mediaName: "images",
+    maxLen: 3,
+    accepts: ["png", "jpeg", "jpg"],
+    title: "Upload Images",
+  },
+  {
+    mediaName: "coverImage",
+    maxLen: 1,
+    accepts: ["png", "jpeg", "jpg"],
+    title: "Upload cover Image *",
+  },
+];
+
 export default function AddProduct() {
   let navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState();
@@ -32,14 +48,12 @@ export default function AddProduct() {
     setIsLoading
   );
 
- 
   let validationSchema = Yup.object().shape({
     name: requiredStringMax255,
 
     price: priceCurrency,
 
     hsnCode: Yup.string()
-      .required("Input Field is Required")
       .min(6, "Minimum  length is 6")
       .max(15, "Maximum 15  is legnth"),
     guarantee: textAreaValidate(),
@@ -94,33 +108,51 @@ export default function AddProduct() {
     }
   }
 
- 
+  const handleScrollToError = () => {
+    if (formValidation.isValid == false) {
+      const targetElement = document.getElementById(
+        Object.keys(formValidation.errors)?.[0]
+      );
+      targetElement?.scrollIntoView({ behavior: "smooth", block: "start" });
+
+      if (targetElement) {
+        targetElement.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      } else {
+        const targetElement = document.getElementById("view");
+        targetElement.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      }
+    }
+  };
 
   return (
     <>
       <LoadingProccess show={isLoading?.submitLoading} />
 
       <div id="view" className="m-4 order-section  ">
+        <div className="header w-100">
+          <div className=" d-flex justify-content-between align-items-center ">
+            <h2>Add New Product</h2>
+
+            <div className="btn-container">
+              <button
+                type="button"
+                className="order-btn-1"
+                onClick={() => navigate("/factorydashboard/AllFactoryProducts")}
+              >
+                <p className="cursor">All Products</p>
+              </button>
+            </div>
+          </div>
+        </div>
         {/* section 1 */}
         <form onSubmit={formValidation.handleSubmit} className="header w-100">
           {/* <form className="header w-100"> */}
-          <div>
-            <div className=" d-flex justify-content-between align-items-center ">
-              <h2>Add New Product</h2>
-
-              <div className="btn-container">
-                <button
-                  type="button"
-                  className="order-btn-1"
-                  onClick={() =>
-                    navigate("/factorydashboard/AllFactoryProducts")
-                  }
-                >
-                  <p className="cursor">All Products</p>
-                </button>
-              </div>
-            </div>
-          </div>
 
           {/* ------------ */}
           <div className="container  add-product-dash">
@@ -138,8 +170,6 @@ export default function AddProduct() {
                   vlaidationName={"name"}
                 />
               </div>
-
-             
 
               <div className="col-4">
                 <InputField
@@ -202,27 +232,19 @@ export default function AddProduct() {
 
               {/* ----------------------------------------- */}
 
-              <UploadDocument
-                selectedDocs={selectedDocs}
-                errorMsg={errorMsg}
-                setSelectedDocs={setSelectedDocs}
-                MediaName="images"
-                mediaMaxLen="3"
-                meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
-                setErrorMsg={setErrorMsg}
-                title="Upload Images"
-              />
-
-              <UploadDocument
-                selectedDocs={selectedDocs}
-                errorMsg={errorMsg}
-                setSelectedDocs={setSelectedDocs}
-                MediaName="coverImage"
-                mediaMaxLen="1"
-                meidaAcceptedExtensions={["png", "jpeg", "jpg"]}
-                setErrorMsg={setErrorMsg}
-                title="Upload cover Image *"
-              />
+              {uploadConfigs.map((media, index) => (
+                <UploadDocument
+                  key={index}
+                  selectedDocs={selectedDocs}
+                  errorMsg={errorMsg}
+                  setSelectedDocs={setSelectedDocs}
+                  MediaName={media.mediaName}
+                  mediaMaxLen={media.maxLen}
+                  meidaAcceptedExtensions={media.accepts} // Fixed typo
+                  setErrorMsg={setErrorMsg}
+                  title={media.title}
+                />
+              ))}
 
               <TextareaInput
                 vlaidationName="description"
@@ -233,41 +255,21 @@ export default function AddProduct() {
 
               <div className="col-12">
                 <div className="btn-container d-flex justify-content-center">
-                  {isLoading?.submitLoading ? (
-                    <button type="button" className="order-btn-2 px-5 ">
+                  <button
+                    className="order-btn-2"
+                    type="submit"
+                    onClick={() => handleScrollToError()}
+                    disabled={isLoading?.submitLoading}
+                  >
+                    {isLoading?.submitLoading ? (
                       <i className="fas fa-spinner fa-spin px-2"></i>
-                    </button>
-                  ) : (
-                    <button
-                      className="order-btn-2"
-                      type="submit"
-                      onClick={() => {
-                        if (formValidation.isValid == false) {
-                          const targetElement = document.getElementById(
-                            Object.keys(formValidation.errors)?.[0]
-                          );
-
-                          if (targetElement) {
-                            targetElement.scrollIntoView({
-                              behavior: "smooth",
-                              block: "start",
-                            });
-                          } else {
-                            const targetElement = document.getElementById(
-                              "view"
-                            );
-                            targetElement.scrollIntoView({
-                              behavior: "smooth",
-                              block: "center",
-                            });
-                          }
-                        }
-                      }}
-                    >
-                      <i className="fa-solid fa-plus"></i>
-                      <p className="cursor">Add product</p>
-                    </button>
-                  )}
+                    ) : (
+                      <>
+                        <i className="fa-solid fa-plus"></i>
+                        <p className="cursor">Add product</p>
+                      </>
+                    )}
+                  </button>
                 </div>
               </div>
             </div>

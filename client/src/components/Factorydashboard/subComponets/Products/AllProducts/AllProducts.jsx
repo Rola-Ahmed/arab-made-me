@@ -60,10 +60,12 @@ export default function GetProducts() {
               <h2>All Products</h2>
 
               <div className="btn-container">
-                <button className="order-btn-1" disabled={false}>
+                {/* will use it again */}
+                
+                {/* <button className="order-btn-1" disabled={false}>
                   <i className="fa-solid fa-cloud-arrow-down"></i>
                   <p className="cursor">Download CSV</p>
-                </button>
+                </button> */}
 
                 <button
                   className="order-btn-2 cursor"
@@ -231,7 +233,29 @@ export default function GetProducts() {
             </table>
           </div>
         </div>
+        
       </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
     </>
   );
 }
