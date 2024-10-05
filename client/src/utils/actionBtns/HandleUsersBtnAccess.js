@@ -1,4 +1,5 @@
 const showLoginModal = (setModalShow, setisLoggedReDirect, redirectPath) => {
+  console.log("nnjj",setModalShow, setisLoggedReDirect, redirectPath)
   setModalShow((prevVal) => ({
     ...prevVal,
     isLogin: true,
@@ -9,6 +10,7 @@ const showLoginModal = (setModalShow, setisLoggedReDirect, redirectPath) => {
 // utils/navigationUtils.js
 // HandleUsersBtnAccess
 const handleButtonClick = (params) => {
+  console.log("params",params)
   const {
     currentUserData,
     isLogin,
@@ -21,6 +23,7 @@ const handleButtonClick = (params) => {
   // return
 
   if (!isLogin) {
+    console.log("!isLogin",!isLogin)
     showLoginModal(setModalShow, setisLoggedReDirect, `/signIn/${loginPath}`);
     return;
   }

@@ -95,20 +95,21 @@ export default function FactoryCardParent(props) {
                 //     Private Label Request
                 //   </div>
                 // </button>
+                
 
                 <button
                   className="btn-call-1  cursor px-4"
                   onClick={() => {
                     handleBtnCheckIfProductExisit(
                       `sendrfq?factoryId=${factoryitem?.id}&factoryName=${factoryitem?.name}`,
-                      factoryitem?.productLength,
+                      factoryitem?.products?.length,
                       factoryitem?.id,
                       factoryitem?.name
                     );
                   }}
                 >
                   <div className="btn-text text-decoration-none cursor text-white">
-                    {t("BtnsDescription:RFQ.sendRfq")}
+                    {t("BtnsDescription:RFQ.sendRfq")}{factoryitem?.products?.length}
                   </div>
                 </button>
               )}

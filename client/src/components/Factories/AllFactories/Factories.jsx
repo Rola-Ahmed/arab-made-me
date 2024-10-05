@@ -27,6 +27,7 @@ import { useAppTranslation } from "config.js";
 import PublicPaginate from "components/Shared/PublicPaginate";
 import FactoryCardParent from "components/Home/TopFactories/Shared/FactoryCardParent";
 import { useFetchFactories } from "./useFetchFactories";
+import DefaultUserNotAuthorizedModal from "components/ActionMessages/FormAccessControl/DefaultUserNotAuthorizedModal";
 
 export default function TopFactories() {
   document.title = "Factory Gallery";
@@ -122,38 +123,51 @@ export default function TopFactories() {
     });
   };
 
-  const renderModal = (Component, show, hideHandler, destination, userType) => (
-    <Component
-      show={show}
-      onHide={hideHandler}
-      {...(destination && { destination })}
-      {...(userType && { userType })}
-    />
-  );
-
   return (
     <>
-      {renderModal(
-        IsLoggedIn,
-        modalShow.isLogin,
-        () => setModalShow((prev) => ({ ...prev, isLogin: false })),
-        isLoggedReDirect,
-        ""
-      )}
-      {renderModal(
-        ImporterUnVerified,
-        modalShow.isImporterVerified,
-        () => setModalShow((prev) => ({ ...prev, isImporterVerified: false })),
-        "",
-        ""
-      )}
-      {renderModal(
-        UserNotAuthorized,
-        modalShow.isFactoryVerified,
-        () => setModalShow((prev) => ({ ...prev, isFactoryVerified: false })),
-        "",
-        "Buyer"
-      )}
+      <IsLoggedIn
+        show={modalShow.isLogin}
+        onHide={() =>
+          setModalShow((prevVal) => ({
+            ...prevVal,
+            isLogin: false,
+          }))
+        }
+        distination={isLoggedReDirect}
+      />
+
+      <ImporterUnVerified
+        show={modalShow.isImporterVerified}
+        onHide={() =>
+          setModalShow((prevVal) => ({
+            ...prevVal,
+            isImporterVerified: false,
+          }))
+        }
+      />
+      <DefaultUserNotAuthorizedModal
+        show={modalShow.isDefaultUserNotAllowed}
+        onHide={() =>
+          setModalShow((prevVal) => ({
+            ...prevVal,
+            isDefaultUserNotAllowed: false,
+          }))
+        }
+        // userType="User"
+        // goToPath="CompanyDetails"
+        goToPath="userType"
+      />
+
+      <UserNotAuthorized
+        show={modalShow.isFactoryVerified}
+        onHide={() =>
+          setModalShow((prevVal) => ({
+            ...prevVal,
+            isFactoryVerified: false,
+          }))
+        }
+        userType="Buyer"
+      />
 
       <Header title={t("translation:factories")} />
 
