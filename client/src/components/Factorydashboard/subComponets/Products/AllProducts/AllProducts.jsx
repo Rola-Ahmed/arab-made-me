@@ -61,7 +61,7 @@ export default function GetProducts() {
 
               <div className="btn-container">
                 {/* will use it again */}
-                
+
                 {/* <button className="order-btn-1" disabled={false}>
                   <i className="fa-solid fa-cloud-arrow-down"></i>
                   <p className="cursor">Download CSV</p>
@@ -89,7 +89,8 @@ export default function GetProducts() {
 
           {/* data section */}
 
-          <div className=" data-container w-100 p-3">
+          {/* <div className=" data-container w-100 p-3 table-responsive"> */}
+          <div className=" table-responsive-xxl">
             <table className="table mb-0">
               {/* headers */}
 
