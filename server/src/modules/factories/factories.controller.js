@@ -229,11 +229,15 @@ export const productsOfFactory = asyncHandler(async (req, res, nxt) => {
   const { id } = req.params;
   const searchFilters = searchFiltering(req.query);
 
+  const page = parseInt(req.query.page, 10) || 1; // Default to page 1
+  const limit = parseInt(req.query.size, 10) || 10; // Default limit to 10
+  const offset = (page - 1) * limit; // Calculate offset based on page
+
   searchFilters.whereConditions.push({ factoryId: id });
   const products = await Product.findAll({
     where: searchFilters.whereConditions,
-    offset: searchFilters.offset,
-    limit: searchFilters.limit,
+    offset,
+    limit,
     order:
       searchFilters.order.length > 0
         ? searchFilters.order
@@ -241,7 +245,23 @@ export const productsOfFactory = asyncHandler(async (req, res, nxt) => {
     include: "factory",
   });
 
-  return res.status(200).json({ message: "done", products });
+
+  const totalProducts = await Product.count({
+    where: searchFilters.whereConditions,
+    // offset: searchFilters.offset,
+    // limit: searchFilters.limit,
+    
+  });
+
+  return res.status(200).json({
+    message: "done",
+    products,
+    pagination: {
+      totalProducts,
+      totalPages: Math.ceil(totalProducts / limit),
+      currentPage: page,
+    },
+  });
 });
 
 export const confirmEmail = crudOps.confirmEmail(Factory, "factory");
@@ -273,79 +293,9 @@ export const getSPMF = crudOps.getAllForFactory(
 
 export const getVisits = crudOps.getAllForFactory(Visit, "visits");
 
-// export const getFactoriesWithProducts = asyncHandler(async (req, res, next) => {
-//   let filter;
-//   if (req.query.filter) {
-//     filter = {
-//       [Op.or]: [
-//         sequelize.where(
-//           sequelize.fn("LOWER", sequelize.col("products.name")),
-//           "LIKE",
-//           sequelize.fn("LOWER", `%${req.query.filter}%`)
-//         ),
-//         sequelize.where(
-//           sequelize.fn("LOWER", sequelize.col("products.description")),
-//           "LIKE",
-//           sequelize.fn("LOWER", `%${req.query.filter}%`)
-//         ),
-//       ],
-//     };
-//     req.query.filter = null;
-//   }
-
-//   const searchFilters = searchFiltering(req.query);
-
-//   if (filter) {
-//     searchFilters.whereConditions.push(filter);
-//   }
-
-//   // Fetch factories along with their associated products
-//   const factories = await Factory.findAll({
-//     where: searchFilters.whereConditions,
-//     offset: searchFilters.offset,
-//     limit: searchFilters.limit,
-//     order:
-//       searchFilters.order.length > 0
-//         ? searchFilters.order
-//         : [["createdAt", "DESC"]],
-//     include: [
-//       {
-//         model: Product,
-//         as: "products",
-//         limit: 20,
-//         separate: true, // Fetch products in a separate query to support limit
-//         attributes: ["id", "name", "coverImage"], // Product attributes to include
-//       },
-//     ],
-//   });
-
-//   return res.status(200).json({ message: "done", factories });
-// });
-
 export const getFactoriesWithProducts = asyncHandler(async (req, res, next) => {
-  // let filter;
-  // if (req.query.filter) {
-  //   filter = {
-  //     [Op.or]: [
-  //       sequelize.where(
-  //         sequelize.fn("LOWER", sequelize.col("products.name")),
-  //         "LIKE",
-  //         sequelize.fn("LOWER", `%${req.query.filter}%`)
-  //       ),
-  //       sequelize.where(
-  //         sequelize.fn("LOWER", sequelize.col("products.description")),
-  //         "LIKE",
-  //         sequelize.fn("LOWER", `%${req.query.filter}%`)
-  //       ),
-  //     ],
-  //   };
-  //   req.query.filter = null;
-  // }
-
-  // const searchFilters = searchFiltering(req.query)
-
   const searchFilters = searchFiltering(req.query);
-  
+
   const page = parseInt(req.query.page, 10) || 1; // Default to page 1
   const limit = parseInt(req.query.size, 10) || 10; // Default limit to 10
 
@@ -372,7 +322,6 @@ export const getFactoriesWithProducts = asyncHandler(async (req, res, next) => {
       },
     ],
   });
-
 
   const totalFactories = await Factory.count({
     where: searchFilters.whereConditions,
