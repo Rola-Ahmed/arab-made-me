@@ -15,7 +15,7 @@ export const addWhiteLabelingValidationSchema = Joi.object({
     supplyLocation:Joi.string(),
     shippingConditions:Joi.string(),
     shippingSize:Joi.string(),
-    quantity:Joi.number(),
+    quantity:Joi.string(),
     qualityConditions:Joi.string(),
     packingConditions:Joi.string(),
     deadline:Joi.date()
@@ -30,7 +30,7 @@ export const updateWhiteLabelingValidationSchema = Joi.object({
     supplyLocation:Joi.string(),
     shippingConditions:Joi.string(),
     shippingSize:Joi.string(),
-    quantity:Joi.number(),
+    quantity:Joi.string(),
     qualityConditions:Joi.string(),
     packingConditions:Joi.string(),
     deadline:Joi.date()

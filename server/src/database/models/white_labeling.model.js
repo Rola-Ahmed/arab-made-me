@@ -34,7 +34,7 @@ export const WhiteLabeling = sequelize.define('whiteLabelings', {
       this.setDataValue('docs', paths)
     }
   },
-  quantity: DataTypes.INTEGER,
+  quantity: DataTypes.STRING,
   shippingConditions: DataTypes.STRING,
   shippingSize: DataTypes.STRING,
   supplyLocation: DataTypes.STRING,

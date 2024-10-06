@@ -2,7 +2,7 @@ import Joi from "joi";
 
 
 let joiString = Joi.string()
-let quantity = Joi.number()
+let quantity = Joi.string()
 let shippingConditions = Joi.string().max(255)
 let packingConditions = Joi.string().max(255)
 let paymentTerms = Joi.string().max(255)

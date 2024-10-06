@@ -1,11 +1,11 @@
 import Joi from "joi"
 
 export const addSourcingOfferSchema = Joi.object({
-    price: Joi.number().required(),
+    price: Joi.string().required(),
     productName: Joi.string().required(),
     productDescription: Joi.string().required(),
     productHSNCode: Joi.string().min(6),
-    quantity: Joi.number().integer().required(),
+    quantity: Joi.string().required(),
     qualityConditions: Joi.string(),
     shippingConditions: Joi.string(),
     packingConditions: Joi.string(),
@@ -19,11 +19,11 @@ export const addSourcingOfferSchema = Joi.object({
 
   export const updateSourcingOfferSchema = Joi.object({
     id:Joi.number().integer(),
-    price: Joi.number(),
+    price: Joi.string(),
     productName: Joi.string(),
     productDescription: Joi.string(),
     productHSNCode: Joi.string().min(6),
-    quantity: Joi.number().integer(),
+    quantity: Joi.string().required(),
     qualityConditions: Joi.string(),
     shippingConditions: Joi.string(),
     packingConditions: Joi.string(),

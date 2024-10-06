@@ -29,7 +29,7 @@ export const SourcingRequest = sequelize.define('sourcingRequests', {
       type: DataTypes.JSONB,
     },
     quantity: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     preferredCountries: {

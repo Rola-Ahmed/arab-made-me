@@ -4,7 +4,7 @@ const commonFields = {
   factoryId: Joi.number().integer(),
   repName: Joi.string(),
   contactData: Joi.object(),
-  quantity: Joi.number().integer().min(1),
+  quantity: Joi.string().required(),
   instructions: Joi.string(),
   shippingConditions: Joi.string(),
   packingConditions: Joi.string(),
@@ -16,7 +16,7 @@ const commonFields = {
   companyQualityTesting: Joi.string(),
   timeLine: Joi.array().max(5).items(Joi.object({
     date: Joi.date(),
-    quantity: Joi.number()
+    quantity: Joi.string().required()
   })).required(),
   supplyLocation: Joi.string(),
   deadline:Joi.date(),

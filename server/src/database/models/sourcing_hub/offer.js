@@ -32,7 +32,7 @@ export const SourcingOffer = sequelize.define('sourcingOffers', {
         type:DataTypes.STRING
     },
     quantity:{
-        type:DataTypes.INTEGER,
+        type:DataTypes.STRING,
     },
     qualityConditions:{
         type:DataTypes.STRING

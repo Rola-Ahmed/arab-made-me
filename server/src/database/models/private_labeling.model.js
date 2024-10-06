@@ -4,53 +4,57 @@ import { Factory } from "./factory.model.js";
 import { Importer } from "./importer.model.js";
 import { Product } from "./product.model.js";
 
-export const PrivateLabeling=sequelize.define('privateLabelings',{
+export const PrivateLabeling = sequelize.define(
+  "privateLabelings",
+  {
     id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
     },
     // specialCharacteristics: {
     //     type: DataTypes.JSONB
     // },
-    moreDetails:{
-      type:DataTypes.STRING
+    moreDetails: {
+      type: DataTypes.STRING,
     },
     productName: {
-      type: DataTypes.STRING
-  },
-    status:{
-      type:DataTypes.ENUM,
-      values:['open','seen','pending','accepted','rejected'],
-      defaultValue:'open'
-  },
-    docs: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
-        set(value){
-          let paths=[]
-          value.forEach(element => {
-            paths.push(element.finalPath)
-          });
-          this.setDataValue('docs',paths)
-        } 
-      },
-      tradeMark:{
-        type: DataTypes.STRING, 
-        set(value){
-          this.setDataValue('tradeMark',value[0].finalPath)
-        }
+      type: DataTypes.STRING,
     },
-    quantity:DataTypes.INTEGER,
-    shippingConditions:DataTypes.STRING,
-    shippingSize:DataTypes.STRING,
-    supplyLocation:DataTypes.STRING,
-    packingConditions:DataTypes.STRING,
-    qualityConditions:DataTypes.STRING,
-    deadline:DataTypes.DATE
-},{
-    timestamps:true
-})
+    status: {
+      type: DataTypes.ENUM,
+      values: ["open", "seen", "pending", "accepted", "rejected"],
+      defaultValue: "open",
+    },
+    docs: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      set(value) {
+        let paths = [];
+        value.forEach((element) => {
+          paths.push(element.finalPath);
+        });
+        this.setDataValue("docs", paths);
+      },
+    },
+    tradeMark: {
+      type: DataTypes.STRING,
+      set(value) {
+        this.setDataValue("tradeMark", value[0].finalPath);
+      },
+    },
+    quantity: DataTypes.STRING,
+    shippingConditions: DataTypes.STRING,
+    shippingSize: DataTypes.STRING,
+    supplyLocation: DataTypes.STRING,
+    packingConditions: DataTypes.STRING,
+    qualityConditions: DataTypes.STRING,
+    deadline: DataTypes.DATE,
+  },
+  {
+    timestamps: true,
+  }
+);
 
-PrivateLabeling.belongsTo(Factory)
-PrivateLabeling.belongsTo(Importer)
-PrivateLabeling.belongsTo(Product,{foreignKey:{allowNull:true}})
+PrivateLabeling.belongsTo(Factory);
+PrivateLabeling.belongsTo(Importer);
+PrivateLabeling.belongsTo(Product, { foreignKey: { allowNull: true } });

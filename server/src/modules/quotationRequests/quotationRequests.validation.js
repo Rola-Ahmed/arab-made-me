@@ -3,7 +3,7 @@ import Joi from "joi";
 let factoryId = Joi.number()
 let importerId = Joi.number()
 let productId = Joi.number().min(1)
-let quantity = Joi.number()
+let quantity = Joi.string()
 let shippingConditions = Joi.string().max(255)
 let packingConditions = Joi.string().max(255)
 let paymentTerms = Joi.string().max(255)

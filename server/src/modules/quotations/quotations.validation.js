@@ -3,27 +3,27 @@ import Joi from "joi";
 const baseQuotationSchema = {
   productName: Joi.string(),
   importerId: Joi.number().required(),
-  quantity: Joi.number().min(1),
+  quantity: Joi.string().required(),
   shippingConditions: Joi.string(),
   packingConditions: Joi.string(),
   paymentTerms: Joi.string(),
-  minQuantity: Joi.number().min(1),
+  minQuantity: Joi.string().required(),
   qualityConditions: Joi.string(),
-  price: Joi.number().min(1).required(),
+  price: Joi.string().required(),
   discounts: Joi.number(),
   timeLine: Joi.array().items(Joi.object()),
-  requestedQuantity: Joi.number(),
   notes: Joi.string(),
-  supplyLocation:Joi.string(),
-  shippingSize:Joi.string(),
-  deadline:Joi.date(),
-  formCode:Joi.string()
+  supplyLocation: Joi.string(),
+  shippingSize: Joi.string(),
+  deadline: Joi.date(),
+  formCode: Joi.string(),
 };
 
-const extendedSchema = (additionalFields) => Joi.object({
-  ...baseQuotationSchema,
-  ...additionalFields,
-}).required();
+const extendedSchema = (additionalFields) =>
+  Joi.object({
+    ...baseQuotationSchema,
+    ...additionalFields,
+  }).required();
 
 export const addQuotationValidationRFQ = extendedSchema({
   productId: Joi.number().required(),
@@ -49,25 +49,31 @@ export const addQuotationValidationWhiteLabel = extendedSchema({
 export const updateQuotationValidation = Joi.object({
   productName: Joi.string(),
   id: Joi.number().required(),
-  quantity: Joi.number().min(1),
+  quantity: Joi.string().required(),
   shippingConditions: Joi.string(),
   packingConditions: Joi.string(),
   paymentTerms: Joi.string(),
-  minQuantity: Joi.number().min(1),
+  minQuantity: Joi.string().required(),
   qualityConditions: Joi.string(),
-  price: Joi.number().min(1),
+  price: Joi.string().required(),
   discounts: Joi.number(),
   timeLine: Joi.array().items(Joi.object()),
-  requestedQuantity: Joi.number(),
   notes: Joi.string(),
-  supplyLocation:Joi.string(),
-  shippingSize:Joi.string(),
-  deadline:Joi.date(),
-  formCode:Joi.string(),
+  supplyLocation: Joi.string(),
+  shippingSize: Joi.string(),
+  deadline: Joi.date(),
+  formCode: Joi.string(),
   status: Joi.string(),
 }).required();
 
 export const getQuotationsValidation = Joi.object({
-  include: Joi.string().valid("factory", "sourcingRequest", "importer", "privateLabeling", "specialManufacturingRequest", "quotationRequest"),
+  include: Joi.string().valid(
+    "factory",
+    "sourcingRequest",
+    "importer",
+    "privateLabeling",
+    "specialManufacturingRequest",
+    "quotationRequest"
+  ),
   id: Joi.number(),
 });
