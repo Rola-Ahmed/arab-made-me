@@ -8,7 +8,9 @@ import LoadingProccess from "components/Shared/Dashboards/LoadingProccess";
 import { useNavigate } from "react-router-dom";
 import useFormSubmission from "./useFormSubmission";
 
-import UploadDocument from "components/Forms/Shared/UploadDocument";
+import UploadDocument, {
+  UploadVedio,
+} from "components/Forms/Shared/UploadDocument";
 import TextareaInput from "components/Forms/Shared/TextareaInput";
 import SpecialChar from "components/Forms/Shared/SpecialChar/SpecialChar";
 import {
@@ -32,6 +34,13 @@ const uploadConfigs = [
     title: "Upload cover Image *",
   },
 ];
+
+const uploadConfigs2 = {
+  mediaName: "coverVideo",
+  maxLen: 1,
+  accepts: ["mp4", "mkv", "x-matroska"],
+  title: "cover Video",
+};
 
 export default function AddProduct() {
   let navigate = useNavigate();
@@ -245,6 +254,16 @@ export default function AddProduct() {
                   title={media.title}
                 />
               ))}
+              <UploadVedio
+                selectedDocs={selectedDocs}
+                errorMsg={errorMsg}
+                setSelectedDocs={setSelectedDocs}
+                MediaName={uploadConfigs2.mediaName}
+                mediaMaxLen={uploadConfigs2.maxLen}
+                meidaAcceptedExtensions={uploadConfigs2.accepts}
+                setErrorMsg={setErrorMsg}
+                title={uploadConfigs2.title}
+              />
 
               <TextareaInput
                 vlaidationName="description"

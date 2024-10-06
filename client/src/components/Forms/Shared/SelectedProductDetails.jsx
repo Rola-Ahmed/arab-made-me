@@ -50,7 +50,7 @@ export default function ProductDetails(props) {
               <input
                 type="text"
                 className="form-control"
-                value={productDetails?.country}
+                value={productDetails?.factory?.country}
                 readOnly
               />
             </div>

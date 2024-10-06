@@ -242,8 +242,16 @@ export const productsOfFactory = asyncHandler(async (req, res, nxt) => {
       searchFilters.order.length > 0
         ? searchFilters.order
         : [["createdAt", "DESC"]],
-    include: "factory",
+    // include: "factory",
+    include: [
+      {
+        model: Factory, // Assuming 'Factory' is the related model
+        attributes: ["id", "city", "country", "coverImage", "sectorId"], // Specific columns from 'factory'
+      }
+    ]
+    // attributes: ["id", "city","country",'coverImage','sectorId'],
   });
+
 
 
   const totalProducts = await Product.count({

@@ -301,7 +301,7 @@ export function UploadVedio(props) {
       <div className="form-group">
         <label className="form-title">{title}</label>
         <label
-          className="mb-0 drop-drag-area p-5 text-center cursor d-block"
+          className="mb-0 drop-drag-area p-5 text-center cursor d-block w-100"
           htmlFor={MediaName}
           onDrop={(e) =>
             handleDrop(

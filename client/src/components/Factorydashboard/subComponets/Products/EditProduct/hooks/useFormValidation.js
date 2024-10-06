@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
   requiredStringMax255,
-  reqQualityValidate,
+  priceCurrency,
   textAreaValidate,
 } from "utils/validationUtils";
 
@@ -16,8 +16,6 @@ export const useFormValidation = (productDetails, submitForm) => {
     maxOrderQuantity: productDetails?.maxOrderQuantity || "",
     description: productDetails?.description || "",
 
-    categoryId: productDetails?.categoryId || "",
-    sectorId: productDetails?.sectorId || "",
 
     // specialCharacteristicsArr:
     productCharacteristic:
@@ -40,7 +38,7 @@ export const useFormValidation = (productDetails, submitForm) => {
   const validationSchema = Yup.object().shape({
     name: requiredStringMax255,
 
-    price: reqQualityValidate,
+    price: priceCurrency,
 
     hsnCode: Yup.string()
       .min(6, "Minimum  length is 6")
@@ -48,7 +46,6 @@ export const useFormValidation = (productDetails, submitForm) => {
     guarantee: textAreaValidate(),
     minOrderQuantity: requiredStringMax255,
     maxOrderQuantity: requiredStringMax255,
-    categoryId: Yup.string().required("Input Field is Required"),
 
     description: requiredStringMax255,
 

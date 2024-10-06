@@ -1,8 +1,6 @@
 import { useEffect, useState, useContext } from "react";
-import useCategories from "hooks/useCategory";
 import { UserToken } from "Context/userToken";
 import { userDetails } from "Context/userType";
-
 import { useNavigate, useParams } from "react-router-dom";
 import FactoryUnVerified from "components/ActionMessages/FactoryUnVerified/FactoryUnVerifiedDash";
 import { useFormValidation } from "./hooks/useFormValidation";
@@ -17,7 +15,6 @@ export default function EditProduct() {
   let { isLogin } = useContext(UserToken);
   let { currentUserData } = useContext(userDetails);
   let { productId } = useParams();
-  const categories = useCategories();
   let navigate = useNavigate();
 
   const [errorMsg, setErrorMsg] = useState();
@@ -41,26 +38,17 @@ export default function EditProduct() {
     });
 
     let {
-      country,
       name,
-      sectorId,
-      categoryId,
       description,
       price,
       hsnCode,
       minOrderQuantity,
-      city,
       guarantee,
       maxOrderQuantity,
     } = values;
 
     let data = {
-      country,
       name,
-
-      categoryId,
-      sectorId,
-
       description,
       price,
       minOrderQuantity,
@@ -69,7 +57,6 @@ export default function EditProduct() {
       ...(hsnCode && { hsnCode: hsnCode }),
       ...(guarantee && { guarantee: guarantee }),
       ...(maxOrderQuantity && { maxOrderQuantity: maxOrderQuantity }),
-      ...(city && { city: city }),
     };
 
     if (
@@ -134,7 +121,7 @@ export default function EditProduct() {
           {/* <form className="header w-100"> */}
           <div>
             <div className=" d-flex justify-content-between align-items-center ">
-              <h2>Edit Product {productDetails?.name}</h2>
+              <h2>Edit Product {`=>`} {productDetails?.name}</h2>
 
               <div className="btn-container">
                 <button
@@ -163,47 +150,8 @@ export default function EditProduct() {
                   isRequired={true}
                   title="Product Name"
                   formValidation={formValidation}
-                  vlaidationName={"name"}
+                  vlaidationName="name"
                 />
-              </div>
-
-              <div className="col-4">
-                <div className="form-group">
-                  <label>Sector</label>
-
-                  <select
-                    className="form-select form-control py-2"
-                    onChange={formValidation.handleChange}
-                    id="sectorId"
-                    onBlur={formValidation.handleBlur}
-                    value={formValidation.values.sectorId}
-                    onClick={(e) => {
-                      let selectedProductName = "";
-                      categories?.find(
-                        (item) =>
-                          item.sectorId == e.target.value
-                            ? (selectedProductName = item.id)
-                            : ""
-                        // )
-                      );
-
-                      formValidation.setFieldValue(
-                        "categoryId",
-                        selectedProductName
-                      ); // Assuming 'productName' is the field name for product name
-                    }}
-                  >
-                    {categories?.map((item) => (
-                      // <option value={item?.id}>{item?.name}</option>
-
-                      <optgroup label={item?.name}>
-                        <option value={item?.sector?.id}>
-                          {item?.sector?.name}
-                        </option>
-                      </optgroup>
-                    ))}
-                  </select>
-                </div>
               </div>
 
               <div className="col-4">
@@ -253,7 +201,7 @@ export default function EditProduct() {
 
               {/* ---------------------------- */}
 
-              <div className="col-12 ms-3 ">
+              <div className="col-12 ms-3 py-2">
                 <div className="border-row row">
                   <label className="pb-2">Product Characteristics</label>
 
@@ -298,8 +246,8 @@ export default function EditProduct() {
                       }
                     }}
                   >
-                    <i className="fa-solid fa-plus me-1"></i>
-                    Add product
+                    {/* <i className="fa-solid fa-plus me-1"></i> */}
+                    Update product
                   </button>
                 )}
               </div>

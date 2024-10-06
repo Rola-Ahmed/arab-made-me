@@ -90,14 +90,13 @@ export default function GetProducts() {
           {/* data section */}
 
           {/* <div className=" data-container w-100 p-3 table-responsive"> */}
-          <div className=" table-responsive-xxl">
-            <table className="table mb-0">
-              {/* headers */}
 
+          <div className="table-responsive">
+            <table className="table mb-0">
               <thead>
-                <tr className="row">
-                  <th className=" col-2 ">
-                    <div className=" th-1st-title-gap d-flex justify-content-start align-items-center">
+                <tr>
+                  <th>
+                    <div className="d-flex justify-content-start align-items-center">
                       <div className="form-check">
                         <input
                           className="form-check-input"
@@ -109,154 +108,113 @@ export default function GetProducts() {
                       Product Name
                     </div>
                   </th>
-
-                  <th className=" col-1 ">Unit Price</th>
-
-                  <th className=" col-1 ">Available</th>
-                  <th className=" col-1 ">Order Quantity</th>
-
-                  <th className=" col-2 pe-1 ">Post Date</th>
-                  <th className=" col-2 ">hsn Code</th>
-
-                  <th className=" col-2 ps-4">guarantee</th>
-
-                  <th className=" col-1"></th>
+                  <th>Unit Price</th>
+                  <th>Available</th>
+                  <th>Order Quantity</th>
+                  <th>Post Date</th>
+                  <th>HSN Code</th>
+                  <th>Guarantee</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
 
               <tbody>
-                {/* row1 */}
+                {/* Data Rows */}
                 {reqData?.map((poItem) => (
-                  <tr className="row">
-                    <th className=" col-2 ">
-                      <div className=" th-1st-title-gap d-flex justify-content-start align-items-center">
+                  <tr key={poItem.id}>
+                    <td>
+                      <div className="d-flex justify-content-start align-items-center">
                         <div className="form-check">
                           <input
                             className="form-check-input"
                             type="checkbox"
                             value=""
-                            id="flexCheckDefault"
+                            id={`productCheckbox-${poItem.id}`}
                           />
                         </div>
-                        <td className="">
-                          <div className="title-text-handler">
-                            <p className="trate-title">{poItem?.name} </p>
-                            <p className="trate-sub-title d-flex">
-                              {poItem?.productAverageRate ? (
-                                <StarRating
-                                  averageRating={poItem?.productAverageRate}
-                                />
-                              ) : (
-                                "0 rating"
-                              )}
-                            </p>
-                          </div>
-                        </td>
+                        <div>
+                          <p className="trate-title title-text-handler">
+                            {poItem?.name}
+                          </p>
+                          <p className="trate-sub-title d-flex">
+                            {poItem?.productAverageRate ? (
+                              <StarRating
+                                averageRating={poItem?.productAverageRate}
+                              />
+                            ) : (
+                              "0 rating"
+                            )}
+                          </p>
+                        </div>
                       </div>
-                    </th>
-
-                    <th className=" col-1 d-flex align-items-center ">
+                    </td>
+                    <td>
                       <p className="trate-sub-title">${poItem?.price}</p>
-                    </th>
-
-                    <th className=" col-1 d-flex align-items-center  ">
-                      <div>
-                        {poItem?.available ? "instock" : "out of stock"}
-                      </div>
-                    </th>
-
-                    <th className=" col-1 d-flex align-items-center  ">
-                      <p className="">
+                    </td>
+                    <td>{poItem?.available ? "In stock" : "Out of stock"}</td>
+                    <td>
+                      <p>
                         {poItem?.minOrderQuantity}
-                        {`${
-                          poItem?.maxOrderQuantity
-                            ? "-" + poItem?.maxOrderQuantity
-                            : ""
-                        }`}
+                        {poItem?.maxOrderQuantity
+                          ? ` - ${poItem?.maxOrderQuantity}`
+                          : ""}
                       </p>
-                    </th>
-                    <th className=" col-2  d-flex align-items-center  pe-1 ">
+                    </td>
+                    <td>
                       <p className="trate-sub-title">
-                        {getMonthName(poItem?.createdAt?.split("T")?.[0])}
+                        {getMonthName(poItem?.createdAt?.split("T")[0])}
                       </p>
-                    </th>
-
-                    <th className=" col-2  d-flex align-items-center ">
-                      <p>{poItem?.hsnCode ?? ""} </p>
-                    </th>
-
-                    <th className=" col-2  d-flex align-items-center ps-4">
-                      <p>{poItem?.guarantee ?? ""} </p>
-                    </th>
-
-                    <th className=" col-1 d-flex align-items-center justify-content-center gap-icon-table">
-                      <p
-                        className="trate-sub-title view-more-details cursor"
-                        title="view more details"
-                        onClick={() => {
-                          navigate(
-                            `/factorydashboard/product/moreDetails?productId=${poItem?.id}&productName=${poItem?.name}`
-                          );
-                        }}
-                      >
-                        {/* view */}
-                        <i className="fa-solid fa-up-right-from-square"></i>
-                      </p>
-                      <p
-                        className="trate-sub-title view-more-details cursor"
-                        title="delete the form"
-                        onClick={() => {
-                          deleteData(poItem?.id);
-                        }}
-                      >
-                        <i className="fa-regular fa-trash-can"></i>
-                      </p>
-                    </th>
+                    </td>
+                    <td>{poItem?.hsnCode ?? ""}</td>
+                    <td>{poItem?.guarantee ?? ""}</td>
+                    <td>
+                      <div className="d-flex justify-content-center  aligen-items-center gap-24">
+                        <p
+                          className="trate-sub-title view-more-details cursor"
+                          title="View more details"
+                          onClick={() =>
+                            navigate(
+                              `/factorydashboard/product/moreDetails?productId=${poItem.id}&productName=${poItem.name}`
+                            )
+                          }
+                        >
+                          <i className="fa-solid fa-up-right-from-square"></i>
+                        </p>
+                        <p
+                          className="trate-sub-title view-more-details cursor"
+                          title="Delete"
+                          onClick={() => deleteData(poItem.id)}
+                        >
+                          <i className="fa-regular fa-trash-can"></i>
+                        </p>
+                      </div>
+                    </td>
                   </tr>
                 ))}
 
-                {/* is data is still loading or error occured */}
+                {/* Status Message */}
                 <StatusMessage
                   reqDataLength={reqData?.length}
                   apiLoadingData={apiLoadingData?.reqData}
                   errorsMsg={apiLoadingData?.errorWhileLoading}
                 />
 
-                <tr className="row">
-                  <div className="col-12  ReactPaginate">
-                    <PaginationDash
-                      pagination={pagination}
-                      setPagination={setPagination}
-                    />
-                  </div>
+                {/* Pagination */}
+                <tr>
+                  <td colSpan="8">
+                    <div className="ReactPaginate">
+                      <PaginationDash
+                        pagination={pagination}
+                        setPagination={setPagination}
+                      />
+                    </div>
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-        
       </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
     </>
   );
 }

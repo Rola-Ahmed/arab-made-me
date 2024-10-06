@@ -59,12 +59,10 @@ const useAllProducts = (filter) => {
     }, 50);
   };
 
-
   useEffect(() => {
-  
     setTimeout(() => {
-      fetchReqData();
-    }, 50);
+    fetchReqData();
+    }, 10);
   }, [pagination?.currentPage, filter, isLogin, currentUserData?.factoryId]);
 
   const deleteData = async (itemId) => {
