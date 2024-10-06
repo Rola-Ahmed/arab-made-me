@@ -23,6 +23,10 @@ i18n
       ar: ["ar"],
       default: ["en"],
     },
+    load: 'currentOnly', // Avoid loading missing namespaces
+    // or
+    saveMissing: true, // Enables saving missing translations to a backend
+
 
     // resources: {
     //   en: {translation: EN},
@@ -30,7 +34,7 @@ i18n
     // },
 
     // ns: ['ar', 'en'],
-    debug: true,
+    debug: false,
 
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default

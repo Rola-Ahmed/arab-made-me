@@ -145,37 +145,37 @@ const useAllUserChats = (isLogin) => {
     if (isLogin) {
       // console.log("isLogin",isLogin)
       const connectSocket = () => {
-        // socket.connect();
+        socket.connect();
 
         socket.on("connect", () => {
-          // console.log("Connected to server");
+          console.log("Connected to server");
         });
 
         socket.on("newMessage", (data) => {
-          // console.log(" newMessage data",data)
+          console.log(" newMessage data",data)
           fetchReqData();
         });
 
         socket.on("socketAuth", (data) => {
-          // console.log("socketAuth data",data)
+          console.log("socketAuth data",data)
         });
 
         socket.on("connect_error", (err) => {
-          // console.log(err);
+          console.log("connect_error,",err);
         });
 
         socket.on("connect_timeout", (err) => {
-          // console.log(err);
+          console.log("connect_error",err);
 
         });
 
         socket.on("error", (err) => {
-          // console.log(err);
+          console.log("error","err",err);
 
         });
 
         socket.on("reconnect_error", (err) => {
-          // console.log(err);
+          console.log("reconnect_error",err);
 
         });
 
@@ -183,6 +183,20 @@ const useAllUserChats = (isLogin) => {
           // console.log(err);
 
         });
+        socket.on("connect_error", (err) => {
+          console.error("Socket connection error:", err.message);
+      });
+      
+      socket.on("connect_timeout", (err) => {
+          console.error("Socket connection timeout:", err.message);
+      });
+      
+      socket.on("error", (err) => {
+          console.error("Socket error:", err.message);
+      });
+      
+      // Add logs for other events as needed...
+      
 
         // Cleanup on unmount
         return () => {
@@ -200,10 +214,7 @@ const useAllUserChats = (isLogin) => {
 
       connectSocket();
 
-      // return () => {
-      //   console.log("Disconnecting socket..."); // Debugging message
-      //   socket.disconnect();
-      // };
+      
     }
   }, [isLogin]);
 

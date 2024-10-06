@@ -64,8 +64,8 @@ export default function ChatList() {
 
             <tbody>
               {/* row1 */}
-              {reqData?.map((poItem) => (
-                <tr className="row goToChat" onClick={() => {}}>
+              {reqData?.map((poItem,index) => (
+                <tr className="row goToChat" key={index} >
                   <th
                     className=" col  d-grid align-items-center gap-16 cursor  "
                     onClick={() =>

@@ -61,7 +61,6 @@ function OneSourcingOffer() {
   // if page is loading
   const authChecks = useAuthFormChecks(isLoading, "Sourcing Offer", currentUrl);
   if (authChecks) return authChecks;
-  console.log("showImagePop", showImagePop);
 
   const handleImageClick = (imagePath) => {
     setShowImagePop({
