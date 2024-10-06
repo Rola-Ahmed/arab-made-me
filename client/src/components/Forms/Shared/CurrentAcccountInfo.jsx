@@ -1,259 +1,124 @@
 import { useState, useContext, useEffect } from "react";
-import axios from "axios";
-import { baseUrl } from "config.js";
+
 import { userDetails } from "Context/userType";
+import { useFetchFactoryById } from "hooks/useFetchFactoryById";
+import { useFetchImporterById } from "hooks/useFetchImporterById";
 
 export default function CurrentAcccountInfo() {
   let { currentUserData } = useContext(userDetails);
-  let [factoryDetails, setFactoryDetails] = useState({});
+  let [factoryDetails, setFactoryDetails] = useState([]);
+  const [error, setError] = useState(null);
+  const { data: factoryData, errorMessage: factoryError } = useFetchFactoryById(
+    currentUserData?.factoryId ?? undefined
+  );
+  // }
 
-  // factory details
-  async function fetchFactoryData() {
-    try {
-      let config = {
-        method: "get",
-        url: `${baseUrl}/factories/${currentUserData?.factoryId}`,
-      };
-
-      const response = await axios.request(config);
-
-      if (response.data.message == "done") {
-        setFactoryDetails(response.data.factories);
-      } else if (response.data.message == "404 Not Found") {
-        // errorsMsg("404");
-      }
-    } catch (error) {}
-  }
-
-  async function fetchImporterData() {
-    try {
-      let config = {
-        method: "get",
-        url: `${baseUrl}/importers/${currentUserData?.importerId}`,
-      };
-
-      const response = await axios.request(config);
-
-      if (response.data.message == "done") {
-        setFactoryDetails(response.data.importers);
-      } else if (response.data.message == "404 Not Found") {
-        // errorsMsg("404");
-      }
-    } catch (error) {}
-  }
+  const {
+    data: importerData,
+    errorMessage: importerError,
+  } = useFetchImporterById(currentUserData?.importerId);
 
   useEffect(() => {
     if (currentUserData && currentUserData?.factoryId !== null) {
-      fetchFactoryData();
+      setFactoryDetails([
+        {
+          name: "Factory Name",
+          value: factoryData?.name,
+        },
+        {
+          name: "User Role",
+          value: "Factory",
+        },
+
+        {
+          name: "Representative Name",
+          value: `${factoryData?.repName?.[0]} ${factoryData?.repName?.[1]}`,
+        },
+
+        {
+          name: "Representative email",
+          value: factoryData?.repEmail,
+        },
+
+        {
+          name: "Representative phone number",
+          value: factoryData?.repPhone,
+        },
+      ]);
+      setError(factoryError);
     }
     if (currentUserData && currentUserData?.importerId !== null) {
-      fetchImporterData();
+      // console.log("current-------------- improetr");
+      setFactoryDetails([
+        {
+          name: "Importer Name",
+          value: importerData?.name,
+        },
+        {
+          name: "Role",
+          value: "Importer",
+        },
+        {
+          name: "repesentive Name",
+          value: importerData?.repName?.[0],
+        },
+        {
+          name: "repesentive email",
+          value: importerData?.repEmail,
+        },
+        {
+          name: "repesentive Phone",
+          value: importerData?.repPhone,
+        },
+      ]);
+      setError(importerError);
     }
-  }, [currentUserData]);
+    if (
+      currentUserData?.importerId == null &&
+      currentUserData?.factoryId == null
+    ) {
+      setFactoryDetails([
+        {
+          name: "Representive Email",
+          value: "currentUserData?.userEmail",
+        },
+
+        {
+          name: "Role",
+          value: "Default User",
+        },
+      ]);
+    }
+  }, [currentUserData, factoryData, importerData]);
 
   return (
-    <>
-      {/* Account description */}
-      {/* <div className="row row-container w-100 "> */}
-      {/* Factory description */}
-      {/* <div className="container container-po "> */}
+    <div className="input-content ">
+      <div className="d-flex justify-content-between w-100">
+        <h5>Current Account Inforamtion</h5>
 
-      <div className="input-content ">
-        <div className="d-flex justify-content-between w-100">
-          <h5>Current Account Inforamtion</h5>
-
-          <i
-            data-bs-toggle="collapse"
-            data-bs-target="#collapseExample"
-            aria-expanded="false"
-            aria-controls="collapseExample"
-            class="fa-solid fa-chevron-down cursor"
-          ></i>
-        </div>
-        <div id="collapseExample" className="row row-container w-100 collapse">
-          {currentUserData?.factoryId !== null && (
-            <>
-              <div className="col-md-6 col-sm-12">
-                <div className="form-group">
-                  <label>Factory Name</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={factoryDetails?.name || ""}
-                    readOnly
-                  />
-                </div>
-              </div>
-              <div className="col-md-6 col-sm-12">
-                <div className="form-group">
-                  <label>Role</label>
-                  <input
-                    type="text"
-                    className="form-control text-dark"
-                    value="Factory"
-                    readOnly
-                  />
-                </div>
-              </div>
-
-              <div className="col-md-6 col-sm-12">
-                <div className="form-group">
-                  <label>Representative Name</label>
-                  <input
-                    type="text"
-                    className="form-control text-dark"
-                    value={`${
-                      factoryDetails?.repName == null
-                        ? " "
-                        : `${factoryDetails?.repName?.[0]}  ${factoryDetails?.repName?.[1]}`
-                    }`}
-                    readOnly
-                  />
-                </div>
-              </div>
-
-              <div className="col-md-6 col-sm-12">
-                <div className="form-group">
-                  <label> Representative email</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={factoryDetails?.repEmail || ""}
-                    readOnly
-                  />
-                </div>
-              </div>
-
-              <div className="col-md-6 col-sm-12">
-                <div className="form-group">
-                  <label>Representative phone number</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={factoryDetails?.repPhone || ""}
-                    readOnly
-                  />
-                </div>
-              </div>
-
-              {/* <div className="col-12 d-none">
-                <div className="form-group">
-                  <label>description</label>
-                  <textarea
-                    type="text"
-                    className="form-control"
-                    value={factoryDetails?.description || ""}
-                    readOnly
-                  />
-                </div>
-              </div> */}
-            </>
-          )}
-
-          {currentUserData?.importerId !== null && (
-            <>
-              <div className="col-md-6 col-sm-12">
-                <div className="form-group">
-                  <label>Representative Name</label>
-                  <input
-                    type="text"
-                    className="form-control text-dark"
-                    value={`${
-                      factoryDetails?.repName == null
-                        ? " "
-                        : `${factoryDetails?.repName}`
-                    }`}
-                    readOnly
-                  />
-                </div>
-              </div>
-
-              <div className="col-md-6 col-sm-12">
-                <div className="form-group">
-                  <label>Role</label>
-                  <input
-                    type="text"
-                    className="form-control text-dark"
-                    value="Buyer"
-                    readOnly
-                  />
-                </div>
-              </div>
-
-              <div className="col-md-6 col-sm-12">
-                <div className="form-group">
-                  <label> Representative email</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={factoryDetails?.repEmail || ""}
-                    readOnly
-                  />
-                </div>
-              </div>
-
-              <div className="col-md-6 col-sm-12">
-                <div className="form-group">
-                  <label>Representative phone number</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={factoryDetails?.repPhone || ""}
-                    readOnly
-                  />
-                </div>
-              </div>
-
-              {/* <div className="col-12 d-none">
-                <div className="form-group">
-                  <label>description</label>
-                  <textarea
-                    type="text"
-                    className="form-control"
-                    value={factoryDetails?.description || ""}
-                    readOnly
-                  />
-                </div>
-              </div> */}
-            </>
-          )}
-
-          {currentUserData?.importerId == null &&
-            currentUserData?.factoryId == null && (
-              <>
-                <div className="col-md-6 col-sm-12">
-                  <div className="form-group">
-                    <label>Role</label>
-                    <input
-                      type="text"
-                      className="form-control text-dark"
-                      value="Default User"
-                      readOnly
-                    />
-                  </div>
-                </div>
-
-                <div className="col-md-6 col-sm-12">
-                  <div className="form-group">
-                    <label> Representative email</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={`${
-                        currentUserData?.userEmail == null
-                          ? " "
-                          : `${currentUserData?.userEmail}`
-                      }`}
-                      readOnly
-                    />
-                  </div>
-                </div>
-              </>
-            )}
-        </div>
+        <i
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseExample"
+          aria-expanded="false"
+          aria-controls="collapseExample"
+          class="fa-solid fa-chevron-down cursor"
+        ></i>
       </div>
-      {/* </div> */}
-      {/* </div> */}
-    </>
+      <div id="collapseExample" className="row row-container w-100 collapse">
+        {factoryDetails?.map((data, index) => (
+          <div className="col-md-6 col-sm-12" key={index}>
+            <div className="form-group">
+              <label>{data?.name}</label>
+              <input
+                type="text"
+                className="form-control"
+                value={data?.value}
+                readOnly
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }

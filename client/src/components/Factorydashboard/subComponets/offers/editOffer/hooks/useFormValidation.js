@@ -22,7 +22,7 @@ export const useFormValidation = (productDetails, submitForm) => {
     categoryId: productDetails?.categoryId || "",
     productId: productDetails?.productId || "", //optional
     preferredCountries: productDetails?.preferredCountries || [],
-    quantity: productDetails?.quantity || [],
+    quantity: productDetails?.quantity || "",
   };
   let validationSchema = Yup.object().shape({
     productName: requiredStringMax255,

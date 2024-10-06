@@ -1,7 +1,6 @@
 import { Button, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 export default function IsLoggedInMsg(directTo) {
-  console.log("directTo",directTo)
   let navigate = useNavigate();
   return (
     <Modal

@@ -16,7 +16,7 @@ export default function AnswerQuotation() {
   const [searchParams] = useSearchParams();
   let { requestType } = useParams();
   const id = searchParams.get("id");
-  const productName = searchParams.get("productName") ;
+  const productName = searchParams.get("productName");
   const productId = searchParams.get("productId");
   const importerId = searchParams.get("userId");
 
@@ -28,10 +28,6 @@ export default function AnswerQuotation() {
   const [errorMsg, setErrorMsg] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [formInfo, setFormInfo] = useState({ formTitle: "", extraData: {} });
-  // const [dataForSecpificForm,setDataForSecpificForm ] = useState({
-  //   formTitle:'',
-  //   initalData:
-  // });
 
   function data(data) {
     switch (data) {
@@ -61,7 +57,8 @@ export default function AnswerQuotation() {
           extraData: {
             privateLabelingId: id || "",
             importerId: importerId || "",
-            ...((productName && productName!=='null') && { productName: productName }),
+            ...(productName &&
+              productName !== "null" && { productName: productName }),
             ...(productId && { productId: productId }),
           },
         };
@@ -111,7 +108,6 @@ export default function AnswerQuotation() {
   }
   let formValidation = useQuotationFormValidation(formInfo?.extraData, submit);
 
-  console.log("formValidation",formValidation)
   return (
     <>
       <Header title={`Send Quotation on ${formInfo?.formTitle}`} />

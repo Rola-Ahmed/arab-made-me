@@ -15,10 +15,8 @@ const useQuotationFormValidation = (
 ) => {
   let validationSchema = Yup.object().shape({
     // from cilent
-    // requestedquantity: requiredStringMax255,
     // avialabe qunaitiy for user
-    minquantity: Yup.string(),
-    // minquantity: requiredStringMax255,
+    minquantity: Yup.string().required(),
 
     price: reqQualityValidate,
 
@@ -61,7 +59,6 @@ const useQuotationFormValidation = (
   });
 
   const defaultInitialValues = {
-    // requestedQuantity: "1", //requried
     minQuantity: "", //requried
     price: "", //requried
     discounts: "", //optional
