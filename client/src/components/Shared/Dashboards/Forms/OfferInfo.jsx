@@ -95,28 +95,7 @@ export default function OfferInfo(props) {
 
               {/* ---------------------------- */}
 
-              {/* {requestedData?.specialCharacteristics &&
-                Object?.keys(requestedData?.specialCharacteristics)?.length >
-                  0 && (
-                  <div className="col-12 ">
-                    <label className="fw-600 mb-1">
-                      Product Characteristics
-                    </label>
-
-                    <div className="form-group form-control p-4 ">
-                      <div className="row row-gap ">
-                        {Object?.entries(
-                          requestedData?.specialCharacteristics
-                        )?.map(([key, value], index) => (
-                          <div className="col-6">
-                            <ReadOnly title={key} value={value} />
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                )} */}
-
+              
               <div className="col-12">
                 <ReadOnly
                   title="Product Description"
