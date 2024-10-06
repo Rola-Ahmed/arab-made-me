@@ -78,7 +78,7 @@ function OneSourcingOffer() {
         </p>
       )}
       {!isLoading.pageLoading && (
-        <section id="view" className="send-po bg-info">
+        <section id="view" className="send-po ">
           <div className="container container-po">
             <FactoryInfo productDetails={posData?.factory} />
           </div>

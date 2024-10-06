@@ -13,95 +13,50 @@ export default function OfferInfo(props) {
           <p className="h5 fw-bolder title-header"> Offer Details</p>
           <div className="w-100 ">
             <div className="row  row-gap">
-              <div className="col-6">
-                <ReadOnly
-                  title="Product Name"
-                  value={requestedData?.productName}
-                />
-              </div>
-
-              <div className="col-6">
-                <ReadOnly
-                  title="hsnCode"
-                  value={requestedData?.productHSNCode}
-                />
-              </div>
-
-              <div className="col-6">
-                <ReadOnly title="Price" value={requestedData?.price} />
-              </div>
-              <div className="col-6">
-                <ReadOnly
-                  title="packing Conditions"
-                  value={requestedData?.packingConditions}
-                />
-              </div>
-              <div className="col-6">
-                <ReadOnly
-                  title="quality Conditions"
-                  value={requestedData?.qualityConditions}
-                />
-              </div>
-
-              <div className="col-6">
-                <ReadOnly
-                  title="shipping Conditions"
-                  value={requestedData?.shippingConditions}
-                />
-              </div>
-
-              <div className="col-6">
-                <ReadOnly
-                  title="Delivery Terms"
-                  value={requestedData?.deliveryTerms}
-                />
-              </div>
-
-              <div className="col-6">
-                <ReadOnly
-                  title="payment Terms"
-                  value={requestedData?.paymentTerms}
-                />
-              </div>
-
-              <div className="col-6">
-                <ReadOnly
-                  title="available"
-                  value={requestedData?.available ? "In Stock" : "Out Of Stock"}
-                />
-              </div>
-
-              <div className="col-6">
-                <ReadOnly
-                  title="preferred Countries"
-                  value={`${
-                    requestedData?.preferredCountries?.join(", ") || "All"
-                  }  `}
-                />
-              </div>
-
-              <div className="col-md-6 col-sm-12">
-                <ReadOnly title="Quantity" value={requestedData?.quantity} />
-              </div>
-
-              <div className="col-md-6 col-sm-12">
-                <ReadOnly
-                  title="Created At"
-                  value={getMonthName(
-                    requestedData?.createdAt?.split("T")?.[0]
-                  )}
-                />
-              </div>
-
-              {/* ---------------------------- */}
-
-              
-              <div className="col-12">
-                <ReadOnly
-                  title="Product Description"
-                  value={requestedData?.productDescription}
-                />
-              </div>
+              {[
+                { title: "Product Name", value: requestedData?.productName },
+                { title: "Quantity", value: requestedData?.quantity },
+                { title: "HSN Code", value: requestedData?.productHSNCode },
+                { title: "Price", value: requestedData?.price },
+                {
+                  title: "Packing Conditions",
+                  value: requestedData?.packingConditions,
+                },
+                {
+                  title: "Quality Conditions",
+                  value: requestedData?.qualityConditions,
+                },
+                {
+                  title: "Shipping Conditions",
+                  value: requestedData?.shippingConditions,
+                },
+                {
+                  title: "Delivery Terms",
+                  value: requestedData?.deliveryTerms,
+                },
+                { title: "Payment Terms", value: requestedData?.paymentTerms },
+                {
+                  title: "Available",
+                  value: requestedData?.available ? "In Stock" : "Out Of Stock",
+                },
+                {
+                  title: "Preferred Countries",
+                  value: `${requestedData?.preferredCountries?.join(", ") || "All"
+                    }`,
+                },
+                {
+                  title: "Created At",
+                  value: getMonthName(requestedData?.createdAt?.split("T")[0]),
+                },
+                {
+                  title: "Product Description",
+                  value: requestedData?.productDescription,
+                },
+              ].map(({ title, value }, index) => (
+                <div className="col-md-6 col-sm-12" key={index}>
+                  <ReadOnly title={title} value={value} />
+                </div>
+              ))}
             </div>
           </div>
         </div>
