@@ -3,7 +3,7 @@ import useCountries from "hooks/useCountries";
 
 const useWorldCountries = () => {
   const { trans: t } = useAppTranslation();
-  const { countriesMiddleEast } = useCountries();
+  const  countriesMiddleEast  = useCountries();
 
   // code is usded for functionalitiy
   // while name is used for the user trnasation

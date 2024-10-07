@@ -4,6 +4,8 @@ import { asyncHandler } from "../../utils/error_handling.js";
 import { User } from "../../database/models/user.model.js";
 import { crudOps } from "../../utils/crud_ops.js";
 import { getIo } from "../../utils/socket_server.js";
+import { Importer } from "../../database/models/importer.model.js";
+import { Factory } from "../../database/models/factory.model.js";
 // import { io } from "../../../index.js";
 
 export const addChatOrMessage = asyncHandler(async (req, res, nxt) => {
@@ -106,11 +108,31 @@ export const getAllChatsForUser = asyncHandler(async (req, res, nxt) => {
         model: User,
         as: "userOne", // Ensure this alias matches the association in your models
         attributes: ["factoryId", "importerId", "id", "email"],
+        include: [
+          {
+            model: Factory, // This is the related model based on User.hasMany(Factory)
+            attributes: ["id", "name", "repName"], // Add the Factory attributes you want to include
+          },
+          {
+            model: Importer, // This is the related model based on User.hasMany(Factory)
+            attributes: ["id", "name", "repName"], // Add the Factory attributes you want to include
+          },
+        ],
       },
       {
         model: User,
         as: "userTwo", // Ensure this alias matches the association in your models
         attributes: ["factoryId", "importerId", "id", "email"],
+        include: [
+            {
+              model: Factory, // This is the related model based on User.hasMany(Factory)
+              attributes: ["id", "name", "repName"], // Add the Factory attributes you want to include
+            },
+            {
+              model: Importer, // This is the related model based on User.hasMany(Factory)
+              attributes: ["id", "name", "repName"], // Add the Factory attributes you want to include
+            },
+          ],
       },
     ],
   });

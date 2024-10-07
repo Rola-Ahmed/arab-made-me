@@ -171,5 +171,7 @@ export const Importer = sequelize.define(
   }
 );
 
-Importer.belongsTo(User, { onDelete: "CASCADE" });
+// Importer.belongsTo(User, { onDelete: "CASCADE" });
 Importer.belongsTo(Sector);
+// User.hasMany(Importer);
+

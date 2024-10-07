@@ -1,94 +1,109 @@
 import { DataTypes, Sequelize } from "sequelize";
 import { sequelize } from "../connection.js";
-import bcrypt from "bcrypt"
+import bcrypt from "bcrypt";
 import { Subscription } from "./subscription.model.js";
+import { Factory } from "./factory.model.js";
+import { Importer } from "./importer.model.js";
 
-export const User = sequelize.define('users', {
+export const User = sequelize.define(
+  "users",
+  {
     id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
     },
     name: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
-        allowNull: true,
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      allowNull: true,
     },
     email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-        validate: {
-            isEmail: true,
-        },
-        set(v) {
-            this.setDataValue('emailActivated', false)
-            this.setDataValue('email', v)
-        }
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        isEmail: true,
+      },
+      set(v) {
+        this.setDataValue("emailActivated", false);
+        this.setDataValue("email", v);
+      },
     },
     password: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-            isValid(value) {
-                if (value.length < 6) { throw new Error(`The password must be atleast 6 characters.`) }
-            }
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        isValid(value) {
+          if (value.length < 6) {
+            throw new Error(`The password must be atleast 6 characters.`);
+          }
         },
-        set(value) {
-            this.setDataValue('password', bcrypt.hashSync(value, 9))
-        }
+      },
+      set(value) {
+        this.setDataValue("password", bcrypt.hashSync(value, 9));
+      },
     },
     phone: {
-        type: DataTypes.STRING,
-        allowNull: true
+      type: DataTypes.STRING,
+      allowNull: true,
     },
 
     language: {
-        type: DataTypes.ENUM,
-        values: ['english', 'arabic', 'german', 'french'],
-        defaultValue: 'english'
+      type: DataTypes.ENUM,
+      values: ["english", "arabic", "german", "french"],
+      defaultValue: "english",
     },
 
     emailActivated: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: true
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
     },
 
     role: {
-        type: DataTypes.ENUM,
-        values: ['admin', 'importer', 'factory', 'user','shippingCompany'],
-        defaultValue: 'user'
+      type: DataTypes.ENUM,
+      values: ["admin", "importer", "factory", "user", "shippingCompany"],
+      defaultValue: "user",
     },
     importerId: {
-        type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     },
     factoryId: {
-        type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     },
-    shippingCompanyId:{
-        type:DataTypes.INTEGER
+    shippingCompanyId: {
+      type: DataTypes.INTEGER,
     },
     logout: {
-        type: DataTypes.BOOLEAN,
+      type: DataTypes.BOOLEAN,
     },
     socketId: {
-        type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
     activeTimeLimit: {
-        type: DataTypes.DATE
+      type: DataTypes.DATE,
     },
-    test:{
-        type:DataTypes.STRING,
-        defaultValue:"test"
-    }
-}, {
+    test: {
+      type: DataTypes.STRING,
+      defaultValue: "test",
+    },
+  },
+  {
     timestamps: true,
     hooks: {
-        beforeCreate: (instance, options) => {
-            let timeLimit = new Date()
-            timeLimit.setHours(timeLimit.getHours() + (24 * 5)) // each 5 days
-            instance.activeTimeLimit = timeLimit
-        }
-    }
-})
+      beforeCreate: (instance, options) => {
+        let timeLimit = new Date();
+        timeLimit.setHours(timeLimit.getHours() + 24 * 5); // each 5 days
+        instance.activeTimeLimit = timeLimit;
+      },
+    },
+  }
+);
 
+// User.hasMany(Factory);
+// User.hasMany(Importer);
 
+// Importer.belongsTo(User, { onDelete: "CASCADE" });
+User.hasMany(Importer);
+// Factory.belongsTo(User, { onDelete: "CASCADE" });
+// User.hasMany(Factory);
+Importer.belongsTo(User, { onDelete: "CASCADE" });

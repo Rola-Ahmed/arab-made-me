@@ -87,7 +87,7 @@ export default function ProductDetails(props) {
                 <label className="fw-600 mb-1">Product Characteristics</label>
 
                 <div className="form-group form-control p-4 ">
-                  <div className="row row-gap">
+                  <div className="row row-gap w-100">
                     {Object?.entries(
                       productDetails?.specialCharacteristics
                     )?.map(([key, value], index) => (

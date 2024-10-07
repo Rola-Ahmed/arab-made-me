@@ -3,7 +3,6 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
   requiredStringMax255,
-  reqQualityValidate,
   otherTextAreaValidate,
   requiredDateValidate,
   textAreaValidate,
@@ -18,7 +17,7 @@ import { packingConditionsArr } from "constants/packingConditionsArr";
 import { useNavigate } from "react-router-dom";
 import ImporterUnVerified from "components/ActionMessages/ImporterUnVerified/ImporterUnVerifiedDash";
 
-import useCountries from "hooks/useCountries";
+import useWorldCountries from "hooks/useWorldCountries";
 import "./SourcingRequest.css";
 import { shippingConditionsArr } from "constants/shippingConditionsArr";
 import SpecialChar from "components/Forms/Shared/SpecialChar/SpecialChar";
@@ -30,7 +29,7 @@ import useFormSubmission from "./hooks/useFormSubmission";
 // import "./PurchasingOrder.css";
 function SourcingRequest() {
   let navigate = useNavigate();
-  const countriesMiddleEast = useCountries();
+  const allCountries = useWorldCountries();
 
   let { currentUserData } = useContext(userDetails);
   const [errorMsg, setErrorMsg] = useState();
@@ -160,12 +159,10 @@ function SourcingRequest() {
         {/* Grid  */}
         <div className="container add-product-dash">
           <div className="row row-container w-100 ">
-            {errorMsg?.response ? (
+            {errorMsg?.response && (
               <div className="alert mt-3 p-2 alert-danger form-control text-dark">
                 {errorMsg?.response}
               </div>
-            ) : (
-              ""
             )}
 
             <div className="col-4">
@@ -242,7 +239,7 @@ function SourcingRequest() {
                   {/* {Dropdown} */}
                 </button>
                 <ul className="dropdown-menu col-3 scroller">
-                  {countriesMiddleEast.map((item) => (
+                  {allCountries.map((item) => (
                     <li>
                       <div className=" dropdown-item d-flex justify-content-start align-items-center width-drop">
                         <input
@@ -311,35 +308,36 @@ function SourcingRequest() {
 
             <div className="col-12">
               <div className="btn-container d-flex justify-content-center">
-                {isLoading?.submitLoading ? (
-                  <button type="button" className="order-btn-2 px-5 ">
-                    <i className="fas fa-spinner fa-spin px-2"></i>
-                  </button>
-                ) : (
-                  <button
-                    className="order-btn-2"
-                    type="submit"
-                    onClick={() => {
-                      if (formValidation.isValid == false) {
-                        const targetElement = document.getElementById(
-                          Object.keys(formValidation.errors)?.[0]
-                        );
+                <button
+                  className="order-btn-2"
+                  type="submit"
+                  onClick={() => {
+                    if (formValidation.isValid == false) {
+                      const targetElement = document.getElementById(
+                        Object.keys(formValidation.errors)?.[0]
+                      );
 
-                        if (targetElement) {
-                          targetElement.scrollIntoView({
-                            behavior: "smooth",
-                            block: "center",
-                          });
-                        }
-
-                        // Scroll to the target element
+                      if (targetElement) {
+                        targetElement.scrollIntoView({
+                          behavior: "smooth",
+                          block: "center",
+                        });
                       }
-                    }}
-                  >
-                    <i className="fa-solid fa-plus"></i>
-                    <p className="cursor">Add </p>
-                  </button>
-                )}
+
+                      // Scroll to the target element
+                    }
+                  }}
+                  disabled={isLoading?.submitLoading}
+                >
+                  {isLoading?.submitLoading ? (
+                    <i className="fas fa-spinner fa-spin px-2"></i>
+                  ) : (
+                    <>
+                      <i className="fa-solid fa-plus"></i>
+                      <p className="cursor">Add </p>
+                    </>
+                  )}
+                </button>
               </div>
             </div>
           </div>

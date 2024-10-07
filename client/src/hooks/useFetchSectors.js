@@ -9,6 +9,7 @@ export const useFetchSectors = () => {
     const fetchData = async () => {
     
       let result = await FetchSectors();
+      console.log("result sectors",result)
       if (result?.success) {
         setAllSectors(result?.data?.sectors);
       } else {

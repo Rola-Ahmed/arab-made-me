@@ -24,7 +24,7 @@ export default function ProductCard(props) {
   let { isLogin } = useContext(UserToken);
 
   let { currentUserData } = useContext(userDetails);
-  const { trans: t, currentLang } = useAppTranslation();
+  const { trans: t, } = useAppTranslation();
 
   const navigate = useNavigate();
   const [description, setDescription] = useState("");
@@ -139,8 +139,8 @@ export default function ProductCard(props) {
                     <p className="title cursor">{productItem?.factory?.name}</p>
                     <p className="sub-title cursor">
                       {/* city, country */}
-                      {`${productItem?.city ? productItem?.city + ", " : ""}`}
-                      {productItem?.country ?? ""}
+                      {`${productItem?.factory?.city ? productItem?.factory?.city + ", " : ""}`}
+                      {productItem?.factory?.country ?? ""}
                     </p>
                   </div>
                 </div>

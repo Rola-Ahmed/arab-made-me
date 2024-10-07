@@ -45,6 +45,7 @@ function Products(title) {
   useEffect(() => {
     async function products() {
       const result = await getAllProducts("size=20&include=factory");
+      console.log("result getAllProducts",result)
       if (result?.success) {
         setAllProductsData(result.data.products);
       }

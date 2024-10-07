@@ -60,21 +60,20 @@ export const productsOfSectors = asyncHandler(async (req, res, nxt) => {
   return res.json({ message: "done", products });
 });
 
-
-
-
-
 export const getAllWithProductLength = asyncHandler(async (req, res, next) => {
+  
+
   const [sectors] = await sequelize.query(`
-    SELECT sectors.*, COUNT(products.id) as productsCount
+    SELECT sectors.id, sectors.name, COUNT(products.id) AS productsCount
     FROM sectors
-    LEFT JOIN products ON sectors.id = products."sectorId"
+    LEFT JOIN factories ON factories."sectorId" = sectors.id
+    LEFT JOIN products ON products."factoryId" = factories.id
     GROUP BY sectors.id
   `);
+  
 
   return res.status(200).json({
     message: "done",
     sectors: sectors, // Return sectors with the product count
   });
 });
-

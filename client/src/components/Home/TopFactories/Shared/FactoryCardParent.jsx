@@ -109,7 +109,7 @@ export default function FactoryCardParent(props) {
                   }}
                 >
                   <div className="btn-text text-decoration-none cursor text-white">
-                    {t("BtnsDescription:RFQ.sendRfq")}{factoryitem?.products?.length}
+                    {t("BtnsDescription:RFQ.sendRfq")}
                   </div>
                 </button>
               )}

@@ -16,7 +16,6 @@ function Sectors() {
     const fetchProductData = async () => {
       let result = await fetchSectorswithProductsLength("size=10");
 
-      // console.log("result", result?.data?.sectors);
       if (result?.success) {
         setAllSectors(result?.data?.sectors);
       } else {
@@ -26,8 +25,6 @@ function Sectors() {
 
     fetchProductData();
   }, []);
-  // console.log("allSectors", allSectors, errormsg);
-  // allSectors?.map((item, index) => (console.log("itemds",item)));
   return (
     <section className=" margin-sm-screen home-padding-t">
       <div className="container container-1 p-0 d-flex gap-48">

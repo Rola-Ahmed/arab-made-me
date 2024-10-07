@@ -159,7 +159,7 @@ export default function EtcCustomProductReq() {
                               </label>
 
                               <div className="form-group form-control p-4 ">
-                                <div className="row row-gap">
+                                <div className="row row-gap w-100">
                                   {Object?.entries(
                                     requestedData?.specialCharacteristics
                                   )?.map(([key, value], index) => (

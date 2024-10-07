@@ -44,7 +44,7 @@ export const getProducts = asyncHandler(async (req, res, nxt) => {
       'city', "factories"."city",
       'name', "factories"."name",
       'coverImage', "factories"."coverImage"
-    ) AS factories
+    ) AS factory
   FROM "products"
   JOIN "factories" ON "factories"."id" = "products"."factoryId"
 `;
