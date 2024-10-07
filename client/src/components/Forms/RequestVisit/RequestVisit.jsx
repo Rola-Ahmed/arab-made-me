@@ -62,16 +62,21 @@ function RequestVisit() {
 
   let validationSchema = Yup.object().shape({
     visitDate: Yup.string().required("Input field is Required"),
-    visitPurpose: Yup.string()
-      .required("Input field is Required")
-      .max(255, "max legnth is 255"),
+    visitType: Yup.string().required("Input field is Required"),
+    requiredProducts: Yup.string().required("Input field is Required"),
+    visitPurpose: Yup.string().required("Input field is Required"),
+    individualsNumber: Yup.string()
+      .required("Input Field is Required")
+      .matches(/^[0-9]+$/, "Input Field should contain numbers only"),
   });
   let initialValues = {
     factoryId: factoryId,
 
     visitDate: "",
     visitPurpose: "",
-    visitType: "offline",
+    visitType: "",
+    individualsNumber: "",
+    requiredProducts: "",
   };
 
   // if i used this or no it will work
@@ -87,6 +92,7 @@ function RequestVisit() {
     validationSchema,
     onSubmit: submitForm,
   });
+  console.log("formValidation", formValidation);
 
   return (
     <>
@@ -151,29 +157,27 @@ function RequestVisit() {
                   />
                 </div>
 
-                {formValidation.values.visitType == "offline" && (
-                  <div className="col-md-6 col-sm-12">
-                    <div className="form-group">
-                      <label>Type Of Visit</label>
-                      <input
-                        className="form-control d-block"
-                        onChange={formValidation.handleChange}
-                        onBlur={formValidation.handleBlur}
-                        // value={formValidation.values.visitDate}
-                        // id="visitDate"
-                        // name="visitDate"
-                      />
-                      {/* {formValidation.errors.visitDate &&
-                          formValidation.touched.visitDate ? (
-                            <small className="form-text text-danger">
-                              {formValidation.errors.visitDate}
-                            </small>
-                          ) : (
-                            ""
-                          )} */}
-                    </div>
+                <div className="col-md-6 col-sm-12">
+                  <div className="form-group">
+                    <label>Type Of Visit *</label>
+                    <input
+                      className="form-control d-block"
+                      onChange={formValidation.handleChange}
+                      onBlur={formValidation.handleBlur}
+                      value={formValidation.values.visitType}
+                      id="visitType"
+                      name="visitType"
+                    />
+                    {formValidation.errors.visitType &&
+                    formValidation.touched.visitType ? (
+                      <small className="form-text text-danger">
+                        {formValidation.errors.visitType}
+                      </small>
+                    ) : (
+                      ""
+                    )}
                   </div>
-                )}
+                </div>
                 <div className="col-md-6 col-sm-12">
                   <div className="form-group">
                     <label>The number of individuals accompanying</label>
@@ -181,18 +185,18 @@ function RequestVisit() {
                       className="form-control d-block"
                       onChange={formValidation.handleChange}
                       onBlur={formValidation.handleBlur}
-                      // value={formValidation.values.visitDate}
-                      // id="visitDate"
-                      // name="visitDate"
+                      value={formValidation.values.individualsNumber}
+                      id="individualsNumber"
+                      name="individualsNumber"
                     />
-                    {/* {formValidation.errors.visitDate &&
-                          formValidation.touched.visitDate ? (
-                            <small className="form-text text-danger">
-                              {formValidation.errors.visitDate}
-                            </small>
-                          ) : (
-                            ""
-                          )} */}
+                    {formValidation.errors.individualsNumber &&
+                    formValidation.touched.individualsNumber ? (
+                      <small className="form-text text-danger">
+                        {formValidation.errors.individualsNumber}
+                      </small>
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </div>
 
@@ -203,14 +207,12 @@ function RequestVisit() {
                   title="Required Products"
                 />
 
-                {formValidation.values.visitType == "offline" && (
-                  <TextareaInput
-                    vlaidationName="visitPurpose"
-                    formValidation={formValidation}
-                    isRequired={true}
-                    title="Visit Reason"
-                  />
-                )}
+                <TextareaInput
+                  vlaidationName="visitPurpose"
+                  formValidation={formValidation}
+                  isRequired={true}
+                  title="visit Purpose"
+                />
 
                 <div className="col-12 action ">
                   {isLoading?.submitLoading ? (
@@ -228,10 +230,11 @@ function RequestVisit() {
                           );
 
                           // Scroll to the target element
-                          targetElement.scrollIntoView({
-                            behavior: "smooth",
-                            block: "center",
-                          });
+                          if (targetElement)
+                            targetElement.scrollIntoView({
+                              behavior: "smooth",
+                              block: "center",
+                            });
                         }
                       }}
                     >

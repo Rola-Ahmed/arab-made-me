@@ -35,6 +35,13 @@ const useFormSubmission = (isLogin, setErrorMsg, setIsLoading) => {
       purpose: values.visitPurpose,
       date: values.visitDate,
       factoryId: values.factoryId,
+      visitType: values.visitType,
+
+      ...(values.individualsNumber && {
+        individualsNumber: values.individualsNumber,
+      }),
+
+      requiredProducts: values.requiredProducts,
     };
 
     let result = await addvisitRequest({ authorization: isLogin }, data);

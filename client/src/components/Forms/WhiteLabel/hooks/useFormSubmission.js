@@ -67,8 +67,9 @@ const useFormSubmission = (isLogin, setErrorMsg, setLoadingState) => {
 
     let data = {
       factoryId,
-      productId,
-      productName,
+      ...(productId && { productId: productId }), //optioal
+      ...(productName && { productName: productName }),//optioal
+
       deadline,
       supplyLocation: SupplyLocation,
 
