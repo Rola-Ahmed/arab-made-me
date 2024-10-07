@@ -45,8 +45,10 @@ const useAllUserChats = (isLogin) => {
     // bec sometime it returns the same data
     setApiLoadingData(true);
     setReqData([]);
-    const result = await getChatsForUser({}, { authorization: isLogin });
-
+    const result = await getChatsForUser("include=userOne&include=userOne", {
+      authorization: isLogin,
+    });
+    console.log("result", result);
     if (result?.success) {
       setTimeout(() => {
         setReqData(result?.data?.chats);
@@ -85,7 +87,7 @@ const useAllUserChats = (isLogin) => {
 
   useEffect(() => {
     // Promise.all(
-    uniqueFactoryIDofProducts.map(async (item) => {
+    uniqueFactoryIDofProducts?.map(async (item) => {
       const result = await getUser(item);
       if (result?.success) {
         // check user role inorder to call the exra data from the factory/impoter endpoint
@@ -109,6 +111,7 @@ const useAllUserChats = (isLogin) => {
             ? {
                 ...value,
                 UserTwoName: response.data.importers.repName,
+                UserTwoId: response.data.importers.userId,
                 UserTwoEmail: response.data.importers.repEmail,
                 UserTwoImage: response.data.importers.image,
                 UserTwoDescription: response.data.importers.description,
@@ -130,6 +133,8 @@ const useAllUserChats = (isLogin) => {
             ? {
                 ...value,
                 UserTwoName: response.data.factories.repName,
+                UserTwoId: response.data.factories.userId,
+
                 UserTwoEmail: response.data.factories.repEmail,
                 UserTwoImage: response.data.factories.coverImage,
                 UserTwoDescription: response.data.factories.description,
@@ -146,57 +151,133 @@ const useAllUserChats = (isLogin) => {
       // console.log("isLogin",isLogin)
       const connectSocket = () => {
         socket.connect();
+        socket.emit("socketAuth", isLogin);
 
         socket.on("connect", () => {
           console.log("Connected to server");
         });
 
+        // socket.on("newMessage", (data) => {
+        //   // console.log("newMessage data", data, data?.sender);
+        //   // fetchReqData();
+        //   console.log("newMessage before", reqData);
+
+        //   const updatedReqData = reqData?.map((item) => {
+        //     if (item?.UserTwoId == data?.sender) {
+        //       console.log(":if item", item);
+
+        //       // If condition is true, push new message to the messages array
+        //       return {
+        //         ...item,
+        //         messages: [...item?.messages, data], // Assuming messages is an array
+        //       };
+        //     } else {
+        //       console.log(":else item", item);
+        //       // If condition is false, return the item unchanged
+        //       return item;
+        //     }
+        //   });
+        //   console.log("newMessage updatedReqData", reqData, updatedReqData);
+
+        //   // Finally, update the state with the new array
+        //   setReqData(updatedReqData);
+
+        //   // reqData?.map((item) =>
+        //   //   //  console.log("item,item", item?.id)
+        //   //   item?.UserTwoId == data?.sender
+        //   //     ? console.log(
+        //   //         " item?.userTwoId==29 true",
+        //   //         item?.UserTwoId,
+        //   //         data?.sender
+        //   //       )
+        //   //     : console.log(
+        //   //         " item?.userTwoId==29 false",
+        //   //         item?.UserTwoId,
+        //   //         data?.sender
+        //   //       )
+        //   // );
+
+        //   // reqData.forEach((chat) => {
+        //   //   console.log(` item Chat ID: ${chat.id}`);
+        //   //   console.log(`Created At: ${chat.createdAt}`);
+        //   //   console.log(`User One ID: ${chat.userOneId}`);
+        //   //   console.log(`Number of Messages: ${chat.messages.length}`);
+        //   // });
+        // });
+
         socket.on("newMessage", (data) => {
-          console.log(" newMessage data",data)
-          fetchReqData();
+          // Log incoming message data
+          console.log("newMessage data", data, data?.sender);
+
+          // Use functional update to ensure you're working with the latest reqData state
+          setReqData((prevReqData) => {
+            // Log the previous state
+            console.log("newMessage before", prevReqData);
+
+            // Map over prevReqData and update it
+            const updatedReqData = prevReqData?.map((item) => {
+              if (item?.UserTwoId === data?.sender) {
+                console.log(":if item", item);
+
+                // If condition is true, push new message to the messages array
+                return {
+                  ...item,
+                  messages: [...item?.messages, data], // Assuming messages is an array
+                };
+              } else {
+                console.log(":else item", item);
+                // If condition is false, return the item unchanged
+                return item;
+              }
+            });
+
+            console.log(
+              "newMessage updatedReqData",
+              prevReqData,
+              updatedReqData
+            );
+
+            // Return the updated array to set the new state
+            return updatedReqData;
+          });
         });
 
         socket.on("socketAuth", (data) => {
-          console.log("socketAuth data",data)
+          console.log("socketAuth data", data);
         });
 
         socket.on("connect_error", (err) => {
-          console.log("connect_error,",err);
+          console.log("connect_error,", err);
         });
 
         socket.on("connect_timeout", (err) => {
-          console.log("connect_error",err);
-
+          console.log("connect_error", err);
         });
 
         socket.on("error", (err) => {
-          console.log("error","err",err);
-
+          console.log("error", "err", err);
         });
 
         socket.on("reconnect_error", (err) => {
-          console.log("reconnect_error",err);
-
+          console.log("reconnect_error", err);
         });
 
         socket.on("reconnect_failed", (err) => {
           // console.log(err);
-
         });
         socket.on("connect_error", (err) => {
           console.error("Socket connection error:", err.message);
-      });
-      
-      socket.on("connect_timeout", (err) => {
+        });
+
+        socket.on("connect_timeout", (err) => {
           console.error("Socket connection timeout:", err.message);
-      });
-      
-      socket.on("error", (err) => {
+        });
+
+        socket.on("error", (err) => {
           console.error("Socket error:", err.message);
-      });
-      
-      // Add logs for other events as needed...
-      
+        });
+
+        // Add logs for other events as needed...
 
         // Cleanup on unmount
         return () => {
@@ -213,12 +294,17 @@ const useAllUserChats = (isLogin) => {
       };
 
       connectSocket();
-
-      
     }
   }, [isLogin]);
 
-  // console.log("here")
+  console.log("her0e", reqData);
+
+  // reqData?.map((item) =>
+  //   item?.userTwoId == 29
+  //     ? console.log(" item?.userTwoId==29", item?.userTwoId == 29)
+  //     : console.log(" item?.userTwoId==29 false")
+  // );
+
   return { reqData, pagination, apiLoadingData, errorsMsg, setPagination };
 };
 

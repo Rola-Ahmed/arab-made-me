@@ -61,7 +61,6 @@ const useSignIn = () => {
     }
     setIsLoading(false);
   }
-  console.log("errorMsg", errorMsg);
   return { submitForm, isLoading, errorMsg };
 };
 
