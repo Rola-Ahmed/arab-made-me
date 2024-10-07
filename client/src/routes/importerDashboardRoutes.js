@@ -36,6 +36,7 @@ import ChatList from "components/Importerdashboard/subComponets/Chat/ChatList";
 import Conversation from "components/Importerdashboard/subComponets/Chat/Converstaion/Conversation";
 import NewConversation from "components/Importerdashboard/subComponets/Chat/Converstaion/NewConverstaion/NewConversation";
 import IssuePage from "components/IssuePage";
+import EditSourcingReq from "components/Importerdashboard/subComponets/SourcingRequest/EditSourcingReq/EditSourcingReq";
 
 const importerDashboardRoutes = [
   {
@@ -66,6 +67,12 @@ const importerDashboardRoutes = [
         path: "add/sourcingRequest",
 
         element: <SourcingRequest />,
+      },
+
+      {
+        path: "edit/sourcingRequest/:id",
+
+        element: <EditSourcingReq />,
       },
       // -------
       {

@@ -1,59 +1,87 @@
 import { useFormik } from "formik";
-import { shippingConditionsArr } from "constants/shippingConditionsArr";
-import { packingConditionsArr } from "constants/packingConditionsArr";
-import { qualityConditionsArr } from "constants/qualityConditionsArr";
-import { paymentTypeArr } from "constants/paymentTypeArr";
 import * as Yup from "yup";
-
 import {
   requiredStringMax255,
-  priceCurrency,
   otherTextAreaValidate,
-  requiredStringValidate,
+  textAreaValidate,
+  requiredDateValidate,
 } from "utils/validationUtils";
+import { shippingConditionsArr } from "constants/shippingConditionsArr";
+import { qualityConditionsArr } from "constants/qualityConditionsArr";
+import { packingConditionsArr } from "constants/packingConditionsArr";
+
 import { useEffect } from "react";
 
 export const useFormValidation = (productDetails, submitForm) => {
   let initialValues = {
-    productName: productDetails?.productName || "",
-    price: productDetails?.price || "",
-    productHSNCode: productDetails?.productHSNCode || "",
-    productDescription: productDetails?.productDescription || "",
-    categoryId: productDetails?.categoryId || "",
-    productId: productDetails?.productId || "", //optional
-    preferredCountries: productDetails?.preferredCountries || [],
-    quantity: productDetails?.quantity || "",
+    quantity: productDetails?.quantity || "", //requried
+    productName: productDetails?.productName || "", //requried
+
+    // shippingConditions:productDetails?.shippingConditions ||  "", //optional,
+    // shippingConditionsOther: productDetails?. || "",
+
+    // packingConditions:productDetails?. ||  "", //optional
+    // packingConditionsOther: productDetails?. || "",
+
+    // qualityConditions:productDetails?. ||  "", //optional
+    // qualityConditionsOther: productDetails?. || "",
+
+    deadline: productDetails?.deadline || "", //optional
+    country: productDetails?.preferredCountries || [], //
+
+    productDescription: productDetails?.productDescription || "", //requried
+
+    otherInfoRequest: productDetails?.otherInfoRequest || "", //optional
+
+    // specialCharacteristicsArr:
+    productCharacteristic:
+      productDetails?.specialCharacteristics &&
+      Object.keys(productDetails.specialCharacteristics).length != 0
+        ? // [productDetails.specialCharacteristics]
+          Object.entries(productDetails.specialCharacteristics).map(
+            ([key, value], index) => ({
+              keyword: key,
+              value: value,
+            })
+          )
+        : [
+            {
+              keyword: "",
+              value: "",
+            },
+          ],
   };
   let validationSchema = Yup.object().shape({
     productName: requiredStringMax255,
-    preferredCountries: Yup.array().of(Yup.string()).nullable(),
-
-    price: priceCurrency,
-    categoryId: requiredStringMax255,
-
-    //   HSN (Harmonized System of Nomenclature) code field i
-    productHSNCode: Yup.string()
-      .min(6, "Minimum  length is 6")
-      .max(15, "Maximum 15  is legnth"),
 
     quantity: requiredStringMax255,
 
-    productDescription: requiredStringMax255,
-
-    qualityConditions: requiredStringValidate,
-    qualityConditionsOther: otherTextAreaValidate("qualityConditions", "other"),
-
-    shippingConditions: requiredStringValidate,
+    shippingConditions: Yup.string(),
     shippingConditionsOther: otherTextAreaValidate(
       "shippingConditions",
       "other"
     ),
 
-    packingConditions: requiredStringValidate,
+    packingConditions: Yup.string(),
     packingConditionsOther: otherTextAreaValidate("packingConditions", "other"),
 
-    paymentType: requiredStringValidate,
-    paymentTypeOther: otherTextAreaValidate("paymentType", "other"),
+    qualityConditions: Yup.string(),
+    qualityConditionsOther: otherTextAreaValidate("qualityConditions", "other"),
+
+    deadline: requiredDateValidate,
+
+    otherInfoRequest: textAreaValidate(),
+
+    productDescription: requiredStringMax255,
+
+    country: Yup.array().of(Yup.string()).nullable(),
+
+    productCharacteristic: Yup.array().of(
+      Yup.object().shape({
+        keyword: Yup.string().max(50, "max legnth is  50"),
+        value: Yup.string().max(50, "max legnth is  50"),
+      })
+    ),
   });
 
   let formValidation = useFormik({
@@ -121,30 +149,11 @@ export const useFormValidation = (productDetails, submitForm) => {
         };
       }
 
-      // check if payment value is set to a option "value" || or option others
-      // if option others: then set paymentType value to "other" && set paymentTypeOther to the paymentType value that is coming from the database
-      const initalPaymentType = paymentTypeArr?.find(
-        (item) => item.value === productDetails?.paymentTerms
-      );
-      let paymentVal = {
-        // if packging condition is null   || value is not selection on option "others"
-        paymentType: productDetails?.paymentTerms || "",
-        paymentTypeOther: "",
-      };
-      if (!initalPaymentType) {
-        // means that data is selected to option others
-        paymentVal = {
-          paymentType: "other",
-          paymentTypeOther: productDetails?.paymentTerms || "",
-        };
-      }
-
       initialValues = {
         ...initialValues,
         ...PackingCondVal, //packing conditions
         ...nameIfValueIsTrue, //qualityConditions
         ...ShippingCondVal, //shipping condition
-        ...paymentVal, //payment
       };
 
       formValidation.setValues(initialValues);

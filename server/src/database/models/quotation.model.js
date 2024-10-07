@@ -37,11 +37,11 @@ const Quotation = sequelize.define('quotations', {
         type: DataTypes.STRING,
     },
     minQuantity: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
     },
     requestedQuantity:DataTypes.INTEGER,
     price: {
-        type: DataTypes.DOUBLE,
+        type: DataTypes.STRING,
         allowNull: false,
     },
     discounts: {

@@ -16,6 +16,9 @@ export const addSourcingRequestrMedia = async (id, header, data) => {
   return await putRequest(`/sourcingRequests/uploadMedia/${id}`, header, data);
 };
 
+export const updateSourcingRequest = async (id, header, data) => {
+  return await putRequest(`sourcingRequests/${id}`, header, data);
+};
 
 
 export const deleteSourceRequestUser = async (id, header) => {

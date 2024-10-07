@@ -23,7 +23,7 @@ import useCategories from "hooks/useCategory";
 
 import {
   requiredStringMax255,
-  reqQualityValidate,
+  priceCurrency,
   otherTextAreaValidate,
   requiredStringValidate,
 } from "utils/validationUtils";
@@ -68,7 +68,7 @@ export default function AddOffer() {
     country: Yup.array().of(Yup.string()).nullable(),
     // preferredCountries: Yup.array().of(Yup.string()).nullable(),
 
-    price: reqQualityValidate,
+    price: priceCurrency,
 
     //   HSN (Harmonized System of Nomenclature) code field i
     productHSNCode: requiredStringMax255,

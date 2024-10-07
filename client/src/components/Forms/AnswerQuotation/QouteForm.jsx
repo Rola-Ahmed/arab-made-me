@@ -38,9 +38,17 @@ export default function QouteForm(props) {
               <div className="col-md-6 col-sm-12">
                 <InputField
                   isRequired={true}
-                  title={"Total Quantity"}
+                  title={"mini Quantity"}
                   formValidation={formValidation}
                   vlaidationName={"minQuantity"}
+                />
+              </div>
+              <div className="col-md-6 col-sm-12">
+                <InputField
+                  isRequired={true}
+                  title={"Total Quantity"}
+                  formValidation={formValidation}
+                  vlaidationName={"quantity"}
                 />
               </div>
 

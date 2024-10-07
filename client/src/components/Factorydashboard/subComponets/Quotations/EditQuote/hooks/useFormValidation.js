@@ -6,9 +6,9 @@ import {
   requiredStringValidate,
   otherTextAreaValidate,
   requiredDateValidate,
-  reqQualityValidate,
+  priceCurrency,
   textAreaValidate,
-  requiredStringMax255
+  requiredStringMax255,
 } from "utils/validationUtils";
 
 const useFormValidation = (
@@ -137,9 +137,9 @@ const useFormValidation = (
   let validationSchema = Yup.object().shape({
     // from cilent
     // avialabe qunaitiy for user
-    minquantity: requiredStringMax255,
+    minQuantity: requiredStringMax255,
 
-    price: reqQualityValidate,
+    price: priceCurrency,
 
     discounts: Yup.string()
       .matches(/^[0-9]+$/, "Input field must be numbers only")

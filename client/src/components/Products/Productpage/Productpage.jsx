@@ -72,8 +72,12 @@ function Productpage(props) {
     });
   };
 
+  function navFactoryPage(factoryId, factoryName) {
+    navigate(`/factoryPage/${factoryId}-${factoryName}`);
+  }
   // ---------------------------------------------------------------
 
+  console.log("productData", productData);
   return (
     <>
       <IsLoggedIn
@@ -133,15 +137,28 @@ function Productpage(props) {
                 modules={[FreeMode, Navigation, Thumbs]}
                 className="main-Swiper w-100 "
               >
-                {productData?.productSlider?.map((item, index) => (
-                  <SwiperSlide>
-                    <img
-                      src={`${baseUrl_IMG}/${item}`}
-                      alt="Img"
-                      onError={handleImageError}
-                    />
-                  </SwiperSlide>
-                ))}
+                <>
+                  {productData?.productSlider?.map((item, index) => (
+                    <SwiperSlide>
+                      <img
+                        src={`${baseUrl_IMG}/${item}`}
+                        alt="Img"
+                        onError={handleImageError}
+                      />
+                    </SwiperSlide>
+                  ))}
+
+                  {/* {productData?.coverVideo && (
+                    <SwiperSlide>
+                      <video
+                        className="w-100 h-100 "
+                        src={`${baseUrl_IMG}/${productData?.coverVideo}`}
+                        alt={`${baseUrl_IMG}/${productData?.coverVideo}`}
+                        onError={handleImageError}
+                      />
+                    </SwiperSlide>
+                  )} */}
+                </>
               </Swiper>
               <Swiper
                 onSwiper={setThumbsSwiper}
@@ -152,18 +169,29 @@ function Productpage(props) {
                 modules={[FreeMode, Navigation, Thumbs]}
                 className="sub-swiper cursor position-relative"
               >
-                {productData?.productSlider?.map((item, index) => (
-                  <SwiperSlide>
-                    <img
-                      className="w-100 h-100 "
-                      id={index}
-                      src={`${baseUrl_IMG}/${item}`}
-                      alt="Img"
-                      onError={handleImageError}
-                    />
-                  </SwiperSlide>
-                ))}
-
+                <>
+                  {productData?.productSlider?.map((item, index) => (
+                    <SwiperSlide>
+                      <img
+                        className="w-100 h-100 "
+                        id={index}
+                        src={`${baseUrl_IMG}/${item}`}
+                        alt="Img"
+                        onError={handleImageError}
+                      />
+                    </SwiperSlide>
+                  ))}
+                  {/* {productData?.coverVideo && (
+                    <SwiperSlide>
+                      <video
+                        className="w-100 h-100 "
+                        src={`${baseUrl_IMG}/${productData?.coverVideo}`}
+                        alt={`${baseUrl_IMG}/${productData?.coverVideo}`}
+                        onError={handleImageError}
+                      />
+                    </SwiperSlide>
+                  )} */}
+                </>
                 <i className="fa-solid fa-chevron-left main-slider-prev rounded-4"></i>
                 <i className="fa-solid fa-chevron-right main-slider-next  rounded-4"></i>
               </Swiper>
@@ -221,8 +249,16 @@ function Productpage(props) {
               </div>
 
               <div className="log">
-                <div className="ar">
-                  <div className="factory-logo">
+                <button
+                  className="ar w-fit-content bg-0 border-0 cursor"
+                  onClick={() => {
+                    navFactoryPage(
+                      productData?.factoryId,
+                      productData?.factory?.name
+                    );
+                  }}
+                >
+                  <div className="factory-logo  cursor">
                     <img
                       className="w-100 h-100 "
                       src={`${baseUrl_IMG}/${productData?.factory?.coverImage}`}
@@ -230,18 +266,22 @@ function Productpage(props) {
                       onError={handleImageError}
                     />
                   </div>
-                  <div className="ar-texts">
+                  <div className="ar-texts  ">
                     <p className="fs-18-semi lh-normal">
                       {productData?.factory?.name}
                     </p>
                     <p className="fs-14-med fw-400 lh-normal">
                       {/* city, country */}
 
-                      {`${productData?.city ? productData?.city + ", " : ""}`}
-                      {productData?.country ?? ""}
+                      {`${
+                        productData?.factory?.city
+                          ? productData?.factory?.city + ", "
+                          : ""
+                      }`}
+                      {productData?.factory?.country ?? ""}
                     </p>
                   </div>
-                </div>
+                </button>
               </div>
               <div className="pricing ">
                 <div>

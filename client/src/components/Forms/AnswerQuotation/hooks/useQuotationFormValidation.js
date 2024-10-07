@@ -4,9 +4,9 @@ import {
   requiredStringValidate,
   otherTextAreaValidate,
   requiredDateValidate,
-  reqQualityValidate,
+  priceCurrency,
   textAreaValidate,
-  requiredStringMax255
+  requiredStringMax255,
 } from "utils/validationUtils";
 
 const useQuotationFormValidation = (
@@ -16,9 +16,10 @@ const useQuotationFormValidation = (
   let validationSchema = Yup.object().shape({
     // from cilent
     // avialabe qunaitiy for user
-    minquantity: Yup.string().required(),
+    minQuantity: Yup.string().required(),
+    quantity: Yup.string().required(),
 
-    price: reqQualityValidate,
+    price: priceCurrency,
 
     discounts: Yup.string()
       .matches(/^[0-9]+$/, "Input field must be numbers only")
@@ -62,6 +63,7 @@ const useQuotationFormValidation = (
     minQuantity: "", //requried
     price: "", //requried
     discounts: "", //optional
+    quantity:"",
 
     shippingConditions: "", //required,
     shippingConditionsOther: "",
@@ -104,6 +106,8 @@ const useQuotationFormValidation = (
     validationSchema,
     onSubmit: onSubmitCallback,
   });
+
+  console.log("formValidation", formValidation);
 
   return formValidation;
 };

@@ -53,12 +53,26 @@ export default function SourcingReqEtc() {
       {!apiLoadingData?.reqData && (
         <div className="section factory-profile m-5">
           <div className="container gap-container">
-            <div className="row">
+            <div className="row gap-24">
               <div className="col-12  container-2-gap  p-0">
                 <SourcingRequestInfo
                   requestedData={requestedData}
                   handleImageClick={handleImageClick}
                 />
+              </div>
+
+              <div className="col-12  mb-4">
+                <button
+                  className="defualt-btn main"
+                  type="button"
+                  onClick={() => {
+                    navigate(
+                      `/importerdashboard/edit/sourcingRequest/${requestedData?.id}?productName=${requestedData?.productName}`
+                    );
+                  }}
+                >
+                  Edit Product
+                </button>
               </div>
             </div>
           </div>

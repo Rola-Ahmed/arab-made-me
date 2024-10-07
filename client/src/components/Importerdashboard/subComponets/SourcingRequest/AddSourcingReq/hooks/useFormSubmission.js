@@ -131,20 +131,18 @@ const useFormSubmission = (setErrorMsg, setIsLoading) => {
 
     selectedDocs?.forEach((item) => data.append(item.keyWord, item.pdfFile));
 
-    try {
-      let result = await addSourcingRequestrMedia(
-        qoute_id,
-        { authorization: isLogin },
-        data
-      );
+    let result = await addSourcingRequestrMedia(
+      qoute_id,
+      { authorization: isLogin },
+      data
+    );
 
-      if (result?.success) {
-        setLoadingState(true);
-        dataSaved();
-      } else {
-        handleResponseError(result.error);
-      }
-    } catch (error) {}
+    if (result?.success) {
+      setLoadingState(true);
+      dataSaved();
+    } else {
+      handleResponseError(result.error);
+    }
   };
 
   return { submitForm, sourcingOfferAdded, submitDocs };
