@@ -52,7 +52,6 @@ const useFormSubmission = (setErrorMsg, setIsLoading) => {
 
     let {
       productName,
-      categoryId,
       productDescription,
       price,
       quantity,
@@ -78,7 +77,6 @@ const useFormSubmission = (setErrorMsg, setIsLoading) => {
       price,
       productName,
       productDescription,
-      categoryId,
       quantity,
 
       ...(productHSNCode && { productHSNCode: productHSNCode }),

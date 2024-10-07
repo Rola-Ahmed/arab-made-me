@@ -29,7 +29,6 @@ export default function AllProductsContainer() {
       if (filterBySector) {
         return filterBySector?.split(",")?.map(Number);
       }
-     
 
       return []; // Return the full phone if no match found
     })(),
@@ -45,6 +44,7 @@ export default function AllProductsContainer() {
 
   const [isLoggedReDirect, setisLoggedReDirect] = useState("");
 
+  console.log("filter",filter)
   useEffect(() => {
     const fetchData = async () => {
       setapiLoadingData({
@@ -54,8 +54,8 @@ export default function AllProductsContainer() {
       setAllProductsData([]);
 
       // let url1 = ``;
-      let url2 = `?size=${pagination?.displayProductSize}&page=${pagination?.currentPage}&include=factory`;
-
+      let url2 = `size=${pagination?.displayProductSize}&page=${pagination?.currentPage}&include=factory`;
+      console.log("url2", url2);
       if (filter?.filterBySearch !== "") {
         url2 += `&filter=${filter?.filterBySearch}`;
       }
@@ -76,7 +76,7 @@ export default function AllProductsContainer() {
       if (response2?.success) {
         setPagination((prevValue) => ({
           ...prevValue,
-          totalPage: response2?.data?.pagination?.totalPage,
+          totalPage: response2?.data?.pagination?.totalPages,
         }));
 
         setAllProductsData(response2?.data?.products);

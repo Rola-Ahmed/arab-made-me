@@ -39,6 +39,8 @@ export default function AllOffers() {
     continueProfilePath,
   } = useAllOffers(filter);
 
+  console.log("reqData offffer",reqData)
+
   return (
     <>
       <FactoryUnVerified

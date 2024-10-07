@@ -19,21 +19,18 @@ import UploadDocument from "components/Forms/Shared/UploadDocument";
 import TextareaInput from "components/Forms/Shared/TextareaInput";
 import SelectWithTextarea from "components/Forms/Shared/SelectWithTextarea";
 
-import useCategories from "hooks/useCategory";
-
 import {
   requiredStringMax255,
   priceCurrency,
   otherTextAreaValidate,
   requiredStringValidate,
+  textAreaValidate,
 } from "utils/validationUtils";
 import { fetchFactoryProducts2 } from "Services/factory";
 import InputField from "components/Forms/Shared/InputField";
-import FormVlaidtionError from "components/Forms/Shared/FormVlaidtionError";
 
 export default function AddOffer() {
   let { currentUserData } = useContext(userDetails);
-  let categories = useCategories();
   const countriesMiddleEast = useCountries();
   let navigate = useNavigate();
 
@@ -71,7 +68,7 @@ export default function AddOffer() {
     price: priceCurrency,
 
     //   HSN (Harmonized System of Nomenclature) code field i
-    productHSNCode: requiredStringMax255,
+    productHSNCode: textAreaValidate(),
 
     quantity: requiredStringMax255,
 
@@ -113,7 +110,6 @@ export default function AddOffer() {
       paymentTypeOther: "",
 
       productId: "", //optional
-      categoryId: "", //optioal
       country: [],
       // preferredCountries: [],
     },
@@ -141,14 +137,6 @@ export default function AddOffer() {
       navigate("/factorydashboard/AllFactoryOffers");
     }
   }
-  useEffect(() => {
-    if (categories?.length !== 0) {
-      formValidation.setValues({
-        ...formValidation.values,
-        categoryId: categories?.[0]?.id || "",
-      });
-    }
-  }, [categories]);
 
   // ----------  add imegs----------------------
   const [selectedDocs, setSelectedDocs] = useState([]);
@@ -208,13 +196,13 @@ export default function AddOffer() {
                   isRequired={true}
                   title={"Price"}
                   formValidation={formValidation}
-                  vlaidationName={"price"}
+                  vlaidationName="price"
                 />
               </div>
 
               <div className="col-4">
                 <InputField
-                  isRequired={true}
+                  isRequired={false}
                   title={"hsn Code"}
                   formValidation={formValidation}
                   vlaidationName={"productHSNCode"}
@@ -228,29 +216,6 @@ export default function AddOffer() {
                   formValidation={formValidation}
                   vlaidationName={"quantity"}
                 />
-              </div>
-
-              <div className="col-4">
-                <div className="form-group">
-                  <label>
-                    Category <span className="">*</span>
-                  </label>
-                  <select
-                    className="form-select form-control"
-                    onChange={formValidation.handleChange}
-                    id="categoryId"
-                    onBlur={formValidation.handleBlur}
-                    value={formValidation.values.categoryId}
-                  >
-                    {categories?.map((item) => (
-                      <option value={item?.id}>{item?.name}</option>
-                    ))}
-                  </select>
-                  <FormVlaidtionError
-                    formValidation={formValidation}
-                    vlaidationName="categoryId"
-                  />
-                </div>
               </div>
 
               <div className="col-4">

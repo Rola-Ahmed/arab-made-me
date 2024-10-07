@@ -11,7 +11,7 @@ export const SourcingOffer = sequelize.define('sourcingOffers', {
         autoIncrement: true,
     },
     price: {
-        type: DataTypes.DOUBLE,
+        type: DataTypes.STRING,
         allowNull: false,
     },
     productId:{

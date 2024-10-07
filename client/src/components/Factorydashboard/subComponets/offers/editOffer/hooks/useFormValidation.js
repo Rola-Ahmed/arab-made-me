@@ -19,7 +19,6 @@ export const useFormValidation = (productDetails, submitForm) => {
     price: productDetails?.price || "",
     productHSNCode: productDetails?.productHSNCode || "",
     productDescription: productDetails?.productDescription || "",
-    categoryId: productDetails?.categoryId || "",
     productId: productDetails?.productId || "", //optional
     preferredCountries: productDetails?.preferredCountries || [],
     quantity: productDetails?.quantity || "",
@@ -29,7 +28,6 @@ export const useFormValidation = (productDetails, submitForm) => {
     preferredCountries: Yup.array().of(Yup.string()).nullable(),
 
     price: priceCurrency,
-    categoryId: requiredStringMax255,
 
     //   HSN (Harmonized System of Nomenclature) code field i
     productHSNCode: Yup.string()

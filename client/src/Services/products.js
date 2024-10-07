@@ -15,7 +15,7 @@ export const fetchProductData = async (productId) => {
 };
 
 export const getAllProducts = async (param) => {
-  return await getRequestDataHeader(`/products/?${param}`, {}, {});
+  return await getRequestDataHeader(`/products?${param}`, {}, {});
 };
 
 export const getOneProduct = async (id, param) => {

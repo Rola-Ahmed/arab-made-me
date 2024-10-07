@@ -50,7 +50,6 @@ export default function EditOffer() {
 
     let {
       productName,
-      categoryId,
       productDescription,
       price,
       quantity,
@@ -76,7 +75,6 @@ export default function EditOffer() {
       price,
       productName,
       productDescription,
-      categoryId,
       quantity,
 
       ...(productHSNCode && { productHSNCode: productHSNCode }),
@@ -240,30 +238,7 @@ export default function EditOffer() {
               </div>
             </div>
 
-            <div className="col-4">
-              <div className="form-group">
-                <label>
-                  Category <span className="">*</span>
-                </label>
-                <select
-                  className="form-select form-control"
-                  onChange={formValidation.handleChange}
-                  id="categoryId"
-                  onBlur={formValidation.handleBlur}
-                  value={formValidation.values.categoryId}
-                >
-                  <option value="">Select Category</option>
-
-                  {categories?.map((item) => (
-                    <option value={item?.id}>{item?.name}</option>
-                  ))}
-                </select>
-                <FormVlaidtionError
-                  formValidation={formValidation}
-                  vlaidationName="categoryId"
-                />
-              </div>
-            </div>
+           
 
             <div className="col-4">
               <InputField
