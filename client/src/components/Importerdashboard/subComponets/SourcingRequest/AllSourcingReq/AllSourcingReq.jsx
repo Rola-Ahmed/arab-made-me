@@ -7,7 +7,7 @@ import PaginationDash from "components/Shared/Dashboards/PaginationDash";
 import useAllSourcingReq from "./useAllSourcingReq";
 import StatusMessage from "components/Shared/Dashboards/StatusMessage";
 
-export default function GetSourcingRequest() {
+export default function AllSourcingReq() {
   let navigate = useNavigate();
   let getMonthName = getDate;
   const [filter, setFilter] = useState({
