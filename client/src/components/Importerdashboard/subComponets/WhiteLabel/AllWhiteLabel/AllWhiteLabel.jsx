@@ -105,6 +105,7 @@ export default function AllWhiteLabel() {
                           type="checkbox"
                           value=""
                         />
+                        
                       </div>
                       <td className="">
                         <div className="title-text-handler">

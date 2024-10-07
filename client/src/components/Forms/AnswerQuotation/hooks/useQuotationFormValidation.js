@@ -25,10 +25,10 @@ const useQuotationFormValidation = (
       .matches(/^[0-9]+$/, "Input field must be numbers only")
       .min(1, "min 1 legnth"),
 
-    packingConditions: Yup.string(),
+    packingConditions: Yup.string().required("Input field is Required"),
     packingConditionsOther: otherTextAreaValidate("packingConditions", "other"),
 
-    paymentType: Yup.string(),
+    paymentType: Yup.string().required("Input field is Required"),
     paymentTypeOther: otherTextAreaValidate("paymentType", "other"),
 
     qualityConditions: Yup.string().required("Input field is Required"),
@@ -64,7 +64,7 @@ const useQuotationFormValidation = (
     price: "", //requried
     discounts: "", //optional
     quantity:"",
-
+    SupplyLocation:"",
     shippingConditions: "", //required,
     shippingConditionsOther: "",
     packingConditions: "", //req

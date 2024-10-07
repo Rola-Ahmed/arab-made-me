@@ -80,6 +80,7 @@ export default function OnePrivateLabel() {
                 {requestedData?.productId && (
                   <div className="container-profile-input w-100">
                     <ProductDetails productDetails={requestedData?.product} />
+                    
                   </div>
                 )}
 

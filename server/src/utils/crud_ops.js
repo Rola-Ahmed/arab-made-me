@@ -7,9 +7,8 @@ import { deleteFiles } from "./delete_files.js";
 
 const getAll = (Model) => {
   return asyncHandler(async (req, res, nxt) => {
-
-  const page = parseInt(req.query.page, 10) || 10; // Default to page 1
-  const limit = parseInt(req.query.size, 10) || 10; // Default limit to 10
+    const page = parseInt(req.query.page, 10) || 10; // Default to page 1
+    const limit = parseInt(req.query.size, 10) || 10; // Default limit to 10
 
     const searchFilters = searchFiltering(req.query);
     let model = Model.name.toLowerCase();
@@ -24,18 +23,19 @@ const getAll = (Model) => {
       include: req.query.include,
     });
 
-     // Get total count of products that match the filters
-  const totalData = await Model.count({
-    where: searchFilters.whereConditions,
-  });
+    // Get total count of products that match the filters
+    const totalData = await Model.count({
+      where: searchFilters.whereConditions,
+    });
 
-    return res.status(200).json({ message: "done", [model]: docs ,
+    return res.status(200).json({
+      message: "done",
+      [model]: docs,
       pagination: {
         totalData,
         totalPages: Math.ceil(totalData / limit),
         currentPage: page,
       },
-
     });
   });
 };
@@ -44,17 +44,35 @@ const getAllForFactory = (Model, returner) => {
   return asyncHandler(async (req, res, nxt) => {
     const { id } = req.params;
     const searchFilters = searchFiltering(req.query);
+    const page = parseInt(req.query.page, 10); // Default to page 1
+    const limit = parseInt(req.query.size, 10); // Default limit to 10
+    const offset = (page - 1) * limit; // Offset calculation
 
     searchFilters.whereConditions.push({ factoryId: req.factory.id });
     const data = await Model.findAll({
       where: searchFilters.whereConditions,
-      offset: searchFilters.offset,
-      limit: searchFilters.limit,
+      offset,
+      limit,
       order: searchFilters.order,
       include: req.query.include || "factory",
     });
 
-    return res.status(200).json({ message: "done", [returner]: data });
+    // Get total count of products that match the filters
+    const totalData = await Model.count({
+      where: searchFilters.whereConditions,
+    });
+    const totalPages = Math.ceil(totalData / limit);
+
+    return res.status(200).json({
+      message: "done",
+      [returner]: data,
+
+      pagination: {
+        totalData,
+        totalPages,
+        currentPage: page,
+      },
+    });
   });
 };
 

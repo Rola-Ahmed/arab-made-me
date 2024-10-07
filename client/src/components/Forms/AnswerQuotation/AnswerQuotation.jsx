@@ -76,7 +76,7 @@ export default function AnswerQuotation() {
           formTitle: "White Label",
 
           extraData: {
-            whiteLabelId: id || "",
+            whiteLabelingId: id || "",
             importerId: importerId || "",
             ...(productName && { productName: productName }),
           },

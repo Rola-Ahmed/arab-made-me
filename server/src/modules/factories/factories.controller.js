@@ -14,6 +14,7 @@ import QuotationRequest from "../../database/models/qoutation_request.model.js";
 import Quotation from "../../database/models/quotation.model.js";
 import { SourcingOffer } from "../../database/models/sourcing_hub/offer.js";
 import { PrivateLabeling } from "../../database/models/private_labeling.model.js";
+import { WhiteLabeling } from "../../database/models/white_labeling.model.js";
 import { SpecialManufacturingRequest } from "../../database/models/special_manufacturing.model.js";
 import { Visit } from "../../database/models/visit.model.js";
 import { searchFiltering } from "../../utils/search/api_features.js";
@@ -292,6 +293,10 @@ export const getOffers = crudOps.getAllForFactory(SourcingOffer, "offers");
 export const getPrivateLabelings = crudOps.getAllForFactory(
   PrivateLabeling,
   "privateLabelings"
+);
+export const getWhiteLabelings = crudOps.getAllForFactory(
+  WhiteLabeling,
+  "whiteLabelings"
 );
 
 export const getSPMF = crudOps.getAllForFactory(

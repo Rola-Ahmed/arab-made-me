@@ -168,6 +168,14 @@ factoriesRouter.get(
 );
 
 factoriesRouter.get(
+  "/factory/whiteLabelings",
+  checkUserToken,
+  checkUserHasFactory,
+  checkFactoryVerified,
+  factoriesController.getWhiteLabelings
+);
+
+factoriesRouter.get(
   "/factory/spmfs",
   checkUserToken,
   checkUserHasFactory,

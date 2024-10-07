@@ -123,10 +123,10 @@ function Productpage(props) {
       />
 
       <Header title="Product Page " />
-      <section className="product-page-section1  home-padding-y">
+      <section className="product-page-section1  home-padding-y ">
         <div className="container">
           <div className="row product-parent">
-            <div className="col-lg-5 product-images">
+            <div className="col-lg-5 product-images mx-auto">
               <Swiper
                 navigation={{
                   nextEl: ".main-slider-next",
@@ -196,7 +196,7 @@ function Productpage(props) {
                 <i className="fa-solid fa-chevron-right main-slider-next  rounded-4"></i>
               </Swiper>
             </div>
-            <div className="col-lg-4 parent2  text-truncate">
+            <div className="col-lg-4 parent2  text-truncate d-flex align-items-center align-items-lg-start ">
               <div className=" ">
                 <div className="rating">
                   <div className="stars">
@@ -235,7 +235,7 @@ function Productpage(props) {
                   {productData?.specialCharacteristics &&
                     Object.entries(productData?.specialCharacteristics)?.map(
                       ([key, value], index) => (
-                        <div className="row  w-100">
+                        <div className="row  w-100 justify-content-center justify-content-lg-start">
                           <div className="col-4">
                             <p className="fw-400 fs-14-med text-muted-2">
                               {key}:{" "}
@@ -248,41 +248,41 @@ function Productpage(props) {
                 </div>
               </div>
 
-              <div className="log">
-                <button
-                  className="ar w-fit-content bg-0 border-0 cursor"
-                  onClick={() => {
-                    navFactoryPage(
-                      productData?.factoryId,
-                      productData?.factory?.name
-                    );
-                  }}
-                >
-                  <div className="factory-logo  cursor">
-                    <img
-                      className="w-100 h-100 "
-                      src={`${baseUrl_IMG}/${productData?.factory?.coverImage}`}
-                      alt="factory"
-                      onError={handleImageError}
-                    />
-                  </div>
-                  <div className="ar-texts  ">
-                    <p className="fs-18-semi lh-normal">
-                      {productData?.factory?.name}
-                    </p>
-                    <p className="fs-14-med fw-400 lh-normal">
-                      {/* city, country */}
+              {/* <div className="log"> */}
+              <button
+                className="ar w-fit-content bg-0 border-0 cursor"
+                onClick={() => {
+                  navFactoryPage(
+                    productData?.factoryId,
+                    productData?.factory?.name
+                  );
+                }}
+              >
+                <div className="factory-logo  cursor">
+                  <img
+                    className="w-100 h-100 "
+                    src={`${baseUrl_IMG}/${productData?.factory?.coverImage}`}
+                    alt="factory"
+                    onError={handleImageError}
+                  />
+                </div>
+                <div className="ar-texts  ">
+                  <p className="fs-18-semi lh-normal">
+                    {productData?.factory?.name}
+                  </p>
+                  <p className="fs-14-med fw-400 lh-normal">
+                    {/* city, country */}
 
-                      {`${
-                        productData?.factory?.city
-                          ? productData?.factory?.city + ", "
-                          : ""
-                      }`}
-                      {productData?.factory?.country ?? ""}
-                    </p>
-                  </div>
-                </button>
-              </div>
+                    {`${
+                      productData?.factory?.city
+                        ? productData?.factory?.city + ", "
+                        : ""
+                    }`}
+                    {productData?.factory?.country ?? ""}
+                  </p>
+                </div>
+              </button>
+              {/* </div> */}
               <div className="pricing ">
                 <div>
                   <p className=" fs-24-semi text-main-2 fw-600 ">
@@ -297,7 +297,7 @@ function Productpage(props) {
                 )}
               </div>
             </div>
-            <div className="col-lg-2   h-100">
+            <div className="col-lg-2   h-100 mx-auto d-flex justify-content-center">
               <div className=" d-table-cell  ">
                 <div className="d-flex align-items-center">
                   <div

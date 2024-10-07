@@ -85,6 +85,7 @@ export default function IndexList(props) {
                           type="checkbox"
                           value=""
                         />
+                        {poItem?.id}
                       </div>
                       <td className="">
                         <div className="title-text-handler">
