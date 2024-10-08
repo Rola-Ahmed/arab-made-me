@@ -20,6 +20,7 @@ import { Visit } from "../../database/models/visit.model.js";
 import { searchFiltering } from "../../utils/search/api_features.js";
 import { checkLoginTimes } from "../login_times/login_times.js";
 import { FactoryDataTypes } from "./factories.dataTypes.js";
+import { QueryTypes } from "sequelize"; // Make sure to import QueryTypes if it's not already
 
 export const addFactory = asyncHandler(async (req, res, nxt) => {
   const { country } = req.body;
@@ -41,25 +42,6 @@ export const addFactory = asyncHandler(async (req, res, nxt) => {
   });
 
   await req.user.update({ role: "factory", country, factoryId: factory.id });
-
-  // const token = jwt.sign({
-  //     id: factory.id,
-  //     email: factory.repEmail
-  // }, process.env.SECRET_KEY, { expiresIn: "10 m" })
-  // const newToken = jwt.sign({
-  //     id: factory.id,
-  //     email: factory.repEmail
-  // }, process.env.SECRET_KEY, { expiresIn: "20 m" })
-  // await sendMail({
-  //     to: factory.repEmail,
-  //     subject: "Activation Email From Arab-Made",
-  //     html: `
-  //         <a href="${req.protocol}://${req.headers.host}/factory/emailActivation?action=${token}">Confirm Accaount</a>
-  //         <br>
-  //         <br>
-  //         `,
-  //     // <a href="${req.protocol}://${req.headers.host}/api/v1/factories/newConfirmEmail/${newToken}">resend confirmation mail</a>
-  // })//api/v1/factories/confirmEmail
 
   return res.status(201).json({ message: "done", factory });
 });
@@ -91,14 +73,6 @@ function splitByCapitalLetters(inputString) {
 }
 
 export const updateFactory = asyncHandler(async (req, res, nxt) => {
-  console.log("req, res-------------------------------");
-  console.log(
-    "req, res-------------------------------",
-    req.body,
-    "--------",
-    req.factory
-  );
-
   const {
     taxRegisterationNumber,
     commercialRegisterationNumber,
@@ -107,19 +81,19 @@ export const updateFactory = asyncHandler(async (req, res, nxt) => {
     BusinessRegistrationNumber,
   } = req.body;
 
-  const checks = [
-    { field: "taxRegisterationNumber", value: taxRegisterationNumber },
-    {
-      field: "commercialRegisterationNumber",
-      value: commercialRegisterationNumber,
-    },
-    { field: "IndustrialLicenseNumber", value: IndustrialLicenseNumber },
-    {
-      field: "IndustrialRegistrationNumber",
-      value: IndustrialRegistrationNumber,
-    },
-    { field: "BusinessRegistrationNumber", value: BusinessRegistrationNumber },
-  ];
+  // const checks = [
+  //   { field: "taxRegisterationNumber", value: taxRegisterationNumber },
+  //   {
+  //     field: "commercialRegisterationNumber",
+  //     value: commercialRegisterationNumber,
+  //   },
+  //   { field: "IndustrialLicenseNumber", value: IndustrialLicenseNumber },
+  //   {
+  //     field: "IndustrialRegistrationNumber",
+  //     value: IndustrialRegistrationNumber,
+  //   },
+  //   { field: "BusinessRegistrationNumber", value: BusinessRegistrationNumber },
+  // ];
 
   // let unuqiueVlaitation = [];
 
@@ -140,12 +114,12 @@ export const updateFactory = asyncHandler(async (req, res, nxt) => {
   // if (unuqiueVlaitation.length!=0) return res.json({ message: `The ${unuqiueVlaitation.join(", ")} already exisit and it must be unique values ` });
 
   await req.factory.update(req.body);
-  console.log(
-    "req, res-------------------------------",
-    req.body,
-    "--------",
-    req.factory
-  );
+  // console.log(
+  //   "req, res-------------------------------",
+  //   req.body,
+  //   "--------",
+  //   req.factory
+  // );
 
   if (req.body.repEmail && (await checkLoginTimes(req.user.id))) {
     const token = jwt.sign(
@@ -223,9 +197,6 @@ export const updateOneQualityCertificate = crudOps.updateOneInMedia(
 
 export const updateFromAdmin = crudOps.updateModel(Factory);
 
-//uploads/factories/2/qualityCertificates-1699021329969-PBBJKZ8zNzEmxmzzDXeKT
-//uploads/factories/2/images-1699021329850-wBltzRiQnWiLLDGDk7liU
-
 export const productsOfFactory = asyncHandler(async (req, res, nxt) => {
   const { id } = req.params;
   const searchFilters = searchFiltering(req.query);
@@ -248,18 +219,12 @@ export const productsOfFactory = asyncHandler(async (req, res, nxt) => {
       {
         model: Factory, // Assuming 'Factory' is the related model
         attributes: ["id", "city", "country", "coverImage", "sectorId"], // Specific columns from 'factory'
-      }
-    ]
-    // attributes: ["id", "city","country",'coverImage','sectorId'],
+      },
+    ],
   });
-
-
 
   const totalProducts = await Product.count({
     where: searchFilters.whereConditions,
-    // offset: searchFilters.offset,
-    // limit: searchFilters.limit,
-    
   });
 
   return res.status(200).json({
@@ -312,10 +277,6 @@ export const getFactoriesWithProducts = asyncHandler(async (req, res, next) => {
   const page = parseInt(req.query.page, 10) || 1; // Default to page 1
   const limit = parseInt(req.query.size, 10) || 10; // Default limit to 10
 
-  // if (searchFilters) {
-  //   searchFilters.whereConditions.push(filter);
-  // }
-
   // Fetch factories along with their associated products
   const factories = await Factory.findAll({
     where: searchFilters.whereConditions,
@@ -348,5 +309,232 @@ export const getFactoriesWithProducts = asyncHandler(async (req, res, next) => {
       totalPages: Math.ceil(totalFactories / limit),
       currentPage: page,
     },
+  });
+});
+
+export const getTotalNotificationsOrigi = asyncHandler(
+  async (req, res, nxt) => {
+    const { id } = req.params;
+
+    // Query to fetch only Whitelabels and Privatelabels associated with the factoryId
+    const data = await Factory.findOne({
+      where: { id: id }, // Use factoryId to find the correct factory
+      attributes: [], // Exclude the Factory data itself (no attributes selected)
+      include: [
+        {
+          model: WhiteLabeling, // Include associated Whitelabels
+          attributes: ["id", "createdAt"], // Only fetch Whitelabel fields
+        },
+        {
+          model: PrivateLabeling, // Include associated Privatelabels
+          attributes: ["id", "createdAt"], // Only fetch Privatelabel fields
+        },
+      ],
+    });
+
+    if (!data) {
+      return res.status(404).json({ message: "Factory not found" });
+    }
+
+    return res.status(200).json({
+      message: "done",
+      data,
+    });
+  }
+);
+
+export const getTotalNotifications22 = asyncHandler(async (req, res, nxt) => {
+  // const { id } = req.params;
+  const id = req.user.factoryId;
+  console.log("idddd", id);
+
+  // Use Sequelize's `query` method to run a raw SQL query
+  const data = await sequelize.query(
+    `
+SELECT id, "createdAt" AS createdAt, "productName" AS productName , 'whiteLabel' AS notificationType, status::text AS status
+  FROM "whiteLabelings"
+  WHERE "factoryId" = :id
+
+  UNION ALL
+
+  SELECT id, "createdAt" AS createdAt, "productName" AS productName,'privateLabel' AS notificationType, status::text AS status
+  FROM "privateLabelings"
+  WHERE "factoryId" = :id
+
+  UNION ALL
+
+  SELECT id, "createdAt" AS createdAt, "productName" AS productName,'offers' AS notificationType, status::text AS status
+  FROM "sourcingOffers"
+  WHERE "factoryId" = :id
+
+
+   UNION ALL
+
+  SELECT id, "createdAt" AS createdAt, "productName" AS productName,'offers' AS notificationType, status::text AS status
+  FROM "sourcingOffers"
+  WHERE "factoryId" = :id
+
+
+    UNION ALL
+
+  SELECT id, "createdAt" AS createdAt, "productName" AS productName,'RFQs' AS notificationType, status::text AS status
+  FROM "quotationRequests"
+  WHERE "factoryId" = :id
+
+
+   UNION ALL
+
+  SELECT id, "createdAt" AS createdAt, "productName" AS productName,'smfr' AS notificationType, status::text AS status
+  FROM "specialManufacturingRequests"
+  WHERE "factoryId" = :id
+
+
+   UNION ALL
+
+  SELECT id, "createdAt" AS createdAt, "productName" AS productName,'po' AS notificationType, status::text AS status
+  FROM "purchasingOrders"
+  WHERE "factoryId" = :id
+
+
+    UNION ALL
+
+  SELECT id, "createdAt" AS createdAt, "productName" AS productName,'po' AS notificationType, status::text AS status
+  FROM "purchasingOrders"
+  WHERE "factoryId" = :id
+
+
+   UNION ALL
+
+  SELECT id, "createdAt" AS createdAt, "purpose" AS productName,'visit' AS notificationType, status::text AS status
+  FROM "visits"
+  WHERE "factoryId" = :id
+
+
+  ORDER BY createdAt ASC
+  `,
+    {
+      replacements: { id },
+      type: QueryTypes.SELECT,
+    }
+  );
+
+  // if (!data.length) {
+  //   return res.status(404).json({ message: "Factory not found" });
+  // }
+
+  return res.status(200).json({
+    message: "done",
+    data,
+  });
+});
+
+export const getTotalNotifications = asyncHandler(async (req, res, nxt) => {
+  // const { id } = req.params;
+  const id = req.user.factoryId;
+  console.log("idddd", id);
+
+  // Use Sequelize's `query` method to run a raw SQL query
+  const data = await sequelize.query(
+    `
+    SELECT 
+      wl.id, 
+      wl."createdAt" AS createdAt, 
+      wl."productName" AS productName, 
+      'whiteLabel' AS notificationType, 
+      wl.status::text AS status, 
+      i."repName" AS importerName, 
+      i."image" AS importerImage
+    FROM "whiteLabelings" wl
+    JOIN "importers" i ON wl."importerId" = i."id"
+    WHERE wl."factoryId" = :id
+  
+    UNION ALL
+  
+    SELECT 
+      pl.id, 
+      pl."createdAt" AS createdAt, 
+      pl."productName" AS productName, 
+      'privateLabel' AS notificationType, 
+      pl.status::text AS status, 
+      i."repName" AS importerName, 
+      i."image" AS importerImage
+    FROM "privateLabelings" pl
+    JOIN "importers" i ON pl."importerId" = i."id"
+    WHERE pl."factoryId" = :id
+  
+  
+  
+    UNION ALL
+  
+    SELECT 
+      qr.id, 
+      qr."createdAt" AS createdAt, 
+      qr."productName" AS productName, 
+      'RFQs' AS notificationType, 
+      qr.status::text AS status, 
+      i."repName" AS importerName, 
+      i."image" AS importerImage
+    FROM "quotationRequests" qr
+    JOIN "importers" i ON qr."importerId" = i."id"
+    WHERE qr."factoryId" = :id
+  
+    UNION ALL
+  
+    SELECT 
+      smr.id, 
+      smr."createdAt" AS createdAt, 
+      smr."productName" AS productName, 
+      'smfr' AS notificationType, 
+      smr.status::text AS status, 
+      i."repName" AS importerName, 
+      i."image" AS importerImage
+    FROM "specialManufacturingRequests" smr
+    JOIN "importers" i ON smr."importerId" = i."id"
+    WHERE smr."factoryId" = :id
+  
+    UNION ALL
+  
+    SELECT 
+      po.id, 
+      po."createdAt" AS createdAt, 
+      po."productName" AS productName, 
+      'po' AS notificationType, 
+      po.status::text AS status, 
+      i."repName" AS importerName, 
+      i."image" AS importerImage
+    FROM "purchasingOrders" po
+    JOIN "importers" i ON po."importerId" = i."id"
+    WHERE po."factoryId" = :id
+  
+    UNION ALL
+  
+    SELECT 
+      v.id, 
+      v."createdAt" AS createdAt, 
+      v."purpose" AS productName, 
+      'visit' AS notificationType, 
+      v.status::text AS status, 
+      i."repName" AS importerName, 
+      i."image" AS importerImage
+    FROM "visits" v
+    JOIN "importers" i ON v."importerId" = i."id"
+    WHERE v."factoryId" = :id
+  
+    ORDER BY createdAt ASC
+    `,
+    {
+      replacements: { id },
+      type: QueryTypes.SELECT,
+    }
+  );
+  
+
+  // if (!data.length) {
+  //   return res.status(404).json({ message: "Factory not found" });
+  // }
+
+  return res.status(200).json({
+    message: "done",
+    data,
   });
 });

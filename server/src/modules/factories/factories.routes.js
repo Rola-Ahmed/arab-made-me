@@ -198,3 +198,12 @@ factoriesRouter.get(
   checkFactoryVerified,
   factoriesController.getVisits
 );
+
+factoriesRouter.get(
+  "/factory/notifications",
+  // "/factory/notifications/:id",
+  checkUserToken,
+  checkUserHasFactory,
+  checkFactoryVerified,
+  factoriesController.getTotalNotifications
+);

@@ -56,5 +56,6 @@ export const PrivateLabeling = sequelize.define(
 );
 
 PrivateLabeling.belongsTo(Factory);
+Factory.hasMany(PrivateLabeling);
 PrivateLabeling.belongsTo(Importer);
 PrivateLabeling.belongsTo(Product, { foreignKey: { allowNull: true } });
