@@ -51,7 +51,7 @@ const DropdownActionBtnsFactory = ({
               onClick={() =>
                 handleBtnCheckIfProductExisit(
                   `sendrfq?factoryId=${factoryitem?.id}&factoryName=${factoryitem?.name}`,
-                  factoryitem?.productLength,
+                  factoryitem?.products?.length,
                   factoryitem?.id,
                   factoryitem?.name
                 )
@@ -74,7 +74,7 @@ const DropdownActionBtnsFactory = ({
               onClick={() =>
                 handleBtnCheckIfProductExisit(
                   `purchasingOrder/fromfactory?factoryId=${factoryitem?.id}&factoryName=${factoryitem?.name}`,
-                  factoryitem?.productLength,
+                  factoryitem?.products?.length,
                   factoryitem?.id,
                   factoryitem?.name
                 )
