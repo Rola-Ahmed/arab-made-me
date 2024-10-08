@@ -44,8 +44,8 @@ const getAllForFactory = (Model, returner) => {
   return asyncHandler(async (req, res, nxt) => {
     const { id } = req.params;
     const searchFilters = searchFiltering(req.query);
-    const page = parseInt(req.query.page, 10); // Default to page 1
-    const limit = parseInt(req.query.size, 10); // Default limit to 10
+    const page = isNaN(parseInt(req.query.page, 10)) ? 1 : parseInt(req.query.page, 10); // Default to page 1 if invalid
+    const limit = isNaN(parseInt(req.query.size, 10)) ? 10 : parseInt(req.query.size, 10); // Default limit to 10 if invalid
     const offset = (page - 1) * limit; // Offset calculation
 
     searchFilters.whereConditions.push({ factoryId: req.factory.id });
@@ -75,6 +75,24 @@ const getAllForFactory = (Model, returner) => {
     });
   });
 };
+
+// const getAllForFactory = (Model, returner) => {
+//   return asyncHandler(async (req, res, nxt) => {
+//     const { id } = req.params;
+//     const searchFilters = searchFiltering(req.query);
+
+//     searchFilters.whereConditions.push({ factoryId: req.factory.id });
+//     const data = await Model.findAll({
+//       where: searchFilters.whereConditions,
+//       offset: searchFilters.offset,
+//       limit: searchFilters.limit,
+//       order: searchFilters.order,
+//       include: req.query.include || "factory",
+//     });
+
+//     return res.status(200).json({ message: "done", [returner]: data });
+//   });
+// };
 
 const getAllForImporter = (Model, returner) => {
   return asyncHandler(async (req, res, nxt) => {

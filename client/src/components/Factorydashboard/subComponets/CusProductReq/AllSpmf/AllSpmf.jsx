@@ -45,76 +45,6 @@ export default function AllSpmf() {
     }));
   }
 
-  const downloadCsv = () => {
-    const attributesToFilter = [
-      "productId",
-      "factoryId",
-      "importerId",
-      "updatedAt",
-      "docs",
-      "importerProfileImg",
-    ];
-    // ,"contactData"
-    const newArray = filterAttributes(reqData, attributesToFilter);
-
-    const csvData = convertToCsv(newArray);
-
-    const blob = new Blob([csvData], { type: "text/csv" });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "privateLabel.csv";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  };
-
-  const convertToCsv = (data) => {
-    // Assuming data is an array of objects with similar structure
-    const header = Object.keys(data[0]).join(",");
-    const rows = data.map((obj) => Object.values(obj).join(",")).join("\n");
-    return `${header}\n${rows}`;
-  };
-
-  const filterAttributes = (dataArray, attributesToFilter) => {
-    return dataArray.map((originalObject) => {
-      const filteredObject = Object.keys(originalObject)
-        .filter((key) => !attributesToFilter.includes(key))
-        .reduce((acc, key) => {
-          if (
-            key === "specialCharacteristics" &&
-            typeof originalObject[key] === "object" &&
-            Object.keys(originalObject[key])?.length !== 0
-          ) {
-            let index = 1;
-            for (const keyLoop in originalObject[key]) {
-              if (originalObject[key].hasOwnProperty(keyLoop)) {
-                const value = originalObject[key][keyLoop];
-
-                acc[`KeyWord${index}`] = keyLoop;
-                acc[`description${index}`] = value;
-              }
-              index++;
-            }
-
-            while (index <= 5) {
-              acc[`KeyWord${index}`] = "";
-              acc[`description${index}`] = "";
-
-              index++;
-            }
-          } else {
-            acc[key] = originalObject[key];
-          }
-
-          return acc;
-        }, {});
-
-      return filteredObject;
-    });
-  };
-
   return (
     <div className="m-4 order-section ">
       {/* section 1 */}
@@ -134,14 +64,10 @@ export default function AllSpmf() {
 
                 <SpmfsNotification />
               </div>
-              <button
-                className="order-btn-1"
-                onClick={downloadCsv}
-                disabled={!reqData?.length}
-              >
+              {/* <button className="order-btn-1" disabled={true}>
                 <i className="fa-solid fa-cloud-arrow-down"></i>
                 <p className="cursor">Download CSV</p>
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
@@ -151,7 +77,7 @@ export default function AllSpmf() {
 
         {/* data section */}
 
-        <div className=" data-container w-100 p-3">
+        <div className=" data-container w-100 p-3 ">
           <table className="table mb-0">
             {/* headers */}
 
@@ -185,7 +111,7 @@ export default function AllSpmf() {
 
             <tbody>
               {/* row1 */}
-              {reqData.map((poItem) => (
+              {reqData?.map((poItem) => (
                 <tr className="row">
                   <th className=" col-2  ">
                     <div className=" th-1st-title-gap d-flex justify-content-start align-items-center">
