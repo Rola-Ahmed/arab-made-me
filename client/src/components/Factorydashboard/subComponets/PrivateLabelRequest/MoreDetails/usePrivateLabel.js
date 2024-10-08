@@ -22,7 +22,6 @@ export function usePrivateLabel() {
 
   useEffect(() => {
     async function fetchReqData() {
-      
       // get private label data
       let result = await getOnePrivateLabel(
         privateLabelId,
@@ -42,14 +41,13 @@ export function usePrivateLabel() {
           ...prevData,
           ...result.data.privatelabelings,
         }));
-    
       }
       //  else {
-        setApiLoadingData((prevVal) => ({
-          ...prevVal,
-          reqData: result?.loadingStatus,
-          errorWhileLoading: result?.error,
-        }));
+      setApiLoadingData((prevVal) => ({
+        ...prevVal,
+        reqData: result?.loadingStatus,
+        errorWhileLoading: result?.error,
+      }));
       // }
 
       if (QouteIdConfigResp?.success) {
@@ -73,7 +71,6 @@ export function usePrivateLabel() {
     }
 
     async function UpdateData(status) {
-
       let response = await updatePrivateLabel(
         privateLabelId,
         { authorization: isLogin },
@@ -89,10 +86,14 @@ export function usePrivateLabel() {
 
     fetchReqData();
 
-    if (requestedData && requestedData.status === "open") {
+    if (requestedData && requestedData.status == "open") {
       UpdateData("seen");
     }
-  }, [privateLabelId, isLogin]);
+  }, [
+    privateLabelId,
+    isLogin,
+    requestedData && requestedData.status == "open",
+  ]);
 
   return {
     isLogin,

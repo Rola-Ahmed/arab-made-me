@@ -207,3 +207,11 @@ factoriesRouter.get(
   checkFactoryVerified,
   factoriesController.getTotalNotifications
 );
+factoriesRouter.get(
+  "/factory/notifications/unread",
+  // "/factory/notifications/:id",
+  checkUserToken,
+  checkUserHasFactory,
+  checkFactoryVerified,
+  factoriesController.getUnReadNotifications
+);

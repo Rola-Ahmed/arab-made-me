@@ -91,38 +91,39 @@ export default function OneWhiteLabelReq() {
                       <ProductDetails productDetails={requestedData?.product} />
                     </div>
                   )}
+
+                  <div className="col-12 d-flex justify-content-start btn-modal-gap ">
+                    {requestedData && requestedData?.quoteId == null ? (
+                      <button
+                        className="btn-edit "
+                        type="button"
+                        onClick={() => {
+                          handleSendQuoteBnt();
+                        }}
+                      >
+                        <p className="cursor">send Quote</p>
+                      </button>
+                    ) : (
+                      <button
+                        className="btn-edit "
+                        type="button"
+                        onClick={() => {
+                          handleEditQuoteBnt();
+                        }}
+                      >
+                        <p className="cursor">Edit Quote</p>
+                      </button>
+                    )}
+
+                    <ContactBtn
+                      isLogin={isLogin}
+                      // handleIsLoggedInBtn={handleIsLoggedInBtn}
+                      recieverUserId={requestedData?.importer?.userId}
+                      // baseUrl={baseUrl}
+                    />
+                  </div>
                 </>
               )}
-              <div className="col-12 d-flex justify-content-start btn-modal-gap ">
-                {requestedData && requestedData?.quoteId == null ? (
-                  <button
-                    className="btn-edit "
-                    type="button"
-                    onClick={() => {
-                      handleSendQuoteBnt();
-                    }}
-                  >
-                    <p className="cursor">send Quote</p>
-                  </button>
-                ) : (
-                  <button
-                    className="btn-edit "
-                    type="button"
-                    onClick={() => {
-                      handleEditQuoteBnt();
-                    }}
-                  >
-                    <p className="cursor">Edit Quote</p>
-                  </button>
-                )}
-
-                <ContactBtn
-                  isLogin={isLogin}
-                  // handleIsLoggedInBtn={handleIsLoggedInBtn}
-                  recieverUserId={requestedData?.importer?.userId}
-                  // baseUrl={baseUrl}
-                />
-              </div>
             </div>
           </div>
         </div>

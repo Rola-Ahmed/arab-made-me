@@ -19,7 +19,6 @@ const useSpmfs = (isLogin, filter) => {
     setReqData([]);
     const params = `size=${pagination.displayProductSize}&page=${pagination.currentPage}&formsFilter=${filter?.formsFilter}&sort=${filter?.sort}&include=importer`;
     const result = await getSpmfs(params, { authorization: isLogin });
-    console.log("result useSpmfs", result);
     if (result?.success) {
       setReqData(result?.data?.spmfs);
 

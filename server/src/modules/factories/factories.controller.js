@@ -527,7 +527,6 @@ export const getTotalNotifications = asyncHandler(async (req, res, nxt) => {
       type: QueryTypes.SELECT,
     }
   );
-  
 
   // if (!data.length) {
   //   return res.status(404).json({ message: "Factory not found" });
@@ -536,5 +535,82 @@ export const getTotalNotifications = asyncHandler(async (req, res, nxt) => {
   return res.status(200).json({
     message: "done",
     data,
+  });
+});
+
+export const getUnReadNotifications = asyncHandler(async (req, res, nxt) => {
+  // const { id } = req.params;
+  const id = req.user.factoryId;
+  console.log("idddd", id);
+
+  // Use Sequelize's `query` method to run a raw SQL query
+  const data = await sequelize.query(
+    `
+    SELECT 
+      notificationType, 
+      COUNT(CASE WHEN status = 'open' THEN 1 END) AS openStatusCount
+    FROM (
+      SELECT 
+        'whiteLabel' AS notificationType, 
+        wl.status::text AS status
+      FROM "whiteLabelings" wl
+      WHERE wl."factoryId" = :id
+    
+      UNION ALL
+    
+      SELECT 
+        'privateLabel' AS notificationType, 
+        pl.status::text AS status
+      FROM "privateLabelings" pl
+      WHERE pl."factoryId" = :id
+    
+      UNION ALL
+    
+      SELECT 
+        'RFQs' AS notificationType, 
+        qr.status::text AS status
+      FROM "quotationRequests" qr
+      WHERE qr."factoryId" = :id
+    
+      UNION ALL
+    
+      SELECT 
+        'smfr' AS notificationType, 
+        smr.status::text AS status
+      FROM "specialManufacturingRequests" smr
+      WHERE smr."factoryId" = :id
+    
+      UNION ALL
+    
+      SELECT 
+        'po' AS notificationType, 
+        po.status::text AS status
+      FROM "purchasingOrders" po
+      WHERE po."factoryId" = :id
+    
+      UNION ALL
+    
+      SELECT 
+        'visit' AS notificationType, 
+        v.status::text AS status
+      FROM "visits" v
+      WHERE v."factoryId" = :id
+    ) AS notifications
+    GROUP BY notificationType
+    ORDER BY notificationType ASC
+    `,
+    {
+      replacements: { id },
+      type: QueryTypes.SELECT,
+    }
+  );
+
+  // if (!data.length) {
+  //   return res.status(404).json({ message: "Factory not found" });
+  // }
+
+  return res.status(200).json({
+    message: "done",
+   notifications: data,
   });
 });

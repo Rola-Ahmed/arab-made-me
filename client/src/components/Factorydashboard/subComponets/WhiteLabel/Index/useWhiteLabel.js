@@ -21,18 +21,14 @@ const useWhiteLabel = (isLogin, filter) => {
     const result = await getWhiteLables(params, { authorization: isLogin });
     console.log("result white", result);
     if (result?.success) {
-      setTimeout(() => {
-        setReqData(result?.data?.whiteLabelings);
-      }, 10);
+      setReqData(result?.data?.whiteLabelings);
       setPagination((prevValue) => ({
         ...prevValue,
         totalPage: result?.data?.pagination?.totalPage,
       }));
     }
-    setTimeout(() => {
-      setErrorsMsg(result?.error);
-      setApiLoadingData(result?.loadingStatus);
-    }, 10);
+    setErrorsMsg(result?.error);
+    setApiLoadingData(result?.loadingStatus);
   };
 
   useEffect(() => {

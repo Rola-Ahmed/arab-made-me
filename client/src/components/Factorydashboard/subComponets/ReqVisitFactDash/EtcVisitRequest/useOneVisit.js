@@ -57,6 +57,7 @@ export function useOneVisit() {
         { authorization: isLogin },
         { status: status }
       );
+      console.log("response", response);
       if (response?.success) {
         setRequestedData((prevVal) => ({
           ...prevVal,
@@ -70,11 +71,7 @@ export function useOneVisit() {
     if (requestedData && requestedData.status === "open") {
       UpdateData("seen");
     }
-  }, [
-    visitReqId,
-    isLogin,
-    requestedData && requestedData.status === "open",
-  ]);
+  }, [visitReqId, isLogin, requestedData && requestedData.status === "open"]);
 
   return {
     isLogin,

@@ -1,54 +1,46 @@
 import { useCallback, useEffect, useState } from "react";
-import { getPrivateLables } from "Services/FactoryRequests/privateLabel";
-import { getRFQs } from "Services/FactoryRequests/rfq";
-import { getSpmfs } from "Services/FactoryRequests/spmf";
-import { getVisitReqs } from "Services/FactoryRequests/visit";
-import { getPos } from "Services/FactoryRequests/pos";
-import { getOffers } from "Services/FactoryRequests/offers";
-import { getQuotes } from "Services/FactoryRequests/quotations";
+import { getUnreadNotifications } from "Services/FactoryRequests/notifications";
 
 export default function useFactoryNotification(isLogin) {
   // Fetch notifications
-  const [notification, setNotification] = useState([]);
+  const [notification, setNotification] = useState({});
 
   const fetchNotificationCounts = useCallback(async () => {
-    const requests = [
-      getPrivateLables,
-      getRFQs,
-      getSpmfs,
-      getVisitReqs,
-      getPos,
-      getOffers,
-      getQuotes,
-    ];
+    const result = await getUnreadNotifications({}, { authorization: isLogin });
 
-    const headers = { authorization: isLogin };
-    const results = await Promise.all(
-      requests.map((request) => request({}, headers))
-    );
+    const notificationCounts = {};
 
-    const notificationCounts = {
-      PrivateLabelingsNotif: results[0]?.data?.privateLabelings?.filter(
-        (item) => item.status === "open"
-      ).length,
-      rfqsNotif: results[1]?.data?.rfqs?.filter(
-        (item) => item.status === "open"
-      ).length,
-      spmfsNotif: results[2]?.data?.spmfs?.filter(
-        (item) => item.status === "open"
-      ).length,
-      visitsNotif: results[3]?.data?.visits?.filter(
-        (item) => item.status === "open"
-      ).length,
-      posNotif: results[4]?.data?.pos?.filter((item) => item.status === "open")
-        .length,
-      offersNotif: results[5]?.data?.offers?.filter(
-        (item) => item.status === "open"
-      ).length,
-      quotationsNotif: results[6]?.data?.quotations?.filter(
-        (item) => item.status === "open"
-      ).length,
-    };
+    // Loop over the result data to map the notification counts
+    result?.data?.notifications.forEach((item) => {
+      switch (item.notificationtype) {
+        case "privateLabel":
+          notificationCounts.PrivateLabelingsNotif = parseInt(
+            item.openstatuscount,
+            10
+          );
+          break;
+        case "RFQs":
+          notificationCounts.rfqsNotif = parseInt(item.openstatuscount, 10);
+          break;
+        case "smfr":
+          notificationCounts.spmfsNotif = parseInt(item.openstatuscount, 10);
+          break;
+        case "visit":
+          notificationCounts.visitsNotif = parseInt(item.openstatuscount, 10);
+          break;
+        case "po":
+          notificationCounts.posNotif = parseInt(item.openstatuscount, 10);
+          break;
+        case "whiteLabel":
+          notificationCounts.whiteLabelNotif = parseInt(
+            item.openstatuscount,
+            10
+          );
+          break;
+        default:
+          break;
+      }
+    });
 
     setNotification(notificationCounts);
   }, [isLogin]);
@@ -57,7 +49,7 @@ export default function useFactoryNotification(isLogin) {
     if (isLogin) {
       fetchNotificationCounts();
     }
-  }, [isLogin]);
+  }, [isLogin, fetchNotificationCounts]);
 
   return { notification, isLogin };
 }

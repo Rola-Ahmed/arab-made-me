@@ -36,17 +36,15 @@ const useVisit = (filter) => {
     const result = await getVisitReqs(params, { authorization: isLogin });
     if (result?.success) {
       setReqData(result?.data?.visits);
-      setTimeout(() => {
-        setReqData(result?.data?.visits);
-      }, 50);
+
+      setPagination((prevValue) => ({
+        ...prevValue,
+        totalPage:result?.data?.pagination?.totalPages,
+      }));
     } else {
       setErrorsMsg(result?.error);
     }
     setApiLoadingData(false);
-
-    setTimeout(() => {
-      setApiLoadingData(false);
-    }, 50);
   };
 
   useEffect(() => {

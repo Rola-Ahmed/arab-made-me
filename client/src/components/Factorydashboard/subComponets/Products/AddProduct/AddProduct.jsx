@@ -191,7 +191,7 @@ export default function AddProduct() {
 
               <div className="col-4">
                 <InputField
-                  isRequired={true}
+                  // isRequired={true}
                   title={"hsn Code"}
                   formValidation={formValidation}
                   vlaidationName={"hsnCode"}
