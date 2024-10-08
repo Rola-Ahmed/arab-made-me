@@ -12,27 +12,29 @@ export default function VisitRequestInfo({ requestedData }) {
         <p> Factory Visit Details</p>
         <div className="w-100 ">
           <div className="row  row-gap">
-            <div className="col-6">
-              <ReadOnly title="status" value={requestedData?.status} />
-            </div>
 
-            <div className="col-6">
-              <ReadOnly
-                title="requested Visit Date At"
-                value={`${formattedTime(requestedData?.date)}`}
-              />
-            </div>
+          {
+              [
+                { title: "Visit Purpose", value: requestedData?.purpose },
+                {  title="requested Visit Date", value:`${formattedTime(requestedData?.date)}` },
+                { title: "Visit Type", value: requestedData?.visitType, },
+                { title: "Individuals Number", value: requestedData?.individualsNumber },
+                { title: "Required Products", value: requestedData?.requiredProducts },
+                { title: "status", value: requestedData?.status },
+                { title: "Created At", value: `${getMonthName(requestedData?.createdAt?.split("T")?.[0])}` },
+               ]?.map(({ title, value }, index) => (
+                <div className="col-md-6 col-sm-12" key={index}>
+                  <ReadOnly title={title} value={value} />
+                </div>
+              ))}
 
-            <div className="col-6">
-              <ReadOnly
-                title="Created At"
-                value={getMonthName(requestedData?.createdAt?.split("T")?.[0])}
-              />
-            </div>
 
-            <div className="col-12">
-              <ReadOnly title="purpose " value={requestedData?.purpose} />
-            </div>
+           
+
+          
+
+           
+         
           </div>
         </div>
       </div>
