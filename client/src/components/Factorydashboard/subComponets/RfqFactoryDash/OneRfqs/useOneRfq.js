@@ -26,6 +26,7 @@ export function useOneRfq() {
         "include=importer&include=product"
       );
 
+      console.log("result rfq",result);
       // check if private label has quotations
       const QouteIdConfigResp = await getQuotes(
         {},
@@ -37,7 +38,7 @@ export function useOneRfq() {
       if (result?.success) {
         setRequestedData((prevData) => ({
           ...prevData,
-          ...result.data.privatelabelings,
+          ...result.data.quotationrequests,
         }));
       }
       //  else {

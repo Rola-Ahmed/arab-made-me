@@ -64,7 +64,7 @@ export const getAllWithProductLength = asyncHandler(async (req, res, next) => {
   
 
   const [sectors] = await sequelize.query(`
-    SELECT sectors.id, sectors.name, COUNT(products.id) AS productsCount
+    SELECT sectors.id, sectors.name,sectors.image, COUNT(products.id) AS productsCount
     FROM sectors
     LEFT JOIN factories ON factories."sectorId" = sectors.id
     LEFT JOIN products ON products."factoryId" = factories.id
