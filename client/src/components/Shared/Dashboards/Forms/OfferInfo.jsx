@@ -52,7 +52,7 @@ export default function OfferInfo(props) {
                   title: "Product Description",
                   value: requestedData?.productDescription,
                 },
-              ].map(({ title, value }, index) => (
+              ]?.map(({ title, value }, index) => (
                 <div className="col-md-6 col-sm-12" key={index}>
                   <ReadOnly title={title} value={value} />
                 </div>
