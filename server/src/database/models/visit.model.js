@@ -12,11 +12,11 @@ export const Visit = sequelize.define(
     },
     requiredProducts: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     visitType: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     individualsNumber: {
       type: DataTypes.INTEGER,
