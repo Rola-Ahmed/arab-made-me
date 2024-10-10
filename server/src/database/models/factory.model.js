@@ -227,7 +227,9 @@ export const Factory = sequelize.define(
 Factory.belongsTo(User, { onDelete: "CASCADE" });
 Factory.belongsTo(Sector);
 Factory.belongsTo(Subscription, { foreignKey: { allowNull: true } });
-User.hasMany(Factory);
+User.hasMany(Factory,{ foreignKey: 'userId',as:'factory' });
+// User.hasMany(models.Factory, { foreignKey: 'userId' });
+
 
 // Factory.hasMany(Product, { as: 'factoryproducts', foreignKey: 'factoryId' });
 // Product.belongsTo(Factory, { as: 'factory', foreignKey: 'factoryId' });

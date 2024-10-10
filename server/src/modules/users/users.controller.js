@@ -220,3 +220,19 @@ export const cleanUnActive = asyncHandler(async (req, res, nxt) => {
 });
 
 export const updateFromAdmin = crudOps.updateModel(User);
+
+
+
+
+
+
+
+const getOne = (Model) => {
+  return asyncHandler(async (req, res, nxt) => {
+    let model = Model.name.toLowerCase();
+    const { id } = req.params;
+    const doc = await Model.findByPk(id, { include: req.query.include });
+    if (!doc) return res.status(400).json({ message: `${model} not found` });
+    return res.status(200).json({ message: "done", [model]: doc });
+  });
+};
